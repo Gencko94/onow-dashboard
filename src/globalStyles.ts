@@ -34,6 +34,7 @@ a {
 }
 hr {
   margin : 0.25rem 0 ;
+  border : 0.3px solid rgba(0,0,0,0.1);
 }
 input,
 button,
@@ -68,9 +69,7 @@ h5 {
 p {
   /* line-height:1 */
 }
-hr{
-  border : 0.3px solid rgba(0,0,0,0.1)
-}
+
 button {
   cursor: pointer;
 }

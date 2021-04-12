@@ -4,7 +4,7 @@ import {
   QueryClientProvider,
   QueryErrorResetBoundary,
 } from 'react-query';
-import Home from './pages/Home';
+import Login from './pages/Login';
 import ScrollToTopOnMount from './utils/ScrollToTopOnMount';
 import { Suspense } from 'react';
 import Loading from './utils/Loading';
@@ -13,6 +13,10 @@ import GlobalStyle from './globalStyles';
 import { ErrorBoundary } from 'react-error-boundary';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import 'react-placeholder/lib/reactPlaceholder.css';
+import Layout from './layout/Layout';
+import Sidebar from './components/Sidebar/Sidebar';
+import Dashboard from './pages/Dashboard';
+import Products from './pages/Products';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -41,9 +45,13 @@ function App() {
                 <ThemeProvider>
                   <GlobalStyle />
                   <ScrollToTopOnMount />
-                  <Switch>
-                    <Route path="/" component={Home} />
-                  </Switch>
+                  <Route exact path="/" component={Login} />
+                  <Layout>
+                    <Switch>
+                      <Route exact path="/dashboard" component={Dashboard} />
+                      <Route exact path="/products" component={Products} />
+                    </Switch>
+                  </Layout>
                 </ThemeProvider>
               </Router>
             </QueryClientProvider>

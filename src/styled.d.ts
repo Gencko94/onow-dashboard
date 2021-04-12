@@ -24,7 +24,7 @@ declare module 'styled-components' {
     textColor: string;
     shadow: string;
     overlayColor: string;
-    // navColor: string;
+    boxColor: string;
     btnPrimaryLight: string;
     btnPrimaryDark: string;
     inputColorLight: string;

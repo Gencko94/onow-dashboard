@@ -23,7 +23,7 @@ const ThemeProvider: React.FC = ({ children }) => {
   const { i18n } = useTranslation();
 
   const fontFamily = useMemo(
-    () => (i18n.language === 'ar' ? 'Cairo' : 'AmazonEmber'),
+    () => (i18n.language === 'ar' ? 'Cairo' : 'Noto Sans JP'),
     [i18n.language]
   );
 
@@ -39,7 +39,7 @@ const ThemeProvider: React.FC = ({ children }) => {
         regular: '400',
         semibold: '500',
         bold: '700',
-        xbold: '800',
+        xbold: '900',
       },
       ...theme,
     };

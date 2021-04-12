@@ -1,0 +1,8 @@
+{
+  "email": "Email",
+  "password": "Password",
+  "login": "Login",
+  "no-account": "Don't have an account ? <1>Register  here</1>",
+  "forgot-password": "Forgot password ? <1>Reset here</1>",
+  "required-field": "Required Field"
+}

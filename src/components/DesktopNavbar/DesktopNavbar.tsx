@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import NavIconsDesktop from './NavIconsDesktop/NavIconsDesktop';
+import Searchbar from './Searchbar/Searchbar';
 
 const DesktopNavbar = () => {
   const { t, i18n, ready } = useTranslation();
@@ -9,12 +11,18 @@ const DesktopNavbar = () => {
       i18n.changeLanguage(lng);
     }
   };
-  return <Container>hi</Container>;
+  return (
+    <Container>
+      <Searchbar />
+      <NavIconsDesktop />
+    </Container>
+  );
 };
 
 export default DesktopNavbar;
 const Container = styled.div`
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: 1rem;
+  justify-content: space-between;
 `;
