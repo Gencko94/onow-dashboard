@@ -33,8 +33,17 @@ a {
   color:inherit;
 }
 hr {
-  margin : 0.25rem 0 ;
-  border : 0.3px solid rgba(0,0,0,0.1);
+  margin: 1.5rem 0;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.4),
+    transparent
+  );
+  background-color: transparent;
+  border: none;
+  height: 1px;
+  opacity: 0.5;
 }
 input,
 button,
@@ -75,6 +84,9 @@ button {
 }
 ul {
   list-style-type:none;
+}  
+input {
+min-width:0;
 }
 `;
 

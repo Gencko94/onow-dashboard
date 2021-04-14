@@ -7,7 +7,7 @@ export const lightTheme = {
   subHeading: '#a0a0a0',
   textColor: 'rgba(15,15,15,.7)',
   shadow: '0px 4px 7px 2px rgb(213,213,213)',
-  highlightColor: '#b11e29',
+  highlightColor: '#fbfbfb',
   highlightColorText: '#fff',
   btnPrimaryLight: '#b11e29',
   btnPrimaryDark: '#b11e29',

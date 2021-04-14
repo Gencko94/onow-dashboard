@@ -4,7 +4,7 @@ import SideOrder from './SideOrder';
 const SideOrders = () => {
   return (
     <Container>
-      <Title>Orders</Title>
+      <Title>Latest Orders</Title>
       <OrdersContainer>
         <SideOrder />
         <SideOrder />

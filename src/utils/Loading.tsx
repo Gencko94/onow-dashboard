@@ -9,5 +9,5 @@ export default function Loading() {
       nprogress.done();
     };
   }, []);
-  return null;
+  return <div>loading</div>;
 }

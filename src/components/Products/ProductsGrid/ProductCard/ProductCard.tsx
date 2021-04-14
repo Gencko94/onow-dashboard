@@ -6,7 +6,7 @@ import ProductCardOptions from './ProductCardOptions';
 const ProductCard = () => {
   return (
     <Container>
-      <ProductCardImage src="/images/user.jpg" />
+      <ProductCardImage src="/images/product.webp" />
       <ProductCardDetails />
       <ProductCardOptions />
     </Container>

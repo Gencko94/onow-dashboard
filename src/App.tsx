@@ -17,6 +17,7 @@ import Layout from './layout/Layout';
 import Sidebar from './components/Sidebar/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
+import AddProduct from './pages/AddProduct';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -50,6 +51,11 @@ function App() {
                     <Switch>
                       <Route exact path="/dashboard" component={Dashboard} />
                       <Route exact path="/products" component={Products} />
+                      <Route
+                        exact
+                        path="/products/add"
+                        component={AddProduct}
+                      />
                     </Switch>
                   </Layout>
                 </ThemeProvider>
