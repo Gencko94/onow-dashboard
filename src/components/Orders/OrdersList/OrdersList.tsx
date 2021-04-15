@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import CustomerItem from './CustomerItem/CustomerItem';
+import OrderItem from './OrderItem';
 
-const CustomerList = () => {
+const OrdersList = () => {
   return (
     <Container>
       <GridHead>
@@ -9,13 +9,16 @@ const CustomerList = () => {
           <span />
         </div>
         <div className="field">
+          <h6>Order ID</h6>
+        </div>
+        <div className="field">
           <h6>Customer Name</h6>
         </div>
         <div className="field">
-          <h6>Customer Phone</h6>
+          <h6>Delivery Location</h6>
         </div>
         <div className="field">
-          <h6>Customer Email</h6>
+          <h6>Order Status</h6>
         </div>
         <div className="field">
           <h6>Actions</h6>
@@ -23,15 +26,14 @@ const CustomerList = () => {
       </GridHead>
       <div>
         {[0, 1, 2, 3].map(i => (
-          <CustomerItem />
+          <OrderItem />
         ))}
       </div>
     </Container>
   );
 };
 
-export default CustomerList;
-
+export default OrdersList;
 const Container = styled.div`
   border-radius: 8px;
   overflow: hidden;
@@ -41,7 +43,7 @@ const Container = styled.div`
 
 const GridHead = styled.div`
   display: grid;
-  grid-template-columns: 50px 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: 50px 0.5fr 1fr 1fr 1fr 0.5fr;
   background-color: ${props => props.theme.overlayColor};
   border-bottom: ${props => props.theme.border};
   gap: 1rem;

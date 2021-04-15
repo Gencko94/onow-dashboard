@@ -5,28 +5,28 @@ const CustomerProfileOrders = () => {
   return (
     <Container>
       <h5>Customer Orders</h5>
-      <GridHead>
-        <div className="field">
-          <span />
-        </div>
-        <div className="field">
-          <h6>Order Number</h6>
-        </div>
-        <div className="field">
-          <h6>Order Date</h6>
-        </div>
-        <div className="field">
-          <h6>Order Amount</h6>
-        </div>
-        <div className="field">
-          <h6>Status</h6>
-        </div>
-      </GridHead>
-      <div>
+      <GridContainer>
+        <GridHead>
+          <div className="field">
+            <span />
+          </div>
+          <div className="field">
+            <h6>Order Number</h6>
+          </div>
+          <div className="field">
+            <h6>Order Date</h6>
+          </div>
+          <div className="field">
+            <h6>Order Amount</h6>
+          </div>
+          <div className="field">
+            <h6>Status</h6>
+          </div>
+        </GridHead>
         {[0, 1, 2, 3].map(i => (
           <CustomerProfileOrderItem />
         ))}
-      </div>
+      </GridContainer>
     </Container>
   );
 };
@@ -34,6 +34,7 @@ const CustomerProfileOrders = () => {
 export default CustomerProfileOrders;
 const Container = styled.div`
   padding: 0.75rem;
+
   h5 {
     margin-bottom: 1rem;
   }
@@ -54,4 +55,10 @@ const GridHead = styled.div`
       font-weight: ${props => props.theme.font.semibold};
     }
   }
+`;
+const GridContainer = styled.div`
+  border: ${props => props.theme.border};
+  box-shadow: ${props => props.theme.shadow};
+  border-radius: 5px;
+  overflow: hidden;
 `;

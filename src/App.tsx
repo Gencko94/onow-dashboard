@@ -20,6 +20,8 @@ import Products from './pages/Products';
 import AddProduct from './pages/AddProduct';
 const Customers = lazy(() => import('./pages/Customers'));
 const CustomerProfile = lazy(() => import('./pages/CustomerProfile'));
+const Orders = lazy(() => import('./pages/Orders'));
+const Order = lazy(() => import('./pages/Order'));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -53,6 +55,8 @@ function App() {
                     <Switch>
                       <Route exact path="/dashboard" component={Dashboard} />
                       <Route exact path="/products" component={Products} />
+                      <Route exact path="/orders" component={Orders} />
+                      <Route exact path="/orders/:id" component={Order} />
                       <Route exact path="/customers" component={Customers} />
                       <Route
                         exact

@@ -5,28 +5,23 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 
 const LayoutDesktop: React.FC = ({ children }) => {
   return (
-    <Container>
-      <ContentContainer>
-        <Sidebar />
-        <Content>
-          <DesktopNavbar />
-          {children}
-        </Content>
-      </ContentContainer>
-    </Container>
+    <ContentContainer>
+      <Sidebar />
+      <Content>
+        <DesktopNavbar />
+        {children}
+      </Content>
+    </ContentContainer>
   );
 };
 
 export default LayoutDesktop;
 
-const Container = styled.div`
-  /* display: grid;
-  grid-template-columns: 250px 1fr;
-  min-height: 100vh; */
-`;
 const ContentContainer = styled.div`
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 250px calc(100vw - 250px);
   min-height: 100vh;
 `;
-const Content = styled.div``;
+const Content = styled.div`
+  padding: 0 0.5rem;
+`;

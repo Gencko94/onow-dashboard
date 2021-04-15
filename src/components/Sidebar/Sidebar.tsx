@@ -8,10 +8,10 @@ const Sidebar = () => {
   return (
     <Container>
       <SidebarOnowLogo />
-      <Hr />
+      <hr />
       <ProjectSwitcher />
       <SideNav />
-      <Hr />
+      <hr />
       <SideUser />
     </Container>
   );
@@ -20,21 +20,12 @@ const Sidebar = () => {
 export default Sidebar;
 const Container = styled.aside`
   background-color: #fff;
+  position: sticky;
+  top: 0;
   box-shadow: ${props => props.theme.shadow};
   padding: 1rem;
   display: flex;
   flex-direction: column;
-`;
-const Hr = styled.hr`
-  margin: 1rem 0;
-  background-image: linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 0, 0, 0.4),
-    transparent
-  );
-  background-color: transparent;
-  border: none;
-  height: 1px;
-  opacity: 0.5;
+  min-height: 100vh;
+  align-self: flex-start;
 `;

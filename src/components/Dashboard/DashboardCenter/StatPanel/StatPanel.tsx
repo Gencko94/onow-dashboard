@@ -14,7 +14,7 @@ const StatPanel = () => {
           <StatItemValue>2012</StatItemValue>
         </StatItemDetails>
       </StatItem>
-      <Hr />
+      <hr />
       <StatItem>
         <OrdersIcon>
           <RiFileList3Line size={22} />
@@ -24,7 +24,7 @@ const StatPanel = () => {
           <StatItemValue>238</StatItemValue>
         </StatItemDetails>
       </StatItem>
-      <Hr />
+      <hr />
       <StatItem>
         <RevenueIcon>
           <MdAttachMoney size={22} />
@@ -34,7 +34,7 @@ const StatPanel = () => {
           <StatItemValue>$3598</StatItemValue>
         </StatItemDetails>
       </StatItem>
-      <Hr />
+      <hr />
       <StatItem>
         <RevenueIcon>
           <MdAttachMoney size={22} />
@@ -103,20 +103,4 @@ const StatItemText = styled.h6`
 const StatItemValue = styled.p`
   font-size: 0.9rem;
   font-weight: ${props => props.theme.font.xbold};
-`;
-
-const Hr = styled.hr`
-  margin: 1rem 0;
-  background-image: linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 0, 0, 0.5),
-    transparent
-  );
-  transform: rotate(90deg);
-  background-color: transparent;
-  border: none;
-  height: 0.7px;
-  width: 40px;
-  opacity: 0.5;
 `;
