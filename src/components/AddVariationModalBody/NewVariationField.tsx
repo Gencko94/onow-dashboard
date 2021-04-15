@@ -87,6 +87,7 @@ const NewVariationField = ({
             )}
             <SaleTypeOptionsContainer
               onClick={() => setSaleTypeOptionsOpen(!saleTypeOptionsOpen)}
+              type="button"
             >
               <SaleType>{saleType}</SaleType>
               <BiChevronDown size={19} />
@@ -242,7 +243,7 @@ const DelIcon = styled.button`
   z-index: 1;
   color: ${props => props.theme.dangerRed};
 `;
-const Icon = styled.button`
+const Icon = styled.span`
   padding: 0.3rem;
   display: flex;
   align-items: center;

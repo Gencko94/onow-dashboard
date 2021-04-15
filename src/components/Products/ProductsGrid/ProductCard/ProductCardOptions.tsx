@@ -99,7 +99,7 @@ const Icon = styled.button`
 `;
 const OptionsList = styled.div`
   position: absolute;
-  /* top: -30px; */
+
   bottom: -20px;
   right: 40px;
   z-index: 10;

@@ -6,7 +6,7 @@ import {
 } from 'react-query';
 import Login from './pages/Login';
 import ScrollToTopOnMount from './utils/ScrollToTopOnMount';
-import { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import Loading from './utils/Loading';
 import ThemeProvider from './contexts/ThemeContext';
 import GlobalStyle from './globalStyles';
@@ -18,6 +18,8 @@ import Sidebar from './components/Sidebar/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
 import AddProduct from './pages/AddProduct';
+const Customers = lazy(() => import('./pages/Customers'));
+const CustomerProfile = lazy(() => import('./pages/CustomerProfile'));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -51,6 +53,12 @@ function App() {
                     <Switch>
                       <Route exact path="/dashboard" component={Dashboard} />
                       <Route exact path="/products" component={Products} />
+                      <Route exact path="/customers" component={Customers} />
+                      <Route
+                        exact
+                        path="/customers/:id"
+                        component={CustomerProfile}
+                      />
                       <Route
                         exact
                         path="/products/add"

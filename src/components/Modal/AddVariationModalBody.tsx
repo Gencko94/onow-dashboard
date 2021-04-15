@@ -68,6 +68,7 @@ const AddVariationModalBody = () => {
       </FieldsContainer>
       <AddButtonContainer>
         <Button
+          type="button"
           onClick={() => {
             setNewVariationsIndeces(prev => {
               return [...prev, prev[prev.length - 1] + 1];
@@ -79,11 +80,11 @@ const AddVariationModalBody = () => {
         </Button>
       </AddButtonContainer>
       <ButtonsContainer>
-        <Button>
+        <Button type="button">
           <BsCheck size={30} />
           <BtnText>Add Variation</BtnText>
         </Button>
-        <Button red>
+        <Button red type="button">
           <MdCancel size={30} />
           <BtnText>Cancel</BtnText>
         </Button>
