@@ -1,4 +1,5 @@
 import { BsCheck } from 'react-icons/bs';
+import { BiPlus } from 'react-icons/bi';
 import { MdCancel } from 'react-icons/md';
 import styled from 'styled-components';
 import Select from 'react-select';
@@ -10,8 +11,30 @@ const options = [
   { id: 3, name: 'Photo' },
 ];
 const AddVariationModalBody = () => {
-  const [newVariations, setNewVariations] = useState<JSX.Element[] | []>([]);
-  const [variationType, setVariationType] = useState<any>(null);
+  const [variationType, setVariationType] = useState<{
+    id: number;
+    name: string;
+  } | null>(null);
+  const [newVariationsIndeces, setNewVariationsIndeces] = useState<number[]>([
+    0,
+  ]);
+
+  const renderFields = () => {
+    let arr = [];
+    for (let i = 0; i < newVariationsIndeces.length; i++) {
+      arr.push(
+        <NewVariationField
+          key={newVariationsIndeces[i]}
+          index={newVariationsIndeces[i]}
+          variationType={variationType}
+          setNewVariationsIndeces={setNewVariationsIndeces}
+          newVariationsIndeces={newVariationsIndeces}
+        />
+      );
+    }
+    return arr;
+  };
+
   return (
     <Container>
       <InputsContainer>
@@ -33,15 +56,28 @@ const AddVariationModalBody = () => {
             getOptionLabel={option => option.name}
             getOptionValue={option => option.id.toString()}
             onChange={value => {
-              setVariationType(value);
-              setNewVariations(prev => {
-                return [...prev, <NewVariationField />];
-              });
+              setVariationType(value!);
             }}
           />
         </div>
       </InputsContainer>
-      {newVariations}
+
+      <FieldsContainer>
+        {/* <NewVariationField variationType={variationType} /> */}
+        {renderFields()}
+      </FieldsContainer>
+      <AddButtonContainer>
+        <Button
+          onClick={() => {
+            setNewVariationsIndeces(prev => {
+              return [...prev, prev[prev.length - 1] + 1];
+            });
+          }}
+        >
+          <BiPlus size={30} />
+          <BtnText>Add Field</BtnText>
+        </Button>
+      </AddButtonContainer>
       <ButtonsContainer>
         <Button>
           <BsCheck size={30} />
@@ -58,7 +94,10 @@ const AddVariationModalBody = () => {
 
 export default AddVariationModalBody;
 const Container = styled.div`
-  width: 700px;
+  width: 900px;
+  max-height: calc(100vh - 100px);
+  overflow: auto;
+  padding: 0 0.5rem;
 `;
 const Label = styled.label`
   color: ${({ theme }) => theme.headingColor};
@@ -85,9 +124,10 @@ const InputsContainer = styled.div`
 `;
 const ButtonsContainer = styled.div`
   display: flex;
-  margin-top: 1rem;
+  padding-top: 1rem;
   align-items: center;
   justify-content: space-between;
+  border-top: ${props => props.theme.border};
 `;
 const Button = styled.button<{ red?: boolean }>`
   background-color: ${props =>
@@ -104,4 +144,16 @@ const BtnText = styled.p`
   font-size: 0.9rem;
   font-weight: ${props => props.theme.font.regular};
   margin: 0 0.5rem;
+`;
+const FieldsContainer = styled.div`
+  padding: 0.5rem;
+  background-color: ${props => props.theme.overlayColor};
+  border: ${props => props.theme.border};
+  border-radius: 5px;
+`;
+const AddButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
 `;

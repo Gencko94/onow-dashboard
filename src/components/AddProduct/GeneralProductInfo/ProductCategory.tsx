@@ -1,32 +1,57 @@
 import styled from 'styled-components';
 import Select from 'react-select';
 import { BiPlus } from 'react-icons/bi';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Modal from '../../Modal/Modal';
 import AddCategoryModalBody from '../../Modal/AddCategoryModalBody';
 import { CSSTransition } from 'react-transition-group';
 import ClickAwayListener from 'react-click-away-listener';
+import { AddProductProvider } from '../../../pages/AddProduct';
+import { Controller } from 'react-hook-form';
 const options = [
   { id: 1, name: 'Clothing' },
   { id: 2, name: 'Food' },
 ];
 const ProductCategory = () => {
+  const { errors, control, register } = useContext(AddProductProvider);
   const [open, setOpen] = useState(false);
   return (
     <Container>
       <Title>Product Category</Title>
-      <Select
+      <Controller
+        name="productCategories"
+        control={control}
+        rules={{ required: 'Required' }}
+        render={({ field: { ref, onChange } }) => (
+          <>
+            <Select
+              isMulti
+              ref={ref}
+              options={options}
+              onChange={val => onChange(val.map(i => i.id))}
+              getOptionLabel={option => option.name}
+              getOptionValue={option => option.id.toString()}
+            />
+            <ErrorMessage>
+              {errors?.productCategories! && 'Required Field'}
+            </ErrorMessage>
+          </>
+        )}
+      />
+      {/* <Select
+        {...register?.('productCategories', { required: 'Required' })}
         // defaultValue={options[0]}
         isMulti
         // name="colors"
         options={options}
+        // onChange={val => field.onChange(val)}
         getOptionLabel={option => option.name}
         getOptionValue={option => option.id.toString()}
         // className="basic-multi-select"
         // classNamePrefix="select"
-      />
+      /> */}
       <ButtonsContainer>
-        <AddButton onClick={() => setOpen(true)}>
+        <AddButton type="button" onClick={() => setOpen(true)}>
           <Icon>
             <BiPlus size={30} />
           </Icon>
@@ -76,4 +101,9 @@ const BtnText = styled.p`
   font-size: 0.9rem;
   font-weight: ${props => props.theme.font.regular};
   margin: 0 0.5rem;
+`;
+const ErrorMessage = styled.p`
+  font-size: 0.7rem;
+  padding-top: 0.25rem;
+  color: ${props => props.theme.dangerRed};
 `;

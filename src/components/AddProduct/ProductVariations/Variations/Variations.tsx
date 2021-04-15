@@ -10,9 +10,12 @@ const Variations = () => {
   const variations = [];
   return (
     <Container>
+      {/* If No Variations Show this */}
       {variations.length === 0 && (
         <NoVariations setNewVariationModalOpen={setNewVariationModalOpen} />
       )}
+
+      {/* New Variation Modal */}
       <CSSTransition
         in={newVariationModalOpen}
         timeout={100}

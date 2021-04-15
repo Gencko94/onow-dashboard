@@ -4,48 +4,93 @@ import styled from 'styled-components';
 import Toggle from 'react-toggle';
 import Select from 'react-select';
 import 'react-toggle/style.css';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { QUICK_ADD_CATEGORY } from '../../interfaces/categories/categories';
+import { useEffect, useState } from 'react';
 const AddCategoryModalBody = () => {
   const options = [
     { id: 1, name: 'Clothing' },
     { id: 2, name: 'Food' },
   ];
+  const {
+    register,
+    unregister,
+    control,
+    handleSubmit,
+    reset,
+    watch,
+    setValue,
+
+    formState: { errors },
+  } = useForm<QUICK_ADD_CATEGORY>();
+  const watchInput = watch('isChild', false);
+  const onSubmit: SubmitHandler<QUICK_ADD_CATEGORY> = data => {
+    console.log(data);
+  };
+  useEffect(() => {
+    if (!watchInput) {
+      unregister('parent_category');
+    }
+  }, [watchInput]);
   return (
-    <Container>
+    <Container onSubmit={handleSubmit(onSubmit)}>
       <InputsContainer>
         <div>
           <Label>Category Name English</Label>
-          <Input />
+          <Input {...register('name', { required: 'Required' })} />
+          <ErrorMessage>{errors?.name?.message}</ErrorMessage>
         </div>
         <div>
           <Label>Category Name Arabic</Label>
-          <Input />
+          <Input {...register('name_ar', { required: 'Required' })} />
+          <ErrorMessage>{errors?.name_ar?.message}</ErrorMessage>
         </div>
       </InputsContainer>
       <ToggleContainer>
-        <Toggle
-          id="cheese-status"
-          // defaultChecked={this.state.cheeseIsReady}
-          // onChange={this.handleCheeseChange}
+        <Controller
+          name="isChild"
+          control={control}
+          defaultValue={false}
+          render={({ field: { ref, onChange } }) => (
+            <Toggle onChange={e => onChange(e.target.checked)} />
+          )}
         />
+        {/* <Toggle
+          {...register('isChild')}
+
+          // id="cheese-status"
+          // checked={isChild}
+          // onChange={() => setIsChild(!isChild)}
+        /> */}
         <ToggleLabel htmlFor="cheese-status">Add as Category Child</ToggleLabel>
       </ToggleContainer>
-      <Select
-        placeholder="Select Parent Category..."
-        // defaultValue={options[0]}
-        isMulti
-        // name="colors"
-        options={options}
-        getOptionLabel={option => option.name}
-        getOptionValue={option => option.id.toString()}
-        // className="basic-multi-select"
-        // classNamePrefix="select"
-      />
+      {watchInput && (
+        <Controller
+          name="parent_category"
+          control={control}
+          rules={{ required: 'Required' }}
+          render={({ field: { ref, onChange } }) => (
+            <>
+              <Select
+                isMulti
+                ref={ref}
+                options={options}
+                onChange={val => onChange(val.map(i => i.id))}
+                getOptionLabel={option => option.name}
+                getOptionValue={option => option.id.toString()}
+                placeholder="Select Parent Category..."
+              />
+              <ErrorMessage>{errors?.parent_category?.message}</ErrorMessage>
+            </>
+          )}
+        />
+      )}
       <ButtonsContainer>
-        <Button>
+        <Button type="button" onClick={handleSubmit(onSubmit)}>
           <BsCheck size={30} />
           <BtnText>Add New Category</BtnText>
         </Button>
-        <Button red>
+        <Button red type="button">
           <MdCancel size={30} />
           <BtnText>Cancel</BtnText>
         </Button>
@@ -113,4 +158,9 @@ const ToggleContainer = styled.div`
 const ToggleLabel = styled.label`
   font-size: 0.9rem;
   margin: 0 0.5rem;
+`;
+const ErrorMessage = styled.p`
+  font-size: 0.7rem;
+  padding-top: 0.25rem;
+  color: ${props => props.theme.dangerRed};
 `;

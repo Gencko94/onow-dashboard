@@ -16,10 +16,16 @@ const AddProductTabs = ({ setActiveTab, activeTab }: IProps) => {
   return (
     <Container>
       {tabOptions.map((tab, i) => (
-        <ListItem onClick={() => setActiveTab(i)} active={activeTab === i}>
+        <ListItem
+          type="button"
+          onClick={() => setActiveTab(i)}
+          active={activeTab === i}
+        >
           {tab}
         </ListItem>
       ))}
+      <hr />
+      <button type="submit">Submit</button>
     </Container>
   );
 };

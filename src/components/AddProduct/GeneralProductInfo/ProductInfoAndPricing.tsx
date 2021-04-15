@@ -1,17 +1,22 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
+import { AddProductProvider } from '../../../pages/AddProduct';
 
 const ProductInfoAndPricing = () => {
+  const { register, errors } = useContext(AddProductProvider);
   return (
     <Container>
       <Title>Product Naming & Pricing</Title>
       <NameContainer>
         <InputContainer>
           <Label>Product Name English</Label>
-          <Input />
+          <Input {...register?.('name', { required: 'Required Field' })} />
+          <ErrorMessage>{errors?.name?.message}</ErrorMessage>
         </InputContainer>
         <InputContainer>
           <Label>Product Name Arabic</Label>
-          <Input />
+          <Input {...register?.('name_ar', { required: 'Required Field' })} />
+          <ErrorMessage>{errors?.name_ar?.message}</ErrorMessage>
         </InputContainer>
       </NameContainer>
       <hr />
@@ -19,9 +24,12 @@ const ProductInfoAndPricing = () => {
         <InputContainer>
           <Label>Product Price </Label>
           <PriceInputContainer>
-            <PriceInput />
+            <PriceInput
+              {...register?.('price', { required: 'Required Field' })}
+            />
             <Currency>KD</Currency>
           </PriceInputContainer>
+          <ErrorMessage>{errors?.price?.message}</ErrorMessage>
         </InputContainer>
       </PricingContainer>
     </Container>
@@ -80,4 +88,9 @@ const PriceInput = styled.input`
 const Currency = styled.p`
   padding: 0.5rem;
   font-size: 0.8rem;
+`;
+const ErrorMessage = styled.p`
+  font-size: 0.7rem;
+  padding-top: 0.25rem;
+  color: ${props => props.theme.dangerRed};
 `;

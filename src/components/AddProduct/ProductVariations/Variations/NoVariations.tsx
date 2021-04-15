@@ -10,6 +10,7 @@ const NoVariations = ({ setNewVariationModalOpen }: IProps) => {
     <Container>
       <NoVariationsText>No Variations Added </NoVariationsText>
       <AddButton
+        type="button"
         onClick={() => {
           setNewVariationModalOpen(true);
         }}

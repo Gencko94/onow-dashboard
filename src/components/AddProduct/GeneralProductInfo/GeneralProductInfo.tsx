@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import ProductCategory from './ProductCategory';
 import ProductDescription from './ProductDescription';
+import ProductImage from './ProductImage';
 import ProductInfoAndPricing from './ProductInfoAndPricing';
 
 const GeneralProductInfo = () => {
@@ -10,6 +11,8 @@ const GeneralProductInfo = () => {
       <hr />
       <ProductCategory />
 
+      <hr />
+      <ProductImage />
       <hr />
       <ProductDescription />
     </Container>

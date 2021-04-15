@@ -12,7 +12,7 @@ const Modal: React.FC<ModalProps> = ({ children, closeFunction, title }) => {
       <ModalContainer>
         <ModalHead>
           <ModalTitle>{title}</ModalTitle>
-          <CloseButton onClick={() => closeFunction()}>
+          <CloseButton type="button" onClick={() => closeFunction()}>
             <GrClose size={20} />
           </CloseButton>
         </ModalHead>

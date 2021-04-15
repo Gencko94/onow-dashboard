@@ -6,3 +6,15 @@ export type PRODUCT_TYPE = {
     [key: string]: string;
   };
 };
+export type SALE_TYPES = 'percent' | 'fixed';
+export interface NEW_PRODUCT {
+  name: string;
+  name_ar: string;
+  shortDescriptionEn: string;
+  shortDescriptionAr: string;
+  longDescriptionEn?: string;
+  longDescriptionAr?: string;
+  productCategories: number[];
+  price: string;
+  image: File[];
+}
