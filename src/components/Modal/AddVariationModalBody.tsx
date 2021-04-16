@@ -121,14 +121,15 @@ const InputsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  padding: 1rem;
 `;
 const ButtonsContainer = styled.div`
   display: flex;
-  padding-top: 1rem;
+  padding: 1rem;
   align-items: center;
   justify-content: space-between;
   border-top: ${props => props.theme.border};
+  background-color: ${props => props.theme.overlayColor};
 `;
 const Button = styled.button<{ red?: boolean }>`
   background-color: ${props =>

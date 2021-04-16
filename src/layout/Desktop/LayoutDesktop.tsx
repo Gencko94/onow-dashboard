@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import DesktopNavbar from '../../components/DesktopNavbar/DesktopNavbar';
 import Sidebar from '../../components/Sidebar/Sidebar';
+import Loading from '../../utils/Loading';
 
 const LayoutDesktop: React.FC = ({ children }) => {
   return (
-    <ContentContainer>
-      <Sidebar />
-      <Content>
-        <DesktopNavbar />
-        {children}
-      </Content>
-    </ContentContainer>
+    <Suspense fallback={<Loading />}>
+      <ContentContainer>
+        <Sidebar />
+        <Content>
+          <DesktopNavbar />
+          {children}
+        </Content>
+      </ContentContainer>
+    </Suspense>
   );
 };
 

@@ -3,6 +3,7 @@ import OrderThumbnail from './OrderThumbnail';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
+import { orderStatuses } from '../../../interfaces/orders/orders';
 SwiperCore.use([Navigation]);
 
 const breakpoints = {
@@ -26,7 +27,7 @@ const breakpoints = {
     spaceBetween: 0,
   },
   1100: {
-    slidesPerView: 6.5,
+    slidesPerView: 4.25,
     spaceBetween: 0,
   },
   1440: {
@@ -42,9 +43,9 @@ const OrdersThumbnails = () => {
         freeMode
         // navigation
       >
-        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 54, 89, 54, 56].map(i => (
-          <SwiperSlide key={i}>
-            <OrderThumbnail />
+        {orderStatuses.map(status => (
+          <SwiperSlide key={status.status_id}>
+            <OrderThumbnail status={status} />
           </SwiperSlide>
         ))}
       </Swiper>

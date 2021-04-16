@@ -33,6 +33,7 @@ const ModalContainer = styled.div`
   border-radius: 8px;
   box-shadow: ${props => props.theme.shadow};
   z-index: 999;
+  overflow: hidden;
   /* max-height: calc(100vh- 250px); */
   /* overflow-y: auto; */
 `;
@@ -41,10 +42,11 @@ const ModalHead = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: ${props => props.theme.overlayColor};
   border-bottom: ${props => props.theme.border};
 `;
 const ModalBody = styled.div`
-  padding: 1rem;
+  /* padding: 1rem; */
 `;
 const ModalTitle = styled.h5``;
 const Backdrop = styled.span`

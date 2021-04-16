@@ -18,6 +18,7 @@ import {
   UseFormSetValue,
 } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useLocation } from 'react-router';
 const GeneralProductInfo = lazy(
   () => import('../components/AddProduct/GeneralProductInfo/GeneralProductInfo')
 );
@@ -38,6 +39,7 @@ export const AddProductProvider = createContext<
   Partial<ADD_PRODUCT_CONTEXT_PROPS>
 >({});
 const AddProduct = () => {
+  const location = useLocation();
   const { t } = useTranslation();
 
   const {

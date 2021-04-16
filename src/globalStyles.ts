@@ -15,10 +15,11 @@ const GlobalStyle = createGlobalStyle`
   box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 10px;
 	background-color: #F5F5F5;
+
 }
 *::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 9px;
+  height: 9px;
 	background-color: #F5F5F5;
 }
 *::-webkit-scrollbar-thumb{
@@ -26,6 +27,11 @@ const GlobalStyle = createGlobalStyle`
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: #777;
+  transition: background 150ms ease;
+}
+*::-webkit-scrollbar-thumb:hover{
+ 
+	background-color: #999;
 }
 html {
   height: 100%;

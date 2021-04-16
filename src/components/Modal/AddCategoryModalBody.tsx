@@ -6,7 +6,7 @@ import Select from 'react-select';
 import 'react-toggle/style.css';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { QUICK_ADD_CATEGORY } from '../../interfaces/categories/categories';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 const AddCategoryModalBody = () => {
   const options = [
     { id: 1, name: 'Clothing' },
@@ -17,9 +17,7 @@ const AddCategoryModalBody = () => {
     unregister,
     control,
     handleSubmit,
-    reset,
     watch,
-    setValue,
 
     formState: { errors },
   } = useForm<QUICK_ADD_CATEGORY>();
@@ -31,9 +29,9 @@ const AddCategoryModalBody = () => {
     if (!watchInput) {
       unregister('parent_category');
     }
-  }, [watchInput]);
+  }, [unregister, watchInput]);
   return (
-    <Container onSubmit={handleSubmit(onSubmit)}>
+    <Container>
       <InputsContainer>
         <div>
           <Label>Category Name English</Label>
@@ -55,13 +53,7 @@ const AddCategoryModalBody = () => {
             <Toggle onChange={e => onChange(e.target.checked)} />
           )}
         />
-        {/* <Toggle
-          {...register('isChild')}
 
-          // id="cheese-status"
-          // checked={isChild}
-          // onChange={() => setIsChild(!isChild)}
-        /> */}
         <ToggleLabel htmlFor="cheese-status">Add as Category Child</ToggleLabel>
       </ToggleContainer>
       {watchInput && (
@@ -106,9 +98,11 @@ const Container = styled.div`
 `;
 const ButtonsContainer = styled.div`
   display: flex;
-  margin-top: 1rem;
+  padding: 1rem;
   align-items: center;
   justify-content: space-between;
+  border-top: ${props => props.theme.border};
+  background-color: ${props => props.theme.overlayColor};
 `;
 const Button = styled.button<{ red?: boolean }>`
   background-color: ${props =>
@@ -125,7 +119,7 @@ const InputsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  padding: 1rem;
 `;
 
 const BtnText = styled.p`

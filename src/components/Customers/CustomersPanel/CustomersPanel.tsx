@@ -1,10 +1,13 @@
+import { Dispatch, SetStateAction } from 'react';
 import { BiPlus } from 'react-icons/bi';
 import styled from 'styled-components';
-
-const CustomersPanel = () => {
+interface IProps {
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+}
+const CustomersPanel = ({ setModalOpen }: IProps) => {
   return (
     <Container>
-      <button className="addBtn">
+      <button onClick={() => setModalOpen(true)} className="addBtn">
         <Icon>
           <BiPlus size={30} />
         </Icon>

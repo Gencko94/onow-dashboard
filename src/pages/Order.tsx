@@ -1,7 +1,15 @@
 import styled from 'styled-components';
+import OrderInfo from '../components/Order/OrderInfo/OrderInfo';
+import OrderPanel from '../components/Order/OrderPanel/OrderPanel';
 
 const Order = () => {
-  return <Container></Container>;
+  return (
+    <Container>
+      <OrderPanel />
+      <hr />
+      <OrderInfo />
+    </Container>
+  );
 };
 
 export default Order;
