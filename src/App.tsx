@@ -65,7 +65,7 @@ function App() {
                       />
                       <Route
                         exact
-                        path="/products/add"
+                        path="/products/new/:type"
                         component={AddProduct}
                       />
                     </Switch>

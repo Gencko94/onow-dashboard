@@ -40,6 +40,7 @@ export const AddProductProvider = createContext<
 >({});
 const AddProduct = () => {
   const location = useLocation();
+
   const { t } = useTranslation();
 
   const {
@@ -63,6 +64,7 @@ const AddProduct = () => {
   return (
     <Container>
       {/* <AddProductPanel /> */}
+      {location.state}
       <FormGrid onSubmit={handleSubmit(onSubmit, onError)}>
         <AddProductProvider.Provider
           value={{ register, errors, control, setValue }}

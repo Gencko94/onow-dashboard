@@ -46,9 +46,7 @@ const ProductsPanel = () => {
         <ClickAwayListener onClickAway={() => setOptionsMenuOpen(false)}>
           <OptionsList>
             <MenuItem
-              onClick={() =>
-                history.push({ pathname: '/products/add', state: 'food' })
-              }
+              onClick={() => history.push({ pathname: '/products/new/food' })}
             >
               <Icon>
                 <GiFrenchFries size={20} />
@@ -59,9 +57,7 @@ const ProductsPanel = () => {
               </OptionNameContainer>
             </MenuItem>
             <MenuItem
-              onClick={() =>
-                history.push({ pathname: '/products/add', state: 'ready' })
-              }
+              onClick={() => history.push({ pathname: '/products/new/ready' })}
             >
               <Icon>
                 <GoPackage size={20} />

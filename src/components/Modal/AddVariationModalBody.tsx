@@ -5,90 +5,126 @@ import styled from 'styled-components';
 import Select from 'react-select';
 import { useState } from 'react';
 import NewVariationField from '../AddVariationModalBody/NewVariationField';
+import {
+  Controller,
+  FormProvider,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from 'react-hook-form';
+import { NEW_VARIATION } from '../../interfaces/products/products';
 const options = [
-  { id: 1, name: 'Color' },
-  { id: 2, name: 'Text' },
-  { id: 3, name: 'Photo' },
+  { id: 1, name: 'Color (Single Select)' },
+  { id: 2, name: 'Color (Multiple Select)' },
+  { id: 3, name: 'Text (Single Select)' },
+  { id: 4, name: 'Text (Multiple Select)' },
+  { id: 5, name: 'Photo (Single Select)' },
+  { id: 6, name: 'Photo (Multiple Select)' },
 ];
 const AddVariationModalBody = () => {
+  const methods = useForm<NEW_VARIATION>();
   const [variationType, setVariationType] = useState<{
     id: number;
     name: string;
   } | null>(null);
-  const [newVariationsIndeces, setNewVariationsIndeces] = useState<number[]>([
-    0,
-  ]);
 
+  const { fields, append, remove } = useFieldArray({
+    control: methods.control,
+    name: 'values',
+  });
   const renderFields = () => {
-    let arr = [];
-    for (let i = 0; i < newVariationsIndeces.length; i++) {
-      arr.push(
-        <NewVariationField
-          key={newVariationsIndeces[i]}
-          index={newVariationsIndeces[i]}
-          variationType={variationType}
-          setNewVariationsIndeces={setNewVariationsIndeces}
-          newVariationsIndeces={newVariationsIndeces}
-        />
-      );
-    }
-    return arr;
+    return fields.map((field, index) => (
+      <NewVariationField
+        key={field.id}
+        index={index}
+        remove={remove}
+        length={fields.length}
+        variationType={variationType}
+      />
+    ));
   };
-
+  const onSubmit: SubmitHandler<NEW_VARIATION> = data => {
+    console.log(data);
+  };
   return (
     <Container>
-      <InputsContainer>
-        <div>
-          <Label>Variation Title English</Label>
-          <Input placeholder="Size/Color..." />
-        </div>
-        <div>
-          <Label>Variation Title Arabic</Label>
-          <Input placeholder="Size/Color..." />
-        </div>
-        <div>
-          <Label>Variation Type</Label>
-          <Select
-            placeholder="Select Variation Type..."
-            options={options}
-            value={variationType}
-            isSearchable={false}
-            getOptionLabel={option => option.name}
-            getOptionValue={option => option.id.toString()}
-            onChange={value => {
-              setVariationType(value!);
-            }}
-          />
-        </div>
-      </InputsContainer>
+      <FormProvider {...methods}>
+        <InputsContainer>
+          <div>
+            <Label>Variation Title English</Label>
+            <Input
+              placeholder="Size/Color..."
+              {...methods.register('title', { required: 'Required' })}
+            />
+            <ErrorMessage>
+              {methods.formState.errors?.title! && 'Required Field'}
+            </ErrorMessage>
+          </div>
+          <div>
+            <Label>Variation Title Arabic</Label>
+            <Input
+              placeholder="Size/Color..."
+              {...methods.register('title_ar', { required: 'Required' })}
+            />
+            <ErrorMessage>
+              {methods.formState.errors?.title_ar! && 'Required Field'}
+            </ErrorMessage>
+          </div>
+          <div>
+            <Label>Variation Type</Label>
+            <Controller
+              name="type_id"
+              control={methods.control}
+              rules={{ required: 'Required' }}
+              render={({ field: { ref, onChange } }) => (
+                <>
+                  <Select
+                    placeholder="Select Variation Type..."
+                    options={options}
+                    value={variationType}
+                    isSearchable={false}
+                    getOptionLabel={option => option.name}
+                    getOptionValue={option => option.id.toString()}
+                    onChange={value => {
+                      if (fields.length === 0) {
+                        append({});
+                      }
+                      onChange(value?.id);
+                      setVariationType(value!);
+                    }}
+                  />
+                  <ErrorMessage>
+                    {methods.formState.errors?.type_id! && 'Required Field'}
+                  </ErrorMessage>
+                </>
+              )}
+            />
+          </div>
+        </InputsContainer>
 
-      <FieldsContainer>
-        {/* <NewVariationField variationType={variationType} /> */}
-        {renderFields()}
-      </FieldsContainer>
-      <AddButtonContainer>
-        <Button
-          type="button"
-          onClick={() => {
-            setNewVariationsIndeces(prev => {
-              return [...prev, prev[prev.length - 1] + 1];
-            });
-          }}
-        >
-          <BiPlus size={30} />
-          <BtnText>Add Field</BtnText>
-        </Button>
-      </AddButtonContainer>
-      <ButtonsContainer>
-        <Button type="button">
-          <BsCheck size={30} />
-          <BtnText>Add Variation</BtnText>
-        </Button>
-        <Button red type="button">
-          <MdCancel size={30} />
-          <BtnText>Cancel</BtnText>
-        </Button>
-      </ButtonsContainer>
+        <FieldsContainer>{renderFields()}</FieldsContainer>
+        <AddButtonContainer>
+          <Button
+            type="button"
+            onClick={() => {
+              append({});
+            }}
+          >
+            <BiPlus size={30} />
+            <BtnText>Add Field</BtnText>
+          </Button>
+        </AddButtonContainer>
+        <ButtonsContainer>
+          <Button type="button" onClick={methods.handleSubmit(onSubmit)}>
+            <BsCheck size={30} />
+            <BtnText>Add Variation</BtnText>
+          </Button>
+          <Button red type="button">
+            <MdCancel size={30} />
+            <BtnText>Cancel</BtnText>
+          </Button>
+        </ButtonsContainer>
+      </FormProvider>
     </Container>
   );
 };
@@ -158,4 +194,9 @@ const AddButtonContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin: 1rem 0;
+`;
+const ErrorMessage = styled.p`
+  font-size: 0.7rem;
+  padding-top: 0.25rem;
+  color: ${props => props.theme.dangerRed};
 `;
