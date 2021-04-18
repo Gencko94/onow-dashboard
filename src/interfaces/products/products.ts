@@ -22,6 +22,8 @@ export interface NEW_PRODUCT {
   saleEndDateEnabled: boolean;
   priceFromVariations: boolean;
   productVariationsEnabled: boolean;
+  allowSideNotes: boolean;
+  maxQtyPerUser: number;
   image: File[];
 }
 export interface NEW_VARIATION {
@@ -29,6 +31,7 @@ export interface NEW_VARIATION {
   select_type: number;
   title: string;
   title_ar: string;
+  required: number;
   values: VARIATION_VALUE[];
 }
 
@@ -42,4 +45,7 @@ export type VARIATION_VALUE = {
   sale_price: string;
   sale_end_date: string;
   color: string;
+  qty: number;
+  infiniteQtyEnabled: boolean;
+  qtyAlertThreshold: number;
 };

@@ -9,7 +9,7 @@ const tabOptions = [
   'General Product Info',
   'Product Details',
   'Product Variations & Pricing',
-  'Quantity Managment',
+  'Ordering Options',
   'Additional Settings',
 ];
 const AddProductTabs = ({ setActiveTab, activeTab }: IProps) => {

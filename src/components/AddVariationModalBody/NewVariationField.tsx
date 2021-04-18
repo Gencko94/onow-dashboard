@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { RiDeleteBinLine } from 'react-icons/ri';
+import { RiDeleteBinLine, RiHandCoinFill } from 'react-icons/ri';
 import { MdSubtitles } from 'react-icons/md';
 import { IoColorPaletteOutline, IoPricetagsOutline } from 'react-icons/io5';
 import Calendar from 'react-calendar';
@@ -16,14 +16,14 @@ import {
 import { FiCalendar } from 'react-icons/fi';
 import { CSSTransition } from 'react-transition-group';
 import ClickAwayListener from 'react-click-away-listener';
-import { BiChevronDown } from 'react-icons/bi';
-import { AiOutlinePercentage } from 'react-icons/ai';
+import { BiChevronDown, BiInfinite } from 'react-icons/bi';
+import { AiOutlineAlert, AiOutlinePercentage } from 'react-icons/ai';
 import { NEW_VARIATION, SALE_TYPES } from '../../interfaces/products/products';
 import { Controller, FieldArrayWithId, useFormContext } from 'react-hook-form';
 import { SketchPicker } from 'react-color';
 
 interface IProps {
-  variationType: any;
+  variationType: number;
   field: FieldArrayWithId<NEW_VARIATION, 'values', 'id'>;
   index: number;
   length: number;
@@ -55,6 +55,10 @@ const NewVariationField = ({
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
   const color = watch(`values.${index}.color` as const);
 
+  const infiniteQtyEnabled = watch(
+    `values.${index}.infiniteQtyEnabled` as const
+  );
+  const qty = watch(`values.${index}.qty` as const);
   const priceEnabled = watch(`values.${index}.priceEnabled` as const);
   const saleEnabled = watch(`values.${index}.saleEnabled` as const);
   const saleEndDateEnabled = watch(
@@ -63,7 +67,7 @@ const NewVariationField = ({
 
   return (
     <Container>
-      <InputsContainer>
+      <InputsContainer type={variationType}>
         <div>
           <Label> Value Title English</Label>
           <IconedInputContainer>
@@ -74,7 +78,6 @@ const NewVariationField = ({
               defaultValue={field.name}
               {...register(`values.${index}.name` as const, {
                 required: 'Required Field',
-                validate: value => value === '1',
               })}
             />
           </IconedInputContainer>
@@ -99,7 +102,7 @@ const NewVariationField = ({
             {errors?.values?.[index]?.name_ar?.message}
           </ErrorMessage>
         </div>
-        {variationType?.id === 2 && (
+        {variationType === 2 && (
           <div>
             <Label>Color</Label>
             <IconedInputContainer>
@@ -199,6 +202,9 @@ const NewVariationField = ({
 
             <Currency>KD</Currency>
           </IconedInputContainer>
+          {/* <p style={{ fontSize: '0.7rem' }}>
+            Price Will be added on top of the product price
+          </p> */}
           <ErrorMessage>{errors?.values?.[index]?.price?.message}</ErrorMessage>
         </div>
         <div>
@@ -343,6 +349,78 @@ const NewVariationField = ({
       </PricingContainer>
       <InputsContainer>
         <div>
+          <Label> Quantity</Label>
+          <IconedInputContainer>
+            <Icon>
+              <RiHandCoinFill size={15} />
+            </Icon>
+            <Input
+              {...register(`values.${index}.qty` as const, {
+                required: infiniteQtyEnabled ? false : 'Required',
+                pattern: /^[0-9]*$/,
+              })}
+              type="number"
+              placeholder={
+                infiniteQtyEnabled ? 'Infinite Quantity' : 'Enter Quantity'
+              }
+              disabled={infiniteQtyEnabled}
+            />
+            <Controller
+              name={`values.${index}.infiniteQtyEnabled` as const}
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <EnabledContainer
+                  type="button"
+                  onClick={() => {
+                    if (value === true) {
+                      onChange(false);
+                    } else {
+                      onChange(true);
+                    }
+                  }}
+                  enabled={infiniteQtyEnabled}
+                >
+                  <BiInfinite color="#fff" size={15} />
+                </EnabledContainer>
+              )}
+            />
+          </IconedInputContainer>
+          <ErrorMessage>{errors?.values?.[index]?.qty?.message}</ErrorMessage>
+        </div>
+        <div>
+          <Label>Alert me when Quantity Reaches</Label>
+          <IconedInputContainer>
+            <Icon>
+              <AiOutlineAlert size={15} />
+            </Icon>
+            <Input
+              {...register(`values.${index}.qtyAlertThreshold` as const, {
+                validate: {
+                  moreThanQty: value => {
+                    console.log(qty);
+                    console.log(value);
+                    if (!qty) {
+                      return true;
+                    } else if (value === 0) {
+                      return true;
+                    } else if (value <= qty) {
+                      return 'smaller';
+                    }
+                    return 'More Than Quantity';
+                  },
+                },
+              })}
+              type="number"
+              disabled={infiniteQtyEnabled}
+            />
+          </IconedInputContainer>
+          <ErrorMessage>
+            {errors?.values?.[index]?.qtyAlertThreshold?.message}
+          </ErrorMessage>
+        </div>
+      </InputsContainer>
+      <InputsContainer>
+        <div>
           <Label> Barcode</Label>
           <IconedInputContainer>
             <Input />
@@ -427,9 +505,10 @@ const PricingContainer = styled.div`
   gap: 0.75rem;
   margin: 0.5rem 0;
 `;
-const InputsContainer = styled.div`
+const InputsContainer = styled.div<{ type?: number }>`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: ${props =>
+    props.type === 2 ? '1fr 1fr 1fr' : '1fr 1fr'};
   gap: 0.75rem;
 `;
 const DelIcon = styled.button`
@@ -484,6 +563,9 @@ const SaleType = styled.p`
 const EnabledContainer = styled.button<{ enabled: boolean }>`
   padding: 0.5rem;
   font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: ${props =>
     props.enabled ? props.theme.dangerRed : props.theme.green};
 

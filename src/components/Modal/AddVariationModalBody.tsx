@@ -15,7 +15,7 @@ import {
 } from 'react-hook-form';
 import { NEW_VARIATION } from '../../interfaces/products/products';
 import { AddProductProvider } from '../../pages/AddProduct';
-import { watch } from 'fs';
+
 const variationTypes = [
   { id: 1, name: 'Text' },
   { id: 2, name: 'Color' },
@@ -32,6 +32,10 @@ const AddVariationModalBody = ({
 }) => {
   const methods = useForm<NEW_VARIATION>({
     defaultValues: {
+      required: priceFromVariationsEnabled ? 1 : 0,
+      select_type: 1,
+      type_id: 1,
+
       values: [
         {
           name: '',
@@ -39,21 +43,24 @@ const AddVariationModalBody = ({
           priceEnabled: priceFromVariationsEnabled ? true : false,
           saleEnabled: false,
           saleEndDateEnabled: false,
+          color: '#555',
+          infiniteQtyEnabled: true,
+          qtyAlertThreshold: 0,
         },
       ],
     },
   });
   const { handleAddVariations } = useContext(AddProductProvider);
-  const [variationType, setVariationType] = useState<{
-    id: number;
-    name: string;
-  } | null>(null);
+  // const [variationType, setVariationType] = useState<{
+  //   id: number;
+  //   name: string;
+  // } | null>(null);
 
   const { fields, append, remove } = useFieldArray({
     control: methods.control,
     name: 'values',
   });
-
+  const variationType = methods.watch('type_id');
   // Select Styles
   const selectStyles = useMemo(() => {
     return {
@@ -132,7 +139,7 @@ const AddVariationModalBody = ({
                     styles={selectStyles}
                     placeholder="Select Variation Type..."
                     options={variationTypes}
-                    value={variationType}
+                    defaultValue={variationTypes[0]}
                     isSearchable={false}
                     getOptionLabel={option => option.name}
                     getOptionValue={option => option.id.toString()}
@@ -141,7 +148,6 @@ const AddVariationModalBody = ({
                         append({ name: 'test555' });
                       }
                       onChange(value?.id);
-                      setVariationType(value!);
                     }}
                   />
                   <ErrorMessage>
@@ -157,23 +163,55 @@ const AddVariationModalBody = ({
               name="select_type"
               control={methods.control}
               rules={{ required: 'Required' }}
-              render={({ field: { ref, onChange } }) => (
+              render={({ field: { ref, onChange, value } }) => (
                 <>
                   <Select
                     ref={ref}
                     styles={selectStyles}
                     placeholder="User Select Type"
                     options={selectTypes}
-                    value={variationType}
+                    defaultValue={selectTypes[0]}
                     isSearchable={false}
                     getOptionLabel={option => option.name}
                     getOptionValue={option => option.id.toString()}
                     onChange={value => {
-                      // if (fields.length === 0) {
-                      //   append({ name: 'test555' });
-                      // }
                       onChange(value?.id);
-                      // setVariationType(value!);
+                    }}
+                  />
+                  <ErrorMessage>
+                    {methods.formState.errors?.select_type! && 'Required Field'}
+                  </ErrorMessage>
+                </>
+              )}
+            />
+          </div>
+          <div>
+            <Label>Required</Label>
+            <Controller
+              name="required"
+              control={methods.control}
+              // rules={{ required: 'Required' }}
+              render={({ field: { ref, onChange, value } }) => (
+                <>
+                  <Select
+                    ref={ref}
+                    styles={selectStyles}
+                    placeholder="User Select Type"
+                    options={[
+                      { id: 0, name: 'No' },
+                      { id: 1, name: 'Yes' },
+                    ]}
+                    defaultValue={
+                      priceFromVariationsEnabled
+                        ? { id: 1, name: 'Yes' }
+                        : { id: 0, name: 'No' }
+                    }
+                    isDisabled={priceFromVariationsEnabled}
+                    isSearchable={false}
+                    getOptionLabel={option => option.name}
+                    getOptionValue={option => option.id.toString()}
+                    onChange={value => {
+                      onChange(value?.id);
                     }}
                   />
                   <ErrorMessage>

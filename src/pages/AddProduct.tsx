@@ -11,6 +11,7 @@ import {
   useForm,
 } from 'react-hook-form';
 import { useLocation } from 'react-router';
+import OrderingOptions from '../components/AddProduct/OrderingOptions/OrderingOptions';
 const GeneralProductInfo = lazy(
   () => import('../components/AddProduct/GeneralProductInfo/GeneralProductInfo')
 );
@@ -36,7 +37,11 @@ const AddProduct = () => {
 
   const { t } = useTranslation();
 
-  const methods = useForm<NEW_PRODUCT>();
+  const methods = useForm<NEW_PRODUCT>({
+    defaultValues: {
+      maxQtyPerUser: 5,
+    },
+  });
   const [productType, setProductType] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
   const [variations, setVariations] = useState<NEW_VARIATION[]>([]);
@@ -58,7 +63,7 @@ const AddProduct = () => {
   return (
     <Container>
       {/* <AddProductPanel /> */}
-      {location.state}
+
       <FormGrid onSubmit={methods.handleSubmit(onSubmit, onError)}>
         <FormProvider {...methods}>
           <AddProductProvider.Provider
@@ -68,6 +73,7 @@ const AddProduct = () => {
               {activeTab === 0 && <GeneralProductInfo />}
               {activeTab === 1 && <ProductDetails />}
               {activeTab === 2 && <ProductVariationsAndPricing />}
+              {activeTab === 3 && <OrderingOptions />}
             </Suspense>
           </AddProductProvider.Provider>
         </FormProvider>
