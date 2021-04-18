@@ -1,10 +1,14 @@
-import { useContext } from 'react';
+import { useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
-import { AddProductProvider } from '../../../pages/AddProduct';
+import { NEW_PRODUCT } from '../../../interfaces/products/products';
 import FileUploader from '../../../utils/FileUploader';
 
 const ProductImage = () => {
-  const { errors, control, setValue } = useContext(AddProductProvider);
+  const {
+    formState: { errors },
+    control,
+    setValue,
+  } = useFormContext<NEW_PRODUCT>();
 
   return (
     <Container>

@@ -16,7 +16,7 @@ const NoVariations = ({ setNewVariationModalOpen }: IProps) => {
         }}
       >
         <Icon>
-          <BiPlus size={30} />
+          <BiPlus size={20} />
         </Icon>
         <BtnText>Add New Variation</BtnText>
       </AddButton>
@@ -26,13 +26,16 @@ const NoVariations = ({ setNewVariationModalOpen }: IProps) => {
 
 export default NoVariations;
 const Container = styled.div`
-  height: calc(100vh - 200px);
+  height: calc(100vh - 480px);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  border: ${props => props.theme.border};
+  border-radius: 6px;
+  background-color: ${props => props.theme.overlayColor};
 `;
-const NoVariationsText = styled.h5`
+const NoVariationsText = styled.h6`
   margin-bottom: 1rem;
 `;
 const AddButton = styled.button`
@@ -40,7 +43,7 @@ const AddButton = styled.button`
   box-shadow: ${props => props.theme.shadow};
   border-radius: 7px;
   position: relative;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 0.75rem;
   color: #fff;
   display: flex;
   align-items: center;
@@ -50,8 +53,8 @@ const Icon = styled.span`
   align-items: center;
   justify-content: center;
   padding: 0.25rem;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.5);
 `;

@@ -16,10 +16,17 @@ export interface NEW_PRODUCT {
   longDescriptionAr?: string;
   productCategories: number[];
   price: string;
+  saleEnabled: boolean;
+  salePrice: string;
+  saleEndDate: string;
+  saleEndDateEnabled: boolean;
+  priceFromVariations: boolean;
+  productVariationsEnabled: boolean;
   image: File[];
 }
 export interface NEW_VARIATION {
   type_id: number;
+  select_type: number;
   title: string;
   title_ar: string;
   values: VARIATION_VALUE[];
@@ -28,7 +35,11 @@ export interface NEW_VARIATION {
 export type VARIATION_VALUE = {
   name: string;
   name_ar: string;
-  price: string | null;
-  sale_price: string | null;
-  sale_end_date: string | null;
+  priceEnabled: boolean;
+  saleEnabled: boolean;
+  saleEndDateEnabled: boolean;
+  price: string;
+  sale_price: string;
+  sale_end_date: string;
+  color: string;
 };

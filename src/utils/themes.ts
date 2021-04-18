@@ -4,7 +4,7 @@ export const lightTheme = {
   inputColorLight: '#ececec',
   overlayColor: '#FBFBFB',
   headingColor: '#373737',
-  subHeading: '#a0a0a0',
+  subHeading: '#6a737a',
   textColor: 'rgba(15,15,15,.7)',
   shadow: '0px 4px 7px 2px rgb(213,213,213)',
   highlightColor: '#fbfbfb',

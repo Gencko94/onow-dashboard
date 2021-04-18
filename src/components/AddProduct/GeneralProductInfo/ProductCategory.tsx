@@ -1,23 +1,25 @@
 import styled from 'styled-components';
 import Select from 'react-select';
 import { BiPlus } from 'react-icons/bi';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import Modal from '../../Modal/Modal';
 import AddCategoryModalBody from '../../Modal/AddCategoryModalBody';
 import { CSSTransition } from 'react-transition-group';
-import ClickAwayListener from 'react-click-away-listener';
-import { AddProductProvider } from '../../../pages/AddProduct';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
+import { NEW_PRODUCT } from '../../../interfaces/products/products';
 const options = [
   { id: 1, name: 'Clothing' },
   { id: 2, name: 'Food' },
 ];
 const ProductCategory = () => {
-  const { errors, control, register } = useContext(AddProductProvider);
+  const {
+    formState: { errors },
+    control,
+  } = useFormContext<NEW_PRODUCT>();
   const [open, setOpen] = useState(false);
   return (
     <Container>
-      <Title>Product Category</Title>
+      <h5 className="title">Product Category</h5>
       <Controller
         name="productCategories"
         control={control}
@@ -68,11 +70,16 @@ const ProductCategory = () => {
 };
 
 export default ProductCategory;
-const Container = styled.div``;
-const Title = styled.h6`
-  margin-bottom: 0.5rem;
-  font-weight: ${props => props.theme.font.xbold};
+const Container = styled.div`
+  margin-bottom: 2rem;
+  .title {
+    margin-bottom: 1rem;
+    font-weight: ${props => props.theme.font.bold};
+    border-bottom: ${props => props.theme.border};
+    padding-bottom: 0.5rem;
+  }
 `;
+
 const ButtonsContainer = styled.div`
   padding: 0.5rem 0;
 `;

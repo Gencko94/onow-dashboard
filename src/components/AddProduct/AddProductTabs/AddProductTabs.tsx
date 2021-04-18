@@ -8,7 +8,7 @@ interface IProps {
 const tabOptions = [
   'General Product Info',
   'Product Details',
-  'Product Variations',
+  'Product Variations & Pricing',
   'Quantity Managment',
   'Additional Settings',
 ];
@@ -41,7 +41,8 @@ const ListContainer = styled.div``;
 const ListItem = styled.button<{ active?: boolean }>`
   width: 100%;
   padding: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
   text-align: center;
   border-radius: 5px;
   background: ${props =>

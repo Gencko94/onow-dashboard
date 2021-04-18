@@ -3,26 +3,47 @@ import { BiPlus } from 'react-icons/bi';
 import { MdCancel } from 'react-icons/md';
 import styled from 'styled-components';
 import Select from 'react-select';
-import { useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import NewVariationField from '../AddVariationModalBody/NewVariationField';
 import {
   Controller,
   FormProvider,
+  SubmitErrorHandler,
   SubmitHandler,
   useFieldArray,
   useForm,
 } from 'react-hook-form';
 import { NEW_VARIATION } from '../../interfaces/products/products';
-const options = [
-  { id: 1, name: 'Color (Single Select)' },
-  { id: 2, name: 'Color (Multiple Select)' },
-  { id: 3, name: 'Text (Single Select)' },
-  { id: 4, name: 'Text (Multiple Select)' },
-  { id: 5, name: 'Photo (Single Select)' },
-  { id: 6, name: 'Photo (Multiple Select)' },
+import { AddProductProvider } from '../../pages/AddProduct';
+import { watch } from 'fs';
+const variationTypes = [
+  { id: 1, name: 'Text' },
+  { id: 2, name: 'Color' },
+  { id: 3, name: 'Photo' },
 ];
-const AddVariationModalBody = () => {
-  const methods = useForm<NEW_VARIATION>();
+const selectTypes = [
+  { id: 1, name: 'Single Select' },
+  { id: 2, name: 'Multiple Select' },
+];
+const AddVariationModalBody = ({
+  priceFromVariationsEnabled,
+}: {
+  priceFromVariationsEnabled: boolean;
+}) => {
+  const methods = useForm<NEW_VARIATION>({
+    defaultValues: {
+      values: [
+        {
+          name: '',
+          name_ar: '',
+          priceEnabled: priceFromVariationsEnabled ? true : false,
+          saleEnabled: false,
+          saleEndDateEnabled: false,
+        },
+      ],
+    },
+  });
+  const { handleAddVariations } = useContext(AddProductProvider);
   const [variationType, setVariationType] = useState<{
     id: number;
     name: string;
@@ -32,6 +53,28 @@ const AddVariationModalBody = () => {
     control: methods.control,
     name: 'values',
   });
+
+  // Select Styles
+  const selectStyles = useMemo(() => {
+    return {
+      control: (provided: any, state: any) => ({
+        ...provided,
+        backgroundColor: '#ececec',
+        fontSize: '0.9rem',
+        minHeight: '35px',
+        border: state.isFocused ? 'none' : '1px solid rgba(0,0,0,0.1)',
+      }),
+      indicatorContainer: (provided: any, state: any) => ({
+        ...provided,
+        padding: state.isFocused ? '0.4rem' : '0.4rem',
+      }),
+      option: (provided: any) => ({
+        ...provided,
+        fontSize: '0.9rem',
+      }),
+    };
+  }, []);
+  // Fields Render Method
   const renderFields = () => {
     return fields.map((field, index) => (
       <NewVariationField
@@ -40,11 +83,17 @@ const AddVariationModalBody = () => {
         remove={remove}
         length={fields.length}
         variationType={variationType}
+        field={field}
+        priceFromVariationsEnabled={priceFromVariationsEnabled}
       />
     ));
   };
   const onSubmit: SubmitHandler<NEW_VARIATION> = data => {
     console.log(data);
+    handleAddVariations?.(data);
+  };
+  const onError: SubmitErrorHandler<NEW_VARIATION> | undefined = errors => {
+    console.log(errors);
   };
   return (
     <Container>
@@ -79,15 +128,17 @@ const AddVariationModalBody = () => {
               render={({ field: { ref, onChange } }) => (
                 <>
                   <Select
+                    ref={ref}
+                    styles={selectStyles}
                     placeholder="Select Variation Type..."
-                    options={options}
+                    options={variationTypes}
                     value={variationType}
                     isSearchable={false}
                     getOptionLabel={option => option.name}
                     getOptionValue={option => option.id.toString()}
                     onChange={value => {
                       if (fields.length === 0) {
-                        append({});
+                        append({ name: 'test555' });
                       }
                       onChange(value?.id);
                       setVariationType(value!);
@@ -100,14 +151,50 @@ const AddVariationModalBody = () => {
               )}
             />
           </div>
+          <div>
+            <Label>Select Type</Label>
+            <Controller
+              name="select_type"
+              control={methods.control}
+              rules={{ required: 'Required' }}
+              render={({ field: { ref, onChange } }) => (
+                <>
+                  <Select
+                    ref={ref}
+                    styles={selectStyles}
+                    placeholder="User Select Type"
+                    options={selectTypes}
+                    value={variationType}
+                    isSearchable={false}
+                    getOptionLabel={option => option.name}
+                    getOptionValue={option => option.id.toString()}
+                    onChange={value => {
+                      // if (fields.length === 0) {
+                      //   append({ name: 'test555' });
+                      // }
+                      onChange(value?.id);
+                      // setVariationType(value!);
+                    }}
+                  />
+                  <ErrorMessage>
+                    {methods.formState.errors?.type_id! && 'Required Field'}
+                  </ErrorMessage>
+                </>
+              )}
+            />
+          </div>
         </InputsContainer>
 
+        {/* {fields.length > 0 && ( */}
         <FieldsContainer>{renderFields()}</FieldsContainer>
+        {/* )} */}
         <AddButtonContainer>
           <Button
             type="button"
             onClick={() => {
-              append({});
+              append({
+                priceEnabled: priceFromVariationsEnabled ? true : false,
+              });
             }}
           >
             <BiPlus size={30} />
@@ -115,7 +202,10 @@ const AddVariationModalBody = () => {
           </Button>
         </AddButtonContainer>
         <ButtonsContainer>
-          <Button type="button" onClick={methods.handleSubmit(onSubmit)}>
+          <Button
+            type="button"
+            onClick={methods.handleSubmit(onSubmit, onError)}
+          >
             <BsCheck size={30} />
             <BtnText>Add Variation</BtnText>
           </Button>
@@ -134,7 +224,6 @@ const Container = styled.div`
   width: 900px;
   max-height: calc(100vh - 100px);
   overflow: auto;
-  padding: 0 0.5rem;
 `;
 const Label = styled.label`
   color: ${({ theme }) => theme.headingColor};
@@ -155,7 +244,7 @@ const Input = styled.input`
 `;
 const InputsContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 0.5rem;
   padding: 1rem;
 `;

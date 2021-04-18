@@ -5,7 +5,11 @@ import AddVariationModalBody from '../../../Modal/AddVariationModalBody';
 import Modal from '../../../Modal/Modal';
 import NoVariations from './NoVariations';
 
-const Variations = () => {
+const Variations = ({
+  priceFromVariationsEnabled,
+}: {
+  priceFromVariationsEnabled: boolean;
+}) => {
   const [newVariationModalOpen, setNewVariationModalOpen] = useState(false);
   const variations = [];
   return (
@@ -26,7 +30,9 @@ const Variations = () => {
           title="Add Variation"
           closeFunction={() => setNewVariationModalOpen(false)}
         >
-          <AddVariationModalBody />
+          <AddVariationModalBody
+            priceFromVariationsEnabled={priceFromVariationsEnabled}
+          />
         </Modal>
       </CSSTransition>
     </Container>

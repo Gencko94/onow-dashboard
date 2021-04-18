@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { MdSubtitles } from 'react-icons/md';
-import { IoPricetagsOutline } from 'react-icons/io5';
+import { IoColorPaletteOutline, IoPricetagsOutline } from 'react-icons/io5';
 import Calendar from 'react-calendar';
 import { format } from 'date-fns';
 
@@ -19,13 +19,16 @@ import ClickAwayListener from 'react-click-away-listener';
 import { BiChevronDown } from 'react-icons/bi';
 import { AiOutlinePercentage } from 'react-icons/ai';
 import { NEW_VARIATION, SALE_TYPES } from '../../interfaces/products/products';
-import { useFormContext } from 'react-hook-form';
+import { Controller, FieldArrayWithId, useFormContext } from 'react-hook-form';
+import { SketchPicker } from 'react-color';
+
 interface IProps {
   variationType: any;
-
+  field: FieldArrayWithId<NEW_VARIATION, 'values', 'id'>;
   index: number;
   length: number;
   remove: (index?: number | number[] | undefined) => void;
+  priceFromVariationsEnabled: boolean;
 }
 
 const NewVariationField = ({
@@ -33,20 +36,30 @@ const NewVariationField = ({
   index,
   length,
   remove,
+  field,
+  priceFromVariationsEnabled,
 }: IProps) => {
   const {
     register,
-
+    control,
     formState: { errors },
+    watch,
+    setValue,
   } = useFormContext<NEW_VARIATION>();
 
   const [date, setDate] = useState<Date | Date[]>(new Date());
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [saleType, setSaleType] = useState<SALE_TYPES>('fixed');
   const [saleTypeOptionsOpen, setSaleTypeOptionsOpen] = useState(false);
-  const [priceEnabled, setPriceEnabled] = useState(false);
-  const [saleEnabled, setSaleEnabled] = useState(false);
-  const [saleEndDateEnabled, setSaleEndDateEnabled] = useState(false);
+
+  const [colorPickerOpen, setColorPickerOpen] = useState(false);
+  const color = watch(`values.${index}.color` as const);
+
+  const priceEnabled = watch(`values.${index}.priceEnabled` as const);
+  const saleEnabled = watch(`values.${index}.saleEnabled` as const);
+  const saleEndDateEnabled = watch(
+    `values.${index}.saleEndDateEnabled` as const
+  );
 
   return (
     <Container>
@@ -58,8 +71,10 @@ const NewVariationField = ({
               <MdSubtitles size={20} />
             </Icon>
             <Input
-              {...register(`values.${index}.name` as `values.${number}.name`, {
+              defaultValue={field.name}
+              {...register(`values.${index}.name` as const, {
                 required: 'Required Field',
+                validate: value => value === '1',
               })}
             />
           </IconedInputContainer>
@@ -84,6 +99,53 @@ const NewVariationField = ({
             {errors?.values?.[index]?.name_ar?.message}
           </ErrorMessage>
         </div>
+        {variationType?.id === 2 && (
+          <div>
+            <Label>Color</Label>
+            <IconedInputContainer>
+              <Icon>
+                <IoColorPaletteOutline size={20} />
+              </Icon>
+              <Input value={color} defaultValue={field.color} readOnly />
+              <ColorButton
+                onClick={() => setColorPickerOpen(true)}
+                type="button"
+                color={color || '#555'}
+              />
+              <Controller
+                control={control}
+                name={`values.${index}.color` as const}
+                render={({
+                  field: { onChange, onBlur, value, name, ref },
+                  fieldState: { invalid, isTouched, isDirty, error },
+                  formState,
+                }) => (
+                  <ClickAwayListener
+                    onClickAway={() => {
+                      if (colorPickerOpen) {
+                        setColorPickerOpen(false);
+                      }
+                    }}
+                  >
+                    <ColorPickerContainer hidden={!colorPickerOpen}>
+                      <SketchPicker
+                        disableAlpha
+                        color={value}
+                        onChangeComplete={color => {
+                          console.log(color);
+                          onChange(color.hex);
+                        }}
+                      />
+                    </ColorPickerContainer>
+                  </ClickAwayListener>
+                )}
+              />
+            </IconedInputContainer>
+            <ErrorMessage>
+              {errors?.values?.[index]?.name_ar?.message}
+            </ErrorMessage>
+          </div>
+        )}
       </InputsContainer>
       <PricingContainer>
         <div>
@@ -94,34 +156,50 @@ const NewVariationField = ({
               <IoPricetagsOutline size={20} />
             </Icon>
             <Input
-              {...register(
-                `values.${index}.price` as `values.${number}.price`,
-                {
-                  required: priceEnabled ? 'Required Field' : false,
-                }
+              defaultValue={field.price}
+              disabled={!priceEnabled}
+              {...register(`values.${index}.price` as const, {
+                required: priceEnabled ? 'Required Field' : false,
+              })}
+            />
+            <Controller
+              name={`values.${index}.priceEnabled` as const}
+              control={control}
+              defaultValue={field.priceEnabled}
+              render={({ field: { onChange, value } }) => (
+                <EnabledContainer
+                  type="button"
+                  onClick={() => {
+                    if (value === true) {
+                      if (!priceFromVariationsEnabled) {
+                        onChange(false);
+                      }
+                    } else {
+                      onChange(true);
+                    }
+                    if (saleEnabled) {
+                      setValue(
+                        `values.${index}.saleEnabled` as const,
+                        false as never
+                      );
+                    }
+                    if (saleEndDateEnabled) {
+                      setValue(
+                        `values.${index}.saleEndDateEnabled` as const,
+                        false as never
+                      );
+                    }
+                  }}
+                  enabled={priceEnabled}
+                >
+                  {priceEnabled ? 'Disable' : 'Enable'}
+                </EnabledContainer>
               )}
             />
-            <EnabledContainer
-              type="button"
-              onClick={() => {
-                setPriceEnabled(!priceEnabled);
-                if (saleEnabled) {
-                  setSaleEnabled(false);
-                }
-                if (saleEndDateEnabled) {
-                  setSaleEndDateEnabled(false);
-                }
-              }}
-              enabled={priceEnabled}
-            >
-              {priceEnabled ? 'Disable' : 'Enable'}
-            </EnabledContainer>
+
             <Currency>KD</Currency>
           </IconedInputContainer>
-          <ErrorMessage>
-            {' '}
-            {errors?.values?.[index]?.price?.message}
-          </ErrorMessage>
+          <ErrorMessage>{errors?.values?.[index]?.price?.message}</ErrorMessage>
         </div>
         <div>
           <Label>Sale Price </Label>
@@ -130,27 +208,42 @@ const NewVariationField = ({
               <IoPricetagsOutline size={20} />
             </Icon>
             <Input
-              {...register(
-                `values.${index}.sale_price` as `values.${number}.sale_price`,
-                {
-                  required: saleEnabled ? 'Required Field' : false,
-                }
+              defaultValue={field.sale_price}
+              disabled={!saleEnabled}
+              {...register(`values.${index}.sale_price` as const, {
+                required: saleEnabled ? 'Required Field' : false,
+              })}
+            />
+            <Controller
+              name={`values.${index}.saleEnabled` as const}
+              control={control}
+              defaultValue={field.saleEnabled}
+              render={({ field: { onChange, value } }) => (
+                <EnabledContainer
+                  type="button"
+                  onClick={() => {
+                    if (value === true) {
+                      onChange(false);
+                      if (saleEndDateEnabled) {
+                        setValue(
+                          `values.${index}.saleEndDateEnabled` as const,
+
+                          false as never
+                        );
+                      }
+                    } else {
+                      if (priceEnabled) {
+                        onChange(true);
+                      }
+                    }
+                  }}
+                  enabled={saleEnabled}
+                >
+                  {saleEnabled ? 'Disable' : 'Enable'}
+                </EnabledContainer>
               )}
             />
-            <EnabledContainer
-              type="button"
-              onClick={() => {
-                if (priceEnabled) {
-                  setSaleEnabled(!saleEnabled);
-                  if (saleEndDateEnabled) {
-                    setSaleEndDateEnabled(false);
-                  }
-                }
-              }}
-              enabled={saleEnabled}
-            >
-              {saleEnabled ? 'Disable' : 'Enable'}
-            </EnabledContainer>
+
             {saleType === 'fixed' ? (
               <Currency>KD</Currency>
             ) : (
@@ -179,7 +272,6 @@ const NewVariationField = ({
             </SaleTypeOptionsContainer>
           </IconedInputContainer>
           <ErrorMessage>
-            {' '}
             {errors?.values?.[index]?.sale_price?.message}
           </ErrorMessage>
         </div>
@@ -187,27 +279,37 @@ const NewVariationField = ({
           <Label>Sale End Date </Label>
           <IconedInputContainer>
             <Input
-              {...register(
-                `values.${index}.sale_end_date` as `values.${number}.sale_end_date`,
-                {
-                  required: 'Required Field',
-                }
-              )}
+              disabled={!saleEndDateEnabled}
+              {...register(`values.${index}.sale_end_date` as const, {
+                required: saleEndDateEnabled ? 'Required Field' : false,
+              })}
               placeholder="Optional.."
               readOnly
               value={format(date as Date, 'yyyy-MM-dd')}
             />
-            <EnabledContainer
-              type="button"
-              onClick={() => {
-                if (saleEnabled) {
-                  setSaleEndDateEnabled(!saleEndDateEnabled);
-                }
-              }}
-              enabled={saleEndDateEnabled}
-            >
-              {saleEndDateEnabled ? 'Disable' : 'Enable'}
-            </EnabledContainer>
+            <Controller
+              name={`values.${index}.saleEndDateEnabled` as const}
+              control={control}
+              defaultValue={false}
+              render={({ field: { onChange, value } }) => (
+                <EnabledContainer
+                  type="button"
+                  onClick={() => {
+                    if (value === true) {
+                      onChange(false);
+                    } else {
+                      if (saleEnabled) {
+                        onChange(true);
+                      }
+                    }
+                  }}
+                  enabled={saleEndDateEnabled}
+                >
+                  {saleEndDateEnabled ? 'Disable' : 'Enable'}
+                </EnabledContainer>
+              )}
+            />
+
             <Icon onClick={() => setCalendarOpen(true)}>
               <FiCalendar />
             </Icon>
@@ -284,14 +386,14 @@ const Label = styled.label`
 const Input = styled.input`
   flex: 1;
   padding: 0.4rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   width: 50px;
 `;
 
 const IconedInputContainer = styled.div`
   display: flex;
   position: relative;
-  /* align-items: center; */
+  align-items: center;
   justify-content: center;
   background-color: ${props => props.theme.inputColorLight};
   color: ${props => props.theme.headingColor};
@@ -327,7 +429,7 @@ const PricingContainer = styled.div`
 `;
 const InputsContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 0.75rem;
 `;
 const DelIcon = styled.button`
@@ -346,7 +448,7 @@ const Icon = styled.span`
   color: ${props => props.theme.subHeading};
 `;
 const SaleTypeOptionsContainer = styled.button`
-  padding: 0.5rem;
+  padding: 0.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -366,7 +468,7 @@ const OptionsContainer = styled.div`
   overflow: hidden;
 `;
 const Option = styled.div`
-  padding: 0.5rem;
+  padding: 0.4rem;
   font-size: 0.8rem;
   background-color: #fff;
   color: ${props => props.theme.subHeading};
@@ -384,8 +486,7 @@ const EnabledContainer = styled.button<{ enabled: boolean }>`
   font-size: 0.7rem;
   background-color: ${props =>
     props.enabled ? props.theme.dangerRed : props.theme.green};
-  /* color: ${props =>
-    props.enabled ? props.theme.green : props.theme.dangerRed}; */
+
   color: #fff;
   font-weight: ${props => props.theme.font.semibold};
 `;
@@ -393,4 +494,19 @@ const ErrorMessage = styled.p`
   font-size: 0.7rem;
   padding-top: 0.25rem;
   color: ${props => props.theme.dangerRed};
+`;
+const ColorPickerContainer = styled.div`
+  position: absolute;
+  z-index: 2;
+  right: 35px;
+  bottom: -150px;
+  /* display: none; */
+`;
+const ColorButton = styled.button`
+  width: 20px;
+  height: 20px;
+  background-color: ${props => props.color};
+  border-radius: 50%;
+  /* padding: 0.4rem; */
+  margin: 0 0.25rem;
 `;
