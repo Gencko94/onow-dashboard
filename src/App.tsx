@@ -22,6 +22,8 @@ const Customers = lazy(() => import('./pages/Customers'));
 const CustomerProfile = lazy(() => import('./pages/CustomerProfile'));
 const Orders = lazy(() => import('./pages/Orders'));
 const Order = lazy(() => import('./pages/Order'));
+const Coupons = lazy(() => import('./pages/Coupons'));
+const Coupon = lazy(() => import('./pages/Coupon'));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -58,6 +60,8 @@ function App() {
                       <Route exact path="/orders" component={Orders} />
                       <Route exact path="/orders/:id" component={Order} />
                       <Route exact path="/customers" component={Customers} />
+                      <Route exact path="/coupons" component={Coupons} />
+                      <Route exact path="/coupons/coupon" component={Coupon} />
                       <Route
                         exact
                         path="/customers/:id"

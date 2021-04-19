@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { BiHomeAlt } from 'react-icons/bi';
-import { RiFileList3Line } from 'react-icons/ri';
+import { RiCoupon3Line, RiFileList3Line } from 'react-icons/ri';
 import { IoPeopleOutline } from 'react-icons/io5';
 import { AiOutlineBarChart } from 'react-icons/ai';
 const SideNav = () => {
@@ -38,6 +38,14 @@ const SideNav = () => {
         </Icon>
         <SideNavItemText isActive={pathname === '/customers'}>
           Customers
+        </SideNavItemText>
+      </SideNavItem>
+      <SideNavItem isActive={pathname === '/coupons'} to="/coupons">
+        <Icon>
+          <RiCoupon3Line size={20} />
+        </Icon>
+        <SideNavItemText isActive={pathname === '/coupons'}>
+          Coupons
         </SideNavItemText>
       </SideNavItem>
       <SideNavItem isActive={pathname === '/reports'} to="/reports">

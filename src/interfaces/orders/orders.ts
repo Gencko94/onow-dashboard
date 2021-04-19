@@ -65,3 +65,37 @@ export const orderStatuses: ORDER_STATUS[] = [
     value: 78,
   },
 ];
+export interface ORDER_ITEM {
+  id: number;
+  name: {
+    [key: string]: string;
+  };
+  price: number;
+  totalPrice: number;
+  qty: number;
+  image: string;
+}
+export const orderItems: ORDER_ITEM[] = [
+  {
+    id: 1,
+    name: {
+      ar: 'ساعة يد ماركة بولغاري',
+      en: 'Bulgary Hand Watch',
+    },
+    price: 2,
+    qty: 2,
+    totalPrice: 4,
+    image: '/images/product.webp',
+  },
+  {
+    id: 2,
+    name: {
+      ar: 'ساعة يد ماركة بولغاري',
+      en: 'Bulgary Hand Watch',
+    },
+    price: 2,
+    qty: 2,
+    totalPrice: 4,
+    image: '/images/product.webp',
+  },
+];

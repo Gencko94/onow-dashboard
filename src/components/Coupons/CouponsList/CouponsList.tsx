@@ -1,24 +1,18 @@
 import styled from 'styled-components';
-import OrderItem from './OrderItem';
+import CouponItem from './CouponItem';
 
-const OrdersList = () => {
+const CouponsList = () => {
   return (
     <Container>
       <GridHead>
         <div className="field">
-          <span />
+          <h6>Coupon Name</h6>
         </div>
         <div className="field">
-          <h6>Order ID</h6>
+          <h6>Status</h6>
         </div>
         <div className="field">
-          <h6>Customer Name</h6>
-        </div>
-        <div className="field">
-          <h6>Delivery Location</h6>
-        </div>
-        <div className="field">
-          <h6>Order Status</h6>
+          <h6>Enabled</h6>
         </div>
         <div className="field">
           <h6>Actions</h6>
@@ -26,24 +20,23 @@ const OrdersList = () => {
       </GridHead>
       <div>
         {[0, 1, 2, 3].map(i => (
-          <OrderItem key={i} />
+          <CouponItem />
         ))}
       </div>
     </Container>
   );
 };
 
-export default OrdersList;
+export default CouponsList;
 const Container = styled.div`
   border-radius: 8px;
   overflow: hidden;
   border: ${props => props.theme.border};
   box-shadow: ${props => props.theme.shadow};
 `;
-
 const GridHead = styled.div`
   display: grid;
-  grid-template-columns: 50px 0.5fr 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: 1fr 1fr 1fr 0.5fr;
   background-color: ${props => props.theme.overlayColor};
   border-bottom: ${props => props.theme.border};
   gap: 1rem;

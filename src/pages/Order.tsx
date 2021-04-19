@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import OrderInfo from '../components/Order/OrderInfo/OrderInfo';
+import OrderBody from '../components/Order/OrderBody/OrderBody';
+import SingleOrderItemsList from '../components/Order/OrderItems/SingleOrderItemsList';
 import OrderPanel from '../components/Order/OrderPanel/OrderPanel';
 
 const Order = () => {
@@ -7,7 +8,8 @@ const Order = () => {
     <Container>
       <OrderPanel />
       <hr />
-      <OrderInfo />
+      <OrderBody />
+      <SingleOrderItemsList />
     </Container>
   );
 };

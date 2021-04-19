@@ -1,32 +1,33 @@
 import styled from 'styled-components';
 import OrderClientInformation from './OrderClientInformation';
 import OrderDelivery from './OrderDelivery';
-import OrderStatus from './OrderStatus';
+import OrderInfo from './OrderInfo';
 
-const OrderInfo = () => {
+const OrderBody = () => {
   return (
     <Container>
-      {/* <h5 className="heading">Order Details</h5> */}
-      <ContentContainer>
+      <h4 className="heading">Order #58954</h4>
+      <BoxesContainer>
+        <OrderInfo />
         <OrderClientInformation />
         <OrderDelivery />
-        <OrderStatus />
-      </ContentContainer>
+      </BoxesContainer>
+      <hr />
     </Container>
   );
 };
 
-export default OrderInfo;
+export default OrderBody;
 const Container = styled.div`
   padding: 0.75rem;
-  h5.heading {
+  .heading {
     margin-bottom: 1rem;
   }
 `;
-const ContentContainer = styled.div`
+const BoxesContainer = styled.div`
   border-radius: 5px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
 `;
 
