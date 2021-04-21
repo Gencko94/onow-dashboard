@@ -24,6 +24,13 @@ const Orders = lazy(() => import('./pages/Orders'));
 const Order = lazy(() => import('./pages/Order'));
 const Coupons = lazy(() => import('./pages/Coupons'));
 const Coupon = lazy(() => import('./pages/Coupon'));
+const WebsiteLayout = lazy(() => import('./pages/WebsiteLayout'));
+const BlockStyleCustomizePage = lazy(
+  () => import('./pages/BlockStyleCustomizePage')
+);
+const BlockStyleSelectionPage = lazy(
+  () => import('./pages/BlockStyleSelectionPage')
+);
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -46,9 +53,9 @@ function App() {
           )}
           onReset={reset}
         >
-          <Suspense fallback={<Loading />}>
-            <QueryClientProvider client={queryClient}>
-              <Router>
+          <Router>
+            <Suspense fallback={<Loading />}>
+              <QueryClientProvider client={queryClient}>
                 <ThemeProvider>
                   <GlobalStyle />
                   <ScrollToTopOnMount />
@@ -64,6 +71,21 @@ function App() {
                       <Route exact path="/coupons/coupon" component={Coupon} />
                       <Route
                         exact
+                        path="/website-layout"
+                        component={WebsiteLayout}
+                      />
+                      <Route
+                        exact
+                        path="/website-layout/block/:type"
+                        component={BlockStyleSelectionPage}
+                      />
+                      <Route
+                        exact
+                        path="/website-layout/block-customize/:type"
+                        component={BlockStyleCustomizePage}
+                      />
+                      <Route
+                        exact
                         path="/customers/:id"
                         component={CustomerProfile}
                       />
@@ -75,9 +97,9 @@ function App() {
                     </Switch>
                   </Layout>
                 </ThemeProvider>
-              </Router>
-            </QueryClientProvider>
-          </Suspense>
+              </QueryClientProvider>
+            </Suspense>
+          </Router>
         </ErrorBoundary>
       )}
     </QueryErrorResetBoundary>

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^2.2.0",
+    "@loadable/component": "^5.14.1",
     "@tinymce/tinymce-react": "^3.12.2",
     "@types/node": "^12.0.0",
     "@types/react-dom": "^17.0.0",
@@ -23,6 +24,7 @@
     "react-hook-form": "^7.1.1",
     "react-i18next": "^11.8.6",
     "react-icons": "^4.2.0",
+    "react-loadable": "^5.5.0",
     "react-loader-spinner": "^4.0.0",
     "react-placeholder": "^4.1.0",
     "react-query": "^3.8.3",
@@ -60,10 +62,12 @@
     ]
   },
   "devDependencies": {
+    "@types/loadable__component": "^5.13.3",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^17.0.1",
     "@types/react-calendar": "^3.1.4",
     "@types/react-color": "^3.0.4",
+    "@types/react-loadable": "^5.5.5",
     "@types/react-responsive": "^8.0.2",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-select": "^4.0.14",

@@ -56,6 +56,17 @@ const SideNav = () => {
           Reports
         </SideNavItemText>
       </SideNavItem>
+      <SideNavItem
+        isActive={pathname === '/website-layout'}
+        to="/website-layout"
+      >
+        <Icon>
+          <AiOutlineBarChart size={20} />
+        </Icon>
+        <SideNavItemText isActive={pathname === '/website-layout'}>
+          Website Layout
+        </SideNavItemText>
+      </SideNavItem>
     </Container>
   );
 };
