@@ -9,6 +9,9 @@ import Flex, {
 import Heading from '../../../../StyledComponents/Heading';
 import Paragraph from '../../../../StyledComponents/Paragraph';
 import Label from '../../../../StyledComponents/Label';
+import TypeSelector from '../../shared/TypeSelector';
+import CategorySelector from '../../shared/CategorySelector';
+import ProductSelector from '../../shared/ProductSelector';
 const smallOptions = [{ num: '1' }, { num: 2 }, { num: '3' }];
 const mediumOptions = [{ num: '3' }, { num: '4' }, { num: '5' }];
 const largeOptions = [{ num: '5' }, { num: '6' }, { num: '7' }, { num: '8' }];
@@ -19,9 +22,19 @@ const ProductGridStyleEditor = () => {
     watch,
     formState: { errors },
   } = useFormContext<PRODUCT_GRID_DESIGN>();
+  const type = watch('type');
+  console.log(type);
   return (
     <Container>
-      {/* <Grid cols={2} gap="1rem"></Grid> */}
+      <Grid cols={2} gap="1rem">
+        <TypeSelector control={control} />
+        {type === 'category' && (
+          <CategorySelector control={control} watch={watch} />
+        )}
+        {type === 'products' && (
+          <ProductSelector control={control} watch={watch} />
+        )}
+      </Grid>
       <Heading tag="h5" mb={1}>
         Appearance
       </Heading>
@@ -68,7 +81,7 @@ const ProductGridStyleEditor = () => {
           <Flex items="center">
             <Paragraph size={0.9}>Large Screens</Paragraph>
             <div className="select-container">
-              {/* <Controller
+              <Controller
                 name="gridOptions.itemsPerRow.large"
                 control={control}
                 render={({ field: { ref, onChange } }) => (
@@ -80,7 +93,7 @@ const ProductGridStyleEditor = () => {
                     getOptionValue={option => option.num.toString()}
                   />
                 )}
-              /> */}
+              />
             </div>
           </Flex>
         </Grid>
@@ -98,6 +111,10 @@ const Container = styled.div`
     border-radius: 8px;
     background-color: ${props => props.theme.overlayColor};
     border: ${props => props.theme.border};
+    ${FlexWrapper} {
+      padding: 0.5rem 0.25rem;
+      position: relative;
+    }
   }
 
   .select-container {
