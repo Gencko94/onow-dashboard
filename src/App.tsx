@@ -25,12 +25,13 @@ const Order = lazy(() => import('./pages/Order'));
 const Coupons = lazy(() => import('./pages/Coupons'));
 const Coupon = lazy(() => import('./pages/Coupon'));
 const WebsiteLayout = lazy(() => import('./pages/WebsiteLayout'));
-const BlockStyleCustomizePage = lazy(
-  () => import('./pages/BlockStyleCustomizePage')
+const HeaderCustomizer = lazy(() => import('./pages/HeaderCustomizer'));
+const FooterCustomizer = lazy(() => import('./pages/FooterCustomizer'));
+const ProductListGridCustomizer = lazy(
+  () => import('./pages/ProductListGridCustomizer')
 );
-const BlockStyleSelectionPage = lazy(
-  () => import('./pages/BlockStyleSelectionPage')
-);
+
+const DesignSelectionPage = lazy(() => import('./pages/DesignSelectionPage'));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -76,13 +77,23 @@ function App() {
                       />
                       <Route
                         exact
-                        path="/website-layout/block/:type"
-                        component={BlockStyleSelectionPage}
+                        path="/website-layout/design-select/:type"
+                        component={DesignSelectionPage}
                       />
                       <Route
                         exact
-                        path="/website-layout/block-customize/:type"
-                        component={BlockStyleCustomizePage}
+                        path="/website-layout/block-customize/header/:id"
+                        component={HeaderCustomizer}
+                      />
+                      <Route
+                        exact
+                        path="/website-layout/block-customize/footer/:id"
+                        component={FooterCustomizer}
+                      />
+                      <Route
+                        exact
+                        path="/website-layout/block-customize/product-grid/:id"
+                        component={ProductListGridCustomizer}
                       />
                       <Route
                         exact

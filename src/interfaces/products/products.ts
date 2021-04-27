@@ -49,3 +49,12 @@ export type VARIATION_VALUE = {
   infiniteQtyEnabled: boolean;
   qtyAlertThreshold: number;
 };
+
+export type MINI_PRODUCT = {
+  id: number;
+  name: {
+    [key: string]: string;
+  };
+  image: string;
+  price: string;
+};

@@ -8,7 +8,7 @@ const NewBlockModalItem = ({ item }: IProps) => {
   const history = useHistory();
   return (
     <Container
-      onClick={() => history.push(`/website-layout/block/${item.type}`)}
+      onClick={() => history.push(`/website-layout/design-select/${item.type}`)}
     >
       <div className="img-container">
         <img src={item.photo} alt={item.type} />

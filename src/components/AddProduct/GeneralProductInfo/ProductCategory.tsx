@@ -40,18 +40,7 @@ const ProductCategory = () => {
           </>
         )}
       />
-      {/* <Select
-        {...register?.('productCategories', { required: 'Required' })}
-        // defaultValue={options[0]}
-        isMulti
-        // name="colors"
-        options={options}
-        // onChange={val => field.onChange(val)}
-        getOptionLabel={option => option.name}
-        getOptionValue={option => option.id.toString()}
-        // className="basic-multi-select"
-        // classNamePrefix="select"
-      /> */}
+
       <ButtonsContainer>
         <AddButton type="button" onClick={() => setOpen(true)}>
           <Icon>

@@ -3,17 +3,11 @@ export type BLOCK_TYPE = {
   photo: string;
   name: string;
 };
-export type BLOCK_STYLE = {
-  id: number;
-  photo: string;
-  selected: boolean;
-  type: string;
-};
 
 export const blocks: BLOCK_TYPE[] = [
   {
-    type: 'header',
-    name: 'Header',
+    type: 'banner',
+    name: 'Banner',
     photo: '/images/header.jpg',
   },
   {
@@ -22,22 +16,8 @@ export const blocks: BLOCK_TYPE[] = [
     photo: '/images/header.jpg',
   },
   {
-    type: 'footer',
-    name: 'Footer',
+    type: 'product-grid',
+    name: 'Product Grid',
     photo: '/images/header.jpg',
-  },
-];
-export const headerStyles: BLOCK_STYLE[] = [
-  {
-    id: 1,
-    photo: '/images/header.jpg',
-    selected: true,
-    type: 'header',
-  },
-  {
-    id: 2,
-    photo: '/images/header2.jpg',
-    selected: false,
-    type: 'footer',
   },
 ];
