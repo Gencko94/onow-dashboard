@@ -9,16 +9,9 @@ interface IProps {
 
 const ProductGridDemo = ({ data }: IProps) => {
   const { control, watch } = useFormContext<PRODUCT_GRID_DESIGN>();
-  // const ctaEnabled = useWatch({
-  //   control: control,
-  //   name: 'ctaOptions.enabled',
-  // });
-  // const ctaEnabled = watch('ctaOptions.enabled')
+
   const values = watch();
-  // const title = useWatch({
-  //   control: control,
-  //   name: 'ctaOptions.text',
-  // });
+
   return (
     <Container>
       <ProductGridTitle
