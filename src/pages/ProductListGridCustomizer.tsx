@@ -7,12 +7,12 @@ import ProductGridEditor from '../components/WebsiteLayout/designs/product-grid/
 import ProductGridDemo from '../components/WebsiteLayout/designs/product-grid/ProductGridDemo';
 import { PRODUCT_GRID_DESIGN } from '../interfaces/website-layout/designs/product-grid-design';
 import { getProductGridDesign } from '../utils/test-queries';
-const ProductGridStyleEditor = lazy(
-  () =>
-    import(
-      '../components/WebsiteLayout/designs/product-grid/editors/ProductGridStyleEditor'
-    )
-);
+// const ProductGridStyleEditor = lazy(
+//   () =>
+//     import(
+//       '../components/WebsiteLayout/designs/product-grid/editors/ProductGridStyleEditor'
+//     )
+// );
 
 const ProductListGridCustomizer = () => {
   const { id } = useParams<{ id: string }>();
@@ -28,8 +28,8 @@ const ProductListGridCustomizer = () => {
   });
   const onSubmit: SubmitHandler<PRODUCT_GRID_DESIGN> = data => {
     // Submit Style Changes to server
-    console.log(data);
   };
+  console.log('hi');
   return (
     <FormProvider {...methods}>
       <Container>

@@ -1,7 +1,7 @@
 import { CSSProperties, FC } from 'react';
 import styled from 'styled-components';
 interface IProps {
-  cols: number;
+  cols: string;
   gap: string;
   items?: string;
 }
@@ -20,7 +20,7 @@ const Grid: FC<IProps> = ({ children, cols, gap, items }) => {
 export default Grid;
 export const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(var(--cols), 1fr);
+  grid-template-columns: var(--cols);
   gap: var(--gap);
   align-items: var(--items, normal);
 `;

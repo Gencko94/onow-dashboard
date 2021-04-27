@@ -27,7 +27,10 @@ const ProductSelector = ({ watch, control }: IProps) => {
             timeout={150}
           >
             <Modal title="Select Products" closeFunction={() => setOpen(false)}>
-              <AddProductsModal onChange={onChange} />
+              <AddProductsModal
+                onChange={onChange}
+                closeFunction={() => setOpen(false)}
+              />
             </Modal>
           </CSSTransition>
         )}

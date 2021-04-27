@@ -13,7 +13,7 @@ interface IProps {
 const CategorySelector = ({ control, watch }: IProps) => {
   const { i18n } = useTranslation();
   const { data, isLoading } = useQuery<any>('categories', getCategories);
-  const category: number = watch('category');
+  const category = watch('category');
   return (
     <Container>
       <Label>Select The Category</Label>
