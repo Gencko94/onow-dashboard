@@ -18,7 +18,6 @@ type CTA_OPTIONS = {
   styles: CTA_STYLES;
 };
 
-type PRODUCT_STYLES = {};
 export interface PRODUCT_GRID_DESIGN {
   id: number;
   title: string;
@@ -28,5 +27,4 @@ export interface PRODUCT_GRID_DESIGN {
   type: string;
   products?: number[] | null;
   category?: number | null;
-  productStyles: PRODUCT_STYLES;
 }

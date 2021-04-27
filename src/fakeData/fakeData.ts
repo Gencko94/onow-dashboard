@@ -85,7 +85,6 @@ export const productGridDesign1: PRODUCT_GRID_DESIGN = {
     },
   },
   type: 'category',
-  productStyles: {},
   category: null,
   products: [],
 };
@@ -176,7 +175,6 @@ export const productGridDesigns: PRODUCT_GRID_DESIGN[] = [
       },
     },
     type: 'category',
-    productStyles: {},
     products: [],
     category: null,
   },

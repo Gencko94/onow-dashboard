@@ -7,6 +7,7 @@ import {
   headerDesigns,
   productGridDesign1,
   productGridDesigns,
+  product1,
 } from '../fakeData/fakeData';
 // import { CATEGORY } from '../interfaces/categories/categories';
 import { FOOTER_DESIGN } from '../interfaces/website-layout/designs/footer-design';
@@ -61,6 +62,18 @@ export const getCategories = (): Promise<any> => {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(categories);
+    }, 500);
+  });
+};
+export const searchProducts = (value: string): Promise<any> => {
+  console.log(value);
+  return new Promise(resolve => {
+    setTimeout(() => {
+      if (value === 'test') {
+        resolve([product1, product1]);
+      } else {
+        resolve([]);
+      }
     }, 500);
   });
 };

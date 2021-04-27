@@ -108,7 +108,7 @@ const Button = styled.button<{ red?: boolean }>`
   background-color: ${props =>
     props.red ? props.theme.dangerRed : props.theme.green};
   box-shadow: ${props => props.theme.shadow};
-  border-radius: 7px;
+  border-radius: 6px;
   position: relative;
   padding: 0.25rem 0.5rem;
   color: #fff;
