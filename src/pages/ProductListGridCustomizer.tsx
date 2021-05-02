@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
 import ProductGridEditor from '../components/WebsiteLayout/designs/product-grid/editors/ProductGridEditor';
-import ProductGridDemo from '../components/WebsiteLayout/designs/product-grid/ProductGridDemo';
+import ProductGridDemo from '../components/WebsiteLayout/designs/product-grid/GridDemo';
 import { PRODUCT_GRID_DESIGN } from '../interfaces/website-layout/designs/product-grid-design';
 import { getProductGridDesign } from '../utils/test-queries';
 // const ProductGridStyleEditor = lazy(

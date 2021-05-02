@@ -8,8 +8,8 @@ import {
   productGridDesign1,
   productGridDesigns,
   product1,
+  productGridDesign2,
 } from '../fakeData/fakeData';
-// import { CATEGORY } from '../interfaces/categories/categories';
 import { FOOTER_DESIGN } from '../interfaces/website-layout/designs/footer-design';
 import { HEADER_DESIGN } from '../interfaces/website-layout/designs/header-design';
 import { PRODUCT_GRID_DESIGN } from '../interfaces/website-layout/designs/product-grid-design';
@@ -54,6 +54,8 @@ export const getProductGridDesign = (
     setTimeout(() => {
       if (id === '1') {
         resolve(productGridDesign1);
+      } else if (id === '2') {
+        resolve(productGridDesign2);
       }
     }, 500);
   });

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const SideOrder = () => {
+const DashboardOrders = () => {
   return (
     <Container>
       <Orderer>Ahmad Zaaza</Orderer>
@@ -11,7 +11,7 @@ const SideOrder = () => {
   );
 };
 
-export default SideOrder;
+export default DashboardOrders;
 const Container = styled.div`
   border-radius: 8px;
   cursor: pointer;

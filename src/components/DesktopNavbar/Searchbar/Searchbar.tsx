@@ -46,7 +46,8 @@ const Searchbar = () => {
 export default Searchbar;
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 275px 100px 40px;
+  flex: auto;
+  grid-template-columns: minmax(100px, 1fr) 100px 40px;
   /* border: ${props => props.theme.border}; */
   box-shadow: ${props => props.theme.shadow};
   border-radius: 5px;
@@ -55,6 +56,9 @@ const Container = styled.div`
 const Input = styled.input`
   padding: 0.5rem;
   font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 const Options = styled.button`
   padding: 0.5rem;

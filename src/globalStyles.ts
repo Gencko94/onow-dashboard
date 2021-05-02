@@ -55,7 +55,7 @@ a {
   text-decoration:none;
   color:inherit;
 }
-hr {
+/* hr {
   margin: 1.5rem 0;
   background-image: linear-gradient(
     90deg,
@@ -67,7 +67,7 @@ hr {
   border: none;
   height: 1px;
   opacity: 0.5;
-}
+} */
 input,
 button,
 textarea,

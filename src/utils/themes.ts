@@ -19,6 +19,7 @@ export const lightTheme = {
   seperator: 'rgba(0,0,0,0.1)',
   mainColor: '#b29b72',
   boxColor: '#fff',
+  iconColor: '#6f6f6f',
 };
 
 export const darkTheme = {
@@ -43,4 +44,5 @@ export const darkTheme = {
   dangerRed: 'hsl(0, 100%, 69.6%)',
   border: '1px solid #D8D8D8',
   seperator: 'rgba(250,250,250,0.3)',
+  iconColor: '#e4e4e4',
 };

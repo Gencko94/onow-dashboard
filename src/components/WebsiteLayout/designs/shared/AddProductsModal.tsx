@@ -113,7 +113,7 @@ const AddProductsModal = ({ onChange, closeFunction }: IProps) => {
           }}
         >
           <BsCheck size={30} />
-          <p>Add New Category</p>
+          <p>Confirm</p>
         </button>
         <button className="red" type="button" onClick={() => closeFunction()}>
           <MdCancel size={30} />

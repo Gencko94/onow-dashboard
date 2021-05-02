@@ -67,14 +67,41 @@ const SideNav = () => {
           Website Layout
         </SideNavItemText>
       </SideNavItem>
+      <SideNavItem
+        isActive={pathname === '/website-layout'}
+        to="/website-layout"
+      >
+        <Icon>
+          <AiOutlineBarChart size={20} />
+        </Icon>
+        <SideNavItemText isActive={pathname === '/website-layout'}>
+          Website Layout
+        </SideNavItemText>
+      </SideNavItem>
+      <SideNavItem
+        isActive={pathname === '/website-layout'}
+        to="/website-layout"
+      >
+        <Icon>
+          <AiOutlineBarChart size={20} />
+        </Icon>
+        <SideNavItemText isActive={pathname === '/website-layout'}>
+          Website Layout
+        </SideNavItemText>
+      </SideNavItem>
     </Container>
   );
 };
 
 export default SideNav;
-const Container = styled.div`
-  flex: 1;
-`;
+const Container = styled.div(
+  ({ theme: { breakpoints } }) => `
+  height: calc(100vh - 366px);
+  overflow-y: auto;
+  @media ${breakpoints.md}
+  height: calc(100vh - 288px);
+  `
+);
 const SideNavItem = styled(Link)<{ isActive: boolean }>`
   padding: 0.5rem 0.25rem;
   border-radius: 10px;

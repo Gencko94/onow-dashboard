@@ -3,8 +3,8 @@ import { Redirect, useHistory, useParams } from 'react-router';
 import styled from 'styled-components';
 import FooterDemoReadOnly from '../components/WebsiteLayout/designs/footer/FooterDemoReadOnly';
 import HeaderDemoReadOnly from '../components/WebsiteLayout/designs/header/HeaderDemoReadOnly';
-import ProductGridDemo from '../components/WebsiteLayout/designs/product-grid/ProductGridDemo';
-import ProductGridDemoReadOnly from '../components/WebsiteLayout/designs/product-grid/ProductGridDemoReadOnly';
+import ProductGridDemo from '../components/WebsiteLayout/designs/product-grid/GridDemo';
+import ProductGridDemoReadOnly from '../components/WebsiteLayout/designs/product-grid/GridDemoReadOnly';
 
 import { getBlockDesigns } from '../utils/test-queries';
 

@@ -80,13 +80,45 @@ export const productGridDesign1: PRODUCT_GRID_DESIGN = {
   gridOptions: {
     itemsPerRow: {
       large: 7,
-      medium: 4,
+      medium: 2,
       small: 2,
     },
   },
-  type: 'category',
+  itemsFrom: 'category',
   category: null,
   products: [],
+  type: 'swiper',
+  itemStyles: {
+    outline: 'shadow',
+  },
+};
+export const productGridDesign2: PRODUCT_GRID_DESIGN = {
+  id: 2,
+  title: 'New Arrivals',
+  isSelected: true,
+  ctaOptions: {
+    enabled: true,
+    text: 'See All',
+    styles: {
+      backgroundColor: '#b72b2b',
+      textColor: '#fff',
+    },
+  },
+  gridOptions: {
+    itemsPerRow: {
+      large: 7,
+      medium: 2,
+      small: 2,
+    },
+  },
+  itemsFrom: 'category',
+  category: null,
+  products: [],
+
+  type: 'grid',
+  itemStyles: {
+    outline: 'border',
+  },
 };
 export const headerDesigns: HEADER_DESIGN[] = [
   {
@@ -174,9 +206,40 @@ export const productGridDesigns: PRODUCT_GRID_DESIGN[] = [
         small: 2,
       },
     },
-    type: 'category',
+    itemsFrom: 'category',
     products: [],
     category: null,
+    type: 'swiper',
+    itemStyles: {
+      outline: 'shadow',
+    },
+  },
+  {
+    id: 2,
+    title: 'New Arrivals',
+    isSelected: true,
+    ctaOptions: {
+      enabled: true,
+      text: 'See All',
+      styles: {
+        backgroundColor: '#b72b2b',
+        textColor: '#fff',
+      },
+    },
+    gridOptions: {
+      itemsPerRow: {
+        large: 7,
+        medium: 4,
+        small: 2,
+      },
+    },
+    itemsFrom: 'category',
+    products: [],
+    category: null,
+    type: 'grid',
+    itemStyles: {
+      outline: 'border',
+    },
   },
 ];
 export const product1: MINI_PRODUCT = {

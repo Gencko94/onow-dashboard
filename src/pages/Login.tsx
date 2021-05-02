@@ -77,7 +77,7 @@ const Login = () => {
           message: t('invalid-credentials'),
         });
       } else {
-        console.log(error);
+        console.log(error.response);
         // show unknown error
       }
     }

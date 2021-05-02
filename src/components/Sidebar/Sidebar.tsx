@@ -3,29 +3,40 @@ import SidebarOnowLogo from './OnowLogo/SidebarOnowLogo';
 import ProjectSwitcher from './ProjectSwitcher/ProjectSwitcher';
 import SideNav from './SideNav/SideNav';
 import SideUser from './SideUser/SideUser';
-
+import Hr from '../StyledComponents/Hr';
 const Sidebar = () => {
   return (
     <Container>
       <SidebarOnowLogo />
-      <hr />
+      <Hr m="1" />
       <ProjectSwitcher />
       <SideNav />
-      <hr />
+      <Hr m="1" />
       <SideUser />
     </Container>
   );
 };
 
 export default Sidebar;
-const Container = styled.aside`
+const Container = styled.aside(
+  ({ theme: { breakpoints, shadow } }) => `
   background-color: #fff;
-  position: sticky;
-  top: 0;
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${shadow};
   padding: 1rem;
-  display: flex;
+  height: 90vh;
+  border-radius:12px;
+  
+  min-width: 300px;
   flex-direction: column;
-  min-height: 100vh;
-  align-self: flex-start;
-`;
+  @media ${breakpoints.md}{
+    border-radius:0px;
+    display: flex;
+    align-self: flex-start;
+    min-height: 100vh;
+    position: sticky;
+    min-width: 300px;
+    top: 0;
+
+  }
+  `
+);

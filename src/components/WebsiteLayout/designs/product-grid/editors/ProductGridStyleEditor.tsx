@@ -18,31 +18,28 @@ const ProductGridStyleEditor = () => {
   const {
     control,
     watch,
-    setValue,
+
     formState: { errors },
-  } = useFormContext();
-  const type = useWatch({
-    control,
-    name: 'type',
-  });
-  // console.log(type);
+  } = useFormContext<PRODUCT_GRID_DESIGN>();
+  const values = watch();
+  console.log(values.type);
   return (
     <Container>
       <Grid cols="1fr 1fr" gap="1rem">
         <TypeSelector control={control} />
-        {type === 'category' && (
+        {values.itemsFrom === 'category' && (
           <CategorySelector control={control} watch={watch} />
         )}
-        {type === 'products' && (
+        {values.itemsFrom === 'products' && (
           <ProductSelector control={control} watch={watch} />
         )}
       </Grid>
       <Heading tag="h5" mb={1}>
         Appearance
       </Heading>
-      <div className="wrapper">
-        <ProductGridItemsPerRowEditor />
-      </div>
+      {/* <div className="wrapper"> */}
+      {values.type === 'grid' && <ProductGridItemsPerRowEditor />}
+      {/* </div> */}
     </Container>
   );
 };
@@ -52,10 +49,7 @@ const Container = styled.div`
   padding: 0.5rem;
 
   .wrapper {
-    display: flex;
-    border-radius: 8px;
-    background-color: ${props => props.theme.overlayColor};
-    border: ${props => props.theme.border};
+    /* display: flex; */
   }
 
   .select-container {

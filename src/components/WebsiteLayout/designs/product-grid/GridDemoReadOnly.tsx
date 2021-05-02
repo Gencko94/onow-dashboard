@@ -1,27 +1,27 @@
 import { lazy } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
 import styled from 'styled-components';
 import { PRODUCT_GRID_DESIGN } from '../../../../interfaces/website-layout/designs/product-grid-design';
+
 const ProductGridTitle = lazy(() => import('./components/ProductGridTitle'));
 interface IProps {
   data: PRODUCT_GRID_DESIGN;
 }
 
-const ProductGridDemo = ({ data }: IProps) => {
-  const { control, watch } = useFormContext<PRODUCT_GRID_DESIGN>();
-
-  const values = watch();
-
+const GridDemoReadOnly = ({ data }: IProps) => {
   return (
     <Container>
-      <ProductGridTitle
-        ctaEnabled={values.ctaOptions.enabled}
-        title={values.title}
-        btnText={values.ctaOptions.text}
-        backgroundColor={values.ctaOptions.styles.backgroundColor}
-        textColor={values.ctaOptions.styles.textColor}
-      />
-
+      <div className="title-wrapper">
+        <h5 className="title">{data.title}</h5>
+        {data.ctaOptions.enabled && (
+          <Button
+            bg={data.ctaOptions.styles.backgroundColor}
+            textColor={data.ctaOptions.styles.textColor}
+            className="btn"
+          >
+            {data.ctaOptions.text}
+          </Button>
+        )}
+      </div>
       <div className="grid">
         <GridItem>
           <img src="/images/product.webp" alt="product" />
@@ -37,7 +37,7 @@ const ProductGridDemo = ({ data }: IProps) => {
   );
 };
 
-export default ProductGridDemo;
+export default GridDemoReadOnly;
 const Container = styled.div`
   padding: 1rem;
   h5.title {

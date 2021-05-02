@@ -12,7 +12,7 @@ export interface Devices {
 const size: Sizes = {
   xs: '320px',
   md: '768px',
-  lg: '1200px',
+  lg: '1100px',
 };
 
 export const devices: Devices = {

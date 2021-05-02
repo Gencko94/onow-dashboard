@@ -18,7 +18,7 @@ const CategorySelector = ({ control, watch }: IProps) => {
     <Container>
       <Label>Select The Category</Label>
       <Controller
-        name="type"
+        name="category"
         control={control}
         render={({ field: { ref, onChange, value } }) => (
           <Select

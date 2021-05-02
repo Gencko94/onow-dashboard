@@ -46,3 +46,17 @@
   transform: scale(0.9);
   transition: all 100ms;
 }
+.side-menu-enter {
+  transform: translateX(-100%);
+}
+.side-menu-enter-active {
+  transform: translateX(0);
+  transition: all 100ms;
+}
+.side-menu-exit {
+  transform: translateX(0);
+}
+.side-menu-exit-active {
+  transform: translateX(-100%);
+  transition: all 100ms;
+}

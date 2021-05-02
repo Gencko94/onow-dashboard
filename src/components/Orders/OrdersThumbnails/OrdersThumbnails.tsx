@@ -38,11 +38,7 @@ const breakpoints = {
 const OrdersThumbnails = () => {
   return (
     <Container>
-      <Swiper
-        breakpoints={breakpoints}
-        freeMode
-        // navigation
-      >
+      <Swiper breakpoints={breakpoints} freeMode>
         {orderStatuses.map(status => (
           <SwiperSlide key={status.status_id}>
             <OrderThumbnail status={status} />

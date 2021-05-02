@@ -1,25 +1,27 @@
 import styled from 'styled-components';
-import SideOrder from './SideOrder';
+import DashboardOrder from './DashboardOrder';
 
-const SideOrders = () => {
+const DashboardOrders = () => {
   return (
     <Container>
       <Title>Latest Orders</Title>
       <OrdersContainer>
-        <SideOrder />
-        <SideOrder />
-        <SideOrder />
+        <DashboardOrder />
+        <DashboardOrder />
+        <DashboardOrder />
       </OrdersContainer>
     </Container>
   );
 };
 
-export default SideOrders;
+export default DashboardOrders;
 const Container = styled.div`
   box-shadow: ${props => props.theme.shadow};
   border-radius: 8px;
   background-color: ${props => props.theme.boxColor};
   padding: 0.75rem;
+  align-self: start;
+  /* width: 300px; */
   /* display: flex; */
   /* align-items: center; */
 `;

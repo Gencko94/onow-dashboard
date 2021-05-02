@@ -37,5 +37,6 @@ declare module 'styled-components' {
     seperator: string;
     maxWidthMd: string;
     maxWidthLg: string;
+    iconColor: string;
   }
 }
