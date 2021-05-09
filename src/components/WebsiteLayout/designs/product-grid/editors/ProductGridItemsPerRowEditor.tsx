@@ -24,7 +24,7 @@ const ProductGridItemsPerRowEditor = () => {
     watch,
     setValue,
     formState: { errors },
-  } = useFormContext<any>();
+  } = useFormContext<PRODUCT_GRID_DESIGN>();
   const selectStyles = useMemo(() => {
     return {
       control: (provided: any, state: any) => ({

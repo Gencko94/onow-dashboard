@@ -1,70 +1,42 @@
 export type STATUS = '';
-
+type ORDER_CUSTOMER = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email?: string;
+  phoneNumber: string;
+};
+type ORDER_DELIVERY_LOCATION = {
+  country_code: string;
+  block: string;
+  street: string;
+  floor?: string;
+  avenue?: string;
+  city: string;
+  special_directions?: string;
+};
+export interface ORDER {
+  order_id: number;
+  order_customer: ORDER_CUSTOMER;
+  order_status: ORDER_STATUS;
+  order_type: 'delivery' | 'pickup';
+  order_items: ORDER_ITEM[];
+  coupon?: {
+    code: string;
+    amount: string;
+  };
+  delivery_location?: ORDER_DELIVERY_LOCATION;
+  pickup_branch?: string;
+  created_at: string;
+}
 export interface ORDER_STATUS {
   status_id: number;
   title: {
     [key: string]: string;
   };
-  value: number;
+  value?: number;
 }
-export const orderStatuses: ORDER_STATUS[] = [
-  {
-    status_id: 1,
-    title: {
-      ar: 'بإنتظار الدفع',
-      en: 'Waiting For Payment',
-    },
-    value: 684,
-  },
-  {
-    status_id: 2,
-    title: {
-      ar: 'بإنتظار المراجعة',
-      en: 'Waiting for Review',
-    },
-    value: 320,
-  },
-  {
-    status_id: 3,
-    title: {
-      ar: 'قيد التنفيذ',
-      en: 'Under Processing',
-    },
-    value: 214,
-  },
-  {
-    status_id: 4,
-    title: {
-      ar: 'تم التنفيذ',
-      en: 'Processed',
-    },
-    value: 324,
-  },
-  {
-    status_id: 5,
-    title: {
-      ar: 'قيد التوصيل',
-      en: 'Delivering',
-    },
-    value: 32,
-  },
-  {
-    status_id: 6,
-    title: {
-      ar: 'تم التوصيل',
-      en: 'Delivered',
-    },
-    value: 42,
-  },
-  {
-    status_id: 7,
-    title: {
-      ar: 'ملغى',
-      en: 'Cancelled',
-    },
-    value: 78,
-  },
-];
+
 export interface ORDER_ITEM {
   id: number;
   name: {
@@ -99,3 +71,15 @@ export const orderItems: ORDER_ITEM[] = [
     image: '/images/product.webp',
   },
 ];
+export type STORE_ORDERS_STATS = {
+  status_id: number;
+  title: {
+    [key: string]: string;
+  };
+  value: number;
+}[];
+
+export interface STORE_ORDERS {
+  orders: ORDER[];
+  stats: STORE_ORDERS_STATS;
+}

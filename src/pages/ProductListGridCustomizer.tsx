@@ -18,7 +18,7 @@ const ProductListGridCustomizer = () => {
   const { id } = useParams<{ id: string }>();
 
   const { data } = useQuery<PRODUCT_GRID_DESIGN>(
-    `header-design-${id}`,
+    ['product-grid-design', id],
     () => getProductGridDesign(id),
     { suspense: true }
   );
@@ -29,7 +29,7 @@ const ProductListGridCustomizer = () => {
   const onSubmit: SubmitHandler<PRODUCT_GRID_DESIGN> = data => {
     // Submit Style Changes to server
   };
-  console.log('hi');
+  console.log(methods.watch());
   return (
     <FormProvider {...methods}>
       <Container>

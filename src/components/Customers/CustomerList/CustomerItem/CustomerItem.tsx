@@ -78,11 +78,11 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.75rem;
     text-align: center;
     h6 {
-      font-size: 0.8rem;
-      font-weight: ${props => props.theme.font.bold};
+      font-size: 0.9rem;
+      font-weight: ${props => props.theme.font.regular};
     }
   }
 `;

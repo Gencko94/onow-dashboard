@@ -50,9 +50,9 @@ const GridHead = styled.div`
     padding: 1rem;
     text-align: center;
     h6 {
-      font-size: 0.8rem;
-      color: ${props => props.theme.subHeading};
-      font-weight: ${props => props.theme.font.semibold};
+      /* font-size: 0.9rem; */
+      color: ${props => props.theme.headingColor};
+      font-weight: ${props => props.theme.font.regular};
     }
   }
 `;

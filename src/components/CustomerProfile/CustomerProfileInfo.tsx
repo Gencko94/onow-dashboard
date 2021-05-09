@@ -3,47 +3,56 @@ import { BsCardHeading } from 'react-icons/bs';
 import { AiOutlinePhone } from 'react-icons/ai';
 import { HiOutlineMail } from 'react-icons/hi';
 import { MdDateRange } from 'react-icons/md';
-const CustomerProfileInfo = () => {
+import { CUSTOMER } from '../../interfaces/customers/customers';
+import { format } from 'date-fns';
+import { parseISO } from 'date-fns/esm';
+interface IProps {
+  data: CUSTOMER;
+}
+
+const CustomerProfileInfo = ({ data }: IProps) => {
   return (
     <Container>
-      <h5>Customer Personal Info</h5>
+      <h4>Customer Personal Info</h4>
       <ContentContainer>
-        <FieldContainer>
+        <div className="stat-item">
           <Icon color="#911f1f">
             <BsCardHeading size={25} />
           </Icon>
-          <div>
-            <p className="label">Customer Full Name</p>
-            <p className="value">Ahmad Zaaza</p>
+          <div className="details">
+            <p className="text">Full Name</p>
+            <p className="value">{`${data.firstName} ${data.lastName}`}</p>
           </div>
-        </FieldContainer>
-        <FieldContainer>
+        </div>
+        <div className="stat-item">
           <Icon color="#9e3da7">
             <AiOutlinePhone size={25} />
           </Icon>
-          <div>
-            <p className="label">Customer Phone Number</p>
-            <p className="value">+9659874321</p>
+          <div className="details">
+            <p className="text">Phone Number</p>
+            <p className="value">{data.phoneNumber}</p>
           </div>
-        </FieldContainer>
-        <FieldContainer>
+        </div>
+        <div className="stat-item">
           <Icon color="#c41681">
             <HiOutlineMail size={25} />
           </Icon>
-          <div>
-            <p className="label">Customer Email Address</p>
-            <p className="value">gfox.piano@hotmail.com</p>
+          <div className="details">
+            <p className="text">Email Address</p>
+            <p className="value">{data.email}</p>
           </div>
-        </FieldContainer>
-        <FieldContainer>
+        </div>
+        <div className="stat-item">
           <Icon color="#137aaa">
             <MdDateRange size={25} />
           </Icon>
-          <div>
-            <p className="label">Customer Join Date</p>
-            <p className="value">2/6/2020</p>
+          <div className="details">
+            <p className="text">Join Date</p>
+            <p className="value">
+              {format(parseISO(data.joinDate), 'dd/MM/yyyy')}
+            </p>
           </div>
-        </FieldContainer>
+        </div>
       </ContentContainer>
     </Container>
   );
@@ -52,41 +61,59 @@ const CustomerProfileInfo = () => {
 export default CustomerProfileInfo;
 const Container = styled.div`
   padding: 0.75rem;
-  h5 {
+  h4 {
     margin-bottom: 1rem;
   }
 `;
-const ContentContainer = styled.div`
-  border-radius: 5px;
+const ContentContainer = styled.div(
+  ({ theme: { breakpoints, boxColor, shadow, font, subHeading } }) => `
+
+  background-color: ${boxColor};
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 1rem;
-`;
-const FieldContainer = styled.div`
-  background: ${props => props.color};
-  box-shadow: ${props => props.theme.shadow};
-  border-radius: 5px;
-  display: grid;
-  grid-template-columns: 0.2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
-  padding: 0.5rem;
-  p.label {
-    color: ${props => props.theme.subHeading};
-    font-size: 0.8rem;
-    margin-bottom: 0.4rem;
+  
+  .stat-item {
+    box-shadow: ${shadow};
+    border-radius: 8px;
+    flex: auto;
+    padding: 0.75rem 0.75rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
   }
-  p.value {
-    font-size: 0.8rem;
-    font-weight: ${props => props.theme.font.bold};
+  .details {
+    margin: 0 0.75rem;
+    .text {
+      font-size:0.9rem;
+      white-space:nowrap;
+      color: ${subHeading};
+    }
+    .value {
+      // font-size: 1.1rem;
+      font-weight: ${font.bold};
+    }
   }
-`;
-const Icon = styled.div`
-  background: ${props => props.color};
+  @media ${breakpoints.md}{
+    .details {
+      .text {
+        font-size:1rem;
+      }
+    }
+  }
+  @media ${breakpoints.lg}{
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+`
+);
+
+const Icon = styled.span`
   box-shadow: ${props => props.theme.shadow};
-  border-radius: 5px;
+  border-radius: 7px;
   padding: 0.5rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  background-color: ${props => props.color};
   color: #fff;
 `;

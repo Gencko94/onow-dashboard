@@ -66,6 +66,7 @@ const Container = styled.div(
   .details {
     margin: 0 0.75rem;
     .text {
+      font-size:0.9rem;
       white-space:nowrap;
       color: ${subHeading};
     }
@@ -75,8 +76,10 @@ const Container = styled.div(
     }
   }
   @media ${breakpoints.md}{
-    .text {
-     font-size:1.1rem;
+    .details {
+      .text {
+        font-size:1rem;
+      }
     }
   }
   @media ${breakpoints.lg}{

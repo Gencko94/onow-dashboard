@@ -19,7 +19,7 @@ const FooterDemo = lazy(
 const FooterCustomizer = () => {
   const { id } = useParams<{ id: string }>();
   const { data } = useQuery<FOOTER_DESIGN>(
-    `footer-design-${id}`,
+    ['footer-design', id],
     () => getFooterDesign(id),
     { suspense: true }
   );

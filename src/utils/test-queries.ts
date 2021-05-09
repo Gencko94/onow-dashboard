@@ -1,3 +1,4 @@
+import { CUSTOMER1 } from '../fakeData/fakeCustomerData';
 import {
   categories,
   footerDesign1,
@@ -10,6 +11,9 @@ import {
   product1,
   productGridDesign2,
 } from '../fakeData/fakeData';
+import { order1, storeOrders } from '../fakeData/fakeOrders';
+import { CUSTOMER } from '../interfaces/customers/customers';
+import { ORDER, STORE_ORDERS } from '../interfaces/orders/orders';
 import { FOOTER_DESIGN } from '../interfaces/website-layout/designs/footer-design';
 import { HEADER_DESIGN } from '../interfaces/website-layout/designs/header-design';
 import { PRODUCT_GRID_DESIGN } from '../interfaces/website-layout/designs/product-grid-design';
@@ -75,6 +79,31 @@ export const searchProducts = (value: string): Promise<any> => {
         resolve([product1, product1]);
       } else {
         resolve([]);
+      }
+    }, 500);
+  });
+};
+export const getSingleCustomer = (id: number): Promise<CUSTOMER> => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      if (id === 1) {
+        resolve(CUSTOMER1);
+      }
+    }, 500);
+  });
+};
+export const getStoreOrders = (): Promise<STORE_ORDERS> => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(storeOrders);
+    }, 500);
+  });
+};
+export const getOrderCustomer = (id: number): Promise<ORDER> => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      if (id === 1) {
+        resolve(order1);
       }
     }, 500);
   });

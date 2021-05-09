@@ -18,7 +18,7 @@ import CategoryBarEditor from '../components/WebsiteLayout/designs/header/editor
 const HeaderCustomizer = () => {
   const { id } = useParams<{ id: string }>();
   const { data } = useQuery<HEADER_DESIGN>(
-    `header-design-${id}`,
+    ['header-design', id],
     () => getHeaderDesign(id),
     { suspense: true }
   );
@@ -31,8 +31,8 @@ const HeaderCustomizer = () => {
     // Submit Style Changes to server
     console.log(data);
   };
+  console.log(methods.watch());
   return (
-    // <Suspense fallback={<p>Loading Styles</p>}>
     <FormProvider {...methods}>
       <Container>
         <div className="title-container">

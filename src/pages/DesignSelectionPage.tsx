@@ -12,7 +12,7 @@ const DesignSelectionPage = () => {
   const { type } = useParams<{ type: string }>();
   const history = useHistory();
   const { data } = useQuery<any>(
-    `${type}-styles`,
+    ['block-designs', type],
     () => getBlockDesigns(type),
     { enabled: Boolean(type) }
   );

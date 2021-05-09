@@ -22,7 +22,6 @@ const ProductGridStyleEditor = () => {
     formState: { errors },
   } = useFormContext<PRODUCT_GRID_DESIGN>();
   const values = watch();
-  console.log(values.type);
   return (
     <Container>
       <Grid cols="1fr 1fr" gap="1rem">
@@ -37,9 +36,7 @@ const ProductGridStyleEditor = () => {
       <Heading tag="h5" mb={1}>
         Appearance
       </Heading>
-      {/* <div className="wrapper"> */}
       {values.type === 'grid' && <ProductGridItemsPerRowEditor />}
-      {/* </div> */}
     </Container>
   );
 };

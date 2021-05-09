@@ -12,12 +12,12 @@ const CustomerProfilePanel = () => {
         </span>
         <p>Edit Customer </p>
       </button>
-      <button>
+      {/* <button>
         <span className="icon">
           <BiMessageRoundedDots size={20} />
         </span>
         <p>Send Message </p>
-      </button>
+      </button> */}
       <button className="delete">
         <span className="icon">
           <RiDeleteBinLine size={20} />

@@ -4,7 +4,7 @@ import { BsCheck } from 'react-icons/bs';
 import { MdCancel } from 'react-icons/md';
 import Select from 'react-select';
 import styled from 'styled-components';
-import { orderStatuses } from '../../../interfaces/orders/orders';
+import { orderStatuses } from '../../../fakeData/fakeOrderStatuses';
 
 const ChangeOrderStatusModalBody = ({ portal }: { portal: any }) => {
   const {

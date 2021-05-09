@@ -1,3 +1,5 @@
+import { parseISO } from 'date-fns';
+import format from 'date-fns/format';
 import { useState } from 'react';
 import ClickAwayListener from 'react-click-away-listener';
 import { BsCheck, BsThreeDotsVertical } from 'react-icons/bs';
@@ -6,38 +8,46 @@ import { RiDeleteBinLine } from 'react-icons/ri';
 import { useHistory } from 'react-router';
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
+import { ORDER } from '../../../interfaces/orders/orders';
+import OrderStatusChip from '../../reusable/OrderStatusChip';
+interface IProps {
+  order: ORDER;
+}
 
-const OrderItem = () => {
+const OrderItem = ({ order }: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   return (
-    <Container>
-      <div className="field">
+    <Container onClick={() => history.push('/orders/1')}>
+      {/* <div className="field">
         <CheckboxContainer>
           <BsCheck size={15} />
         </CheckboxContainer>
+      </div> */}
+      <div className="field">
+        <h6>{order.order_id}</h6>
       </div>
       <div className="field">
-        <h6>#568742</h6>
+        <h6>{`${order.order_customer.first_name} ${order.order_customer.last_name}`}</h6>
       </div>
       <div className="field">
-        <h6>Ahmad Zaaza</h6>
+        <h6>{`${order.order_type === 'delivery' ? 'Delivery' : 'Pickup'}`}</h6>
       </div>
       <div className="field">
-        <h6>+9659874621</h6>
+        <OrderStatusChip dots status={order.order_status} />
       </div>
       <div className="field">
-        <h6>gfox.piano@hotmail.com</h6>
+        <h6>{format(parseISO(order.created_at), 'dd/MM/yyyy')}</h6>
       </div>
       <div className="field">
         <ButtonsContainer>
-          <button
+          {/* <button
             onClick={() => history.push('/orders/1')}
             className="icon"
             title="Visit Profile"
           >
             <ImProfile size={18} />
-          </button>
+          </button> */}
           <ActionButtonContainer onClick={() => setActionsMenuOpen(true)}>
             <button className="icon">
               <BsThreeDotsVertical size={18} />
@@ -70,8 +80,9 @@ const OrderItem = () => {
 
 export default OrderItem;
 const Container = styled.div`
+  cursor: pointer;
   display: grid;
-  grid-template-columns: 50px 0.5fr 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr;
   gap: 1rem;
   border-bottom: ${props => props.theme.border};
   &:hover {
@@ -82,11 +93,11 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.5rem;
     text-align: center;
     h6 {
       font-size: 0.8rem;
-      font-weight: ${props => props.theme.font.bold};
+      font-weight: ${props => props.theme.font.semibold};
     }
   }
 `;
@@ -105,7 +116,7 @@ const CheckboxContainer = styled.button`
 `;
 const ButtonsContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 0.5rem;
   button.icon {
     display: inline-block;

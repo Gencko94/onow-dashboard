@@ -15,9 +15,9 @@ export interface NEW_PRODUCT {
   longDescriptionEn?: string;
   longDescriptionAr?: string;
   productCategories: number[];
-  price: string;
+  price?: string;
   saleEnabled: boolean;
-  salePrice: string;
+  salePrice?: string;
   saleEndDate: string;
   saleEndDateEnabled: boolean;
   priceFromVariations: boolean;
@@ -25,15 +25,16 @@ export interface NEW_PRODUCT {
   allowSideNotes: boolean;
   maxQtyPerUser: number;
   image: File[];
+  variations?: NEW_VARIATION[];
 }
-export interface NEW_VARIATION {
+export type NEW_VARIATION = {
   type_id: number;
   select_type: number;
   title: string;
   title_ar: string;
   required: number;
   values: VARIATION_VALUE[];
-}
+};
 
 export type VARIATION_VALUE = {
   name: string;

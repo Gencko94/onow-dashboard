@@ -3,12 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import Select from 'react-select';
 import styled from 'styled-components';
+import { PRODUCT_GRID_DESIGN } from '../../../../interfaces/website-layout/designs/product-grid-design';
 // import { CATEGORY } from '../../../../interfaces/categories/categories';
 import { getCategories } from '../../../../utils/test-queries';
 import Label from '../../../StyledComponents/Label';
 interface IProps {
-  control: Control<any>;
-  watch: UseFormWatch<any>;
+  control: Control<PRODUCT_GRID_DESIGN>;
+  watch: UseFormWatch<PRODUCT_GRID_DESIGN>;
 }
 const CategorySelector = ({ control, watch }: IProps) => {
   const { i18n } = useTranslation();
