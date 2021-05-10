@@ -15,13 +15,19 @@ const OrdersList = ({ orders }: IProps) => {
       <TableContainer>
         <GridHead>
           <div className="field">
-            <h6>Order ID</h6>
+            <h6>ID</h6>
           </div>
           <div className="field">
             <h6>Customer Name</h6>
           </div>
           <div className="field">
             <h6>Order Type</h6>
+          </div>
+          <div className="field">
+            <h6>Payment Type</h6>
+          </div>
+          <div className="field">
+            <h6>Payment Status</h6>
           </div>
 
           <div className="field">
@@ -62,18 +68,18 @@ const TableContainer = styled.div`
 
 const GridHead = styled.div`
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: 0.25fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
   background-color: ${props => props.theme.overlayColor};
   border-bottom: ${props => props.theme.border};
   gap: 1rem;
-  /* padding: 0 0.5rem; */
   .field {
-    padding: 1rem;
+    padding: 1rem 0.5rem;
     text-align: center;
     h6 {
       font-size: 0.8rem;
       color: ${props => props.theme.headingColor};
       font-weight: ${props => props.theme.font.semibold};
+      text-align: center;
     }
   }
 `;

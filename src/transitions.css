@@ -60,3 +60,21 @@
   transform: translateX(-100%);
   transition: all 100ms;
 }
+.orders-filter-enter {
+  opacity: 0;
+  max-height: 0;
+}
+.orders-filter-enter-active {
+  opacity: 1;
+  max-height: 300px;
+  transition: all 250ms;
+}
+.orders-filter-exit {
+  opacity: 1;
+  max-height: 300px;
+}
+.orders-filter-exit-active {
+  opacity: 0;
+  max-height: 0;
+  transition: all 250ms;
+}

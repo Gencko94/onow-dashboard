@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { MdAttachMoney } from 'react-icons/md';
 import styled from 'styled-components';
-import { ORDER_STATUS } from '../../../interfaces/orders/orders';
 import { VscOpenPreview, VscServerProcess } from 'react-icons/vsc';
 import { BsGear } from 'react-icons/bs';
 import { FiTruck } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
+import { STORE_ORDERS_STAT } from '../../../interfaces/orders/orders';
 
 interface IProps {
-  status: ORDER_STATUS;
+  status: STORE_ORDERS_STAT;
 }
 
 const OrderThumbnail = ({ status }: IProps) => {

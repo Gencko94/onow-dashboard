@@ -39,7 +39,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
-    border-radius: 5px;
+    border-radius: 6px;
 
     p {
       margin: 0 0.5rem;

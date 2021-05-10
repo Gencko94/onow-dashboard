@@ -10,6 +10,7 @@ import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { ORDER } from '../../../interfaces/orders/orders';
 import OrderStatusChip from '../../reusable/OrderStatusChip';
+import PaymentStatusChip from '../../reusable/PaymentStatusChip';
 interface IProps {
   order: ORDER;
 }
@@ -32,6 +33,14 @@ const OrderItem = ({ order }: IProps) => {
       </div>
       <div className="field">
         <h6>{`${order.order_type === 'delivery' ? 'Delivery' : 'Pickup'}`}</h6>
+      </div>
+      <div className="field">
+        <h6>{`${
+          order.payment_type === 'cash' ? 'Cash on Delivery' : 'Online'
+        }`}</h6>
+      </div>
+      <div className="field">
+        <PaymentStatusChip dots status={order.payment_status} />
       </div>
       <div className="field">
         <OrderStatusChip dots status={order.order_status} />
@@ -82,7 +91,7 @@ export default OrderItem;
 const Container = styled.div`
   cursor: pointer;
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: 0.25fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
   gap: 1rem;
   border-bottom: ${props => props.theme.border};
   &:hover {

@@ -476,7 +476,7 @@ const IconedInputContainer = styled.div`
   background-color: ${props => props.theme.inputColorLight};
   color: ${props => props.theme.headingColor};
   border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  border-radius: 6px;
 `;
 const CalendarContainer = styled.div`
   position: absolute;

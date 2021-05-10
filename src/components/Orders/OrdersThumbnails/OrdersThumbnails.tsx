@@ -3,8 +3,7 @@ import OrderThumbnail from './OrderThumbnail';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
-import { orderStatuses } from '../../../fakeData/fakeOrderStatuses';
-import { STORE_ORDERS_STATS } from '../../../interfaces/orders/orders';
+import { STORE_ORDERS_STAT } from '../../../interfaces/orders/orders';
 SwiperCore.use([Navigation]);
 
 const breakpoints = {
@@ -37,13 +36,13 @@ const breakpoints = {
   },
 };
 interface IProps {
-  stats: STORE_ORDERS_STATS;
+  stats: STORE_ORDERS_STAT[];
 }
 const OrdersThumbnails = ({ stats }: IProps) => {
   return (
     <Container>
       <Swiper breakpoints={breakpoints} freeMode>
-        {orderStatuses.map(status => (
+        {stats.map(status => (
           <SwiperSlide key={status.status_id}>
             <OrderThumbnail status={status} />
           </SwiperSlide>

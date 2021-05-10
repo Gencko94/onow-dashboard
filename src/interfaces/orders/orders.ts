@@ -20,6 +20,8 @@ export interface ORDER {
   order_customer: ORDER_CUSTOMER;
   order_status: ORDER_STATUS;
   order_type: 'delivery' | 'pickup';
+  payment_type: 'cash' | 'online';
+  payment_status: PAYMENT_STATUS;
   order_items: ORDER_ITEM[];
   coupon?: {
     code: string;
@@ -34,7 +36,12 @@ export interface ORDER_STATUS {
   title: {
     [key: string]: string;
   };
-  value?: number;
+}
+export interface PAYMENT_STATUS {
+  status_id: number;
+  title: {
+    [key: string]: string;
+  };
 }
 
 export interface ORDER_ITEM {
@@ -71,15 +78,29 @@ export const orderItems: ORDER_ITEM[] = [
     image: '/images/product.webp',
   },
 ];
-export type STORE_ORDERS_STATS = {
+export type STORE_ORDERS_STAT = {
   status_id: number;
   title: {
     [key: string]: string;
   };
   value: number;
-}[];
+};
 
 export interface STORE_ORDERS {
   orders: ORDER[];
-  stats: STORE_ORDERS_STATS;
+  stats: STORE_ORDERS_STAT[];
+}
+export interface ORDERS_FILTERS {
+  orderStatus: number | null;
+  paymentType: 'cash' | 'online' | null;
+  paymentStatus: number | null;
+  orderMode: 'delivery' | 'pickup' | null;
+  orderAmount: {
+    from: number | '';
+    to: number | '';
+  };
+  orderDate: {
+    from: Date | '';
+    to: Date | '';
+  };
 }

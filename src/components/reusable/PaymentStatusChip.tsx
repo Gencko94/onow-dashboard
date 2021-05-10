@@ -8,7 +8,7 @@ interface IProps {
   dots?: boolean;
 }
 
-const OrderStatusChip = ({ status, withBg, dots }: IProps) => {
+const PaymentStatusChip = ({ status, withBg, dots }: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
@@ -16,14 +16,9 @@ const OrderStatusChip = ({ status, withBg, dots }: IProps) => {
     switch (id) {
       case 1:
         return '#f8d300';
+
       case 2:
-        return '#1b5bff';
-      case 3:
-        return '#2dd4eb';
-      case 4:
         return '#02be02';
-      case 5:
-        return '#e60f07';
     }
   };
   return (
@@ -34,7 +29,7 @@ const OrderStatusChip = ({ status, withBg, dots }: IProps) => {
   );
 };
 
-export default OrderStatusChip;
+export default PaymentStatusChip;
 const Container = styled.div<{ bg?: string }>`
   display: flex;
   align-items: center;
