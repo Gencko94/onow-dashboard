@@ -53,6 +53,22 @@ const SideNav = () => {
       </SideNavItem>
       <SideNavItem
         onClick={() => {
+          if (openedItem === 2) {
+            return setOpenedItem(null);
+          }
+          setOpenedItem(2);
+        }}
+        opened={openedItem === 2}
+      >
+        <SideNavLink isActive={pathname === '/categories'} to="/categories">
+          <span className="icon">
+            <BiHomeAlt size={20} />
+          </span>
+          <h6>Categories</h6>
+        </SideNavLink>
+      </SideNavItem>
+      <SideNavItem
+        onClick={() => {
           if (openedItem === 3) {
             return setOpenedItem(null);
           }

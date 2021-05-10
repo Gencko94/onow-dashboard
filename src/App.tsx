@@ -19,6 +19,7 @@ import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
 import AddProduct from './pages/AddProduct';
 const Customers = lazy(() => import('./pages/Customers'));
+const Categories = lazy(() => import('./pages/Categories'));
 const CustomerProfile = lazy(() => import('./pages/CustomerProfile'));
 const Orders = lazy(() => import('./pages/Orders'));
 const Order = lazy(() => import('./pages/Order'));
@@ -65,6 +66,7 @@ function App() {
                     <Switch>
                       <Route exact path="/dashboard" component={Dashboard} />
                       <Route exact path="/products" component={Products} />
+                      <Route exact path="/categories" component={Categories} />
                       <Route exact path="/orders" component={Orders} />
                       <Route exact path="/orders/:id" component={Order} />
                       <Route exact path="/customers" component={Customers} />
