@@ -1,10 +1,15 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import SidebarOnowLogo from './OnowLogo/SidebarOnowLogo';
 import ProjectSwitcher from './ProjectSwitcher/ProjectSwitcher';
 import SideNav from './SideNav/SideNav';
 import SideUser from './SideUser/SideUser';
 import Hr from '../StyledComponents/Hr';
-const Sidebar = () => {
+
+interface IProps {
+  // drawerOpen: boolean;
+}
+
+const Sidebar = ({}: IProps) => {
   return (
     <Container>
       <SidebarOnowLogo />
@@ -23,20 +28,21 @@ const Container = styled.aside(
   background-color: #fff;
   box-shadow: ${shadow};
   padding: 1rem;
-  height: 90vh;
-  border-radius:12px;
-  
-  min-width: 300px;
+  position:fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  width:300px;
+  z-index:3;
+  display: flex;
   flex-direction: column;
   @media ${breakpoints.md}{
-    border-radius:0px;
-    display: flex;
-    align-self: flex-start;
-    min-height: 100vh;
-    position: sticky;
-    min-width: 300px;
-    top: 0;
 
+    z-index:1;
   }
+
+  
+  
+  
   `
 );

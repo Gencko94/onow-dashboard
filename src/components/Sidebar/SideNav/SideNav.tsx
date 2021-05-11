@@ -157,7 +157,7 @@ const SideNav = () => {
 export default SideNav;
 const Container = styled.ul(
   ({ theme: { breakpoints } }) => `
-  height: calc(100vh - 366px);
+  height: calc(100vh - 298px);
   overflow-y: auto;
   @media ${breakpoints.md} {
 

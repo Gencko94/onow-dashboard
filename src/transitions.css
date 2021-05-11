@@ -48,17 +48,25 @@
 }
 .side-menu-enter {
   transform: translateX(-100%);
+  /* max-width: 0; */
+  /* opacity: 0; */
 }
 .side-menu-enter-active {
+  /* max-width: 300px; */
+  /* opacity: 1; */
   transform: translateX(0);
-  transition: all 100ms;
+  transition: all 250ms ease-out;
 }
 .side-menu-exit {
+  /* max-width: 300px; */
+  /* opacity: 1; */
   transform: translateX(0);
 }
 .side-menu-exit-active {
+  /* opacity: 0; */
   transform: translateX(-100%);
-  transition: all 100ms;
+  /* max-width: 0; */
+  transition: all 250ms;
 }
 .orders-filter-enter {
   opacity: 0;

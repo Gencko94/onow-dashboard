@@ -15,11 +15,11 @@ const NavIconsDesktop = ({ handleToggleDrawer }: IProps) => {
   };
   return (
     <Container>
-      {!isDesktop && (
-        <button onClick={() => handleToggleDrawer()} className="icon">
-          <CgMenu size={22} />
-        </button>
-      )}
+      {/* {!isDesktop && ( */}
+      <button onClick={() => handleToggleDrawer()} className="icon">
+        <CgMenu size={22} />
+      </button>
+      {/* )} */}
       <button className="icon">
         <IoMdNotificationsOutline size={22} />
       </button>
