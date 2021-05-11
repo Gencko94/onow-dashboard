@@ -9,7 +9,7 @@ export const lightTheme = {
   shadow: '0px 4px 7px 2px rgb(213,213,213)',
   highlightColor: '#fbfbfb',
   highlightColorText: '#fff',
-  btnPrimaryLight: '#b11e29',
+  btnPrimaryLight: '#f78f21',
   btnPrimaryDark: '#b11e29',
   btnBorder: 'none',
   green: '#0B9B23',
@@ -17,9 +17,10 @@ export const lightTheme = {
   dangerRed: '#b72b2b',
   border: '1px solid rgba(0,0,0,0.1)',
   seperator: 'rgba(0,0,0,0.1)',
-  mainColor: '#b29b72',
+  mainColor: '#f78f21',
   boxColor: '#fff',
   iconColor: '#6f6f6f',
+  mainGradient: 'linear-gradient(90deg, #fe0488, #f78f21)',
 };
 
 export const darkTheme = {
@@ -45,4 +46,5 @@ export const darkTheme = {
   border: '1px solid #D8D8D8',
   seperator: 'rgba(250,250,250,0.3)',
   iconColor: '#e4e4e4',
+  mainGradient: 'linear-gradient(90deg, #fe0488, #f78f21)',
 };

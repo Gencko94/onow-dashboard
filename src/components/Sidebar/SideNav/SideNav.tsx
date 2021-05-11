@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { BiHomeAlt } from 'react-icons/bi';
 import { RiCoupon3Line, RiFileList3Line } from 'react-icons/ri';
 import { IoPeopleOutline } from 'react-icons/io5';
-import { AiOutlineBarChart } from 'react-icons/ai';
+import { AiFillSetting, AiOutlineBarChart } from 'react-icons/ai';
 import { FiChevronDown } from 'react-icons/fi';
 import { useState } from 'react';
 const SideNav = () => {
@@ -97,6 +97,22 @@ const SideNav = () => {
             <IoPeopleOutline size={20} />
           </span>
           <h6>Customers</h6>
+        </SideNavLink>
+      </SideNavItem>
+      <SideNavItem
+        onClick={() => {
+          if (openedItem === 5) {
+            return setOpenedItem(null);
+          }
+          setOpenedItem(5);
+        }}
+        opened={openedItem === 5}
+      >
+        <SideNavLink isActive={pathname === '/settings'} to="/settings">
+          <span className="icon">
+            <AiFillSetting size={20} />
+          </span>
+          <h6>Settings</h6>
         </SideNavLink>
       </SideNavItem>
       <SideNavItem

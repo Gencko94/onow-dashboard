@@ -28,6 +28,7 @@ const Coupon = lazy(() => import('./pages/Coupon'));
 const WebsiteLayout = lazy(() => import('./pages/WebsiteLayout'));
 const HeaderCustomizer = lazy(() => import('./pages/HeaderCustomizer'));
 const FooterCustomizer = lazy(() => import('./pages/FooterCustomizer'));
+const Settings = lazy(() => import('./pages/SettingsPages/Settings'));
 const ProductListGridCustomizer = lazy(
   () => import('./pages/ProductListGridCustomizer')
 );
@@ -107,6 +108,7 @@ function App() {
                         path="/products/new/:type"
                         component={AddProduct}
                       />
+                      <Route exact path="/settings" component={Settings} />
                     </Switch>
                   </Layout>
                 </ThemeProvider>

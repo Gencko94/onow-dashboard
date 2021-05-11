@@ -38,5 +38,6 @@ declare module 'styled-components' {
     maxWidthMd: string;
     maxWidthLg: string;
     iconColor: string;
+    mainGradient: string;
   }
 }
