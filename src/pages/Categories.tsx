@@ -1,7 +1,12 @@
 import styled from 'styled-components';
+import SvgLogo from '../components/SvgLogo/SvgLogo';
 
 const Categories = () => {
-  return <Container></Container>;
+  return (
+    <Container>
+      <SvgLogo />
+    </Container>
+  );
 };
 
 export default Categories;
