@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import DashboardOrder from './DashboardOrder';
+import styled from "styled-components";
+import DashboardOrder from "./DashboardOrder";
 
 const DashboardOrders = () => {
   return (
     <Container>
-      <Title>Latest Orders</Title>
+      <Title>New Orders</Title>
       <OrdersContainer>
         <DashboardOrder />
         <DashboardOrder />
@@ -16,9 +16,9 @@ const DashboardOrders = () => {
 
 export default DashboardOrders;
 const Container = styled.div`
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 8px;
-  background-color: ${props => props.theme.boxColor};
+  background-color: ${(props) => props.theme.boxColor};
   padding: 0.75rem;
   align-self: start;
   /* width: 300px; */

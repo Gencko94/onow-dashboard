@@ -86,3 +86,21 @@
   max-height: 0;
   transition: all 250ms;
 }
+.store-tasks-enter {
+  opacity: 0;
+  max-height: 0;
+}
+.store-tasks-enter-active {
+  opacity: 1;
+  max-height: 300px;
+  transition: all 250ms;
+}
+.store-tasks-exit {
+  opacity: 1;
+  max-height: 300px;
+}
+.store-tasks-exit-active {
+  opacity: 0;
+  max-height: 0;
+  transition: all 250ms;
+}
