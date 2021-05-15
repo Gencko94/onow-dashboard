@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import DashboardStatPanel from "../components/Dashboard/DashboardStatPanel/DashboardStatPanel";
 import DashboardOrders from "../components/Dashboard/DashboardOrders/DashboardOrders";
+import DashboardBestSeller from "../components/Dashboard/DashboardBestSeller/DashboardBestSeller";
 import StoreTasks from "../components/Dashboard/StoreTasks/StoreTasks";
 
 const Dashboard = () => {
@@ -10,9 +11,7 @@ const Dashboard = () => {
 
       <DashboardStatPanel />
       <DashboardOrders />
-      <DashboardOrders />
-      <DashboardOrders />
-      <DashboardOrders />
+      <DashboardBestSeller />
     </Container>
   );
 };

@@ -1,6 +1,6 @@
-import { FcSettings, FcLock, FcPositiveDynamic } from 'react-icons/fc';
-import styled from 'styled-components';
-import SettingsCard from '../../reusable/SettingsCard';
+import { FcSettings, FcLock, FcPositiveDynamic } from "react-icons/fc";
+import styled from "styled-components";
+import SettingsCard from "../../reusable/SettingsCard";
 
 const AccountSection = () => {
   return (
@@ -8,10 +8,10 @@ const AccountSection = () => {
       <h5>Account Settings</h5>
       <div className="cards-container">
         <SettingsCard
-          title="Profile Settings"
-          target="/settings/account"
+          title="Account Settings"
+          target="/settings/account-settings"
           Icon={FcSettings}
-          desc="Preview & Edit Profile Information"
+          desc="Preview & Edit Account Information"
         />
         <SettingsCard
           title="Password"

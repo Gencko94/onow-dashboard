@@ -7,8 +7,8 @@ const Settings = () => {
   return (
     <Container>
       <SubscriptionSection />
-      <AccountSection />
       <StoreSection />
+      <AccountSection />
     </Container>
   );
 };

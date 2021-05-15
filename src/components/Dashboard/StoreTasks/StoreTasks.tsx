@@ -6,7 +6,7 @@ import StoreTaskCard from "./StoreTaskCard";
 import TasksProgressBar from "./TasksProgressBar";
 
 const StoreTasks = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   return (
     <Container>
       <div className="head-container">
@@ -89,7 +89,7 @@ const Container = styled.div`
     }
   }
   .cards-container {
-    padding: 1rem;
+    padding: 2rem;
     display: grid;
     /* margin: 1rem 0; */
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;

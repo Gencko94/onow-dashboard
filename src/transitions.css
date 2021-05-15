@@ -92,12 +92,12 @@
 }
 .store-tasks-enter-active {
   opacity: 1;
-  max-height: 300px;
+  max-height: 340px;
   transition: all 250ms;
 }
 .store-tasks-exit {
   opacity: 1;
-  max-height: 300px;
+  max-height: 340px;
 }
 .store-tasks-exit-active {
   opacity: 0;

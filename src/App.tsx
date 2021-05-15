@@ -1,39 +1,42 @@
-import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
+import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import {
   QueryClient,
   QueryClientProvider,
   QueryErrorResetBoundary,
-} from 'react-query';
-import Login from './pages/Login';
-import ScrollToTopOnMount from './utils/ScrollToTopOnMount';
-import { lazy, Suspense } from 'react';
-import Loading from './utils/Loading';
-import ThemeProvider from './contexts/ThemeContext';
-import GlobalStyle from './globalStyles';
-import { ErrorBoundary } from 'react-error-boundary';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import 'react-placeholder/lib/reactPlaceholder.css';
-import Layout from './layout/Layout';
-import Sidebar from './components/Sidebar/Sidebar';
-import Dashboard from './pages/Dashboard';
-import Products from './pages/Products';
-import AddProduct from './pages/AddProduct';
-const Customers = lazy(() => import('./pages/Customers'));
-const Categories = lazy(() => import('./pages/Categories'));
-const CustomerProfile = lazy(() => import('./pages/CustomerProfile'));
-const Orders = lazy(() => import('./pages/Orders'));
-const Order = lazy(() => import('./pages/Order'));
-const Coupons = lazy(() => import('./pages/Coupons'));
-const Coupon = lazy(() => import('./pages/Coupon'));
-const WebsiteLayout = lazy(() => import('./pages/WebsiteLayout'));
-const HeaderCustomizer = lazy(() => import('./pages/HeaderCustomizer'));
-const FooterCustomizer = lazy(() => import('./pages/FooterCustomizer'));
-const Settings = lazy(() => import('./pages/SettingsPages/Settings'));
+} from "react-query";
+import Login from "./pages/Login";
+import ScrollToTopOnMount from "./utils/ScrollToTopOnMount";
+import { lazy, Suspense } from "react";
+import Loading from "./utils/Loading";
+import ThemeProvider from "./contexts/ThemeContext";
+import GlobalStyle from "./globalStyles";
+import { ErrorBoundary } from "react-error-boundary";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import "react-placeholder/lib/reactPlaceholder.css";
+import Layout from "./layout/Layout";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Dashboard from "./pages/Dashboard";
+import Products from "./pages/Products";
+import AddProduct from "./pages/AddProduct";
+const Customers = lazy(() => import("./pages/Customers"));
+const Categories = lazy(() => import("./pages/Categories"));
+const CustomerProfile = lazy(() => import("./pages/CustomerProfile"));
+const Orders = lazy(() => import("./pages/Orders"));
+const Order = lazy(() => import("./pages/Order"));
+const Coupons = lazy(() => import("./pages/Coupons"));
+const Coupon = lazy(() => import("./pages/Coupon"));
+const WebsiteLayout = lazy(() => import("./pages/WebsiteLayout"));
+const HeaderCustomizer = lazy(() => import("./pages/HeaderCustomizer"));
+const FooterCustomizer = lazy(() => import("./pages/FooterCustomizer"));
+const Settings = lazy(() => import("./pages/SettingsPages/Settings"));
+const AccountSettings = lazy(
+  () => import("./pages/SettingsPages/AccountSettings")
+);
 const ProductListGridCustomizer = lazy(
-  () => import('./pages/ProductListGridCustomizer')
+  () => import("./pages/ProductListGridCustomizer")
 );
 
-const DesignSelectionPage = lazy(() => import('./pages/DesignSelectionPage'));
+const DesignSelectionPage = lazy(() => import("./pages/DesignSelectionPage"));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -49,9 +52,9 @@ function App() {
         <ErrorBoundary
           fallbackRender={({ error, resetErrorBoundary }) => (
             <div>
-              There was an error!{' '}
+              There was an error!{" "}
               <button onClick={() => resetErrorBoundary()}>Try again</button>
-              <pre style={{ whiteSpace: 'normal' }}>{error.message}</pre>
+              <pre style={{ whiteSpace: "normal" }}>{error.message}</pre>
             </div>
           )}
           onReset={reset}
@@ -109,6 +112,11 @@ function App() {
                         component={AddProduct}
                       />
                       <Route exact path="/settings" component={Settings} />
+                      <Route
+                        exact
+                        path="/settings/account-settings"
+                        component={AccountSettings}
+                      />
                     </Switch>
                   </Layout>
                 </ThemeProvider>

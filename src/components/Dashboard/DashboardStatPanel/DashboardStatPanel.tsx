@@ -112,7 +112,7 @@ const ContentContainer = styled.div(
 
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+  gap: 1.5rem;
   
   .stat-item {
     background-color: ${boxColor};

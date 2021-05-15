@@ -1,4 +1,4 @@
-import { CUSTOMER1 } from '../fakeData/fakeCustomerData';
+import { CUSTOMER1 } from "../fakeData/fakeCustomerData";
 import {
   categories,
   footerDesign1,
@@ -10,42 +10,43 @@ import {
   productGridDesigns,
   product1,
   productGridDesign2,
-} from '../fakeData/fakeData';
-import { order1, storeOrders } from '../fakeData/fakeOrders';
-import { CUSTOMER } from '../interfaces/customers/customers';
-import { ORDER, STORE_ORDERS } from '../interfaces/orders/orders';
-import { FOOTER_DESIGN } from '../interfaces/website-layout/designs/footer-design';
-import { HEADER_DESIGN } from '../interfaces/website-layout/designs/header-design';
-import { PRODUCT_GRID_DESIGN } from '../interfaces/website-layout/designs/product-grid-design';
+} from "../fakeData/fakeData";
+import { newOrders, order1, storeOrders } from "../fakeData/fakeOrders";
+import { CUSTOMER } from "../interfaces/customers/customers";
+import { NEW_ORDERS } from "../interfaces/orders/new-orders";
+import { ORDER, STORE_ORDERS } from "../interfaces/orders/orders";
+import { FOOTER_DESIGN } from "../interfaces/website-layout/designs/footer-design";
+import { HEADER_DESIGN } from "../interfaces/website-layout/designs/header-design";
+import { PRODUCT_GRID_DESIGN } from "../interfaces/website-layout/designs/product-grid-design";
 
 export const getBlockDesigns = (type: string): Promise<any> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      if (type === 'header') {
+      if (type === "header") {
         resolve(headerDesigns);
-      } else if (type === 'footer') {
+      } else if (type === "footer") {
         resolve(footerDesigns);
-      } else if (type === 'product-grid') {
+      } else if (type === "product-grid") {
         resolve(productGridDesigns);
       }
     }, 500);
   });
 };
 export const getHeaderDesign = (id: string): Promise<HEADER_DESIGN> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      if (id === '1') {
+      if (id === "1") {
         resolve(headerDesign1);
-      } else if (id === '2') {
+      } else if (id === "2") {
         resolve(headerDesign2);
       }
     }, 500);
   });
 };
 export const getFooterDesign = (id: string): Promise<FOOTER_DESIGN> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      if (id === '1') {
+      if (id === "1") {
         resolve(footerDesign1);
       }
     }, 500);
@@ -54,18 +55,18 @@ export const getFooterDesign = (id: string): Promise<FOOTER_DESIGN> => {
 export const getProductGridDesign = (
   id: string
 ): Promise<PRODUCT_GRID_DESIGN> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      if (id === '1') {
+      if (id === "1") {
         resolve(productGridDesign1);
-      } else if (id === '2') {
+      } else if (id === "2") {
         resolve(productGridDesign2);
       }
     }, 500);
   });
 };
 export const getCategories = (): Promise<any> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(categories);
     }, 500);
@@ -73,9 +74,9 @@ export const getCategories = (): Promise<any> => {
 };
 export const searchProducts = (value: string): Promise<any> => {
   console.log(value);
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      if (value === 'test') {
+      if (value === "test") {
         resolve([product1, product1]);
       } else {
         resolve([]);
@@ -84,7 +85,7 @@ export const searchProducts = (value: string): Promise<any> => {
   });
 };
 export const getSingleCustomer = (id: number): Promise<CUSTOMER> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       if (id === 1) {
         resolve(CUSTOMER1);
@@ -93,18 +94,25 @@ export const getSingleCustomer = (id: number): Promise<CUSTOMER> => {
   });
 };
 export const getStoreOrders = (): Promise<STORE_ORDERS> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(storeOrders);
     }, 500);
   });
 };
 export const getOrderCustomer = (id: number): Promise<ORDER> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       if (id === 1) {
         resolve(order1);
       }
+    }, 500);
+  });
+};
+export const getNewOrders = (): Promise<NEW_ORDERS> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(newOrders);
     }, 500);
   });
 };

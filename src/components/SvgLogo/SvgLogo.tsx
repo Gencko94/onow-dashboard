@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
-import styled from 'styled-components';
-import '../../styles/logoAnimationStyles.css';
+import styled from "styled-components";
+import "../../styles/logoAnimationStyles.css";
 const SvgLogo = () => {
-  useEffect(() => {
-    const logo = document.querySelectorAll('#letters path') as any;
-    for (let i = 0; i < logo.length; i++) {
-      console.log('letter' + i + logo[i].getTotalLength());
-    }
-  }, []);
+  // useEffect(() => {
+  //   const logo = document.querySelectorAll('#letters path') as any;
+  //   for (let i = 0; i < logo.length; i++) {
+  //     console.log('letter' + i + logo[i].getTotalLength());
+  //   }
+  // }, []);
   return (
     <Container>
       <svg

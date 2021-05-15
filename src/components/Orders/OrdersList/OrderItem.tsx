@@ -1,16 +1,16 @@
-import { parseISO } from 'date-fns';
-import format from 'date-fns/format';
-import { useState } from 'react';
-import ClickAwayListener from 'react-click-away-listener';
-import { BsCheck, BsThreeDotsVertical } from 'react-icons/bs';
-import { ImProfile } from 'react-icons/im';
-import { RiDeleteBinLine } from 'react-icons/ri';
-import { useHistory } from 'react-router';
-import { CSSTransition } from 'react-transition-group';
-import styled from 'styled-components';
-import { ORDER } from '../../../interfaces/orders/orders';
-import OrderStatusChip from '../../reusable/OrderStatusChip';
-import PaymentStatusChip from '../../reusable/PaymentStatusChip';
+import { parseISO } from "date-fns";
+import format from "date-fns/format";
+import { useState } from "react";
+import ClickAwayListener from "react-click-away-listener";
+import { BsCheck, BsThreeDotsVertical } from "react-icons/bs";
+import { ImProfile } from "react-icons/im";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { useHistory } from "react-router";
+import { CSSTransition } from "react-transition-group";
+import styled from "styled-components";
+import { ORDER } from "../../../interfaces/orders/orders";
+import OrderStatusChip from "../../reusable/OrderStatusChip";
+import PaymentStatusChip from "../../reusable/PaymentStatusChip";
 interface IProps {
   order: ORDER;
 }
@@ -19,7 +19,7 @@ const OrderItem = ({ order }: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   return (
-    <Container onClick={() => history.push('/orders/1')}>
+    <Container onClick={() => history.push("/orders/1")}>
       {/* <div className="field">
         <CheckboxContainer>
           <BsCheck size={15} />
@@ -32,11 +32,11 @@ const OrderItem = ({ order }: IProps) => {
         <h6>{`${order.order_customer.first_name} ${order.order_customer.last_name}`}</h6>
       </div>
       <div className="field">
-        <h6>{`${order.order_type === 'delivery' ? 'Delivery' : 'Pickup'}`}</h6>
+        <h6>{`${order.order_type === "delivery" ? "Delivery" : "Pickup"}`}</h6>
       </div>
       <div className="field">
         <h6>{`${
-          order.payment_type === 'cash' ? 'Cash on Delivery' : 'Online'
+          order.payment_type === "cash" ? "Cash on Delivery" : "Online"
         }`}</h6>
       </div>
       <div className="field">
@@ -46,7 +46,7 @@ const OrderItem = ({ order }: IProps) => {
         <OrderStatusChip dots status={order.order_status} />
       </div>
       <div className="field">
-        <h6>{format(parseISO(order.created_at), 'dd/MM/yyyy')}</h6>
+        <h6>{format(parseISO(order.created_at), "dd/MM/yyyy")}</h6>
       </div>
       <div className="field">
         <ButtonsContainer>
@@ -88,30 +88,40 @@ const OrderItem = ({ order }: IProps) => {
 };
 
 export default OrderItem;
-const Container = styled.div`
+const Container = styled.div(
+  ({ theme: { breakpoints, border, font, highlightColor } }) => `
+  background-color:#fff;
   cursor: pointer;
   display: grid;
   grid-template-columns: 0.25fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
   gap: 1rem;
-  border-bottom: ${props => props.theme.border};
+  border-bottom: ${border};
   &:hover {
-    background-color: ${props => props.theme.highlightColor};
+    background-color: ${highlightColor};
   }
-
+  
   .field {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem;
+    padding: 0.75rem;
     text-align: center;
-    h6 {
-      font-size: 0.8rem;
-      font-weight: ${props => props.theme.font.semibold};
-    }
   }
-`;
+  h6 {
+    font-size: 0.8rem;
+    font-weight: ${font.semibold};
+  }
+  @media ${breakpoints.xl}{
+    h6 {
+      font-weight: ${font.regular};
+      font-size: 1rem;
+    }
+
+  }
+  `
+);
 const CheckboxContainer = styled.button`
-  border: ${props => props.theme.border};
+  border: ${(props) => props.theme.border};
   border-radius: 5px;
   width: 20px;
   height: 20px;
@@ -120,7 +130,7 @@ const CheckboxContainer = styled.button`
   justify-content: center;
   padding: 2px;
   &:hover {
-    background-color: ${props => props.theme.accentColor};
+    background-color: ${(props) => props.theme.accentColor};
   }
 `;
 const ButtonsContainer = styled.div`
@@ -150,7 +160,7 @@ const ActionButtonContainer = styled.div`
     z-index: 10;
     background-color: #fff;
     transform-origin: right;
-    box-shadow: ${props => props.theme.shadow};
+    box-shadow: ${(props) => props.theme.shadow};
     border-radius: 5px;
   }
   ul li button {
@@ -161,11 +171,11 @@ const ActionButtonContainer = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 0.9rem;
-    color: ${props => props.color};
+    color: ${(props) => props.color};
     transition: all 75ms ease;
     &:hover {
-      color: ${props => props.theme.headingColor};
-      background-color: ${props => props.theme.highlightColor};
+      color: ${(props) => props.theme.headingColor};
+      background-color: ${(props) => props.theme.highlightColor};
     }
     p {
       margin: 0 0.5rem;
