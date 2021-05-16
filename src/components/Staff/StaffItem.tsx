@@ -1,62 +1,41 @@
-import { parseISO } from "date-fns";
-import format from "date-fns/format";
 import { useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
-import { BsCheck, BsThreeDotsVertical } from "react-icons/bs";
-import { ImProfile } from "react-icons/im";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useHistory } from "react-router";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
-import { ORDER } from "../../../interfaces/orders/orders";
-import OrderStatusChip from "../../reusable/OrderStatusChip";
-import PaymentStatusChip from "../../reusable/PaymentStatusChip";
+import { STAFF_MEMBER } from "../../interfaces/staff/staff";
+
 interface IProps {
-  order: ORDER;
+  member: STAFF_MEMBER;
 }
 
-const OrderItem = ({ order }: IProps) => {
+const StaffItem = ({ member }: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   return (
-    <Container onClick={() => history.push("/orders/1")}>
+    <Container onClick={() => history.push(`/staff/${member.id}`)}>
       {/* <div className="field">
-        <CheckboxContainer>
-          <BsCheck size={15} />
-        </CheckboxContainer>
-      </div> */}
+          <CheckboxContainer>
+            <BsCheck size={15} />
+          </CheckboxContainer>
+        </div> */}
       <div className="field">
-        <h6>{order.order_id}</h6>
+        <h6>{member.name}</h6>
       </div>
       <div className="field">
-        <h6>{`${order.order_customer.first_name} ${order.order_customer.last_name}`}</h6>
+        <h6>{member.phone}</h6>
       </div>
       <div className="field">
-        <h6>{`${order.order_type === "delivery" ? "Delivery" : "Pickup"}`}</h6>
+        <h6>{member.email}</h6>
       </div>
       <div className="field">
-        <h6>{`${
-          order.payment_type === "cash" ? "Cash on Delivery" : "Online"
-        }`}</h6>
+        <h6>{member.role}</h6>
       </div>
-      <div className="field">
-        <PaymentStatusChip dots status={order.payment_status} />
-      </div>
-      <div className="field">
-        <OrderStatusChip dots status={order.order_status} />
-      </div>
-      <div className="field">
-        <h6>{format(parseISO(order.created_at), "dd/MM/yyyy")}</h6>
-      </div>
+
       <div className="field">
         <ButtonsContainer>
-          {/* <button
-            onClick={() => history.push('/orders/1')}
-            className="icon"
-            title="Visit Profile"
-          >
-            <ImProfile size={18} />
-          </button> */}
           <ActionButtonContainer
             onClick={(e) => {
               e.stopPropagation();
@@ -92,57 +71,45 @@ const OrderItem = ({ order }: IProps) => {
   );
 };
 
-export default OrderItem;
+export default StaffItem;
 const Container = styled.div(
   ({ theme: { breakpoints, border, font, highlightColor } }) => `
-  background-color:#fff;
-  cursor: pointer;
-  display: grid;
-  grid-template-columns: 0.25fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
-  gap: 1rem;
-  border-bottom: ${border};
-  &:hover {
-    background-color: ${highlightColor};
-  }
-  
-  .field {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.75rem;
-    text-align: center;
-  }
-  h6 {
-    font-size: 0.8rem;
-    font-weight: ${font.semibold};
-  }
-  @media ${breakpoints.xl}{
-    h6 {
-      font-weight: ${font.regular};
-      font-size: 1rem;
+    background-color:#fff;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    border-bottom: ${border};
+    &:hover {
+      background-color: ${highlightColor};
     }
-
-  }
-  `
+    
+    .field {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem;
+      text-align: center;
+    }
+    h6 {
+      font-size: 0.8rem;
+      font-weight: ${font.semibold};
+    }
+    @media ${breakpoints.xl}{
+      h6 {
+        font-weight: ${font.regular};
+        font-size: 1rem;
+      }
+  
+    }
+    `
 );
-const CheckboxContainer = styled.button`
-  border: ${(props) => props.theme.border};
-  border-radius: 5px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;
-  &:hover {
-    background-color: ${(props) => props.theme.accentColor};
-  }
-`;
 const ButtonsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.5rem;
   button.icon {
+    z-index: 1;
     display: inline-block;
     cursor: pointer;
     padding: 0.25rem;

@@ -1,10 +1,11 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import { BiPlus } from 'react-icons/bi';
-import { VscFilter } from 'react-icons/vsc';
-import { CSSTransition } from 'react-transition-group';
-import styled from 'styled-components';
-import { ORDERS_FILTERS } from '../../../interfaces/orders/orders';
-import OrdersFilters from './OrdersFilters/OrdersFilters';
+import { Dispatch, SetStateAction, useState } from "react";
+import { BiPlus } from "react-icons/bi";
+import { VscFilter } from "react-icons/vsc";
+import { CSSTransition } from "react-transition-group";
+import styled from "styled-components";
+import { ORDERS_FILTERS } from "../../../interfaces/orders/orders";
+import AddButton from "../../reusable/AddButton";
+import OrdersFilters from "./OrdersFilters/OrdersFilters";
 interface IProps {
   filters: ORDERS_FILTERS;
   setFilters: Dispatch<SetStateAction<ORDERS_FILTERS>>;
@@ -14,12 +15,8 @@ const OrdersPanel = ({ setFilters, filters }: IProps) => {
   return (
     <>
       <Container>
-        <button className="addBtn">
-          <Icon>
-            <BiPlus size={30} />
-          </Icon>
-          <p>Add New Order</p>
-        </button>
+        <AddButton target="/orders/create" title="Create New Order" />
+
         <button onClick={() => setOpen(!open)} className="filter-btn">
           <Icon>
             <VscFilter size={15} />
@@ -52,20 +49,18 @@ const Container = styled.div`
     border-radius: 6px;
     padding: 0.25rem 0.5rem;
   }
-  .addBtn {
-    background-color: ${props => props.theme.green};
-    box-shadow: ${props => props.theme.shadow};
+
+  .filter-btn {
+    background-color: ${(props) => props.theme.green};
+    box-shadow: ${(props) => props.theme.shadow};
 
     position: relative;
 
-    color: #fff;
-  }
-  .filter-btn {
     background-color: #f0f0f0;
   }
   p {
     font-size: 0.9rem;
-    font-weight: ${props => props.theme.font.regular};
+    font-weight: ${(props) => props.theme.font.regular};
     margin: 0 0.5rem;
   }
 `;

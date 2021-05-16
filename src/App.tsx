@@ -29,6 +29,11 @@ const WebsiteLayout = lazy(() => import("./pages/WebsiteLayout"));
 const HeaderCustomizer = lazy(() => import("./pages/HeaderCustomizer"));
 const FooterCustomizer = lazy(() => import("./pages/FooterCustomizer"));
 const Settings = lazy(() => import("./pages/SettingsPages/Settings"));
+const Staff = lazy(() => import("./pages/StaffPages/Staff"));
+const StaffMember = lazy(() => import("./pages/StaffPages/StaffMember"));
+const CreateStaffMember = lazy(
+  () => import("./pages/StaffPages/CreateStaffMember")
+);
 const AccountSettings = lazy(
   () => import("./pages/SettingsPages/AccountSettings")
 );
@@ -117,6 +122,13 @@ function App() {
                         path="/settings/account-settings"
                         component={AccountSettings}
                       />
+                      <Route exact path="/staff" component={Staff} />
+                      <Route
+                        exact
+                        path="/staff/create"
+                        component={CreateStaffMember}
+                      />
+                      <Route exact path="/staff/:id" component={StaffMember} />
                     </Switch>
                   </Layout>
                 </ThemeProvider>

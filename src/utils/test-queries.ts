@@ -12,9 +12,11 @@ import {
   productGridDesign2,
 } from "../fakeData/fakeData";
 import { newOrders, order1, storeOrders } from "../fakeData/fakeOrders";
+import { staff1, staffMembers } from "../fakeData/fakeStaffMembers";
 import { CUSTOMER } from "../interfaces/customers/customers";
 import { NEW_ORDERS } from "../interfaces/orders/new-orders";
 import { ORDER, STORE_ORDERS } from "../interfaces/orders/orders";
+import { STAFF_MEMBER } from "../interfaces/staff/staff";
 import { FOOTER_DESIGN } from "../interfaces/website-layout/designs/footer-design";
 import { HEADER_DESIGN } from "../interfaces/website-layout/designs/header-design";
 import { PRODUCT_GRID_DESIGN } from "../interfaces/website-layout/designs/product-grid-design";
@@ -113,6 +115,20 @@ export const getNewOrders = (): Promise<NEW_ORDERS> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(newOrders);
+    }, 500);
+  });
+};
+export const getStoreStaffMembers = (): Promise<STAFF_MEMBER[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(staffMembers);
+    }, 500);
+  });
+};
+export const getStaffMember = (id: string): Promise<STAFF_MEMBER> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(staff1);
     }, 500);
   });
 };

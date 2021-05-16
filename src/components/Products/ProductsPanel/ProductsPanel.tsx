@@ -1,37 +1,39 @@
-import styled from 'styled-components';
-import { BiPlus } from 'react-icons/bi';
-import { GiFrenchFries } from 'react-icons/gi';
-import { GoPackage } from 'react-icons/go';
-import ProductsPanelActions from './ProductsPanelActions/ProductPanelActions';
-import { useHistory } from 'react-router';
-import ClickAwayListener from 'react-click-away-listener';
-import { CSSTransition } from 'react-transition-group';
-import { useState } from 'react';
-import { PRODUCT_TYPE } from '../../../interfaces/products/products';
+import styled from "styled-components";
+import { BiPlus } from "react-icons/bi";
+import { GiFrenchFries } from "react-icons/gi";
+import { GoPackage } from "react-icons/go";
+import ProductsPanelActions from "./ProductsPanelActions/ProductPanelActions";
+import { useHistory } from "react-router";
+import ClickAwayListener from "react-click-away-listener";
+import { CSSTransition } from "react-transition-group";
+import { useState } from "react";
+import { PRODUCT_TYPE } from "../../../interfaces/products/products";
+import AddButton from "../../reusable/AddButton";
 const ProductsPanel = () => {
   const [optionsMenuOpen, setOptionsMenuOpen] = useState(false);
   const productTypes: PRODUCT_TYPE[] = [
     {
       id: 1,
-      name: 'Ready',
+      name: "Ready",
       description: {
-        en: 'Ready to be Shipped Products',
-        ar: 'المنتجات الجاهزة للشحن',
+        en: "Ready to be Shipped Products",
+        ar: "المنتجات الجاهزة للشحن",
       },
     },
     {
       id: 2,
-      name: 'Food',
+      name: "Food",
       description: {
-        en: 'Food that required prepration Time',
-        ar: 'المأكولات التي تتطلب وقتا للتحضير',
+        en: "Food that required prepration Time",
+        ar: "المأكولات التي تتطلب وقتا للتحضير",
       },
     },
   ];
   const history = useHistory();
   return (
     <Container>
-      <AddProductButton onClick={() => setOptionsMenuOpen(true)}>
+      <AddButton target="/products/new/food" title="Create new Product" />
+      {/* <AddProductButton onClick={() => setOptionsMenuOpen(true)}>
         <Icon>
           <BiPlus size={30} />
         </Icon>
@@ -46,7 +48,7 @@ const ProductsPanel = () => {
         <ClickAwayListener onClickAway={() => setOptionsMenuOpen(false)}>
           <OptionsList>
             <MenuItem
-              onClick={() => history.push({ pathname: '/products/new/food' })}
+              onClick={() => history.push({ pathname: "/products/new/food" })}
             >
               <Icon>
                 <GiFrenchFries size={20} />
@@ -57,7 +59,7 @@ const ProductsPanel = () => {
               </OptionNameContainer>
             </MenuItem>
             <MenuItem
-              onClick={() => history.push({ pathname: '/products/new/ready' })}
+              onClick={() => history.push({ pathname: "/products/new/ready" })}
             >
               <Icon>
                 <GoPackage size={20} />
@@ -69,7 +71,7 @@ const ProductsPanel = () => {
             </MenuItem>
           </OptionsList>
         </ClickAwayListener>
-      </CSSTransition>
+      </CSSTransition> */}
       <ProductsPanelActions />
     </Container>
   );
@@ -84,8 +86,8 @@ const Container = styled.div`
   position: relative;
 `;
 const AddProductButton = styled.button`
-  background-color: ${props => props.theme.green};
-  box-shadow: ${props => props.theme.shadow};
+  background-color: ${(props) => props.theme.green};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 7px;
   position: relative;
   padding: 0.25rem 0.5rem;
@@ -105,7 +107,7 @@ const Icon = styled.span`
 `;
 const AddText = styled.p`
   font-size: 0.9rem;
-  font-weight: ${props => props.theme.font.regular};
+  font-weight: ${(props) => props.theme.font.regular};
   margin: 0 0.5rem;
 `;
 const OptionNameContainer = styled.div`
@@ -113,7 +115,7 @@ const OptionNameContainer = styled.div`
 `;
 const OptionText = styled.p``;
 const OptionDesc = styled.p`
-  color: ${props => props.theme.subHeading};
+  color: ${(props) => props.theme.subHeading};
   font-size: 0.8rem;
 `;
 const OptionsList = styled.div`
@@ -124,7 +126,7 @@ const OptionsList = styled.div`
   z-index: 10;
   background-color: #fff;
   /* transform-origin: top right; */
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 5px;
 `;
 const MenuItem = styled.button`
@@ -135,11 +137,11 @@ const MenuItem = styled.button`
   justify-content: center;
   align-items: center;
   font-size: 0.9rem;
-  color: ${props => props.color};
+  color: ${(props) => props.color};
   overflow: hidden;
   transition: all 75ms ease;
   &:hover {
-    color: ${props => props.theme.headingColor};
-    background-color: ${props => props.theme.highlightColor};
+    color: ${(props) => props.theme.headingColor};
+    background-color: ${(props) => props.theme.highlightColor};
   }
 `;
