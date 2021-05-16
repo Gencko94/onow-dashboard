@@ -1,11 +1,11 @@
-import React, { Suspense, useState } from 'react';
-import ClickAwayListener from 'react-click-away-listener';
-import { CSSTransition } from 'react-transition-group';
-import styled, { css } from 'styled-components';
-import DesktopNavbar from '../../components/DesktopNavbar/DesktopNavbar';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import useResponsive from '../../hooks/useResponsive';
-import Loading from '../../utils/Loading';
+import React, { Suspense, useState } from "react";
+import ClickAwayListener from "react-click-away-listener";
+import { CSSTransition } from "react-transition-group";
+import styled, { css } from "styled-components";
+import DesktopNavbar from "../../components/DesktopNavbar/DesktopNavbar";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import useResponsive from "../../hooks/useResponsive";
+import Loading from "../../utils/Loading";
 
 const LayoutDesktop: React.FC = ({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState(true);
@@ -33,7 +33,9 @@ const LayoutDesktop: React.FC = ({ children }) => {
 
       <Content drawerOpen={drawerOpen}>
         <DesktopNavbar handleToggleDrawer={handleToggleDrawer} />
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        <Suspense fallback={<Loading />}>
+          <div className="page-container">{children}</div>
+        </Suspense>
       </Content>
     </ContentContainer>
   );
@@ -59,7 +61,14 @@ const Content = styled.div<{ drawerOpen: boolean }>(
   background-color:#f3f3f3;
   transition: all 250ms ease-out;
   margin-left:0;
+  .page-container {
+    padding:0.5rem;
+  }
   @media ${breakpoints.md}{
+    
+    .page-container {
+      padding:0.75rem;
+    }
     
     ${
       drawerOpen &&

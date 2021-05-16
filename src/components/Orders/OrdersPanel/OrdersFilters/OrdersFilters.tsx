@@ -1,21 +1,21 @@
-import { Dispatch, SetStateAction, useMemo, useState } from 'react';
-import Calendar from 'react-calendar';
-import ClickAwayListener from 'react-click-away-listener';
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import Calendar from "react-calendar";
+import ClickAwayListener from "react-click-away-listener";
 import {
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
   FaAngleLeft,
   FaAngleRight,
-} from 'react-icons/fa';
-import { FiCalendar } from 'react-icons/fi';
-import { VscFilter } from 'react-icons/vsc';
-import Select from 'react-select';
-import { CSSTransition } from 'react-transition-group';
-import styled from 'styled-components';
-import 'react-calendar/dist/Calendar.css';
-import { ORDERS_FILTERS } from '../../../../interfaces/orders/orders';
-import format from 'date-fns/format';
-import { GrClose } from 'react-icons/gr';
+} from "react-icons/fa";
+import { FiCalendar } from "react-icons/fi";
+import { VscFilter } from "react-icons/vsc";
+import Select from "react-select";
+import { CSSTransition } from "react-transition-group";
+import styled from "styled-components";
+import "react-calendar/dist/Calendar.css";
+import { ORDERS_FILTERS } from "../../../../interfaces/orders/orders";
+import format from "date-fns/format";
+import { GrClose } from "react-icons/gr";
 
 interface IProps {
   open: boolean;
@@ -24,34 +24,34 @@ interface IProps {
 }
 const orderStatusOptions = [
   {
-    title: 'Pending Approval',
+    title: "Pending Approval",
     value: 1,
   },
-  { title: 'Under Processing', value: 2 },
-  { title: 'Out for Delivery', value: 3 },
-  { title: 'Delivered', value: 4 },
-  { title: 'Cancelled', value: 5 },
+  { title: "Under Processing", value: 2 },
+  { title: "Out for Delivery", value: 3 },
+  { title: "Delivered", value: 4 },
+  { title: "Cancelled", value: 5 },
 ];
 const paymentTypeOptions = [
   {
-    title: 'Cash',
-    value: 'cash',
+    title: "Cash",
+    value: "cash",
   },
-  { title: 'Online', value: 'online' },
+  { title: "Online", value: "online" },
 ];
 const paymentStatusOptions = [
   {
-    title: 'Paid',
+    title: "Paid",
     value: 1,
   },
-  { title: 'Pending', value: 2 },
+  { title: "Pending", value: 2 },
 ];
 const orderModeOptions = [
   {
-    title: 'Delivery',
-    value: 'delivery',
+    title: "Delivery",
+    value: "delivery",
   },
-  { title: 'Pickup', value: 'pick' },
+  { title: "Pickup", value: "pick" },
 ];
 const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
   const [fromCalendarOpen, setFromCalendarOpen] = useState(false);
@@ -60,16 +60,16 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
     return {
       control: (provided: any, state: any) => ({
         ...provided,
-        fontSize: '0.9rem',
-        minHeight: '35px',
+        fontSize: "0.9rem",
+        minHeight: "35px",
       }),
       indicatorContainer: (provided: any, state: any) => ({
         ...provided,
-        padding: state.isFocused ? '0.4rem' : '0.4rem',
+        padding: state.isFocused ? "0.4rem" : "0.4rem",
       }),
       option: (provided: any) => ({
         ...provided,
-        fontSize: '0.9rem',
+        fontSize: "0.9rem",
       }),
       menu: (provided: any) => ({
         ...provided,
@@ -93,23 +93,23 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
             isSearchable={false}
             options={orderStatusOptions}
             value={orderStatusOptions.filter(
-              i => filters.orderStatus === i.value
+              (i) => filters.orderStatus === i.value
             )}
-            onChange={val => {
+            onChange={(val) => {
               if (val) {
-                setFilters(prev => ({
+                setFilters((prev) => ({
                   ...prev,
                   orderStatus: val.value,
                 }));
               } else {
-                setFilters(prev => ({
+                setFilters((prev) => ({
                   ...prev,
                   orderStatus: null,
                 }));
               }
             }}
-            getOptionLabel={option => option.title}
-            getOptionValue={option => option.value.toString()}
+            getOptionLabel={(option) => option.title}
+            getOptionValue={(option) => option.value.toString()}
           />
         </div>
         <div className="filter-container">
@@ -121,23 +121,23 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
             isSearchable={false}
             options={paymentTypeOptions}
             value={paymentTypeOptions.filter(
-              i => filters.paymentType === i.value
+              (i) => filters.paymentType === i.value
             )}
-            onChange={val => {
+            onChange={(val) => {
               if (val) {
-                setFilters(prev => ({
+                setFilters((prev) => ({
                   ...prev,
-                  paymentType: val.value as 'cash' | 'online',
+                  paymentType: val.value as "cash" | "online",
                 }));
               } else {
-                setFilters(prev => ({
+                setFilters((prev) => ({
                   ...prev,
                   paymentType: null,
                 }));
               }
             }}
-            getOptionLabel={option => option.title}
-            getOptionValue={option => option.value}
+            getOptionLabel={(option) => option.title}
+            getOptionValue={(option) => option.value}
           />
         </div>
         <div className="filter-container">
@@ -149,23 +149,23 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
             styles={selectStyles}
             options={paymentStatusOptions}
             value={paymentStatusOptions.filter(
-              i => filters.paymentStatus === i.value
+              (i) => filters.paymentStatus === i.value
             )}
-            onChange={val => {
+            onChange={(val) => {
               if (val) {
-                setFilters(prev => ({
+                setFilters((prev) => ({
                   ...prev,
                   paymentStatus: val.value,
                 }));
               } else {
-                setFilters(prev => ({
+                setFilters((prev) => ({
                   ...prev,
                   paymentStatus: null,
                 }));
               }
             }}
-            getOptionLabel={option => option.title}
-            getOptionValue={option => option.value.toString()}
+            getOptionLabel={(option) => option.title}
+            getOptionValue={(option) => option.value.toString()}
           />
         </div>
         <div className="filter-container">
@@ -176,22 +176,24 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
             isSearchable={false}
             styles={selectStyles}
             options={orderModeOptions}
-            value={orderModeOptions.filter(i => filters.orderMode === i.value)}
-            onChange={val => {
+            value={orderModeOptions.filter(
+              (i) => filters.orderMode === i.value
+            )}
+            onChange={(val) => {
               if (val) {
-                setFilters(prev => ({
+                setFilters((prev) => ({
                   ...prev,
-                  orderMode: val.value as 'delivery' | 'pickup',
+                  orderMode: val.value as "delivery" | "pickup",
                 }));
               } else {
-                setFilters(prev => ({
+                setFilters((prev) => ({
                   ...prev,
                   orderMode: null,
                 }));
               }
             }}
-            getOptionLabel={option => option.title}
-            getOptionValue={option => option.value}
+            getOptionLabel={(option) => option.title}
+            getOptionValue={(option) => option.value}
           />
         </div>
         <div className="filter-container">
@@ -201,8 +203,8 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
               <label>From</label>
               <input
                 value={filters.orderAmount.from}
-                onChange={e => {
-                  setFilters(prev => ({
+                onChange={(e) => {
+                  setFilters((prev) => ({
                     ...prev,
                     orderAmount: {
                       ...prev.orderAmount,
@@ -218,8 +220,8 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
               <label>To</label>
               <input
                 value={filters.orderAmount.to}
-                onChange={e => {
-                  setFilters(prev => ({
+                onChange={(e) => {
+                  setFilters((prev) => ({
                     ...prev,
                     orderAmount: {
                       ...prev.orderAmount,
@@ -242,8 +244,8 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
                 <input
                   value={
                     filters.orderDate.from
-                      ? format(filters.orderDate.from as Date, 'yyyy-MM-dd')
-                      : ''
+                      ? format(filters.orderDate.from as Date, "yyyy-MM-dd")
+                      : ""
                   }
                   readOnly
                 />
@@ -266,7 +268,7 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
                     <div className="calendar-container">
                       <Calendar
                         onChange={(date: Date | Date[]) => {
-                          setFilters(prev => ({
+                          setFilters((prev) => ({
                             ...prev,
                             orderDate: {
                               ...prev.orderDate,
@@ -294,8 +296,8 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
                 <input
                   value={
                     filters.orderDate.to
-                      ? format(filters.orderDate.to as Date, 'yyyy-MM-dd')
-                      : ''
+                      ? format(filters.orderDate.to as Date, "yyyy-MM-dd")
+                      : ""
                   }
                   readOnly
                 />
@@ -318,7 +320,7 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
                     <div className="calendar-container">
                       <Calendar
                         onChange={(date: Date | Date[]) => {
-                          setFilters(prev => ({
+                          setFilters((prev) => ({
                             ...prev,
                             orderDate: {
                               ...prev.orderDate,
@@ -354,12 +356,12 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
           onClick={() =>
             setFilters({
               orderAmount: {
-                from: '',
-                to: '',
+                from: "",
+                to: "",
               },
               orderDate: {
-                from: '',
-                to: '',
+                from: "",
+                to: "",
               },
               orderMode: null,
               orderStatus: null,
@@ -381,7 +383,7 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
 
 export default OrdersFilters;
 const Container = styled.div<{ open: boolean }>`
-  background-color: #f0f0f0;
+  background-color: #fff;
 
   border-radius: 6px;
 
@@ -424,8 +426,8 @@ const Container = styled.div<{ open: boolean }>`
       position: relative;
       align-items: center;
       justify-content: center;
-      background-color: ${props => props.theme.inputColorLight};
-      color: ${props => props.theme.headingColor};
+      background-color: ${(props) => props.theme.inputColorLight};
+      color: ${(props) => props.theme.headingColor};
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 6px;
       .icon {
@@ -433,7 +435,7 @@ const Container = styled.div<{ open: boolean }>`
         display: flex;
         align-items: center;
         justify-content: center;
-        color: ${props => props.theme.subHeading};
+        color: ${(props) => props.theme.subHeading};
       }
       input {
         display: block;
@@ -480,7 +482,7 @@ const ButtonsContainer = styled.div`
   }
   .filter-btn {
     color: #fff;
-    background-color: ${props => props.theme.green};
+    background-color: ${(props) => props.theme.green};
   }
   .clear-btn {
   }

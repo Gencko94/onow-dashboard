@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import AddNewBlock from '../components/WebsiteLayout/WebsiteLayoutOverview/AddNewBlock';
-import FooterBlock from '../components/WebsiteLayout/WebsiteLayoutOverview/FooterBlock';
-import HeaderBlock from '../components/WebsiteLayout/WebsiteLayoutOverview/HeaderBlock';
-import LayoutBlock from '../components/WebsiteLayout/WebsiteLayoutOverview/LayoutBlock';
+import { useState } from "react";
+import styled from "styled-components";
+import AddNewBlock from "../components/WebsiteLayout/WebsiteLayoutOverview/AddNewBlock";
+import FooterBlock from "../components/WebsiteLayout/WebsiteLayoutOverview/FooterBlock";
+import HeaderBlock from "../components/WebsiteLayout/WebsiteLayoutOverview/HeaderBlock";
+import LayoutBlock from "../components/WebsiteLayout/WebsiteLayoutOverview/LayoutBlock";
 
 const BlockDetailsPage = () => {
   const [totalBlocks, setTotalBlocks] = useState(1);
@@ -21,7 +21,6 @@ const BlockDetailsPage = () => {
 
 export default BlockDetailsPage;
 const Container = styled.div`
-  padding: 0.75rem;
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;

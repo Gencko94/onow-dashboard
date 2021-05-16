@@ -1,15 +1,12 @@
-import styled from 'styled-components';
-import SvgLogo from '../components/SvgLogo/SvgLogo';
+import styled from "styled-components";
+import SvgLogo from "../components/SvgLogo/SvgLogo";
 
 const Categories = () => {
   return (
-    <Container>
+    <div>
       <SvgLogo />
-    </Container>
+    </div>
   );
 };
 
 export default Categories;
-const Container = styled.div`
-  padding: 0.75rem;
-`;

@@ -30,6 +30,7 @@ const Button = styled.button(
     padding: 0.25rem 0.5rem;
     position: relative;
     color: #fff;
+    transition:transform 75ms ease;
     .icon {
         display: flex;
         align-items: center;
@@ -38,6 +39,9 @@ const Button = styled.button(
     p {
        font-size:0.9rem;
        margin: 0 0.25rem;
+      }
+      &:hover {
+        transform:translateY(-2px);
       }
     `
 );

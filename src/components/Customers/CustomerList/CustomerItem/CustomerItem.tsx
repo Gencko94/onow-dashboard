@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { BsCheck, BsThreeDotsVertical } from 'react-icons/bs';
-import { useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
-import ClickAwayListener from 'react-click-away-listener';
-import { RiDeleteBinLine } from 'react-icons/ri';
-import { ImProfile } from 'react-icons/im';
-import { useHistory } from 'react-router';
+import styled from "styled-components";
+import { BsCheck, BsThreeDotsVertical } from "react-icons/bs";
+import { useState } from "react";
+import { CSSTransition } from "react-transition-group";
+import ClickAwayListener from "react-click-away-listener";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { ImProfile } from "react-icons/im";
+import { useHistory } from "react-router";
 const CustomerItem = () => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
@@ -28,7 +28,7 @@ const CustomerItem = () => {
       <div className="field">
         <ButtonsContainer>
           <button
-            onClick={() => history.push('/customers/1')}
+            onClick={() => history.push("/customers/1")}
             className="icon"
             title="Visit Profile"
           >
@@ -68,10 +68,11 @@ export default CustomerItem;
 const Container = styled.div`
   display: grid;
   grid-template-columns: 50px 1fr 1fr 1fr 0.5fr;
+  background-color: #fff;
   gap: 1rem;
-  border-bottom: ${props => props.theme.border};
+  border-bottom: ${(props) => props.theme.border};
   &:hover {
-    background-color: ${props => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.highlightColor};
   }
 
   .field {
@@ -82,12 +83,12 @@ const Container = styled.div`
     text-align: center;
     h6 {
       font-size: 0.9rem;
-      font-weight: ${props => props.theme.font.regular};
+      font-weight: ${(props) => props.theme.font.regular};
     }
   }
 `;
 const CheckboxContainer = styled.button`
-  border: ${props => props.theme.border};
+  border: ${(props) => props.theme.border};
   border-radius: 5px;
   width: 20px;
   height: 20px;
@@ -96,7 +97,7 @@ const CheckboxContainer = styled.button`
   justify-content: center;
   padding: 2px;
   &:hover {
-    background-color: ${props => props.theme.accentColor};
+    background-color: ${(props) => props.theme.accentColor};
   }
 `;
 const ButtonsContainer = styled.div`
@@ -126,7 +127,7 @@ const ActionButtonContainer = styled.div`
     z-index: 10;
     background-color: #fff;
     transform-origin: right;
-    box-shadow: ${props => props.theme.shadow};
+    box-shadow: ${(props) => props.theme.shadow};
     border-radius: 5px;
   }
   ul li button {
@@ -137,11 +138,11 @@ const ActionButtonContainer = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 0.9rem;
-    color: ${props => props.color};
+    color: ${(props) => props.color};
     transition: all 75ms ease;
     &:hover {
-      color: ${props => props.theme.headingColor};
-      background-color: ${props => props.theme.highlightColor};
+      color: ${(props) => props.theme.headingColor};
+      background-color: ${(props) => props.theme.highlightColor};
     }
     p {
       margin: 0 0.5rem;

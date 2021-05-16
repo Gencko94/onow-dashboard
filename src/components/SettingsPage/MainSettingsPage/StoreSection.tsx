@@ -6,9 +6,9 @@ import {
   FcVlc,
   FcSupport,
   FcTimeline,
-} from 'react-icons/fc';
-import styled from 'styled-components';
-import SettingsCard from '../../reusable/SettingsCard';
+} from "react-icons/fc";
+import styled from "styled-components";
+import SettingsCard from "../../reusable/SettingsCard";
 
 const StoreSection = () => {
   return (
@@ -28,10 +28,10 @@ const StoreSection = () => {
           desc="Manage your store identity"
         />
         <SettingsCard
-          title="Store Branches"
-          target="/settings/store-branches"
+          title="Branches & Warehouses"
+          target="/settings/branch-warehouse"
           Icon={FcTimeline}
-          desc="Manage your store branches"
+          desc="Manage your store branches & Warehouses"
         />
         <SettingsCard
           title="Store Domain"

@@ -35,7 +35,6 @@ const StaffMember = () => {
 
 export default StaffMember;
 const Container = styled.div`
-  padding: 0.75rem;
   .panel {
     display: flex;
     align-items: center;

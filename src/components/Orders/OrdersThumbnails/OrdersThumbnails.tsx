@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import OrderThumbnail from './OrderThumbnail';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation } from 'swiper';
-import 'swiper/swiper-bundle.css';
-import { STORE_ORDERS_STAT } from '../../../interfaces/orders/orders';
+import styled from "styled-components";
+import OrderThumbnail from "./OrderThumbnail";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation } from "swiper";
+import "swiper/swiper-bundle.css";
+import { STORE_ORDERS_STAT } from "../../../interfaces/orders/orders";
 SwiperCore.use([Navigation]);
 
 const breakpoints = {
@@ -19,19 +19,19 @@ const breakpoints = {
   },
   // when window width is >= 640px
   640: {
-    slidesPerView: 4,
+    slidesPerView: 3.5,
     spaceBetween: 20,
   },
   768: {
-    slidesPerView: 5,
-    spaceBetween: 0,
+    slidesPerView: 3.5,
+    spaceBetween: 20,
   },
   1100: {
     slidesPerView: 4.25,
-    spaceBetween: 0,
+    spaceBetween: 20,
   },
   1440: {
-    slidesPerView: 5,
+    slidesPerView: 4,
     spaceBetween: 20,
   },
 };
@@ -42,7 +42,7 @@ const OrdersThumbnails = ({ stats }: IProps) => {
   return (
     <Container>
       <Swiper breakpoints={breakpoints} freeMode>
-        {stats.map(status => (
+        {stats.map((status) => (
           <SwiperSlide key={status.status_id}>
             <OrderThumbnail status={status} />
           </SwiperSlide>

@@ -5,15 +5,12 @@ import SubscriptionSection from "../../components/SettingsPage/MainSettingsPage/
 
 const Settings = () => {
   return (
-    <Container>
+    <div>
       <SubscriptionSection />
       <StoreSection />
       <AccountSection />
-    </Container>
+    </div>
   );
 };
 
 export default Settings;
-const Container = styled.div`
-  padding: 0.75rem;
-`;

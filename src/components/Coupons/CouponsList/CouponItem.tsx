@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { BsCheck, BsThreeDotsVertical } from 'react-icons/bs';
-import { useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
-import ClickAwayListener from 'react-click-away-listener';
-import { RiDeleteBinLine } from 'react-icons/ri';
-import { ImProfile } from 'react-icons/im';
-import { useHistory } from 'react-router';
+import styled from "styled-components";
+import { BsCheck, BsThreeDotsVertical } from "react-icons/bs";
+import { useState } from "react";
+import { CSSTransition } from "react-transition-group";
+import ClickAwayListener from "react-click-away-listener";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { ImProfile } from "react-icons/im";
+import { useHistory } from "react-router";
 const CouponItem = () => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
@@ -43,7 +43,7 @@ const CouponItem = () => {
       <div className="field">
         <ButtonsContainer>
           <button
-            onClick={() => history.push('/customers/1')}
+            onClick={() => history.push("/customers/1")}
             className="icon"
             title="Visit Profile"
           >
@@ -82,11 +82,12 @@ const CouponItem = () => {
 export default CouponItem;
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  background-color: #fff;
   gap: 1rem;
-  border-bottom: ${props => props.theme.border};
+  border-bottom: ${(props) => props.theme.border};
   &:hover {
-    background-color: ${props => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.highlightColor};
   }
 
   .field {
@@ -97,7 +98,7 @@ const Container = styled.div`
     text-align: center;
     h6 {
       font-size: 0.8rem;
-      font-weight: ${props => props.theme.font.bold};
+      font-weight: ${(props) => props.theme.font.bold};
     }
   }
 `;
@@ -129,7 +130,7 @@ const ActionButtonContainer = styled.div`
     z-index: 10;
     background-color: #fff;
     transform-origin: right;
-    box-shadow: ${props => props.theme.shadow};
+    box-shadow: ${(props) => props.theme.shadow};
     border-radius: 5px;
   }
   ul li button {
@@ -140,11 +141,11 @@ const ActionButtonContainer = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 0.9rem;
-    color: ${props => props.color};
+    color: ${(props) => props.color};
     transition: all 75ms ease;
     &:hover {
-      color: ${props => props.theme.headingColor};
-      background-color: ${props => props.theme.highlightColor};
+      color: ${(props) => props.theme.headingColor};
+      background-color: ${(props) => props.theme.highlightColor};
     }
     p {
       margin: 0 0.5rem;
@@ -164,12 +165,12 @@ const Status = styled.div`
   .dot {
     width: 10px;
     height: 10px;
-    background-color: ${props => props.color};
+    background-color: ${(props) => props.color};
     border-radius: 50%;
   }
   h6 {
     /* font-size: 0.8rem; */
-    color: ${props => props.color};
+    color: ${(props) => props.color};
 
     margin: 0 0.25rem;
   }
@@ -180,9 +181,9 @@ const EnabledButton = styled.button<{ enabled: boolean }>`
   justify-content: center;
   font-size: 0.9rem;
   padding: 0.25rem 0.5rem;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.enabled ? props.theme.dangerRed : props.theme.green};
-  color: ${props => props.theme.btnText};
-  border: ${props => props.theme.border};
+  color: ${(props) => props.theme.btnText};
+  border: ${(props) => props.theme.border};
   border-radius: 5px;
 `;

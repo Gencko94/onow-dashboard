@@ -1,21 +1,20 @@
-import { IconType } from 'react-icons/lib';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
+import { IconType } from "react-icons/lib";
+import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 
 interface IProps {
   title: string;
   desc: string;
   image: string;
   target: string;
-  btnText: string
+  btnText: string;
 }
 
 const StoreTaskCard = ({ desc, title, image, target, btnText }: IProps) => {
-  const history = useHistory()
+  const history = useHistory();
   return (
     <Container>
-      < img src={image} alt='title' className="img" />
-
+      <img src={image} alt="title" className="img" />
 
       <p className="title">{title}</p>
       <p className="desc">{desc}</p>
@@ -52,11 +51,12 @@ const Container = styled.div`
   }
   &:hover {
     box-shadow: ${(props) => props.theme.shadow};
+    transform: translateY(-2px);
   }
   button {
     padding: 0.5rem 0.75rem;
     border-radius: 6px;
-    font-size:0.9rem;
+    font-size: 0.9rem;
     box-shadow: ${(props) => props.theme.shadow};
     transition: background 200ms ease;
     background: ${(props) => props.theme.mainGradient};

@@ -1,11 +1,105 @@
-import styled from 'styled-components';
-import { ORDER } from '../../../interfaces/orders/orders';
-import ExportAs from '../../reusable/ExportAs';
-import OrderItem from './OrderItem';
+import { Dispatch, SetStateAction, useMemo } from "react";
+import styled from "styled-components";
+import { ORDER } from "../../../interfaces/orders/orders";
+import { ORDER_SORT } from "../../../pages/Orders";
+import ExportAs from "../../reusable/ExportAs";
+import TableHead from "../../reusable/TableHead";
+import OrderItem from "./OrderItem";
 interface IProps {
   orders: ORDER[];
+  sortBy: ORDER_SORT;
+  setSortBy: Dispatch<SetStateAction<ORDER_SORT>>;
 }
-const OrdersList = ({ orders }: IProps) => {
+const OrdersList = ({ orders, setSortBy, sortBy }: IProps) => {
+  const cols = useMemo(
+    () => [
+      { title: "id", sortable: false },
+      {
+        title: "customerName",
+        sortable: true,
+        cb: () => {
+          if (sortBy.by === "customerName") {
+            if (sortBy.order === "asc") {
+              setSortBy({ by: "customerName", order: "desc" });
+            } else {
+              setSortBy({ by: "customerName", order: "asc" });
+            }
+          } else {
+            setSortBy({ by: "customerName", order: "desc" });
+          }
+        },
+      },
+      {
+        title: "orderType",
+        sortable: true,
+        cb: () => {
+          if (sortBy.by === "orderType") {
+            if (sortBy.order === "asc") {
+              setSortBy({ by: "orderType", order: "desc" });
+            } else {
+              setSortBy({ by: "orderType", order: "asc" });
+            }
+          } else {
+            setSortBy({ by: "orderType", order: "desc" });
+          }
+        },
+      },
+      {
+        title: "paymentType",
+        sortable: true,
+        cb: () => {
+          if (sortBy.by === "paymentType") {
+            if (sortBy.order === "asc") {
+              setSortBy({ by: "paymentType", order: "desc" });
+            } else {
+              setSortBy({ by: "paymentType", order: "asc" });
+            }
+          } else {
+            setSortBy({ by: "paymentType", order: "desc" });
+          }
+        },
+      },
+      {
+        title: "paymentStatus",
+        sortable: true,
+        cb: () => {
+          if (sortBy.by === "paymentStatus") {
+            if (sortBy.order === "asc") {
+              setSortBy({ by: "paymentStatus", order: "desc" });
+            } else {
+              setSortBy({ by: "paymentStatus", order: "asc" });
+            }
+          } else {
+            setSortBy({ by: "paymentStatus", order: "desc" });
+          }
+        },
+      },
+      {
+        title: "orderStatus",
+        sortable: false,
+      },
+      {
+        title: "orderDate",
+        sortable: true,
+        cb: () => {
+          if (sortBy.by === "orderDate") {
+            if (sortBy.order === "asc") {
+              setSortBy({ by: "orderDate", order: "desc" });
+            } else {
+              setSortBy({ by: "orderDate", order: "asc" });
+            }
+          } else {
+            setSortBy({ by: "orderDate", order: "desc" });
+          }
+        },
+      },
+      {
+        title: "actions",
+        sortable: false,
+      },
+    ],
+    [sortBy]
+  );
   return (
     <Container>
       <div className="title-container">
@@ -13,35 +107,15 @@ const OrdersList = ({ orders }: IProps) => {
         <ExportAs />
       </div>
       <TableContainer>
-        <GridHead>
-          <div className="field">
-            <h6>ID</h6>
-          </div>
-          <div className="field">
-            <h6>Customer Name</h6>
-          </div>
-          <div className="field">
-            <h6>Order Type</h6>
-          </div>
-          <div className="field">
-            <h6>Payment Type</h6>
-          </div>
-          <div className="field">
-            <h6>Payment Status</h6>
-          </div>
+        <TableHead
+          cols={cols}
+          gridCols="0.25fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr"
+          activeSortBy={sortBy.by}
+          activeOrder={sortBy.order}
+        />
 
-          <div className="field">
-            <h6>Order Status</h6>
-          </div>
-          <div className="field">
-            <h6>Order Date</h6>
-          </div>
-          <div className="field">
-            <h6>Actions</h6>
-          </div>
-        </GridHead>
         <div>
-          {orders.map(order => (
+          {orders.map((order) => (
             <OrderItem order={order} key={order.order_id} />
           ))}
         </div>
@@ -62,24 +136,6 @@ const Container = styled.div`
 const TableContainer = styled.div`
   border-radius: 8px;
   overflow: hidden;
-  border: ${props => props.theme.border};
-  box-shadow: ${props => props.theme.shadow};
-`;
-
-const GridHead = styled.div`
-  display: grid;
-  grid-template-columns: 0.25fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
-  background-color: ${props => props.theme.overlayColor};
-  border-bottom: ${props => props.theme.border};
-  gap: 1rem;
-  .field {
-    padding: 1rem 0.5rem;
-    text-align: center;
-    h6 {
-      font-size: 0.8rem;
-      color: ${props => props.theme.headingColor};
-      font-weight: ${props => props.theme.font.semibold};
-      text-align: center;
-    }
-  }
+  border: ${(props) => props.theme.border};
+  box-shadow: ${(props) => props.theme.shadow};
 `;

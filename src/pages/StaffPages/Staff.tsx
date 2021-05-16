@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import AddButton from "../../components/reusable/AddButton";
@@ -5,12 +6,38 @@ import ExportAs from "../../components/reusable/ExportAs";
 import StaffItem from "../../components/Staff/StaffItem";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
 import { getStoreStaffMembers } from "../../utils/test-queries";
+import TableHead from "../../components/reusable/TableHead";
 
 const Staff = () => {
   const { data } = useQuery<STAFF_MEMBER[]>(
     "staff-members",
     getStoreStaffMembers,
     { suspense: true }
+  );
+  const cols = useMemo(
+    () => [
+      {
+        title: "name",
+        sortable: false,
+      },
+      {
+        title: "phoneNumber",
+        sortable: false,
+      },
+      {
+        title: "emailAddress",
+        sortable: false,
+      },
+      {
+        title: "role",
+        sortable: false,
+      },
+      {
+        title: "actions",
+        sortable: false,
+      },
+    ],
+    []
   );
   return (
     <Container>
@@ -22,24 +49,8 @@ const Staff = () => {
         <ExportAs />
       </div>
       <div className="table">
-        <div className="table-head">
-          <div className="field">
-            <h6>Name</h6>
-          </div>
-          <div className="field">
-            <h6>Phone Number</h6>
-          </div>
-          <div className="field">
-            <h6>Email Address</h6>
-          </div>
-          <div className="field">
-            <h6>Role</h6>
-          </div>
+        <TableHead cols={cols} />
 
-          <div className="field">
-            <h6>Actions</h6>
-          </div>
-        </div>
         <div>
           {data?.map((member) => (
             <StaffItem member={member} key={member.id} />
@@ -52,7 +63,6 @@ const Staff = () => {
 
 export default Staff;
 const Container = styled.div`
-  padding: 0.75rem;
   .panel {
     padding: 0.75rem 0;
   }
@@ -67,22 +77,5 @@ const Container = styled.div`
     overflow: hidden;
     border: ${(props) => props.theme.border};
     box-shadow: ${(props) => props.theme.shadow};
-  }
-  .table-head {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    background-color: ${(props) => props.theme.overlayColor};
-    border-bottom: ${(props) => props.theme.border};
-    gap: 1rem;
-    .field {
-      padding: 1rem 0.5rem;
-      text-align: center;
-      h6 {
-        font-size: 0.9rem;
-        color: ${(props) => props.theme.headingColor};
-        font-weight: ${(props) => props.theme.font.semibold};
-        text-align: center;
-      }
-    }
   }
 `;

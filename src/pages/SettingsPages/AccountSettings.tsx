@@ -15,7 +15,7 @@ const AccountSettings = () => {
     console.log(data);
   };
   return (
-    <Container>
+    <div>
       <SettingsBreadcrumbs transId="Account" />
       <AccountInformationSection>
         <h5>Account Information</h5>
@@ -47,14 +47,12 @@ const AccountSettings = () => {
         <h5>Password</h5>
         <div className="container"></div>
       </PasswordSection>
-    </Container>
+    </div>
   );
 };
 
 export default AccountSettings;
-const Container = styled.div`
-  padding: 0.75rem;
-`;
+
 const AccountInformationSection = styled.div`
   margin: 2rem 0;
   h5 {

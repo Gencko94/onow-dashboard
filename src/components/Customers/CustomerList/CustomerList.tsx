@@ -1,28 +1,25 @@
-import styled from 'styled-components';
-import CustomerItem from './CustomerItem/CustomerItem';
+import { useMemo } from "react";
+import styled from "styled-components";
+import TableHead from "../../reusable/TableHead";
+import CustomerItem from "./CustomerItem/CustomerItem";
 
 const CustomerList = () => {
+  const cols = useMemo(
+    () => [
+      { title: " ", sortable: false },
+      { title: "customerName", sortable: true },
+      { title: "customerPhone", sortable: true },
+      { title: "customerEmail", sortable: true },
+      { title: "actions", sortable: false },
+    ],
+    []
+  );
   return (
     <Container>
-      <GridHead>
-        <div className="field">
-          <span />
-        </div>
-        <div className="field">
-          <h6>Customer Name</h6>
-        </div>
-        <div className="field">
-          <h6>Customer Phone</h6>
-        </div>
-        <div className="field">
-          <h6>Customer Email</h6>
-        </div>
-        <div className="field">
-          <h6>Actions</h6>
-        </div>
-      </GridHead>
+      <TableHead cols={cols} gridCols="50px 1fr 1fr 1fr 0.5fr" />
+
       <div>
-        {[0, 1, 2, 3].map(i => (
+        {[0, 1, 2, 3].map((i) => (
           <CustomerItem />
         ))}
       </div>
@@ -35,24 +32,6 @@ export default CustomerList;
 const Container = styled.div`
   border-radius: 8px;
   overflow: hidden;
-  border: ${props => props.theme.border};
-  box-shadow: ${props => props.theme.shadow};
-`;
-
-const GridHead = styled.div`
-  display: grid;
-  grid-template-columns: 50px 1fr 1fr 1fr 0.5fr;
-  background-color: ${props => props.theme.overlayColor};
-  border-bottom: ${props => props.theme.border};
-  gap: 1rem;
-  /* padding: 0 0.5rem; */
-  .field {
-    padding: 1rem;
-    text-align: center;
-    h6 {
-      /* font-size: 0.9rem; */
-      color: ${props => props.theme.headingColor};
-      font-weight: ${props => props.theme.font.regular};
-    }
-  }
+  border: ${(props) => props.theme.border};
+  box-shadow: ${(props) => props.theme.shadow};
 `;

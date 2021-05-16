@@ -1,24 +1,24 @@
-import { useQuery } from 'react-query';
-import styled from 'styled-components';
-import { HEADER_DESIGN } from '../interfaces/website-layout/designs/header-design';
-import { getHeaderDesign } from '../utils/test-queries';
+import { useQuery } from "react-query";
+import styled from "styled-components";
+import { HEADER_DESIGN } from "../interfaces/website-layout/designs/header-design";
+import { getHeaderDesign } from "../utils/test-queries";
 
-import { useParams } from 'react-router';
+import { useParams } from "react-router";
 import {
   Controller,
   FormProvider,
   SubmitHandler,
   useForm,
-} from 'react-hook-form';
-import Toggle from 'react-toggle';
-import 'react-toggle/style.css';
-import HeaderDemo from '../components/WebsiteLayout/designs/header/HeaderDemo';
-import CategoryBarEditor from '../components/WebsiteLayout/designs/header/editors/CategoryBarEditor';
+} from "react-hook-form";
+import Toggle from "react-toggle";
+import "react-toggle/style.css";
+import HeaderDemo from "../components/WebsiteLayout/designs/header/HeaderDemo";
+import CategoryBarEditor from "../components/WebsiteLayout/designs/header/editors/CategoryBarEditor";
 
 const HeaderCustomizer = () => {
   const { id } = useParams<{ id: string }>();
   const { data } = useQuery<HEADER_DESIGN>(
-    ['header-design', id],
+    ["header-design", id],
     () => getHeaderDesign(id),
     { suspense: true }
   );
@@ -26,8 +26,8 @@ const HeaderCustomizer = () => {
     defaultValues: data,
     shouldUnregister: false,
   });
-  const enableCategoryBar = methods.watch('categoryBar.enabled');
-  const onSubmit: SubmitHandler<HEADER_DESIGN> = data => {
+  const enableCategoryBar = methods.watch("categoryBar.enabled");
+  const onSubmit: SubmitHandler<HEADER_DESIGN> = (data) => {
     // Submit Style Changes to server
     console.log(data);
   };
@@ -69,23 +69,22 @@ const HeaderCustomizer = () => {
 
 export default HeaderCustomizer;
 const Container = styled.div`
-  padding: 0.75rem;
   .title-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* border-bottom: ${props => props.theme.border}; */
+    /* border-bottom: ${(props) => props.theme.border}; */
     padding: 0.5rem 0;
     button {
       border-radius: 6px;
-      color: ${props => props.theme.btnText};
-      background-color: ${props => props.theme.green};
+      color: ${(props) => props.theme.btnText};
+      background-color: ${(props) => props.theme.green};
       padding: 0.5rem;
     }
   }
   .demo-wrapper {
     /* padding: 1rem; */
-    border: ${props => props.theme.border};
+    border: ${(props) => props.theme.border};
     margin: 1rem 0;
     height: 135px;
   }
@@ -102,14 +101,14 @@ const FlexContainer = styled.div`
       font-size: 0.9rem;
     }
     .first-subtitle {
-      color: ${props => props.theme.headingColor};
+      color: ${(props) => props.theme.headingColor};
       font-size: 0.8rem;
       margin-bottom: 0.25rem;
     }
     .second-subtitle {
-      color: ${props => props.theme.subHeading};
+      color: ${(props) => props.theme.subHeading};
       font-size: 0.75rem;
-      font-weight: ${props => props.theme.font.light};
+      font-weight: ${(props) => props.theme.font.light};
     }
   }
 `;

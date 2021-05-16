@@ -37,6 +37,9 @@ const CreateStaffMember = lazy(
 const AccountSettings = lazy(
   () => import("./pages/SettingsPages/AccountSettings")
 );
+const BranchesAndWarehouses = lazy(
+  () => import("./pages/SettingsPages/BranchesAndWarehouses")
+);
 const ProductListGridCustomizer = lazy(
   () => import("./pages/ProductListGridCustomizer")
 );
@@ -121,6 +124,11 @@ function App() {
                         exact
                         path="/settings/account-settings"
                         component={AccountSettings}
+                      />
+                      <Route
+                        exact
+                        path="/settings/branch-warehouse"
+                        component={BranchesAndWarehouses}
                       />
                       <Route exact path="/staff" component={Staff} />
                       <Route

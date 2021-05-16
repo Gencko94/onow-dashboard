@@ -19,7 +19,7 @@ const Dashboard = () => {
 export default Dashboard;
 const Container = styled.div(
   ({ theme: { breakpoints, headingColor, font } }) => `
-  padding: 0.75rem;
+  
   @media ${breakpoints.md}{
     gap: 1rem;
     grid-template-columns: 1fr;
