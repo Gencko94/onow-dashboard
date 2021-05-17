@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { USER } from "../interfaces/auth/auth";
+import { GET_USER_RESPONSE, USER } from "../interfaces/auth/auth";
 import { getUser } from "../utils/queries";
 
 interface AuthContextProps {
@@ -16,15 +16,16 @@ const AuthContext: React.FC = ({ children }) => {
   const queryClient = useQueryClient();
   const { data: user } = useQuery("auth", getUser, {
     suspense: true,
+    // useErrorBoundary: false,
   });
   const logOut = () => {
-    localStorage.removeItem("tpid");
+    localStorage.removeItem("dshtid");
     queryClient.setQueryData("auth", undefined);
   };
   return (
     <AuthProvider.Provider
       value={{
-        user,
+        user: user?.customer,
         logOut,
       }}
     >

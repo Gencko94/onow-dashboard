@@ -26,8 +26,8 @@ const SvgLogo = () => {
             y2="1"
             gradientUnits="objectBoundingBox"
           >
-            <stop offset="0" stop-color="#f78f21" />
-            <stop offset="1" stop-color="#fe0488" />
+            <stop offset="0" stopColor="#f78f21" />
+            <stop offset="1" stopColor="#fe0488" />
           </linearGradient>
         </defs>
         <g
@@ -62,7 +62,7 @@ const SvgLogo = () => {
               transform="translate(-329.387 -424.987)"
               fill="none"
               stroke="#657B8A"
-              stroke-width="1"
+              strokeWidth="1"
             />
             <path
               id="n"
@@ -71,7 +71,7 @@ const SvgLogo = () => {
               transform="translate(-518.159 -424.987)"
               fill="none"
               stroke="#657B8A"
-              stroke-width="1"
+              strokeWidth="1"
             />
             <path
               id="o2"
@@ -80,7 +80,7 @@ const SvgLogo = () => {
               transform="translate(-624.857 -426.279)"
               fill="none"
               stroke="#657B8A"
-              stroke-width="1"
+              strokeWidth="1"
             />
             <path
               id="w"
@@ -89,7 +89,7 @@ const SvgLogo = () => {
               transform="translate(-434.942 -424.553)"
               fill="none"
               stroke="#657B8A"
-              stroke-width="1"
+              strokeWidth="1"
             />
           </g>
         </g>

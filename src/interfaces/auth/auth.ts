@@ -1,9 +1,19 @@
 export type USER = {
+  id: number;
   first_name: string;
   last_name: string;
-  phone_number: string;
+  phone: string;
+  created_at: string;
+  reset_token: string;
+  reset_token_date: string;
   email: string;
-  role: string;
+  schema_name: string;
+  social: null;
+  updated_at: string;
+};
+
+export type GET_USER_RESPONSE = {
+  customer: USER;
 };
 
 export type LOGIN_FORM = {

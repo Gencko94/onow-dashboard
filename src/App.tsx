@@ -19,6 +19,7 @@ import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import AddProduct from "./pages/AddProduct";
 import AuthContext from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 const Customers = lazy(() => import("./pages/Customers"));
 const Categories = lazy(() => import("./pages/Categories"));
 const CustomerProfile = lazy(() => import("./pages/CustomerProfile"));
@@ -71,78 +72,83 @@ function App() {
           <Router>
             <Suspense fallback={<Loading />}>
               <QueryClientProvider client={queryClient}>
-                {/* <AuthContext> */}
-                <ThemeProvider>
-                  <GlobalStyle />
-                  <ScrollToTopOnMount />
-                  <Route exact path="/" component={Login} />
-                  <Layout>
+                <AuthContext>
+                  <ThemeProvider>
+                    <GlobalStyle />
+                    <ScrollToTopOnMount />
                     <Switch>
-                      <Route exact path="/dashboard" component={Dashboard} />
-                      <Route exact path="/products" component={Products} />
-                      <Route exact path="/categories" component={Categories} />
-                      <Route exact path="/orders" component={Orders} />
-                      <Route exact path="/orders/:id" component={Order} />
-                      <Route exact path="/customers" component={Customers} />
-                      <Route exact path="/coupons" component={Coupons} />
-                      <Route exact path="/coupons/coupon" component={Coupon} />
-                      <Route
-                        exact
-                        path="/website-layout"
-                        component={WebsiteLayout}
-                      />
-                      <Route
-                        exact
-                        path="/website-layout/design-select/:type"
-                        component={DesignSelectionPage}
-                      />
-                      <Route
-                        exact
-                        path="/website-layout/block-customize/header/:id"
-                        component={HeaderCustomizer}
-                      />
-                      <Route
-                        exact
-                        path="/website-layout/block-customize/footer/:id"
-                        component={FooterCustomizer}
-                      />
-                      <Route
-                        exact
-                        path="/website-layout/block-customize/product-grid/:id"
-                        component={ProductListGridCustomizer}
-                      />
-                      <Route
-                        exact
-                        path="/customers/:id"
-                        component={CustomerProfile}
-                      />
-                      <Route
-                        exact
-                        path="/products/new/:type"
-                        component={AddProduct}
-                      />
-                      <Route exact path="/settings" component={Settings} />
-                      <Route
-                        exact
-                        path="/settings/account-settings"
-                        component={AccountSettings}
-                      />
-                      <Route
-                        exact
-                        path="/settings/branch-warehouse"
-                        component={BranchesAndWarehouses}
-                      />
-                      <Route exact path="/staff" component={Staff} />
-                      <Route
-                        exact
-                        path="/staff/create"
-                        component={CreateStaffMember}
-                      />
-                      <Route exact path="/staff/:id" component={StaffMember} />
+                      <Route exact path="/" component={Login} />
+                      <Layout>
+                        <ProtectedRoute
+                          path="/dashboard"
+                          Component={Dashboard}
+                        />
+                        <ProtectedRoute path="/products" Component={Products} />
+                        <ProtectedRoute
+                          path="/categories"
+                          Component={Categories}
+                        />
+                        <ProtectedRoute path="/orders" Component={Orders} />
+                        <ProtectedRoute path="/orders/:id" Component={Order} />
+                        <ProtectedRoute
+                          path="/customers"
+                          Component={Customers}
+                        />
+                        <ProtectedRoute path="/coupons" Component={Coupons} />
+                        <ProtectedRoute
+                          path="/coupons/coupon"
+                          Component={Coupon}
+                        />
+                        <ProtectedRoute
+                          path="/website-layout"
+                          Component={WebsiteLayout}
+                        />
+                        <ProtectedRoute
+                          path="/website-layout/design-select/:type"
+                          Component={DesignSelectionPage}
+                        />
+                        <ProtectedRoute
+                          path="/website-layout/block-customize/header/:id"
+                          Component={HeaderCustomizer}
+                        />
+                        <ProtectedRoute
+                          path="/website-layout/block-customize/footer/:id"
+                          Component={FooterCustomizer}
+                        />
+                        <ProtectedRoute
+                          path="/website-layout/block-customize/product-grid/:id"
+                          Component={ProductListGridCustomizer}
+                        />
+                        <ProtectedRoute
+                          path="/customers/:id"
+                          Component={CustomerProfile}
+                        />
+                        <ProtectedRoute
+                          path="/products/new/:type"
+                          Component={AddProduct}
+                        />
+                        <ProtectedRoute path="/settings" Component={Settings} />
+                        <ProtectedRoute
+                          path="/settings/account-settings"
+                          Component={AccountSettings}
+                        />
+                        <ProtectedRoute
+                          path="/settings/branch-warehouse"
+                          Component={BranchesAndWarehouses}
+                        />
+                        <ProtectedRoute path="/staff" Component={Staff} />
+                        <ProtectedRoute
+                          path="/staff/create"
+                          Component={CreateStaffMember}
+                        />
+                        <ProtectedRoute
+                          path="/staff/:id"
+                          Component={StaffMember}
+                        />
+                      </Layout>
                     </Switch>
-                  </Layout>
-                </ThemeProvider>
-                {/* </AuthContext> */}
+                  </ThemeProvider>
+                </AuthContext>
               </QueryClientProvider>
             </Suspense>
           </Router>

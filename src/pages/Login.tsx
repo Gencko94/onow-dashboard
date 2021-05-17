@@ -41,8 +41,9 @@ const Login = () => {
   const { mutateAsync: login } = useMutation(userLogin, {
     onSuccess: (data) => {
       localStorage.setItem("dshtid", data.result.token);
-      queryClient.setQueryData("auth", data.result.userInfo);
+      queryClient.setQueryData("auth", { customer: data.result.userInfo });
       if (location.state) {
+        console.log(location.state);
         history.replace(location.state);
       } else {
         history.replace("/dashboard");
@@ -88,7 +89,7 @@ const Login = () => {
     }
   };
   if (user) {
-    return <Redirect to="/" />;
+    return <Redirect to="/dashboard" />;
   }
   return (
     <Container>

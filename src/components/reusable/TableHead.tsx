@@ -26,6 +26,7 @@ const TableHead = ({
       {cols.map((item) => {
         return (
           <Field
+            key={item.title}
             onClick={() => item.cb?.()}
             active={activeSortBy === item.title}
             sortable={item.sortable}
