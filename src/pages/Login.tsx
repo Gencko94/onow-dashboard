@@ -1,23 +1,23 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
-import styled from 'styled-components';
-import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import styled from "styled-components";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 
-import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
-import { useContext, useState } from 'react';
-import { useTranslation, Trans } from 'react-i18next/';
-import { LOGIN_FORM } from '../interfaces/auth';
-import { useMutation, useQueryClient } from 'react-query';
-import { userLogin } from '../utils/queries';
-import { AuthProvider } from '../contexts/AuthContext';
-import * as Yup from 'yup';
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { useContext, useState } from "react";
+import { useTranslation, Trans } from "react-i18next/";
+import { LOGIN_FORM } from "../interfaces/auth/auth";
+import { useMutation, useQueryClient } from "react-query";
+import { userLogin } from "../utils/queries";
+import { AuthProvider } from "../contexts/AuthContext";
+import * as Yup from "yup";
 
 const Login = () => {
-  const { t, ready, i18n } = useTranslation(['login']);
+  const { t, ready, i18n } = useTranslation(["login"]);
   const { user } = useContext(AuthProvider);
   const schema = Yup.object().shape({
-    login: Yup.string().required('Required Field'),
-    password: Yup.string().required('Required Field').min(6, t('min-6')),
+    login: Yup.string().required("Required Field"),
+    password: Yup.string().required("Required Field").min(6, t("min-6")),
   });
   const queryClient = useQueryClient();
   const [showPassword, setShowPassword] = useState(false);
@@ -39,15 +39,13 @@ const Login = () => {
     }
   };
   const { mutateAsync: login } = useMutation(userLogin, {
-    onSuccess: data => {
-      if (data.token) {
-        localStorage.setItem('dshtid', data.token);
-        queryClient.setQueryData('auth', data.user);
-        if (location.state) {
-          history.replace(location.state);
-        } else {
-          history.replace('/dashboard');
-        }
+    onSuccess: (data) => {
+      localStorage.setItem("dshtid", data.result.token);
+      queryClient.setQueryData("auth", data.result.userInfo);
+      if (location.state) {
+        history.replace(location.state);
+      } else {
+        history.replace("/dashboard");
       }
     },
   });
@@ -61,20 +59,20 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       if (
-        error.response?.data.message === 'Phone Number or Password is Missing'
+        error.response?.data.error === "Phone Number or Password is Missing"
       ) {
-        setError('password', {
-          message: t('fields-missing-response'),
+        setError("password", {
+          message: t("fields-missing-response"),
         });
-        setError('login', {
-          message: t('fields-missing-response'),
+        setError("login", {
+          message: t("fields-missing-response"),
         });
-      } else if (error.response?.data.message === 'Invalid Credentials') {
-        setError('password', {
-          message: t('invalid-credentials'),
+      } else if (error.response?.data.error === "INVALID_CREDENTIALS") {
+        setError("password", {
+          message: t("invalid-credentials"),
         });
-        setError('login', {
-          message: t('invalid-credentials'),
+        setError("login", {
+          message: t("invalid-credentials"),
         });
       } else {
         console.log(error.response);
@@ -103,19 +101,22 @@ const Login = () => {
         <FormContainer>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <InputContainer>
-              <Label>{t('email')}</Label>
-              <Input {...register('login')} />
+              <Label>{t("email")}</Label>
+              <Input {...register("login")} />
 
               <ErrorMessage>{errors.login?.message}</ErrorMessage>
             </InputContainer>
             <InputContainer>
-              <Label>{t('password')}</Label>
+              <Label>{t("password")}</Label>
               <PasswordInputContainer>
                 <Input
-                  type={showPassword ? 'text' : 'password'}
-                  {...register('password')}
+                  type={showPassword ? "text" : "password"}
+                  {...register("password")}
                 />
-                <ShowPassword onClick={() => handleShowPassword()}>
+                <ShowPassword
+                  type="button"
+                  onClick={() => handleShowPassword()}
+                >
                   {showPassword ? (
                     <MdVisibilityOff size={21} />
                   ) : (
@@ -132,7 +133,7 @@ const Login = () => {
               disabled={isSubmitting}
               loading={isSubmitting}
             >
-              {t('login')}
+              {t("login")}
             </SubmitButton>
           </Form>
         </FormContainer>
@@ -154,11 +155,11 @@ const Login = () => {
 
       <LanguageContainer>
         <>
-          {i18n.language === 'ar' && (
-            <Icon onClick={() => changeLanguage('en')}>English</Icon>
+          {i18n.language === "ar" && (
+            <Icon onClick={() => changeLanguage("en")}>English</Icon>
           )}
-          {i18n.language === 'en' && (
-            <Icon onClick={() => changeLanguage('ar')}>العربية</Icon>
+          {i18n.language === "en" && (
+            <Icon onClick={() => changeLanguage("ar")}>العربية</Icon>
           )}
         </>
       </LanguageContainer>
@@ -173,8 +174,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: ${props => props.theme.fontFamily};
-  background: ${props => props.theme.bodyColor};
+  font-family: ${(props) => props.theme.fontFamily};
+  background: ${(props) => props.theme.bodyColor};
 `;
 
 const ContentWrapper = styled.div`
@@ -201,12 +202,12 @@ const LogoContainer = styled(Link)`
 `;
 const FormContainer = styled.div`
   padding: 0.75rem 0.75rem;
-  border: ${props => props.theme.btnBorder};
-  box-shadow: ${props => props.theme.shadow};
+  border: ${(props) => props.theme.btnBorder};
+  box-shadow: ${(props) => props.theme.shadow};
   background-color: #fff;
   border-radius: 12px;
   margin-bottom: 0.5rem;
-  background: ${props => props.theme.overlayColor};
+  background: ${(props) => props.theme.overlayColor};
 `;
 const Form = styled.form`
   padding: 0rem 0.25rem;
@@ -218,7 +219,7 @@ const Label = styled.label`
   color: ${({ theme }) => theme.headingColor};
   margin-bottom: 0.4rem;
   font-size: 0.8rem;
-  font-weight: ${props => props.theme.font.semibold};
+  font-weight: ${(props) => props.theme.font.semibold};
   display: block;
 `;
 const PhoneInputContainer = styled.div`
@@ -226,14 +227,14 @@ const PhoneInputContainer = styled.div`
   align-items: center;
   border-radius: 5px;
   overflow: hidden;
-  border: 1px solid ${props => props.theme.btnBorder};
-  background-color: ${props => props.theme.inputColorLight};
+  border: 1px solid ${(props) => props.theme.btnBorder};
+  background-color: ${(props) => props.theme.inputColorLight};
 `;
 const PhoneKey = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: ${props => props.theme.font.semibold};
+  font-weight: ${(props) => props.theme.font.semibold};
   padding: 0.5rem;
   font-size: 0.9rem;
 `;
@@ -242,35 +243,35 @@ const PhoneInput = styled.input`
   width: 100%;
   font-size: 0.9rem;
 
-  color: ${props => props.theme.subHeading};
+  color: ${(props) => props.theme.subHeading};
 `;
 const PasswordInputContainer = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${props => props.theme.inputColorLight};
+  background-color: ${(props) => props.theme.inputColorLight};
   border-radius: 5px;
   overflow: hidden;
-  border: ${props => props.theme.btnBorder};
+  border: ${(props) => props.theme.btnBorder};
 `;
 const Input = styled.input`
   padding: 0.5rem;
-  border: ${props => props.theme.btnBorder};
+  border: ${(props) => props.theme.btnBorder};
   width: 100%;
   font-size: 0.9rem;
   border-radius: 5px;
-  background-color: ${props => props.theme.inputColorLight};
-  color: ${props => props.theme.subHeading};
+  background-color: ${(props) => props.theme.inputColorLight};
+  color: ${(props) => props.theme.subHeading};
 `;
-const ShowPassword = styled.div`
+const ShowPassword = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
   /* border-left: 1px solid rgba(0, 0, 0, 0.1); */
   padding: 0.5rem;
-  background-color: ${props => props.theme.inputColorLight};
+  background-color: ${(props) => props.theme.inputColorLight};
 `;
 const ErrorMessage = styled.p`
-  color: ${props => props.theme.dangerRed};
+  color: ${(props) => props.theme.dangerRed};
   font-size: 0.8rem;
   margin-top: 0.25rem;
   height: 19.2px;
@@ -278,17 +279,17 @@ const ErrorMessage = styled.p`
 const SubmitButton = styled.button<{ loading: boolean }>`
   width: 100%;
   padding: 0.5rem;
-  background-color: ${props =>
-    props.loading ? 'gray' : props.theme.btnPrimaryLight};
-  color: ${props => props.theme.btnText};
-  font-weight: ${props => props.theme.font.regular};
+  background-color: ${(props) =>
+    props.loading ? "gray" : props.theme.btnPrimaryLight};
+  color: ${(props) => props.theme.btnText};
+  font-weight: ${(props) => props.theme.font.regular};
   border-radius: 5px;
-  border: ${props => props.theme.btnBorder};
+  border: ${(props) => props.theme.btnBorder};
   text-transform: uppercase;
   font-size: 0.9rem;
   transition: background-color 75ms;
   &:hover {
-    background-color: ${props => props.theme.btnPrimaryDark};
+    background-color: ${(props) => props.theme.btnPrimaryDark};
   }
 
   margin-top: 0.5rem;
@@ -299,7 +300,7 @@ const Footer = styled.div`
 `;
 const Text = styled.p`
   font-size: 0.8rem;
-  font-weight: ${props => props.theme.font.regular};
+  font-weight: ${(props) => props.theme.font.regular};
 `;
 
 const LanguageContainer = styled.div`
@@ -309,11 +310,11 @@ const LanguageContainer = styled.div`
 `;
 
 const Icon = styled.button`
-  color: ${props => props.theme.headingColor};
+  color: ${(props) => props.theme.headingColor};
 `;
 
 const InlineLink = styled(Link)`
-  color: ${props => props.theme.dangerRed};
-  font-weight: ${props => props.theme.font.regular};
+  color: ${(props) => props.theme.dangerRed};
+  font-weight: ${(props) => props.theme.font.regular};
   text-decoration: underline;
 `;

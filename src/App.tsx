@@ -18,6 +18,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import AddProduct from "./pages/AddProduct";
+import AuthContext from "./contexts/AuthContext";
 const Customers = lazy(() => import("./pages/Customers"));
 const Categories = lazy(() => import("./pages/Categories"));
 const CustomerProfile = lazy(() => import("./pages/CustomerProfile"));
@@ -70,6 +71,7 @@ function App() {
           <Router>
             <Suspense fallback={<Loading />}>
               <QueryClientProvider client={queryClient}>
+                {/* <AuthContext> */}
                 <ThemeProvider>
                   <GlobalStyle />
                   <ScrollToTopOnMount />
@@ -140,6 +142,7 @@ function App() {
                     </Switch>
                   </Layout>
                 </ThemeProvider>
+                {/* </AuthContext> */}
               </QueryClientProvider>
             </Suspense>
           </Router>
