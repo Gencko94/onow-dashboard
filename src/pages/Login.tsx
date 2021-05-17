@@ -41,11 +41,14 @@ const Login = () => {
   const { mutateAsync: login } = useMutation(userLogin, {
     onSuccess: (data) => {
       localStorage.setItem("dshtid", data.result.token);
-      queryClient.setQueryData("auth", { customer: data.result.userInfo });
+      queryClient.setQueryData("auth", {
+        result: { userInfo: data.result.userInfo },
+      });
       if (location.state) {
-        console.log(location.state);
         history.replace(location.state);
+        console.log(location.state);
       } else {
+        console.log("hi");
         history.replace("/dashboard");
       }
     },
@@ -88,6 +91,7 @@ const Login = () => {
       setShowPassword(true);
     }
   };
+
   if (user) {
     return <Redirect to="/dashboard" />;
   }

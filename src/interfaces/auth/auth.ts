@@ -1,7 +1,7 @@
 export type USER = {
   id: number;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   phone: string;
   created_at: string;
   reset_token: string;
@@ -13,7 +13,9 @@ export type USER = {
 };
 
 export type GET_USER_RESPONSE = {
-  customer: USER;
+  result: {
+    userInfo: USER;
+  };
 };
 
 export type LOGIN_FORM = {

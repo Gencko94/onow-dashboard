@@ -13,7 +13,8 @@ const ProjectSwitcher = () => {
   const {
     i18n: { language },
   } = useTranslation();
-  console.log(data);
+
+  if (data?.length === 0) return null;
   return (
     <Container>
       <Project>

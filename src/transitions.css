@@ -105,12 +105,12 @@
 }
 .project-menu-enter-active {
   opacity: 1;
-  max-height: 60px;
+  max-height: 90px;
   transition: all 250ms;
 }
 .project-menu-exit {
   opacity: 1;
-  max-height: 60px;
+  max-height: 90px;
 }
 .project-menu-exit-active {
   opacity: 0;

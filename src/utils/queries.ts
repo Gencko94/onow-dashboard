@@ -15,8 +15,8 @@ export const getUser = async (): Promise<GET_USER_RESPONSE> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.post(`/get-user`, {}, config);
-  console.log(res.data);
+  const res = await axios.post(`get-user`, {}, config);
+
   return res.data;
 };
 export const userLogin = async (data: LOGIN_FORM): Promise<LOGIN_RESPONSE> => {

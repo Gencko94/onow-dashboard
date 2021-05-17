@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { useQuery, useQueryClient } from "react-query";
+import { useHistory } from "react-router";
 import { GET_USER_RESPONSE, USER } from "../interfaces/auth/auth";
 import { getUser } from "../utils/queries";
 
@@ -13,6 +14,7 @@ export const AuthProvider = createContext<Partial<AuthContextProps>>({
 });
 
 const AuthContext: React.FC = ({ children }) => {
+  const history = useHistory();
   const queryClient = useQueryClient();
   const { data: user } = useQuery("auth", getUser, {
     suspense: true,
@@ -20,12 +22,14 @@ const AuthContext: React.FC = ({ children }) => {
   });
   const logOut = () => {
     localStorage.removeItem("dshtid");
-    queryClient.setQueryData("auth", undefined);
+    queryClient.setQueryData("auth", null);
+    history.push("/");
   };
+
   return (
     <AuthProvider.Provider
       value={{
-        user: user?.customer,
+        user: user?.result?.userInfo,
         logOut,
       }}
     >

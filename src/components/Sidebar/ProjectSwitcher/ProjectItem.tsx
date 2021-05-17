@@ -34,20 +34,20 @@ const ProjectItem = ({ project }: IProps) => {
       </Container>
       <CSSTransition
         in={menuOpen}
-        classNames="orders-filter"
+        classNames="project-menu"
         timeout={250}
         unmountOnExit
       >
         <SubMenu>
           <div className="content">
-            <a className="link" href={project.domain} target="#">
-              <p>Visit Website</p>
-              <BiLinkExternal />
-            </a>
             <div className="switch">
               <p>Switch to Project</p>
               <HiSwitchHorizontal />
             </div>
+            <a className="link" href={`http://${project.domain}`} target="#">
+              <p>Visit Website</p>
+              <BiLinkExternal />
+            </a>
           </div>
         </SubMenu>
       </CSSTransition>
@@ -103,7 +103,7 @@ const SubMenu = styled.div`
     padding: 1rem 0.5rem;
     .link {
       display: flex;
-      margin-bottom: 0.5rem;
+
       align-items: center;
       color: ${(props) => props.theme.mainColor};
       &:hover {
@@ -117,6 +117,7 @@ const SubMenu = styled.div`
     .switch {
       display: flex;
       align-items: center;
+      margin-bottom: 0.5rem;
       &:hover {
         text-decoration: underline;
       }
