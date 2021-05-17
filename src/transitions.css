@@ -52,20 +52,15 @@
   /* opacity: 0; */
 }
 .side-menu-enter-active {
-  /* max-width: 300px; */
-  /* opacity: 1; */
   transform: translateX(0);
   transition: all 250ms ease-out;
 }
 .side-menu-exit {
-  /* max-width: 300px; */
-  /* opacity: 1; */
   transform: translateX(0);
 }
 .side-menu-exit-active {
-  /* opacity: 0; */
   transform: translateX(-100%);
-  /* max-width: 0; */
+
   transition: all 250ms;
 }
 .orders-filter-enter {
@@ -100,6 +95,24 @@
   max-height: 340px;
 }
 .store-tasks-exit-active {
+  opacity: 0;
+  max-height: 0;
+  transition: all 250ms;
+}
+.project-menu-enter {
+  opacity: 0;
+  max-height: 0;
+}
+.project-menu-enter-active {
+  opacity: 1;
+  max-height: 60px;
+  transition: all 250ms;
+}
+.project-menu-exit {
+  opacity: 1;
+  max-height: 60px;
+}
+.project-menu-exit-active {
   opacity: 0;
   max-height: 0;
   transition: all 250ms;

@@ -14,7 +14,6 @@ import { ErrorBoundary } from "react-error-boundary";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "react-placeholder/lib/reactPlaceholder.css";
 import Layout from "./layout/Layout";
-import Sidebar from "./components/Sidebar/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import AddProduct from "./pages/AddProduct";
@@ -138,12 +137,12 @@ function App() {
                         />
                         <ProtectedRoute path="/staff" Component={Staff} />
                         <ProtectedRoute
-                          path="/staff/create"
-                          Component={CreateStaffMember}
-                        />
-                        <ProtectedRoute
                           path="/staff/:id"
                           Component={StaffMember}
+                        />
+                        <ProtectedRoute
+                          path="/staff/create"
+                          Component={CreateStaffMember}
                         />
                       </Layout>
                     </Switch>

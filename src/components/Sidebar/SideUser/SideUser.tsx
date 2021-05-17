@@ -1,11 +1,14 @@
-import styled from 'styled-components';
-import { BiDotsVerticalRounded } from 'react-icons/bi';
+import styled from "styled-components";
+import { BiDotsVerticalRounded } from "react-icons/bi";
+import { useContext } from "react";
+import { AuthProvider } from "../../../contexts/AuthContext";
 const SideUser = () => {
+  const { user } = useContext(AuthProvider);
   return (
     <Container>
       <User>
         <UserImage src="/images/user.jpg" />
-        <Username>Ahmad Zaaza</Username>
+        <Username>{`${user?.first_name} ${user?.last_name}`}</Username>
       </User>
       <Icon>
         <BiDotsVerticalRounded size={22} />
@@ -16,7 +19,7 @@ const SideUser = () => {
 
 export default SideUser;
 const Container = styled.div`
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   padding: 0.5rem;
   display: flex;
   align-items: center;
@@ -36,7 +39,7 @@ const User = styled.div`
 const Username = styled.p`
   margin: 0 0.5rem;
   font-size: 0.9rem;
-  font-weight: ${props => props.theme.font.regular};
+  font-weight: ${(props) => props.theme.font.regular};
 `;
 const UserImage = styled.img`
   border-radius: 50%;
