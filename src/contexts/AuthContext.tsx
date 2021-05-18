@@ -1,11 +1,12 @@
 import { createContext } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router";
-import { GET_USER_RESPONSE, USER } from "../interfaces/auth/auth";
+import { STORE, USER } from "../interfaces/auth/auth";
 import { getUser } from "../utils/queries";
 
 interface AuthContextProps {
   user?: USER | undefined;
+  userStores: STORE[];
   logOut: () => void;
 }
 
@@ -30,6 +31,7 @@ const AuthContext: React.FC = ({ children }) => {
     <AuthProvider.Provider
       value={{
         user: user?.result?.userInfo,
+
         logOut,
       }}
     >

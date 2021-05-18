@@ -5,7 +5,7 @@ import { AuthProvider } from "../../contexts/AuthContext";
 
 interface IProps {
   path: string;
-  Component: React.FC;
+  Component: React.FC<{ storeId: number }>;
 }
 
 export default function ProtectedRoute({ Component, path }: IProps) {
@@ -17,7 +17,7 @@ export default function ProtectedRoute({ Component, path }: IProps) {
       path={path}
       render={({ location }) => {
         if (user) {
-          return <Component />;
+          return <Component storeId={user?.stores[0].id} />;
         } else {
           return (
             <Redirect

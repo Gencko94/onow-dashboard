@@ -2,30 +2,32 @@ import styled from "styled-components";
 import { HiOutlineSwitchVertical } from "react-icons/hi";
 import { CSSTransition } from "react-transition-group";
 import ClickAwayListener from "react-click-away-listener";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { getUserStores } from "../../../utils/queries";
 import { useTranslation } from "react-i18next";
 import ProjectItem from "./ProjectItem";
+import { AuthProvider } from "../../../contexts/AuthContext";
 const ProjectSwitcher = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { data } = useQuery("stores", getUserStores);
+  const { user } = useContext(AuthProvider);
+  // const { data } = useQuery("stores", getUserStores);
   const {
     i18n: { language },
   } = useTranslation();
 
-  if (data?.length === 0) return null;
+  if (user?.stores.length === 0) return null;
   return (
     <Container>
       <Project>
         <img
           className="logo"
           src="/images/storeLogo.png"
-          alt={data?.[0].name[language]}
+          alt={user?.stores[0].storeName[language]}
         />
         <div className="name-container">
-          <p className="name">{data?.[0].name[language]}</p>
-          <p className="domain">{data?.[0].domain}</p>
+          <p className="name">{user?.stores[0].storeName[language]}</p>
+          <p className="domain">{user?.stores[0].domain}</p>
         </div>
       </Project>
       <button onClick={() => setMenuOpen(true)} className="switcher">
@@ -38,7 +40,7 @@ const ProjectSwitcher = () => {
         >
           <ClickAwayListener onClickAway={() => setMenuOpen(false)}>
             <ul className="menu">
-              {data?.map((project) => {
+              {user?.stores.map((project) => {
                 return <ProjectItem key={project.id} project={project} />;
               })}
             </ul>

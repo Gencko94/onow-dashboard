@@ -6,24 +6,30 @@ import ClickAwayListener from "react-click-away-listener";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { ImProfile } from "react-icons/im";
 import { useHistory } from "react-router";
-const CustomerItem = () => {
+import { CUSTOMER } from "../../../../interfaces/customers/customers";
+
+interface IProps {
+  customer: CUSTOMER;
+}
+
+const CustomerItem = ({ customer }: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   return (
     <Container>
-      <div className="field">
+      {/* <div className="field">
         <CheckboxContainer>
           <BsCheck size={15} />
         </CheckboxContainer>
+      </div> */}
+      <div className="field">
+        <h6>{`${customer.firstName} ${customer.lastName}`}</h6>
       </div>
       <div className="field">
-        <h6>Ahmad Zaaza</h6>
+        <h6>{customer.phoneNumber}</h6>
       </div>
       <div className="field">
-        <h6>+9659874621</h6>
-      </div>
-      <div className="field">
-        <h6>gfox.piano@hotmail.com</h6>
+        <h6>{customer.email} </h6>
       </div>
       <div className="field">
         <ButtonsContainer>
@@ -67,7 +73,7 @@ const CustomerItem = () => {
 export default CustomerItem;
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 50px 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: 1fr 1fr 1fr 0.5fr;
   background-color: #fff;
   gap: 1rem;
   border-bottom: ${(props) => props.theme.border};

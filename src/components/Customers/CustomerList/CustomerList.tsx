@@ -1,12 +1,16 @@
 import { useMemo } from "react";
 import styled from "styled-components";
+import { CUSTOMER } from "../../../interfaces/customers/customers";
+import TableEmpty from "../../reusable/TableEmpty";
 import TableHead from "../../reusable/TableHead";
 import CustomerItem from "./CustomerItem/CustomerItem";
 
-const CustomerList = () => {
+interface IProps {
+  data: CUSTOMER[];
+}
+const CustomerList = ({ data }: IProps) => {
   const cols = useMemo(
     () => [
-      { title: " ", sortable: false },
       { title: "customerName", sortable: true },
       { title: "customerPhone", sortable: true },
       { title: "customerEmail", sortable: true },
@@ -16,13 +20,11 @@ const CustomerList = () => {
   );
   return (
     <Container>
-      <TableHead cols={cols} gridCols="50px 1fr 1fr 1fr 0.5fr" />
-
-      <div>
-        {[0, 1, 2, 3].map((i) => (
-          <CustomerItem />
-        ))}
-      </div>
+      <TableHead cols={cols} gridCols="1fr 1fr 1fr 0.5fr" />
+      {data.length === 0 && <TableEmpty title="No Customers were Added " />}
+      {data.map((customer) => (
+        <CustomerItem key={customer.id} customer={customer} />
+      ))}
     </Container>
   );
 };

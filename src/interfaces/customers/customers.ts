@@ -1,3 +1,7 @@
+export interface GET_CUSTOMERS_RESPONSE {
+  results: CUSTOMER[];
+}
+
 export interface NEW_CUSTOMER {
   firstName: string;
   lastName: string;
@@ -14,9 +18,14 @@ export interface CUSTOMER {
   email?: string;
   joinDate: string;
   country: {
-    name_en: string;
-    name_ar: string;
-    flag: string; // photo of the country flag;
+    id: number;
+    name: {
+      [key: string]: string;
+    };
+    currency: {
+      [key: string]: string;
+    };
+    orders: [];
   };
   // orders: [
   //   {

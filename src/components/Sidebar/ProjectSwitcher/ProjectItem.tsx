@@ -4,9 +4,10 @@ import { BiChevronDown, BiChevronUp, BiLinkExternal } from "react-icons/bi";
 import { HiSwitchHorizontal } from "react-icons/hi";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
+import { STORE } from "../../../interfaces/auth/auth";
 
 interface IProps {
-  project: any;
+  project: STORE;
 }
 
 const ProjectItem = ({ project }: IProps) => {
@@ -21,10 +22,10 @@ const ProjectItem = ({ project }: IProps) => {
           <img
             className="logo"
             src="/images/storeLogo.png"
-            alt={project.name[language]}
+            alt={project.storeName[language]}
           />
           <div className="name-container">
-            <p className="name">{project.name[language]}</p>
+            <p className="name">{project.storeName[language]}</p>
             <p className="domain">{project.domain}</p>
           </div>
         </div>
