@@ -1,12 +1,12 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-const Hr = ({ m = '1.5' }: { m: string }) => {
+const Hr = ({ m = "1.5" }: { m?: string }) => {
   return <Container m={m} />;
 };
 
 export default Hr;
 const Container = styled.hr<{ m: string }>`
-  margin: ${props => `${props.m}rem 0 `};
+  margin: ${(props) => `${props.m}rem 0 `};
   background-image: linear-gradient(
     90deg,
     transparent,

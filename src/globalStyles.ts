@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 * ,*::before,*::after{
@@ -42,8 +42,8 @@ body {
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
-  background-color:${props => props.theme.bodyColor};
-  color:${props => props.theme.textColor};
+  background-color:${(props) => props.theme.bodyColor};
+  color:${(props) => props.theme.textColor};
   transition:background-color 200ms ease;
   
 }
@@ -55,19 +55,7 @@ a {
   text-decoration:none;
   color:inherit;
 }
-/* hr {
-  margin: 1.5rem 0;
-  background-image: linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 0, 0, 0.4),
-    transparent
-  );
-  background-color: transparent;
-  border: none;
-  height: 1px;
-  opacity: 0.5;
-} */
+
 input,
 button,
 textarea,
@@ -113,9 +101,20 @@ button {
 ul {
   list-style-type:none;
 }  
-input {
-min-width:0;
+input , textarea {
+ min-width:0;
+ transition:200ms all ease;
+ &:hover {
+
+  border-color:${(props) => props.theme.borderHovered} !important;
+ }
 }
+input:focus, textarea:focus {
+  border-color:${(props) => props.theme.borderHovered} !important;
+
+}
+/* input:hover {
+} */
 `;
 
 export default GlobalStyle;

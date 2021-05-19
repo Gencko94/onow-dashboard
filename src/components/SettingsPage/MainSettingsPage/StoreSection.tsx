@@ -6,6 +6,7 @@ import {
   FcVlc,
   FcSupport,
   FcTimeline,
+  FcSearch,
 } from "react-icons/fc";
 import styled from "styled-components";
 import SettingsCard from "../../reusable/SettingsCard";
@@ -50,6 +51,12 @@ const StoreSection = () => {
           target="/settings/payment-methods"
           Icon={FcMoneyTransfer}
           desc="Manage your orders payment methods"
+        />
+        <SettingsCard
+          title="SEO"
+          target="/settings/seo"
+          Icon={FcSearch}
+          desc="Search Engine optimization improvments"
         />
         <SettingsCard
           title="Maintanance Mode"

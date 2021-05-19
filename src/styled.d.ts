@@ -1,6 +1,6 @@
 // import original module declarations
-import 'styled-components';
-import { Devices } from './breakpoints';
+import "styled-components";
+import { Devices } from "./breakpoints";
 
 // and extend them!
 type FontWeights = {
@@ -10,7 +10,7 @@ type FontWeights = {
   bold: string;
   xbold: string;
 };
-declare module 'styled-components' {
+declare module "styled-components" {
   export interface DefaultTheme {
     fontFamily: string;
     breakpoints: Devices;
@@ -39,5 +39,6 @@ declare module 'styled-components' {
     maxWidthLg: string;
     iconColor: string;
     mainGradient: string;
+    borderHovered: string;
   }
 }

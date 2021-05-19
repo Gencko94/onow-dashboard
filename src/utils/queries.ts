@@ -16,12 +16,12 @@ export const getUser = async (): Promise<GET_USER_RESPONSE> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.post(`get-user`, {}, config);
+  const res = await axios.post(`/get-user`, {}, config);
 
   return res.data;
 };
 export const userLogin = async (data: LOGIN_FORM): Promise<LOGIN_RESPONSE> => {
-  const res = await axios.post(`login`, data);
+  const res = await axios.post(`/login`, data);
   return res.data;
 };
 export const getUserStores = async (): Promise<GET_STORES_RESPONSE> => {
@@ -31,7 +31,7 @@ export const getUserStores = async (): Promise<GET_STORES_RESPONSE> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`stores`, config);
+  const res = await axios.get(`/stores`, config);
   const result = res.data.results.map((i: any) => ({
     id: i.id,
     domain: i.domain,
@@ -53,6 +53,6 @@ export const getCustomers = async (
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`clients-store/${storeId}`, config);
+  const res = await axios.get(`/clients-store/${storeId}`, config);
   return res.data;
 };

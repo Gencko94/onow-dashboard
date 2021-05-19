@@ -44,6 +44,12 @@ const AccountSettings = lazy(
 const BranchesAndWarehouses = lazy(
   () => import("./pages/SettingsPages/BranchesAndWarehouses")
 );
+const StoreIdentity = lazy(() => import("./pages/SettingsPages/StoreIdentity"));
+
+const StoreProperties = lazy(
+  () => import("./pages/SettingsPages/StoreProperties")
+);
+const StoreSEO = lazy(() => import("./pages/SettingsPages/StoreSEO"));
 const ProductListGridCustomizer = lazy(
   () => import("./pages/ProductListGridCustomizer")
 );
@@ -137,6 +143,18 @@ function App() {
                         <ProtectedRoute
                           path="/settings/branch-warehouse"
                           Component={BranchesAndWarehouses}
+                        />
+                        <ProtectedRoute
+                          path="/settings/store-properties"
+                          Component={StoreProperties}
+                        />
+                        <ProtectedRoute
+                          path="/settings/store-identity"
+                          Component={StoreIdentity}
+                        />
+                        <ProtectedRoute
+                          path="/settings/seo"
+                          Component={StoreSEO}
                         />
                         <ProtectedRoute path="/staff" Component={Staff} />
                         <ProtectedRoute
