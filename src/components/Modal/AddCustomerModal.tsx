@@ -1,50 +1,76 @@
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { BsCheck } from 'react-icons/bs';
-import { MdCancel, MdSubtitles } from 'react-icons/md';
-import { HiOutlineMail } from 'react-icons/hi';
-import { AiOutlinePhone } from 'react-icons/ai';
-import styled from 'styled-components';
-import { NEW_CUSTOMER } from '../../interfaces/customers/customers';
-import Select from 'react-select';
-import { useMemo, useState } from 'react';
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { BsCheck } from "react-icons/bs";
+import { MdCancel, MdSubtitles } from "react-icons/md";
+import { HiOutlineMail } from "react-icons/hi";
+import { AiOutlinePhone } from "react-icons/ai";
+import styled from "styled-components";
+import { CUSTOMER, NEW_CUSTOMER } from "../../interfaces/customers/customers";
+import Select from "react-select";
+import { useMemo, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { createCustomer } from "../../utils/queries";
 
 const countryOptions = [
   {
-    name: 'Kuwait',
-    key: '+965',
+    name: "Kuwait",
+    key: "1",
   },
   {
-    name: 'Saudi Arabia',
-    key: '+966',
+    name: "Saudi Arabia",
+    key: "1",
   },
 ];
-const AddCustomerModal = () => {
+interface IProps {
+  closeFunction: () => void;
+  storeId: number;
+}
+const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<NEW_CUSTOMER>();
-  const onSubmit: SubmitHandler<NEW_CUSTOMER> = data => {
-    console.log(data);
+  const { mutateAsync: createNewCustomer } = useMutation(createCustomer, {
+    onSuccess: (data) => {
+      queryClient.setQueryData<CUSTOMER[] | undefined>(
+        ["customers", storeId],
+        (prev) => {
+          if (prev) return [...prev, data];
+        }
+      );
+    },
+  });
+  const onSubmit: SubmitHandler<NEW_CUSTOMER> = async (data) => {
+    await createNewCustomer({
+      ...data,
+      phone: `${phoneKey}${data.phone}`,
+      country_id: data.country_id,
+    });
+    console.log({
+      ...data,
+      phoneNumber: `${phoneKey}${data.phone}`,
+    });
+    closeFunction();
   };
-  const [phoneKey, setPhoneKey] = useState<string>('+965');
+  const [phoneKey, setPhoneKey] = useState<string>("+965");
   const selectStyles = useMemo(() => {
     return {
       control: (provided: any, state: any) => ({
         ...provided,
-        backgroundColor: '#ececec',
-        fontSize: '0.9rem',
-        minHeight: '35px',
-        border: state.isFocused ? 'none' : '1px solid rgba(0,0,0,0.1)',
+        backgroundColor: "#ececec",
+        fontSize: "0.9rem",
+        minHeight: "35px",
+        border: state.isFocused ? "none" : "1px solid rgba(0,0,0,0.1)",
       }),
       indicatorContainer: (provided: any, state: any) => ({
         ...provided,
-        padding: state.isFocused ? '0.4rem' : '0.4rem',
+        padding: state.isFocused ? "0.4rem" : "0.4rem",
       }),
       option: (provided: any) => ({
         ...provided,
-        fontSize: '0.9rem',
+        fontSize: "0.9rem",
       }),
     };
   }, []);
@@ -57,9 +83,9 @@ const AddCustomerModal = () => {
             <span className="icon">
               <MdSubtitles size={20} />
             </span>
-            <Input {...register('firstName', { required: 'Required' })} />
+            <Input {...register("first_name", { required: "Required" })} />
           </div>
-          <ErrorMessage>{errors?.firstName?.message}</ErrorMessage>
+          <ErrorMessage>{errors?.first_name?.message}</ErrorMessage>
         </div>
 
         <div>
@@ -68,34 +94,35 @@ const AddCustomerModal = () => {
             <span className="icon">
               <MdSubtitles size={20} />
             </span>
-            <Input {...register('lastName', { required: 'Required' })} />
+            <Input {...register("last_name", { required: "Required" })} />
           </div>
-          <ErrorMessage>{errors?.lastName?.message}</ErrorMessage>
+          <ErrorMessage>{errors?.last_name?.message}</ErrorMessage>
         </div>
       </InputsContainer>
       <InputsContainer>
         <div>
           <label>Country</label>
           <Controller
-            name="country"
+            name="country_id"
             control={control}
-            rules={{ required: 'Required' }}
+            rules={{ required: "Required" }}
+            defaultValue={countryOptions[0]}
             render={({ field: { ref, onChange } }) => (
               <>
                 <Select
-                  defaultValue={countryOptions.find(i => i.name === 'Kuwait')}
+                  // defaultValue={countryOptions.find((i) => i.name === "Kuwait")}
                   ref={ref}
                   options={countryOptions}
                   styles={selectStyles}
-                  onChange={val => {
+                  onChange={(val) => {
                     setPhoneKey(val!.key);
-                    onChange(val?.name);
+                    onChange(parseInt(val!.key));
                   }}
-                  getOptionLabel={option => option.name}
-                  getOptionValue={option => option.name}
+                  getOptionLabel={(option) => option.name}
+                  getOptionValue={(option) => option.key}
                 />
                 <ErrorMessage>
-                  {errors?.country! && 'Required Field'}
+                  {errors?.country_id! && "Required Field"}
                 </ErrorMessage>
               </>
             )}
@@ -108,9 +135,9 @@ const AddCustomerModal = () => {
               <AiOutlinePhone size={20} />
             </span>
             {phoneKey}
-            <Input {...register('phoneNumber', { required: 'Required' })} />
+            <Input {...register("phone", { required: "Required" })} />
           </div>
-          <ErrorMessage>{errors?.phoneNumber?.message}</ErrorMessage>
+          <ErrorMessage>{errors?.phone?.message}</ErrorMessage>
         </div>
       </InputsContainer>
       <InputsContainer>
@@ -122,7 +149,7 @@ const AddCustomerModal = () => {
             </span>
             <Input
               placeholder="optional"
-              {...register('email', { required: 'Required' })}
+              {...register("email", { required: "Required" })}
             />
           </div>
           <ErrorMessage>{errors?.email?.message}</ErrorMessage>
@@ -133,7 +160,7 @@ const AddCustomerModal = () => {
           <BsCheck size={30} />
           <BtnText>Add New Customer</BtnText>
         </Button>
-        <Button red type="button">
+        <Button onClick={() => closeFunction()} red type="button">
           <MdCancel size={30} />
           <BtnText>Cancel</BtnText>
         </Button>
@@ -145,7 +172,8 @@ const AddCustomerModal = () => {
 export default AddCustomerModal;
 const Container = styled.div`
   /* padding: 0.5rem; */
-  width: 600px;
+  /* width: 600px; */
+  font-family: ${(props) => props.theme.fontFamily};
 `;
 const InputsContainer = styled.div`
   display: grid;
@@ -157,7 +185,7 @@ const InputsContainer = styled.div`
     color: ${({ theme }) => theme.headingColor};
     margin-bottom: 0.4rem;
     font-size: 0.8rem;
-    font-weight: ${props => props.theme.font.regular};
+    font-weight: ${(props) => props.theme.font.regular};
     display: inline-block;
   }
   .input-container {
@@ -165,8 +193,8 @@ const InputsContainer = styled.div`
     position: relative;
     align-items: center;
     justify-content: center;
-    background-color: ${props => props.theme.inputColorLight};
-    color: ${props => props.theme.headingColor};
+    background-color: ${(props) => props.theme.inputColorLight};
+    color: ${(props) => props.theme.headingColor};
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
   }
@@ -175,7 +203,7 @@ const InputsContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: ${props => props.theme.subHeading};
+    color: ${(props) => props.theme.subHeading};
   }
 `;
 const ButtonsContainer = styled.div`
@@ -183,12 +211,12 @@ const ButtonsContainer = styled.div`
   padding: 1rem;
   align-items: center;
   justify-content: space-between;
-  border-top: ${props => props.theme.border};
-  background-color: ${props => props.theme.overlayColor};
+  border-top: ${(props) => props.theme.border};
+  background-color: ${(props) => props.theme.overlayColor};
 `;
 const BtnText = styled.p`
   font-size: 0.9rem;
-  font-weight: ${props => props.theme.font.regular};
+  font-weight: ${(props) => props.theme.font.regular};
   margin: 0 0.5rem;
 `;
 
@@ -200,9 +228,9 @@ const Input = styled.input`
 `;
 
 const Button = styled.button<{ red?: boolean }>`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.red ? props.theme.dangerRed : props.theme.green};
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 7px;
   position: relative;
   padding: 0.25rem 0.5rem;
@@ -214,5 +242,5 @@ const ErrorMessage = styled.p`
   font-size: 0.7rem;
   padding-top: 0.25rem;
   height: 22px;
-  color: ${props => props.theme.dangerRed};
+  color: ${(props) => props.theme.dangerRed};
 `;

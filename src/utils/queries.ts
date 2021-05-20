@@ -4,7 +4,7 @@ import {
   LOGIN_FORM,
   LOGIN_RESPONSE,
 } from "../interfaces/auth/auth";
-import { GET_CUSTOMERS_RESPONSE } from "../interfaces/customers/customers";
+import { CUSTOMER, NEW_CUSTOMER } from "../interfaces/customers/customers";
 import { GET_STORES_RESPONSE } from "../interfaces/stores/stores";
 
 const uri = "https://develop.o-now.net/customer-api";
@@ -44,9 +44,7 @@ export const getUserStores = async (): Promise<GET_STORES_RESPONSE> => {
   return result;
 };
 
-export const getCustomers = async (
-  storeId: number
-): Promise<GET_CUSTOMERS_RESPONSE> => {
+export const getCustomers = async (storeId: number): Promise<CUSTOMER[]> => {
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {
@@ -54,5 +52,15 @@ export const getCustomers = async (
     },
   };
   const res = await axios.get(`/clients-store/${storeId}`, config);
-  return res.data;
+  return res.data.results;
+};
+export const createCustomer = async (data: NEW_CUSTOMER): Promise<CUSTOMER> => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.post(`/clients`, data, config);
+  return res.data.results;
 };

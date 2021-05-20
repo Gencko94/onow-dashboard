@@ -93,9 +93,10 @@ const Container = styled.div`
 const Box = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
   border-radius: 6px;
-  padding: 1rem;
   background-color: #fff;
   .section {
+    padding: 1rem;
+    border-bottom: ${(props) => props.theme.border};
     .section-title {
       margin-bottom: 1.5rem;
       font-size: 1.1rem;
@@ -166,6 +167,7 @@ const Box = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1rem;
     button {
       background-color: ${(props) => props.theme.green};
       padding: 0.5rem;

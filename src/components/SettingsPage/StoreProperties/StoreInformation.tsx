@@ -84,7 +84,7 @@ const StoreInformation = () => {
             </div>
           </div>
         </div>
-        <Hr />
+
         <div className="section">
           <h6 className="section-title">Store Headquarters</h6>
           <div className="store-headquarters">
@@ -205,9 +205,10 @@ const Container = styled.div`
 const Box = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
   border-radius: 6px;
-  padding: 1rem;
   background-color: #fff;
   .section {
+    border-bottom: ${(props) => props.theme.border};
+    padding: 1rem;
     .section-title {
       margin-bottom: 1.5rem;
       font-size: 1.1rem;
@@ -288,6 +289,7 @@ const Box = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1rem;
     button {
       background-color: ${(props) => props.theme.green};
       padding: 0.5rem;

@@ -1,13 +1,9 @@
-export interface GET_CUSTOMERS_RESPONSE {
-  results: CUSTOMER[];
-}
-
 export interface NEW_CUSTOMER {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
+  first_name: string;
+  last_name: string;
+  phone: string;
   email?: string;
-  country: string;
+  country_id: number;
 }
 
 export interface CUSTOMER {
@@ -27,12 +23,4 @@ export interface CUSTOMER {
     };
     orders: [];
   };
-  // orders: [
-  //   {
-  //     order_id: number;
-  //     orderStatus: 'delivered' | 'waiting_for_payment'; // ... all other order statuses.
-  //     order_items: []; // array of minimal products list;
-  //     order_type: 'pickup' | 'delivery';
-  //   }
-  // ];
 }
