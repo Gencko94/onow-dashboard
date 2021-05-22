@@ -1,16 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import {
-  AiOutlineMail,
-  AiOutlinePhone,
-  AiOutlineWhatsApp,
-} from "react-icons/ai";
-import { MdSmartphone } from "react-icons/md";
+
 import styled from "styled-components";
-import {
-  STORE_SOCIAL_NETWORK,
-  STORE_TECHNICAL_SUPPORT,
-} from "../../../interfaces/settings/store-properties/store-properties";
+import { STORE_SOCIAL_NETWORK } from "../../../interfaces/settings/store-properties/store-properties";
 
 const StoreSocialNetwork = () => {
   const {
@@ -103,11 +95,11 @@ const Box = styled.div`
       font-weight: ${(props) => props.theme.font.xbold};
     }
     label {
-      display: block;
-      margin-bottom: 0.5rem;
+      color: ${({ theme }) => theme.headingColor};
+      margin-bottom: 0.4rem;
       font-size: 0.9rem;
-      color: ${(props) => props.theme.headingColor};
-      font-weight: ${(props) => props.theme.font.light};
+      font-weight: ${(props) => props.theme.font.regular};
+      display: inline-block;
     }
 
     .error {
@@ -130,6 +122,12 @@ const Box = styled.div`
         color: ${(props) => props.theme.headingColor};
         border: ${(props) => props.theme.border};
         border-radius: 5px;
+        transition: all 150ms ease;
+        &:hover,
+        &:focus-within {
+          border-color: ${(props) => props.theme.borderHovered};
+          background-color: ${(props) => props.theme.inputColorLight};
+        }
       }
       .link {
         padding: 0.4rem;
@@ -145,21 +143,6 @@ const Box = styled.div`
         font-size: 0.9rem;
         width: 50px;
         background-color: #fff;
-      }
-    }
-    .store-headquarters {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      column-gap: 1rem;
-      row-gap: 0.5rem;
-      input.input {
-        flex: 1;
-        padding: 0.4rem;
-        font-size: 0.9rem;
-        width: 100%;
-        background-color: #fff;
-        border: ${(props) => props.theme.border};
-        border-radius: 6px;
       }
     }
   }

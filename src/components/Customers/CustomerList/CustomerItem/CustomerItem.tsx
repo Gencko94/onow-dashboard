@@ -23,10 +23,10 @@ const CustomerItem = ({ customer }: IProps) => {
         </CheckboxContainer>
       </div> */}
       <div className="field">
-        <h6>{`${customer.firstName} ${customer.lastName}`}</h6>
+        <h6>{`${customer.first_name} ${customer.last_name}`}</h6>
       </div>
       <div className="field">
-        <h6>{customer.phoneNumber}</h6>
+        <h6>{customer.phone}</h6>
       </div>
       <div className="field">
         <h6>{customer.email} </h6>

@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
+import IconedInput from "../../components/reusable/IconedInput";
 import SettingsBreadcrumbs from "../../components/SettingsPage/SettingsBreadcrumbs";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
 
@@ -20,7 +21,16 @@ const AccountSettings = () => {
       <AccountInformationSection>
         <h5>Account Information</h5>
         <div className="container">
-          <div>
+          <IconedInput
+            Icon={MdSubtitles}
+            errors={errors}
+            register={register}
+            required
+            requiredMessage="Required"
+            label="Name"
+            name="name"
+          />
+          {/* <div>
             <label>Name</label>
             <div className="input-container">
               <span className="icon">
@@ -29,18 +39,16 @@ const AccountSettings = () => {
               <input {...register("name", { required: "Required" })} />
             </div>
             <p className="error">{errors?.name?.message}</p>
-          </div>
-
-          <div>
-            <label>Phone Number</label>
-            <div className="input-container">
-              <span className="icon">
-                <MdSubtitles size={20} />
-              </span>
-              <input {...register("phone", { required: "Required" })} />
-            </div>
-            <p className="error">{errors?.phone?.message}</p>
-          </div>
+          </div> */}
+          <IconedInput
+            Icon={MdSubtitles}
+            errors={errors}
+            register={register}
+            required
+            requiredMessage="Required"
+            label="Phone number"
+            name="phone"
+          />
         </div>
       </AccountInformationSection>
       <PasswordSection>
@@ -67,36 +75,6 @@ const AccountInformationSection = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    label {
-      color: ${({ theme }) => theme.headingColor};
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-      font-weight: ${(props) => props.theme.font.regular};
-      display: inline-block;
-    }
-    .input-container {
-      display: flex;
-      position: relative;
-      align-items: center;
-      justify-content: center;
-      background-color: ${(props) => props.theme.inputColorLight};
-      color: ${(props) => props.theme.headingColor};
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-    }
-    .icon {
-      padding: 0.3rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: ${(props) => props.theme.subHeading};
-    }
-    input {
-      flex: 1;
-      padding: 0.4rem;
-      font-size: 0.9rem;
-      width: 50px;
-    }
   }
 `;
 const PasswordSection = styled.div`

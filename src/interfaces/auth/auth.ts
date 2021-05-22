@@ -8,12 +8,6 @@ export type USER = {
   stores: STORE[];
 };
 
-export type GET_USER_RESPONSE = {
-  result: {
-    userInfo: USER;
-  };
-};
-
 export type LOGIN_FORM = {
   login: string;
   password: string;

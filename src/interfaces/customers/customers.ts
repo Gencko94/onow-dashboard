@@ -8,13 +8,14 @@ export interface NEW_CUSTOMER {
 
 export interface CUSTOMER {
   id: number;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
+  first_name: string;
+  last_name: string;
+  phone: string;
   email?: string;
-  joinDate: string;
+  join_date: string;
   country: {
     id: number;
+    country_code: string;
     name: {
       [key: string]: string;
     };

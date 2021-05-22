@@ -9,6 +9,8 @@ import Select from "react-select";
 import { useMemo, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { createCustomer } from "../../utils/queries";
+import IconedInput from "../reusable/IconedInput";
+import { useTranslation } from "react-i18next";
 
 const countryOptions = [
   {
@@ -25,6 +27,9 @@ interface IProps {
   storeId: number;
 }
 const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
+  const {
+    i18n: { language },
+  } = useTranslation();
   const queryClient = useQueryClient();
   const {
     register,
@@ -44,9 +49,12 @@ const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
   });
   const onSubmit: SubmitHandler<NEW_CUSTOMER> = async (data) => {
     await createNewCustomer({
-      ...data,
-      phone: `${phoneKey}${data.phone}`,
-      country_id: data.country_id,
+      storeId,
+      data: {
+        ...data,
+        phone: `${phoneKey}${data.phone}`,
+        country_id: data.country_id,
+      },
     });
     console.log({
       ...data,
@@ -75,29 +83,26 @@ const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
     };
   }, []);
   return (
-    <Container>
+    <Container rtl={language === "ar"}>
       <InputsContainer>
-        <div>
-          <label>Customer First Name</label>
-          <div className="input-container">
-            <span className="icon">
-              <MdSubtitles size={20} />
-            </span>
-            <Input {...register("first_name", { required: "Required" })} />
-          </div>
-          <ErrorMessage>{errors?.first_name?.message}</ErrorMessage>
-        </div>
-
-        <div>
-          <label>Customer Last Name</label>
-          <div className="input-container">
-            <span className="icon">
-              <MdSubtitles size={20} />
-            </span>
-            <Input {...register("last_name", { required: "Required" })} />
-          </div>
-          <ErrorMessage>{errors?.last_name?.message}</ErrorMessage>
-        </div>
+        <IconedInput
+          Icon={MdSubtitles}
+          errors={errors}
+          register={register}
+          required
+          label="Customer First Name"
+          name="first_name"
+          requiredMessage="Required"
+        />
+        <IconedInput
+          Icon={MdSubtitles}
+          errors={errors}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Customer Last Name"
+          name="last_name"
+        />
       </InputsContainer>
       <InputsContainer>
         <div>
@@ -110,7 +115,6 @@ const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
             render={({ field: { ref, onChange } }) => (
               <>
                 <Select
-                  // defaultValue={countryOptions.find((i) => i.name === "Kuwait")}
                   ref={ref}
                   options={countryOptions}
                   styles={selectStyles}
@@ -128,7 +132,16 @@ const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
             )}
           />
         </div>
-        <div>
+        <IconedInput
+          Icon={AiOutlinePhone}
+          errors={errors}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Customer Phone Number"
+          name="phone"
+        />
+        {/* <div>
           <label>Customer Phone Number</label>
           <div className="input-container">
             <span className="icon">
@@ -138,22 +151,18 @@ const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
             <Input {...register("phone", { required: "Required" })} />
           </div>
           <ErrorMessage>{errors?.phone?.message}</ErrorMessage>
-        </div>
+        </div> */}
       </InputsContainer>
       <InputsContainer>
-        <div>
-          <label>Email Address</label>
-          <div className="input-container">
-            <span className="icon">
-              <HiOutlineMail size={20} />
-            </span>
-            <Input
-              placeholder="optional"
-              {...register("email", { required: "Required" })}
-            />
-          </div>
-          <ErrorMessage>{errors?.email?.message}</ErrorMessage>
-        </div>
+        <IconedInput
+          Icon={HiOutlineMail}
+          errors={errors}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Customer Email Address"
+          name="email"
+        />
       </InputsContainer>
       <ButtonsContainer>
         <Button type="button" onClick={handleSubmit(onSubmit)}>
@@ -170,10 +179,11 @@ const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
 };
 
 export default AddCustomerModal;
-const Container = styled.div`
+const Container = styled.div<{ rtl: boolean }>`
   /* padding: 0.5rem; */
   /* width: 600px; */
   font-family: ${(props) => props.theme.fontFamily};
+  direction: ${(props) => (props.rtl ? "rtl" : "ltr")};
 `;
 const InputsContainer = styled.div`
   display: grid;

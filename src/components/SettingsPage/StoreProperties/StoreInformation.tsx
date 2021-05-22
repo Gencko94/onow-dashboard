@@ -7,7 +7,7 @@ import Select, { GroupTypeBase, Styles } from "react-select";
 import styled from "styled-components";
 import { COUNTRY, countryList } from "../../../data/countryList";
 import { STORE_INFORMATION } from "../../../interfaces/settings/store-properties/store-properties";
-import Hr from "../../StyledComponents/Hr";
+import IconedInput from "../../reusable/IconedInput";
 
 const StoreInformation = () => {
   const {
@@ -52,26 +52,26 @@ const StoreInformation = () => {
         <div className="section">
           <h6 className="section-title">Store Name</h6>
           <div className="store-name-grid">
-            <div>
-              <label>Store Name English</label>
-              <div className="input-container">
-                <span className="icon">
-                  <MdSubtitles size={20} />
-                </span>
-                <input {...register("name.en", { required: "Required" })} />
-              </div>
-              <p className="error">{errors?.name?.en?.message}</p>
-            </div>
-            <div>
-              <label>Store Name Arabic</label>
-              <div className="input-container">
-                <span className="icon">
-                  <MdSubtitles size={20} />
-                </span>
-                <input {...register("name.ar", { required: "Required" })} />
-              </div>
-              <p className="error">{errors?.name?.ar?.message}</p>
-            </div>
+            <IconedInput
+              Icon={MdSubtitles}
+              errors={errors}
+              register={register}
+              name="name.en"
+              required
+              requiredMessage="Name Required"
+              label="Store Name English"
+            />
+
+            <IconedInput
+              Icon={MdSubtitles}
+              errors={errors}
+              register={register}
+              name="name.ar"
+              required
+              requiredMessage="Name Required"
+              label="Store Name Arabic"
+            />
+
             <div className="description">
               <label>Store Description</label>
 
@@ -214,13 +214,6 @@ const Box = styled.div`
       font-size: 1.1rem;
       font-weight: ${(props) => props.theme.font.xbold};
     }
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-      color: ${(props) => props.theme.headingColor};
-      font-weight: ${(props) => props.theme.font.light};
-    }
 
     .error {
       height: 20px;
@@ -233,30 +226,7 @@ const Box = styled.div`
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
-      .input-container {
-        display: flex;
-        position: relative;
-        align-items: center;
-        justify-content: center;
-        background-color: ${(props) => props.theme.inputColorLight};
-        color: ${(props) => props.theme.headingColor};
-        border: ${(props) => props.theme.border};
-        border-radius: 5px;
-      }
-      .icon {
-        padding: 0.3rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: ${(props) => props.theme.subHeading};
-      }
-      input {
-        flex: 1;
-        padding: 0.4rem;
-        font-size: 0.9rem;
-        width: 50px;
-        background-color: #fff;
-      }
+
       .description {
         grid-column: 1/3;
         textarea {
@@ -274,6 +244,13 @@ const Box = styled.div`
       grid-template-columns: 1fr 1fr;
       column-gap: 1rem;
       row-gap: 0.5rem;
+      label {
+        color: ${({ theme }) => theme.headingColor};
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+        font-weight: ${(props) => props.theme.font.regular};
+        display: inline-block;
+      }
       input.input {
         flex: 1;
         padding: 0.4rem;

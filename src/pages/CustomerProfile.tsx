@@ -5,13 +5,13 @@ import CustomerProfileInfo from "../components/CustomerProfile/CustomerProfileIn
 import CustomerProfileOrders from "../components/CustomerProfile/CustomerProfileOrders/CustomerProfileOrders";
 import CustomerProfilePanel from "../components/CustomerProfile/CustomerProfilePanel/CustomerProfilePanel";
 import { CUSTOMER } from "../interfaces/customers/customers";
-import { getSingleCustomer } from "../utils/test-queries";
+import { getSingleCustomer } from "../utils/queries";
 
 const CustomerProfile = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading } = useQuery<CUSTOMER>(
     ["customer", id],
-    () => getSingleCustomer(parseInt(id)),
+    () => getSingleCustomer(id),
     {
       suspense: true,
     }

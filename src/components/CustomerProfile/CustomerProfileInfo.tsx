@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { BsCardHeading } from 'react-icons/bs';
-import { AiOutlinePhone } from 'react-icons/ai';
-import { HiOutlineMail } from 'react-icons/hi';
-import { MdDateRange } from 'react-icons/md';
-import { CUSTOMER } from '../../interfaces/customers/customers';
-import { format } from 'date-fns';
-import { parseISO } from 'date-fns/esm';
+import styled from "styled-components";
+import { BsCardHeading } from "react-icons/bs";
+import { AiOutlinePhone } from "react-icons/ai";
+import { HiOutlineMail } from "react-icons/hi";
+import { MdDateRange } from "react-icons/md";
+import { CUSTOMER } from "../../interfaces/customers/customers";
+import { format } from "date-fns";
+import { parseISO } from "date-fns/esm";
 interface IProps {
   data: CUSTOMER;
 }
@@ -21,7 +21,7 @@ const CustomerProfileInfo = ({ data }: IProps) => {
           </Icon>
           <div className="details">
             <p className="text">Full Name</p>
-            <p className="value">{`${data.firstName} ${data.lastName}`}</p>
+            <p className="value">{`${data.first_name} ${data.last_name}`}</p>
           </div>
         </div>
         <div className="stat-item">
@@ -30,7 +30,7 @@ const CustomerProfileInfo = ({ data }: IProps) => {
           </Icon>
           <div className="details">
             <p className="text">Phone Number</p>
-            <p className="value">{data.phoneNumber}</p>
+            <p className="value">{data.phone}</p>
           </div>
         </div>
         <div className="stat-item">
@@ -49,7 +49,7 @@ const CustomerProfileInfo = ({ data }: IProps) => {
           <div className="details">
             <p className="text">Join Date</p>
             <p className="value">
-              {format(parseISO(data.joinDate), 'dd/MM/yyyy')}
+              {format(parseISO(data.join_date), "dd/MM/yyyy")}
             </p>
           </div>
         </div>
@@ -109,11 +109,11 @@ const ContentContainer = styled.div(
 );
 
 const Icon = styled.span`
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 7px;
   padding: 0.5rem;
   display: flex;
   align-items: center;
-  background-color: ${props => props.color};
+  background-color: ${(props) => props.color};
   color: #fff;
 `;

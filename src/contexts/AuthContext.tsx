@@ -30,7 +30,7 @@ const AuthContext: React.FC = ({ children }) => {
   return (
     <AuthProvider.Provider
       value={{
-        user: user?.result?.userInfo,
+        user: user,
 
         logOut,
       }}

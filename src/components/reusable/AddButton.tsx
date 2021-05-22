@@ -4,13 +4,14 @@ import styled from "styled-components";
 
 interface IProps {
   title: string;
-  target: string;
+  target?: string;
+  cb?: () => void;
 }
 
-const AddButton = ({ target, title }: IProps) => {
+const AddButton = ({ target, title, cb }: IProps) => {
   const history = useHistory();
   return (
-    <Button onClick={() => history.push(target)}>
+    <Button onClick={() => (cb ? cb() : target && history.push(target))}>
       <span className="icon">
         <BiPlus size={30} />
       </span>
