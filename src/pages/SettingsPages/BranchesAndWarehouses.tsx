@@ -1,11 +1,15 @@
 import styled from "styled-components";
-import SettingsBreadcrumbs from "../../components/SettingsPage/SettingsBreadcrumbs";
+import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import AddButton from "../../components/reusable/AddButton";
 
 const BranchesAndWarehouses = () => {
   return (
     <Container>
-      <SettingsBreadcrumbs transId="Branches & Warehouses" />
+      <Breadcrumbs
+        childLabel="Branches & Warehouses"
+        parentLabel="Settings"
+        parentTarget="/settings"
+      />
       <div className="panel">
         <AddButton
           title="Create New Branch/Warehouse"

@@ -4,26 +4,28 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 interface IProps {
-  transId: string;
+  parentLabel: string;
+  parentTarget: string;
+  childLabel: string;
 }
 
-const SettingsBreadcrumbs = ({ transId }: IProps) => {
+const Breadcrumbs = ({ childLabel, parentLabel, parentTarget }: IProps) => {
   const { t } = useTranslation();
   return (
     <Container>
-      <h5>{transId}</h5>
+      <h5>{childLabel}</h5>
       <div className="links-container">
-        <MainLink to="/settings">Settings</MainLink>
+        <MainLink to={parentTarget}>{t(parentLabel)}</MainLink>
         <span className="chevron">
           <FiChevronRight size={16} />
         </span>
-        <p>{t(transId)}</p>
+        <p>{t(childLabel)}</p>
       </div>
     </Container>
   );
 };
 
-export default SettingsBreadcrumbs;
+export default Breadcrumbs;
 const Container = styled.div`
   padding: 0.75rem 1rem;
   border-radius: 6px;

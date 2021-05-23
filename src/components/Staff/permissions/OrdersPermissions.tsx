@@ -2,6 +2,7 @@ import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { STAFF_MEMBER } from "../../../interfaces/staff/staff";
+import Checkbox from "../../reusable/Checkbox";
 
 interface IProps {
   control: Control<STAFF_MEMBER>;
@@ -21,23 +22,11 @@ const OrdersPermissions = ({ control, permissions }: IProps) => {
         {permissions.orders.map((key: any) => {
           return (
             <div className="item">
-              <Controller
-                defaultValue={false}
+              <Checkbox
                 control={control}
-                name={`permissions.orders.${key}` as any}
-                render={({ field: { onChange, value } }) => {
-                  return (
-                    <Checkbox>
-                      {t(key)}
-                      <input
-                        type="checkbox"
-                        onChange={onChange}
-                        checked={value}
-                      />
-                      <span className="check" />
-                    </Checkbox>
-                  );
-                }}
+                name={`permissions.orders.${key}`}
+                label={key}
+                key={key}
               />
             </div>
           );
@@ -70,54 +59,5 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     padding: 0.5rem;
-  }
-`;
-const Checkbox = styled.label`
-  display: block;
-  position: relative;
-  padding-left: 35px;
-
-  cursor: pointer;
-  font-size: 0.9rem;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-  .check {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    background-color: #fff;
-    border: ${(props) => props.theme.border};
-    border-radius: 6px;
-    &::after {
-      content: "";
-      position: absolute;
-      display: none;
-      left: 7px;
-      top: 4px;
-      width: 5px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
-    }
-  }
-  input:checked ~ .check {
-    background-color: #2196f3;
-  }
-  input:checked ~ .check:after {
-    display: block;
   }
 `;

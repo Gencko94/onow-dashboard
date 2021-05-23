@@ -29,7 +29,7 @@ const StoreTechnicalSupport = () => {
           <div className="grid">
             <IconedInput
               Icon={MdSmartphone}
-              errors={errors}
+              errors={errors?.phone}
               register={register}
               name="phone"
               required
@@ -39,7 +39,7 @@ const StoreTechnicalSupport = () => {
 
             <IconedInput
               Icon={AiOutlineWhatsApp}
-              errors={errors}
+              errors={errors?.whatsapp}
               register={register}
               name="whatsapp"
               required
@@ -48,7 +48,7 @@ const StoreTechnicalSupport = () => {
             />
             <IconedInput
               Icon={AiOutlineMail}
-              errors={errors}
+              errors={errors?.email}
               register={register}
               name="email"
               required
@@ -57,7 +57,7 @@ const StoreTechnicalSupport = () => {
             />
             <IconedInput
               Icon={AiOutlinePhone}
-              errors={errors}
+              errors={errors?.landline}
               register={register}
               name="landline"
               required

@@ -30,7 +30,7 @@ const CouponItem = () => {
     }
   };
   return (
-    <Container>
+    <Container onClick={() => history.push(`/coupons/coupon/1`)}>
       <div className="field">
         <h6>DISCOUNT</h6>
       </div>
@@ -42,14 +42,12 @@ const CouponItem = () => {
       </div>
       <div className="field">
         <ButtonsContainer>
-          <button
-            onClick={() => history.push("/customers/1")}
-            className="icon"
-            title="Visit Profile"
+          <ActionButtonContainer
+            onClick={(e) => {
+              e.stopPropagation();
+              setActionsMenuOpen(true);
+            }}
           >
-            <ImProfile size={18} />
-          </button>
-          <ActionButtonContainer onClick={() => setActionsMenuOpen(true)}>
             <button className="icon">
               <BsThreeDotsVertical size={18} />
             </button>
@@ -85,6 +83,7 @@ const Container = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr;
   background-color: #fff;
   gap: 1rem;
+  cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
   &:hover {
     background-color: ${(props) => props.theme.highlightColor};

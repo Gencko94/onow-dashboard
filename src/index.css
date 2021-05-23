@@ -66,7 +66,7 @@
   background-color: unset !important;
 }
 .react-calendar__month-view__weekdays__weekday {
-  font-size: larger !important;
+  /* font-size: larger !important; */
 }
 .react-calendar__month-view__weekdays__weekday abbr {
   text-decoration: none;
@@ -79,10 +79,11 @@
 .react-calendar {
   border-radius: 6px;
   border: none !important;
-  box-shadow: 0px 0px 7px 0px rgb(213, 213, 213);
+  box-shadow: 0px 8px 7px 2px rgb(213, 213, 213);
+  font-size: 0.9rem;
 }
 .react-calendar__tile--now {
-  background-color: unset !important;
+  background-color: #f78f21 !important;
 }
 .react-calendar__navigation__arrow {
   border-radius: 50%;

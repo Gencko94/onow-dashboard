@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import SettingsBreadcrumbs from "../../components/SettingsPage/SettingsBreadcrumbs";
+import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Hr from "../../components/StyledComponents/Hr";
 import { STORE_IDENTITY } from "../../interfaces/settings/store-identity/store-identity";
 import MiniFileUploader from "../../utils/MiniFileUploader";
@@ -14,7 +14,11 @@ const StoreIdentity = () => {
   } = useForm<STORE_IDENTITY>();
   return (
     <div>
-      <SettingsBreadcrumbs transId="Store Identity" />
+      <Breadcrumbs
+        childLabel="Store Identity"
+        parentLabel="Settings"
+        parentTarget="/settings"
+      />
       <Container>
         <div className="title-container">
           <h5>Store Logo & Favicon</h5>

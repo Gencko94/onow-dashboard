@@ -1,30 +1,31 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import { RiDeleteBinLine, RiHandCoinFill } from 'react-icons/ri';
-import { MdSubtitles } from 'react-icons/md';
-import { IoColorPaletteOutline, IoPricetagsOutline } from 'react-icons/io5';
-import Calendar from 'react-calendar';
-import { format } from 'date-fns';
+import { useState } from "react";
+import styled from "styled-components";
+import { RiDeleteBinLine, RiHandCoinFill } from "react-icons/ri";
+import { MdSubtitles } from "react-icons/md";
+import { IoColorPaletteOutline, IoPricetagsOutline } from "react-icons/io5";
+import Calendar from "react-calendar";
+import { format } from "date-fns";
 
-import 'react-calendar/dist/Calendar.css';
+import "react-calendar/dist/Calendar.css";
 import {
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
   FaAngleLeft,
   FaAngleRight,
-} from 'react-icons/fa';
-import { FiCalendar } from 'react-icons/fi';
-import { CSSTransition } from 'react-transition-group';
-import ClickAwayListener from 'react-click-away-listener';
-import { BiChevronDown, BiInfinite } from 'react-icons/bi';
-import { AiOutlineAlert, AiOutlinePercentage } from 'react-icons/ai';
-import { NEW_VARIATION, SALE_TYPES } from '../../interfaces/products/products';
-import { Controller, FieldArrayWithId, useFormContext } from 'react-hook-form';
-import { SketchPicker } from 'react-color';
+} from "react-icons/fa";
+import { FiCalendar } from "react-icons/fi";
+import { CSSTransition } from "react-transition-group";
+import ClickAwayListener from "react-click-away-listener";
+import { BiChevronDown, BiInfinite } from "react-icons/bi";
+import { AiOutlineAlert, AiOutlinePercentage } from "react-icons/ai";
+import { NEW_VARIATION, SALE_TYPES } from "../../interfaces/products/products";
+
+import { SketchPicker } from "react-color";
+import { Controller, FieldArrayWithId, useFormContext } from "react-hook-form";
 
 interface IProps {
   variationType: number;
-  field: FieldArrayWithId<NEW_VARIATION, 'values', 'id'>;
+  field: FieldArrayWithId<NEW_VARIATION, "values", "id">;
   index: number;
   length: number;
   remove: (index?: number | number[] | undefined) => void;
@@ -49,7 +50,7 @@ const NewVariationField = ({
 
   const [date, setDate] = useState<Date | Date[]>(new Date());
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const [saleType, setSaleType] = useState<SALE_TYPES>('fixed');
+  const [saleType, setSaleType] = useState<SALE_TYPES>("fixed");
   const [saleTypeOptionsOpen, setSaleTypeOptionsOpen] = useState(false);
 
   const [colorPickerOpen, setColorPickerOpen] = useState(false);
@@ -77,7 +78,7 @@ const NewVariationField = ({
             <Input
               defaultValue={field.name}
               {...register(`values.${index}.name` as const, {
-                required: 'Required Field',
+                required: "Required Field",
               })}
             />
           </IconedInputContainer>
@@ -93,7 +94,7 @@ const NewVariationField = ({
               {...register(
                 `values.${index}.name_ar` as `values.${number}.name_ar`,
                 {
-                  required: 'Required Field',
+                  required: "Required Field",
                 }
               )}
             />
@@ -113,7 +114,7 @@ const NewVariationField = ({
               <ColorButton
                 onClick={() => setColorPickerOpen(true)}
                 type="button"
-                color={color || '#555'}
+                color={color || "#555"}
               />
               <Controller
                 control={control}
@@ -134,7 +135,7 @@ const NewVariationField = ({
                       <SketchPicker
                         disableAlpha
                         color={value}
-                        onChangeComplete={color => {
+                        onChangeComplete={(color) => {
                           console.log(color);
                           onChange(color.hex);
                         }}
@@ -162,7 +163,7 @@ const NewVariationField = ({
               defaultValue={field.price}
               disabled={!priceEnabled}
               {...register(`values.${index}.price` as const, {
-                required: priceEnabled ? 'Required Field' : false,
+                required: priceEnabled ? "Required Field" : false,
               })}
             />
             <Controller
@@ -195,7 +196,7 @@ const NewVariationField = ({
                   }}
                   enabled={priceEnabled}
                 >
-                  {priceEnabled ? 'Disable' : 'Enable'}
+                  {priceEnabled ? "Disable" : "Enable"}
                 </EnabledContainer>
               )}
             />
@@ -217,7 +218,7 @@ const NewVariationField = ({
               defaultValue={field.sale_price}
               disabled={!saleEnabled}
               {...register(`values.${index}.sale_price` as const, {
-                required: saleEnabled ? 'Required Field' : false,
+                required: saleEnabled ? "Required Field" : false,
               })}
             />
             <Controller
@@ -245,12 +246,12 @@ const NewVariationField = ({
                   }}
                   enabled={saleEnabled}
                 >
-                  {saleEnabled ? 'Disable' : 'Enable'}
+                  {saleEnabled ? "Disable" : "Enable"}
                 </EnabledContainer>
               )}
             />
 
-            {saleType === 'fixed' ? (
+            {saleType === "fixed" ? (
               <Currency>KD</Currency>
             ) : (
               <Icon>
@@ -268,8 +269,8 @@ const NewVariationField = ({
                   onClickAway={() => setSaleTypeOptionsOpen(false)}
                 >
                   <OptionsContainer>
-                    <Option onClick={() => setSaleType('fixed')}>Fixed</Option>
-                    <Option onClick={() => setSaleType('percent')}>
+                    <Option onClick={() => setSaleType("fixed")}>Fixed</Option>
+                    <Option onClick={() => setSaleType("percent")}>
                       Percent
                     </Option>
                   </OptionsContainer>
@@ -287,11 +288,11 @@ const NewVariationField = ({
             <Input
               disabled={!saleEndDateEnabled}
               {...register(`values.${index}.sale_end_date` as const, {
-                required: saleEndDateEnabled ? 'Required Field' : false,
+                required: saleEndDateEnabled ? "Required Field" : false,
               })}
               placeholder="Optional.."
               readOnly
-              value={format(date as Date, 'yyyy-MM-dd')}
+              value={format(date as Date, "yyyy-MM-dd")}
             />
             <Controller
               name={`values.${index}.saleEndDateEnabled` as const}
@@ -311,7 +312,7 @@ const NewVariationField = ({
                   }}
                   enabled={saleEndDateEnabled}
                 >
-                  {saleEndDateEnabled ? 'Disable' : 'Enable'}
+                  {saleEndDateEnabled ? "Disable" : "Enable"}
                 </EnabledContainer>
               )}
             />
@@ -356,12 +357,12 @@ const NewVariationField = ({
             </Icon>
             <Input
               {...register(`values.${index}.qty` as const, {
-                required: infiniteQtyEnabled ? false : 'Required',
+                required: infiniteQtyEnabled ? false : "Required",
                 pattern: /^[0-9]*$/,
               })}
               type="number"
               placeholder={
-                infiniteQtyEnabled ? 'Infinite Quantity' : 'Enter Quantity'
+                infiniteQtyEnabled ? "Infinite Quantity" : "Enter Quantity"
               }
               disabled={infiniteQtyEnabled}
             />
@@ -396,7 +397,7 @@ const NewVariationField = ({
             <Input
               {...register(`values.${index}.qtyAlertThreshold` as const, {
                 validate: {
-                  moreThanQty: value => {
+                  moreThanQty: (value) => {
                     console.log(qty);
                     console.log(value);
                     if (!qty) {
@@ -404,9 +405,9 @@ const NewVariationField = ({
                     } else if (value === 0) {
                       return true;
                     } else if (value <= qty) {
-                      return 'smaller';
+                      return "smaller";
                     }
-                    return 'More Than Quantity';
+                    return "More Than Quantity";
                   },
                 },
               })}
@@ -458,7 +459,7 @@ const Label = styled.label`
   color: ${({ theme }) => theme.headingColor};
   margin-bottom: 0.4rem;
   font-size: 0.8rem;
-  font-weight: ${props => props.theme.font.regular};
+  font-weight: ${(props) => props.theme.font.regular};
   display: inline-block;
 `;
 const Input = styled.input`
@@ -473,8 +474,8 @@ const IconedInputContainer = styled.div`
   position: relative;
   align-items: center;
   justify-content: center;
-  background-color: ${props => props.theme.inputColorLight};
-  color: ${props => props.theme.headingColor};
+  background-color: ${(props) => props.theme.inputColorLight};
+  color: ${(props) => props.theme.headingColor};
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 6px;
 `;
@@ -497,7 +498,7 @@ const Currency = styled.p`
 `;
 const Title = styled.h6`
   margin-bottom: 0.5rem;
-  font-weight: ${props => props.theme.font.xbold};
+  font-weight: ${(props) => props.theme.font.xbold};
 `;
 const PricingContainer = styled.div`
   display: grid;
@@ -507,8 +508,8 @@ const PricingContainer = styled.div`
 `;
 const InputsContainer = styled.div<{ type?: number }>`
   display: grid;
-  grid-template-columns: ${props =>
-    props.type === 2 ? '1fr 1fr 1fr' : '1fr 1fr'};
+  grid-template-columns: ${(props) =>
+    props.type === 2 ? "1fr 1fr 1fr" : "1fr 1fr"};
   gap: 0.75rem;
 `;
 const DelIcon = styled.button`
@@ -517,22 +518,22 @@ const DelIcon = styled.button`
   right: 0;
 
   z-index: 1;
-  color: ${props => props.theme.dangerRed};
+  color: ${(props) => props.theme.dangerRed};
 `;
 const Icon = styled.span`
   padding: 0.3rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${props => props.theme.subHeading};
+  color: ${(props) => props.theme.subHeading};
 `;
 const SaleTypeOptionsContainer = styled.button`
   padding: 0.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-right: ${props => props.theme.border};
-  border-left: ${props => props.theme.border};
+  border-right: ${(props) => props.theme.border};
+  border-left: ${(props) => props.theme.border};
   position: relative;
   cursor: pointer;
 `;
@@ -542,7 +543,7 @@ const OptionsContainer = styled.div`
   top: 110%;
   left: 0;
   right: 0;
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 5px;
   overflow: hidden;
 `;
@@ -550,11 +551,11 @@ const Option = styled.div`
   padding: 0.4rem;
   font-size: 0.8rem;
   background-color: #fff;
-  color: ${props => props.theme.subHeading};
+  color: ${(props) => props.theme.subHeading};
   transition: all 75ms ease;
   &:hover {
-    color: ${props => props.theme.headingColor};
-    font-weight: ${props => props.theme.font.semibold};
+    color: ${(props) => props.theme.headingColor};
+    font-weight: ${(props) => props.theme.font.semibold};
   }
 `;
 const SaleType = styled.p`
@@ -566,16 +567,16 @@ const EnabledContainer = styled.button<{ enabled: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.enabled ? props.theme.dangerRed : props.theme.green};
 
   color: #fff;
-  font-weight: ${props => props.theme.font.semibold};
+  font-weight: ${(props) => props.theme.font.semibold};
 `;
 const ErrorMessage = styled.p`
   font-size: 0.7rem;
   padding-top: 0.25rem;
-  color: ${props => props.theme.dangerRed};
+  color: ${(props) => props.theme.dangerRed};
 `;
 const ColorPickerContainer = styled.div`
   position: absolute;
@@ -587,7 +588,7 @@ const ColorPickerContainer = styled.div`
 const ColorButton = styled.button`
   width: 20px;
   height: 20px;
-  background-color: ${props => props.color};
+  background-color: ${(props) => props.color};
   border-radius: 50%;
   /* padding: 0.4rem; */
   margin: 0 0.25rem;

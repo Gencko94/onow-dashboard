@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { STORE_SEO } from "../../interfaces/settings/store-seo/store-seo";
-import SettingsBreadcrumbs from "../../components/SettingsPage/SettingsBreadcrumbs";
+import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { MdTitle } from "react-icons/md";
 
 const StoreSEO = () => {
@@ -13,7 +13,11 @@ const StoreSEO = () => {
   const values = watch();
   return (
     <div>
-      <SettingsBreadcrumbs transId="SEO Improvments" />
+      <Breadcrumbs
+        childLabel="SEO Improvments"
+        parentLabel="Settings"
+        parentTarget="/settings"
+      />
       <Container>
         <div className="title-container">
           <h5>Store SEO</h5>

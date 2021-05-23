@@ -87,7 +87,7 @@ const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
       <InputsContainer>
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors}
+          errors={errors?.first_name}
           register={register}
           required
           label="Customer First Name"
@@ -96,7 +96,7 @@ const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
         />
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors}
+          errors={errors?.last_name}
           register={register}
           required
           requiredMessage="Required"
@@ -134,29 +134,18 @@ const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
         </div>
         <IconedInput
           Icon={AiOutlinePhone}
-          errors={errors}
+          errors={errors?.phone}
           register={register}
           required
           requiredMessage="Required"
           label="Customer Phone Number"
           name="phone"
         />
-        {/* <div>
-          <label>Customer Phone Number</label>
-          <div className="input-container">
-            <span className="icon">
-              <AiOutlinePhone size={20} />
-            </span>
-            {phoneKey}
-            <Input {...register("phone", { required: "Required" })} />
-          </div>
-          <ErrorMessage>{errors?.phone?.message}</ErrorMessage>
-        </div> */}
       </InputsContainer>
       <InputsContainer>
         <IconedInput
           Icon={HiOutlineMail}
-          errors={errors}
+          errors={errors?.email}
           register={register}
           required
           requiredMessage="Required"

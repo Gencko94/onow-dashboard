@@ -1,16 +1,21 @@
+import { UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IconType } from "react-icons/lib";
 
 import styled, { css } from "styled-components";
 
 interface IProps {
-  register: any;
+  register: UseFormRegister<any>;
   errors: any;
   name: string;
   Icon: IconType;
   required?: boolean;
   requiredMessage?: string;
   label: string;
+  number?: boolean;
+  min?: number;
+  max?: number;
+  desc?: string;
 }
 
 const IconedInput = ({
@@ -21,12 +26,16 @@ const IconedInput = ({
   required,
   label,
   requiredMessage,
+  number,
+  min,
+  max,
+  desc,
 }: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
   return (
-    <Container rtl={language === "ar"} error={Boolean(errors?.[name])}>
+    <Container rtl={language === "ar"} error={Boolean(errors?.message)}>
       <label>{label}</label>
       <div className="input-container">
         <span className="icon">
@@ -34,10 +43,20 @@ const IconedInput = ({
         </span>
 
         <input
-          {...register(name, { required: required ? requiredMessage : false })}
+          type={number ? "number" : "text"}
+          min={min!}
+          max={max!}
+          {...register(name, {
+            required: required ? requiredMessage : false,
+            min: {
+              value: min!,
+              message: "Only Positive",
+            },
+          })}
         />
       </div>
-      <p className="error">{errors?.[name]?.message}</p>
+      {desc && <p className="desc">{desc}</p>}
+      <p className="error">{errors?.message}</p>
     </Container>
   );
 };
@@ -46,7 +65,7 @@ export default IconedInput;
 const Container = styled.div<{ rtl: boolean; error: boolean }>`
   label {
     color: ${({ theme }) => theme.headingColor};
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
     font-size: 0.9rem;
     font-weight: ${(props) => props.theme.font.regular};
     display: inline-block;
@@ -101,5 +120,12 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     padding-top: 0.25rem;
     height: 22px;
     color: ${(props) => props.theme.dangerRed};
+  }
+  .desc {
+    font-size: 0.7rem;
+    padding-top: 0.25rem;
+    height: 22px;
+    /* color: #7c7c7c; */
+    color: ${(props) => props.theme.mainColor};
   }
 `;

@@ -1,4 +1,4 @@
-import SettingsBreadcrumbs from "../../components/SettingsPage/SettingsBreadcrumbs";
+import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import StoreInformation from "../../components/SettingsPage/StoreProperties/StoreInformation";
 import StoreSocialNetwork from "../../components/SettingsPage/StoreProperties/StoreSocialNetwork";
 import StoreTechnicalSupport from "../../components/SettingsPage/StoreProperties/StoreTechnicalSupport";
@@ -6,7 +6,11 @@ import StoreTechnicalSupport from "../../components/SettingsPage/StoreProperties
 const StoreProperties = () => {
   return (
     <div>
-      <SettingsBreadcrumbs transId="Store Properties" />
+      <Breadcrumbs
+        childLabel="Store Properties"
+        parentLabel="Settings"
+        parentTarget="/settings"
+      />
       <StoreInformation />
       <StoreTechnicalSupport />
       <StoreSocialNetwork />

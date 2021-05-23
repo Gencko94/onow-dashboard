@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import styled from "styled-components";
+import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import DeleteButton from "../../components/reusable/DeleteButton";
 import StaffMemberInformation from "../../components/Staff/StaffMemberInformation";
 import StaffMemberPermissions from "../../components/Staff/StaffMemberPermissions";
@@ -27,6 +28,11 @@ const StaffMember = () => {
       <div className="panel">
         <DeleteButton cb={() => {}} title="Delete Staff Member" />
       </div>
+      <Breadcrumbs
+        childLabel="Staff Member"
+        parentLabel="Staff"
+        parentTarget="/staff"
+      />
       <StaffMemberInformation register={register} errors={errors} />
       <StaffMemberPermissions control={control} permissions={userPermissions} />
     </Container>
@@ -39,5 +45,6 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    margin-bottom: 2rem;
   }
 `;

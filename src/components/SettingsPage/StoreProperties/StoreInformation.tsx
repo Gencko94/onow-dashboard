@@ -1,48 +1,26 @@
-import { useMemo } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { AiOutlinePhone } from "react-icons/ai";
 import { MdSubtitles } from "react-icons/md";
-import Select, { GroupTypeBase, Styles } from "react-select";
 import styled from "styled-components";
-import { COUNTRY, countryList } from "../../../data/countryList";
+import { countryList } from "../../../data/countryList";
 import { STORE_INFORMATION } from "../../../interfaces/settings/store-properties/store-properties";
 import IconedInput from "../../reusable/IconedInput";
+import Select from "../../reusable/Select";
 
 const StoreInformation = () => {
   const {
     register,
     control,
+    handleSubmit,
     formState: { errors },
   } = useForm<STORE_INFORMATION>();
   const {
     i18n: { language },
   } = useTranslation();
-  const selectStyles:
-    | Partial<Styles<COUNTRY, false, GroupTypeBase<COUNTRY>>>
-    | undefined = useMemo(() => {
-    return {
-      control: (provided: any, state: any) => ({
-        ...provided,
-        fontSize: "0.9rem",
-        minHeight: "35px",
-      }),
-      dropdownIndicator: (provided: any, state: any) => ({
-        ...provided,
-        padding: "6px",
-        display: "grid",
-      }),
-      option: (provided: any) => ({
-        ...provided,
-        fontSize: "0.9rem",
-      }),
-      menu: (provided: any) => ({
-        ...provided,
 
-        zIndex: 200,
-      }),
-    };
-  }, []);
+  const onSubmit = (data: STORE_INFORMATION) => {
+    console.log(data);
+  };
   return (
     <Container>
       <div className="title-container">
@@ -54,7 +32,7 @@ const StoreInformation = () => {
           <div className="store-name-grid">
             <IconedInput
               Icon={MdSubtitles}
-              errors={errors}
+              errors={errors?.name?.en}
               register={register}
               name="name.en"
               required
@@ -64,7 +42,7 @@ const StoreInformation = () => {
 
             <IconedInput
               Icon={MdSubtitles}
-              errors={errors}
+              errors={errors?.name?.ar}
               register={register}
               name="name.ar"
               required
@@ -88,7 +66,19 @@ const StoreInformation = () => {
         <div className="section">
           <h6 className="section-title">Store Headquarters</h6>
           <div className="store-headquarters">
-            <div>
+            {/* <Select
+              control={control}
+              defaultValue={countryList[0]}
+              errors={errors}
+              label="Country"
+              name="headquarters.country"
+              options={countryList}
+              required
+              requiredMessage="Required"
+              getOptionLabel={(option) => option.name[language]}
+              getOptionValue={(option) => option.code}
+            /> */}
+            {/* <div>
               <label>Country</label>
               <Controller
                 name="headquarters.country"
@@ -115,8 +105,19 @@ const StoreInformation = () => {
                   </>
                 )}
               />
-            </div>
-            <div>
+            </div> */}
+            {/* <Select
+              control={control}
+              defaultValue={countryList[0]}
+              errors={errors}
+              label="City"
+              name="headquarters.city"
+              options={countryList}
+              required
+              getOptionLabel={(option) => option.name[language]}
+              getOptionValue={(option) => option.code}
+            /> */}
+            {/* <div>
               <label>City</label>
               <Controller
                 name="headquarters.city"
@@ -143,7 +144,7 @@ const StoreInformation = () => {
                   </>
                 )}
               />
-            </div>
+            </div> */}
             <div>
               <label>Avenue</label>
               <input
@@ -187,7 +188,7 @@ const StoreInformation = () => {
           </div>
         </div>
         <div className="save-container">
-          <button>Save Changes</button>
+          <button onClick={handleSubmit(onSubmit)}>Save Changes</button>
         </div>
       </Box>
     </Container>

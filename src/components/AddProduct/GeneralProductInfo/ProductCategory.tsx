@@ -1,15 +1,21 @@
-import styled from 'styled-components';
-import Select from 'react-select';
-import { BiPlus } from 'react-icons/bi';
-import { useState } from 'react';
-import Modal from '../../Modal/Modal';
-import AddCategoryModalBody from '../../Modal/AddCategoryModalBody';
-import { CSSTransition } from 'react-transition-group';
-import { Controller, useFormContext } from 'react-hook-form';
-import { NEW_PRODUCT } from '../../../interfaces/products/products';
+import styled from "styled-components";
+import Select from "react-select";
+import { BiPlus } from "react-icons/bi";
+import { useState } from "react";
+import Modal from "../../Modal/Modal";
+import AddCategoryModalBody from "../../Modal/AddCategoryModalBody";
+import { CSSTransition } from "react-transition-group";
+
+import { NEW_PRODUCT } from "../../../interfaces/products/products";
+import { Controller, useFormContext } from "react-hook-form";
 const options = [
-  { id: 1, name: 'Clothing' },
-  { id: 2, name: 'Food' },
+  { id: 1, name: "Clothing" },
+  { id: 2, name: "Food" },
+  { id: 3, name: "Foodd" },
+  { id: 4, name: "Foode2" },
+  { id: 5, name: "Food3" },
+  { id: 6, name: "Food33" },
+  { id: 7, name: "Food43" },
 ];
 const ProductCategory = () => {
   const {
@@ -23,19 +29,19 @@ const ProductCategory = () => {
       <Controller
         name="productCategories"
         control={control}
-        rules={{ required: 'Required' }}
+        rules={{ required: "Required" }}
         render={({ field: { ref, onChange } }) => (
           <>
             <Select
               isMulti
               ref={ref}
               options={options}
-              onChange={val => onChange(val.map(i => i.id))}
-              getOptionLabel={option => option.name}
-              getOptionValue={option => option.id.toString()}
+              onChange={(val) => onChange(val.map((i) => i.id))}
+              getOptionLabel={(option) => option.name}
+              getOptionValue={(option) => option.id.toString()}
             />
             <ErrorMessage>
-              {errors?.productCategories! && 'Required Field'}
+              {errors?.productCategories! && "Required Field"}
             </ErrorMessage>
           </>
         )}
@@ -63,8 +69,8 @@ const Container = styled.div`
   margin-bottom: 2rem;
   .title {
     margin-bottom: 1rem;
-    font-weight: ${props => props.theme.font.bold};
-    border-bottom: ${props => props.theme.border};
+    font-weight: ${(props) => props.theme.font.bold};
+    border-bottom: ${(props) => props.theme.border};
     padding-bottom: 0.5rem;
   }
 `;
@@ -73,8 +79,8 @@ const ButtonsContainer = styled.div`
   padding: 0.5rem 0;
 `;
 const AddButton = styled.button`
-  background-color: ${props => props.theme.green};
-  box-shadow: ${props => props.theme.shadow};
+  background-color: ${(props) => props.theme.green};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 7px;
   position: relative;
   padding: 0.25rem 0.5rem;
@@ -95,11 +101,11 @@ const Icon = styled.span`
 
 const BtnText = styled.p`
   font-size: 0.9rem;
-  font-weight: ${props => props.theme.font.regular};
+  font-weight: ${(props) => props.theme.font.regular};
   margin: 0 0.5rem;
 `;
 const ErrorMessage = styled.p`
   font-size: 0.7rem;
   padding-top: 0.25rem;
-  color: ${props => props.theme.dangerRed};
+  color: ${(props) => props.theme.dangerRed};
 `;

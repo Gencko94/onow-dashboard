@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import IconedInput from "../../components/reusable/IconedInput";
-import SettingsBreadcrumbs from "../../components/SettingsPage/SettingsBreadcrumbs";
+import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
 
 const AccountSettings = () => {
@@ -17,7 +17,11 @@ const AccountSettings = () => {
   };
   return (
     <div>
-      <SettingsBreadcrumbs transId="Account" />
+      <Breadcrumbs
+        childLabel="Account"
+        parentLabel="Settings"
+        parentTarget="/settings"
+      />
       <AccountInformationSection>
         <h5>Account Information</h5>
         <div className="container">

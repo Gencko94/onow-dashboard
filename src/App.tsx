@@ -29,6 +29,7 @@ const Orders = lazy(() => import("./pages/Orders"));
 const Order = lazy(() => import("./pages/Order"));
 const Coupons = lazy(() => import("./pages/Coupons"));
 const Coupon = lazy(() => import("./pages/Coupon"));
+const CreateNewCoupon = lazy(() => import("./pages/Coupons/CreateNewCoupon"));
 const WebsiteLayout = lazy(() => import("./pages/WebsiteLayout"));
 const HeaderCustomizer = lazy(() => import("./pages/HeaderCustomizer"));
 const FooterCustomizer = lazy(() => import("./pages/FooterCustomizer"));
@@ -104,8 +105,12 @@ function App() {
                         />
                         <ProtectedRoute path="/coupons" Component={Coupons} />
                         <ProtectedRoute
-                          path="/coupons/coupon"
+                          path="/coupons/coupon/:id"
                           Component={Coupon}
+                        />
+                        <ProtectedRoute
+                          path="/coupons/create"
+                          Component={CreateNewCoupon}
                         />
                         <ProtectedRoute
                           path="/website-layout"
