@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { BsCheck, BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import ClickAwayListener from "react-click-away-listener";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { ImProfile } from "react-icons/im";
+
 import { useHistory } from "react-router";
-const CouponItem = () => {
+const BranchItem = () => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   const renderStatus = (id: number) => {
@@ -30,9 +30,11 @@ const CouponItem = () => {
     }
   };
   return (
-    <Container onClick={() => history.push(`/coupons/coupon/1`)}>
+    <Container
+      onClick={() => history.push(`/settings/branch-warehouse/branch/1`)}
+    >
       <div className="field">
-        <h6>DISCOUNT</h6>
+        <h6>Branch 1</h6>
       </div>
       <div className="field">{renderStatus(2)}</div>
       <div className="field">
@@ -64,7 +66,7 @@ const CouponItem = () => {
                       <span className="icon">
                         <RiDeleteBinLine size={15} />
                       </span>
-                      <p>Delete Coupon</p>
+                      <p>Delete Branch</p>
                     </button>
                   </li>
                 </ul>
@@ -77,7 +79,7 @@ const CouponItem = () => {
   );
 };
 
-export default CouponItem;
+export default BranchItem;
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

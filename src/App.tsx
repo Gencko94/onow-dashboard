@@ -14,9 +14,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "react-placeholder/lib/reactPlaceholder.css";
 import Layout from "./layout/Layout";
-// import Dashboard from "./pages/Dashboard";
-// import Products from "./pages/Products";
-// import AddProduct from "./pages/AddProduct";
+
 import AuthContext from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 const AddProduct = lazy(() => import("./pages/AddProduct"));
@@ -24,11 +22,18 @@ const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Products = lazy(() => import("./pages/Products"));
 const Customers = lazy(() => import("./pages/Customers"));
 const Categories = lazy(() => import("./pages/Categories"));
+const Brands = lazy(() => import("./pages/Brands"));
+const CreateNewCategory = lazy(
+  () => import("./pages/Categories/CreateNewCategory")
+);
+const CreateNewBrand = lazy(() => import("./pages/Brands/CreateNewBrand"));
+const Category = lazy(() => import("./pages/Categories/Category"));
+const Brand = lazy(() => import("./pages/Brands/Brand"));
 const CustomerProfile = lazy(() => import("./pages/CustomerProfile"));
 const Orders = lazy(() => import("./pages/Orders"));
 const Order = lazy(() => import("./pages/Order"));
 const Coupons = lazy(() => import("./pages/Coupons"));
-const Coupon = lazy(() => import("./pages/Coupon"));
+const Coupon = lazy(() => import("./pages/Coupons/Coupon"));
 const CreateNewCoupon = lazy(() => import("./pages/Coupons/CreateNewCoupon"));
 const WebsiteLayout = lazy(() => import("./pages/WebsiteLayout"));
 const HeaderCustomizer = lazy(() => import("./pages/HeaderCustomizer"));
@@ -53,6 +58,18 @@ const StoreProperties = lazy(
 const StoreSEO = lazy(() => import("./pages/SettingsPages/StoreSEO"));
 const ProductListGridCustomizer = lazy(
   () => import("./pages/ProductListGridCustomizer")
+);
+const Branch = lazy(
+  () => import("./pages/SettingsPages/Branches&Warehouses/Branch")
+);
+const Warehouse = lazy(
+  () => import("./pages/SettingsPages/Branches&Warehouses/Warehouse")
+);
+const CreateNewBranch = lazy(
+  () => import("./pages/SettingsPages/Branches&Warehouses/CreateNewBranch")
+);
+const CreateNewWarehouse = lazy(
+  () => import("./pages/SettingsPages/Branches&Warehouses/CreateNewWarehouse")
 );
 
 const DesignSelectionPage = lazy(() => import("./pages/DesignSelectionPage"));
@@ -96,6 +113,23 @@ function App() {
                         <ProtectedRoute
                           path="/categories"
                           Component={Categories}
+                        />
+                        <ProtectedRoute
+                          path="/categories/category/:id"
+                          Component={Category}
+                        />
+                        <ProtectedRoute
+                          path="/categories/create"
+                          Component={CreateNewCategory}
+                        />
+                        <ProtectedRoute path="/brands" Component={Brands} />
+                        <ProtectedRoute
+                          path="/brands/brand/:id"
+                          Component={Brand}
+                        />
+                        <ProtectedRoute
+                          path="/brands/create"
+                          Component={CreateNewBrand}
                         />
                         <ProtectedRoute path="/orders" Component={Orders} />
                         <ProtectedRoute path="/orders/:id" Component={Order} />
@@ -169,6 +203,22 @@ function App() {
                         <ProtectedRoute
                           path="/staff/create"
                           Component={CreateStaffMember}
+                        />
+                        <ProtectedRoute
+                          path="/settings/branch-warehouse/branch/:id"
+                          Component={Branch}
+                        />
+                        <ProtectedRoute
+                          path="/settings/branch-warehouse/warehouse/:id"
+                          Component={Warehouse}
+                        />
+                        <ProtectedRoute
+                          path="/settings/branch-warehouse/create/warehouse"
+                          Component={CreateNewWarehouse}
+                        />
+                        <ProtectedRoute
+                          path="/settings/branch-warehouse/create/branch"
+                          Component={CreateNewBranch}
                         />
                       </Layout>
                     </Switch>

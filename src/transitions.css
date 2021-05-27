@@ -117,3 +117,21 @@
   max-height: 0;
   transition: all 250ms;
 }
+.sub-categories-enter {
+  opacity: 0;
+  max-height: 0;
+}
+.sub-categories-enter-active {
+  opacity: 1;
+  max-height: 262px;
+  transition: all 250ms;
+}
+.sub-categories-exit {
+  opacity: 1;
+  max-height: 262px;
+}
+.sub-categories-exit-active {
+  opacity: 0;
+  max-height: 0;
+  transition: all 250ms;
+}

@@ -91,14 +91,6 @@ const Box = styled.div`
     .section-title {
       margin-bottom: 1rem;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: 0.5fr 200px 1fr;
-      gap: 1rem;
-      .specs {
-        font-size: 0.8rem;
-      }
-    }
   }
   .save-container {
     display: flex;
@@ -126,7 +118,7 @@ const Grid = styled.div(
     font-size: 0.8rem;
   }
   @media ${breakpoints.md}{
-    grid-template-columns: 0.5fr 200px 1fr;
+    grid-template-columns: 0.5fr 275px 1fr;
     .demo-container {
       grid-column:unset;
     }

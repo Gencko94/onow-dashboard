@@ -8,7 +8,7 @@ interface IProps {
   register: UseFormRegister<any>;
   errors: any;
   name: string;
-  Icon: IconType;
+  prefixText: string;
   required?: boolean;
   requiredMessage?: string;
   label: string;
@@ -18,10 +18,10 @@ interface IProps {
   desc?: string;
 }
 
-const IconedInput = ({
+const PrefixedInput = ({
   errors,
   register,
-  Icon,
+  prefixText,
   name,
   required,
   label,
@@ -38,9 +38,9 @@ const IconedInput = ({
     <Container rtl={language === "ar"} error={Boolean(errors?.message)}>
       <label>{label}</label>
       <div className="input-container">
-        <span className="icon">
-          <Icon size={21} />
-        </span>
+        <div className="prefix">
+          <p>{prefixText}</p>
+        </div>
 
         <input
           type={number ? "number" : "text"}
@@ -61,14 +61,14 @@ const IconedInput = ({
   );
 };
 
-export default IconedInput;
+export default PrefixedInput;
 const Container = styled.div<{ rtl: boolean; error: boolean }>`
   label {
     color: ${({ theme }) => theme.headingColor};
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
     font-weight: ${(props) => props.theme.font.regular};
-    display: block;
+    display: inline-block;
   }
   .input-container {
     display: flex;
@@ -82,9 +82,10 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
-    .icon {
+    .prefix {
       padding: 0.4rem;
       display: flex;
+      font-size: 0.8rem;
       align-items: center;
       justify-content: center;
       color: ${(props) => props.theme.subHeading};

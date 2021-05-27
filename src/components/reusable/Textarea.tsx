@@ -8,27 +8,23 @@ interface IProps {
   register: UseFormRegister<any>;
   errors: any;
   name: string;
-  Icon: IconType;
+  rows?: number;
   required?: boolean;
   requiredMessage?: string;
   label: string;
-  number?: boolean;
-  min?: number;
-  max?: number;
+
   desc?: string;
 }
 
-const IconedInput = ({
+const Textarea = ({
   errors,
   register,
-  Icon,
+  rows = 4,
   name,
   required,
   label,
   requiredMessage,
-  number,
-  min,
-  max,
+
   desc,
 }: IProps) => {
   const {
@@ -37,31 +33,21 @@ const IconedInput = ({
   return (
     <Container rtl={language === "ar"} error={Boolean(errors?.message)}>
       <label>{label}</label>
-      <div className="input-container">
-        <span className="icon">
-          <Icon size={21} />
-        </span>
 
-        <input
-          type={number ? "number" : "text"}
-          min={min!}
-          max={max!}
-          {...register(name, {
-            required: required ? requiredMessage : false,
-            min: {
-              value: min!,
-              message: "Only Positive",
-            },
-          })}
-        />
-      </div>
+      <textarea
+        rows={rows}
+        {...register(name, {
+          required: required ? requiredMessage : false,
+        })}
+      />
+
       {desc && <p className="desc">{desc}</p>}
       <p className="error">{errors?.message}</p>
     </Container>
   );
 };
 
-export default IconedInput;
+export default Textarea;
 const Container = styled.div<{ rtl: boolean; error: boolean }>`
   label {
     color: ${({ theme }) => theme.headingColor};
@@ -70,40 +56,17 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     font-weight: ${(props) => props.theme.font.regular};
     display: block;
   }
-  .input-container {
-    display: flex;
-    position: relative;
-
-    justify-content: center;
-
+  textarea {
+    width: 100%;
+    padding: 0.4rem;
+    font-size: 0.8rem;
     background-color: #fff;
     color: ${(props) => props.theme.headingColor};
     border: ${(props) => props.theme.border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
-    .icon {
-      padding: 0.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: ${(props) => props.theme.subHeading};
-      background-color: ${(props) => props.theme.inputColorLight};
-      border-right: ${(props) => props.theme.border};
-      ${(props) =>
-        props.rtl &&
-        css`
-          border-right: none;
-          border-left: ${(props) => props.theme.border};
-        `}
-    }
 
-    input {
-      flex: 1;
-      padding: 0.4rem;
-      font-size: 0.9rem;
-      width: 50px;
-    }
     &:hover,
     &:focus-within {
       border-color: ${(props) => props.theme.borderHovered};
@@ -125,7 +88,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    /* color: #7c7c7c; */
+
     color: ${(props) => props.theme.mainColor};
   }
 `;

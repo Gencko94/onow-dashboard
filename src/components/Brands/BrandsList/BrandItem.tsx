@@ -1,13 +1,15 @@
 import styled from "styled-components";
-import { BsCheck, BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import ClickAwayListener from "react-click-away-listener";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { ImProfile } from "react-icons/im";
+
 import { useHistory } from "react-router";
-const CouponItem = () => {
+
+const BrandItem = () => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
+
   const history = useHistory();
   const renderStatus = (id: number) => {
     switch (id) {
@@ -30,10 +32,18 @@ const CouponItem = () => {
     }
   };
   return (
-    <Container onClick={() => history.push(`/coupons/coupon/1`)}>
-      <div className="field">
-        <h6>DISCOUNT</h6>
+    <Container onClick={() => history.push(`/brands/brand/1`)}>
+      <div className="btns-container">
+        <Checkbox onClick={(e) => e.stopPropagation()}>
+          h
+          <input type="checkbox" />
+          <span className="check" />
+        </Checkbox>
       </div>
+      <div className="field">
+        <h6>Name</h6>
+      </div>
+      <div className="field">image</div>
       <div className="field">{renderStatus(2)}</div>
       <div className="field">
         <EnabledButton enabled={false} type="button">
@@ -77,10 +87,10 @@ const CouponItem = () => {
   );
 };
 
-export default CouponItem;
+export default BrandItem;
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr;
   background-color: #fff;
   gap: 1rem;
   cursor: pointer;
@@ -99,6 +109,11 @@ const Container = styled.div`
       font-size: 0.8rem;
       font-weight: ${(props) => props.theme.font.bold};
     }
+  }
+  .btns-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -182,4 +197,53 @@ const EnabledButton = styled.button<{ enabled: boolean }>`
   color: ${(props) => props.theme.btnText};
   border: ${(props) => props.theme.border};
   border-radius: 5px;
+`;
+const Checkbox = styled.label`
+  display: block;
+  position: relative;
+  margin: 0 0.5rem;
+
+  cursor: pointer;
+  font-size: 0.9rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  .check {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 22px;
+    width: 22px;
+    background-color: #fff;
+    border: ${(props) => props.theme.border};
+    border-radius: 6px;
+    &::after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 7px;
+      top: 4px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+  }
+  input:checked ~ .check {
+    background-color: ${(props) => props.theme.mainColor};
+  }
+  input:checked ~ .check:after {
+    display: block;
+  }
 `;

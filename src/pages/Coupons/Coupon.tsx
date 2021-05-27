@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
-import CouponInfo from "../components/Coupons/Coupon/CouponInfo";
-import CouponProducts from "../components/Coupons/Coupon/CouponProducts";
-import Breadcrumbs from "../components/reusable/Breadcrumbs";
-import { COUPON } from "../interfaces/coupons/coupons";
+import CouponInfo from "../../components/Coupons/Coupon/CouponInfo";
+import CouponProducts from "../../components/Coupons/Coupon/CouponProducts";
+import Breadcrumbs from "../../components/reusable/Breadcrumbs";
+import { COUPON } from "../../interfaces/coupons/coupons";
 
 const Coupon = () => {
   const {

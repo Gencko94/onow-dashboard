@@ -20,7 +20,6 @@ const MiniFileUploader = ({
 }: IProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [image, setImage] = useState<File | null>(null);
-  console.log(image);
 
   // Image Validation
   const addFilesAndValidate = (files: FileList) => {
@@ -51,7 +50,7 @@ const MiniFileUploader = ({
     <Container>
       <DragFileInputContainer>
         <div className="img-preview">
-          <DragDropText>Drag and drop here</DragDropText>
+          {!image && <DragDropText>Drag and drop here</DragDropText>}
           {image && (
             <FilePreviewContainer>
               {/* <PreviewList> */}
@@ -124,8 +123,8 @@ const DragFileInputContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   .img-preview {
-    height: 150px;
-    max-width: 200px;
+    height: 250px;
+    width: 250px;
     border: 2px dashed rgba(0, 0, 0, 0.3);
     position: relative;
     display: flex;
@@ -175,15 +174,14 @@ const FilePreviewContainer = styled.div`
 const PreviewContainer = styled.div`
   width: 100%;
   height: 100%;
-  border-radius: 8px;
+
   position: relative;
   overflow: hidden;
 `;
 const ImagePreview = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 6px;
+  object-fit: contain;
 `;
 const ImageMetaData = styled.div`
   position: absolute;
@@ -196,7 +194,7 @@ const ImageMetaData = styled.div`
   display: flex;
   flex-direction: column;
   font-weight: ${(props) => props.theme.font.bold};
-  background-color: rgba(5, 5, 5, 0.55);
+  background-color: rgba(5, 5, 5, 0.35);
   font-size: 0.8rem;
   p {
     flex: 1;

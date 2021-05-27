@@ -1,11 +1,12 @@
 import axios from "axios";
 import { USER, LOGIN_FORM, LOGIN_RESPONSE } from "../interfaces/auth/auth";
 import { CUSTOMER, NEW_CUSTOMER } from "../interfaces/customers/customers";
+import { GET_GOOGLE_MAP_DATA, MapCoordinates } from "../interfaces/maps/maps";
 import { GET_STORES_RESPONSE } from "../interfaces/stores/stores";
 
-const uri = "https://develop.o-now.net/customer-api";
+// const uri = "http://develop.o-now.net/customer-api";
 
-export const getUser = async (): Promise<USER> => {
+export const getUser = async (): Promise<USER | undefined> => {
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {
@@ -14,8 +15,11 @@ export const getUser = async (): Promise<USER> => {
   };
   // generate proper error message in bad http method
   const res = await axios.get(`/get-user`, config);
-
-  return res.data.result.userInfo;
+  if (res.data.result) {
+    return res.data.result.userInfo;
+  } else {
+    return undefined;
+  }
 };
 export const userLogin = async (data: LOGIN_FORM): Promise<LOGIN_RESPONSE> => {
   const res = await axios.post(`/login`, data);
@@ -81,4 +85,19 @@ export const createCustomer = async ({
   };
   const res = await axios.post(`/clients`, data, config);
   return res.data.results;
+};
+
+//  Google Maps
+
+export const getGoogleMapsLocation = async ({
+  coords,
+  language,
+}: {
+  coords: MapCoordinates;
+  language: string;
+}): Promise<GET_GOOGLE_MAP_DATA> => {
+  const res = await axios.get(
+    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&language=${language}`
+  );
+  return res.data;
 };
