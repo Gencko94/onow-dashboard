@@ -11,6 +11,7 @@ interface IProps {
   gridCols?: number | string;
   activeSortBy?: string;
   activeOrder?: "asc" | "desc";
+  gap?: string;
 }
 
 const TableHead = ({
@@ -18,11 +19,12 @@ const TableHead = ({
   gridCols = cols.length,
   activeSortBy,
   activeOrder,
+  gap = "1rem",
 }: IProps) => {
   const { t } = useTranslation();
 
   return (
-    <Container cols={gridCols}>
+    <Container gap={gap} cols={gridCols}>
       {cols.map((item) => {
         return (
           <Field
@@ -46,13 +48,13 @@ const TableHead = ({
 };
 
 export default TableHead;
-const Container = styled.div<{ cols: number | string }>(
-  ({ theme: { breakpoints, border }, cols }) => `
+const Container = styled.div<{ cols: number | string; gap: string }>(
+  ({ theme: { breakpoints, border }, cols, gap }) => `
     display:grid;
     grid-template-columns: ${
       typeof cols === "string" ? cols : `repeat(${cols},1fr)`
     };
-    gap:1rem;
+    gap:${gap};
     border-bottom:${border};
 
     `

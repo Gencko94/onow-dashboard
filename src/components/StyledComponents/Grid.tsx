@@ -1,6 +1,17 @@
-import { CSSProperties, FC } from 'react';
-import styled from 'styled-components';
+import { CSSProperties, FC } from "react";
+import styled from "styled-components";
 interface IProps {
+  /**
+   * @param cols - Specifies the grid-template-columns
+   *
+   *
+   * @param gap - Specifies the grid gap property
+   *
+   *
+   * @param items - Sets the ```align-items``` property
+   *
+   *
+   */
   cols: string;
   gap: string;
   items?: string;
@@ -9,7 +20,7 @@ const Grid: FC<IProps> = ({ children, cols, gap, items }) => {
   return (
     <Wrapper
       style={
-        { '--cols': cols, '--gap': gap, '--items': items } as CSSProperties
+        { "--cols": cols, "--gap": gap, "--items": items } as CSSProperties
       }
     >
       {children}

@@ -21,24 +21,27 @@ const Branch = () => {
       <Breadcrumbs
         childLabel="Branch"
         parentLabel="Branches & Warehouses"
-        parentTarget="/branch-warehouse"
+        parentTarget="/settings/branch-warehouse"
       />
-      <BranchInformation
-        errors={errors}
-        register={register}
-        control={control}
-      />
-      <BranchLocation
-        setValue={setValue}
-        errors={errors}
-        register={register}
-        control={control}
-      />
-      <BranchWorkingHours
-        errors={errors}
-        register={register}
-        control={control}
-      />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <BranchInformation
+          errors={errors}
+          register={register}
+          control={control}
+        />
+        <BranchLocation
+          setValue={setValue}
+          errors={errors}
+          register={register}
+          control={control}
+        />
+        <button>Submit</button>
+        {/* <BranchWorkingHours
+          errors={errors}
+          register={register}
+          control={control}
+        /> */}
+      </form>
     </div>
   );
 };

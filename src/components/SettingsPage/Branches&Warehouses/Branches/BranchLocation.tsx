@@ -126,6 +126,7 @@ const Container = styled.div(
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
+    align-items:flex-start;
 
 }
 .inputs {
@@ -145,7 +146,7 @@ const Container = styled.div(
       .label {
       }
       .map {
-        height:350px;
+        height:300px;
         margin:1rem 0;  
       }
       .desc {

@@ -3,13 +3,20 @@ import styled from "styled-components";
 import { STORE_SEO } from "../../interfaces/settings/store-seo/store-seo";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { MdTitle } from "react-icons/md";
+import IconedInput from "../../components/reusable/IconedInput";
+import Textarea from "../../components/reusable/Textarea";
 
 const StoreSEO = () => {
   const {
     register,
     watch,
     formState: { errors },
-  } = useForm<STORE_SEO>();
+  } = useForm<STORE_SEO>({
+    defaultValues: {
+      description: "Your Store Description Here",
+      title: "Your Store Name here",
+    },
+  });
   const values = watch();
   return (
     <div>
@@ -25,26 +32,23 @@ const StoreSEO = () => {
         <Box>
           <Grid>
             <div>
-              <div>
-                <label>Home Page Title</label>
-                <div className="input-container">
-                  <span className="icon">
-                    <MdTitle size={20} />
-                  </span>
-                  <input {...register("title", { required: "Required" })} />
-                </div>
-                <p className="error">{errors?.title?.message}</p>
-              </div>
-              <div className="description">
-                <label>Store Description</label>
-
-                <textarea
-                  rows={4}
-                  {...register("description", { required: "Required" })}
-                />
-
-                <p className="error">{errors?.description?.message}</p>
-              </div>
+              <IconedInput
+                Icon={MdTitle}
+                errors={errors?.title}
+                label="Home Page Title"
+                name="title"
+                register={register}
+                required
+                requiredMessage="This field is required"
+              />
+              <Textarea
+                errors={errors?.description}
+                label="Store Description"
+                name="description"
+                register={register}
+                required
+                requiredMessage="This field is required"
+              />
             </div>
             <Demo>
               <p className="link">https://Flowersplus.com</p>
@@ -74,53 +78,6 @@ const Box = styled.div`
   padding: 1rem;
   background-color: #fff;
 
-  .input-container {
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    background-color: ${(props) => props.theme.inputColorLight};
-    color: ${(props) => props.theme.headingColor};
-    border: ${(props) => props.theme.border};
-    border-radius: 5px;
-  }
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: ${(props) => props.theme.headingColor};
-    font-weight: ${(props) => props.theme.font.light};
-  }
-  .icon {
-    padding: 0.3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: ${(props) => props.theme.subHeading};
-  }
-  input {
-    flex: 1;
-    padding: 0.4rem;
-    font-size: 0.9rem;
-    width: 50px;
-    background-color: #fff;
-  }
-  .error {
-    height: 20px;
-    font-size: 0.7rem;
-    padding-top: 0.25rem;
-    color: ${(props) => props.theme.dangerRed};
-  }
-  .description {
-    textarea {
-      width: 100%;
-      border: ${(props) => props.theme.border};
-      border-radius: 6px;
-      background-color: ${(props) => props.theme.accentColor};
-      padding: 0.4rem;
-      font-size: 0.9rem;
-    }
-  }
   .save-container {
     display: flex;
     align-items: center;

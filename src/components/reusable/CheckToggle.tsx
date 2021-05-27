@@ -14,7 +14,7 @@ const CheckToggle = ({ control, name, label, desc }: IProps) => {
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange, ref } }) => {
+      render={({ field: { onChange, ref, value } }) => {
         return (
           <Toggler>
             <div className="info">
@@ -22,6 +22,7 @@ const CheckToggle = ({ control, name, label, desc }: IProps) => {
               <p className="desc">{desc}</p>
             </div>
             <Toggle
+              defaultChecked={value}
               className="react-custom-toggle"
               ref={ref}
               onChange={(e) => {

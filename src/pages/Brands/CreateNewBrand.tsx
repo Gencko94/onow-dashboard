@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import BrandInfo from "../../components/Brands/Brand/BrandInfo";
 
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
+
 import { NEW_CATEGORY } from "../../interfaces/categories/categories";
 
 const CreateNewBrand = () => {

@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import TableHead from "../../reusable/TableHead";
 import CouponItem from "./CouponItem";
@@ -13,6 +14,7 @@ const CouponsList = () => {
     ],
     []
   );
+  const { t } = useTranslation();
   return (
     <Container>
       <TableHead cols={cols} />

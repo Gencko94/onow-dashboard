@@ -15,7 +15,7 @@ const BranchesAndWarehouses = () => {
       <div className="panel">
         <AddButton
           title="Create New Branch/Warehouse"
-          target="/branch-warehouse/create"
+          target="/settings/branch-warehouse/create/branch"
         />
       </div>
       <BranchesList />
