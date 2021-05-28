@@ -4,8 +4,17 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 interface IProps {
+  /**
+   * The name of the parent component.
+   */
   parentLabel: string;
+  /**
+   * The ```href``` of the parent component.
+   */
   parentTarget: string;
+  /**
+   * The name of the current component.
+   */
   childLabel: string;
 }
 

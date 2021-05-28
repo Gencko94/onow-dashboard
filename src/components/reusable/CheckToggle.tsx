@@ -3,9 +3,21 @@ import Toggle from "react-toggle";
 import styled from "styled-components";
 import "react-toggle/style.css";
 interface IProps {
+  /**
+   * 	```control``` object provided by ```useForm```.
+   */
   control: Control<any>;
+  /**
+   * 	Input's name being registered.
+   */
   name: string;
+  /**
+   * 	The label of the input.
+   */
   label: string;
+  /**
+   * 	Optional description shown in a smaller size text below the label.
+   */
   desc?: string;
 }
 

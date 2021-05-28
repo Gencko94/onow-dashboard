@@ -2,11 +2,31 @@ import { BiPlus } from "react-icons/bi";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 
-interface IProps {
+interface BaseButton {
+  /**
+   * Specifies the button's text.
+   */
   title: string;
-  target?: string;
-  cb?: () => void;
 }
+interface ButtonWithTarget extends BaseButton {
+  /**
+   * If provided the button will behave as a link, and target is the ```href``` target.
+   *
+   * Providing this prop will disable ```cb``` prop.
+   */
+  target?: string;
+  cb?: never;
+}
+interface ButtonWithCB extends BaseButton {
+  /**
+   * If provided the button will behave as a button. and ```cb``` is the  ```onClick``` callback function.
+   *
+   * Providing this prop will disable ```target``` prop.
+   */
+  cb: () => void;
+  target?: never;
+}
+type IProps = ButtonWithCB | ButtonWithTarget;
 
 const AddButton = ({ target, title, cb }: IProps) => {
   const history = useHistory();

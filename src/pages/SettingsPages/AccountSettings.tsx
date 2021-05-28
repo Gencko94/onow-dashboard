@@ -27,7 +27,7 @@ const AccountSettings = () => {
         <div className="container">
           <IconedInput
             Icon={MdSubtitles}
-            errors={errors}
+            errors={errors?.name!}
             register={register}
             required
             requiredMessage="Required"
@@ -46,7 +46,7 @@ const AccountSettings = () => {
           </div> */}
           <IconedInput
             Icon={MdSubtitles}
-            errors={errors}
+            errors={errors.phone}
             register={register}
             required
             requiredMessage="Required"

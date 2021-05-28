@@ -9,6 +9,7 @@ import styled from "styled-components";
 import CheckToggle from "../../../reusable/CheckToggle";
 import DateIconedInput from "../../../reusable/DateIconedInput";
 import IconedInput from "../../../reusable/IconedInput";
+import IconedNumberInput from "../../../reusable/IconedNumberInput";
 import Select from "../../../reusable/Select";
 
 interface IProps {
@@ -62,7 +63,7 @@ const BranchInformation = ({ control, errors, register }: IProps) => {
           name="name.ar"
         />
 
-        <IconedInput
+        <IconedNumberInput
           Icon={IoMdCash}
           errors={errors?.cod_cost}
           register={register}
@@ -70,7 +71,6 @@ const BranchInformation = ({ control, errors, register }: IProps) => {
           requiredMessage="Required"
           label="Cash on Delivery cost"
           name="cod_cost"
-          number
           min={0}
         />
 

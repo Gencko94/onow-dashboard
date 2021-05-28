@@ -8,6 +8,7 @@ import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import DateIconedInput from "../../reusable/DateIconedInput";
 import IconedInput from "../../reusable/IconedInput";
+import IconedNumberInput from "../../reusable/IconedNumberInput";
 import Select from "../../reusable/Select";
 interface IProps {
   register: any;
@@ -59,7 +60,7 @@ const CouponInfo = ({ control, errors, register }: IProps) => {
           label="Coupon Code"
           name="code"
         />
-        <IconedInput
+        <IconedNumberInput
           Icon={IoMdCash}
           errors={errors?.min_total_amount}
           register={register}
@@ -67,7 +68,6 @@ const CouponInfo = ({ control, errors, register }: IProps) => {
           requiredMessage="Required"
           label="Minimum order amount"
           name="min_total_amount"
-          number
           min={0}
         />
 
@@ -82,7 +82,7 @@ const CouponInfo = ({ control, errors, register }: IProps) => {
           getOptionValue={(option) => option.value}
         />
 
-        <IconedInput
+        <IconedNumberInput
           Icon={IoMdCash}
           errors={errors?.amount}
           register={register}
@@ -90,9 +90,9 @@ const CouponInfo = ({ control, errors, register }: IProps) => {
           requiredMessage="Required"
           label="Discount Amount"
           name="amount"
-          number
           min={0}
         />
+
         <Select
           label="Free Delivery"
           control={control}
@@ -118,7 +118,7 @@ const CouponInfo = ({ control, errors, register }: IProps) => {
           getOptionLabel={(option) => option.title[language]}
           getOptionValue={(option) => option.value}
         />
-        <IconedInput
+        <IconedNumberInput
           Icon={FiUser}
           errors={errors?.uses_per_user}
           register={register}
@@ -127,10 +127,10 @@ const CouponInfo = ({ control, errors, register }: IProps) => {
           label="Uses Per User"
           name="uses_per_user"
           desc="Leave Blank for unlimited"
-          number
           min={0}
         />
-        <IconedInput
+
+        <IconedNumberInput
           Icon={FiUsers}
           errors={errors?.total_uses}
           register={register}
@@ -139,9 +139,9 @@ const CouponInfo = ({ control, errors, register }: IProps) => {
           label="Total Uses"
           name="total_uses"
           desc="Leave Blank for unlimited"
-          number
           min={0}
         />
+
         <DateIconedInput
           Icon={FiCalendar}
           errors={errors?.end_date}

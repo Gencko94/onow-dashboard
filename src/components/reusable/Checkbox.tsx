@@ -3,8 +3,17 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 interface IProps {
+  /**
+   * 	Input's name being registered.
+   */
   name: string;
+  /**
+   * 	```control``` object provided by ```useForm```.
+   */
   control: Control<any>;
+  /**
+   * 	The label of the input.
+   */
   label: string;
 }
 

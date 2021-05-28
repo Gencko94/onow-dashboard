@@ -2,7 +2,13 @@ import { GrClose } from "react-icons/gr";
 import styled from "styled-components";
 
 interface IProps {
+  /**
+   * Specifies the Modal's head title.
+   */
   title: string;
+  /**
+   * Callback function to execute when the close button is pressed.
+   */
   closeFunction: () => void;
 }
 

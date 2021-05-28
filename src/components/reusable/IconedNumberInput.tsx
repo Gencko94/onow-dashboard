@@ -29,6 +29,17 @@ interface BaseInput {
    * 	Optional description shown in a smaller size text below the input.
    */
   desc?: string;
+  /**
+   * 	Providing this property will make the input of ```type='number'```.
+   */
+
+  /**
+   * Minimum Value of the input.
+   *
+   * Required when input ```type``` is ```number```.
+   */
+  min: number;
+  max?: number;
 }
 interface RequiredInput extends BaseInput {
   /**
@@ -49,7 +60,7 @@ interface NotRequiredInput extends BaseInput {
 
 type IProps = RequiredInput | NotRequiredInput;
 
-const IconedInput = ({
+const IconedNumberInput = ({
   errors,
   register,
   Icon,
@@ -58,6 +69,8 @@ const IconedInput = ({
   label,
   requiredMessage,
 
+  min,
+  max,
   desc,
 }: IProps) => {
   const {
@@ -72,8 +85,15 @@ const IconedInput = ({
         </span>
 
         <input
+          type="number"
+          min={min}
+          max={max!}
           {...register(name, {
             required: required ? requiredMessage : false,
+            min: {
+              value: min!,
+              message: "Only Positive",
+            },
           })}
         />
       </div>
@@ -83,7 +103,7 @@ const IconedInput = ({
   );
 };
 
-export default IconedInput;
+export default IconedNumberInput;
 const Container = styled.div<{ rtl: boolean; error: boolean }>`
   label {
     color: ${({ theme }) => theme.headingColor};

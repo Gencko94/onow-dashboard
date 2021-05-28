@@ -1,9 +1,14 @@
-import { BiPlus } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import styled from "styled-components";
 
 interface IProps {
+  /**
+   * Specifies the button's text.
+   */
   title: string;
+  /**
+   * ```cb``` is the  ```onClick``` callback function.
+   */
   cb: () => void;
 }
 

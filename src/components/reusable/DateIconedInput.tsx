@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Calendar from "react-calendar";
 import ClickAwayListener from "react-click-away-listener";
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import "react-calendar/dist/Calendar.css";
 
@@ -17,16 +17,54 @@ import { CSSTransition } from "react-transition-group";
 import styled, { css } from "styled-components";
 import { format } from "date-fns";
 
-interface IProps {
-  errors: any;
+interface BaseInput {
+  /**
+   * 	An object with field errors. Obtainable from ```formState.errors```
+   */
+  errors: FieldError;
+  /**
+   * 	Input's name being registered.
+   */
   name: string;
+  /**
+   * 	The icon to show.
+   */
   Icon: IconType;
-  required?: boolean;
-  requiredMessage?: string;
+  /**
+   * 	The label of the input.
+   */
   label: string;
+  /**
+   * 	```control``` object provided by ```useForm```.
+   */
   control: Control<any>;
 }
 
+interface RequiredInput extends BaseInput {
+  /**
+   * 	Optional. Marks the input as ```required```.
+   */
+  required: boolean;
+  /**
+   * The Message text to show when the field is ```required```.
+   *
+   * Required when ```required``` is provided.
+   */
+  requiredMessage: string;
+}
+interface NotRequiredInput extends BaseInput {
+  /**
+   * 	Optional. Marks the input as ```required```.
+   */
+  required?: never;
+  /**
+   * The Message text to show when the field is ```required```.
+   *
+   * Required when ```required``` is provided.
+   */
+  requiredMessage?: never;
+}
+type IProps = RequiredInput | NotRequiredInput;
 const DateIconedInput = ({
   errors,
 
@@ -50,7 +88,7 @@ const DateIconedInput = ({
         <Container
           onClick={() => setCalendarOpen(true)}
           rtl={language === "ar"}
-          error={Boolean(errors?.[name])}
+          error={Boolean(errors)}
         >
           <label>{label}</label>
           <div className="input-container">
