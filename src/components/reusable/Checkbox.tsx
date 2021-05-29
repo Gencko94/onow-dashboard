@@ -14,7 +14,7 @@ interface IProps {
   /**
    * 	The label of the input.
    */
-  label: string;
+  label?: string;
 }
 
 const Checkbox = ({ control, name, label }: IProps) => {
@@ -27,7 +27,7 @@ const Checkbox = ({ control, name, label }: IProps) => {
       render={({ field: { onChange, value } }) => {
         return (
           <Container>
-            {t(label)}
+            {label && t(label)}
             <input type="checkbox" onChange={onChange} checked={value} />
             <span className="check" />
           </Container>

@@ -12,8 +12,8 @@ import {
 } from "react-hook-form";
 import { useLocation } from "react-router";
 import OrderingOptions from "../components/AddProduct/OrderingOptions/OrderingOptions";
-const GeneralProductInfo = lazy(
-  () => import("../components/AddProduct/GeneralProductInfo/GeneralProductInfo")
+const ProductGeneralInfo = lazy(
+  () => import("../components/AddProduct/ProductGeneralInfo/ProductGeneralInfo")
 );
 const ProductDetails = lazy(
   () => import("../components/AddProduct/ProductDetails/ProductDetails")
@@ -42,7 +42,7 @@ const AddProduct = () => {
       maxQtyPerUser: 5,
     },
   });
-  const [productType, setProductType] = useState(null);
+
   const [activeTab, setActiveTab] = useState(0);
   const [variations, setVariations] = useState<NEW_VARIATION[]>([]);
   const onSubmit: SubmitHandler<NEW_PRODUCT> = (data) => {
@@ -70,7 +70,7 @@ const AddProduct = () => {
             value={{ handleAddVariations, variations }}
           >
             <Suspense fallback={<Loading />}>
-              {activeTab === 0 && <GeneralProductInfo />}
+              {activeTab === 0 && <ProductGeneralInfo />}
               {activeTab === 1 && <ProductDetails />}
               {activeTab === 2 && <ProductVariationsAndPricing />}
               {activeTab === 3 && <OrderingOptions />}

@@ -1,9 +1,9 @@
-import { useRef, useState } from 'react';
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
-import { CSSTransition } from 'react-transition-group';
-import styled from 'styled-components';
-import Modal from '../../Modal/Modal';
-import ChangeOrderStatusModalBody from './ChangeOrderStatusModalBody';
+import { useRef, useState } from "react";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { CSSTransition } from "react-transition-group";
+import styled from "styled-components";
+import Modal from "../../Modal/Modal";
+import ChangeOrderStatusModalBody from "./ChangeOrderStatusModalBody";
 
 const OrderInfo = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -66,39 +66,33 @@ const OrderInfo = () => {
         </div>
       </div>
 
-      <CSSTransition
-        classNames="modal"
-        in={modalOpen}
-        timeout={150}
-        unmountOnExit
+      <Modal
+        isOpen={modalOpen}
+        title="Change order Status"
+        closeFunction={() => setModalOpen(false)}
       >
-        <Modal
-          title="Change order Status"
-          closeFunction={() => setModalOpen(false)}
-        >
-          <ChangeOrderStatusModalBody portal={ref} />
-        </Modal>
-      </CSSTransition>
+        <ChangeOrderStatusModalBody portal={ref} />
+      </Modal>
     </Container>
   );
 };
 
 export default OrderInfo;
 const Container = styled.div`
-  background: ${props => props.color};
-  box-shadow: ${props => props.theme.shadow};
+  background: ${(props) => props.color};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 5px;
 
   .title-container {
     padding: 0.75rem;
-    background-color: ${props => props.theme.overlayColor};
-    border-bottom: ${props => props.theme.border};
+    background-color: ${(props) => props.theme.overlayColor};
+    border-bottom: ${(props) => props.theme.border};
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
   .title {
-    font-weight: ${props => props.theme.font.xbold};
+    font-weight: ${(props) => props.theme.font.xbold};
   }
   .flex {
     padding: 0.5rem 0.5rem;
@@ -109,13 +103,13 @@ const Container = styled.div`
     /* grid-template-columns: auto 1fr; */
 
     p.label {
-      color: ${props => props.theme.subHeading};
+      color: ${(props) => props.theme.subHeading};
       /* font-size: 0.9rem; */
     }
     p.value {
       font-size: 0.9rem;
       margin: 0 0.25rem;
-      font-weight: ${props => props.theme.font.semibold};
+      font-weight: ${(props) => props.theme.font.semibold};
     }
   }
 `;
@@ -124,7 +118,7 @@ const OrderStatusContainer = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${props => props.color};
+  background-color: ${(props) => props.color};
   padding: 0.25rem 0.5rem;
   margin: 0 0.25rem;
   color: #fff;

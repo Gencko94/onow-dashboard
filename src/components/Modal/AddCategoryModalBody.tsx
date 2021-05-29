@@ -1,17 +1,13 @@
-import { BsCheck } from 'react-icons/bs';
-import { MdCancel } from 'react-icons/md';
-import styled from 'styled-components';
-import Toggle from 'react-toggle';
-import Select from 'react-select';
-import 'react-toggle/style.css';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { QUICK_ADD_CATEGORY } from '../../interfaces/categories/categories';
-import { useEffect } from 'react';
+import { MdSubdirectoryArrowRight } from "react-icons/md";
+import styled from "styled-components";
+
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { QUICK_ADD_CATEGORY } from "../../interfaces/categories/categories";
+import { useMemo } from "react";
+import IconedInput from "../reusable/IconedInput";
+import { BiSearch } from "react-icons/bi";
+import Checkbox from "../reusable/Checkbox";
 const AddCategoryModalBody = () => {
-  const options = [
-    { id: 1, name: 'Clothing' },
-    { id: 2, name: 'Food' },
-  ];
   const {
     register,
     unregister,
@@ -20,141 +16,113 @@ const AddCategoryModalBody = () => {
     watch,
 
     formState: { errors },
-  } = useForm<QUICK_ADD_CATEGORY>();
-  const watchInput = watch('isChild', false);
-  const onSubmit: SubmitHandler<QUICK_ADD_CATEGORY> = data => {
+  } = useForm<any>();
+
+  const onSubmit: SubmitHandler<QUICK_ADD_CATEGORY> = (data) => {
     console.log(data);
   };
-  useEffect(() => {
-    if (!watchInput) {
-      unregister('parent_category');
-    }
-  }, [unregister, watchInput]);
+  const cols = useMemo(
+    () => [
+      { title: "categoryName", sortable: false },
+      { title: "productsCount", sortable: false },
+      { title: " ", sortable: false },
+    ],
+    []
+  );
   return (
     <Container>
-      <InputsContainer>
-        <div>
-          <Label>Category Name English</Label>
-          <Input {...register('name', { required: 'Required' })} />
-          <ErrorMessage>{errors?.name?.message}</ErrorMessage>
-        </div>
-        <div>
-          <Label>Category Name Arabic</Label>
-          <Input {...register('name_ar', { required: 'Required' })} />
-          <ErrorMessage>{errors?.name_ar?.message}</ErrorMessage>
-        </div>
-      </InputsContainer>
-      <ToggleContainer>
-        <Controller
-          name="isChild"
-          control={control}
-          defaultValue={false}
-          render={({ field: { ref, onChange } }) => (
-            <Toggle onChange={e => onChange(e.target.checked)} />
-          )}
-        />
+      <IconedInput
+        Icon={BiSearch}
+        errors={errors?.d}
+        name="d"
+        placeholder="Search for categories"
+        register={register}
+      />
 
-        <ToggleLabel htmlFor="cheese-status">Add as Category Child</ToggleLabel>
-      </ToggleContainer>
-      {watchInput && (
-        <Controller
-          name="parent_category"
-          control={control}
-          rules={{ required: 'Required' }}
-          render={({ field: { ref, onChange } }) => (
+      {/* <TableHead cols={cols} /> */}
+      <h5 className="table-title">Categories</h5>
+      <div className="table">
+        {[0, 1, 2].map((i) => {
+          return (
             <>
-              <Select
-                isMulti
-                ref={ref}
-                options={options}
-                onChange={val => onChange(val.map(i => i.id))}
-                getOptionLabel={option => option.name}
-                getOptionValue={option => option.id.toString()}
-                placeholder="Select Parent Category..."
-              />
-              <ErrorMessage>{errors?.parent_category?.message}</ErrorMessage>
+              <CategoryItem>
+                <div className="field">
+                  <h6>Category Name 1</h6>
+                  <Checkbox control={control} name="d" />
+                </div>
+              </CategoryItem>
+              {[0, 1].map((s) => {
+                return (
+                  <SubCategoryItem>
+                    <div className="field">
+                      <MdSubdirectoryArrowRight />
+                      <h6>SubCategory Name 1</h6>
+                    </div>
+                  </SubCategoryItem>
+                );
+              })}
             </>
-          )}
-        />
-      )}
-      <ButtonsContainer>
-        <Button type="button" onClick={handleSubmit(onSubmit)}>
-          <BsCheck size={30} />
-          <BtnText>Add New Category</BtnText>
-        </Button>
-        <Button red type="button">
-          <MdCancel size={30} />
-          <BtnText>Cancel</BtnText>
-        </Button>
-      </ButtonsContainer>
+          );
+        })}
+      </div>
     </Container>
   );
 };
 
 export default AddCategoryModalBody;
 const Container = styled.div`
-  /* padding: 0.5rem; */
-  width: 500px;
-`;
-const ButtonsContainer = styled.div`
-  display: flex;
-  padding: 1rem;
-  align-items: center;
-  justify-content: space-between;
-  border-top: ${props => props.theme.border};
-  background-color: ${props => props.theme.overlayColor};
-`;
-const Button = styled.button<{ red?: boolean }>`
-  background-color: ${props =>
-    props.red ? props.theme.dangerRed : props.theme.green};
-  box-shadow: ${props => props.theme.shadow};
-  border-radius: 6px;
-  position: relative;
-  padding: 0.25rem 0.5rem;
-  color: #fff;
-  display: flex;
-  align-items: center;
-`;
-const InputsContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
-  padding: 1rem;
+  .table-title {
+    padding: 0.5rem;
+  }
+  .table {
+    /* padding: 0.5rem 0; */
+    border: ${(props) => props.theme.border};
+    /* width: 70%; */
+    margin: 0 auto;
+    max-height: 271px;
+    overflow: auto;
+  }
 `;
 
-const BtnText = styled.p`
-  font-size: 0.9rem;
-  font-weight: ${props => props.theme.font.regular};
-  margin: 0 0.5rem;
+const CategoryItem = styled.div`
+  background-color: ${(props) => props.theme.accentColor};
+
+  cursor: pointer;
+  border-bottom: ${(props) => props.theme.border};
+  &:hover {
+    /* background-color: ${(props) => props.theme.highlightColor}; */
+  }
+
+  .field {
+    display: flex;
+    padding: 0.5rem;
+    justify-content: space-between;
+    h6 {
+      font-size: 0.9rem;
+      font-weight: ${(props) => props.theme.font.bold};
+    }
+  }
 `;
-const Label = styled.label`
-  color: ${({ theme }) => theme.headingColor};
-  margin-bottom: 0.4rem;
-  font-size: 0.9rem;
-  font-weight: ${props => props.theme.font.regular};
-  display: inline-block;
-`;
-const Input = styled.input`
-  padding: 0.5rem;
-  border: ${props => props.theme.btnBorder};
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  width: 100%;
-  font-size: 0.9rem;
-  border-radius: 5px;
-  background-color: ${props => props.theme.inputColorLight};
-  color: ${props => props.theme.headingColor};
-`;
-const ToggleContainer = styled.div`
-  display: flex;
-  margin: 1rem 0;
-  align-items: center;
-`;
-const ToggleLabel = styled.label`
-  font-size: 0.9rem;
-  margin: 0 0.5rem;
-`;
-const ErrorMessage = styled.p`
-  font-size: 0.7rem;
-  padding-top: 0.25rem;
-  color: ${props => props.theme.dangerRed};
+const SubCategoryItem = styled.div`
+  background-color: #fff;
+  gap: 1rem;
+  cursor: pointer;
+  border-bottom: ${(props) => props.theme.border};
+  background-color: ${(props) => props.theme.highlightColor};
+  &:hover {
+    background-color: ${(props) => props.theme.highlightColor};
+  }
+
+  .field {
+    display: flex;
+    align-items: center;
+
+    padding: 0.5rem;
+    padding-left: 3rem;
+
+    h6 {
+      font-size: 0.8rem;
+      font-weight: ${(props) => props.theme.font.bold};
+    }
+  }
 `;

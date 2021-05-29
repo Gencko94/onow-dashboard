@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { Control, Controller, UseFormWatch } from 'react-hook-form';
-import { CSSTransition } from 'react-transition-group';
-import styled from 'styled-components';
-import Modal from '../../../Modal/Modal';
-import Label from '../../../StyledComponents/Label';
-import AddProductsModal from './AddProductsModal';
+import { useState } from "react";
+import { Control, Controller, UseFormWatch } from "react-hook-form";
+import { CSSTransition } from "react-transition-group";
+import styled from "styled-components";
+import Modal from "../../../Modal/Modal";
+import Label from "../../../StyledComponents/Label";
+import AddProductsModal from "./AddProductsModal";
 interface IProps {
   control: Control<any>;
   watch: UseFormWatch<any>;
 }
 const ProductSelector = ({ watch, control }: IProps) => {
   const [open, setOpen] = useState(false);
-  const products = watch('products');
+  const products = watch("products");
   return (
     <Container>
       <Label>Select the Products</Label>
@@ -26,7 +26,11 @@ const ProductSelector = ({ watch, control }: IProps) => {
             classNames="modal"
             timeout={150}
           >
-            <Modal title="Select Products" closeFunction={() => setOpen(false)}>
+            <Modal
+              isOpen={open}
+              title="Select Products"
+              closeFunction={() => setOpen(false)}
+            >
               <AddProductsModal
                 onChange={onChange}
                 closeFunction={() => setOpen(false)}

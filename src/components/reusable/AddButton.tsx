@@ -31,7 +31,10 @@ type IProps = ButtonWithCB | ButtonWithTarget;
 const AddButton = ({ target, title, cb }: IProps) => {
   const history = useHistory();
   return (
-    <Button onClick={() => (cb ? cb() : target && history.push(target))}>
+    <Button
+      type="button"
+      onClick={() => (cb ? cb() : target && history.push(target))}
+    >
       <span className="icon">
         <BiPlus size={30} />
       </span>

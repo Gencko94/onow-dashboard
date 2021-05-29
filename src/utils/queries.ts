@@ -4,7 +4,7 @@ import { CUSTOMER, NEW_CUSTOMER } from "../interfaces/customers/customers";
 import { GET_GOOGLE_MAP_DATA, MapCoordinates } from "../interfaces/maps/maps";
 import { GET_STORES_RESPONSE } from "../interfaces/stores/stores";
 
-// const uri = "http://develop.o-now.net/customer-api";
+const uri = "http://new-version.o-now.net/customer-api";
 
 export const getUser = async (): Promise<USER | undefined> => {
   const t = localStorage.getItem("dshtid");
@@ -14,7 +14,7 @@ export const getUser = async (): Promise<USER | undefined> => {
     },
   };
   // generate proper error message in bad http method
-  const res = await axios.get(`/get-user`, config);
+  const res = await axios.get(`${uri}/get-user`, config);
   if (res.data.result) {
     return res.data.result.userInfo;
   } else {
@@ -22,7 +22,7 @@ export const getUser = async (): Promise<USER | undefined> => {
   }
 };
 export const userLogin = async (data: LOGIN_FORM): Promise<LOGIN_RESPONSE> => {
-  const res = await axios.post(`/login`, data);
+  const res = await axios.post(`${uri}/login`, data);
   return res.data;
 };
 export const getUserStores = async (): Promise<GET_STORES_RESPONSE> => {
@@ -32,7 +32,7 @@ export const getUserStores = async (): Promise<GET_STORES_RESPONSE> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`/stores`, config);
+  const res = await axios.get(`${uri}/stores`, config);
   const result = res.data.results.map((i: any) => ({
     id: i.id,
     domain: i.domain,
@@ -53,7 +53,7 @@ export const getCustomers = async (storeId: number): Promise<CUSTOMER[]> => {
       StoreId: storeId,
     },
   };
-  const res = await axios.get(`/clients-store`, config);
+  const res = await axios.get(`${uri}/clients-store`, config);
   return res.data.results;
 };
 
@@ -66,7 +66,7 @@ export const getSingleCustomer = async (
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`/clients/${customerId}`, config);
+  const res = await axios.get(`${uri}/clients/${customerId}`, config);
   return res.data.results;
 };
 export const createCustomer = async ({
@@ -83,7 +83,7 @@ export const createCustomer = async ({
       StoreId: storeId,
     },
   };
-  const res = await axios.post(`/clients`, data, config);
+  const res = await axios.post(`${uri}/clients`, data, config);
   return res.data.results;
 };
 

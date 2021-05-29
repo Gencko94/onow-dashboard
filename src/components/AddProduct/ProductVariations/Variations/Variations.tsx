@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
-import styled from 'styled-components';
-import AddVariationModalBody from '../../../Modal/AddVariationModalBody';
-import Modal from '../../../Modal/Modal';
-import NoVariations from './NoVariations';
+import { useState } from "react";
+import { CSSTransition } from "react-transition-group";
+import styled from "styled-components";
+import AddVariationModalBody from "../../../Modal/AddVariationModalBody";
+import Modal from "../../../Modal/Modal";
+import NoVariations from "./NoVariations";
 
 const Variations = ({
   priceFromVariationsEnabled,
@@ -20,21 +20,16 @@ const Variations = ({
       )}
 
       {/* New Variation Modal */}
-      <CSSTransition
-        in={newVariationModalOpen}
-        timeout={100}
-        classNames="modal"
-        unmountOnExit
+
+      <Modal
+        isOpen={newVariationModalOpen}
+        title="Add Variation"
+        closeFunction={() => setNewVariationModalOpen(false)}
       >
-        <Modal
-          title="Add Variation"
-          closeFunction={() => setNewVariationModalOpen(false)}
-        >
-          <AddVariationModalBody
-            priceFromVariationsEnabled={priceFromVariationsEnabled}
-          />
-        </Modal>
-      </CSSTransition>
+        <AddVariationModalBody
+          priceFromVariationsEnabled={priceFromVariationsEnabled}
+        />
+      </Modal>
     </Container>
   );
 };
@@ -42,8 +37,8 @@ const Variations = ({
 export default Variations;
 const Container = styled.div``;
 const AddButton = styled.button`
-  background-color: ${props => props.theme.green};
-  box-shadow: ${props => props.theme.shadow};
+  background-color: ${(props) => props.theme.green};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 7px;
   position: relative;
   padding: 0.25rem 0.5rem;

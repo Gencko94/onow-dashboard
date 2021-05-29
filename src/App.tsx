@@ -18,6 +18,8 @@ import Layout from "./layout/Layout";
 import AuthContext from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 const AddProduct = lazy(() => import("./pages/AddProduct"));
+const CreateNewProduct = lazy(() => import("./pages/Product/CreateNewProduct"));
+const Product = lazy(() => import("./pages/Product/Product"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Products = lazy(() => import("./pages/Products"));
 const Customers = lazy(() => import("./pages/Customers"));
@@ -110,6 +112,14 @@ function App() {
                           Component={Dashboard}
                         />
                         <ProtectedRoute path="/products" Component={Products} />
+                        <ProtectedRoute
+                          path="/products/product/create"
+                          Component={CreateNewProduct}
+                        />
+                        <ProtectedRoute
+                          path="/product/:id"
+                          Component={Product}
+                        />
                         <ProtectedRoute
                           path="/categories"
                           Component={Categories}

@@ -1,17 +1,22 @@
-import { useState } from 'react';
-import ClickAwayListener from 'react-click-away-listener';
-import { BsThreeDotsVertical } from 'react-icons/bs';
-import { MdEdit } from 'react-icons/md';
-import { FiCopy } from 'react-icons/fi';
-import { RiDeleteBinLine } from 'react-icons/ri';
-import { CSSTransition } from 'react-transition-group';
-import styled from 'styled-components';
+import { useState } from "react";
+import ClickAwayListener from "react-click-away-listener";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdEdit } from "react-icons/md";
+import { FiCopy } from "react-icons/fi";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { CSSTransition } from "react-transition-group";
+import styled from "styled-components";
+import { useHistory } from "react-router";
 
 const ProductCardOptions = () => {
   const [optionsMenuOpen, setOptionsMenuOpen] = useState(false);
+  const history = useHistory();
   return (
     <Container>
-      <Option color="#a3a3a3">
+      <Option
+        onClick={() => history.push("/products/product/create")}
+        color="#a3a3a3"
+      >
         <OptionText>Edit</OptionText>
 
         <MdEdit size={22} />
@@ -73,11 +78,11 @@ const Option = styled.button`
   justify-content: center;
   align-items: center;
   font-size: 0.9rem;
-  color: ${props => props.color};
+  color: ${(props) => props.color};
   transition: all 75ms ease;
   &:hover {
-    color: ${props => props.theme.headingColor};
-    /* font-weight: ${props => props.theme.font.semibold}; */
+    color: ${(props) => props.theme.headingColor};
+    /* font-weight: ${(props) => props.theme.font.semibold}; */
   }
 `;
 const OptionText = styled.p`
@@ -92,7 +97,7 @@ const Icon = styled.button`
   width: 30px;
   height: 30px;
   transition: all 75ms ease;
-  color: ${props => props.color};
+  color: ${(props) => props.color};
   &:hover {
     background-color: #e6e6e6;
   }
@@ -105,7 +110,7 @@ const OptionsList = styled.div`
   z-index: 10;
   background-color: #fff;
   transform-origin: right;
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 5px;
 `;
 const MenuItem = styled.button`
@@ -116,10 +121,10 @@ const MenuItem = styled.button`
   justify-content: center;
   align-items: center;
   font-size: 0.9rem;
-  color: ${props => props.color};
+  color: ${(props) => props.color};
   transition: all 75ms ease;
   &:hover {
-    color: ${props => props.theme.headingColor};
-    background-color: ${props => props.theme.highlightColor};
+    color: ${(props) => props.theme.headingColor};
+    background-color: ${(props) => props.theme.highlightColor};
   }
 `;

@@ -15,7 +15,7 @@ interface IProps {
 const ModalHead = ({ closeFunction, title }: IProps) => {
   return (
     <Container>
-      <h5>Create New Customer</h5>
+      <h5>{title}</h5>
       <button className="close" type="button" onClick={() => closeFunction()}>
         <GrClose size={20} />
       </button>

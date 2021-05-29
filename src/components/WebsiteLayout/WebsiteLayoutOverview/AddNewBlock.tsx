@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { BsPlusCircle } from 'react-icons/bs';
-import { CSSTransition } from 'react-transition-group';
-import styled from 'styled-components';
-import AddBlockModal from '../../Modal/AddBlockModal';
-import Modal from '../../Modal/Modal';
+import { useState } from "react";
+import { BsPlusCircle } from "react-icons/bs";
+import { CSSTransition } from "react-transition-group";
+import styled from "styled-components";
+import AddBlockModal from "../../Modal/AddBlockModal";
+import Modal from "../../Modal/Modal";
 
 const AddNewBlock = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -20,6 +20,7 @@ const AddNewBlock = () => {
         unmountOnExit
       >
         <Modal
+          isOpen={modalOpen}
           title="Select Block Type"
           closeFunction={() => setModalOpen(false)}
         >
@@ -34,17 +35,17 @@ export default AddNewBlock;
 const Container = styled.div`
   border-radius: 12px;
   height: 150px;
-  border: ${props => props.theme.border};
+  border: ${(props) => props.theme.border};
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: ${props => props.theme.overlayColor};
+  background-color: ${(props) => props.theme.overlayColor};
   cursor: pointer;
   h6 {
     margin-top: 1rem;
   }
   &:hover {
-    background-color: ${props => props.theme.accentColor};
+    background-color: ${(props) => props.theme.accentColor};
   }
 `;

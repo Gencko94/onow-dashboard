@@ -1,65 +1,53 @@
-import styled from 'styled-components';
-import { GrClose } from 'react-icons/gr';
+import { BsCheck } from "react-icons/bs";
+import { MdCancel } from "react-icons/md";
+import ReactModal from "react-modal";
+import styled from "styled-components";
+import ModalHead from "../reusable/ModalHead";
+import ModalTail from "../reusable/ModalTail";
+ReactModal.setAppElement("#root");
+const modalStyles = {
+  content: {
+    inset: "240px",
+    border: "none",
+    boxShadow: "0px 4px 7px 2px rgb(213,213,213)",
+  },
+};
 interface ModalProps {
   closeFunction: () => void;
   title: string;
+  isOpen: boolean;
+  styles?: ReactModal.Styles;
 }
 
-const Modal: React.FC<ModalProps> = ({ children, closeFunction, title }) => {
+const Modal: React.FC<ModalProps> = ({
+  children,
+  closeFunction,
+  title,
+  isOpen,
+  styles = modalStyles,
+}) => {
   return (
-    <>
-      <Backdrop onClick={() => closeFunction()} />
-      <ModalContainer>
-        <ModalHead>
-          <ModalTitle>{title}</ModalTitle>
-          <CloseButton type="button" onClick={() => closeFunction()}>
-            <GrClose size={20} />
-          </CloseButton>
-        </ModalHead>
-        <ModalBody>{children}</ModalBody>
-      </ModalContainer>
-    </>
+    <ReactModal
+      isOpen={isOpen}
+      onRequestClose={closeFunction}
+      style={styles}
+      closeTimeoutMS={200}
+    >
+      <Body>
+        <ModalHead closeFunction={closeFunction} title={title} />
+        {children}
+        <ModalTail
+          btnText="Confirm"
+          successCb={() => {}}
+          closeFunction={closeFunction}
+        />
+      </Body>
+    </ReactModal>
   );
 };
 
 export default Modal;
-const ModalContainer = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  /* min-width: 300px; */
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: ${props => props.theme.shadow};
-  z-index: 999;
-  overflow: hidden;
-  /* max-height: calc(100vh- 250px); */
-  /* overflow-y: auto; */
-`;
-const ModalHead = styled.div`
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: ${props => props.theme.overlayColor};
-  border-bottom: ${props => props.theme.border};
-`;
-const ModalBody = styled.div`
-  /* padding: 1rem; */
-`;
-const ModalTitle = styled.h5``;
-const Backdrop = styled.span`
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.1);
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 998;
-`;
-const CloseButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const Body = styled.div`
+  font-family: ${(props) => props.theme.fontFamily};
+  width: 100%;
 `;

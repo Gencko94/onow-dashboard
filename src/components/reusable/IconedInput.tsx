@@ -19,7 +19,7 @@ interface BaseInput {
   /**
    * 	The label of the input.
    */
-  label: string;
+  label?: string;
   /**
    * 	```register``` object provided by ```useForm```.
    */
@@ -29,6 +29,11 @@ interface BaseInput {
    * 	Optional description shown in a smaller size text below the input.
    */
   desc?: string;
+
+  /**
+   * 	Optional placeholder for the input.
+   */
+  placeholder?: string;
 }
 interface RequiredInput extends BaseInput {
   /**
@@ -57,7 +62,7 @@ const IconedInput = ({
   required,
   label,
   requiredMessage,
-
+  placeholder,
   desc,
 }: IProps) => {
   const {
@@ -65,13 +70,14 @@ const IconedInput = ({
   } = useTranslation();
   return (
     <Container rtl={language === "ar"} error={Boolean(errors?.message)}>
-      <label>{label}</label>
+      {label && <label>{label}</label>}
       <div className="input-container">
         <span className="icon">
           <Icon size={21} />
         </span>
 
         <input
+          placeholder={placeholder}
           {...register(name, {
             required: required ? requiredMessage : false,
           })}

@@ -1,4 +1,4 @@
-export type PRODUCTS_VIEW = 'list' | 'grid';
+export type PRODUCTS_VIEW = "list" | "grid";
 export type PRODUCT_TYPE = {
   id: number;
   name: string;
@@ -6,7 +6,7 @@ export type PRODUCT_TYPE = {
     [key: string]: string;
   };
 };
-export type SALE_TYPES = 'percent' | 'fixed';
+export type SALE_TYPES = "percent" | "fixed";
 export interface NEW_PRODUCT {
   name: string;
   name_ar: string;
@@ -58,4 +58,24 @@ export type MINI_PRODUCT = {
   };
   image: string;
   price: string;
+};
+
+export type PRODUCT = {
+  name: {
+    ar: string;
+    en: string;
+  };
+  category_id: [number];
+  image: File;
+  short_description: {
+    ar: string;
+    en: string;
+  };
+  long_description: {
+    ar: string;
+    en: string;
+  };
+  price: number;
+  price_by_variations: boolean;
+  variations_enabled: boolean;
 };
