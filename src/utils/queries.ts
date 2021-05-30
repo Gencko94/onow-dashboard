@@ -4,7 +4,7 @@ import { CUSTOMER, NEW_CUSTOMER } from "../interfaces/customers/customers";
 import { GET_GOOGLE_MAP_DATA, MapCoordinates } from "../interfaces/maps/maps";
 import { GET_STORES_RESPONSE } from "../interfaces/stores/stores";
 
-const uri = "http://new-version.o-now.net/customer-api";
+const uri = "https://new-version.o-now.net/customer-api";
 
 export const getUser = async (): Promise<USER | undefined> => {
   const t = localStorage.getItem("dshtid");
