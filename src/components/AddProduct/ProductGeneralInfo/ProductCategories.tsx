@@ -1,90 +1,99 @@
 import styled from "styled-components";
-import Select from "react-select";
 
 import { useState } from "react";
 import Modal from "../../Modal/Modal";
 import AddCategoryModalBody from "../../Modal/AddCategoryModalBody";
 
-import { NEW_PRODUCT } from "../../../interfaces/products/products";
-import { Controller, useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import AddButton from "../../reusable/AddButton";
+import { useTranslation } from "react-i18next";
+import { RiDeleteBinLine } from "react-icons/ri";
 const modalStyles = {
   content: {
-    inset: "209px",
+    inset: "178px",
     border: "none",
     boxShadow: "0px 4px 7px 2px rgb(213,213,213)",
   },
 };
-const options = [
-  { id: 1, name: "Clothing" },
-  { id: 2, name: "Food" },
-  { id: 3, name: "Foodd" },
-  { id: 4, name: "Foode2" },
-  { id: 5, name: "Food3" },
-  { id: 6, name: "Food33" },
-  { id: 7, name: "Food43" },
-];
+
 const ProductCategories = () => {
   const {
     formState: { errors },
     control,
-  } = useFormContext<NEW_PRODUCT>();
+    setValue,
+  } = useFormContext<any>();
+  const {
+    i18n: { language },
+  } = useTranslation();
   const [open, setOpen] = useState(false);
+  const categories = useWatch({
+    control,
+    name: "category_id",
+  });
+  const handleRemoveCategory = (id: number) => {
+    const newCategories = categories.filter((i: any) => i.id !== id);
+    setValue("category_id", newCategories);
+  };
   return (
     <Container>
       <div className="title-container">
         <h5>Product Categories</h5>
-      </div>
-      <div className="box">
-        <Controller
-          name="productCategories"
-          control={control}
-          rules={{ required: "Required" }}
-          render={({ field: { ref, onChange } }) => (
-            <CategoriesList>
-              <div className="empty">
-                <p className="text">No Categories added</p>
-                <AddButton
-                  title="Add Categories"
-                  cb={() => {
-                    setOpen(true);
-                  }}
-                />
-              </div>
-            </CategoriesList>
-            // <>
-            //   <Select
-            //     isMulti
-            //     ref={ref}
-            //     options={options}
-            //     onChange={(val) => onChange(val.map((i) => i.id))}
-            //     getOptionLabel={(option) => option.name}
-            //     getOptionValue={(option) => option.id.toString()}
-            //   />
-            //   <ErrorMessage>
-            //     {errors?.productCategories! && "Required Field"}
-            //   </ErrorMessage>
-            // </>
-          )}
-        />
+        {categories.length > 0 && (
+          <AddButton
+            title="Add Categories"
+            cb={() => {
+              setOpen(true);
+            }}
+          />
+        )}
       </div>
 
-      {/* <ButtonsContainer>
-        <AddButton type="button" onClick={() => setOpen(true)}>
-          <Icon>
-            <BiPlus size={30} />
-          </Icon>
-          <BtnText>Quick Add New Category</BtnText>
-        </AddButton>
-      </ButtonsContainer> */}
+      <CategoriesList>
+        {categories.length === 0 && (
+          <div className="empty">
+            <p className="text">No Categories added</p>
+            <AddButton
+              title="Add Categories"
+              cb={() => {
+                setOpen(true);
+              }}
+            />
+          </div>
+        )}
+        {categories.length > 0 && (
+          <CategoriesTable>
+            {categories.map((category: any) => {
+              return (
+                <div className="item">
+                  <div className="title">
+                    <img src={category.image} alt={category.name[language]} />
+                    <p>{category.name[language]}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveCategory(category.id)}
+                    className="icon"
+                  >
+                    <RiDeleteBinLine size={22} />
+                  </button>
+                </div>
+              );
+            })}
+          </CategoriesTable>
+        )}
+      </CategoriesList>
 
       <Modal
         isOpen={open}
-        title="Add Category"
+        title="Add Categories to the product"
         closeFunction={() => setOpen(false)}
         styles={modalStyles}
       >
-        <AddCategoryModalBody />
+        <AddCategoryModalBody
+          setValue={setValue}
+          control={control}
+          closeFunction={() => setOpen(false)}
+        />
       </Modal>
     </Container>
   );
@@ -94,34 +103,31 @@ export default ProductCategories;
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `
   margin: 2rem 0;
+  display:flex;
+  flex-direction:column;
+  
   .title-container {
     padding: 1rem 0;
     color: ${mainColor};
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
   }
-  .box {
-    background-color: #fff;
-    box-shadow: ${shadow};
-    border-radius: 6px;
-    padding: 1rem;
-    // display: grid;
-    // grid-template-columns: 1fr;
-    // gap: 1rem;
-  }
+ 
   @media ${breakpoints.md} {
-    .box {
-      // grid-template-columns: 1fr 1fr 1fr;
-
-    }
+    
   }
   `
 );
 const CategoriesList = styled.div`
-  height: 250px;
   overflow-y: auto;
   position: relative;
+  background-color: #fff;
+  box-shadow: ${(props) => props.theme.shadow};
+  border-radius: 6px;
+  flex: 1;
 
   .empty {
-    background-color: ${(props) => props.theme.accentColor};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -136,37 +142,39 @@ const CategoriesList = styled.div`
     }
   }
 `;
-const ButtonsContainer = styled.div`
-  padding: 0.5rem 0;
-`;
-// const AddButton = styled.button`
-//   background-color: ${(props) => props.theme.green};
-//   box-shadow: ${(props) => props.theme.shadow};
-//   border-radius: 7px;
-//   position: relative;
-//   padding: 0.25rem 0.5rem;
-//   color: #fff;
-//   display: flex;
-//   align-items: center;
-// `;
-const Icon = styled.span`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.25rem;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
-`;
-
-const BtnText = styled.p`
-  font-size: 0.9rem;
-  font-weight: ${(props) => props.theme.font.regular};
-  margin: 0 0.5rem;
-`;
-const ErrorMessage = styled.p`
-  font-size: 0.7rem;
-  padding-top: 0.25rem;
-  color: ${(props) => props.theme.dangerRed};
+const CategoriesTable = styled.div`
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  .item {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: ${(props) => props.theme.border};
+    .title {
+      display: flex;
+      align-items: center;
+      img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: ${(props) => props.theme.border};
+      }
+      p {
+        font-size: 0.9rem;
+        margin: 0 0.5rem;
+      }
+    }
+    .icon {
+      transition: transform 75ms ease;
+      color: ${(props) => props.theme.dangerRed};
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+  }
 `;

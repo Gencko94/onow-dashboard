@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import { BsCheck } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
 import ReactModal from "react-modal";
 import styled from "styled-components";
+import Loading from "../../utils/Loading";
 import ModalHead from "../reusable/ModalHead";
 import ModalTail from "../reusable/ModalTail";
 ReactModal.setAppElement("#root");
@@ -35,12 +37,7 @@ const Modal: React.FC<ModalProps> = ({
     >
       <Body>
         <ModalHead closeFunction={closeFunction} title={title} />
-        {children}
-        <ModalTail
-          btnText="Confirm"
-          successCb={() => {}}
-          closeFunction={closeFunction}
-        />
+        <Suspense fallback={<Loading />}>{children}</Suspense>
       </Body>
     </ReactModal>
   );
@@ -50,4 +47,7 @@ export default Modal;
 const Body = styled.div`
   font-family: ${(props) => props.theme.fontFamily};
   width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
 `;

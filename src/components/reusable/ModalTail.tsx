@@ -39,6 +39,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  align-self: flex-end;
   background-color: ${(props) => props.theme.overlayColor};
   button {
     box-shadow: ${(props) => props.theme.shadow};

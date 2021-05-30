@@ -24,6 +24,30 @@ export interface CATEGORY {
   active: boolean;
   as_child: boolean;
 }
+export type MINI_CATEGORY = {
+  /**
+   *  Id of the Category
+   */
+  id: number;
+  /**
+   *  Translated names of the category set by locale keys
+   */
+  name: {
+    [key: string]: string;
+  };
+  /**
+   *  Category image URL
+   */
+  image: string;
+  /**
+   *  Category Slug
+   */
+  slug: string;
+  /**
+   *  Category children.
+   */
+  children?: MINI_CATEGORY[];
+};
 export interface NEW_CATEGORY {
   id: number;
   name: {

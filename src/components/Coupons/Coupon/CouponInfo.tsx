@@ -1,4 +1,4 @@
-import { Control } from "react-hook-form";
+import { Control, DeepMap, FieldError, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { BiBarcode } from "react-icons/bi";
@@ -10,11 +10,11 @@ import DateIconedInput from "../../reusable/DateIconedInput";
 import IconedInput from "../../reusable/IconedInput";
 import IconedNumberInput from "../../reusable/IconedNumberInput";
 import Select from "../../reusable/Select";
-interface IProps {
-  register: any;
-  errors: any;
+interface IProps<T> {
+  register: UseFormRegister<T>;
+  errors: DeepMap<any, FieldError>;
 
-  control: Control<any>;
+  control: Control<T>;
 }
 const options = [
   {
@@ -32,7 +32,11 @@ const options = [
     value: "fixed",
   },
 ];
-const CouponInfo = ({ control, errors, register }: IProps) => {
+export default function CouponInfo<T>({
+  control,
+  errors,
+  register,
+}: IProps<T>) {
   const {
     i18n: { language },
   } = useTranslation();
@@ -154,9 +158,7 @@ const CouponInfo = ({ control, errors, register }: IProps) => {
       </div>
     </Container>
   );
-};
-
-export default CouponInfo;
+}
 
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `

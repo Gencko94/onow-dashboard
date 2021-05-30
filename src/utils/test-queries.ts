@@ -1,3 +1,4 @@
+import { miniCategories } from "../fakeData/fakeCategories";
 import { CUSTOMER1 } from "../fakeData/fakeCustomerData";
 import {
   categories,
@@ -13,6 +14,7 @@ import {
 } from "../fakeData/fakeData";
 import { newOrders, order1, storeOrders } from "../fakeData/fakeOrders";
 import { staff1, staffMembers } from "../fakeData/fakeStaffMembers";
+import { MINI_CATEGORY } from "../interfaces/categories/categories";
 import { CUSTOMER } from "../interfaces/customers/customers";
 import { NEW_ORDERS } from "../interfaces/orders/new-orders";
 import { ORDER, STORE_ORDERS } from "../interfaces/orders/orders";
@@ -129,6 +131,13 @@ export const getStaffMember = (id: string): Promise<STAFF_MEMBER> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(staff1);
+    }, 500);
+  });
+};
+export const getMiniCategories = (): Promise<MINI_CATEGORY[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(miniCategories);
     }, 500);
   });
 };

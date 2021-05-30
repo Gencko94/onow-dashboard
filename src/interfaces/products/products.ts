@@ -8,14 +8,24 @@ export type PRODUCT_TYPE = {
 };
 export type SALE_TYPES = "percent" | "fixed";
 export interface NEW_PRODUCT {
-  name: string;
-  name_ar: string;
-  shortDescriptionEn: string;
-  shortDescriptionAr: string;
-  longDescriptionEn?: string;
-  longDescriptionAr?: string;
-  productCategories: number[];
-  price?: string;
+  name: {
+    ar: string;
+    en: string;
+  };
+  category_id: number[];
+  images: File[];
+  short_description: {
+    ar: string;
+    en: string;
+  };
+  long_description: {
+    ar: string;
+    en: string;
+  };
+  price: number;
+  price_by_variations: boolean;
+  variations_enabled: boolean;
+
   saleEnabled: boolean;
   salePrice?: string;
   saleEndDate: string;
@@ -66,7 +76,7 @@ export type PRODUCT = {
     en: string;
   };
   category_id: [number];
-  image: File;
+  images: File[];
   short_description: {
     ar: string;
     en: string;

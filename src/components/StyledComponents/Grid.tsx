@@ -6,6 +6,10 @@ interface IProps {
    */
   cols: string;
   /**
+   * Specifies the ```grid-template-rows``` property
+   */
+  rows?: string;
+  /**
    * Specifies the ```grid-gap``` property
    */
   gap: string;
@@ -20,11 +24,16 @@ interface IProps {
    */
   p?: number;
 }
-const Grid: FC<IProps> = ({ children, cols, gap, items }) => {
+const Grid: FC<IProps> = ({ children, rows, cols, gap, items }) => {
   return (
     <Wrapper
       style={
-        { "--cols": cols, "--gap": gap, "--items": items } as CSSProperties
+        {
+          "--cols": cols,
+          "--gap": gap,
+          "--items": items,
+          "--rows": rows,
+        } as CSSProperties
       }
     >
       {children}
@@ -36,6 +45,7 @@ export default Grid;
 export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: var(--cols);
+  grid-template-rows: var(--rows);
   gap: var(--gap);
   align-items: var(--items, normal);
 `;

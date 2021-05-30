@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Grid from "../../StyledComponents/Grid";
 import ProductCategories from "./ProductCategories";
 import ProductDescription from "./ProductDescription";
 import ProductImage from "./ProductImage";
@@ -7,9 +8,11 @@ import ProductNameAndDescription from "./ProductNameAndDescription";
 const ProductGeneralInfo = () => {
   return (
     <Container>
-      <ProductNameAndDescription />
+      <Grid cols="1fr 1fr" gap="1rem" rows="350px">
+        <ProductNameAndDescription />
 
-      <ProductCategories />
+        <ProductCategories />
+      </Grid>
 
       <ProductImage />
       <hr />

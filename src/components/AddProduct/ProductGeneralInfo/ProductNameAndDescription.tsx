@@ -17,21 +17,39 @@ const ProductNameAndDescription = () => {
       <div className="box">
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors?.name}
+          errors={errors?.name?.en}
           register={register}
           required
           requiredMessage="Required"
           label="Product Name"
-          name="name"
+          name="name.en"
         />
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors?.name_ar}
+          errors={errors?.name?.ar}
           register={register}
           required
           requiredMessage="Required"
           label="Product Name Arabic"
-          name="name_ar"
+          name="name.ar"
+        />
+        <IconedInput
+          Icon={MdSubtitles}
+          errors={errors?.short_description?.en}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Short Description English"
+          name="short_description.en"
+        />
+        <IconedInput
+          Icon={MdSubtitles}
+          errors={errors?.short_description?.ar}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Short Description Arabic"
+          name="short_description.ar"
         />
       </div>
     </Container>
@@ -42,11 +60,14 @@ export default ProductNameAndDescription;
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `
   margin: 2rem 0;
+  display:flex;
+  flex-direction:column;
   .title-container {
     padding: 1rem 0;
     color: ${mainColor};
   }
   .box {
+    flex:1;
     background-color: #fff;
     box-shadow: ${shadow};
     border-radius: 6px;
@@ -57,7 +78,7 @@ const Container = styled.div(
   }
   @media ${breakpoints.md} {
     .box {
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr ;
 
     }
   }

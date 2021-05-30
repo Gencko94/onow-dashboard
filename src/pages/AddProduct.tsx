@@ -51,7 +51,7 @@ const AddProduct = () => {
   };
   const onError: SubmitErrorHandler<NEW_PRODUCT> | undefined = (errors) => {
     console.log(errors);
-    if (errors.name || errors.name_ar) {
+    if (errors.name?.en || errors.name?.ar) {
       setActiveTab(0);
     } else if (errors.price) {
       setActiveTab(2);
