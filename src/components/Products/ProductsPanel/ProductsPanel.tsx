@@ -32,7 +32,7 @@ const ProductsPanel = () => {
   const history = useHistory();
   return (
     <Container>
-      <AddButton target="/products/new/food" title="Create new Product" />
+      <AddButton target="/products/product/create" title="Create new Product" />
       {/* <AddProductButton onClick={() => setOptionsMenuOpen(true)}>
         <Icon>
           <BiPlus size={30} />

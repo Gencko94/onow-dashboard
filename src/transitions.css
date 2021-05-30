@@ -135,3 +135,19 @@
   max-height: 0;
   transition: all 250ms;
 }
+.switch-fade-enter {
+  opacity: 0;
+}
+.switch-fade-exit {
+  opacity: 1;
+}
+.switch-fade-enter-active {
+  opacity: 1;
+}
+.switch-fade-exit-active {
+  opacity: 0;
+}
+.switch-fade-enter-active,
+.switch-fade-exit-active {
+  transition: opacity 500ms;
+}

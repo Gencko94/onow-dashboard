@@ -1,7 +1,7 @@
 import { createContext, lazy, Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import AddProductTabs from "../components/AddProduct/AddProductTabs/AddProductTabs";
+// import AddProductTabs from "../components/AddProduct/AddProductTabs/AddProductTabs";
 import { NEW_PRODUCT, NEW_VARIATION } from "../interfaces/products/products";
 import Loading from "../utils/Loading";
 import {
@@ -77,7 +77,7 @@ const AddProduct = () => {
             </Suspense>
           </AddProductProvider.Provider>
         </FormProvider>
-        <AddProductTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        {/* <AddProductTabs activeTab={activeTab} setActiveTab={setActiveTab} /> */}
       </FormGrid>
     </div>
   );

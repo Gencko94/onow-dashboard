@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Grid from "../../StyledComponents/Grid";
+import Hr from "../../StyledComponents/Hr";
 import ProductCategories from "./ProductCategories";
 import ProductDescription from "./ProductDescription";
 import ProductImage from "./ProductImage";
@@ -14,9 +15,9 @@ const ProductGeneralInfo = () => {
         <ProductCategories />
       </Grid>
 
+      <Hr />
       <ProductImage />
-      <hr />
-      <ProductDescription />
+      {/* <ProductDescription /> */}
     </Container>
   );
 };

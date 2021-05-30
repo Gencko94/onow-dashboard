@@ -1,3 +1,5 @@
+import { CATEGORY, MINI_CATEGORY } from "../categories/categories";
+
 export type PRODUCTS_VIEW = "list" | "grid";
 export type PRODUCT_TYPE = {
   id: number;
@@ -18,10 +20,7 @@ export interface NEW_PRODUCT {
     ar: string;
     en: string;
   };
-  long_description: {
-    ar: string;
-    en: string;
-  };
+
   price: number;
   price_by_variations: boolean;
   variations_enabled: boolean;
@@ -70,21 +69,22 @@ export type MINI_PRODUCT = {
   price: string;
 };
 
+interface PRODUCT_IMAGE {
+  url: string;
+  is_default: boolean;
+}
 export type PRODUCT = {
+  id: number;
   name: {
-    ar: string;
-    en: string;
+    [key: string]: string;
   };
-  category_id: [number];
-  images: File[];
+  category: MINI_CATEGORY[];
+  images: PRODUCT_IMAGE[];
   short_description: {
     ar: string;
     en: string;
   };
-  long_description: {
-    ar: string;
-    en: string;
-  };
+
   price: number;
   price_by_variations: boolean;
   variations_enabled: boolean;

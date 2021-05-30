@@ -68,7 +68,7 @@ const Field = styled.button<{ active: boolean; sortable: boolean }>(
   display:flex;
   align-items:center;
   justify-content:center;
-  padding: 1rem 0.5rem;
+  padding: 1rem 0;
   color: ${subHeading};
  
   transition: transform 75ms ease;

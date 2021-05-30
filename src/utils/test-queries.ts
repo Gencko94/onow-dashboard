@@ -11,6 +11,7 @@ import {
   productGridDesigns,
   product1,
   productGridDesign2,
+  products,
 } from "../fakeData/fakeData";
 import { newOrders, order1, storeOrders } from "../fakeData/fakeOrders";
 import { staff1, staffMembers } from "../fakeData/fakeStaffMembers";
@@ -18,6 +19,7 @@ import { MINI_CATEGORY } from "../interfaces/categories/categories";
 import { CUSTOMER } from "../interfaces/customers/customers";
 import { NEW_ORDERS } from "../interfaces/orders/new-orders";
 import { ORDER, STORE_ORDERS } from "../interfaces/orders/orders";
+import { PRODUCT } from "../interfaces/products/products";
 import { STAFF_MEMBER } from "../interfaces/staff/staff";
 import { FOOTER_DESIGN } from "../interfaces/website-layout/designs/footer-design";
 import { HEADER_DESIGN } from "../interfaces/website-layout/designs/header-design";
@@ -138,6 +140,13 @@ export const getMiniCategories = (): Promise<MINI_CATEGORY[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(miniCategories);
+    }, 500);
+  });
+};
+export const getProductsList = (): Promise<PRODUCT[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(products);
     }, 500);
   });
 };

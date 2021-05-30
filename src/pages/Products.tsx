@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import styled from "styled-components";
-import ProductsGrid from "../components/Products/ProductsGrid/ProductsGrid";
+
+import ProductsList from "../components/Products/ProductsList/ProductsList";
 import ProductsPanel from "../components/Products/ProductsPanel/ProductsPanel";
 import { PRODUCTS_VIEW } from "../interfaces/products/products";
 type PRODUCTS_CONTEXT_PROPS = {
@@ -16,12 +17,10 @@ const Products = () => {
     setView(view);
   };
   return (
-    <ProductsProvider.Provider value={{ view, handleViewChange }}>
-      <div>
-        <ProductsPanel />
-        <ProductsGrid />
-      </div>
-    </ProductsProvider.Provider>
+    <div>
+      <ProductsPanel />
+      <ProductsList />
+    </div>
   );
 };
 

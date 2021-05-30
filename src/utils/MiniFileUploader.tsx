@@ -76,7 +76,7 @@ const MiniFileUploader = ({
             </FilePreviewContainer>
           )}
         </div>
-        {!image && (
+        {/* {!image && (
           <UploadFileButton
             type="button"
             onClick={() => {
@@ -85,7 +85,7 @@ const MiniFileUploader = ({
           >
             Browse Files
           </UploadFileButton>
-        )}
+        )} */}
         <Controller
           control={control}
           name={name}

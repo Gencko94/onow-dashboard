@@ -24,42 +24,44 @@ const StoreTasks = () => {
         timeout={250}
         unmountOnExit
       >
-        <div className="cards-container">
-          <StoreTaskCard
-            image="/images/products.svg"
-            title="Store Identity"
-            btnText="Go to settings"
-            target="/settings/store-identity"
-            desc="Configure your Store Identity"
-          />
-          <StoreTaskCard
-            image="/images/settings.svg"
-            title="Store Identity"
-            btnText="Add Products"
-            target="/settings/store-identity"
-            desc="Configure your Store Identity"
-          />
-          <StoreTaskCard
-            image="/images/products.svg"
-            title="Store Identity"
-            btnText="Delivery Options"
-            target="/settings/store-identity"
-            desc="Configure your Store Identity"
-          />
-          <StoreTaskCard
-            image="/images/settings.svg"
-            title="Store Identity"
-            btnText="Payment Methods"
-            target="/settings/store-identity"
-            desc="Configure your Store Identity"
-          />
-          <StoreTaskCard
-            image="/images/products.svg"
-            title="Warehouses"
-            btnText="Warehouses"
-            target="/settings/store-identity"
-            desc="Configure your warehouse locations"
-          />
+        <div>
+          <div className="cards-container">
+            <StoreTaskCard
+              image="/images/products.svg"
+              title="Store Identity"
+              btnText="Go to settings"
+              target="/settings/store-identity"
+              desc="Configure your Store Identity"
+            />
+            <StoreTaskCard
+              image="/images/settings.svg"
+              title="Store Identity"
+              btnText="Add Products"
+              target="/settings/store-identity"
+              desc="Configure your Store Identity"
+            />
+            <StoreTaskCard
+              image="/images/products.svg"
+              title="Store Identity"
+              btnText="Delivery Options"
+              target="/settings/store-identity"
+              desc="Configure your Store Identity"
+            />
+            <StoreTaskCard
+              image="/images/settings.svg"
+              title="Store Identity"
+              btnText="Payment Methods"
+              target="/settings/store-identity"
+              desc="Configure your Store Identity"
+            />
+            <StoreTaskCard
+              image="/images/products.svg"
+              title="Warehouses"
+              btnText="Warehouses"
+              target="/settings/store-identity"
+              desc="Configure your warehouse locations"
+            />
+          </div>
         </div>
       </CSSTransition>
     </Container>
