@@ -205,13 +205,16 @@ function App() {
                           path="/settings/seo"
                           Component={StoreSEO}
                         />
-                        <ProtectedRoute path="/staff" Component={Staff} />
                         <ProtectedRoute
-                          path="/staff/:id"
+                          path="/settings/staff"
+                          Component={Staff}
+                        />
+                        <ProtectedRoute
+                          path="/settings/staff/:id"
                           Component={StaffMember}
                         />
                         <ProtectedRoute
-                          path="/staff/create"
+                          path="/settings/staff/member/create"
                           Component={CreateStaffMember}
                         />
                         <ProtectedRoute

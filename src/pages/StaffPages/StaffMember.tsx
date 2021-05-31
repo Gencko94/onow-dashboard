@@ -25,14 +25,14 @@ const StaffMember = () => {
   } = useForm<STAFF_MEMBER>({ defaultValues: data });
   return (
     <Container>
-      <div className="panel">
-        <DeleteButton cb={() => {}} title="Delete Staff Member" />
-      </div>
       <Breadcrumbs
         childLabel="Staff Member"
         parentLabel="Staff"
-        parentTarget="/staff"
+        parentTarget="/settings/staff"
       />
+      <div className="panel">
+        <DeleteButton cb={() => {}} title="Delete Staff Member" />
+      </div>
       <StaffMemberInformation register={register} errors={errors} />
       <StaffMemberPermissions control={control} permissions={userPermissions} />
     </Container>
@@ -45,6 +45,6 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-bottom: 2rem;
+    margin: 1rem 0;
   }
 `;

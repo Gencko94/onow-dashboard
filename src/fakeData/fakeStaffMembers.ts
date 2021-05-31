@@ -8,16 +8,19 @@ export const staff1: STAFF_MEMBER = {
   id: 1,
   permissions: {
     customers: {
+      all: false,
       createCustomer: true,
       deleteCustomer: true,
       editCustomer: false,
     },
     orders: {
+      all: false,
       createOrder: false,
       deleteOrder: false,
       editOrder: true,
     },
     products: {
+      all: false,
       createProduct: false,
       deleteProduct: true,
       editProduct: true,

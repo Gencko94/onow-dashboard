@@ -15,7 +15,7 @@ const StaffItem = ({ member }: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   return (
-    <Container onClick={() => history.push(`/staff/${member.id}`)}>
+    <Container onClick={() => history.push(`/settings/staff/${member.id}`)}>
       {/* <div className="field">
           <CheckboxContainer>
             <BsCheck size={15} />

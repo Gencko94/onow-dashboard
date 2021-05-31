@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { FiCheck } from "react-icons/fi";
 import styled from "styled-components";
+import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import StaffMemberInformation from "../../components/Staff/StaffMemberInformation";
 import StaffMemberPermissions from "../../components/Staff/StaffMemberPermissions";
 import { userPermissions } from "../../data/userPermissions";
@@ -19,6 +20,11 @@ const CreateStaffMember = () => {
   };
   return (
     <Container>
+      <Breadcrumbs
+        childLabel="Staff Members"
+        parentLabel="Staff"
+        parentTarget="/settings/staff"
+      />
       <div className="panel">
         <button onClick={handleSubmit(onSubmit)}>
           <span className="icon">
@@ -39,6 +45,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    margin: 1rem 0;
     button {
       background-color: #418ce0;
       box-shadow: ${(props) => props.theme.shadow};

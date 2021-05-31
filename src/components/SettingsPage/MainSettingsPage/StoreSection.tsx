@@ -7,6 +7,7 @@ import {
   FcSupport,
   FcTimeline,
   FcSearch,
+  FcManager,
 } from "react-icons/fc";
 import styled from "styled-components";
 import SettingsCard from "../../reusable/SettingsCard";
@@ -63,6 +64,12 @@ const StoreSection = () => {
           target="/settings/maintanance-mode"
           Icon={FcVlc}
           desc="Put your store into maintanance mode "
+        />
+        <SettingsCard
+          title="Store Staff"
+          target="/settings/staff"
+          Icon={FcManager}
+          desc="Manage your staff roles"
         />
       </div>
     </Container>

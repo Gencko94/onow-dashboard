@@ -50,9 +50,10 @@ const StaffMemberInformation = ({ register, errors }: IProps) => {
 export default StaffMemberInformation;
 
 const Container = styled.div`
-  margin: 2rem 0;
+  margin: 1rem 0;
   .title-container {
     padding: 1rem 0;
+    color: ${(props) => props.theme.mainColor};
   }
   .box {
     background-color: #fff;

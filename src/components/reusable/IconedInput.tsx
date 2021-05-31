@@ -93,7 +93,7 @@ export default IconedInput;
 const Container = styled.div<{ rtl: boolean; error: boolean }>`
   label {
     color: ${({ theme }) => theme.headingColor};
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     font-size: 0.9rem;
     font-weight: ${(props) => props.theme.font.regular};
     display: block;
@@ -115,7 +115,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${(props) => props.theme.subHeading};
+      color: ${(props) => props.theme.mainColor};
       background-color: ${(props) => props.theme.inputColorLight};
       border-right: ${(props) => props.theme.border};
       ${(props) =>

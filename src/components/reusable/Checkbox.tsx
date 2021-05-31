@@ -49,6 +49,10 @@ const Container = styled.label`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  transition: all 75ms ease;
+  &:hover {
+    font-weight: ${(props) => props.theme.font.semibold};
+  }
   input {
     position: absolute;
     opacity: 0;

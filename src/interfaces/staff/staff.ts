@@ -12,16 +12,19 @@ export type STAFF_PERMISSIONS = {
   products: PRODUCTS_PERMISSIONS;
 };
 export type CUSTOMERS_PERMISSIONS = {
+  all: boolean;
   createCustomer: boolean;
   deleteCustomer: boolean;
   editCustomer: boolean;
 };
 export type ORDERS_PERMISSIONS = {
+  all: boolean;
   createOrder: boolean;
   deleteOrder: boolean;
   editOrder: boolean;
 };
 export type PRODUCTS_PERMISSIONS = {
+  all: boolean;
   createProduct: boolean;
   hideProduct: boolean;
   deleteProduct: boolean;

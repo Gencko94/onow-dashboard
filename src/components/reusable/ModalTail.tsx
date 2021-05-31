@@ -60,7 +60,7 @@ const Container = styled.div`
     }
   }
   .close {
-    background-color: ${(props) => props.theme.dangerRed};
+    background-color: ${(props) => props.theme.accentColor};
   }
   .success {
     margin: 0 1rem;

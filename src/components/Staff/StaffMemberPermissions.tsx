@@ -16,10 +16,12 @@ const StaffMemberPermissions = ({ control, permissions }: IProps) => {
       <div className="title-container">
         <h5>Staff Member Permissions</h5>
       </div>
-      <div className="grid">
-        <CustomerPermissions permissions={permissions} control={control} />
-        <OrdersPermissions control={control} permissions={permissions} />
-        <ProductsPermissions control={control} permissions={permissions} />
+      <div className="box">
+        <div className="grid">
+          <CustomerPermissions permissions={permissions} control={control} />
+          <OrdersPermissions control={control} permissions={permissions} />
+          <ProductsPermissions control={control} permissions={permissions} />
+        </div>
       </div>
     </Container>
   );
@@ -30,14 +32,15 @@ const Container = styled.div`
   margin: 2rem 0;
   .title-container {
     padding: 1rem 0;
+    color: ${(props) => props.theme.mainColor};
   }
-  .grid {
-    background-color: #fff;
-    box-shadow: ${(props) => props.theme.shadow};
+  .box {
     border-radius: 6px;
-    padding: 1rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 1rem;
+    }
   }
 `;

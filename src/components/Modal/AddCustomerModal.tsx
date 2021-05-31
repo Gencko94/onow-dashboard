@@ -219,13 +219,6 @@ const BtnText = styled.p`
   margin: 0 0.5rem;
 `;
 
-const Input = styled.input`
-  flex: 1;
-  padding: 0.4rem;
-  font-size: 0.9rem;
-  width: 50px;
-`;
-
 const Button = styled.button<{ red?: boolean }>`
   background-color: ${(props) =>
     props.red ? props.theme.dangerRed : props.theme.green};

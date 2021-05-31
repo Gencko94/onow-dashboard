@@ -7,6 +7,7 @@ import StaffItem from "../../components/Staff/StaffItem";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
 import { getStoreStaffMembers } from "../../utils/test-queries";
 import TableHead from "../../components/reusable/TableHead";
+import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 
 const Staff = () => {
   const { data } = useQuery<STAFF_MEMBER[]>(
@@ -41,8 +42,16 @@ const Staff = () => {
   );
   return (
     <Container>
+      <Breadcrumbs
+        childLabel="Staff Members"
+        parentLabel="Settings"
+        parentTarget="/settings"
+      />
       <div className="panel">
-        <AddButton title="Create New Member" target="/staff/create" />
+        <AddButton
+          title="Create New Member"
+          target="/settings/staff/member/create"
+        />
       </div>
       <div className="title-container">
         <h5>Staff Members</h5>

@@ -131,22 +131,7 @@ const SideNav = () => {
           <h6>Settings</h6>
         </SideNavLink>
       </SideNavItem>
-      <SideNavItem
-        onClick={() => {
-          if (openedItem === 5) {
-            return setOpenedItem(null);
-          }
-          setOpenedItem(5);
-        }}
-        opened={openedItem === 5}
-      >
-        <SideNavLink isActive={pathname === "/staff"} to="/staff">
-          <span className="icon">
-            <AiFillSetting size={20} />
-          </span>
-          <h6>Staff</h6>
-        </SideNavLink>
-      </SideNavItem>
+
       <SideNavItem
         onClick={() => {
           if (openedItem === 5) {
