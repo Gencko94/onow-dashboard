@@ -1,4 +1,7 @@
-export type STATUS = '';
+export type STATUS = "";
+export type GET_ORDERS_RESPONSE = {
+  orders: ORDER;
+}[];
 type ORDER_CUSTOMER = {
   id: number;
   first_name: string;
@@ -19,9 +22,9 @@ export interface ORDER {
   order_id: number;
   order_customer: ORDER_CUSTOMER;
   order_status: ORDER_STATUS;
-  order_type: 'delivery' | 'pickup';
-  payment_type: 'cash' | 'online';
-  payment_status: PAYMENT_STATUS;
+  order_type: "delivery" | "pickup";
+  payment_type: "cash" | "online";
+  payment_status: PAYMENT_STATUS[];
   order_items: ORDER_ITEM[];
   coupon?: {
     code: string;
@@ -38,7 +41,7 @@ export interface ORDER_STATUS {
   };
 }
 export interface PAYMENT_STATUS {
-  status_id: number;
+  id: number;
   title: {
     [key: string]: string;
   };
@@ -58,24 +61,24 @@ export const orderItems: ORDER_ITEM[] = [
   {
     id: 1,
     name: {
-      ar: 'ساعة يد ماركة بولغاري',
-      en: 'Bulgary Hand Watch',
+      ar: "ساعة يد ماركة بولغاري",
+      en: "Bulgary Hand Watch",
     },
     price: 2,
     qty: 2,
     totalPrice: 4,
-    image: '/images/product.webp',
+    image: "/images/product.webp",
   },
   {
     id: 2,
     name: {
-      ar: 'ساعة يد ماركة بولغاري',
-      en: 'Bulgary Hand Watch',
+      ar: "ساعة يد ماركة بولغاري",
+      en: "Bulgary Hand Watch",
     },
     price: 2,
     qty: 2,
     totalPrice: 4,
-    image: '/images/product.webp',
+    image: "/images/product.webp",
   },
 ];
 export type STORE_ORDERS_STAT = {
@@ -92,15 +95,15 @@ export interface STORE_ORDERS {
 }
 export interface ORDERS_FILTERS {
   orderStatus: number | null;
-  paymentType: 'cash' | 'online' | null;
+  paymentType: "cash" | "online" | null;
   paymentStatus: number | null;
-  orderMode: 'delivery' | 'pickup' | null;
+  orderMode: "delivery" | "pickup" | null;
   orderAmount: {
-    from: number | '';
-    to: number | '';
+    from: number | "";
+    to: number | "";
   };
   orderDate: {
-    from: Date | '';
-    to: Date | '';
+    from: Date | "";
+    to: Date | "";
   };
 }

@@ -6,7 +6,7 @@ import ExportAs from "../../reusable/ExportAs";
 import TableHead from "../../reusable/TableHead";
 import OrderItem from "./OrderItem";
 interface IProps {
-  orders: ORDER[];
+  orders: { orders: ORDER }[];
   sortBy: ORDER_SORT;
   setSortBy: Dispatch<SetStateAction<ORDER_SORT>>;
 }
@@ -116,7 +116,7 @@ const OrdersList = ({ orders, setSortBy, sortBy }: IProps) => {
 
         <div>
           {orders.map((order) => (
-            <OrderItem order={order} key={order.order_id} />
+            <OrderItem order={order.orders} key={order.orders.order_id} />
           ))}
         </div>
       </TableContainer>
@@ -131,6 +131,9 @@ const Container = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 1rem 0;
+    h5 {
+      color: ${(props) => props.theme.mainColor};
+    }
   }
 `;
 const TableContainer = styled.div`

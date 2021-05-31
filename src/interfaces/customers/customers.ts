@@ -1,3 +1,5 @@
+import { ORDER } from "../orders/orders";
+
 export interface NEW_CUSTOMER {
   first_name: string;
   last_name: string;
@@ -22,6 +24,6 @@ export interface CUSTOMER {
     currency: {
       [key: string]: string;
     };
-    orders: [];
   };
+  orders: ORDER[];
 }

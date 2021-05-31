@@ -3,8 +3,9 @@ import { USER, LOGIN_FORM, LOGIN_RESPONSE } from "../interfaces/auth/auth";
 import { CUSTOMER, NEW_CUSTOMER } from "../interfaces/customers/customers";
 import { GET_GOOGLE_MAP_DATA, MapCoordinates } from "../interfaces/maps/maps";
 import { GET_STORES_RESPONSE } from "../interfaces/stores/stores";
+import { GET_ORDERS_RESPONSE } from "../interfaces/orders/orders";
 
-const uri = "https://new-version.o-now.net/customer-api";
+const uri = "http://new-version.o-now.net/customer-api";
 
 export const getUser = async (): Promise<USER | undefined> => {
   const t = localStorage.getItem("dshtid");
@@ -100,4 +101,20 @@ export const getGoogleMapsLocation = async ({
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&language=${language}`
   );
   return res.data;
+};
+
+// Orders
+
+export const getOrders = async (
+  storeId: number
+): Promise<GET_ORDERS_RESPONSE> => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+      StoreId: storeId,
+    },
+  };
+  const res = await axios.get(`${uri}/orders-store`, config);
+  return res.data.results;
 };

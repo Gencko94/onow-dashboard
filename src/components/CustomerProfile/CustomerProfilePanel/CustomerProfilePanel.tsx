@@ -1,7 +1,8 @@
-import styled from 'styled-components';
-import { MdEdit } from 'react-icons/md';
-import { BiMessageRoundedDots } from 'react-icons/bi';
-import { RiDeleteBinLine } from 'react-icons/ri';
+import styled from "styled-components";
+import { MdEdit } from "react-icons/md";
+import { BiMessageRoundedDots } from "react-icons/bi";
+import { RiDeleteBinLine } from "react-icons/ri";
+import DeleteButton from "../../reusable/DeleteButton";
 
 const CustomerProfilePanel = () => {
   return (
@@ -18,12 +19,7 @@ const CustomerProfilePanel = () => {
         </span>
         <p>Send Message </p>
       </button> */}
-      <button className="delete">
-        <span className="icon">
-          <RiDeleteBinLine size={20} />
-        </span>
-        <p>Delete Customer </p>
-      </button>
+      <DeleteButton cb={() => {}} title="Delete Customer" />
     </Container>
   );
 };
@@ -52,7 +48,7 @@ const Container = styled.div`
     }
   }
   button.delete {
-    background-color: ${props => props.theme.dangerRed};
-    color: ${props => props.theme.btnText};
+    background-color: ${(props) => props.theme.dangerRed};
+    color: ${(props) => props.theme.btnText};
   }
 `;

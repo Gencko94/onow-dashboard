@@ -16,6 +16,7 @@ interface IProps {
 }
 
 const OrderItem = ({ order }: IProps) => {
+  console.log(order);
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   return (
@@ -29,7 +30,7 @@ const OrderItem = ({ order }: IProps) => {
         <h6>{order.order_id}</h6>
       </div>
       <div className="field">
-        <h6>{`${order.order_customer.first_name} ${order.order_customer.last_name}`}</h6>
+        <h6>{`${order.order_customer?.first_name} ${order.order_customer?.last_name}`}</h6>
       </div>
       <div className="field">
         <h6>{`${order.order_type === "delivery" ? "Delivery" : "Pickup"}`}</h6>
@@ -40,23 +41,16 @@ const OrderItem = ({ order }: IProps) => {
         }`}</h6>
       </div>
       <div className="field">
-        <PaymentStatusChip dots status={order.payment_status} />
+        -{/* <PaymentStatusChip dots status={order.payment_status[0]} /> */}
       </div>
       <div className="field">
-        <OrderStatusChip dots status={order.order_status} />
+        -{/* <OrderStatusChip dots status={order.order_status} /> */}
       </div>
       <div className="field">
         <h6>{format(parseISO(order.created_at), "dd/MM/yyyy")}</h6>
       </div>
       <div className="field">
         <ButtonsContainer>
-          {/* <button
-            onClick={() => history.push('/orders/1')}
-            className="icon"
-            title="Visit Profile"
-          >
-            <ImProfile size={18} />
-          </button> */}
           <ActionButtonContainer
             onClick={(e) => {
               e.stopPropagation();
@@ -125,19 +119,7 @@ const Container = styled.div(
   }
   `
 );
-const CheckboxContainer = styled.button`
-  border: ${(props) => props.theme.border};
-  border-radius: 5px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;
-  &:hover {
-    background-color: ${(props) => props.theme.accentColor};
-  }
-`;
+
 const ButtonsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;

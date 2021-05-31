@@ -130,3 +130,7 @@
 .react-custom-toggle.react-toggle--checked .react-toggle-thumb {
   border-color: #f78f21;
 }
+#nprogress .bar {
+  background-color: #f78f21 !important;
+  height: 3px !important;
+}

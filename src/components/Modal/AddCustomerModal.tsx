@@ -15,11 +15,11 @@ import { useTranslation } from "react-i18next";
 const countryOptions = [
   {
     name: "Kuwait",
-    key: "1",
+    key: "965",
   },
   {
     name: "Saudi Arabia",
-    key: "1",
+    key: "966",
   },
 ];
 interface IProps {

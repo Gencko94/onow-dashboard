@@ -4,7 +4,12 @@ import styled from "styled-components";
 import OrdersList from "../components/Orders/OrdersList/OrdersList";
 import OrdersPanel from "../components/Orders/OrdersPanel/OrdersPanel";
 import OrdersThumbnails from "../components/Orders/OrdersThumbnails/OrdersThumbnails";
-import { ORDERS_FILTERS, STORE_ORDERS } from "../interfaces/orders/orders";
+import {
+  GET_ORDERS_RESPONSE,
+  ORDERS_FILTERS,
+  STORE_ORDERS,
+} from "../interfaces/orders/orders";
+import { getOrders } from "../utils/queries";
 import { getStoreOrders } from "../utils/test-queries";
 export interface ORDER_SORT {
   by:
@@ -16,7 +21,7 @@ export interface ORDER_SORT {
     | "customerName";
   order: "asc" | "desc";
 }
-const Orders = () => {
+const Orders = ({ storeId }: { storeId: number }) => {
   const [filters, setFilters] = useState<ORDERS_FILTERS>({
     orderStatus: null,
     paymentType: null,
@@ -35,18 +40,30 @@ const Orders = () => {
     by: "orderDate",
     order: "desc",
   });
-  const { data } = useQuery<STORE_ORDERS>("store-orders", getStoreOrders, {
-    suspense: true,
-  });
+  const { data } = useQuery(
+    ["store-orders", storeId],
+    () => getOrders(storeId),
+    {
+      suspense: true,
+    }
+  );
   return (
     <div>
       <OrdersPanel filters={filters} setFilters={setFilters} />
       <hr />
-      <OrdersThumbnails stats={data!.stats} />
+      {/* <OrdersThumbnails stats={data!.stats} /> */}
       <hr />
-      <OrdersList orders={data!.orders} sortBy={sortBy} setSortBy={setSortBy} />
+      {/* <Box> */}
+      <OrdersList orders={data!} sortBy={sortBy} setSortBy={setSortBy} />
+      {/* </Box> */}
     </div>
   );
 };
 
 export default Orders;
+const Box = styled.div`
+  box-shadow: ${(props) => props.theme.shadow};
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 0.5rem;
+`;

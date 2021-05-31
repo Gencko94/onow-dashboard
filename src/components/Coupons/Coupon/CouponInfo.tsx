@@ -147,7 +147,6 @@ export default function CouponInfo<T>({
         />
 
         <DateIconedInput
-          Icon={FiCalendar}
           errors={errors?.end_date}
           required
           control={control}

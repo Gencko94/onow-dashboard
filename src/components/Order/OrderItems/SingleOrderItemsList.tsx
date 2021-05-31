@@ -1,11 +1,14 @@
-import styled from 'styled-components';
-import { orderItems } from '../../../interfaces/orders/orders';
-import SingleOrderItem from './SingleOrderItem';
+import styled from "styled-components";
+import { orderItems } from "../../../interfaces/orders/orders";
+import SingleOrderItem from "./SingleOrderItem";
 
 const SingleOrderItemsList = () => {
   return (
     <Container>
-      <h4 className="heading">Order Items</h4>
+      <div className="title-container">
+        <h5>Order Items</h5>
+      </div>
+
       <Table>
         <div className="head">
           <div className="col span">
@@ -22,7 +25,7 @@ const SingleOrderItemsList = () => {
           </div>
         </div>
         <div className="body">
-          {orderItems.map(item => (
+          {orderItems.map((item) => (
             <SingleOrderItem key={item.id} item={item} />
           ))}
           <OrderSummary>
@@ -62,17 +65,18 @@ const SingleOrderItemsList = () => {
 
 export default SingleOrderItemsList;
 const Container = styled.div`
-  padding: 0.75rem;
-  .heading {
-    margin-bottom: 1rem;
+  margin: 2rem 0;
+  .title-container {
+    padding: 1rem 0;
+    color: ${(props) => props.theme.mainColor};
   }
 `;
 const Table = styled.div`
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 8px;
-  border: ${props => props.theme.border};
+  border: ${(props) => props.theme.border};
   .head {
-    border-bottom: ${props => props.theme.border};
+    border-bottom: ${(props) => props.theme.border};
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     .col {
@@ -92,12 +96,12 @@ const OrderSummary = styled.div`
   .col {
     text-align: center;
     padding: 0.5rem;
-    border-bottom: ${props => props.theme.border};
+    border-bottom: ${(props) => props.theme.border};
     p {
-      font-weight: ${props => props.theme.font.semibold};
+      font-weight: ${(props) => props.theme.font.semibold};
     }
     .total {
-      font-weight: ${props => props.theme.font.bold};
+      font-weight: ${(props) => props.theme.font.bold};
       font-size: 1.1rem;
       border: none;
     }

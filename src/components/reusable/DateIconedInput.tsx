@@ -16,6 +16,7 @@ import { CSSTransition } from "react-transition-group";
 
 import styled, { css } from "styled-components";
 import { format } from "date-fns";
+import { FiCalendar } from "react-icons/fi";
 
 interface BaseInput {
   /**
@@ -26,10 +27,7 @@ interface BaseInput {
    * 	Input's name being registered.
    */
   name: string;
-  /**
-   * 	The icon to show.
-   */
-  Icon: IconType;
+
   /**
    * 	The label of the input.
    */
@@ -68,7 +66,6 @@ type IProps = RequiredInput | NotRequiredInput;
 const DateIconedInput = ({
   errors,
 
-  Icon,
   name,
   required,
   label,
@@ -93,7 +90,7 @@ const DateIconedInput = ({
           <label>{label}</label>
           <div className="input-container">
             <span className="icon">
-              <Icon size={21} />
+              <FiCalendar size={21} />
             </span>
             <input
               readOnly

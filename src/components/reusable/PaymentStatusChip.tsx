@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
-import { ORDER_STATUS } from "../../interfaces/orders/orders";
+import { PAYMENT_STATUS } from "../../interfaces/orders/orders";
 
 interface IProps {
-  status: ORDER_STATUS;
+  status: PAYMENT_STATUS;
   withBg?: boolean;
   dots?: boolean;
 }
@@ -22,8 +22,8 @@ const PaymentStatusChip = ({ status, withBg, dots }: IProps) => {
     }
   };
   return (
-    <Container bg={withBg ? resolveColor(status.status_id) : undefined}>
-      {dots ? <Dot color={resolveColor(status.status_id)} /> : ""}
+    <Container bg={withBg ? resolveColor(status.id) : undefined}>
+      {dots ? <Dot color={resolveColor(status.id)} /> : ""}
       <p>{status.title[language]}</p>
     </Container>
   );

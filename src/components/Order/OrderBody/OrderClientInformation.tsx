@@ -1,18 +1,19 @@
-import { useState } from 'react';
-import ClickAwayListener from 'react-click-away-listener';
-import { BsThreeDotsVertical } from 'react-icons/bs';
-import { AiOutlinePhone, AiOutlineWhatsApp } from 'react-icons/ai';
-import { HiOutlineMail, HiOutlineArchive } from 'react-icons/hi';
-import { CSSTransition } from 'react-transition-group';
-import styled from 'styled-components';
+import { useState } from "react";
+import ClickAwayListener from "react-click-away-listener";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { AiOutlinePhone, AiOutlineWhatsApp } from "react-icons/ai";
+import { HiOutlineMail, HiOutlineArchive } from "react-icons/hi";
+import { CSSTransition } from "react-transition-group";
+import styled from "styled-components";
+import { BiUser } from "react-icons/bi";
 
 const OrderClientInformation = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <Container>
-      <div className="title-container">
-        <h6 className="title">Client Information</h6>
-        <ActionButtonContainer onClick={() => setMenuOpen(true)}>
+      <div className="content">
+        <div className="title-container">
+          {/* <ActionButtonContainer onClick={() => setMenuOpen(true)}>
           <button className="icon">
             <BsThreeDotsVertical size={20} />
           </button>
@@ -59,18 +60,21 @@ const OrderClientInformation = () => {
               </ul>
             </ClickAwayListener>
           </CSSTransition>
-        </ActionButtonContainer>
-      </div>
-      <div className="content">
-        <div className="grid">
+        </ActionButtonContainer> */}
+          <span className="icon">
+            <BiUser size={60} />
+          </span>
+          <h5>Client Information</h5>
+        </div>
+        <div className="flex">
           <p className="label">Name :</p>
           <p className="value">Ahmad Zaaza</p>
         </div>
-        <div className="grid">
+        <div className="flex">
           <p className="label">Phone Number : </p>
           <p className="value">+96598744132</p>
         </div>
-        <div className="grid">
+        <div className="flex">
           <p className="label">Email :</p>
           <p className="value">gfox.piano@hotmail.com</p>
         </div>
@@ -81,34 +85,48 @@ const OrderClientInformation = () => {
 
 export default OrderClientInformation;
 const Container = styled.div`
-  background: ${props => props.color};
-  box-shadow: ${props => props.theme.shadow};
-  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: ${(props) => props.theme.shadow};
+  border-radius: 6px;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  flex-direction: column;
 
   .title-container {
-    padding: 0.75rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background-color: ${props => props.theme.overlayColor};
-    border-bottom: ${props => props.theme.border};
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+
+    font-weight: ${(props) => props.theme.font.bold};
+    color: ${(props) => props.theme.mainColor};
+    .icon {
+      margin-bottom: 0.25rem;
+    }
   }
-  .title {
-    font-weight: ${props => props.theme.font.xbold};
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex: 1;
   }
-  .grid {
+  .flex {
     padding: 0.5rem 0.5rem;
-    display: grid;
-    gap: 5px;
-    grid-template-columns: auto 1fr;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     p.label {
-      color: ${props => props.theme.subHeading};
-      font-size: 0.9rem;
+      color: ${(props) => props.theme.subHeading};
+      font-size: 0.8rem;
     }
     p.value {
+      margin: 0 0.5rem;
       font-size: 0.9rem;
-      font-weight: ${props => props.theme.font.semibold};
+      font-weight: ${(props) => props.theme.font.semibold};
     }
   }
 `;
@@ -125,7 +143,7 @@ const ActionButtonContainer = styled.div`
     background-color: #fff;
     transform-origin: right;
     overflow: hidden;
-    box-shadow: ${props => props.theme.shadow};
+    box-shadow: ${(props) => props.theme.shadow};
     border-radius: 5px;
   }
   ul li button {
@@ -135,12 +153,12 @@ const ActionButtonContainer = styled.div`
     display: flex;
     align-items: center;
     font-size: 0.8rem;
-    color: ${props => props.color};
+    color: ${(props) => props.color};
     transition: all 75ms ease;
     white-space: nowrap;
     &:hover {
-      color: ${props => props.theme.headingColor};
-      background-color: ${props => props.theme.highlightColor};
+      color: ${(props) => props.theme.headingColor};
+      background-color: ${(props) => props.theme.highlightColor};
     }
     p {
       margin: 0 0.25rem;
@@ -161,7 +179,7 @@ const ActionButtonContainer = styled.div`
     border-radius: 50%;
     padding: 0.25rem;
     &:hover {
-      background-color: ${props => props.theme.accentColor};
+      background-color: ${(props) => props.theme.accentColor};
     }
   }
 `;

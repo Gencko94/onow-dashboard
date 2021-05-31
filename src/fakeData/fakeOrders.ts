@@ -10,13 +10,15 @@ export const order1: ORDER = {
     last_name: "Zaaza",
     phoneNumber: "+965978954",
   },
-  payment_status: {
-    status_id: 2,
-    title: {
-      en: "Paid",
-      ar: "مدفوع",
+  payment_status: [
+    {
+      id: 2,
+      title: {
+        en: "Paid",
+        ar: "مدفوع",
+      },
     },
-  },
+  ],
   payment_type: "online",
   order_items: [
     {
