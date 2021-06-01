@@ -1,4 +1,9 @@
-import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  Switch,
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import {
   QueryClient,
   QueryClientProvider,

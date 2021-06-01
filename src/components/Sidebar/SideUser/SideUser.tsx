@@ -41,6 +41,7 @@ export default SideUser;
 const Container = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
   padding: 0.5rem;
+  margin: 0 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;

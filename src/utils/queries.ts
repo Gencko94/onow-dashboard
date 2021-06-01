@@ -5,17 +5,22 @@ import { GET_GOOGLE_MAP_DATA, MapCoordinates } from "../interfaces/maps/maps";
 import { GET_STORES_RESPONSE } from "../interfaces/stores/stores";
 import { GET_ORDERS_RESPONSE } from "../interfaces/orders/orders";
 
-const uri = "http://new-version.o-now.net/customer-api";
+const uri = "https://new-version.o-now.net/customer-api";
 
 export const getUser = async (): Promise<USER | undefined> => {
   const t = localStorage.getItem("dshtid");
+  const instance = axios.create({
+    validateStatus: (status) => {
+      return status === 200 || status === 401;
+    },
+  });
   const config = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
   // generate proper error message in bad http method
-  const res = await axios.get(`${uri}/get-user`, config);
+  const res = await instance.get(`${uri}/get-user`, config);
   if (res.data.result) {
     return res.data.result.userInfo;
   } else {

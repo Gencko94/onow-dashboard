@@ -57,6 +57,7 @@ const Container = styled.div`
   color: #fff;
   box-shadow: ${(props) => props.theme.shadow};
   padding: 0.5rem;
+  margin: 0 0.5rem;
 
   display: grid;
   position: relative;

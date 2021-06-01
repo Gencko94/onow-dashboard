@@ -4,181 +4,193 @@ import { BiHomeAlt } from "react-icons/bi";
 import { RiCoupon3Line, RiFileList3Line } from "react-icons/ri";
 import { IoPeopleOutline } from "react-icons/io5";
 import { AiFillSetting, AiOutlineBarChart } from "react-icons/ai";
-import { FiChevronDown } from "react-icons/fi";
-import { useState } from "react";
+
+import {
+  FcAdvertising,
+  FcBullish,
+  FcConferenceCall,
+  FcGenealogy,
+  FcHome,
+  FcRules,
+  FcSelfie,
+  FcShop,
+  FcSupport,
+  FcViewDetails,
+} from "react-icons/fc";
+// import { useState } from "react";
 const SideNav = () => {
   const { pathname } = useLocation();
-  const [openedItem, setOpenedItem] = useState<number | null>(null);
+  // const [openedItem, setOpenedItem] = useState<number | null>(null);
   return (
     <Container>
       <SideNavItem
-        onClick={() => {
-          if (openedItem === 1) {
-            return setOpenedItem(null);
-          }
-          setOpenedItem(1);
-        }}
-        opened={openedItem === 1}
+      // onClick={() => {
+      //   if (openedItem === 1) {
+      //     return setOpenedItem(null);
+      //   }
+      //   setOpenedItem(1);
+      // }}
+      // opened={openedItem === 1}
       >
-        <SideNavLink isActive={pathname === "/dashboard"} to="/dashboard">
+        <SideNavLink isActive={pathname.includes("/dashboard")} to="/dashboard">
           <span className="icon">
-            <BiHomeAlt size={20} />
+            <FcHome size={20} />
           </span>
           <h6>Dashboard</h6>
-          <span>
-            <FiChevronDown />
-          </span>
         </SideNavLink>
-        <div className="submenu">
+        {/* <div className="submenu">
           <SubMenuLink isActive={pathname === "/dashboard"} to="/dashboard">
             Dashboard
           </SubMenuLink>
-        </div>
+        </div> */}
       </SideNavItem>
       <SideNavItem
-        onClick={() => {
-          if (openedItem === 2) {
-            return setOpenedItem(null);
-          }
-          setOpenedItem(2);
-        }}
-        opened={openedItem === 2}
+      // onClick={() => {
+      //   if (openedItem === 2) {
+      //     return setOpenedItem(null);
+      //   }
+      //   setOpenedItem(2);
+      // }}
+      // opened={openedItem === 2}
       >
-        <SideNavLink isActive={pathname === "/products"} to="/products">
+        <SideNavLink isActive={pathname.includes("/products")} to="/products">
           <span className="icon">
-            <BiHomeAlt size={20} />
+            <FcViewDetails size={20} />
           </span>
           <h6>Products</h6>
         </SideNavLink>
       </SideNavItem>
       <SideNavItem
-        onClick={() => {
-          if (openedItem === 2) {
-            return setOpenedItem(null);
-          }
-          setOpenedItem(2);
-        }}
-        opened={openedItem === 2}
+      // onClick={() => {
+      //   if (openedItem === 2) {
+      //     return setOpenedItem(null);
+      //   }
+      //   setOpenedItem(2);
+      // }}
+      // opened={openedItem === 2}
       >
-        <SideNavLink isActive={pathname === "/categories"} to="/categories">
+        <SideNavLink
+          isActive={pathname.includes("/categories")}
+          to="/categories"
+        >
           <span className="icon">
-            <BiHomeAlt size={20} />
+            <FcGenealogy size={20} />
           </span>
           <h6>Categories</h6>
         </SideNavLink>
       </SideNavItem>
       <SideNavItem
-        onClick={() => {
-          if (openedItem === 2) {
-            return setOpenedItem(null);
-          }
-          setOpenedItem(2);
-        }}
-        opened={openedItem === 2}
+      // onClick={() => {
+      //   if (openedItem === 2) {
+      //     return setOpenedItem(null);
+      //   }
+      //   setOpenedItem(2);
+      // }}
+      // opened={openedItem === 2}
       >
-        <SideNavLink isActive={pathname === "/brands"} to="/brands">
+        <SideNavLink isActive={pathname.includes("/brands")} to="/brands">
           <span className="icon">
-            <BiHomeAlt size={20} />
+            <FcShop size={20} />
           </span>
           <h6>Brands</h6>
         </SideNavLink>
       </SideNavItem>
       <SideNavItem
-        onClick={() => {
-          if (openedItem === 3) {
-            return setOpenedItem(null);
-          }
-          setOpenedItem(3);
-        }}
-        opened={openedItem === 3}
+      // onClick={() => {
+      //   if (openedItem === 3) {
+      //     return setOpenedItem(null);
+      //   }
+      //   setOpenedItem(3);
+      // }}
+      // opened={openedItem === 3}
       >
-        <SideNavLink isActive={pathname === "/orders"} to="/orders">
+        <SideNavLink isActive={pathname.includes("/orders")} to="/orders">
           <span className="icon">
-            <RiFileList3Line size={20} />
+            <FcRules size={20} />
           </span>
           <h6>Orders</h6>
         </SideNavLink>
       </SideNavItem>
       <SideNavItem
-        onClick={() => {
-          if (openedItem === 4) {
-            return setOpenedItem(null);
-          }
-          setOpenedItem(4);
-        }}
-        opened={openedItem === 4}
+      // onClick={() => {
+      //   if (openedItem === 4) {
+      //     return setOpenedItem(null);
+      //   }
+      //   setOpenedItem(4);
+      // }}
+      // opened={openedItem === 4}
       >
-        <SideNavLink isActive={pathname === "/customers"} to="/customers">
+        <SideNavLink isActive={pathname.includes("/customers")} to="/customers">
           <span className="icon">
-            <IoPeopleOutline size={20} />
+            <FcConferenceCall size={20} />
           </span>
           <h6>Customers</h6>
         </SideNavLink>
       </SideNavItem>
       <SideNavItem
-        onClick={() => {
-          if (openedItem === 5) {
-            return setOpenedItem(null);
-          }
-          setOpenedItem(5);
-        }}
-        opened={openedItem === 5}
+      // onClick={() => {
+      //   if (openedItem === 5) {
+      //     return setOpenedItem(null);
+      //   }
+      //   setOpenedItem(5);
+      // }}
+      // opened={openedItem === 5}
       >
-        <SideNavLink isActive={pathname === "/settings"} to="/settings">
+        <SideNavLink isActive={pathname.includes("/settings")} to="/settings">
           <span className="icon">
-            <AiFillSetting size={20} />
+            <FcSupport size={20} />
           </span>
           <h6>Settings</h6>
         </SideNavLink>
       </SideNavItem>
 
       <SideNavItem
-        onClick={() => {
-          if (openedItem === 5) {
-            return setOpenedItem(null);
-          }
-          setOpenedItem(5);
-        }}
-        opened={openedItem === 5}
+      // onClick={() => {
+      //   if (openedItem === 5) {
+      //     return setOpenedItem(null);
+      //   }
+      //   setOpenedItem(5);
+      // }}
+      // opened={openedItem === 5}
       >
-        <SideNavLink isActive={pathname === "/coupons"} to="/coupons">
+        <SideNavLink isActive={pathname.includes("/coupons")} to="/coupons">
           <span className="icon">
-            <RiCoupon3Line size={20} />
+            <FcAdvertising size={20} />
           </span>
           <h6>Coupons</h6>
         </SideNavLink>
       </SideNavItem>
       <SideNavItem
-        onClick={() => {
-          if (openedItem === 6) {
-            return setOpenedItem(null);
-          }
-          setOpenedItem(6);
-        }}
-        opened={openedItem === 6}
+      // onClick={() => {
+      //   if (openedItem === 6) {
+      //     return setOpenedItem(null);
+      //   }
+      //   setOpenedItem(6);
+      // }}
+      // opened={openedItem === 6}
       >
-        <SideNavLink isActive={pathname === "/reports"} to="/reports">
+        <SideNavLink isActive={pathname.includes("/reports")} to="/reports">
           <span className="icon">
-            <AiOutlineBarChart size={20} />
+            <FcBullish size={20} />
           </span>
           <h6>Reports</h6>
         </SideNavLink>
       </SideNavItem>
       <SideNavItem
-        onClick={() => {
-          if (openedItem === 7) {
-            return setOpenedItem(null);
-          }
-          setOpenedItem(7);
-        }}
-        opened={openedItem === 7}
+      // onClick={() => {
+      //   if (openedItem === 7) {
+      //     return setOpenedItem(null);
+      //   }
+      //   setOpenedItem(7);
+      // }}
+      // opened={openedItem === 7}
       >
         <SideNavLink
           isActive={pathname === "/website-layout"}
           to="/website-layout"
         >
           <span className="icon">
-            <AiOutlineBarChart size={20} />
+            <FcSelfie size={20} />
           </span>
           <h6>Website Layout</h6>
         </SideNavLink>
@@ -199,7 +211,7 @@ const Container = styled.ul(
   
   `
 );
-const SideNavItem = styled.li<{ opened: boolean }>`
+const SideNavItem = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -210,20 +222,12 @@ const SideNavItem = styled.li<{ opened: boolean }>`
     transition: all 0.5s ease-out;
     -webkit-transition: all 0.5s ease-out;
   }
-  ${(props) =>
-    props.opened &&
-    css`
-      background-color: ${props.theme.highlightColor};
-      .submenu {
-        display: block;
-        max-height: 200px;
-      }
-    `}
 `;
 const SideNavLink = styled(Link)<{ isActive: boolean }>`
-  padding: 0.5rem 0.25rem;
+  padding: 0.75rem 1rem;
   border-radius: 10px;
   display: flex;
+  margin: 0 0.5rem;
   align-items: center;
 
   .icon {
@@ -236,10 +240,21 @@ const SideNavLink = styled(Link)<{ isActive: boolean }>`
   h6 {
     margin: 0 0.5rem;
     font-size: 0.9rem;
-    font-weight: ${(props) =>
-      props.isActive ? props.theme.font.semibold : props.theme.font.regular};
+    font-weight: ${(props) => props.theme.font.regular};
   }
+  ${(props) =>
+    props.isActive &&
+    css`
+      font-weight: ${(props) => props.theme.font.semibold};
+      background-color: ${(props) => props.theme.mainColor};
+      color: #fff;
+      .icon {
+        background-color: #fff;
+        color: ${(props) => props.theme.mainColor};
+        box-shadow: none;
+      }
+    `}
 `;
-const SubMenuLink = styled(Link)<{ isActive: boolean }>`
-  margin: 0 1rem;
-`;
+// const SubMenuLink = styled(Link)<{ isActive: boolean }>`
+//   margin: 0 1rem;
+// `;

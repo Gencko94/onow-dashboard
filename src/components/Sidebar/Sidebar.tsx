@@ -1,9 +1,9 @@
-import styled, { css } from 'styled-components';
-import SidebarOnowLogo from './OnowLogo/SidebarOnowLogo';
-import ProjectSwitcher from './ProjectSwitcher/ProjectSwitcher';
-import SideNav from './SideNav/SideNav';
-import SideUser from './SideUser/SideUser';
-import Hr from '../StyledComponents/Hr';
+import styled, { css } from "styled-components";
+import SidebarOnowLogo from "./OnowLogo/SidebarOnowLogo";
+import ProjectSwitcher from "./ProjectSwitcher/ProjectSwitcher";
+import SideNav from "./SideNav/SideNav";
+import SideUser from "./SideUser/SideUser";
+import Hr from "../StyledComponents/Hr";
 
 interface IProps {
   // drawerOpen: boolean;
@@ -27,7 +27,6 @@ const Container = styled.aside(
   ({ theme: { breakpoints, shadow } }) => `
   background-color: #fff;
   box-shadow: ${shadow};
-  padding: 1rem;
   position:fixed;
   top:0;
   bottom:0;
