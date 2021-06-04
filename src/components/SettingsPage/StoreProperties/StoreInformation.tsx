@@ -4,7 +4,7 @@ import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import { countryList } from "../../../data/countryList";
 import { STORE_INFORMATION } from "../../../interfaces/settings/store-properties/store-properties";
-import IconedInput from "../../reusable/IconedInput";
+import IconedInput from "../../reusable/Inputs/IconedInput";
 import Select from "../../reusable/Select";
 
 const StoreInformation = () => {

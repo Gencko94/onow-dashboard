@@ -1,4 +1,4 @@
-import { CATEGORY, MINI_CATEGORY } from "../categories/categories";
+import { MINI_CATEGORY } from "../categories/categories";
 
 export type PRODUCTS_VIEW = "list" | "grid";
 export type PRODUCT_TYPE = {
@@ -16,48 +16,52 @@ export interface NEW_PRODUCT {
   };
   category_id: number[];
   images: File[];
-  short_description: {
+  description: {
     ar: string;
     en: string;
   };
-
+  slug: string;
   price: number;
   price_by_variations: boolean;
   variations_enabled: boolean;
-
+  prep_time: {
+    time: number;
+    unit: string;
+  };
   saleEnabled: boolean;
   salePrice?: string;
   saleEndDate: string;
   saleEndDateEnabled: boolean;
   priceFromVariations: boolean;
   productVariationsEnabled: boolean;
-  allowSideNotes: boolean;
-  maxQtyPerUser: number;
+  allow_side_notes: boolean;
+  max_qty_per_user: number;
+  availability: {
+    all: boolean;
+    branches: number[];
+  };
   image: File[];
-  variations?: NEW_VARIATION[];
+  variations: PRODUCT_OPTION[];
 }
-export type NEW_VARIATION = {
+export type PRODUCT_OPTION = {
   type_id: number;
-  select_type: number;
-  title: string;
-  title_ar: string;
-  required: number;
+  select_type: "single" | "multiple";
+  max_picks: number | undefined;
+  name: {
+    [key: string]: string;
+  };
+  required: boolean;
   values: VARIATION_VALUE[];
 };
 
 export type VARIATION_VALUE = {
-  name: string;
-  name_ar: string;
-  priceEnabled: boolean;
-  saleEnabled: boolean;
-  saleEndDateEnabled: boolean;
+  name: {
+    [key: string]: string;
+  };
   price: string;
   sale_price: string;
   sale_end_date: string;
-  color: string;
   qty: number;
-  infiniteQtyEnabled: boolean;
-  qtyAlertThreshold: number;
 };
 
 export type MINI_PRODUCT = {
@@ -78,6 +82,7 @@ export type PRODUCT = {
   name: {
     [key: string]: string;
   };
+  slug: string;
   category: MINI_CATEGORY[];
   images: PRODUCT_IMAGE[];
   short_description: {

@@ -1,14 +1,15 @@
 import { useFormContext } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
-import { NEW_PRODUCT } from "../../../interfaces/products/products";
-import IconedInput from "../../reusable/IconedInput";
+import { NEW_PRODUCT_FORM_PROPS } from "../../../pages/Product/CreateNewProduct";
+import IconedInput from "../../reusable/Inputs/IconedInput";
+import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
 
 const ProductNameAndDescription = () => {
   const {
     register,
     formState: { errors },
-  } = useFormContext<NEW_PRODUCT>();
+  } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
   return (
     <Container>
       <div className="title-container">
@@ -35,22 +36,34 @@ const ProductNameAndDescription = () => {
         />
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors?.short_description?.en}
+          errors={errors?.description?.en}
           register={register}
           required
           requiredMessage="Required"
           label="Short Description English"
-          name="short_description.en"
+          name="description.en"
         />
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors?.short_description?.ar}
+          errors={errors?.description?.ar}
           register={register}
           required
           requiredMessage="Required"
           label="Short Description Arabic"
-          name="short_description.ar"
+          name="description.ar"
         />
+        <div className="slug">
+          <PrefixedInput
+            errors={errors?.slug}
+            label="Slug"
+            name="slug"
+            register={register}
+            required
+            requiredMessage="Required"
+            prefixText="https://your-domain.com/products/"
+            desc="This is how your product will look in the URL"
+          />
+        </div>
       </div>
     </Container>
   );
@@ -78,9 +91,13 @@ const Container = styled.div(
   }
   @media ${breakpoints.md} {
     .box {
-      grid-template-columns: 1fr 1fr ;
+      grid-template-columns: 1fr 1fr;
+      .slug {
+        grid-column:1/3;
+      }
 
     }
   }
+  
   `
 );

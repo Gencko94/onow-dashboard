@@ -1,59 +1,99 @@
-import { UseFormRegister } from "react-hook-form";
+import { FieldError, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IconType } from "react-icons/lib";
 
 import styled, { css } from "styled-components";
-
-interface IProps {
-  register: UseFormRegister<any>;
-  errors: any;
+interface BaseInput {
+  /**
+   * 	An object with field errors. Obtainable from ```formState.errors```
+   */
+  errors: FieldError | undefined;
+  /**
+   * 	Input's name being registered.
+   */
   name: string;
-  prefixText: string;
-  required?: boolean;
-  requiredMessage?: string;
-  label: string;
-  number?: boolean;
-  min?: number;
-  max?: number;
+  /**
+   * 	The icon to show.
+   */
+  Icon: IconType;
+  /**
+   * 	The label of the input.
+   */
+  label?: string;
+  /**
+   * 	```register``` object provided by ```useForm```.
+   */
+  register: UseFormRegister<any>;
+
+  /**
+   * 	Optional description shown in a smaller size text below the input.
+   */
   desc?: string;
+
+  /**
+   * 	Optional placeholder for the input.
+   */
+  placeholder?: string;
+  /**
+   * 	Prefix text.
+   */
+  prefix?: string;
+  /**
+   * Whether the input is disabled
+   */
+  disabled?: boolean;
+}
+interface RequiredInput extends BaseInput {
+  /**
+   * 	Optional. Marks the input as ```required```.
+   */
+  required: boolean;
+  /**
+   * The Message text to show when the field is ```required```.
+   *
+   * Required when ```required``` is provided.
+   */
+  requiredMessage: string;
+}
+interface NotRequiredInput extends BaseInput {
+  required?: never;
+  requiredMessage?: never;
 }
 
-const PrefixedInput = ({
+type IProps = RequiredInput | NotRequiredInput;
+
+const PrefixedIconedInput = ({
   errors,
   register,
-  prefixText,
+  Icon,
   name,
   required,
   label,
   requiredMessage,
-  number,
-  min,
-  max,
+  placeholder,
   desc,
+  prefix,
+  disabled,
 }: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
   return (
     <Container rtl={language === "ar"} error={Boolean(errors?.message)}>
-      <label>{label}</label>
+      {label && <label>{label}</label>}
       <div className="input-container">
-        <div className="prefix">
-          <p>{prefixText}</p>
-        </div>
+        <span className="icon">
+          <Icon size={21} />
+        </span>
 
         <input
-          type={number ? "number" : "text"}
-          min={min!}
-          max={max!}
+          disabled={disabled}
+          placeholder={placeholder}
           {...register(name, {
             required: required ? requiredMessage : false,
-            min: {
-              value: min!,
-              message: "Only Positive",
-            },
           })}
         />
+        <span className="prefix">{prefix}</span>
       </div>
       {desc && <p className="desc">{desc}</p>}
       <p className="error">{errors?.message}</p>
@@ -61,14 +101,14 @@ const PrefixedInput = ({
   );
 };
 
-export default PrefixedInput;
+export default PrefixedIconedInput;
 const Container = styled.div<{ rtl: boolean; error: boolean }>`
   label {
     color: ${({ theme }) => theme.headingColor};
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     font-size: 0.9rem;
     font-weight: ${(props) => props.theme.font.regular};
-    display: inline-block;
+    display: block;
   }
   .input-container {
     display: flex;
@@ -82,13 +122,12 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
-    .prefix {
+    .icon {
       padding: 0.4rem;
       display: flex;
-      font-size: 0.8rem;
       align-items: center;
       justify-content: center;
-      color: ${(props) => props.theme.subHeading};
+      color: ${(props) => props.theme.mainColor};
       background-color: ${(props) => props.theme.inputColorLight};
       border-right: ${(props) => props.theme.border};
       ${(props) =>
@@ -104,6 +143,9 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
       padding: 0.4rem;
       font-size: 0.9rem;
       width: 50px;
+      &:disabled {
+        background-color: ${(props) => props.theme.inputColorLight};
+      }
     }
     &:hover,
     &:focus-within {
@@ -126,7 +168,23 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    /* color: #7c7c7c; */
+
     color: ${(props) => props.theme.mainColor};
+  }
+  .prefix {
+    padding: 0.4rem;
+    display: flex;
+    font-size: 0.8rem;
+    align-items: center;
+    justify-content: center;
+    color: ${(props) => props.theme.subHeading};
+    background-color: ${(props) => props.theme.inputColorLight};
+    border-left: ${(props) => props.theme.border};
+    ${(props) =>
+      props.rtl &&
+      css`
+        border-left: none;
+        border-right: ${(props) => props.theme.border};
+      `}
   }
 `;

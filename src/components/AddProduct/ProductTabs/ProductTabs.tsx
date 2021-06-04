@@ -30,6 +30,13 @@ const ProductTabs = ({ setActiveTab, activeTab }: IProps) => {
       >
         Pricing & Variations
       </TabItem>
+      <TabItem
+        type="button"
+        onClick={() => setActiveTab(2)}
+        active={activeTab === 2}
+      >
+        Ordering Options & Branch Availability
+      </TabItem>
     </Container>
   );
 };

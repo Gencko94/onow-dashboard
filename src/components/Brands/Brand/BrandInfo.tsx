@@ -6,8 +6,8 @@ import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import MiniFileUploader from "../../../utils/MiniFileUploader";
 
-import IconedInput from "../../reusable/IconedInput";
-import PrefixedInput from "../../reusable/PrefixedInput";
+import IconedInput from "../../reusable/Inputs/IconedInput";
+import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
 import Select from "../../reusable/Select";
 import Textarea from "../../reusable/Textarea";
 interface IProps {

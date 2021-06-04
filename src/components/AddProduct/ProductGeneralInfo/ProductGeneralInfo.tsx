@@ -9,7 +9,7 @@ import ProductNameAndDescription from "./ProductNameAndDescription";
 const ProductGeneralInfo = () => {
   return (
     <Container>
-      <Grid cols="1fr 1fr" gap="1rem" rows="350px">
+      <Grid cols="1fr 1fr" gap="1rem">
         <ProductNameAndDescription />
 
         <ProductCategories />

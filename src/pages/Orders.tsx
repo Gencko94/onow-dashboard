@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useQuery } from "react-query";
+import { Suspense, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { QueryErrorResetBoundary, useQuery } from "react-query";
 import styled from "styled-components";
 import OrdersList from "../components/Orders/OrdersList/OrdersList";
 import OrdersPanel from "../components/Orders/OrdersPanel/OrdersPanel";
@@ -9,6 +10,7 @@ import {
   ORDERS_FILTERS,
   STORE_ORDERS,
 } from "../interfaces/orders/orders";
+import Loading from "../utils/Loading";
 import { getOrders } from "../utils/queries";
 import { getStoreOrders } from "../utils/test-queries";
 export interface ORDER_SORT {
@@ -48,15 +50,30 @@ const Orders = ({ storeId }: { storeId: number }) => {
     }
   );
   return (
-    <div>
-      <OrdersPanel filters={filters} setFilters={setFilters} />
-      <hr />
-      {/* <OrdersThumbnails stats={data!.stats} /> */}
-      <hr />
-      {/* <Box> */}
-      <OrdersList orders={data!} sortBy={sortBy} setSortBy={setSortBy} />
-      {/* </Box> */}
-    </div>
+    <QueryErrorResetBoundary>
+      {({ reset }) => (
+        <ErrorBoundary
+          fallbackRender={({ error, resetErrorBoundary }) => (
+            <div>
+              Something went wrong , please try again
+              <button onClick={() => resetErrorBoundary()}>Try again</button>
+              <pre style={{ whiteSpace: "normal" }}>{error.message}</pre>
+            </div>
+          )}
+          onReset={reset}
+        >
+          <Suspense fallback={<Loading />}>
+            <OrdersPanel filters={filters} setFilters={setFilters} />
+            <hr />
+            {/* <OrdersThumbnails stats={data!.stats} /> */}
+            <hr />
+            {/* <Box> */}
+            <OrdersList orders={data!} sortBy={sortBy} setSortBy={setSortBy} />
+            {/* </Box> */}
+          </Suspense>
+        </ErrorBoundary>
+      )}
+    </QueryErrorResetBoundary>
   );
 };
 

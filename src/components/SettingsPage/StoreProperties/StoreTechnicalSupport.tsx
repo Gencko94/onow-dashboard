@@ -8,7 +8,7 @@ import {
 import { MdSmartphone } from "react-icons/md";
 import styled from "styled-components";
 import { STORE_TECHNICAL_SUPPORT } from "../../../interfaces/settings/store-properties/store-properties";
-import IconedInput from "../../reusable/IconedInput";
+import IconedInput from "../../reusable/Inputs/IconedInput";
 
 const StoreTechnicalSupport = () => {
   const {

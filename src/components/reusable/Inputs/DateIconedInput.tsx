@@ -11,7 +11,6 @@ import {
   FaAngleLeft,
   FaAngleRight,
 } from "react-icons/fa";
-import { IconType } from "react-icons/lib";
 import { CSSTransition } from "react-transition-group";
 
 import styled, { css } from "styled-components";
@@ -22,7 +21,7 @@ interface BaseInput {
   /**
    * 	An object with field errors. Obtainable from ```formState.errors```
    */
-  errors: FieldError;
+  errors: FieldError | undefined;
   /**
    * 	Input's name being registered.
    */
@@ -36,6 +35,14 @@ interface BaseInput {
    * 	```control``` object provided by ```useForm```.
    */
   control: Control<any>;
+  /**
+   * Whether the input is disabled
+   */
+  disabled?: boolean;
+  /**
+   * 	Optional description shown in a smaller size text below the input.
+   */
+  desc?: string;
 }
 
 interface RequiredInput extends BaseInput {
@@ -65,12 +72,13 @@ interface NotRequiredInput extends BaseInput {
 type IProps = RequiredInput | NotRequiredInput;
 const DateIconedInput = ({
   errors,
-
+  disabled,
   name,
   required,
   label,
   requiredMessage,
   control,
+  desc,
 }: IProps) => {
   const {
     i18n: { language },
@@ -83,7 +91,9 @@ const DateIconedInput = ({
       defaultValue={format(new Date(), "dd-MM-yyyy")}
       render={({ field: { onChange, value } }) => (
         <Container
-          onClick={() => setCalendarOpen(true)}
+          onClick={() => {
+            if (!disabled) setCalendarOpen(true);
+          }}
           rtl={language === "ar"}
           error={Boolean(errors)}
         >
@@ -96,8 +106,10 @@ const DateIconedInput = ({
               readOnly
               defaultValue={format(new Date(), "dd-MM-yyyy")}
               value={value}
+              disabled={disabled}
             />
           </div>
+          {desc && <p className="desc">{desc}</p>}
           <CSSTransition
             in={calendarOpen}
             timeout={150}
@@ -174,6 +186,9 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
       padding: 0.4rem;
       font-size: 0.9rem;
       width: 50px;
+      &:disabled {
+        background-color: ${(props) => props.theme.inputColorLight};
+      }
     }
     &:hover,
     &:focus-within {
@@ -191,6 +206,12 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     padding-top: 0.25rem;
     height: 22px;
     color: ${(props) => props.theme.dangerRed};
+  }
+  .desc {
+    font-size: 0.7rem;
+    padding-top: 0.25rem;
+    height: 22px;
+    color: ${(props) => props.theme.mainColor};
   }
 `;
 const CalendarContainer = styled.div`

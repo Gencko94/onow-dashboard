@@ -42,17 +42,21 @@ const Container = styled.div(
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    height:200px;
-    .button {
-        background-color:${mainColor};
-        color:#fff;
-        padding:0.5rem;
-        font-size:0.9rem;
-        border-radius:6px;
-        transition:transform 75ms ease;
-        &:hover {
-            transform:translateY(-2px);
-          }
+    // height:200px;
+    height:100%;
+    p {
+      margin-bottom:0.5rem;
+    }
+    button {
+      background-color:${mainColor};
+      color:#fff;
+      padding:0.5rem;
+      font-size:0.9rem;
+      border-radius:6px;
+      transition:transform 75ms ease;
+      &:hover {
+      transform:translateY(-2px);
+      }
     }
 `
 );

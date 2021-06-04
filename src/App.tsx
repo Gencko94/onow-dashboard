@@ -1,9 +1,4 @@
-import {
-  Switch,
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import {
   QueryClient,
   QueryClientProvider,
@@ -22,7 +17,7 @@ import Layout from "./layout/Layout";
 
 import AuthContext from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-const AddProduct = lazy(() => import("./pages/AddProduct"));
+
 const CreateNewProduct = lazy(() => import("./pages/Product/CreateNewProduct"));
 const Product = lazy(() => import("./pages/Product/Product"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -185,10 +180,7 @@ function App() {
                           path="/customers/:id"
                           Component={CustomerProfile}
                         />
-                        <ProtectedRoute
-                          path="/products/new/:type"
-                          Component={AddProduct}
-                        />
+
                         <ProtectedRoute path="/settings" Component={Settings} />
                         <ProtectedRoute
                           path="/settings/account-settings"

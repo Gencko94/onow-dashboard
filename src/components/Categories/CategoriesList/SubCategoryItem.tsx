@@ -8,6 +8,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { useHistory } from "react-router";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import SubCategoriesList from "./SubCategoriesList";
+import Checkbox from "../../reusable/Inputs/Checkbox";
 
 const SubCategoryItem = () => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
@@ -50,11 +51,12 @@ const SubCategoryItem = () => {
               <BiChevronDown size={25} />
             )}
           </button>
-          <Checkbox onClick={(e) => e.stopPropagation()}>
-            h
-            <input type="checkbox" />
-            <span className="check" />
-          </Checkbox>
+          <Checkbox
+            checked={true}
+            onChange={(e) => {
+              e.stopPropagation();
+            }}
+          />
         </div>
         <div className="field">
           <h6>Name</h6>
@@ -234,53 +236,4 @@ const EnabledButton = styled.button<{ enabled: boolean }>`
   color: ${(props) => props.theme.btnText};
   border: ${(props) => props.theme.border};
   border-radius: 5px;
-`;
-const Checkbox = styled.label`
-  display: block;
-  position: relative;
-  margin: 0 0.5rem;
-
-  cursor: pointer;
-  font-size: 0.9rem;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-  .check {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 22px;
-    width: 22px;
-    background-color: #fff;
-    border: ${(props) => props.theme.border};
-    border-radius: 6px;
-    &::after {
-      content: "";
-      position: absolute;
-      display: none;
-      left: 7px;
-      top: 4px;
-      width: 5px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
-    }
-  }
-  input:checked ~ .check {
-    background-color: ${(props) => props.theme.mainColor};
-  }
-  input:checked ~ .check:after {
-    display: block;
-  }
 `;

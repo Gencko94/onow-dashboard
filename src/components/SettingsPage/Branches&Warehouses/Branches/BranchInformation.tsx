@@ -7,8 +7,8 @@ import { MdSubtitles } from "react-icons/md";
 
 import styled from "styled-components";
 import CheckToggle from "../../../reusable/CheckToggle";
-import DateIconedInput from "../../../reusable/DateIconedInput";
-import IconedInput from "../../../reusable/IconedInput";
+import DateIconedInput from "../../../reusable/Inputs/DateIconedInput";
+import IconedInput from "../../../reusable/Inputs/IconedInput";
 import IconedNumberInput from "../../../reusable/IconedNumberInput";
 import Select from "../../../reusable/Select";
 

@@ -1,14 +1,15 @@
 import styled from "styled-components";
-import { BsCheck, BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import ClickAwayListener from "react-click-away-listener";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { ImProfile } from "react-icons/im";
+
 import { useHistory } from "react-router";
 import { PRODUCT } from "../../../interfaces/products/products";
 import { useTranslation } from "react-i18next";
 import { FiCopy } from "react-icons/fi";
+import Checkbox from "../../reusable/Inputs/Checkbox";
 
 interface IProps {
   product: PRODUCT;
@@ -43,11 +44,12 @@ const ProductItem = ({ product }: IProps) => {
   return (
     <Container onClick={() => history.push(`/product/1`)}>
       <div className="field">
-        <Checkbox onClick={(e) => e.stopPropagation()}>
-          h
-          <input type="checkbox" />
-          <span className="check" />
-        </Checkbox>
+        <Checkbox
+          checked={true}
+          onChange={(e) => {
+            e.stopPropagation();
+          }}
+        />
       </div>
       <div className="field">
         <img
@@ -216,66 +218,5 @@ const Status = styled.div`
     color: ${(props) => props.color};
 
     margin: 0 0.25rem;
-  }
-`;
-const EnabledButton = styled.button<{ enabled: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  padding: 0.25rem 0.5rem;
-  background-color: ${(props) =>
-    props.enabled ? props.theme.dangerRed : props.theme.green};
-  color: ${(props) => props.theme.btnText};
-  border: ${(props) => props.theme.border};
-  border-radius: 5px;
-`;
-const Checkbox = styled.label`
-  display: block;
-  position: relative;
-  margin: 0 0.5rem;
-
-  cursor: pointer;
-  font-size: 0.9rem;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-  .check {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 22px;
-    width: 22px;
-    background-color: #fff;
-    border: ${(props) => props.theme.border};
-    border-radius: 6px;
-    &::after {
-      content: "";
-      position: absolute;
-      display: none;
-      left: 7px;
-      top: 4px;
-      width: 5px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
-    }
-  }
-  input:checked ~ .check {
-    background-color: ${(props) => props.theme.mainColor};
-  }
-  input:checked ~ .check:after {
-    display: block;
   }
 `;

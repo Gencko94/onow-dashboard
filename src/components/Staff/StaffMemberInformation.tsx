@@ -1,7 +1,7 @@
 import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
-import IconedInput from "../reusable/IconedInput";
+import IconedInput from "../reusable/Inputs/IconedInput";
 
 interface IProps {
   register: any;

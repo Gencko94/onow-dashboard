@@ -1,5 +1,5 @@
 // import { CATEGORY } from '../interfaces/categories/categories';
-import { CATEGORY, MINI_CATEGORY } from "../interfaces/categories/categories";
+import { MINI_CATEGORY } from "../interfaces/categories/categories";
 import { MINI_PRODUCT, PRODUCT } from "../interfaces/products/products";
 import { FOOTER_DESIGN } from "../interfaces/website-layout/designs/footer-design";
 import { HEADER_DESIGN } from "../interfaces/website-layout/designs/header-design";
@@ -294,7 +294,7 @@ export const products: PRODUCT[] = [
       en: "Body Lotion",
       ar: "مرطب للجسم",
     },
-
+    slug: "body-lotion",
     price: 2,
     category: [category1],
     images: [{ is_default: true, url: "/images/product.webp" }],

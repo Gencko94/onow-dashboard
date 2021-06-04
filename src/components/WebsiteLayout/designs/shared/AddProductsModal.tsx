@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
-import { GoSearch } from 'react-icons/go';
-import styled from 'styled-components';
-import Flex, { Wrapper as FlexWrapper } from '../../../StyledComponents/Flex';
-import { useDebounce } from 'use-debounce';
-import { useQuery } from 'react-query';
-import { searchProducts } from '../../../../utils/test-queries';
-import { SEARCH_RESULTS_PRODUCT } from '../../../../interfaces/search/search';
-import ClickAwayListener from 'react-click-away-listener';
-import Grid from '../../../StyledComponents/Grid';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from "react";
+import { GoSearch } from "react-icons/go";
+import styled from "styled-components";
+import Flex, { FlexWrapper } from "../../../StyledComponents/Flex";
+import { useDebounce } from "use-debounce";
+import { useQuery } from "react-query";
+import { searchProducts } from "../../../../utils/test-queries";
+import { SEARCH_RESULTS_PRODUCT } from "../../../../interfaces/search/search";
+import ClickAwayListener from "react-click-away-listener";
+import Grid from "../../../StyledComponents/Grid";
+import { useTranslation } from "react-i18next";
 
-import { MINI_PRODUCT } from '../../../../interfaces/products/products';
-import { BsCheck } from 'react-icons/bs';
-import { MdCancel } from 'react-icons/md';
+import { MINI_PRODUCT } from "../../../../interfaces/products/products";
+import { BsCheck } from "react-icons/bs";
+import { MdCancel } from "react-icons/md";
 interface IProps {
   onChange: (...event: any[]) => void;
   closeFunction: () => void;
@@ -20,25 +20,25 @@ interface IProps {
 
 const AddProductsModal = ({ onChange, closeFunction }: IProps) => {
   const { i18n } = useTranslation();
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const [searchResultsOpen, setSearchResultsOpen] = useState(false);
   const [debouncedSearchValue] = useDebounce(searchValue, 500);
   const [products, setProducts] = useState<MINI_PRODUCT[]>([]);
 
   const { data, isLoading } = useQuery<SEARCH_RESULTS_PRODUCT>(
-    ['product-search', debouncedSearchValue],
+    ["product-search", debouncedSearchValue],
     () => searchProducts(debouncedSearchValue),
-    { enabled: debouncedSearchValue !== '' }
+    { enabled: debouncedSearchValue !== "" }
   );
   useEffect(() => {
     if (data) setSearchResultsOpen(true);
   }, [data]);
   const handleAddProduct = (product: MINI_PRODUCT) => {
-    setProducts(prev => [...prev, product]);
+    setProducts((prev) => [...prev, product]);
     setSearchResultsOpen(false);
   };
   const handleRemoveProduct = (id: number) => {
-    setProducts(prev => prev.filter(i => i.id !== id));
+    setProducts((prev) => prev.filter((i) => i.id !== id));
   };
   return (
     <Container>
@@ -49,7 +49,7 @@ const AddProductsModal = ({ onChange, closeFunction }: IProps) => {
         <input
           placeholder="Search For products"
           value={searchValue}
-          onChange={e => setSearchValue(e.target.value)}
+          onChange={(e) => setSearchValue(e.target.value)}
           onClick={() => {
             if (!data) return;
             setSearchResultsOpen(true);
@@ -58,9 +58,9 @@ const AddProductsModal = ({ onChange, closeFunction }: IProps) => {
         {searchResultsOpen && (
           <ClickAwayListener onClickAway={() => setSearchResultsOpen(false)}>
             <SearchResults>
-              {isLoading && 'loading'}
-              {data?.length === 0 && 'no Search Results'}
-              {data?.map(item => (
+              {isLoading && "loading"}
+              {data?.length === 0 && "no Search Results"}
+              {data?.map((item) => (
                 <div
                   className="search-result"
                   onClick={() => handleAddProduct(item)}
@@ -84,7 +84,7 @@ const AddProductsModal = ({ onChange, closeFunction }: IProps) => {
             <h6>Search For Products to add them</h6>
           </div>
         )}
-        {products.map(product => (
+        {products.map((product) => (
           <div className="search-result">
             <Grid cols="50px 1fr 50px" gap="0.25rem">
               <img src={product.image} alt={product.name[i18n.language]} />
@@ -131,7 +131,7 @@ const Container = styled.div`
   ${FlexWrapper} {
     position: relative;
     border-radius: 6px;
-    box-shadow: ${props => props.theme.shadow};
+    box-shadow: ${(props) => props.theme.shadow};
   }
   span.icon {
     display: flex;
@@ -147,7 +147,7 @@ const Container = styled.div`
   .btns-container {
     display: flex;
     align-items: center;
-    border-top: ${props => props.theme.border};
+    border-top: ${(props) => props.theme.border};
     justify-content: space-between;
     padding: 0.5rem 0;
     button {
@@ -156,37 +156,37 @@ const Container = styled.div`
       justify-content: center;
       padding: 0.25rem 0.5rem;
       border-radius: 7px;
-      color: ${props => props.theme.btnText};
+      color: ${(props) => props.theme.btnText};
       p {
         margin: 0 0.5rem;
         font-size: 0.9rem;
       }
     }
     .green {
-      background-color: ${props => props.theme.green};
+      background-color: ${(props) => props.theme.green};
     }
     .red {
-      background-color: ${props => props.theme.dangerRed};
+      background-color: ${(props) => props.theme.dangerRed};
     }
   }
   .search-result {
     padding: 0.5rem 0;
     overflow: hidden;
     cursor: pointer;
-    border-bottom: ${props => props.theme.border};
+    border-bottom: ${(props) => props.theme.border};
     &:hover {
-      background-color: ${props => props.theme.highlightColor};
+      background-color: ${(props) => props.theme.highlightColor};
     }
     .info {
       padding: 0.25rem;
       .name {
         font-size: 0.8rem;
-        font-weight: ${props => props.theme.font.semibold};
+        font-weight: ${(props) => props.theme.font.semibold};
       }
       .price {
         font-size: 0.8rem;
-        font-weight: ${props => props.theme.font.semibold};
-        color: ${props => props.theme.green};
+        font-weight: ${(props) => props.theme.font.semibold};
+        color: ${(props) => props.theme.green};
       }
     }
   }
@@ -198,14 +198,14 @@ const SearchResults = styled.div`
   right: 0;
   background-color: #fff;
 
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 6px;
 `;
 const ProductsContainer = styled.div`
   height: 400px;
   overflow-y: auto;
-  background-color: ${props => props.theme.overlayColor};
-  border: ${props => props.theme.border};
+  background-color: ${(props) => props.theme.overlayColor};
+  border: ${(props) => props.theme.border};
   border-radius: 6px;
   margin: 1rem 0;
 
@@ -219,6 +219,6 @@ const ProductsContainer = styled.div`
   button.icon {
     align-self: center;
 
-    color: ${props => props.theme.dangerRed};
+    color: ${(props) => props.theme.dangerRed};
   }
 `;

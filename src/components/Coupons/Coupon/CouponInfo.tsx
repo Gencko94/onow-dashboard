@@ -6,8 +6,8 @@ import { FiCalendar, FiUser, FiUsers } from "react-icons/fi";
 import { IoMdCash } from "react-icons/io";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
-import DateIconedInput from "../../reusable/DateIconedInput";
-import IconedInput from "../../reusable/IconedInput";
+import DateIconedInput from "../../reusable/Inputs/DateIconedInput";
+import IconedInput from "../../reusable/Inputs/IconedInput";
 import IconedNumberInput from "../../reusable/IconedNumberInput";
 import Select from "../../reusable/Select";
 interface IProps<T> {

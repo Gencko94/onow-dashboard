@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { STORE_SEO } from "../../interfaces/settings/store-seo/store-seo";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { MdTitle } from "react-icons/md";
-import IconedInput from "../../components/reusable/IconedInput";
+import IconedInput from "../../components/reusable/Inputs/IconedInput";
 import Textarea from "../../components/reusable/Textarea";
 
 const StoreSEO = () => {

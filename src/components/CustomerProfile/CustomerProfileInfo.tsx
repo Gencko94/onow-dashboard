@@ -6,7 +6,7 @@ import { MdDateRange, MdSubtitles } from "react-icons/md";
 import { CUSTOMER } from "../../interfaces/customers/customers";
 import { format } from "date-fns";
 import { parseISO } from "date-fns/esm";
-import IconedInput from "../reusable/IconedInput";
+import IconedInput from "../reusable/Inputs/IconedInput";
 import { useForm } from "react-hook-form";
 import SuccessButton from "../reusable/SuccessButton";
 interface IProps {

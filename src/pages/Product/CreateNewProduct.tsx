@@ -4,13 +4,15 @@ import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
 
 import ProductGeneralInfo from "../../components/AddProduct/ProductGeneralInfo/ProductGeneralInfo";
+import ProductOrdering from "../../components/AddProduct/ProductOrderingAndBranch/ProductOrdering";
+import ProductOrderingAndBranchAvailability from "../../components/AddProduct/ProductOrderingAndBranch/ProductOrderingAndBranchAvailability";
 import ProductTabs from "../../components/AddProduct/ProductTabs/ProductTabs";
-import ProductVariationsAndPricing from "../../components/AddProduct/ProductVariations/ProductVariationsAndPricing";
+import ProductOptions from "../../components/AddProduct/ProductVariations/ProductOptions";
+import ProductPricingAndOptions from "../../components/AddProduct/ProductVariations/ProductPricingAndOptions";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { MINI_CATEGORY } from "../../interfaces/categories/categories";
-import { NEW_PRODUCT } from "../../interfaces/products/products";
 
-interface NEW_PRODUCT_FORM_PROPS {
+export interface NEW_PRODUCT_FORM_PROPS {
   category_id: MINI_CATEGORY[];
   name: {
     ar: string;
@@ -18,18 +20,24 @@ interface NEW_PRODUCT_FORM_PROPS {
   };
 
   images: File[];
-  short_description: {
+  description: {
     ar: string;
     en: string;
   };
-  long_description: {
-    ar: string;
-    en: string;
+  slug: string;
+  max_qty_per_user: number;
+  prep_time: {
+    time: number;
+    unit: string;
   };
   maxQtyPerUser: number;
   price: number;
   price_by_variations: boolean;
   variations_enabled: boolean;
+  availability: {
+    all: boolean;
+    branches: number[];
+  };
 }
 
 const CreateNewProduct = () => {
@@ -37,6 +45,10 @@ const CreateNewProduct = () => {
     defaultValues: {
       maxQtyPerUser: 5,
       category_id: [],
+      availability: {
+        all: true,
+        branches: [],
+      },
     },
   });
   const [activeTab, setActiveTab] = useState<0 | 1 | 2>(0);
@@ -51,22 +63,17 @@ const CreateNewProduct = () => {
       <FormProvider {...methods}>
         <Wrapper>
           {activeTab === 0 && <ProductGeneralInfo />}
-          {activeTab === 1 && <ProductVariationsAndPricing />}
+          {activeTab === 1 && <ProductPricingAndOptions />}
+          {activeTab === 2 && <ProductOrderingAndBranchAvailability />}
         </Wrapper>
       </FormProvider>
-      <div>d</div>
     </form>
   );
 };
 
 export default CreateNewProduct;
-const FormGrid = styled.form`
-  display: grid;
-  grid-template-columns: 1fr 0.3fr;
-  gap: 0.75rem;
-`;
+
 const Wrapper = styled.div`
-  /* box-shadow: ${(props) => props.theme.shadow}; */
   box-shadow: 0px 4px 7px 2px rgb(213, 213, 213);
   border-radius: 0 6px 6px 6px;
   padding: 1rem;

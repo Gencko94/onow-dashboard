@@ -1,6 +1,4 @@
-import { useMemo } from "react";
 import styled from "styled-components";
-import TableHead from "../../reusable/TableHead";
 
 import SubCategoryItem from "./SubCategoryItem";
 

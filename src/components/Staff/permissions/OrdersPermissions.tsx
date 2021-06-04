@@ -3,7 +3,8 @@ import { useTranslation } from "react-i18next";
 import { FcRules } from "react-icons/fc";
 import styled from "styled-components";
 import { STAFF_MEMBER } from "../../../interfaces/staff/staff";
-import Checkbox from "../../reusable/Checkbox";
+import CheckboxWithLabel from "../../reusable/CheckboxWithLabel";
+import Checkbox from "../../reusable/Inputs/Checkbox";
 
 interface IProps {
   control: Control<STAFF_MEMBER>;
@@ -23,21 +24,13 @@ const OrdersPermissions = ({ control, permissions }: IProps) => {
           name="permissions.orders.all"
           render={({ field: { onChange } }) => {
             return (
-              <Check
+              <Checkbox
                 onChange={(e) => {
                   e.stopPropagation();
+                  onChange(e.target.checked);
                 }}
-              >
-                h
-                <input
-                  onChange={(e) => {
-                    onChange(e.target.checked);
-                  }}
-                  type="checkbox"
-                  checked={allChecked as boolean}
-                />
-                <span className="check" />
-              </Check>
+                checked={allChecked as boolean}
+              />
             );
           }}
         />
@@ -50,7 +43,7 @@ const OrdersPermissions = ({ control, permissions }: IProps) => {
         {permissions.orders.map((key: any) => {
           return (
             <div className="item">
-              <Checkbox
+              <CheckboxWithLabel
                 control={control}
                 name={`permissions.orders.${key}`}
                 label={key}
@@ -94,56 +87,5 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     padding: 0.75rem 0.5rem;
-  }
-`;
-const Check = styled.label`
-  display: block;
-  position: absolute;
-  margin: 0;
-  top: 10px;
-  left: 10px;
-
-  cursor: pointer;
-  font-size: 0.9rem;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-  .check {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 22px;
-    width: 22px;
-    background-color: #fff;
-    border: ${(props) => props.theme.border};
-    border-radius: 6px;
-    &::after {
-      content: "";
-      position: absolute;
-      display: none;
-      left: 7px;
-      top: 4px;
-      width: 5px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
-    }
-  }
-  input:checked ~ .check {
-    background-color: ${(props) => props.theme.mainColor};
-  }
-  input:checked ~ .check:after {
-    display: block;
   }
 `;

@@ -9,7 +9,7 @@ import Select from "react-select";
 import { useMemo, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { createCustomer } from "../../utils/queries";
-import IconedInput from "../reusable/IconedInput";
+import IconedInput from "../reusable/Inputs/IconedInput";
 import { useTranslation } from "react-i18next";
 
 const countryOptions = [

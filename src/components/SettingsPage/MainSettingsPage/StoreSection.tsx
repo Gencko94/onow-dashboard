@@ -15,7 +15,9 @@ import SettingsCard from "../../reusable/SettingsCard";
 const StoreSection = () => {
   return (
     <Container>
-      <h5>Store Settings</h5>
+      <div className="title">
+        <h5>Store Settings</h5>
+      </div>
       <div className="cards-container">
         <SettingsCard
           title="Store properties"
@@ -79,11 +81,17 @@ const StoreSection = () => {
 export default StoreSection;
 const Container = styled.div`
   margin: 2rem 0;
-
+  .title {
+    color: ${(props) => props.theme.mainColor};
+  }
   .cards-container {
     display: grid;
     margin: 1rem 0;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 2rem;
+    /* background-color: #fff;
+    padding: 1rem;
+    box-shadow: ${(props) => props.theme.shadow};
+    border-radius: 6px; */
   }
 `;

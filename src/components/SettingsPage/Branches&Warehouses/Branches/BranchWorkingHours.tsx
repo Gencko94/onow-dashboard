@@ -8,8 +8,8 @@ import { WiTime8, WiTime12 } from "react-icons/wi";
 
 import styled from "styled-components";
 import CheckToggle from "../../../reusable/CheckToggle";
-import DateIconedInput from "../../../reusable/DateIconedInput";
-import IconedInput from "../../../reusable/IconedInput";
+import DateIconedInput from "../../../reusable/Inputs/DateIconedInput";
+import IconedInput from "../../../reusable/Inputs/IconedInput";
 import Select from "../../../reusable/Select";
 import TableHead from "../../../reusable/TableHead";
 import TimeIconedInput from "../../../reusable/TimeIconedInput";

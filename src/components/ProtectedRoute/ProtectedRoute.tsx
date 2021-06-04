@@ -2,6 +2,8 @@ import { Redirect, Route } from "react-router-dom";
 
 import { useContext } from "react";
 import { AuthProvider } from "../../contexts/AuthContext";
+import { QueryErrorResetBoundary } from "react-query";
+import { ErrorBoundary } from "react-error-boundary";
 
 interface IProps {
   path: string;
@@ -17,7 +19,28 @@ export default function ProtectedRoute({ Component, path }: IProps) {
       path={path}
       render={({ location }) => {
         if (user) {
-          return <Component storeId={user?.stores[0].id} />;
+          return (
+            <QueryErrorResetBoundary>
+              {({ reset }) => (
+                <ErrorBoundary
+                  fallbackRender={({ error, resetErrorBoundary }) => (
+                    <div>
+                      Something went wrong , please try again
+                      <button onClick={() => resetErrorBoundary()}>
+                        Try again
+                      </button>
+                      <pre style={{ whiteSpace: "normal" }}>
+                        {error.message}
+                      </pre>
+                    </div>
+                  )}
+                  onReset={reset}
+                >
+                  <Component storeId={user?.stores[0].id} />{" "}
+                </ErrorBoundary>
+              )}
+            </QueryErrorResetBoundary>
+          );
         } else {
           return (
             <Redirect
