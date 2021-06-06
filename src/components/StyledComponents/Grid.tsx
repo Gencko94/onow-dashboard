@@ -24,7 +24,7 @@ interface IProps {
    */
   p?: number;
 }
-const Grid: FC<IProps> = ({ children, rows, cols, gap, items }) => {
+const Grid: FC<IProps> = ({ children, rows, cols, gap, items, p }) => {
   return (
     <Wrapper
       style={
@@ -33,6 +33,7 @@ const Grid: FC<IProps> = ({ children, rows, cols, gap, items }) => {
           "--gap": gap,
           "--items": items,
           "--rows": rows,
+          "--padding": `${p! * 0.25}rem`,
         } as CSSProperties
       }
     >
@@ -48,4 +49,5 @@ export const Wrapper = styled.div`
   grid-template-rows: var(--rows);
   gap: var(--gap);
   align-items: var(--items, normal);
+  padding: var(--padding, 0);
 `;

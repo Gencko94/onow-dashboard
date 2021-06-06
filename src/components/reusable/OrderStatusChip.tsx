@@ -27,9 +27,9 @@ const OrderStatusChip = ({ status, withBg, dots }: IProps) => {
     }
   };
   return (
-    <Container bg={withBg ? resolveColor(status.status_id) : undefined}>
-      {dots ? <Dot color={resolveColor(status.status_id)} /> : ""}
-      <p>{status.title[language]}</p>
+    <Container bg={withBg ? resolveColor(status?.id) : undefined}>
+      {dots ? <Dot color={resolveColor(status?.id)} /> : ""}
+      <p>{status?.title[language]}</p>
     </Container>
   );
 };

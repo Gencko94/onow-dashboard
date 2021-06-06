@@ -33,7 +33,7 @@ const CustomerProfileOrderItem = ({ order }: IProps) => {
         <h6>5kd</h6>
       </div>
       <div className="field">
-        <PaymentStatusChip dots status={order.payment_status[0]} />
+        <PaymentStatusChip dots status={order.payment_status} />
       </div>
       <div className="field">
         <OrderStatusChip dots status={order.order_status} />

@@ -41,10 +41,10 @@ const OrderItem = ({ order }: IProps) => {
         }`}</h6>
       </div>
       <div className="field">
-        -{/* <PaymentStatusChip dots status={order.payment_status[0]} /> */}
+        <PaymentStatusChip dots status={order.payment_status} />
       </div>
       <div className="field">
-        -{/* <OrderStatusChip dots status={order.order_status} /> */}
+        <OrderStatusChip dots status={order.order_status} />
       </div>
       <div className="field">
         <h6>{format(parseISO(order.created_at), "dd/MM/yyyy")}</h6>

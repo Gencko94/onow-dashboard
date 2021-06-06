@@ -1,40 +1,40 @@
-import { ORDER_STATUS } from '../interfaces/orders/orders';
+import { ORDER_STATUS } from "../interfaces/orders/orders";
 
 export const orderStatuses: ORDER_STATUS[] = [
   {
-    status_id: 1,
+    id: 1,
     title: {
-      ar: 'بإنتظار التأكيد',
-      en: 'Pending Approval',
+      ar: "بإنتظار التأكيد",
+      en: "Pending Approval",
     },
   },
   {
-    status_id: 2,
+    id: 2,
     title: {
-      ar: 'قيد التنفيذ',
-      en: 'Under Processing',
+      ar: "قيد التنفيذ",
+      en: "Under Processing",
     },
   },
 
   {
-    status_id: 3,
+    id: 3,
     title: {
-      ar: 'قيد التوصيل',
-      en: 'Out for Delivery',
+      ar: "قيد التوصيل",
+      en: "Out for Delivery",
     },
   },
   {
-    status_id: 4,
+    id: 4,
     title: {
-      ar: 'تم التوصيل',
-      en: 'Delivered',
+      ar: "تم التوصيل",
+      en: "Delivered",
     },
   },
   {
-    status_id: 5,
+    id: 5,
     title: {
-      ar: 'ملغى',
-      en: 'Cancelled',
+      ar: "ملغى",
+      en: "Cancelled",
     },
   },
 ];

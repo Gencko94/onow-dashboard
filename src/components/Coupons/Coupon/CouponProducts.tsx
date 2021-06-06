@@ -1,4 +1,4 @@
-import { Control, useWatch } from "react-hook-form";
+import { Control, Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Select from "../../reusable/Select";
@@ -73,31 +73,46 @@ const CouponProducts = ({
         <h5>Coupon Products</h5>
       </div>
       <div className="box">
-        <Select
+        <Controller
           control={control}
-          errors={errors?.coupon_coverage}
-          getOptionLabel={(option) => option.title[language]}
-          getOptionValue={(option) => option.value}
           name="coupon_coverage"
-          options={options}
-          defaultValue="all_products"
-          label="Coupon Coverage"
+          render={({ field: { value, onChange } }) => {
+            return (
+              <Select
+                onChange={(val) => onChange(val.value)}
+                errors={errors?.coupon_coverage}
+                getOptionLabel={(option: any) => option.title[language]}
+                getOptionValue={(option) => option.value}
+                options={options}
+                defaultValue="all_products"
+                label="Coupon Coverage"
+              />
+            );
+          }}
         />
+
         {(coverage === "all_products_specific" ||
           coverage === "categories" ||
           coverage === "specific_products") && (
-          <Select
-            isMulti
+          <Controller
             control={control}
-            errors={errors?.coupon_coverage}
-            getOptionLabel={(option) => option.title[language]}
-            getOptionValue={(option) => option.value}
             name="covered_data"
-            options={options}
-            defaultValue="all_products"
-            label={`Select ${
-              coverage === "categories" ? "Categories" : "Products"
-            }`}
+            render={({ field: { value, onChange } }) => {
+              return (
+                <Select
+                  isMulti
+                  onChange={(val) => onChange(val.value)}
+                  errors={errors?.coupon_coverage}
+                  getOptionLabel={(option: any) => option.title[language]}
+                  getOptionValue={(option) => option.value}
+                  options={options}
+                  defaultValue="all_products"
+                  label={`Select ${
+                    coverage === "categories" ? "Categories" : "Products"
+                  }`}
+                />
+              );
+            }}
           />
         )}
       </div>

@@ -120,6 +120,6 @@ export const getOrders = async (
       StoreId: storeId,
     },
   };
-  const res = await axios.get(`${uri}/orders-store`, config);
+  const res = await axios.get(`${uri}/get-orders`, config);
   return res.data.results;
 };

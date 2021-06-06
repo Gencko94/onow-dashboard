@@ -38,7 +38,7 @@ const Container = styled.span<{ checked: boolean }>`
   /* display: inline-block; */
   position: relative;
   color: ${(props) => props.theme.mainColor};
-  padding: 5px;
+  padding: 7px;
 
   cursor: pointer;
   font-size: 0.9rem;

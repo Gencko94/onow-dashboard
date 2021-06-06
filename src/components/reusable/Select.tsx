@@ -1,30 +1,44 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import S, { GroupTypeBase, Styles } from "react-select";
+import S, {
+  ActionMeta,
+  FormatOptionLabelMeta,
+  GroupTypeBase,
+  Styles,
+} from "react-select";
 import { useMemo } from "react";
-import { getOptionLabel, getOptionValue } from "react-select/src/builtins";
-import { Control, Controller } from "react-hook-form";
+import {
+  formatGroupLabel,
+  getOptionLabel,
+  getOptionValue,
+} from "react-select/src/builtins";
 
-interface IProps {
+interface IProps<T> {
   label: string;
-  control: Control<any>;
-  name: string;
-  options: any;
+
+  options: T[];
   defaultValue: any;
   errors: any;
   required?: boolean;
   errorMessage?: string;
   placeholder?: string;
-  getOptionLabel: getOptionLabel<any>;
-  getOptionValue: getOptionValue<any>;
+  getOptionLabel: getOptionLabel<T>;
+  getOptionValue: getOptionValue<T>;
   isSearchable?: boolean;
   isMulti?: boolean;
+  formatOptionLabel?: (
+    option: any,
+    labelMeta: FormatOptionLabelMeta<any, boolean>
+  ) => React.ReactNode;
+  formatGroupLabel?: formatGroupLabel<any, any>;
+  onChange:
+    | (((value: any, actionMeta: ActionMeta<any>) => void) &
+        ((value: any, action: ActionMeta<any>) => void))
+    | undefined;
 }
 
-const Select = ({
+export default function Select<T>({
   label,
-  control,
-  name,
   options,
   errors,
   defaultValue,
@@ -35,7 +49,10 @@ const Select = ({
   errorMessage,
   isSearchable = false,
   isMulti,
-}: IProps) => {
+  formatGroupLabel,
+  formatOptionLabel,
+  onChange,
+}: IProps<T>) {
   const { t } = useTranslation();
   const selectStyles:
     | Partial<Styles<any, false, GroupTypeBase<any>>>
@@ -65,37 +82,27 @@ const Select = ({
   return (
     <Container>
       <label>{t(label)}</label>
-      <Controller
-        name={name}
-        control={control}
-        rules={{ required: required ? errorMessage : false }}
-        defaultValue={defaultValue}
-        render={({ field: { ref, onChange } }) => (
-          <>
-            <S
-              isMulti={isMulti}
-              defaultValue={options.find((i: any) => i.value === defaultValue)}
-              isSearchable={isSearchable}
-              placeholder={placeholder}
-              ref={ref}
-              options={options}
-              styles={selectStyles}
-              onChange={(val) => {
-                console.log(val);
-                onChange(val.value);
-              }}
-              getOptionLabel={getOptionLabel}
-              getOptionValue={getOptionValue}
-            />
-            <p className="error">{errors?.message}</p>
-          </>
-        )}
-      />
+
+      <>
+        <S
+          isMulti={isMulti}
+          defaultValue={options.find((i: any) => i.value === defaultValue)}
+          isSearchable={isSearchable}
+          placeholder={placeholder}
+          options={options}
+          styles={selectStyles}
+          onChange={onChange}
+          getOptionLabel={getOptionLabel}
+          getOptionValue={getOptionValue}
+          formatOptionLabel={formatOptionLabel}
+          formatGroupLabel={formatGroupLabel}
+        />
+        <p className="error">{errors?.message}</p>
+      </>
     </Container>
   );
-};
+}
 
-export default Select;
 const Container = styled.div`
   label {
     color: ${({ theme }) => theme.headingColor};

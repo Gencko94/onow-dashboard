@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
-import { NEW_PRODUCT } from "../../../interfaces/products/products";
+import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
 import FileUploader from "../../../utils/FileUploader";
 
 const ProductImage = () => {
@@ -8,7 +8,7 @@ const ProductImage = () => {
     formState: { errors },
     control,
     setValue,
-  } = useFormContext<NEW_PRODUCT>();
+  } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
 
   return (
     <Container>
@@ -27,7 +27,7 @@ const ProductImage = () => {
         multiple
         setValue={setValue}
       />
-      <ErrorMessage>{errors?.image && "Required"}</ErrorMessage>
+      <ErrorMessage>{errors?.images && "Required"}</ErrorMessage>
     </Container>
   );
 };

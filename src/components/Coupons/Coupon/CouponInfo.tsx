@@ -1,4 +1,10 @@
-import { Control, DeepMap, FieldError, UseFormRegister } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  DeepMap,
+  FieldError,
+  UseFormRegister,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { BiBarcode } from "react-icons/bi";
@@ -10,11 +16,11 @@ import DateIconedInput from "../../reusable/Inputs/DateIconedInput";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import IconedNumberInput from "../../reusable/IconedNumberInput";
 import Select from "../../reusable/Select";
-interface IProps<T> {
-  register: UseFormRegister<T>;
+interface IProps {
+  register: UseFormRegister<any>;
   errors: DeepMap<any, FieldError>;
 
-  control: Control<T>;
+  control: Control<any>;
 }
 const options = [
   {
@@ -32,11 +38,7 @@ const options = [
     value: "fixed",
   },
 ];
-export default function CouponInfo<T>({
-  control,
-  errors,
-  register,
-}: IProps<T>) {
+export default function CouponInfo<T>({ control, errors, register }: IProps) {
   const {
     i18n: { language },
   } = useTranslation();
@@ -74,16 +76,22 @@ export default function CouponInfo<T>({
           name="min_total_amount"
           min={0}
         />
-
-        <Select
-          label="Discount Type"
+        <Controller
           control={control}
           name="discount_type"
-          errors={errors?.discount_type}
-          options={options}
-          defaultValue="fixed"
-          getOptionLabel={(option) => option.title[language]}
-          getOptionValue={(option) => option.value}
+          render={({ field: { value, onChange } }) => {
+            return (
+              <Select
+                label="Discount Type"
+                onChange={(val) => onChange(val.value)}
+                errors={errors?.discount_type}
+                options={options}
+                defaultValue="fixed"
+                getOptionLabel={(option: any) => option.title[language]}
+                getOptionValue={(option: any) => option.value}
+              />
+            );
+          }}
         />
 
         <IconedNumberInput
@@ -96,32 +104,39 @@ export default function CouponInfo<T>({
           name="amount"
           min={0}
         />
-
-        <Select
-          label="Free Delivery"
+        <Controller
           control={control}
           name="free_delivery"
-          errors={errors?.free_delivery}
-          options={[
-            {
-              title: {
-                ar: "نعم",
-                en: "Yes",
-              },
-              value: "1",
-            },
-            {
-              title: {
-                ar: "لا",
-                en: "No",
-              },
-              value: "0",
-            },
-          ]}
-          defaultValue="0"
-          getOptionLabel={(option) => option.title[language]}
-          getOptionValue={(option) => option.value}
+          render={({ field: { value, onChange } }) => {
+            return (
+              <Select
+                label="Free Delivery"
+                onChange={(val) => onChange(val.value)}
+                errors={errors?.free_delivery}
+                options={[
+                  {
+                    title: {
+                      ar: "نعم",
+                      en: "Yes",
+                    },
+                    value: "1",
+                  },
+                  {
+                    title: {
+                      ar: "لا",
+                      en: "No",
+                    },
+                    value: "0",
+                  },
+                ]}
+                defaultValue="0"
+                getOptionLabel={(option: any) => option.title[language]}
+                getOptionValue={(option) => option.value}
+              />
+            );
+          }}
         />
+
         <IconedNumberInput
           Icon={FiUser}
           errors={errors?.uses_per_user}

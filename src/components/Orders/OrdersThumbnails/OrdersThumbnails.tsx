@@ -43,7 +43,7 @@ const OrdersThumbnails = ({ stats }: IProps) => {
     <Container>
       <Swiper breakpoints={breakpoints} freeMode>
         {stats.map((status) => (
-          <SwiperSlide key={status.status_id}>
+          <SwiperSlide key={status.id}>
             <OrderThumbnail status={status} />
           </SwiperSlide>
         ))}

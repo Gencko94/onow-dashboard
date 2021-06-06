@@ -75,13 +75,6 @@ const BranchLocation = ({ control, errors, register, setValue }: IProps) => {
             name="cod_cost"
             min={0}
           />
-
-          <CheckToggle
-            control={control}
-            label="Enable Cash on Delivery"
-            name="cod_enabled"
-            desc="Enable Cash on Delivery at this branch"
-          />
         </div>
 
         <div className="map-container">

@@ -9,6 +9,7 @@ import { useQuery } from "react-query";
 import { getMiniCategories } from "../../utils/test-queries";
 import { useTranslation } from "react-i18next";
 import ModalTail from "../reusable/ModalTail";
+import Checkbox from "../reusable/Inputs/Checkbox";
 
 interface IProps {
   closeFunction: () => void;
@@ -51,16 +52,18 @@ const AddCategoryModalBody = ({ closeFunction, setValue, control }: IProps) => {
         render={({ field: { onChange } }) => {
           return (
             <Container>
-              <h5 className="table-title">Categories</h5>
+              {/* <h5 className="table-title">Categories</h5> */}
               <div className="chips">
-                <p className="text">Selected Categories:</p>
+                <p className="text">Selected Categories :</p>
                 <div className="chips-wrapper">
                   {categories.map((cat: any) => {
                     return (
                       <Chip
                         key={cat.id}
                         text={cat.name[language]}
-                        cb={() => {}}
+                        onClick={(e) => {
+                          handleToggleCategories(cat, onChange);
+                        }}
                       />
                     );
                   })}
@@ -87,20 +90,14 @@ const AddCategoryModalBody = ({ closeFunction, setValue, control }: IProps) => {
                           <h6>{category.name[language]}</h6>
                         </div>
                         <Checkbox
+                          checked={Boolean(
+                            categories.find((i: any) => i.id === category.id)
+                          )}
                           onChange={(e) => {
                             e.stopPropagation();
                             handleToggleCategories(category, onChange);
                           }}
-                        >
-                          h
-                          <input
-                            type="checkbox"
-                            checked={Boolean(
-                              categories.find((i: any) => i.id === category.id)
-                            )}
-                          />
-                          <span className="check" />
-                        </Checkbox>
+                        />
                       </CategoryItem>
                       {category?.children?.map((child) => {
                         return (
@@ -124,20 +121,14 @@ const AddCategoryModalBody = ({ closeFunction, setValue, control }: IProps) => {
                               </div>
                             </div>
                             <Checkbox
+                              checked={Boolean(
+                                categories.find((i: any) => i.id === child.id)
+                              )}
                               onChange={(e) => {
                                 e.stopPropagation();
                                 handleToggleCategories(child, onChange);
                               }}
-                            >
-                              h
-                              <input
-                                type="checkbox"
-                                checked={Boolean(
-                                  categories.find((i: any) => i.id === child.id)
-                                )}
-                              />
-                              <span className="check" />
-                            </Checkbox>
+                            />
                           </SubCategoryItem>
                         );
                       })}
@@ -150,13 +141,13 @@ const AddCategoryModalBody = ({ closeFunction, setValue, control }: IProps) => {
         }}
       />
 
-      <ModalTail
+      {/* <ModalTail
         btnText="Confirm"
         successCb={() => {
           closeFunction();
         }}
         closeFunction={closeFunction}
-      />
+      /> */}
     </>
   );
 };
@@ -173,7 +164,7 @@ const Container = styled.div`
 
     gap: 0.5rem;
     .text {
-      padding: 0.5rem 0.25rem;
+      padding: 0.75rem 0.5rem;
       background-color: ${(props) => props.theme.accentColor};
       color: ${(props) => props.theme.subHeading};
       font-size: 0.9rem;
@@ -255,54 +246,5 @@ const SubCategoryItem = styled.div`
       font-size: 0.9rem;
       font-weight: ${(props) => props.theme.font.semibold};
     }
-  }
-`;
-const Checkbox = styled.label`
-  display: block;
-  position: relative;
-  margin: 0 2rem;
-
-  cursor: pointer;
-  font-size: 0.9rem;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-  .check {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 22px;
-    width: 22px;
-    background-color: #fff;
-    border: ${(props) => props.theme.border};
-    border-radius: 6px;
-    &::after {
-      content: "";
-      position: absolute;
-      display: none;
-      left: 7px;
-      top: 4px;
-      width: 5px;
-      height: 10px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
-    }
-  }
-  input:checked ~ .check {
-    background-color: ${(props) => props.theme.mainColor};
-  }
-  input:checked ~ .check:after {
-    display: block;
   }
 `;

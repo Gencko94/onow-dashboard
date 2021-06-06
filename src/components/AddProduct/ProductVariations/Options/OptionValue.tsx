@@ -5,8 +5,8 @@ import { MdSubtitles } from "react-icons/md";
 import { RiHandCoinLine } from "react-icons/ri";
 import { TiDelete } from "react-icons/ti";
 import styled from "styled-components";
-import { NEW_PRODUCT } from "../../../../interfaces/products/products";
-import DateIconedInput from "../../../reusable/Inputs/DateIconedInput";
+import { NEW_PRODUCT_FORM_PROPS } from "../../../../interfaces/products/create-new-product";
+
 import IconedInput from "../../../reusable/Inputs/IconedInput";
 import PrefixedIconedInput from "../../../reusable/Inputs/PrefixedIconedInput";
 import Flex, { FlexWrapper } from "../../../StyledComponents/Flex";
@@ -21,7 +21,7 @@ const OptionValue = ({ index, parentIndex, removeValue }: IProps) => {
     formState: { errors },
     register,
     control,
-  } = useFormContext<NEW_PRODUCT>();
+  } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
   const {
     i18n: { language },
   } = useTranslation();
@@ -61,26 +61,7 @@ const OptionValue = ({ index, parentIndex, removeValue }: IProps) => {
           prefix="KD"
           desc="Leave empty to disable"
         />
-        <PrefixedIconedInput
-          errors={
-            errors?.variations?.[parentIndex]?.values?.[index]?.sale_price
-          }
-          Icon={IoPricetagsOutline}
-          name={`variations.${parentIndex}.values.${index}.sale_price`}
-          register={register}
-          label="Sale Price"
-          prefix="KD"
-          desc="Leave empty to disable"
-        />
-        <DateIconedInput
-          errors={
-            errors?.variations?.[parentIndex]?.values?.[index]?.sale_end_date
-          }
-          name={`variations.${parentIndex}.values.${index}.sale_end_date`}
-          control={control}
-          label="Sale End Date"
-          desc="Leave empty to disable"
-        />
+
         <IconedInput
           errors={errors?.variations?.[parentIndex]?.values?.[index]?.qty}
           Icon={RiHandCoinLine}

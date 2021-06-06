@@ -1,10 +1,10 @@
-import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { BsCheck } from 'react-icons/bs';
-import { MdCancel } from 'react-icons/md';
-import Select from 'react-select';
-import styled from 'styled-components';
-import { orderStatuses } from '../../../fakeData/fakeOrderStatuses';
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { BsCheck } from "react-icons/bs";
+import { MdCancel } from "react-icons/md";
+import Select from "react-select";
+import styled from "styled-components";
+import { orderStatuses } from "../../../fakeData/fakeOrderStatuses";
 
 const ChangeOrderStatusModalBody = ({ portal }: { portal: any }) => {
   const {
@@ -14,17 +14,17 @@ const ChangeOrderStatusModalBody = ({ portal }: { portal: any }) => {
     return {
       control: (provided: any, state: any) => ({
         ...provided,
-        backgroundColor: '#ececec',
-        fontSize: '0.9rem',
-        minHeight: '35px',
+        backgroundColor: "#ececec",
+        fontSize: "0.9rem",
+        minHeight: "35px",
       }),
       indicatorContainer: (provided: any, state: any) => ({
         ...provided,
-        padding: state.isFocused ? '0.4rem' : '0.4rem',
+        padding: state.isFocused ? "0.4rem" : "0.4rem",
       }),
       option: (provided: any) => ({
         ...provided,
-        fontSize: '0.9rem',
+        fontSize: "0.9rem",
       }),
       menuPortal: (provided: any) => ({
         ...provided,
@@ -33,8 +33,8 @@ const ChangeOrderStatusModalBody = ({ portal }: { portal: any }) => {
     };
   }, []);
   const selectTypes = [
-    { id: 1, name: 'Single Select' },
-    { id: 2, name: 'Multiple Select' },
+    { id: 1, name: "Single Select" },
+    { id: 2, name: "Multiple Select" },
   ];
   return (
     <Container>
@@ -45,10 +45,10 @@ const ChangeOrderStatusModalBody = ({ portal }: { portal: any }) => {
           options={orderStatuses}
           defaultValue={orderStatuses[0]}
           isSearchable={false}
-          getOptionLabel={option => option.title[language]}
-          getOptionValue={option => option.status_id.toString()}
+          getOptionLabel={(option) => option.title[language]}
+          getOptionValue={(option) => option.id.toString()}
           menuPortalTarget={portal.current}
-          onChange={value => {
+          onChange={(value) => {
             // onChange(value?.id);
           }}
         />
@@ -82,13 +82,13 @@ const ButtonsContainer = styled.div`
   padding: 1rem;
   align-items: center;
   justify-content: space-between;
-  border-top: ${props => props.theme.border};
-  background-color: ${props => props.theme.overlayColor};
+  border-top: ${(props) => props.theme.border};
+  background-color: ${(props) => props.theme.overlayColor};
 `;
 const Button = styled.button<{ red?: boolean }>`
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.red ? props.theme.dangerRed : props.theme.green};
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 7px;
   position: relative;
   padding: 0.25rem 0.5rem;
@@ -97,7 +97,7 @@ const Button = styled.button<{ red?: boolean }>`
   align-items: center;
   p {
     font-size: 0.9rem;
-    font-weight: ${props => props.theme.font.regular};
+    font-weight: ${(props) => props.theme.font.regular};
     margin: 0 0.5rem;
   }
 `;

@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import { IoPricetagsOutline } from "react-icons/io5";
 import styled from "styled-components";
-import { NEW_PRODUCT } from "../../../interfaces/products/products";
-import DateIconedInput from "../../reusable/Inputs/DateIconedInput";
+import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
+
 import GithubInput from "../../reusable/Inputs/GithubInput";
 import PrefixedIconedInput from "../../reusable/Inputs/PrefixedIconedInput";
 
@@ -12,8 +12,8 @@ const ProductPricing = () => {
     control,
     watch,
     formState: { errors },
-  } = useFormContext<NEW_PRODUCT>();
-  const priceFromVariationsEnabled = watch("priceFromVariations");
+  } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
+  const priceFromVariationsEnabled = watch("price_by_options");
   return (
     <Container>
       <div className="title-container">
@@ -29,22 +29,7 @@ const ProductPricing = () => {
           prefix="KD"
           disabled={priceFromVariationsEnabled}
         />
-        <PrefixedIconedInput
-          errors={errors.salePrice}
-          Icon={IoPricetagsOutline}
-          name="salePrice"
-          register={register}
-          label="Sale Price"
-          prefix="KD"
-          disabled={priceFromVariationsEnabled}
-        />
-        <DateIconedInput
-          errors={errors.saleEndDate}
-          name="saleEndDate"
-          control={control}
-          label="Sale End Date"
-          disabled={priceFromVariationsEnabled}
-        />
+
         <GithubInput
           control={control}
           label="Enable Pricing by variations"

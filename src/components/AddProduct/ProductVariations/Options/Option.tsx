@@ -1,11 +1,11 @@
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
 import { TiDelete } from "react-icons/ti";
 import styled from "styled-components";
 import {
-  NEW_PRODUCT,
+  NEW_PRODUCT_FORM_PROPS,
   PRODUCT_OPTION,
-} from "../../../../interfaces/products/products";
+} from "../../../../interfaces/products/create-new-product";
 
 import EmptyTable from "../../../reusable/EmptyTable";
 import IconedNumberInput from "../../../reusable/IconedNumberInput";
@@ -29,7 +29,7 @@ const Variation = ({ option, index, removeOption }: IProps) => {
     watch,
     formState: { errors },
     register,
-  } = useFormContext<NEW_PRODUCT>();
+  } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: `variations.${index}.values` as const, // unique name for your Field Array
@@ -63,16 +63,24 @@ const Variation = ({ option, index, removeOption }: IProps) => {
           register={register}
           label="Option Name Arabic"
         />
-        <Select
+        <Controller
           control={control}
-          options={selectTypes}
-          defaultValue={selectTypes[0]}
-          errors={errors?.variations?.[index]?.select_type}
-          getOptionLabel={(option) => option.label}
-          getOptionValue={(option) => option.value}
-          label="Option Type"
-          name={`variations.${index}.select_type`}
+          name={`variations.${index}.select_type` as const}
+          render={({ field: { value, onChange } }) => {
+            return (
+              <Select
+                options={selectTypes}
+                defaultValue={selectTypes[0]}
+                errors={errors?.variations?.[index]?.select_type}
+                getOptionLabel={(option) => option.label}
+                getOptionValue={(option) => option.value}
+                label="Option Type"
+                onChange={(val) => onChange(val.value)}
+              />
+            );
+          }}
         />
+
         {optionType === "multiple" && (
           <IconedNumberInput
             Icon={MdSubtitles}
@@ -84,18 +92,25 @@ const Variation = ({ option, index, removeOption }: IProps) => {
             desc="0 For Unlimited"
           />
         )}
-        <Select
+        <Controller
           control={control}
-          options={[
-            { value: false, label: "No" },
-            { value: true, label: "Yes" },
-          ]}
-          defaultValue={{ id: 1, name: "Yes" }}
-          errors={errors?.variations?.[index]?.required}
-          getOptionLabel={(option) => option.label}
-          getOptionValue={(option) => option.value}
-          label="Required"
-          name={`variations.${index}.required`}
+          name={`variations.${index}.required` as const}
+          render={({ field: { value, onChange } }) => {
+            return (
+              <Select
+                onChange={(val) => onChange(val.value)}
+                options={[
+                  { value: false, label: "No" },
+                  { value: true, label: "Yes" },
+                ]}
+                defaultValue={{ id: 1, name: "Yes" }}
+                errors={errors?.variations?.[index]?.required}
+                getOptionLabel={(option) => option.label}
+                getOptionValue={(option: any) => option.value}
+                label="Required"
+              />
+            );
+          }}
         />
       </div>
       <h6 className="title">Options Values</h6>

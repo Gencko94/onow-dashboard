@@ -2,8 +2,8 @@ import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
 interface IProps {
-  setActiveTab: Dispatch<SetStateAction<0 | 1 | 2>>;
-  activeTab: 0 | 1 | 2;
+  setActiveTab: Dispatch<SetStateAction<0 | 1 | 2 | 3>>;
+  activeTab: 0 | 1 | 2 | 3;
 }
 const tabOptions = [
   "General Product Info",
@@ -36,6 +36,13 @@ const ProductTabs = ({ setActiveTab, activeTab }: IProps) => {
         active={activeTab === 2}
       >
         Ordering Options & Branch Availability
+      </TabItem>
+      <TabItem
+        type="button"
+        onClick={() => setActiveTab(3)}
+        active={activeTab === 3}
+      >
+        Product Promotions
       </TabItem>
     </Container>
   );

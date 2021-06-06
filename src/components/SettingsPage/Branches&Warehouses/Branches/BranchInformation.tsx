@@ -1,4 +1,4 @@
-import { Control } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { FiCalendar, FiUser, FiUsers } from "react-icons/fi";
@@ -73,12 +73,19 @@ const BranchInformation = ({ control, errors, register }: IProps) => {
           name="cod_cost"
           min={0}
         />
-
-        <CheckToggle
+        <Controller
           control={control}
-          label="Enable Cash on Delivery"
           name="cod_enabled"
-          desc="Enable Cash on Delivery at this branch"
+          render={({ field: { value, onChange } }) => {
+            return (
+              <CheckToggle
+                checked={value}
+                label="Enable Cash on Delivery"
+                onChange={onChange}
+                desc="Enable Cash on Delivery at this branch"
+              />
+            );
+          }}
         />
       </div>
     </Container>

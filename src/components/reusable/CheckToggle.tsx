@@ -4,14 +4,6 @@ import styled from "styled-components";
 import "react-toggle/style.css";
 interface IProps {
   /**
-   * 	```control``` object provided by ```useForm```.
-   */
-  control: Control<any>;
-  /**
-   * 	Input's name being registered.
-   */
-  name: string;
-  /**
    * 	The label of the input.
    */
   label: string;
@@ -19,32 +11,30 @@ interface IProps {
    * 	Optional description shown in a smaller size text below the label.
    */
   desc?: string;
+  /**
+   * 	```onChange``` callback function.
+   */
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  /**
+   * 	Boolean indicated whether the input is checked.
+   */
+  checked: boolean;
 }
 
-const CheckToggle = ({ control, name, label, desc }: IProps) => {
+const CheckToggle = ({ checked, onChange, label, desc }: IProps) => {
   return (
-    <Controller
-      name={name}
-      control={control}
-      render={({ field: { onChange, ref, value } }) => {
-        return (
-          <Toggler>
-            <div className="info">
-              <label>{label}</label>
-              <p className="desc">{desc}</p>
-            </div>
-            <Toggle
-              defaultChecked={value}
-              className="react-custom-toggle"
-              ref={ref}
-              onChange={(e) => {
-                onChange(e.target.checked);
-              }}
-            />
-          </Toggler>
-        );
-      }}
-    ></Controller>
+    <Toggler>
+      <div className="info">
+        <label htmlFor={label}>{label}</label>
+        <p className="desc">{desc}</p>
+      </div>
+      <Toggle
+        id={label}
+        checked={checked}
+        className="react-custom-toggle"
+        onChange={onChange}
+      />
+    </Toggler>
   );
 };
 
@@ -54,6 +44,12 @@ const Toggler = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  .info {
+    margin: 0 0.25rem;
+    label {
+      cursor: pointer;
+    }
+  }
   .desc {
     font-size: 0.8rem;
   }

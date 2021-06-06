@@ -7,7 +7,7 @@ import { STORE_INFORMATION } from "../../../interfaces/settings/store-properties
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import Select from "../../reusable/Select";
 
-const StoreInformation = () => {
+const StoreNameAndDescription = () => {
   const {
     register,
     control,
@@ -195,7 +195,7 @@ const StoreInformation = () => {
   );
 };
 
-export default StoreInformation;
+export default StoreNameAndDescription;
 const Container = styled.div`
   .title-container {
     padding: 2rem 0;

@@ -22,9 +22,9 @@ const PaymentStatusChip = ({ status, withBg, dots }: IProps) => {
     }
   };
   return (
-    <Container bg={withBg ? resolveColor(status.id) : undefined}>
-      {dots ? <Dot color={resolveColor(status.id)} /> : ""}
-      <p>{status.title[language]}</p>
+    <Container bg={withBg ? resolveColor(status?.id) : undefined}>
+      {dots ? <Dot color={resolveColor(status?.id)} /> : ""}
+      <p>{status?.title[language]}</p>
     </Container>
   );
 };

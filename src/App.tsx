@@ -54,8 +54,8 @@ const BranchesAndWarehouses = lazy(
 );
 const StoreIdentity = lazy(() => import("./pages/SettingsPages/StoreIdentity"));
 
-const StoreProperties = lazy(
-  () => import("./pages/SettingsPages/StoreProperties")
+const StoreInformation = lazy(
+  () => import("./pages/SettingsPages/StoreInformation")
 );
 const StoreSEO = lazy(() => import("./pages/SettingsPages/StoreSEO"));
 const ProductListGridCustomizer = lazy(
@@ -72,6 +72,9 @@ const CreateNewBranch = lazy(
 );
 const CreateNewWarehouse = lazy(
   () => import("./pages/SettingsPages/Branches&Warehouses/CreateNewWarehouse")
+);
+const StoreCurrencies = lazy(
+  () => import("./pages/SettingsPages/Currencies/StoreCurrencies")
 );
 
 const DesignSelectionPage = lazy(() => import("./pages/DesignSelectionPage"));
@@ -191,8 +194,8 @@ function App() {
                           Component={BranchesAndWarehouses}
                         />
                         <ProtectedRoute
-                          path="/settings/store-properties"
-                          Component={StoreProperties}
+                          path="/settings/store-information"
+                          Component={StoreInformation}
                         />
                         <ProtectedRoute
                           path="/settings/store-identity"
@@ -229,6 +232,10 @@ function App() {
                         <ProtectedRoute
                           path="/settings/branch-warehouse/create/branch"
                           Component={CreateNewBranch}
+                        />
+                        <ProtectedRoute
+                          path="/settings/store-currencies"
+                          Component={StoreCurrencies}
                         />
                       </Layout>
                     </Switch>

@@ -8,6 +8,7 @@ import {
   FcTimeline,
   FcSearch,
   FcManager,
+  FcCurrencyExchange,
 } from "react-icons/fc";
 import styled from "styled-components";
 import SettingsCard from "../../reusable/SettingsCard";
@@ -20,10 +21,10 @@ const StoreSection = () => {
       </div>
       <div className="cards-container">
         <SettingsCard
-          title="Store properties"
-          target="/settings/store-properties"
+          title="Store Information"
+          target="/settings/store-information"
           Icon={FcSupport}
-          desc="Manage your store properties"
+          desc="Manage your store information"
         />
         <SettingsCard
           title="Store Identity"
@@ -54,6 +55,12 @@ const StoreSection = () => {
           target="/settings/payment-methods"
           Icon={FcMoneyTransfer}
           desc="Manage your orders payment methods"
+        />
+        <SettingsCard
+          title="Store Currencies"
+          target="/settings/store-currencies"
+          Icon={FcCurrencyExchange}
+          desc="Adjust your currencies used throughout your store"
         />
         <SettingsCard
           title="SEO"

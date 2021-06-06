@@ -1,7 +1,7 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 
 import styled from "styled-components";
-import { NEW_PRODUCT } from "../../../../interfaces/products/products";
+import { NEW_PRODUCT_FORM_PROPS } from "../../../../interfaces/products/create-new-product";
 
 import AddButton from "../../../reusable/AddButton";
 import EmptyTable from "../../../reusable/EmptyTable";
@@ -14,7 +14,7 @@ const Options = ({
 }: {
   priceFromVariationsEnabled: boolean;
 }) => {
-  const { control } = useFormContext<NEW_PRODUCT>();
+  const { control } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: "variations", // unique name for your Field Array

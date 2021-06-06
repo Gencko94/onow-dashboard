@@ -4,54 +4,28 @@ import { FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components";
 
 import ProductGeneralInfo from "../../components/AddProduct/ProductGeneralInfo/ProductGeneralInfo";
-import ProductOrdering from "../../components/AddProduct/ProductOrderingAndBranch/ProductOrdering";
 import ProductOrderingAndBranchAvailability from "../../components/AddProduct/ProductOrderingAndBranch/ProductOrderingAndBranchAvailability";
+import ProductPromotions from "../../components/AddProduct/ProductPromotions/ProductPromotions";
 import ProductTabs from "../../components/AddProduct/ProductTabs/ProductTabs";
-import ProductOptions from "../../components/AddProduct/ProductVariations/ProductOptions";
 import ProductPricingAndOptions from "../../components/AddProduct/ProductVariations/ProductPricingAndOptions";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
-import { MINI_CATEGORY } from "../../interfaces/categories/categories";
-
-export interface NEW_PRODUCT_FORM_PROPS {
-  category_id: MINI_CATEGORY[];
-  name: {
-    ar: string;
-    en: string;
-  };
-
-  images: File[];
-  description: {
-    ar: string;
-    en: string;
-  };
-  slug: string;
-  max_qty_per_user: number;
-  prep_time: {
-    time: number;
-    unit: string;
-  };
-  maxQtyPerUser: number;
-  price: number;
-  price_by_variations: boolean;
-  variations_enabled: boolean;
-  availability: {
-    all: boolean;
-    branches: number[];
-  };
-}
+import { NEW_PRODUCT_FORM_PROPS } from "../../interfaces/products/create-new-product";
 
 const CreateNewProduct = () => {
   const methods = useForm<NEW_PRODUCT_FORM_PROPS>({
     defaultValues: {
-      maxQtyPerUser: 5,
+      max_qty_per_user: 5,
       category_id: [],
-      availability: {
+      branch_availability: {
         all: true,
         branches: [],
       },
+      promotions: {
+        values_skus: [],
+      },
     },
   });
-  const [activeTab, setActiveTab] = useState<0 | 1 | 2>(0);
+  const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3>(0);
   return (
     <form>
       <Breadcrumbs
@@ -65,6 +39,7 @@ const CreateNewProduct = () => {
           {activeTab === 0 && <ProductGeneralInfo />}
           {activeTab === 1 && <ProductPricingAndOptions />}
           {activeTab === 2 && <ProductOrderingAndBranchAvailability />}
+          {activeTab === 3 && <ProductPromotions />}
         </Wrapper>
       </FormProvider>
     </form>

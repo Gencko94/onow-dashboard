@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Control, useWatch } from "react-hook-form";
+import { Control, Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { FiCalendar, FiUser, FiUsers } from "react-icons/fi";
@@ -47,11 +47,20 @@ const BranchWorkingHours = ({ control, errors, register }: IProps) => {
         <TableHead gap="2rem" cols={cols} gridCols="1fr 0.5fr 0.5fr" />
         <div className="table">
           {/* Saturday */}
-          <CheckToggle
+          <Controller
             control={control}
-            label="Saturday"
             name="working_hours.saturday.enabled"
+            render={({ field: { value, onChange } }) => {
+              return (
+                <CheckToggle
+                  checked={value}
+                  onChange={onChange}
+                  label="Saturday"
+                />
+              );
+            }}
           />
+
           <TimeIconedInput
             enabled={workingHours.saturday.enabled}
             control={control}
@@ -67,11 +76,20 @@ const BranchWorkingHours = ({ control, errors, register }: IProps) => {
             name="working_hours.saturday.to"
           />
           {/* Sunday */}
-          <CheckToggle
+          <Controller
             control={control}
-            label="Sunday"
             name="working_hours.sunday.enabled"
+            render={({ field: { value, onChange } }) => {
+              return (
+                <CheckToggle
+                  checked={value}
+                  onChange={onChange}
+                  label="Sunday"
+                />
+              );
+            }}
           />
+
           <TimeIconedInput
             enabled={workingHours.sunday.enabled}
             control={control}
@@ -87,11 +105,20 @@ const BranchWorkingHours = ({ control, errors, register }: IProps) => {
             name="working_hours.sunday.to"
           />
           {/* Monday */}
-          <CheckToggle
+          <Controller
             control={control}
-            label="Monday"
             name="working_hours.monday.enabled"
+            render={({ field: { value, onChange } }) => {
+              return (
+                <CheckToggle
+                  checked={value}
+                  onChange={onChange}
+                  label="Monday"
+                />
+              );
+            }}
           />
+
           <TimeIconedInput
             enabled={workingHours.monday.enabled}
             control={control}
@@ -107,11 +134,20 @@ const BranchWorkingHours = ({ control, errors, register }: IProps) => {
             name="working_hours.monday.to"
           />
           {/* Tuesday */}
-          <CheckToggle
+          <Controller
             control={control}
-            label="Tuesday"
             name="working_hours.tuesday.enabled"
+            render={({ field: { value, onChange } }) => {
+              return (
+                <CheckToggle
+                  checked={value}
+                  onChange={onChange}
+                  label="Tuesday"
+                />
+              );
+            }}
           />
+
           <TimeIconedInput
             enabled={workingHours.tuesday.enabled}
             control={control}

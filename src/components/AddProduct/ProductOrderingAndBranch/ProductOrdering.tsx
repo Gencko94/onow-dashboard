@@ -1,9 +1,8 @@
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { GrServices } from "react-icons/gr";
 import { RiHandCoinLine } from "react-icons/ri";
 import styled from "styled-components";
-import { NEW_PRODUCT } from "../../../interfaces/products/products";
-import { NEW_PRODUCT_FORM_PROPS } from "../../../pages/Product/CreateNewProduct";
+import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
 
 import CheckToggle from "../../reusable/CheckToggle";
 import IconedNumberInput from "../../reusable/IconedNumberInput";
@@ -20,8 +19,10 @@ const ProductOrdering = () => {
   const {
     register,
     control,
+    watch,
     formState: { errors },
   } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
+  const allowSideNotes = watch("allow_side_notes");
   return (
     <Container>
       <div className="title-container">
@@ -46,23 +47,55 @@ const ProductOrdering = () => {
           name="prep_time.time"
           register={register}
         />
-        <Select
-          options={unitsOptions}
-          label="Unit"
+        <Controller
           control={control}
-          getOptionLabel={(option) => option.label}
-          getOptionValue={(option) => option.value}
           name="prep_time.unit"
-          errors={errors.prep_time?.unit}
-          defaultValue="m"
+          render={({ field: { value, onChange } }) => {
+            return (
+              <Select
+                options={unitsOptions}
+                label="Unit"
+                getOptionLabel={(option) => option.label}
+                getOptionValue={(option) => option.value}
+                errors={errors.prep_time?.unit}
+                defaultValue="m"
+                onChange={(val) => onChange(val.value)}
+              />
+            );
+          }}
         />
       </Grid>
+      <Grid cols="1fr 1fr" gap="3.5rem">
+        <Controller
+          control={control}
+          name="allow_side_notes"
+          render={({ field: { value, onChange } }) => {
+            return (
+              <CheckToggle
+                label="Enable Customers to write extra Instructions"
+                checked={value}
+                onChange={onChange}
+              />
+            );
+          }}
+        />
 
-      <CheckToggle
-        label="Enable Customers to write extra Instructions"
-        control={control}
-        name="allow_side_notes"
-      />
+        {allowSideNotes && (
+          <Controller
+            control={control}
+            name="allow_attachments"
+            render={({ field: { value, onChange } }) => {
+              return (
+                <CheckToggle
+                  label="Enable Customers to upload attachments"
+                  checked={value}
+                  onChange={onChange}
+                />
+              );
+            }}
+          />
+        )}
+      </Grid>
     </Container>
   );
 };

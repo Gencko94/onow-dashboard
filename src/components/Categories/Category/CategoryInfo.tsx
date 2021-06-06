@@ -1,4 +1,4 @@
-import { Control, SetFieldValue, useWatch } from "react-hook-form";
+import { Control, Controller, SetFieldValue, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { MdSubtitles } from "react-icons/md";
@@ -75,44 +75,57 @@ const CategoryInfo = ({ control, errors, register, setValue }: IProps) => {
             name="slug"
             desc="How your category will look in the url"
           />
-
-          <Select
-            label="As a child category"
+          <Controller
             control={control}
             name="as_child"
-            errors={errors?.as_child}
-            options={[
-              {
-                title: {
-                  ar: "نعم",
-                  en: "Yes",
-                },
-                value: true,
-              },
-              {
-                title: {
-                  ar: "لا",
-                  en: "No",
-                },
-                value: false,
-              },
-            ]}
-            defaultValue={false}
-            getOptionLabel={(option) => option.title[language]}
-            getOptionValue={(option) => option.value}
+            render={({ field: { value, onChange } }) => {
+              return (
+                <Select
+                  onChange={(val) => onChange(val.value)}
+                  label="As a child category"
+                  errors={errors?.as_child}
+                  options={[
+                    {
+                      title: {
+                        ar: "نعم",
+                        en: "Yes",
+                      },
+                      value: true,
+                    },
+                    {
+                      title: {
+                        ar: "لا",
+                        en: "No",
+                      },
+                      value: false,
+                    },
+                  ]}
+                  defaultValue={false}
+                  getOptionLabel={(option: any) => option.title[language]}
+                  getOptionValue={(option: any) => option.value}
+                />
+              );
+            }}
           />
 
           {isChild && (
-            <Select
-              label="Select Category Parent"
+            <Controller
               control={control}
               name="parent"
-              required={isChild}
-              errors={errors?.parent}
-              options={options}
-              defaultValue="fixed"
-              getOptionLabel={(option) => option.title[language]}
-              getOptionValue={(option) => option.value}
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <Select
+                    label="Select Category Parent"
+                    onChange={(val) => onChange(val.value)}
+                    required={isChild}
+                    errors={errors?.parent}
+                    options={options}
+                    defaultValue="fixed"
+                    getOptionLabel={(option: any) => option.title[language]}
+                    getOptionValue={(option) => option.value}
+                  />
+                );
+              }}
             />
           )}
           <Textarea

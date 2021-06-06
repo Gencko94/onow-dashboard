@@ -1,12 +1,9 @@
 import { useTranslation } from "react-i18next";
-import { MdAttachMoney } from "react-icons/md";
-import styled from "styled-components";
-import { VscOpenPreview, VscServerProcess } from "react-icons/vsc";
 
-import { FiTruck } from "react-icons/fi";
-import { IoMdClose } from "react-icons/io";
+import styled from "styled-components";
+
 import { STORE_ORDERS_STAT } from "../../../interfaces/orders/orders";
-import { GoGear } from "react-icons/go";
+
 import { FcApprove, FcCancel, FcServices, FcShipped } from "react-icons/fc";
 
 interface IProps {
@@ -54,7 +51,7 @@ const OrderThumbnail = ({ status }: IProps) => {
   };
   return (
     <Container>
-      {generateIcon(status.status_id)}
+      {generateIcon(status.id)}
       <div>
         <p className="label">{status.title[language]}</p>
         <p className="value">{status.value}</p>

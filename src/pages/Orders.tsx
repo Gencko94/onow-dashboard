@@ -1,18 +1,13 @@
 import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { QueryErrorResetBoundary, useQuery } from "react-query";
-import styled from "styled-components";
 import OrdersList from "../components/Orders/OrdersList/OrdersList";
 import OrdersPanel from "../components/Orders/OrdersPanel/OrdersPanel";
 import OrdersThumbnails from "../components/Orders/OrdersThumbnails/OrdersThumbnails";
-import {
-  GET_ORDERS_RESPONSE,
-  ORDERS_FILTERS,
-  STORE_ORDERS,
-} from "../interfaces/orders/orders";
+import { ORDERS_FILTERS } from "../interfaces/orders/orders";
 import Loading from "../utils/Loading";
 import { getOrders } from "../utils/queries";
-import { getStoreOrders } from "../utils/test-queries";
+
 export interface ORDER_SORT {
   by:
     | "orderStatus"
@@ -65,11 +60,14 @@ const Orders = ({ storeId }: { storeId: number }) => {
           <Suspense fallback={<Loading />}>
             <OrdersPanel filters={filters} setFilters={setFilters} />
             <hr />
-            {/* <OrdersThumbnails stats={data!.stats} /> */}
+            <OrdersThumbnails stats={data!.stats} />
             <hr />
-            {/* <Box> */}
-            <OrdersList orders={data!} sortBy={sortBy} setSortBy={setSortBy} />
-            {/* </Box> */}
+
+            <OrdersList
+              orders={data!.orders}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+            />
           </Suspense>
         </ErrorBoundary>
       )}
@@ -78,9 +76,3 @@ const Orders = ({ storeId }: { storeId: number }) => {
 };
 
 export default Orders;
-const Box = styled.div`
-  box-shadow: ${(props) => props.theme.shadow};
-  background-color: #fff;
-  border-radius: 6px;
-  padding: 0.5rem;
-`;

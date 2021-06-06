@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
-import { NEW_PRODUCT_FORM_PROPS } from "../../../pages/Product/CreateNewProduct";
+import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
 

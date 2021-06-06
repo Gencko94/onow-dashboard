@@ -1,18 +1,17 @@
 import { Controller, useFormContext } from "react-hook-form";
 import styled from "styled-components";
-import { NEW_PRODUCT } from "../../../interfaces/products/products";
+import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
 
 import CheckToggle from "../../reusable/CheckToggle";
-import Checkbox from "../../reusable/Inputs/Checkbox";
 
 const ProductBranches = () => {
   const {
     control,
     watch,
     formState: { errors },
-  } = useFormContext<NEW_PRODUCT>();
-  const allBranchesChecked = watch("availability.all");
-  const addedBranches = watch("availability.branches");
+  } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
+  const allBranchesChecked = watch("branch_availability.all");
+  const addedBranches = watch("branch_availability.branches");
   const branches = [
     { id: 1, name: "Main Branch" },
     { id: 2, name: "Salmiyah Branch" },
@@ -35,40 +34,42 @@ const ProductBranches = () => {
       <div className="title-container">
         <h5>Product Branch Availability</h5>
       </div>
-      <CheckToggle
-        label="Available in all branches"
+      <Controller
         control={control}
-        name="availability.all"
+        name="branch_availability.all"
+        render={({ field: { value, onChange } }) => {
+          return (
+            <CheckToggle
+              label="Available in all branches"
+              onChange={onChange}
+              checked={value}
+            />
+          );
+        }}
       />
+
       {!allBranchesChecked && (
         <Controller
           control={control}
-          name="availability.branches"
+          name="branch_availability.branches"
           render={({ field: { value, onChange } }) => {
             return (
               <div className="branches-container">
                 {branches.map((branch) => {
                   return (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleToggleBranches(branch, onChange);
-                      }}
-                      key={branch.id}
-                      className="branch-item"
-                    >
-                      {branch.name}
-                      <Checkbox
+                    <div className="branch-item">
+                      <CheckToggle
+                        key={branch.id}
+                        label={branch.name}
+                        checked={Boolean(
+                          addedBranches.find((i: any) => i === branch.id)
+                        )}
                         onChange={(e) => {
                           e.stopPropagation();
                           handleToggleBranches(branch, onChange);
                         }}
-                        checked={Boolean(
-                          addedBranches.find((i: any) => i === branch.id)
-                        )}
                       />
-                    </button>
+                    </div>
                   );
                 })}
               </div>
@@ -100,53 +101,3 @@ const Container = styled.div`
     align-items: center;
   }
 `;
-// const Checkbox = styled.label`
-//   display: block;
-//   position: relative;
-//   margin: 0 1rem;
-
-//   cursor: pointer;
-//   font-size: 0.9rem;
-//   -webkit-user-select: none;
-//   -moz-user-select: none;
-//   -ms-user-select: none;
-//   user-select: none;
-
-//   input {
-//     position: absolute;
-//     opacity: 0;
-//     cursor: pointer;
-//     height: 0;
-//     width: 0;
-//   }
-//   .check {
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     height: 22px;
-//     width: 22px;
-//     background-color: #fff;
-//     border: ${(props) => props.theme.border};
-//     border-radius: 6px;
-//     &::after {
-//       content: "";
-//       position: absolute;
-//       display: none;
-//       left: 7px;
-//       top: 4px;
-//       width: 5px;
-//       height: 10px;
-//       border: solid white;
-//       border-width: 0 3px 3px 0;
-//       -webkit-transform: rotate(45deg);
-//       -ms-transform: rotate(45deg);
-//       transform: rotate(45deg);
-//     }
-//   }
-//   input:checked ~ .check {
-//     background-color: ${(props) => props.theme.mainColor};
-//   }
-//   input:checked ~ .check:after {
-//     display: block;
-//   }
-// `;

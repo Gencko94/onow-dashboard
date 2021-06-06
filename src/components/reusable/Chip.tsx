@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 type IProps = {
   text: string;
-  cb: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-const Chip = ({ text, cb }: IProps) => {
+const Chip = ({ text, onClick }: IProps) => {
   return (
-    <Container type="button" onClick={() => cb()}>
+    <Container type="button" onClick={onClick}>
       {text}
     </Container>
   );

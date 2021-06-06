@@ -1,7 +1,8 @@
 export type STATUS = "";
 export type GET_ORDERS_RESPONSE = {
-  orders: ORDER;
-}[];
+  orders: ORDER[];
+  stats: STORE_ORDERS_STAT[];
+};
 type ORDER_CUSTOMER = {
   id: number;
   first_name: string;
@@ -24,7 +25,7 @@ export interface ORDER {
   order_status: ORDER_STATUS;
   order_type: "delivery" | "pickup";
   payment_type: "cash" | "online";
-  payment_status: PAYMENT_STATUS[];
+  payment_status: PAYMENT_STATUS;
   order_items: ORDER_ITEM[];
   coupon?: {
     code: string;
@@ -35,7 +36,7 @@ export interface ORDER {
   created_at: string;
 }
 export interface ORDER_STATUS {
-  status_id: number;
+  id: number;
   title: {
     [key: string]: string;
   };
@@ -82,7 +83,7 @@ export const orderItems: ORDER_ITEM[] = [
   },
 ];
 export type STORE_ORDERS_STAT = {
-  status_id: number;
+  id: number;
   title: {
     [key: string]: string;
   };

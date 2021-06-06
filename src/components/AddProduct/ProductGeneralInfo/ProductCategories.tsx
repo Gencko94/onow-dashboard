@@ -5,9 +5,9 @@ import Modal from "../../Modal/Modal";
 import AddCategoryModalBody from "../../Modal/AddCategoryModalBody";
 
 import { useFormContext, useWatch } from "react-hook-form";
-import AddButton from "../../reusable/AddButton";
+
 import { useTranslation } from "react-i18next";
-import { RiDeleteBinLine } from "react-icons/ri";
+
 const modalStyles = {
   content: {
     inset: "178px",
@@ -38,18 +38,23 @@ const ProductCategories = () => {
     <Container>
       <div className="title-container">
         <h5>Product Categories</h5>
-        {categories.length > 0 && (
+        {/* {categories.length > 0 && (
           <AddButton
             title="Add Categories"
             cb={() => {
               setOpen(true);
             }}
           />
-        )}
+        )} */}
       </div>
 
       <CategoriesList>
-        {categories.length === 0 && (
+        <AddCategoryModalBody
+          setValue={setValue}
+          control={control}
+          closeFunction={() => setOpen(false)}
+        />
+        {/* {categories.length === 0 && (
           <div className="empty">
             <p className="text">No Categories added</p>
             <AddButton
@@ -80,7 +85,7 @@ const ProductCategories = () => {
               );
             })}
           </CategoriesTable>
-        )}
+        )} */}
       </CategoriesList>
 
       <Modal

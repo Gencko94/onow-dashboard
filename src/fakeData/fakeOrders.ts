@@ -10,15 +10,14 @@ export const order1: ORDER = {
     last_name: "Zaaza",
     phoneNumber: "+965978954",
   },
-  payment_status: [
-    {
-      id: 2,
-      title: {
-        en: "Paid",
-        ar: "مدفوع",
-      },
+  payment_status: {
+    id: 2,
+    title: {
+      en: "Paid",
+      ar: "مدفوع",
     },
-  ],
+  },
+
   payment_type: "online",
   order_items: [
     {
@@ -34,7 +33,7 @@ export const order1: ORDER = {
     },
   ],
   order_status: {
-    status_id: 1,
+    id: 1,
     title: {
       ar: "بإنتظار التأكيد",
       en: "Pending Approval",
@@ -53,7 +52,7 @@ export const storeOrders: STORE_ORDERS = {
   orders: [order1],
   stats: [
     {
-      status_id: 1,
+      id: 1,
       title: {
         ar: "بإنتظار التأكيد",
         en: "Pending Approval",
@@ -61,7 +60,7 @@ export const storeOrders: STORE_ORDERS = {
       value: 320,
     },
     {
-      status_id: 2,
+      id: 2,
       title: {
         ar: "قيد التنفيذ",
         en: "Under Processing",
@@ -70,7 +69,7 @@ export const storeOrders: STORE_ORDERS = {
     },
 
     {
-      status_id: 3,
+      id: 3,
       title: {
         ar: "قيد التوصيل",
         en: "Out for Delivery",
@@ -78,7 +77,7 @@ export const storeOrders: STORE_ORDERS = {
       value: 32,
     },
     {
-      status_id: 4,
+      id: 4,
       title: {
         ar: "تم التوصيل",
         en: "Delivered",
@@ -86,7 +85,7 @@ export const storeOrders: STORE_ORDERS = {
       value: 42,
     },
     {
-      status_id: 5,
+      id: 5,
       title: {
         ar: "ملغى",
         en: "Cancelled",
