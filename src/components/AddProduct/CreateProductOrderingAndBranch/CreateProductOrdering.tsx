@@ -1,10 +1,7 @@
-import { useContext } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { GrServices } from "react-icons/gr";
 import { RiHandCoinLine } from "react-icons/ri";
 import styled from "styled-components";
-import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
-import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 
 import CheckToggle from "../../reusable/CheckToggle";
 import IconedNumberInput from "../../reusable/IconedNumberInput";
@@ -18,7 +15,6 @@ const unitsOptions = [
 ];
 
 const CreateProductOrdering = () => {
-  const { formValues } = useContext(NewProductContext);
   const {
     register,
     control,
@@ -41,7 +37,7 @@ const CreateProductOrdering = () => {
           register={register}
           min={0}
           desc="0 For Unlimited"
-          defaultValue={formValues?.max_qty_per_user}
+          // defaultValue={formValues?.max_qty_per_user}
         />
         <IconedNumberInput
           label="Preperation Time"
@@ -50,12 +46,12 @@ const CreateProductOrdering = () => {
           min={0}
           name="prep_time.time"
           register={register}
-          defaultValue={formValues?.max_qty_per_user}
+          // defaultValue={formValues?.max_qty_per_user}
         />
         <Controller
           control={control}
           name="prep_time.unit"
-          defaultValue={formValues?.prep_time?.unit}
+          // defaultValue={formValues?.prep_time?.unit}
           render={({ field: { value, onChange } }) => {
             return (
               <Select
@@ -81,7 +77,7 @@ const CreateProductOrdering = () => {
         <Controller
           control={control}
           name="allow_side_notes"
-          defaultValue={formValues?.allow_side_notes}
+          // defaultValue={formValues?.allow_side_notes}
           render={({ field: { value, onChange } }) => {
             return (
               <CheckToggle
@@ -97,7 +93,7 @@ const CreateProductOrdering = () => {
           <Controller
             control={control}
             name="allow_attachments"
-            defaultValue={formValues?.allow_attachments}
+            // defaultValue={formValues?.allow_attachments}
             render={({ field: { value, onChange } }) => {
               return (
                 <CheckToggle

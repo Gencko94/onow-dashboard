@@ -36,12 +36,32 @@ const CreateProductPricingAndOptions = () => {
       options: formValues?.options,
     },
   });
-  console.log(formValues?.options);
 
   const onSubmit: SubmitHandler<secondTabProps> = (data) => {
-    console.log(data);
-    updateData?.(methods.watch());
-    setActiveTab?.(2);
+    let safeToProceed = true;
+    if (data.price_by_options === true) {
+      let foundTrue = false;
+      for (let i = 0; i < data.options.length; i++) {
+        console.log(data.options[i]);
+        if (data.options[i].required === true) {
+          foundTrue = true;
+        }
+      }
+      if (!foundTrue) {
+        safeToProceed = false;
+      }
+    }
+
+    if (safeToProceed === true) {
+      updateData?.(data);
+      setActiveTab?.(2);
+    } else {
+      console.log("One Must be Required");
+      methods.setError("options.0.required", {
+        message: "Atleast one should be required",
+      });
+      methods.setFocus("options.0.required");
+    }
   };
   const onError: SubmitErrorHandler<secondTabProps> = (errors) => {
     console.log(errors);

@@ -28,6 +28,7 @@ const Button = styled.button(
     background-color: #2d88ff;
     box-shadow: ${shadow};
     display: flex;
+    margin:0 0.25rem;
     align-items: center;
     border-radius: 6px;
     padding: 0.5rem 0.75rem;

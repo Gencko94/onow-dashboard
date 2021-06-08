@@ -26,6 +26,7 @@ interface IProps<T> {
   getOptionValue: getOptionValue<T>;
   isSearchable?: boolean;
   isMulti?: boolean;
+  ref?: any;
   formatOptionLabel?: (
     option: any,
     labelMeta: FormatOptionLabelMeta<any, boolean>
@@ -51,6 +52,7 @@ export default function Select<T>({
   isMulti,
   formatGroupLabel,
   formatOptionLabel,
+  ref,
   onChange,
   value,
 }: IProps<T>) {
@@ -86,6 +88,7 @@ export default function Select<T>({
 
       <>
         <S
+          ref={ref}
           isMulti={isMulti}
           value={value}
           defaultValue={options.find((i: any) => i.value === defaultValue)}

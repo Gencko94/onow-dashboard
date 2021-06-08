@@ -76,6 +76,13 @@ const CreateNewWarehouse = lazy(
 const StoreCurrencies = lazy(
   () => import("./pages/SettingsPages/Currencies/StoreCurrencies")
 );
+const StorePaymentMethods = lazy(
+  () => import("./pages/SettingsPages/PaymentMethods/StorePaymentMethods")
+);
+const CreatePaymentGatewayAccount = lazy(
+  () =>
+    import("./pages/SettingsPages/PaymentMethods/CreatePaymentGatewayAccount")
+);
 
 const DesignSelectionPage = lazy(() => import("./pages/DesignSelectionPage"));
 const queryClient = new QueryClient({
@@ -196,6 +203,14 @@ function App() {
                         <ProtectedRoute
                           path="/settings/store-information"
                           Component={StoreInformation}
+                        />
+                        <ProtectedRoute
+                          path="/settings/payment-methods"
+                          Component={StorePaymentMethods}
+                        />
+                        <ProtectedRoute
+                          path="/settings/payment-methods/create-payment-gateway-account"
+                          Component={CreatePaymentGatewayAccount}
                         />
                         <ProtectedRoute
                           path="/settings/store-identity"

@@ -38,6 +38,7 @@ export default Breadcrumbs;
 const Container = styled.div`
   padding: 0.75rem 1rem;
   border-radius: 6px;
+  margin-bottom: 2rem;
   background-color: #fff;
   box-shadow: ${(props) => props.theme.shadow};
   h5 {

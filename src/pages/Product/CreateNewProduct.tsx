@@ -31,6 +31,10 @@ const CreateNewProduct = () => {
     options: [],
     images: [],
     max_qty_per_user: 0,
+    prep_time: {
+      time: 0,
+      unit: "minutes",
+    },
   });
 
   const updateData = (data: any) => {

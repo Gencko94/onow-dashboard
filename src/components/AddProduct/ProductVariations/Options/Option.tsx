@@ -31,6 +31,7 @@ const Variation = ({ option, index, removeOption }: IProps) => {
     watch,
     formState: { errors },
     register,
+    clearErrors,
   } = useFormContext<secondTabProps>();
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
@@ -79,9 +80,10 @@ const Variation = ({ option, index, removeOption }: IProps) => {
           control={control}
           name={`options.${index}.select_type` as any}
           defaultValue={options[index].select_type}
-          render={({ field: { value, onChange } }) => {
+          render={({ field: { value, onChange, ref } }) => {
             return (
               <Select
+                ref={ref}
                 value={
                   selectTypes.find(
                     (i) => i.value === options[index].select_type
@@ -118,9 +120,10 @@ const Variation = ({ option, index, removeOption }: IProps) => {
           control={control}
           defaultValue={options[index].required}
           name={`options.${index}.required` as const}
-          render={({ field: { value, onChange } }) => {
+          render={({ field: { value, onChange, ref } }) => {
             return (
               <Select
+                ref={ref}
                 value={
                   requiredOptions.find(
                     (i) => i.value === options[index].required
@@ -129,7 +132,10 @@ const Variation = ({ option, index, removeOption }: IProps) => {
                     label: string;
                   }
                 }
-                onChange={(val) => onChange(val.value)}
+                onChange={(val) => {
+                  onChange(val.value);
+                  clearErrors("options.0.required");
+                }}
                 options={requiredOptions}
                 defaultValue={value}
                 errors={errors?.options?.[index]?.required}

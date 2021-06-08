@@ -1,20 +1,13 @@
-import { useContext } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import styled from "styled-components";
-import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 
 import CheckToggle from "../../reusable/CheckToggle";
 import { thirdTabProps } from "./CreateProductOrderingAndBranchAvailability";
 
 const CreateProductBranches = () => {
-  const {
-    control,
-    watch,
-    formState: { errors },
-  } = useFormContext<thirdTabProps>();
-  const { formValues } = useContext(NewProductContext);
-  // const allBranchesChecked = watch("branch_availability.all");
-  // const addedBranches = watch("branch_availability.branches");
+  const { control, watch } = useFormContext<thirdTabProps>();
+  const allBranchesChecked = watch("branch_availability.all");
+  const addedBranches = watch("branch_availability.branches");
   const branches = [
     { id: 1, name: "Main Branch" },
     { id: 2, name: "Salmiyah Branch" },
@@ -23,19 +16,13 @@ const CreateProductBranches = () => {
     branch: { name: string; id: number },
     onChange: (...event: any[]) => void
   ) => {
-    const found = formValues?.branch_availability?.branches.find(
-      (i: any) => i === branch.id
-    );
+    const found = addedBranches.find((i: any) => i === branch.id);
 
-    console.log(formValues?.branch_availability?.branches);
+    console.log(addedBranches);
     if (!found) {
-      onChange([...formValues?.branch_availability?.branches!, branch.id]);
+      onChange([...addedBranches, branch.id]);
     } else {
-      onChange(
-        formValues?.branch_availability?.branches.filter(
-          (i: any) => i !== branch.id
-        )
-      );
+      onChange(addedBranches.filter((i: any) => i !== branch.id));
     }
   };
   return (
@@ -46,7 +33,7 @@ const CreateProductBranches = () => {
       <Controller
         control={control}
         name="branch_availability.all"
-        defaultValue={formValues?.branch_availability?.all}
+        defaultValue={allBranchesChecked}
         render={({ field: { value, onChange } }) => {
           return (
             <CheckToggle
@@ -58,10 +45,10 @@ const CreateProductBranches = () => {
         }}
       />
 
-      {!formValues?.branch_availability?.all && (
+      {!allBranchesChecked && (
         <Controller
           control={control}
-          defaultValue={formValues?.branch_availability?.branches}
+          defaultValue={addedBranches}
           name="branch_availability.branches"
           render={({ field: { value, onChange } }) => {
             return (
@@ -73,9 +60,7 @@ const CreateProductBranches = () => {
                         key={branch.id}
                         label={branch.name}
                         checked={Boolean(
-                          formValues?.branch_availability?.branches.find(
-                            (i: any) => i === branch.id
-                          )
+                          addedBranches.find((i: any) => i === branch.id)
                         )}
                         onChange={(e) => {
                           e.stopPropagation();
@@ -108,7 +93,7 @@ const Container = styled.div`
     border-radius: 6px;
   }
   .branch-item {
-    cursor: pointer;
+    /* cursor: pointer; */
     padding: 1rem;
     display: flex;
     align-items: center;
