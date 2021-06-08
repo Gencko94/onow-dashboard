@@ -299,10 +299,11 @@ export const products: PRODUCT[] = [
     category: [category1],
     images: [{ is_default: true, url: "/images/product.webp" }],
     price_by_variations: false,
-    short_description: {
+    description: {
       ar: "مرحبا",
       en: "lorem ipsum",
     },
     variations_enabled: false,
+    category_id: [],
   },
 ];

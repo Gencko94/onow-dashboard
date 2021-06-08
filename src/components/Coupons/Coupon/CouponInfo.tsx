@@ -24,18 +24,34 @@ interface IProps {
 }
 const options = [
   {
-    title: {
+    label: {
       ar: "نسبة",
       en: "Percent",
     },
     value: "percent",
   },
   {
-    title: {
+    label: {
       ar: "مبلغ ثابت",
       en: "Fixed Amount",
     },
     value: "fixed",
+  },
+];
+const freeDeliveryOptions = [
+  {
+    label: {
+      ar: "لا",
+      en: "No",
+    },
+    value: "0",
+  },
+  {
+    label: {
+      ar: "نعم",
+      en: "Yes",
+    },
+    value: "1",
   },
 ];
 export default function CouponInfo<T>({ control, errors, register }: IProps) {
@@ -82,6 +98,14 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           render={({ field: { value, onChange } }) => {
             return (
               <Select
+                value={
+                  options.find((i) => i.value === value) as {
+                    value: string;
+                    label: {
+                      [key: string]: string;
+                    };
+                  }
+                }
                 label="Discount Type"
                 onChange={(val) => onChange(val.value)}
                 errors={errors?.discount_type}
@@ -110,27 +134,20 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           render={({ field: { value, onChange } }) => {
             return (
               <Select
+                value={
+                  freeDeliveryOptions.find((i) => i.value === value) as {
+                    value: string;
+                    label: {
+                      [key: string]: string;
+                    };
+                  }
+                }
                 label="Free Delivery"
                 onChange={(val) => onChange(val.value)}
                 errors={errors?.free_delivery}
-                options={[
-                  {
-                    title: {
-                      ar: "نعم",
-                      en: "Yes",
-                    },
-                    value: "1",
-                  },
-                  {
-                    title: {
-                      ar: "لا",
-                      en: "No",
-                    },
-                    value: "0",
-                  },
-                ]}
+                options={freeDeliveryOptions}
                 defaultValue="0"
-                getOptionLabel={(option: any) => option.title[language]}
+                getOptionLabel={(option: any) => option.label[language]}
                 getOptionValue={(option) => option.value}
               />
             );

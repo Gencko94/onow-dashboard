@@ -23,6 +23,7 @@ declare module "styled-components" {
     subHeading: string;
     textColor: string;
     shadow: string;
+    errorShadow: string;
     overlayColor: string;
     boxColor: string;
     btnPrimaryLight: string;

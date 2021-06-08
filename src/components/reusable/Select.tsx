@@ -15,9 +15,9 @@ import {
 
 interface IProps<T> {
   label: string;
-
+  value: T;
   options: T[];
-  defaultValue: any;
+  defaultValue?: any;
   errors: any;
   required?: boolean;
   errorMessage?: string;
@@ -52,6 +52,7 @@ export default function Select<T>({
   formatGroupLabel,
   formatOptionLabel,
   onChange,
+  value,
 }: IProps<T>) {
   const { t } = useTranslation();
   const selectStyles:
@@ -86,6 +87,7 @@ export default function Select<T>({
       <>
         <S
           isMulti={isMulti}
+          value={value}
           defaultValue={options.find((i: any) => i.value === defaultValue)}
           isSearchable={isSearchable}
           placeholder={placeholder}

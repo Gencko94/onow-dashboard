@@ -40,6 +40,10 @@ interface BaseInput {
    */
   min: number;
   max?: number;
+  /**
+   * Default Value
+   */
+  defaultValue?: any;
 }
 interface RequiredInput extends BaseInput {
   /**
@@ -68,7 +72,7 @@ const IconedNumberInput = ({
   required,
   label,
   requiredMessage,
-
+  defaultValue,
   min,
   max,
   desc,
@@ -85,6 +89,7 @@ const IconedNumberInput = ({
         </span>
 
         <input
+          defaultValue={defaultValue}
           type="number"
           min={min}
           max={max!}

@@ -15,6 +15,10 @@ interface IProps {
   min?: number;
   max?: number;
   desc?: string;
+  /**
+   * Default Value
+   */
+  defaultValue?: any;
 }
 
 const PrefixedInput = ({
@@ -29,6 +33,7 @@ const PrefixedInput = ({
   min,
   max,
   desc,
+  defaultValue,
 }: IProps) => {
   const {
     i18n: { language },
@@ -42,6 +47,7 @@ const PrefixedInput = ({
         </div>
 
         <input
+          defaultValue={defaultValue}
           type={number ? "number" : "text"}
           min={min!}
           max={max!}

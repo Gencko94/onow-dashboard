@@ -28,12 +28,12 @@ export type PRODUCT = {
   name: {
     [key: string]: string;
   };
+  category_id: number[];
   slug: string;
   category: MINI_CATEGORY[];
   images: PRODUCT_IMAGE[];
-  short_description: {
-    ar: string;
-    en: string;
+  description: {
+    [key: string]: string;
   };
 
   price: number;

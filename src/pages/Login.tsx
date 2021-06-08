@@ -56,7 +56,7 @@ const Login = () => {
     try {
       await login({
         password: data.password,
-        login: data.login,
+        login: data.login.toLowerCase(),
       });
     } catch (error) {
       console.log(error);

@@ -1,9 +1,12 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { USER, LOGIN_FORM, LOGIN_RESPONSE } from "../interfaces/auth/auth";
 import { CUSTOMER, NEW_CUSTOMER } from "../interfaces/customers/customers";
 import { GET_GOOGLE_MAP_DATA, MapCoordinates } from "../interfaces/maps/maps";
 import { GET_STORES_RESPONSE } from "../interfaces/stores/stores";
-import { GET_ORDERS_RESPONSE } from "../interfaces/orders/orders";
+import {
+  GET_ORDERS_RESPONSE,
+  ORDERS_FILTERS,
+} from "../interfaces/orders/orders";
 
 const uri = "https://new-version.o-now.net/customer-api";
 
@@ -109,16 +112,21 @@ export const getGoogleMapsLocation = async ({
 };
 
 // Orders
-
-export const getOrders = async (
-  storeId: number
-): Promise<GET_ORDERS_RESPONSE> => {
+type GET_ORDERS_REQUEST = {
+  storeId: number;
+  filters: ORDERS_FILTERS;
+};
+export const getOrders = async ({
+  storeId,
+  filters,
+}: GET_ORDERS_REQUEST): Promise<GET_ORDERS_RESPONSE> => {
   const t = localStorage.getItem("dshtid");
-  const config = {
+  const config: AxiosRequestConfig = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
       StoreId: storeId,
     },
+    // params: filters,
   };
   const res = await axios.get(`${uri}/get-orders`, config);
   return res.data.results;

@@ -34,6 +34,10 @@ interface BaseInput {
    * 	Optional placeholder for the input.
    */
   placeholder?: string;
+  /**
+   * Default Value
+   */
+  defaultValue?: any;
 }
 interface RequiredInput extends BaseInput {
   /**
@@ -64,6 +68,7 @@ const IconedInput = ({
   requiredMessage,
   placeholder,
   desc,
+  defaultValue,
 }: IProps) => {
   const {
     i18n: { language },
@@ -77,6 +82,7 @@ const IconedInput = ({
         </span>
 
         <input
+          defaultValue={defaultValue}
           placeholder={placeholder}
           {...register(name, {
             required: required ? requiredMessage : false,

@@ -4,14 +4,6 @@ import Toggle from "react-toggle";
 import "react-toggle/style.css";
 interface IProps {
   /**
-   * ```control``` object provided by ```useForm```.
-   */
-  control: Control<any>;
-  /**
-   * Input's name being registered.
-   */
-  name: string;
-  /**
    * Primary Label.
    */
   label: string;
@@ -23,9 +15,25 @@ interface IProps {
    * Optional Secondary description.
    */
   secondaryDesc?: string;
+  /**
+   * ```onChange``` callback.
+   */
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  /**
+   * ```checked``` boolean
+   */
+  checked: boolean;
+  defaultValue?: boolean;
 }
 
-const GithubInput = ({ control, name, label, desc, secondaryDesc }: IProps) => {
+const GithubInput = ({
+  onChange,
+  checked,
+  label,
+  desc,
+  defaultValue,
+  secondaryDesc,
+}: IProps) => {
   return (
     <Container>
       <div className="text-container">
@@ -34,13 +42,10 @@ const GithubInput = ({ control, name, label, desc, secondaryDesc }: IProps) => {
         {secondaryDesc && <p className="second-subtitle">{secondaryDesc}</p>}
       </div>
       <div>
-        <Controller
-          name={name}
-          control={control}
-          defaultValue={false}
-          render={({ field: { onChange, value } }) => (
-            <Toggle checked={value} onChange={onChange} />
-          )}
+        <Toggle
+          defaultChecked={defaultValue}
+          checked={checked}
+          onChange={onChange}
         />
       </div>
     </Container>

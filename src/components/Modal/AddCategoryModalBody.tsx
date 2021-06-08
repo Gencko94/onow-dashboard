@@ -1,27 +1,29 @@
 import { MdSubdirectoryArrowRight } from "react-icons/md";
 import styled from "styled-components";
 
-import { Control, Controller, SetFieldValue, useWatch } from "react-hook-form";
+import { Control, Controller, useWatch } from "react-hook-form";
 import { MINI_CATEGORY } from "../../interfaces/categories/categories";
 
 import Chip from "../reusable/Chip";
 import { useQuery } from "react-query";
 import { getMiniCategories } from "../../utils/test-queries";
 import { useTranslation } from "react-i18next";
-import ModalTail from "../reusable/ModalTail";
 import Checkbox from "../reusable/Inputs/Checkbox";
+import { firstTabInfo } from "../AddProduct/CreateProductGeneralInfo/CreateProductGeneralInfo";
+import { NewProductContext } from "../../pages/Product/CreateNewProduct";
+import { useContext } from "react";
 
 interface IProps {
-  closeFunction: () => void;
-  setValue: SetFieldValue<any>;
-  control: Control<any>;
+  control: Control<firstTabInfo>;
+  errors: boolean;
 }
-const AddCategoryModalBody = ({ closeFunction, setValue, control }: IProps) => {
+const AddCategoryModalBody = ({ control, errors }: IProps) => {
+  const { formValues } = useContext(NewProductContext);
   const categories = useWatch({
-    control,
     name: "category_id",
+    control,
+    defaultValue: formValues?.category_id,
   });
-
   const { data } = useQuery<MINI_CATEGORY[]>(
     "mini-categories",
     getMiniCategories,
@@ -31,32 +33,35 @@ const AddCategoryModalBody = ({ closeFunction, setValue, control }: IProps) => {
     i18n: { language },
   } = useTranslation();
 
-  const handleToggleCategories = (
+  function handleToggleCategories(
     category: MINI_CATEGORY,
     onChange: (...event: any[]) => void
-  ) => {
-    const found = categories.find((i: any) => i.id === category.id);
+  ) {
+    const found = categories?.find((i: any) => i.id === category.id);
 
     if (!found) {
-      onChange([...categories, category]);
+      onChange([...categories!, category]);
     } else {
-      onChange(categories.filter((i: any) => i.id !== category.id));
+      onChange(categories?.filter((i: any) => i.id !== category.id));
     }
-  };
+  }
 
   return (
     <>
       <Controller
         control={control}
         name="category_id"
+        rules={{
+          required: "Required",
+        }}
+        defaultValue={formValues?.category_id}
         render={({ field: { onChange } }) => {
           return (
             <Container>
-              {/* <h5 className="table-title">Categories</h5> */}
               <div className="chips">
                 <p className="text">Selected Categories :</p>
                 <div className="chips-wrapper">
-                  {categories.map((cat: any) => {
+                  {categories?.map((cat: any) => {
                     return (
                       <Chip
                         key={cat.id}
@@ -67,6 +72,9 @@ const AddCategoryModalBody = ({ closeFunction, setValue, control }: IProps) => {
                       />
                     );
                   })}
+                  {errors && (
+                    <p className="error-message">Please Select a Category</p>
+                  )}
                 </div>
               </div>
 
@@ -91,7 +99,7 @@ const AddCategoryModalBody = ({ closeFunction, setValue, control }: IProps) => {
                         </div>
                         <Checkbox
                           checked={Boolean(
-                            categories.find((i: any) => i.id === category.id)
+                            categories?.find((i: any) => i.id === category.id)
                           )}
                           onChange={(e) => {
                             e.stopPropagation();
@@ -122,7 +130,7 @@ const AddCategoryModalBody = ({ closeFunction, setValue, control }: IProps) => {
                             </div>
                             <Checkbox
                               checked={Boolean(
-                                categories.find((i: any) => i.id === child.id)
+                                categories?.find((i: any) => i.id === child.id)
                               )}
                               onChange={(e) => {
                                 e.stopPropagation();
@@ -140,14 +148,6 @@ const AddCategoryModalBody = ({ closeFunction, setValue, control }: IProps) => {
           );
         }}
       />
-
-      {/* <ModalTail
-        btnText="Confirm"
-        successCb={() => {
-          closeFunction();
-        }}
-        closeFunction={closeFunction}
-      /> */}
     </>
   );
 };
@@ -158,6 +158,10 @@ const Container = styled.div`
     padding: 1rem;
     color: ${(props) => props.theme.mainColor};
     border-bottom: ${(props) => props.theme.border};
+  }
+  .error-message {
+    color: ${(props) => props.theme.dangerRed};
+    font-size: 0.9rem;
   }
   .chips {
     display: flex;

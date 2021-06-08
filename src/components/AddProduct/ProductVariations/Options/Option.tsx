@@ -2,20 +2,22 @@ import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
 import { TiDelete } from "react-icons/ti";
 import styled from "styled-components";
-import {
-  NEW_PRODUCT_FORM_PROPS,
-  PRODUCT_OPTION,
-} from "../../../../interfaces/products/create-new-product";
+import { PRODUCT_OPTION } from "../../../../interfaces/products/create-new-product";
 
 import EmptyTable from "../../../reusable/EmptyTable";
 import IconedNumberInput from "../../../reusable/IconedNumberInput";
 import IconedInput from "../../../reusable/Inputs/IconedInput";
 import Select from "../../../reusable/Select";
 import Flex, { FlexWrapper } from "../../../StyledComponents/Flex";
+import { secondTabProps } from "../CreateProductPricingAndOptions";
 import OptionValue from "./OptionValue";
 const selectTypes = [
   { value: "single", label: "Single Select" },
   { value: "multiple", label: "Multiple Select" },
+];
+const requiredOptions = [
+  { value: false, label: "No" },
+  { value: true, label: "Yes" },
 ];
 interface IProps {
   option: PRODUCT_OPTION;
@@ -29,19 +31,23 @@ const Variation = ({ option, index, removeOption }: IProps) => {
     watch,
     formState: { errors },
     register,
-  } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
+  } = useFormContext<secondTabProps>();
   const { fields, append, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
-    name: `variations.${index}.values` as const, // unique name for your Field Array
+    name: `options.${index}.values` as const, // unique name for your Field Array
     // keyName: "id", default to "id", you can change the key name
   });
-  const optionType = watch(`variations.${index}.select_type` as const);
+  const options = watch("options");
+  const optionType = watch(`options.${index}.select_type` as const);
+
   return (
     <Container>
       <Flex justify="flex-end">
         <button
           type="button"
-          onClick={() => removeOption(index)}
+          onClick={() => {
+            if (options.length > 1) removeOption(index);
+          }}
           className="delete"
         >
           <TiDelete size={30} />
@@ -51,27 +57,42 @@ const Variation = ({ option, index, removeOption }: IProps) => {
       <div className="inputs">
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors?.variations?.[index]?.name?.en}
-          name={`variations.${index}.name.en`}
+          errors={errors?.options?.[index]?.name?.en}
+          name={`options.${index}.name.en`}
           register={register}
           label="Option Name English"
+          required
+          requiredMessage="Required"
+          defaultValue={options[index]?.name?.en}
         />
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors?.variations?.[index]?.name?.ar}
-          name={`variations.${index}.name.ar`}
+          errors={errors?.options?.[index]?.name?.ar}
+          name={`options.${index}.name.ar`}
           register={register}
           label="Option Name Arabic"
+          required
+          defaultValue={options[index]?.name?.ar}
+          requiredMessage="Required"
         />
         <Controller
           control={control}
-          name={`variations.${index}.select_type` as const}
+          name={`options.${index}.select_type` as any}
+          defaultValue={options[index].select_type}
           render={({ field: { value, onChange } }) => {
             return (
               <Select
+                value={
+                  selectTypes.find(
+                    (i) => i.value === options[index].select_type
+                  ) as {
+                    value: string;
+                    label: string;
+                  }
+                }
                 options={selectTypes}
-                defaultValue={selectTypes[0]}
-                errors={errors?.variations?.[index]?.select_type}
+                defaultValue={value}
+                errors={errors?.options?.[index]?.select_type}
                 getOptionLabel={(option) => option.label}
                 getOptionValue={(option) => option.value}
                 label="Option Type"
@@ -84,27 +105,34 @@ const Variation = ({ option, index, removeOption }: IProps) => {
         {optionType === "multiple" && (
           <IconedNumberInput
             Icon={MdSubtitles}
-            errors={errors?.variations?.[index]?.max_picks}
-            name={`variations.${index}.max_picks`}
+            errors={errors?.options?.[index]?.max_picks}
+            name={`options.${index}.max_picks`}
             register={register}
-            label="Maximum Selections"
+            label="Maximum choice selections"
             min={0}
+            defaultValue={options[index]?.max_picks}
             desc="0 For Unlimited"
           />
         )}
         <Controller
           control={control}
-          name={`variations.${index}.required` as const}
+          defaultValue={options[index].required}
+          name={`options.${index}.required` as const}
           render={({ field: { value, onChange } }) => {
             return (
               <Select
+                value={
+                  requiredOptions.find(
+                    (i) => i.value === options[index].required
+                  ) as {
+                    value: boolean;
+                    label: string;
+                  }
+                }
                 onChange={(val) => onChange(val.value)}
-                options={[
-                  { value: false, label: "No" },
-                  { value: true, label: "Yes" },
-                ]}
-                defaultValue={{ id: 1, name: "Yes" }}
-                errors={errors?.variations?.[index]?.required}
+                options={requiredOptions}
+                defaultValue={value}
+                errors={errors?.options?.[index]?.required}
                 getOptionLabel={(option) => option.label}
                 getOptionValue={(option: any) => option.value}
                 label="Required"
@@ -120,7 +148,11 @@ const Variation = ({ option, index, removeOption }: IProps) => {
             btnText="Add New Option Value"
             text="No Values were Added"
             withButton
-            cb={() => append({})}
+            cb={() =>
+              append({
+                name: { ar: "", en: "", price: "", sku: "" },
+              })
+            }
           />
         </div>
       )}
@@ -134,11 +166,17 @@ const Variation = ({ option, index, removeOption }: IProps) => {
                 index={childIndex}
                 parentIndex={index}
                 removeValue={remove}
+                valuesCount={fields.length}
               />
             );
           })}
           <div className="add-button">
-            <button type="button" onClick={() => append({})}>
+            <button
+              type="button"
+              onClick={() =>
+                append({ name: { ar: "", en: "" }, price: "", qty: 0, sku: "" })
+              }
+            >
               Add new value
             </button>
           </div>

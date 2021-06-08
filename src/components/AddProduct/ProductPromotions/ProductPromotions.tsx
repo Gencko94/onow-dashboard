@@ -8,7 +8,11 @@ import Grid from "../../StyledComponents/Grid";
 import PrefixedIconedInput from "../../reusable/Inputs/PrefixedIconedInput";
 import { IoPricetagsOutline } from "react-icons/io5";
 import DateIconedInput from "../../reusable/Inputs/DateIconedInput";
-import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
+import {
+  NEW_PRODUCT_FORM_PROPS,
+  OPTION_VALUE,
+  PRODUCT_OPTION,
+} from "../../../interfaces/products/create-new-product";
 
 const promotionTypeOptions = [
   {
@@ -35,7 +39,6 @@ const ProductPromotions = () => {
   const values = watch("promotions.values_skus");
   const options = [
     {
-      id: 1,
       name: {
         ar: "المقاس",
         en: "Size",
@@ -43,30 +46,26 @@ const ProductPromotions = () => {
       max_picks: 4,
       required: true,
       select_type: "single",
-      type_id: 1,
-      options: [
+
+      values: [
         {
-          id: 1,
           name: {
             ar: "صغير",
             en: "Small",
           },
           price: "2",
           qty: 1,
-          sale_end_date: "",
-          sale_price: "2",
+
           sku: "f",
         },
         {
-          id: 2,
           name: {
             ar: "كبير",
             en: "Large",
           },
           price: "3",
           qty: 1,
-          sale_end_date: "",
-          sale_price: "2",
+
           sku: "3",
         },
       ],
@@ -102,6 +101,12 @@ const ProductPromotions = () => {
           render={({ field: { value, onChange } }) => {
             return (
               <Select
+                value={
+                  promotionTypeOptions.find((i) => i.value === value) as {
+                    value: string;
+                    label: string;
+                  }
+                }
                 defaultValue="product_price"
                 errors={errors.promotions}
                 getOptionLabel={(option) => option.label}
@@ -121,6 +126,7 @@ const ProductPromotions = () => {
             render={({ field: { value, onChange } }) => {
               return (
                 <Select
+                  value={options.find((i: any) => i.value === value)}
                   isMulti
                   defaultValue="product_price"
                   onChange={(val) => onChange(val.value)}

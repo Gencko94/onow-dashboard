@@ -38,8 +38,8 @@ const Orders = ({ storeId }: { storeId: number }) => {
     order: "desc",
   });
   const { data } = useQuery(
-    ["store-orders", storeId],
-    () => getOrders(storeId),
+    ["store-orders", storeId, filters],
+    () => getOrders({ storeId, filters }),
     {
       suspense: true,
     }

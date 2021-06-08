@@ -1,27 +1,30 @@
+import { useContext } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { GrServices } from "react-icons/gr";
 import { RiHandCoinLine } from "react-icons/ri";
 import styled from "styled-components";
 import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
+import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 
 import CheckToggle from "../../reusable/CheckToggle";
 import IconedNumberInput from "../../reusable/IconedNumberInput";
-import IconedInput from "../../reusable/Inputs/IconedInput";
 import Select from "../../reusable/Select";
 import Grid from "../../StyledComponents/Grid";
+import { thirdTabProps } from "./CreateProductOrderingAndBranchAvailability";
 
 const unitsOptions = [
   { label: "Minutes", value: "m" },
   { label: "Hours", value: "h" },
 ];
 
-const ProductOrdering = () => {
+const CreateProductOrdering = () => {
+  const { formValues } = useContext(NewProductContext);
   const {
     register,
     control,
     watch,
     formState: { errors },
-  } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
+  } = useFormContext<thirdTabProps>();
   const allowSideNotes = watch("allow_side_notes");
   return (
     <Container>
@@ -38,6 +41,7 @@ const ProductOrdering = () => {
           register={register}
           min={0}
           desc="0 For Unlimited"
+          defaultValue={formValues?.max_qty_per_user}
         />
         <IconedNumberInput
           label="Preperation Time"
@@ -46,13 +50,21 @@ const ProductOrdering = () => {
           min={0}
           name="prep_time.time"
           register={register}
+          defaultValue={formValues?.max_qty_per_user}
         />
         <Controller
           control={control}
           name="prep_time.unit"
+          defaultValue={formValues?.prep_time?.unit}
           render={({ field: { value, onChange } }) => {
             return (
               <Select
+                value={
+                  unitsOptions.find((i) => i.value === value) as {
+                    value: string;
+                    label: string;
+                  }
+                }
                 options={unitsOptions}
                 label="Unit"
                 getOptionLabel={(option) => option.label}
@@ -69,6 +81,7 @@ const ProductOrdering = () => {
         <Controller
           control={control}
           name="allow_side_notes"
+          defaultValue={formValues?.allow_side_notes}
           render={({ field: { value, onChange } }) => {
             return (
               <CheckToggle
@@ -84,6 +97,7 @@ const ProductOrdering = () => {
           <Controller
             control={control}
             name="allow_attachments"
+            defaultValue={formValues?.allow_attachments}
             render={({ field: { value, onChange } }) => {
               return (
                 <CheckToggle
@@ -100,7 +114,7 @@ const ProductOrdering = () => {
   );
 };
 
-export default ProductOrdering;
+export default CreateProductOrdering;
 const Container = styled.div`
   .title-container {
     margin-bottom: 1rem;

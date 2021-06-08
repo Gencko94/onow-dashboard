@@ -104,7 +104,7 @@ export interface ORDERS_FILTERS {
     to: number | "";
   };
   orderDate: {
-    from: Date | "";
-    to: Date | "";
+    from: string;
+    to: string;
   };
 }

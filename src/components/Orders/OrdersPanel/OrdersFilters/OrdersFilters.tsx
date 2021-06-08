@@ -244,13 +244,14 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
                 <input
                   value={
                     filters.orderDate.from
-                      ? format(filters.orderDate.from as Date, "yyyy-MM-dd")
-                      : ""
+                    // ? format(filters.orderDate.from as Date, "yyyy-MM-dd")
+                    // : ""
                   }
                   readOnly
                 />
 
                 <button
+                  type="button"
                   onClick={() => setFromCalendarOpen(true)}
                   className="icon"
                 >
@@ -272,7 +273,8 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
                             ...prev,
                             orderDate: {
                               ...prev.orderDate,
-                              from: date as Date,
+                              // from: date as Date,
+                              from: format(date as Date, "yyyy-MM-dd"),
                             },
                           }));
                           setFromCalendarOpen(false);
@@ -296,13 +298,14 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
                 <input
                   value={
                     filters.orderDate.to
-                      ? format(filters.orderDate.to as Date, "yyyy-MM-dd")
-                      : ""
+                    // ? format(filters.orderDate.to as Date, "yyyy-MM-dd")
+                    // : ""
                   }
                   readOnly
                 />
 
                 <button
+                  type="button"
                   onClick={() => setToCalendarOpen(true)}
                   className="icon"
                 >
@@ -324,7 +327,8 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
                             ...prev,
                             orderDate: {
                               ...prev.orderDate,
-                              to: date as Date,
+                              // to: date as Date,
+                              to: format(date as Date, "yyyy-MM-dd"),
                             },
                           }));
                           setToCalendarOpen(false);
@@ -346,13 +350,14 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
         </div>
       </div>
       <ButtonsContainer>
-        <button className="filter-btn">
+        <button type="button" className="filter-btn">
           <span className="icon">
             <VscFilter size={20} />
           </span>
           <p>Filter Orders </p>
         </button>
         <button
+          type="button"
           onClick={() =>
             setFilters({
               orderAmount: {

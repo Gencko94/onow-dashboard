@@ -42,6 +42,7 @@ interface BaseInput {
    * Whether the input is disabled
    */
   disabled?: boolean;
+  defaultValue?: any;
 }
 interface RequiredInput extends BaseInput {
   /**
@@ -74,6 +75,7 @@ const PrefixedIconedInput = ({
   desc,
   prefix,
   disabled,
+  defaultValue,
 }: IProps) => {
   const {
     i18n: { language },
@@ -87,6 +89,7 @@ const PrefixedIconedInput = ({
         </span>
 
         <input
+          defaultValue={defaultValue}
           disabled={disabled}
           placeholder={placeholder}
           {...register(name, {

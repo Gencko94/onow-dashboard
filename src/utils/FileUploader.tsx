@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Control, Controller, UseFormSetValue } from "react-hook-form";
 import { RiDeleteBinLine } from "react-icons/ri";
 import styled from "styled-components";
+import { firstTabInfo } from "../components/AddProduct/CreateProductGeneralInfo/CreateProductGeneralInfo";
 const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 1000000;
 const convertBytesToKB = (bytes: number) => Math.round(bytes / 1000);
 interface IProps {
@@ -9,7 +10,7 @@ interface IProps {
   control: Control<any> | undefined;
   multiple: boolean;
   maxFileSizeInBytes?: number;
-  setValue?: UseFormSetValue<any> | undefined;
+  setValue: UseFormSetValue<any>;
 }
 const FileUploader = ({
   multiple,
@@ -53,7 +54,7 @@ const FileUploader = ({
   const removeImage = (fileName: string) => {
     delete images[fileName];
     setImages({ ...images });
-    setValue?.("image", convertNestedObjectToArray({ ...images }));
+    setValue?.("images", convertNestedObjectToArray({ ...images }));
   };
   return (
     <Container>
@@ -76,8 +77,7 @@ const FileUploader = ({
         <p className="desc">Accepted Formats : .jpeg .png .jpg</p>
         <Controller
           control={control}
-          name="image"
-          rules={{ required: "Required" }}
+          name="images"
           render={({ field: { onChange, value, ref } }) => (
             <>
               <DragInput

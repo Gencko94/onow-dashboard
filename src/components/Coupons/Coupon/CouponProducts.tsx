@@ -11,42 +11,42 @@ interface IProps {
 
 const options = [
   {
-    title: {
+    label: {
       en: "All Products",
       ar: "جميع المنتجات",
     },
     value: "all_products",
   },
   {
-    title: {
+    label: {
       en: "Specified Categories",
       ar: "تصنيفات محددة",
     },
     value: "categories",
   },
   {
-    title: {
+    label: {
       en: "Specific Products",
       ar: "منتجات محددة",
     },
     value: "specific_products",
   },
   {
-    title: {
+    label: {
       en: "All Products except specific products",
       ar: "جميع المنتجات ما عدا منتجات محددة",
     },
     value: "all_products_specific",
   },
   {
-    title: {
+    label: {
       en: "All Products except discounted products",
       ar: "جميع المنتجات ما عدا المنتجات المخفضة",
     },
     value: "all_products_discounted",
   },
   {
-    title: {
+    label: {
       en: "Discounted Products Only",
       ar: "المنتجات المخفضة فقط",
     },
@@ -79,6 +79,14 @@ const CouponProducts = ({
           render={({ field: { value, onChange } }) => {
             return (
               <Select
+                value={
+                  options.find((i) => i.value === value) as {
+                    value: string;
+                    label: {
+                      [key: string]: string;
+                    };
+                  }
+                }
                 onChange={(val) => onChange(val.value)}
                 errors={errors?.coupon_coverage}
                 getOptionLabel={(option: any) => option.title[language]}
@@ -100,6 +108,14 @@ const CouponProducts = ({
             render={({ field: { value, onChange } }) => {
               return (
                 <Select
+                  value={
+                    options.find((i) => i.value === value) as {
+                      value: string;
+                      label: {
+                        [key: string]: string;
+                      };
+                    }
+                  }
                   isMulti
                   onChange={(val) => onChange(val.value)}
                   errors={errors?.coupon_coverage}

@@ -1,4 +1,4 @@
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { IoPricetagsOutline } from "react-icons/io5";
 import styled from "styled-components";
 import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
@@ -10,6 +10,7 @@ const ProductPricing = () => {
   const {
     register,
     control,
+    clearErrors,
     watch,
     formState: { errors },
   } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
@@ -30,12 +31,24 @@ const ProductPricing = () => {
           disabled={priceFromVariationsEnabled}
         />
 
-        <GithubInput
+        <Controller
+          name="price_by_options"
           control={control}
-          label="Enable Pricing by variations"
-          name="priceFromVariations"
-          desc="Product Price will be dependent on the Variation Price."
-          secondaryDesc="Enabling this option will enable product variations by default."
+          defaultValue={false}
+          render={({ field: { onChange, value } }) => (
+            <GithubInput
+              onChange={(e) => {
+                if (errors.price) {
+                  clearErrors("price");
+                  onChange(e.target.checked);
+                }
+              }}
+              checked={value}
+              label="Enable Pricing by variations"
+              desc="Product Price will be dependent on the Variation Price."
+              secondaryDesc="Enabling this option will enable product variations by default."
+            />
+          )}
         />
       </div>
     </Container>

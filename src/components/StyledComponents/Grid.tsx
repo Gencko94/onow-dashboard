@@ -26,7 +26,7 @@ interface IProps {
 }
 const Grid: FC<IProps> = ({ children, rows, cols, gap, items, p }) => {
   return (
-    <Wrapper
+    <GridWrapper
       style={
         {
           "--cols": cols,
@@ -38,12 +38,12 @@ const Grid: FC<IProps> = ({ children, rows, cols, gap, items, p }) => {
       }
     >
       {children}
-    </Wrapper>
+    </GridWrapper>
   );
 };
 
 export default Grid;
-export const Wrapper = styled.div`
+export const GridWrapper = styled.div`
   display: grid;
   grid-template-columns: var(--cols);
   grid-template-rows: var(--rows);

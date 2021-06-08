@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import ProductPricing from "./ProductPricing";
 import Hr from "../../StyledComponents/Hr";
 import ProductOptions from "./ProductOptions";
+import ProductPricing from "./ProductPricing";
 const ProductPricingAndOptions = () => {
   return (
     <Container>

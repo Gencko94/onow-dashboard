@@ -5,32 +5,44 @@ import { MdSubtitles } from "react-icons/md";
 import { RiHandCoinLine } from "react-icons/ri";
 import { TiDelete } from "react-icons/ti";
 import styled from "styled-components";
-import { NEW_PRODUCT_FORM_PROPS } from "../../../../interfaces/products/create-new-product";
 
 import IconedInput from "../../../reusable/Inputs/IconedInput";
 import PrefixedIconedInput from "../../../reusable/Inputs/PrefixedIconedInput";
 import Flex, { FlexWrapper } from "../../../StyledComponents/Flex";
+import { secondTabProps } from "../CreateProductPricingAndOptions";
 interface IProps {
   index: number;
   parentIndex: number;
   removeValue: (index?: number | number[] | undefined) => void;
+  valuesCount: number;
 }
 
-const OptionValue = ({ index, parentIndex, removeValue }: IProps) => {
+const OptionValue = ({
+  index,
+  parentIndex,
+  removeValue,
+  valuesCount,
+}: IProps) => {
   const {
     formState: { errors },
     register,
-    control,
-  } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
+    watch,
+  } = useFormContext<secondTabProps>();
+
   const {
     i18n: { language },
   } = useTranslation();
+
+  const options = watch(`options.${parentIndex}.values` as any);
+
   return (
     <Container>
       <Flex justify="flex-end">
         <button
           type="button"
-          onClick={() => removeValue(index)}
+          onClick={() => {
+            if (valuesCount > 1) removeValue(index);
+          }}
           className="delete"
         >
           <TiDelete size={30} />
@@ -39,36 +51,42 @@ const OptionValue = ({ index, parentIndex, removeValue }: IProps) => {
       <div className="inputs">
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors?.variations?.[parentIndex]?.values?.[index]?.name?.en}
-          name={`variations.${parentIndex}.values.${index}.name.en`}
+          errors={errors?.options?.[parentIndex]?.values?.[index]?.name?.en}
+          name={`options.${parentIndex}.values.${index}.name.en`}
           register={register}
           label="Value Name English"
+          required
+          requiredMessage="Required"
+          defaultValue={options?.[index].name.en}
         />
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors?.variations?.[parentIndex]?.values?.[index]?.name?.ar}
-          name={`variations.${parentIndex}.values.${index}.name.ar`}
+          errors={errors?.options?.[parentIndex]?.values?.[index]?.name?.ar}
+          name={`options.${parentIndex}.values.${index}.name.ar`}
           register={register}
           label="Value Name Arabic"
+          defaultValue={options?.[index].name.ar}
+          requiredMessage="Required"
+          required
         />
-
         <PrefixedIconedInput
-          errors={errors?.variations?.[parentIndex]?.values?.[index]?.price}
+          errors={errors?.options?.[parentIndex]?.values?.[index]?.price}
           Icon={IoPricetagsOutline}
-          name={`variations.${parentIndex}.values.${index}.price`}
+          name={`options.${parentIndex}.values.${index}.price`}
           register={register}
           label="Price"
           prefix="KD"
           desc="Leave empty to disable"
+          defaultValue={options?.[index].price}
         />
-
         <IconedInput
-          errors={errors?.variations?.[parentIndex]?.values?.[index]?.qty}
+          errors={errors?.options?.[parentIndex]?.values?.[index]?.qty}
           Icon={RiHandCoinLine}
-          name={`variations.${parentIndex}.values.${index}.qty`}
+          name={`options.${parentIndex}.values.${index}.qty`}
           register={register}
           label="Stock Quantity"
           desc="Leave empty for unlimited"
+          defaultValue={options?.[index].qty}
         />
       </div>
     </Container>

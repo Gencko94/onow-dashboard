@@ -18,18 +18,34 @@ interface IProps {
 }
 const options = [
   {
-    title: {
+    label: {
       ar: "نسبة",
       en: "Percent",
     },
     value: "percent",
   },
   {
-    title: {
+    label: {
       ar: "مبلغ ثابت",
       en: "Fixed Amount",
     },
     value: "fixed",
+  },
+];
+const subCategoryOptions = [
+  {
+    label: {
+      ar: "لا",
+      en: "No",
+    },
+    value: false,
+  },
+  {
+    label: {
+      ar: "نعم",
+      en: "Yes",
+    },
+    value: true,
   },
 ];
 const CategoryInfo = ({ control, errors, register, setValue }: IProps) => {
@@ -81,27 +97,20 @@ const CategoryInfo = ({ control, errors, register, setValue }: IProps) => {
             render={({ field: { value, onChange } }) => {
               return (
                 <Select
+                  value={
+                    subCategoryOptions.find((i) => i.value === value) as {
+                      value: boolean;
+                      label: {
+                        [key: string]: string;
+                      };
+                    }
+                  }
                   onChange={(val) => onChange(val.value)}
                   label="As a child category"
                   errors={errors?.as_child}
-                  options={[
-                    {
-                      title: {
-                        ar: "نعم",
-                        en: "Yes",
-                      },
-                      value: true,
-                    },
-                    {
-                      title: {
-                        ar: "لا",
-                        en: "No",
-                      },
-                      value: false,
-                    },
-                  ]}
+                  options={subCategoryOptions}
                   defaultValue={false}
-                  getOptionLabel={(option: any) => option.title[language]}
+                  getOptionLabel={(option: any) => option.label[language]}
                   getOptionValue={(option: any) => option.value}
                 />
               );
@@ -115,13 +124,21 @@ const CategoryInfo = ({ control, errors, register, setValue }: IProps) => {
               render={({ field: { value, onChange } }) => {
                 return (
                   <Select
+                    value={
+                      options.find((i) => i.value === value) as {
+                        value: string;
+                        label: {
+                          [key: string]: string;
+                        };
+                      }
+                    }
                     label="Select Category Parent"
                     onChange={(val) => onChange(val.value)}
                     required={isChild}
                     errors={errors?.parent}
                     options={options}
                     defaultValue="fixed"
-                    getOptionLabel={(option: any) => option.title[language]}
+                    getOptionLabel={(option: any) => option.label[language]}
                     getOptionValue={(option) => option.value}
                   />
                 );
