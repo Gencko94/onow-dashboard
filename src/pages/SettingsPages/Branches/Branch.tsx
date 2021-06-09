@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
-import BranchInformation from "../../../components/SettingsPage/Branches&Warehouses/Branches/BranchInformation";
-import BranchLocation from "../../../components/SettingsPage/Branches&Warehouses/Branches/BranchLocation";
-import BranchWorkingHours from "../../../components/SettingsPage/Branches&Warehouses/Branches/BranchWorkingHours";
+import BranchInformation from "../../../components/SettingsPage/StoreBranches/Branches/BranchInformation";
+import BranchLocation from "../../../components/SettingsPage/StoreBranches/Branches/BranchLocation";
+import BranchWorkingHours from "../../../components/SettingsPage/StoreBranches/Branches/BranchWorkingHours";
 import { BRANCH } from "../../../interfaces/settings/branches-warehouses/branches-warehouses";
 
 const Branch = () => {
@@ -20,8 +20,8 @@ const Branch = () => {
     <div>
       <Breadcrumbs
         childLabel="Branch"
-        parentLabel="Branches & Warehouses"
-        parentTarget="/settings/branch-warehouse"
+        parentLabel="Branches"
+        parentTarget="/settings/branches"
       />
       <form onSubmit={handleSubmit(onSubmit)}>
         <BranchInformation

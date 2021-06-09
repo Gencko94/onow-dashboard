@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { HiOutlineSwitchVertical } from "react-icons/hi";
+import { HiOutlineSwitchVertical, HiSwitchHorizontal } from "react-icons/hi";
 import { CSSTransition } from "react-transition-group";
 import ClickAwayListener from "react-click-away-listener";
 import { useContext, useState } from "react";
@@ -8,6 +8,7 @@ import { getUserStores } from "../../../utils/queries";
 import { useTranslation } from "react-i18next";
 import ProjectItem from "./ProjectItem";
 import { AuthProvider } from "../../../contexts/AuthContext";
+import { BiLinkExternal } from "react-icons/bi";
 const ProjectSwitcher = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user } = useContext(AuthProvider);
@@ -27,26 +28,17 @@ const ProjectSwitcher = () => {
         />
         <div className="name-container">
           <p className="name">{user?.stores[0].storeName[language]}</p>
-          <p className="domain">{user?.stores[0].domain}</p>
+
+          <a
+            className="link"
+            href={`http://${user?.stores[0].domain}`}
+            target="#"
+          >
+            <p>{user?.stores[0].domain}</p>
+            <BiLinkExternal size={10} />
+          </a>
         </div>
       </Project>
-      <button onClick={() => setMenuOpen(true)} className="switcher">
-        <HiOutlineSwitchVertical size={22} />
-        <CSSTransition
-          in={menuOpen}
-          classNames="menu"
-          unmountOnExit
-          timeout={100}
-        >
-          <ClickAwayListener onClickAway={() => setMenuOpen(false)}>
-            <ul className="menu">
-              {user?.stores.map((project) => {
-                return <ProjectItem key={project.id} project={project} />;
-              })}
-            </ul>
-          </ClickAwayListener>
-        </CSSTransition>
-      </button>
     </Container>
   );
 };
@@ -59,32 +51,22 @@ const Container = styled.div`
   padding: 0.5rem;
   margin: 0 0.5rem;
 
-  display: grid;
   position: relative;
-  grid-template-columns: 1fr 25px;
 
   border-radius: 8px;
   margin-bottom: 1rem;
-  .switcher {
+  .link {
     display: flex;
-    align-items: center;
-    justify-content: center;
 
+    align-items: center;
     color: #fff;
-    .menu {
-      position: absolute;
-      top: -10px;
-      right: 8px;
-      z-index: 10;
-      width: 100%;
-      background-color: #fff;
-      transform-origin: right;
-      box-shadow: ${(props) => props.theme.shadow};
-      border-radius: 5px;
-      max-height: 300px;
-      min-height: 100px;
-      overflow-y: auto;
-      color: ${(props) => props.theme.headingColor};
+    &:hover {
+      text-decoration: underline;
+    }
+    p {
+      font-size: 0.7rem;
+      font-weight: ${(props) => props.theme.font.regular};
+      margin: 0 0.25rem;
     }
   }
 `;
@@ -92,6 +74,7 @@ const Container = styled.div`
 const Project = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 0.25rem;
   .logo {
     border-radius: 50%;
     max-height: 40px;
@@ -99,12 +82,11 @@ const Project = styled.div`
   .name-container {
     align-items: center;
     margin: 0 0.5rem;
+    p {
+      font-size: 0.8rem;
+    }
     p.name {
       font-size: 0.9rem;
-      font-weight: ${(props) => props.theme.font.regular};
-    }
-    p.domain {
-      font-size: 0.7rem;
       font-weight: ${(props) => props.theme.font.regular};
     }
   }

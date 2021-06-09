@@ -89,7 +89,7 @@ const CouponProducts = ({
                 }
                 onChange={(val) => onChange(val.value)}
                 errors={errors?.coupon_coverage}
-                getOptionLabel={(option: any) => option.title[language]}
+                getOptionLabel={(option: any) => option.label[language]}
                 getOptionValue={(option) => option.value}
                 options={options}
                 defaultValue="all_products"
@@ -119,7 +119,7 @@ const CouponProducts = ({
                   isMulti
                   onChange={(val) => onChange(val.value)}
                   errors={errors?.coupon_coverage}
-                  getOptionLabel={(option: any) => option.title[language]}
+                  getOptionLabel={(option: any) => option.label[language]}
                   getOptionValue={(option) => option.value}
                   options={options}
                   defaultValue="all_products"

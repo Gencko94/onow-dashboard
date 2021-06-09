@@ -159,7 +159,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    /* color: #7c7c7c; */
+
     color: ${(props) => props.theme.mainColor};
   }
 `;

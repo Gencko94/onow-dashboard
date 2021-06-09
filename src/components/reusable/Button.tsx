@@ -114,6 +114,7 @@ export const ButtonWrapper = styled.button<{
             font-size:0.9rem;
             margin: 0 0.25rem;
         }
+       
         ${
           withTransition &&
           css`

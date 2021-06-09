@@ -7,7 +7,7 @@ import StoreTasks from "../components/Dashboard/StoreTasks/StoreTasks";
 const Dashboard = () => {
   return (
     <Container>
-      <StoreTasks />
+      {/* <StoreTasks /> */}
 
       <DashboardStatPanel />
       <DashboardOrders />

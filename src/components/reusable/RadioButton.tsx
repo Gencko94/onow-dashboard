@@ -1,36 +1,20 @@
-import { Control, Controller, useWatch } from "react-hook-form";
+import {} from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 interface IProps {
-  control: Control<any>;
   label: string;
-  name: any;
-  value: any;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  checked: boolean;
 }
 
-const RadioButton = ({ control, label, name, value }: IProps) => {
-  const watch = useWatch({
-    control,
-  });
+const RadioButton = ({ label, checked, onChange }: IProps) => {
   const { t } = useTranslation();
   return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field: { onChange, name } }) => {
-        return (
-          <Container
-            onClick={() => {
-              onChange(value);
-            }}
-          >
-            <input type="radio" checked={value === watch[name]} />
-            <label>{t(label)}</label>
-          </Container>
-        );
-      }}
-    />
+    <Container>
+      <input onChange={onChange} type="radio" checked={checked} />
+      <label>{t(label)}</label>
+    </Container>
   );
 };
 

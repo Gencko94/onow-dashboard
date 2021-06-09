@@ -111,7 +111,7 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
                 errors={errors?.discount_type}
                 options={options}
                 defaultValue="fixed"
-                getOptionLabel={(option: any) => option.title[language]}
+                getOptionLabel={(option: any) => option.label[language]}
                 getOptionValue={(option: any) => option.value}
               />
             );

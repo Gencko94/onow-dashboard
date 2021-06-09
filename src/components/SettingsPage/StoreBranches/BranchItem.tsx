@@ -30,9 +30,7 @@ const BranchItem = () => {
     }
   };
   return (
-    <Container
-      onClick={() => history.push(`/settings/branch-warehouse/branch/1`)}
-    >
+    <Container onClick={() => history.push(`/settings/branches/branch/1`)}>
       <div className="field">
         <h6>Branch 1</h6>
       </div>

@@ -49,9 +49,7 @@ const CreateStaffMember = lazy(
 const AccountSettings = lazy(
   () => import("./pages/SettingsPages/AccountSettings")
 );
-const BranchesAndWarehouses = lazy(
-  () => import("./pages/SettingsPages/BranchesAndWarehouses")
-);
+const Branches = lazy(() => import("./pages/SettingsPages/Branches"));
 const StoreIdentity = lazy(() => import("./pages/SettingsPages/StoreIdentity"));
 
 const StoreInformation = lazy(
@@ -61,18 +59,12 @@ const StoreSEO = lazy(() => import("./pages/SettingsPages/StoreSEO"));
 const ProductListGridCustomizer = lazy(
   () => import("./pages/ProductListGridCustomizer")
 );
-const Branch = lazy(
-  () => import("./pages/SettingsPages/Branches&Warehouses/Branch")
-);
-const Warehouse = lazy(
-  () => import("./pages/SettingsPages/Branches&Warehouses/Warehouse")
-);
+const Branch = lazy(() => import("./pages/SettingsPages/Branches/Branch"));
+
 const CreateNewBranch = lazy(
-  () => import("./pages/SettingsPages/Branches&Warehouses/CreateNewBranch")
+  () => import("./pages/SettingsPages/Branches/CreateNewBranch")
 );
-const CreateNewWarehouse = lazy(
-  () => import("./pages/SettingsPages/Branches&Warehouses/CreateNewWarehouse")
-);
+
 const StoreCurrencies = lazy(
   () => import("./pages/SettingsPages/Currencies/StoreCurrencies")
 );
@@ -197,8 +189,8 @@ function App() {
                           Component={AccountSettings}
                         />
                         <ProtectedRoute
-                          path="/settings/branch-warehouse"
-                          Component={BranchesAndWarehouses}
+                          path="/settings/branches"
+                          Component={Branches}
                         />
                         <ProtectedRoute
                           path="/settings/store-information"
@@ -233,19 +225,12 @@ function App() {
                           Component={CreateStaffMember}
                         />
                         <ProtectedRoute
-                          path="/settings/branch-warehouse/branch/:id"
+                          path="/settings/branches/branch/:id"
                           Component={Branch}
                         />
+
                         <ProtectedRoute
-                          path="/settings/branch-warehouse/warehouse/:id"
-                          Component={Warehouse}
-                        />
-                        <ProtectedRoute
-                          path="/settings/branch-warehouse/create/warehouse"
-                          Component={CreateNewWarehouse}
-                        />
-                        <ProtectedRoute
-                          path="/settings/branch-warehouse/create/branch"
+                          path="/settings/branches/create/branch"
                           Component={CreateNewBranch}
                         />
                         <ProtectedRoute

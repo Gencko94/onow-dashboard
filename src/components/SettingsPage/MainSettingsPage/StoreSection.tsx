@@ -33,10 +33,10 @@ const StoreSection = () => {
           desc="Manage your store identity"
         />
         <SettingsCard
-          title="Branches & Warehouses"
-          target="/settings/branch-warehouse"
+          title="Store Branches"
+          target="/settings/branches"
           Icon={FcTimeline}
-          desc="Manage your store branches & Warehouses"
+          desc="Manage your store branches"
         />
         <SettingsCard
           title="Store Domain"
