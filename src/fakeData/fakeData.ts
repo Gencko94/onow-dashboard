@@ -287,23 +287,3 @@ export const categories = [
     ],
   },
 ];
-export const products: PRODUCT[] = [
-  {
-    id: 1,
-    name: {
-      en: "Body Lotion",
-      ar: "مرطب للجسم",
-    },
-    slug: "body-lotion",
-    price: 2,
-    category: [category1],
-    images: [{ is_default: true, url: "/images/product.webp" }],
-    price_by_variations: false,
-    description: {
-      ar: "مرحبا",
-      en: "lorem ipsum",
-    },
-    variations_enabled: false,
-    category_id: [],
-  },
-];

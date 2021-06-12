@@ -1,10 +1,10 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { IoPricetagsOutline } from "react-icons/io5";
 import styled from "styled-components";
-import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
 
 import GithubInput from "../../reusable/Inputs/GithubInput";
 import PrefixedIconedInput from "../../reusable/Inputs/PrefixedIconedInput";
+import { FORM_PROPS } from "./ProductPricingAndOptions";
 
 const ProductPricing = () => {
   const {
@@ -12,8 +12,9 @@ const ProductPricing = () => {
     control,
     clearErrors,
     watch,
+    setValue,
     formState: { errors },
-  } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
+  } = useFormContext<FORM_PROPS>();
   const priceFromVariationsEnabled = watch("price_by_options");
   return (
     <Container>
@@ -21,6 +22,15 @@ const ProductPricing = () => {
         <h5>Product Pricing</h5>
       </div>
       <div className="inputs-container">
+        {/* <PrefixedIconedInput
+          errors={errors.price}
+          Icon={IoPricetagsOutline}
+          name="price"
+          register={register}
+          label="Product Price"
+          prefix="KD"
+          disabled={priceFromVariationsEnabled}
+        /> */}
         <PrefixedIconedInput
           errors={errors.price}
           Icon={IoPricetagsOutline}
@@ -29,9 +39,11 @@ const ProductPricing = () => {
           label="Product Price"
           prefix="KD"
           disabled={priceFromVariationsEnabled}
+          required={!priceFromVariationsEnabled}
+          requiredMessage="Required"
+          // defaultValue={formValues?.price}
         />
-
-        <Controller
+        {/* <Controller
           name="price_by_options"
           control={control}
           defaultValue={false}
@@ -47,6 +59,27 @@ const ProductPricing = () => {
               label="Enable Pricing by variations"
               desc="Product Price will be dependent on the Variation Price."
               secondaryDesc="Enabling this option will enable product variations by default."
+            />
+          )}
+        /> */}
+        <Controller
+          name="price_by_options"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <GithubInput
+              onChange={(e) => {
+                if (e.target.checked) {
+                  if (errors.price) {
+                    clearErrors("price");
+                  }
+                  setValue("options_enabled", true);
+                }
+                onChange(e.target.checked);
+              }}
+              checked={value}
+              label="Enable Pricing by Product Options"
+              desc="Product Price will be dependent on the Product Option Price."
+              secondaryDesc="Enabling this option will enable product options by default."
             />
           )}
         />

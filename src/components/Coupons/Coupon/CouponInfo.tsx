@@ -66,12 +66,21 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
       <div className="box">
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors?.name}
+          errors={errors?.name?.en}
           register={register}
           required
           requiredMessage="Required"
-          label="Coupon Name"
-          name="name"
+          label="Coupon Name English"
+          name="name.en"
+        />
+        <IconedInput
+          Icon={MdSubtitles}
+          errors={errors?.name?.ar}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Coupon Name Arabic"
+          name="name.ar"
         />
         <IconedInput
           Icon={BiBarcode}
@@ -84,12 +93,12 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
         />
         <IconedNumberInput
           Icon={IoMdCash}
-          errors={errors?.min_total_amount}
+          errors={errors?.min_total_order}
           register={register}
           required
           requiredMessage="Required"
           label="Minimum order amount"
-          name="min_total_amount"
+          name="min_total_order"
           min={0}
         />
         <Controller
@@ -179,6 +188,14 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
         />
 
         <DateIconedInput
+          errors={errors?.start_date}
+          required
+          control={control}
+          requiredMessage="Required"
+          label="Coupon Start Date"
+          name="start_date"
+        />
+        <DateIconedInput
           errors={errors?.end_date}
           required
           control={control}
@@ -193,7 +210,7 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
 
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `
-  margin: 2rem 0;
+  margin: 1rem 0;
   .title-container {
     padding: 1rem 0;
     color: ${mainColor};

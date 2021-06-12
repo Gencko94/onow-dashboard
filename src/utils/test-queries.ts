@@ -1,4 +1,5 @@
 import { miniCategories } from "../fakeData/fakeCategories";
+import { coupon1 } from "../fakeData/fakeCoupons";
 import { CUSTOMER1 } from "../fakeData/fakeCustomerData";
 import {
   categories,
@@ -9,13 +10,13 @@ import {
   headerDesigns,
   productGridDesign1,
   productGridDesigns,
-  product1,
   productGridDesign2,
-  products,
 } from "../fakeData/fakeData";
 import { newOrders, order1, storeOrders } from "../fakeData/fakeOrders";
+import { product1, products } from "../fakeData/fakeProducts";
 import { staff1, staffMembers } from "../fakeData/fakeStaffMembers";
 import { MINI_CATEGORY } from "../interfaces/categories/categories";
+import { COUPON } from "../interfaces/coupons/coupons";
 import { CUSTOMER } from "../interfaces/customers/customers";
 import { NEW_ORDERS } from "../interfaces/orders/new-orders";
 import { ORDER, STORE_ORDERS } from "../interfaces/orders/orders";
@@ -147,6 +148,24 @@ export const getProductsList = (): Promise<PRODUCT[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(products);
+    }, 500);
+  });
+};
+export const getSingleProduct = (id: string): Promise<PRODUCT> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(product1);
+    }, 500);
+  });
+};
+export const getSingleCoupon = (id: string): Promise<COUPON> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (id === "1") {
+        resolve(coupon1);
+      } else {
+        reject({ message: "Not Found" });
+      }
     }, 500);
   });
 };

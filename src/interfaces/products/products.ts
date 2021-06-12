@@ -1,4 +1,5 @@
 import { MINI_CATEGORY } from "../categories/categories";
+import { PRODUCT_OPTION } from "./create-new-product";
 
 export type PRODUCTS_VIEW = "list" | "grid";
 export type PRODUCT_TYPE = {
@@ -28,7 +29,7 @@ export type PRODUCT = {
   name: {
     [key: string]: string;
   };
-  category_id: number[];
+  category_id: string[];
   slug: string;
   category: MINI_CATEGORY[];
   images: PRODUCT_IMAGE[];
@@ -37,6 +38,17 @@ export type PRODUCT = {
   };
 
   price: number;
-  price_by_variations: boolean;
-  variations_enabled: boolean;
+  price_by_options: boolean;
+  options: PRODUCT_OPTION[];
+  max_qty_per_user: number;
+  prep_time: {
+    time: number;
+    unit: string;
+  };
+  allow_side_notes: boolean;
+  allow_attachments: boolean;
+  branch_availability: {
+    all: boolean;
+    branches: number[];
+  };
 };

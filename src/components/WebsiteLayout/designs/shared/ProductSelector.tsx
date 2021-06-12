@@ -4,7 +4,7 @@ import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import Modal from "../../../Modal/Modal";
 import Label from "../../../StyledComponents/Label";
-import AddProductsModal from "./AddProductsModal";
+
 interface IProps {
   control: Control<any>;
   watch: UseFormWatch<any>;
@@ -31,10 +31,11 @@ const ProductSelector = ({ watch, control }: IProps) => {
               title="Select Products"
               closeFunction={() => setOpen(false)}
             >
-              <AddProductsModal
+              dsa
+              {/* <AddProductsModal
                 onChange={onChange}
                 closeFunction={() => setOpen(false)}
-              />
+              /> */}
             </Modal>
           </CSSTransition>
         )}

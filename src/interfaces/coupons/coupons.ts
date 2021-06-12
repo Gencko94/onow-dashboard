@@ -1,6 +1,8 @@
 export interface COUPON {
   id: number;
-  name: string;
+  name: {
+    [key: string]: string;
+  };
   code: string;
   end_date: string;
   discount_type: string;
@@ -11,11 +13,15 @@ export interface COUPON {
   total_uses: number;
   uses_per_user: number;
   enabled: boolean;
-  coupon_coverage: string;
-  covered_data: string[] | [];
+  coupon_coverage: number;
+  special_products: string[];
+  special_categories: string[];
 }
 export interface NEW_COUPON {
-  name: string;
+  name: {
+    [key: string]: string;
+  };
+  start_date: string;
   end_date: string;
   code: string;
   discount_type: string;
@@ -26,6 +32,7 @@ export interface NEW_COUPON {
   total_uses: number;
   uses_per_user: number;
   enabled: boolean;
-  coupon_coverage: string;
-  covered_data: string[] | [];
+  coupon_coverage: number;
+  special_products: string[];
+  special_categories: string[];
 }

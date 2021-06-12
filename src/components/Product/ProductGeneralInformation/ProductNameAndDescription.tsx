@@ -1,16 +1,17 @@
 import { useFormContext } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
-import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
-import { PRODUCT } from "../../../interfaces/products/products";
+
+import { EDIT_PRODUCT_GENERAL_INFO } from "../../../interfaces/products/update-product";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
+import { FORM_PROPS } from "./ProductGeneralInformation";
 
 const ProductNameAndDescription = () => {
   const {
     register,
     formState: { errors },
-  } = useFormContext<PRODUCT>();
+  } = useFormContext<FORM_PROPS>();
   return (
     <Container>
       <div className="title-container">

@@ -3,13 +3,14 @@ import styled from "styled-components";
 import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
 
 import CheckToggle from "../../reusable/CheckToggle";
+import { FORM_PROPS } from "./ProductOrderingAndBranchAvailability";
 
 const ProductBranches = () => {
   const {
     control,
     watch,
     formState: { errors },
-  } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
+  } = useFormContext<FORM_PROPS>();
   const allBranchesChecked = watch("branch_availability.all");
   const addedBranches = watch("branch_availability.branches");
   const branches = [

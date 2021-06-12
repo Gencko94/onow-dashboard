@@ -4,10 +4,9 @@ import styled from "styled-components";
 import { NEW_ORDERS } from "../../../interfaces/orders/new-orders";
 import { getNewOrders } from "../../../utils/test-queries";
 import OrderItem from "../../Orders/OrdersList/OrderItem";
-import ExportAs from "../../reusable/ExportAs";
 import TableHead from "../../reusable/TableHead";
 
-const DashboardOrders = () => {
+const RealTimeOrders = () => {
   const cols = useMemo(
     () => [
       { title: "id", sortable: false },
@@ -46,7 +45,7 @@ const DashboardOrders = () => {
   return (
     <Container>
       <div className="title-container">
-        <h5>New Orders</h5>
+        <h5>Real Time Orders</h5>
       </div>
       <TableContainer>
         <TableHead
@@ -64,13 +63,14 @@ const DashboardOrders = () => {
   );
 };
 
-export default DashboardOrders;
+export default RealTimeOrders;
 const Container = styled.div`
   .title-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 1rem 0;
+    color: ${(props) => props.theme.mainColor};
   }
 `;
 const TableContainer = styled.div`

@@ -1,6 +1,8 @@
-import { SubmitHandler, useFormContext } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import styled from "styled-components";
+import { MINI_CATEGORY } from "../../../interfaces/categories/categories";
 import { PRODUCT } from "../../../interfaces/products/products";
+
 import SaveButton from "../../reusable/SaveButton";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
@@ -10,24 +12,51 @@ import ProductCategories from "./ProductCategories";
 import ProductImage from "./ProductImage";
 import ProductNameAndDescription from "./ProductNameAndDescription";
 
-const ProductGeneralInformation = () => {
-  const { handleSubmit } = useFormContext<PRODUCT>();
-  const onSubmit: SubmitHandler<PRODUCT> = (data) => {
+interface IProps {
+  data: PRODUCT;
+}
+export interface FORM_PROPS {
+  name: {
+    [key: string]: string;
+  };
+  description: {
+    [key: string]: string;
+  };
+  slug: string;
+  category: MINI_CATEGORY[];
+}
+const ProductGeneralInformation = ({ data }: IProps) => {
+  const methods = useForm<FORM_PROPS>({
+    defaultValues: {
+      name: data.name,
+      description: data.description,
+      slug: data.slug,
+
+      category: data.category,
+    },
+  });
+  console.log(methods.watch().category);
+  const onSubmit: SubmitHandler<FORM_PROPS> = (data) => {
     console.log(data);
   };
   return (
     <Container>
       <Flex justify="flex-end">
-        <SaveButton title="Save Changes" onClick={handleSubmit(onSubmit)} />
+        <SaveButton
+          title="Save Changes"
+          onClick={methods.handleSubmit(onSubmit)}
+        />
       </Flex>
       <Grid cols="1fr 1fr" gap="1rem">
-        <ProductNameAndDescription />
+        <FormProvider {...methods}>
+          <ProductNameAndDescription />
 
-        <ProductCategories />
+          <ProductCategories />
+        </FormProvider>
       </Grid>
 
       <Hr />
-      <ProductImage />
+      <ProductImage data={data} />
     </Container>
   );
 };

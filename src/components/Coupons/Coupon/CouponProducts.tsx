@@ -2,6 +2,9 @@ import { Control, Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Select from "../../reusable/Select";
+import CouponCategoryList from "./CouponCategoryList";
+import CouponProductsList from "./CouponProductsList";
+import CouponProductsSearch from "./CouponProductsSearch";
 interface IProps {
   register: any;
   errors: any;
@@ -15,42 +18,42 @@ const options = [
       en: "All Products",
       ar: "جميع المنتجات",
     },
-    value: "all_products",
+    value: 1,
   },
   {
     label: {
       en: "Specified Categories",
       ar: "تصنيفات محددة",
     },
-    value: "categories",
+    value: 2,
   },
   {
     label: {
       en: "Specific Products",
       ar: "منتجات محددة",
     },
-    value: "specific_products",
+    value: 3,
   },
   {
     label: {
       en: "All Products except specific products",
       ar: "جميع المنتجات ما عدا منتجات محددة",
     },
-    value: "all_products_specific",
+    value: 4,
   },
   {
     label: {
       en: "All Products except discounted products",
       ar: "جميع المنتجات ما عدا المنتجات المخفضة",
     },
-    value: "all_products_discounted",
+    value: 5,
   },
   {
     label: {
       en: "Discounted Products Only",
       ar: "المنتجات المخفضة فقط",
     },
-    value: "discounted",
+    value: 6,
   },
 ];
 const CouponProducts = ({
@@ -81,7 +84,7 @@ const CouponProducts = ({
               <Select
                 value={
                   options.find((i) => i.value === value) as {
-                    value: string;
+                    value: number;
                     label: {
                       [key: string]: string;
                     };
@@ -90,46 +93,38 @@ const CouponProducts = ({
                 onChange={(val) => onChange(val.value)}
                 errors={errors?.coupon_coverage}
                 getOptionLabel={(option: any) => option.label[language]}
-                getOptionValue={(option) => option.value}
+                getOptionValue={(option) => option.value.toString()}
                 options={options}
-                defaultValue="all_products"
+                defaultValue={1}
                 label="Coupon Coverage"
               />
             );
           }}
         />
 
-        {(coverage === "all_products_specific" ||
-          coverage === "categories" ||
-          coverage === "specific_products") && (
-          <Controller
+        {(coverage === 3 || coverage === 4) && (
+          <CouponProductsSearch
             control={control}
-            name="covered_data"
-            render={({ field: { value, onChange } }) => {
-              return (
-                <Select
-                  value={
-                    options.find((i) => i.value === value) as {
-                      value: string;
-                      label: {
-                        [key: string]: string;
-                      };
-                    }
-                  }
-                  isMulti
-                  onChange={(val) => onChange(val.value)}
-                  errors={errors?.coupon_coverage}
-                  getOptionLabel={(option: any) => option.label[language]}
-                  getOptionValue={(option) => option.value}
-                  options={options}
-                  defaultValue="all_products"
-                  label={`Select ${
-                    coverage === "categories" ? "Categories" : "Products"
-                  }`}
-                />
-              );
-            }}
+            title={
+              coverage === 3
+                ? "Search for the products you want to cover in the coupon"
+                : "Search for the products you want to exclude"
+            }
           />
+        )}
+        {(coverage === 3 || coverage === 4) && (
+          <CouponProductsList
+            control={control}
+            title={coverage === 3 ? "Covered Products" : "Execluded Products"}
+          />
+        )}
+        {coverage === 2 && (
+          <div style={{ gridColumn: "2/4" }}>
+            <CouponCategoryList
+              control={control}
+              errors={errors?.special_categories}
+            />
+          </div>
         )}
       </div>
     </Container>

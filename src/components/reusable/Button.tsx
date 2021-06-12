@@ -97,7 +97,7 @@ export const ButtonWrapper = styled.button<{
       };
       box-shadow: ${shadow};
       display: flex;
-      width:100%;
+      // width:100%;
       justify-content:center;
       align-items: center;
       border-radius: 6px;

@@ -9,6 +9,7 @@ import IconedNumberInput from "../../reusable/IconedNumberInput";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import Select from "../../reusable/Select";
 import Grid from "../../StyledComponents/Grid";
+import { FORM_PROPS } from "./ProductOrderingAndBranchAvailability";
 
 const unitsOptions = [
   { label: "Minutes", value: "m" },
@@ -21,7 +22,7 @@ const ProductOrdering = () => {
     control,
     watch,
     formState: { errors },
-  } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
+  } = useFormContext<FORM_PROPS>();
   const allowSideNotes = watch("allow_side_notes");
   return (
     <Container>

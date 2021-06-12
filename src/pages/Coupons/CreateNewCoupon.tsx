@@ -13,7 +13,8 @@ const CreateNewCoupon = () => {
     control,
   } = useForm<NEW_COUPON>({
     defaultValues: {
-      covered_data: [],
+      special_categories: [],
+      special_products: [],
     },
   });
 

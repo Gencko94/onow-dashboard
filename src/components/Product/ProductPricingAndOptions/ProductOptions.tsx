@@ -1,22 +1,23 @@
 import { Controller, useFormContext } from "react-hook-form";
 
 import styled from "styled-components";
-import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
+
 import Options from "../../AddProduct/ProductVariations/Options/Options";
 
 import GithubInput from "../../reusable/Inputs/GithubInput";
+import { FORM_PROPS } from "./ProductPricingAndOptions";
 
 const ProductOptions = () => {
-  const { control, watch } = useFormContext<NEW_PRODUCT_FORM_PROPS>();
+  const { control, watch } = useFormContext<FORM_PROPS>();
   const priceFromVariationsEnabled = watch("price_by_options");
-  const variationsEnabled = watch("variations_enabled");
+  const variationsEnabled = watch("options_enabled");
   return (
     <Container>
       <div className="title-container">
         <h5>Product Variations</h5>
       </div>
       <Controller
-        name="variations_enabled"
+        name="options_enabled"
         control={control}
         defaultValue={false}
         render={({ field: { onChange, value } }) => (

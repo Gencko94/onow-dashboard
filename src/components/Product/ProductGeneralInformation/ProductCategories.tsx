@@ -5,12 +5,15 @@ import AddCategoryModalBody from "../../Modal/AddCategoryModalBody";
 import { useFormContext } from "react-hook-form";
 
 import { useTranslation } from "react-i18next";
+import { EDIT_PRODUCT_GENERAL_INFO } from "../../../interfaces/products/update-product";
+import ProductCategoryList from "./ProductCategoryList";
+import { FORM_PROPS } from "./ProductGeneralInformation";
 
 const ProductCategories = () => {
   const {
     formState: { errors },
     control,
-  } = useFormContext<any>();
+  } = useFormContext<FORM_PROPS>();
   const {
     i18n: { language },
   } = useTranslation();
@@ -22,7 +25,7 @@ const ProductCategories = () => {
       </div>
 
       <CategoriesList>
-        <AddCategoryModalBody control={control} errors={errors.category_id} />
+        <ProductCategoryList control={control} errors={errors.category} />
       </CategoriesList>
     </Container>
   );
