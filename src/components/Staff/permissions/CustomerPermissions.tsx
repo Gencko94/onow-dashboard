@@ -3,51 +3,78 @@ import { useTranslation } from "react-i18next";
 import { FcConferenceCall } from "react-icons/fc";
 import styled from "styled-components";
 import { STAFF_MEMBER } from "../../../interfaces/staff/staff";
-import CheckboxWithLabel from "../../reusable/CheckboxWithLabel";
-import Checkbox from "../../reusable/Inputs/Checkbox";
+import CheckToggle from "../../reusable/CheckToggle";
 
 interface IProps {
   control: Control<STAFF_MEMBER>;
   permissions: any;
+  setValue: any;
 }
-const CustomerPermissions = ({ control, permissions }: IProps) => {
+const CustomerPermissions = ({ control, permissions, setValue }: IProps) => {
   const { t } = useTranslation();
-  const allChecked = useWatch<STAFF_MEMBER>({
+  const permissionsValues: any = useWatch<STAFF_MEMBER>({
     control,
-    name: "permissions.customers.all",
+    name: "permissions.customers",
   });
+
+  function checkIfAllChecked() {
+    let allChecked = true;
+    Object.keys(permissionsValues).map((entry) => {
+      console.log(permissionsValues[entry]);
+      if (permissionsValues[entry] === false) {
+        allChecked = false;
+      }
+    });
+    return allChecked;
+  }
+  function checkAllValues() {
+    Object.keys(permissionsValues).forEach((value: any) => {
+      setValue(`permissions.customers.${value}`, true);
+    });
+  }
+  function unCheckAllValues() {
+    Object.keys(permissionsValues).forEach((value: any) => {
+      setValue(`permissions.customers.${value}`, false);
+    });
+  }
   return (
     <Container>
       <div className="title">
-        <Controller
-          control={control}
-          name="permissions.customers.all"
-          render={({ field: { onChange } }) => {
-            return (
-              <Checkbox
-                onChange={(e) => {
-                  e.stopPropagation();
-                  onChange(e.target.checked);
-                }}
-                checked={allChecked as boolean}
-              />
-            );
-          }}
-        />
         <span className="icon">
           <FcConferenceCall size={50} />
         </span>
         <h6>Customers</h6>
       </div>
       <div className="box-content">
+        <div className="item">
+          <CheckToggle
+            checked={checkIfAllChecked() ? true : false}
+            onChange={(e) => {
+              if (checkIfAllChecked()) {
+                unCheckAllValues();
+              } else {
+                checkAllValues();
+              }
+            }}
+            label="Select All"
+          />
+        </div>
         {permissions.customers.map((key: any) => {
           return (
             <div className="item">
-              <CheckboxWithLabel
+              <Controller
                 control={control}
-                name={`permissions.customers.${key}`}
-                label={key}
-                key={key}
+                name={`permissions.customers.${key}` as any}
+                render={({ field: { value, onChange } }) => {
+                  return (
+                    <CheckToggle
+                      label={key}
+                      key={key}
+                      checked={value}
+                      onChange={(e) => onChange(e.target.checked)}
+                    />
+                  );
+                }}
               />
             </div>
           );
@@ -78,13 +105,13 @@ const Container = styled.div`
     }
   }
   .box-content {
-    max-height: 200px;
+    max-height: 300px;
     overflow-y: auto;
   }
   .item {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.75rem 0.5rem;
+    padding: 1rem 0.5rem;
   }
 `;

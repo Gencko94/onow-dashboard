@@ -12,6 +12,7 @@ import {
   getOptionLabel,
   getOptionValue,
 } from "react-select/src/builtins";
+import InputErrorMessage from "./InputErrorMessage";
 
 interface IProps<T> {
   label: string;
@@ -19,8 +20,7 @@ interface IProps<T> {
   options: T[];
   defaultValue?: any;
   errors: any;
-  required?: boolean;
-  errorMessage?: string;
+
   placeholder?: string;
   getOptionLabel: getOptionLabel<T>;
   getOptionValue: getOptionValue<T>;
@@ -43,11 +43,11 @@ export default function Select<T>({
   options,
   errors,
   defaultValue,
-  required,
+
   placeholder,
   getOptionLabel,
   getOptionValue,
-  errorMessage,
+
   isSearchable = false,
   isMulti,
   formatGroupLabel,
@@ -86,24 +86,22 @@ export default function Select<T>({
     <Container>
       <label>{t(label)}</label>
 
-      <>
-        <S
-          ref={ref}
-          isMulti={isMulti}
-          value={value}
-          defaultValue={options.find((i: any) => i.value === defaultValue)}
-          isSearchable={isSearchable}
-          placeholder={placeholder}
-          options={options}
-          styles={selectStyles}
-          onChange={onChange}
-          getOptionLabel={getOptionLabel}
-          getOptionValue={getOptionValue}
-          formatOptionLabel={formatOptionLabel}
-          formatGroupLabel={formatGroupLabel}
-        />
-        <p className="error">{errors?.message}</p>
-      </>
+      <S
+        ref={ref}
+        isMulti={isMulti}
+        value={value}
+        defaultValue={options.find((i: any) => i.value === defaultValue)}
+        isSearchable={isSearchable}
+        placeholder={placeholder}
+        options={options}
+        styles={selectStyles}
+        onChange={onChange}
+        getOptionLabel={getOptionLabel}
+        getOptionValue={getOptionValue}
+        formatOptionLabel={formatOptionLabel}
+        formatGroupLabel={formatGroupLabel}
+      />
+      <InputErrorMessage msg={errors?.message} />
     </Container>
   );
 }

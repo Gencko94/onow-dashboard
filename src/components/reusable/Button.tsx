@@ -38,6 +38,10 @@ interface IProps {
    * button ```type```
    */
   type?: "submit" | "button";
+  /**
+   * button ```margin```
+   */
+  margin?: string;
 }
 
 const Button = ({
@@ -50,9 +54,11 @@ const Button = ({
   color = "#fff",
   iconSize = 30,
   withTransition,
+  margin = "none",
 }: IProps) => {
   return (
     <ButtonWrapper
+      margin={margin}
       withTransition={withTransition}
       bg={bg}
       padding={padding}
@@ -76,6 +82,7 @@ export const ButtonWrapper = styled.button<{
   color: string;
   bg: "primary" | "danger" | "blue" | "green" | string;
   withTransition?: boolean;
+  margin: string;
 }>(
   ({
     theme: { breakpoints, green, shadow, mainColor, dangerRed },
@@ -83,6 +90,7 @@ export const ButtonWrapper = styled.button<{
     color,
     bg,
     withTransition,
+    margin,
   }) => `
       background-color: ${
         bg === "primary"
@@ -97,7 +105,7 @@ export const ButtonWrapper = styled.button<{
       };
       box-shadow: ${shadow};
       display: flex;
-      // width:100%;
+      margin:${margin};
       justify-content:center;
       align-items: center;
       border-radius: 6px;

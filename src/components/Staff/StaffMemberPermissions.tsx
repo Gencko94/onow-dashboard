@@ -1,16 +1,16 @@
 import { Control } from "react-hook-form";
 import styled from "styled-components";
-import { STAFF_MEMBER, STAFF_PERMISSIONS } from "../../interfaces/staff/staff";
 import CustomerPermissions from "./permissions/CustomerPermissions";
 import OrdersPermissions from "./permissions/OrdersPermissions";
 import ProductsPermissions from "./permissions/ProductsPermissions";
 
 interface IProps {
-  control: Control<STAFF_MEMBER>;
+  control: Control<any>;
   permissions: any;
+  setValue: any;
 }
 
-const StaffMemberPermissions = ({ control, permissions }: IProps) => {
+const StaffMemberPermissions = ({ control, permissions, setValue }: IProps) => {
   return (
     <Container>
       <div className="title-container">
@@ -18,9 +18,21 @@ const StaffMemberPermissions = ({ control, permissions }: IProps) => {
       </div>
       <div className="box">
         <div className="grid">
-          <CustomerPermissions permissions={permissions} control={control} />
-          <OrdersPermissions control={control} permissions={permissions} />
-          <ProductsPermissions control={control} permissions={permissions} />
+          <CustomerPermissions
+            setValue={setValue}
+            permissions={permissions}
+            control={control}
+          />
+          <OrdersPermissions
+            control={control}
+            permissions={permissions}
+            setValue={setValue}
+          />
+          <ProductsPermissions
+            control={control}
+            permissions={permissions}
+            setValue={setValue}
+          />
         </div>
       </div>
     </Container>

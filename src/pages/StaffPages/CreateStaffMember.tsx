@@ -1,69 +1,83 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FiCheck } from "react-icons/fi";
 import styled from "styled-components";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
-import StaffMemberInformation from "../../components/Staff/StaffMemberInformation";
+import Button from "../../components/reusable/Button";
+import NewStaffMemberInformation from "../../components/Staff/NewStaffMemberInformation";
 import StaffMemberPermissions from "../../components/Staff/StaffMemberPermissions";
+import Flex from "../../components/StyledComponents/Flex";
 import { userPermissions } from "../../data/userPermissions";
-import { STAFF_MEMBER } from "../../interfaces/staff/staff";
+import { NEW_STAFF_MEMBER } from "../../interfaces/staff/staff";
 
 const CreateStaffMember = () => {
   const {
     register,
     control,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
-  } = useForm<STAFF_MEMBER>();
-
-  const onSubmit = (data: STAFF_MEMBER) => {
+  } = useForm<NEW_STAFF_MEMBER>({
+    defaultValues: {
+      permissions: {
+        customers: {
+          createCustomer: true,
+          deleteCustomer: true,
+          editCustomer: true,
+          visitCustomers: false,
+        },
+        orders: {
+          createOrder: true,
+          deleteOrder: true,
+          editOrder: true,
+          visitOrders: true,
+        },
+        products: {
+          createProduct: true,
+          deleteProduct: true,
+          editProduct: true,
+          hideProduct: true,
+          visitProducts: true,
+        },
+      },
+    },
+  });
+  const role = watch("role");
+  const onSubmit: SubmitHandler<NEW_STAFF_MEMBER> = (data) => {
     console.log(data);
   };
   return (
-    <Container>
+    <div>
       <Breadcrumbs
-        childLabel="Staff Members"
+        childLabel="Create Staff Member"
         parentLabel="Staff"
         parentTarget="/settings/staff"
       />
-      <div className="panel">
-        <button onClick={handleSubmit(onSubmit)}>
-          <span className="icon">
-            <FiCheck size={20} />
-          </span>
-          <p>Save Changes</p>
-        </button>
-      </div>
-      <StaffMemberInformation register={register} errors={errors} />
-      <StaffMemberPermissions control={control} permissions={userPermissions} />
-    </Container>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Flex margin="1rem" justify="flex-end">
+          <Button
+            type="submit"
+            text="Save Changes"
+            padding="0.5rem"
+            bg="green"
+            withTransition
+          />
+        </Flex>
+        <NewStaffMemberInformation
+          register={register}
+          errors={errors}
+          control={control}
+        />
+        {role === "staff" && (
+          <StaffMemberPermissions
+            setValue={setValue}
+            control={control}
+            permissions={userPermissions}
+          />
+        )}
+      </form>
+    </div>
   );
 };
 
 export default CreateStaffMember;
-const Container = styled.div`
-  .panel {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin: 1rem 0;
-    button {
-      background-color: #418ce0;
-      box-shadow: ${(props) => props.theme.shadow};
-      display: flex;
-      align-items: center;
-      border-radius: 6px;
-      padding: 0.5rem 0.5rem;
-      position: relative;
-      color: #fff;
-      .icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      p {
-        font-size: 0.9rem;
-        margin: 0 0.25rem;
-      }
-    }
-  }
-`;

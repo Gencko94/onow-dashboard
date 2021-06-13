@@ -1,6 +1,7 @@
 import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
+import { CgPassword } from "react-icons/cg";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import IconedInput from "../reusable/Inputs/IconedInput";
@@ -38,10 +39,12 @@ const branches: {
     value: 1,
   },
 ];
-const StaffMemberInformation = ({ register, errors, control }: IProps) => {
+
+const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
+
   return (
     <Container>
       <div className="title-container">
@@ -74,6 +77,15 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
           requiredMessage="Required"
           label="Email Address"
           name="email"
+        />
+        <IconedInput
+          Icon={CgPassword}
+          errors={errors?.password}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Password"
+          name="password"
         />
         <Controller
           control={control}
@@ -124,7 +136,7 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
   );
 };
 
-export default StaffMemberInformation;
+export default NewStaffMemberInformation;
 
 const Container = styled.div`
   margin: 1rem 0;

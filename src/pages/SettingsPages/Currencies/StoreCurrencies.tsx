@@ -19,7 +19,7 @@ const StoreCurrencies = () => {
 export default StoreCurrencies;
 const Container = styled.div`
   .title-container {
-    padding: 2rem 0;
+    margin: 1rem 0;
     color: ${(props) => props.theme.mainColor};
   }
 `;

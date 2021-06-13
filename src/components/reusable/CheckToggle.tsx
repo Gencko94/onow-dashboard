@@ -30,7 +30,7 @@ const CheckToggle = ({ checked, onChange, label, desc }: IProps) => {
       </div>
       <Toggle
         id={label}
-        checked={checked}
+        checked={checked as boolean}
         className="react-custom-toggle"
         onChange={onChange}
       />
@@ -45,6 +45,7 @@ const Toggler = styled.div`
   align-items: center;
   justify-content: space-between;
   .info {
+    font-size: 0.9rem;
     margin: 0 0.25rem;
     label {
       cursor: pointer;

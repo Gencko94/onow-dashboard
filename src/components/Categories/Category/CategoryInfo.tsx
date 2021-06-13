@@ -121,6 +121,7 @@ const CategoryInfo = ({ control, errors, register, setValue }: IProps) => {
             <Controller
               control={control}
               name="parent"
+              rules={{ required: isChild && "Required" }}
               render={({ field: { value, onChange } }) => {
                 return (
                   <Select
@@ -134,7 +135,6 @@ const CategoryInfo = ({ control, errors, register, setValue }: IProps) => {
                     }
                     label="Select Category Parent"
                     onChange={(val) => onChange(val.value)}
-                    required={isChild}
                     errors={errors?.parent}
                     options={options}
                     defaultValue="fixed"

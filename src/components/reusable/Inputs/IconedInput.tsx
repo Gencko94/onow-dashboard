@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { IconType } from "react-icons/lib";
 
 import styled, { css } from "styled-components";
+import InputErrorMessage from "../InputErrorMessage";
 interface BaseInput {
   /**
    * 	An object with field errors. Obtainable from ```formState.errors```
@@ -73,6 +74,7 @@ const IconedInput = ({
   const {
     i18n: { language },
   } = useTranslation();
+
   return (
     <Container rtl={language === "ar"} error={Boolean(errors?.message)}>
       {label && <label>{label}</label>}
@@ -90,7 +92,8 @@ const IconedInput = ({
         />
       </div>
       {desc && <p className="desc">{desc}</p>}
-      <p className="error">{errors?.message}</p>
+
+      <InputErrorMessage msg={errors?.message} />
     </Container>
   );
 };
@@ -149,12 +152,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
         border-color: ${(props) => props.theme.dangerRed} !important;
       `}
   }
-  .error {
-    font-size: 0.7rem;
-    padding-top: 0.25rem;
-    height: 22px;
-    color: ${(props) => props.theme.dangerRed};
-  }
+
   .desc {
     font-size: 0.7rem;
     padding-top: 0.25rem;
