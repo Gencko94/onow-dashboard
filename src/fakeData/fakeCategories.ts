@@ -3,7 +3,7 @@ import { MINI_CATEGORY } from "../interfaces/categories/categories";
 
 export const miniCategories: MINI_CATEGORY[] = [
   {
-    id: 1,
+    id: 7,
     image: "/images/product.webp",
     name: {
       ar: "الملابس",
@@ -12,7 +12,7 @@ export const miniCategories: MINI_CATEGORY[] = [
     slug: "/clothes",
     children: [
       {
-        id: 3,
+        id: 6,
         image: "/images/product.webp",
         name: {
           ar: "رجالي",
@@ -24,7 +24,7 @@ export const miniCategories: MINI_CATEGORY[] = [
     ],
   },
   {
-    id: 2,
+    id: 5,
     image: "/images/product.webp",
     name: {
       ar: "المنظفات",
@@ -33,7 +33,7 @@ export const miniCategories: MINI_CATEGORY[] = [
     slug: "/clothes",
     children: [
       {
-        id: 4,
+        id: 9,
         image: "/images/product.webp",
         name: {
           ar: "مساحيق الغسيل",

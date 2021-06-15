@@ -151,3 +151,23 @@
 .switch-fade-exit-active {
   transition: opacity 500ms;
 }
+.error-toast-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+.error-toast-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.error-toast-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+}
+.error-toast-exit-active {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.error-toast-enter-active,
+.error-toast-exit-active {
+  transition: all 200ms;
+}

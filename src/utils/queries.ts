@@ -7,6 +7,8 @@ import {
   GET_ORDERS_RESPONSE,
   ORDERS_FILTERS,
 } from "../interfaces/orders/orders";
+import { COUPON } from "../interfaces/coupons/coupons";
+import { NEW_PRODUCT } from "../interfaces/products/create-new-product";
 
 const uri = "https://new-version.o-now.net/customer-api";
 
@@ -129,5 +131,64 @@ export const getOrders = async ({
     // params: filters,
   };
   const res = await axios.get(`${uri}/get-orders`, config);
+  return res.data.results;
+};
+export const getCoupon = async (id: string): Promise<COUPON> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.get(`${uri}/coupons/${id}`, config);
+  return res.data.results;
+};
+export const getCoupons = async (sortBy: any): Promise<COUPON[]> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+    // params: sortBy,
+  };
+  const res = await axios.get(`${uri}/coupons`, config);
+  return res.data.results;
+};
+export const editCoupon = async (coupon: any): Promise<COUPON[]> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(`${uri}/coupons/${coupon.id}`, coupon, config);
+  return res.data.results;
+};
+export const deleteCoupon = async (id: string): Promise<COUPON[]> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.delete(`${uri}/coupons/${id}`, config);
+  return res.data.results;
+};
+
+//Products
+
+//Create
+export const createProduct = async (product: NEW_PRODUCT) => {
+  const t = localStorage.getItem("dshtid");
+  console.log(product);
+  const formData = new FormData();
+  // formData.append("file", product.images);
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  const res = await axios.post(`${uri}/products`, product, config);
   return res.data.results;
 };

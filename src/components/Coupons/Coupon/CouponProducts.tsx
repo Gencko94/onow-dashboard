@@ -64,9 +64,9 @@ const CouponProducts = ({
 }: IProps) => {
   const coverage = useWatch({
     control,
-    name: "coupon_coverage",
+    name: "couponCoverage",
   });
-
+  console.log(coverage);
   const {
     i18n: { language },
   } = useTranslation();
@@ -78,7 +78,7 @@ const CouponProducts = ({
       <div className="box">
         <Controller
           control={control}
-          name="coupon_coverage"
+          name="couponCoverage"
           render={({ field: { value, onChange } }) => {
             return (
               <Select
@@ -91,7 +91,7 @@ const CouponProducts = ({
                   }
                 }
                 onChange={(val) => onChange(val.value)}
-                errors={errors?.coupon_coverage}
+                errors={errors?.couponCoverage}
                 getOptionLabel={(option: any) => option.label[language]}
                 getOptionValue={(option) => option.value.toString()}
                 options={options}

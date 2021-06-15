@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import Loading from "../../utils/Loading";
 import ModalHead from "./ModalHead";
 import ModalTail from "./ModalTail";
+import { FlexWrapper } from "../StyledComponents/Flex";
 const modalStyles = {
   content: {
     inset: "240px",
@@ -81,9 +82,13 @@ const Body = styled.div`
   height: 100%;
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
   .description {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
     font-size: 0.9rem;
     color: ${(props) => props.theme.subHeading};
+  }
+  ${FlexWrapper} {
+    border-top: ${(props) => props.theme.border};
   }
 `;

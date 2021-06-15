@@ -4,7 +4,7 @@ import ClickAwayListener from "react-click-away-listener";
 import { Control, Controller, FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import "react-calendar/dist/Calendar.css";
-
+import { formatISO, parseISO } from "date-fns";
 import {
   FaAngleDoubleLeft,
   FaAngleDoubleRight,
@@ -88,7 +88,7 @@ const DateIconedInput = ({
     <Controller
       name={name}
       control={control}
-      defaultValue={format(new Date(), "dd-MM-yyyy")}
+      defaultValue={formatISO(new Date())}
       render={({ field: { onChange, value } }) => (
         <Container
           onClick={() => {
@@ -104,8 +104,11 @@ const DateIconedInput = ({
             </span>
             <input
               readOnly
-              defaultValue={format(new Date(), "dd-MM-yyyy")}
-              value={value}
+              defaultValue={format(
+                parseISO(new Date().toISOString()),
+                "dd-MM-yyyy"
+              )}
+              value={format(parseISO(value), "dd-MM-yyyy")}
               disabled={disabled}
             />
           </div>
@@ -119,11 +122,11 @@ const DateIconedInput = ({
             <ClickAwayListener onClickAway={() => setCalendarOpen(false)}>
               <CalendarContainer>
                 <Calendar
-                  value={new Date()}
-                  onChange={(date: Date | Date[]) => {
+                  value={parseISO(value)}
+                  onChange={(date: any) => {
                     setCalendarOpen(false);
 
-                    onChange(format(date as Date, "dd-MM-yyyy"));
+                    onChange(date.toISOString());
                   }}
                   tileClassName="tile"
                   minDate={new Date()}

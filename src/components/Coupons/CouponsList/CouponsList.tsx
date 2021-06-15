@@ -1,6 +1,8 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "react-query";
 import styled from "styled-components";
+import { getCoupons } from "../../../utils/queries";
 import TableHead from "../../reusable/TableHead";
 import CouponItem from "./CouponItem";
 
@@ -14,14 +16,21 @@ const CouponsList = () => {
     ],
     []
   );
+  const [sortBy, setSortBy] = useState({
+    by: "orderDate",
+    order: "desc",
+  });
   const { t } = useTranslation();
+  const { data } = useQuery(["coupons", sortBy], () => getCoupons(sortBy), {
+    suspense: true,
+  });
   return (
     <Container>
       <TableHead cols={cols} />
 
       <div>
-        {[0, 1, 2, 3].map((i) => (
-          <CouponItem />
+        {data!.map((coupon) => (
+          <CouponItem key={coupon.id} coupon={coupon} />
         ))}
       </div>
     </Container>

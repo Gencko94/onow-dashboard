@@ -3,10 +3,11 @@ import { COUPON } from "../interfaces/coupons/coupons";
 export const coupon1: COUPON = {
   amount: "1",
   code: "fdsa",
-  coupon_coverage: 1,
+  couponCoverage: 1,
   discount_type: "fixed",
   enabled: true,
   end_date: "11/2/2020",
+  start_date: "11/2/2020",
   free_delivery: "0",
   id: 1,
   max_discount: 2,

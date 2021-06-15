@@ -11,8 +11,9 @@ import Flex from "../../StyledComponents/Flex";
 import Hr from "../../StyledComponents/Hr";
 import CreateProductBranches from "./CreateProductBranches";
 import CreateProductOrdering from "./CreateProductOrdering";
-import BlueButton from "../../reusable/BlueButton";
-import AddButton from "../../reusable/AddButton";
+
+import Button from "../../reusable/Button";
+import { NEW_PRODUCT } from "../../../interfaces/products/create-new-product";
 
 export interface thirdTabProps {
   max_qty_per_user: number;
@@ -27,8 +28,10 @@ export interface thirdTabProps {
     branches: number[];
   };
 }
-
-const CreateProductOrderingAndBranchAvailability = () => {
+interface IProps {
+  submitForm: (product: any) => void;
+}
+const CreateProductOrderingAndBranchAvailability = ({ submitForm }: IProps) => {
   const { updateData, setActiveTab, formValues } =
     useContext(NewProductContext);
   const methods = useForm<thirdTabProps>({
@@ -42,28 +45,45 @@ const CreateProductOrderingAndBranchAvailability = () => {
   });
   const onSubmit: SubmitHandler<thirdTabProps> = (data) => {
     updateData?.(data);
+
+    submitForm({ ...formValues, ...data });
   };
   const onError: SubmitErrorHandler<thirdTabProps> = (errors) => {
     console.log(errors);
   };
   return (
     <FormProvider {...methods}>
-      <Flex justify="flex-end">
-        <BlueButton
-          onClick={() => {
-            console.log(methods.watch());
-            updateData?.(methods.watch());
-            setActiveTab?.(1);
-          }}
-          type="button"
-          title="back"
-        />
-        <AddButton
-          cb={methods.handleSubmit(onSubmit, onError)}
-          title="Create New Product"
-        />
-      </Flex>
       <Container onSubmit={methods.handleSubmit(onSubmit, onError)}>
+        <Flex justify="flex-end">
+          <Button
+            margin="0 0.5rem"
+            bg="blue"
+            padding=" 0.5rem"
+            textSize="0.9rem"
+            text="Back"
+            onClick={() => {
+              updateData?.(methods.watch());
+              setActiveTab?.(1);
+            }}
+            withRipple
+            withTransition
+          />
+          <Button
+            withRipple
+            withTransition
+            margin="0 0.5rem"
+            type="submit"
+            bg="green"
+            padding=" 0.5rem"
+            textSize="0.9rem"
+            text="Create New Product"
+            onClick={() => {
+              console.log("hi");
+              methods.handleSubmit(onSubmit, onError);
+            }}
+          />
+        </Flex>
+
         <CreateProductOrdering />
         <Hr />
         <CreateProductBranches />

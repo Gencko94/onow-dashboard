@@ -1,19 +1,26 @@
-import styled from "styled-components";
-import AddButton from "../../reusable/AddButton";
+import { IoAddOutline } from "react-icons/io5";
+import { useHistory } from "react-router-dom";
+
+import Button from "../../reusable/Button";
+import Flex from "../../StyledComponents/Flex";
 
 const CouponsPanel = () => {
+  const history = useHistory();
   return (
-    <Container>
-      <AddButton target="/coupons/create" title="Create new Coupon" />
-    </Container>
+    <Flex margin="1rem 0" justify="flex-end">
+      <Button
+        bg="green"
+        text="Create new Coupon"
+        onClick={() => history.push("/coupons/create")}
+        padding="0.5rem"
+        withRipple
+        Icon={IoAddOutline}
+        iconSize={25}
+        withTransition
+        textSize="0.9rem"
+      />
+    </Flex>
   );
 };
 
 export default CouponsPanel;
-const Container = styled.div`
-  padding: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-`;

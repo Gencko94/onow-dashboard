@@ -2,78 +2,144 @@ import styled from "styled-components";
 import { BsCheck, BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
-import ClickAwayListener from "react-click-away-listener";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { ImProfile } from "react-icons/im";
 import { useHistory } from "react-router";
-const CouponItem = () => {
+import { COUPON } from "../../../interfaces/coupons/coupons";
+import { useTranslation } from "react-i18next";
+import { useMutation } from "react-query";
+import { deleteCoupon } from "../../../utils/queries";
+import ErrorToast from "../../reusable/ErrorToast";
+import Button from "../../reusable/Button";
+import Popover from "../../reusable/Popover";
+import ConfirmationModal from "../../reusable/ConfirmationModal";
+interface IProps {
+  coupon: COUPON;
+}
+
+const CouponItem = ({ coupon }: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const history = useHistory();
+  const {
+    i18n: { language },
+  } = useTranslation();
+  // Delete Mutation
+
+  const {
+    mutateAsync,
+    reset,
+    isError: deleteError,
+  } = useMutation(deleteCoupon);
+
   const renderStatus = (id: number) => {
-    switch (id) {
-      case 1:
-        return (
-          <Status color="green">
-            <span className="dot" />
-            <h6>Active</h6>
-          </Status>
-        );
-      case 2:
-        return (
-          <Status color="#b72b2b">
-            <span className="dot" />
-            <h6>Disabled</h6>
-          </Status>
-        );
-      default:
-        break;
+    // if Enabled
+    if (id === 1) {
+      return (
+        <Status color="green">
+          <span className="dot" />
+          <h6>Active</h6>
+        </Status>
+      );
+    } else if (id === 0) {
+      return (
+        <Status color="#b72b2b">
+          <span className="dot" />
+          <h6>Disabled</h6>
+        </Status>
+      );
+    }
+  };
+  const handleDeleteCoupon = async (id: number) => {
+    try {
+      await mutateAsync(id.toString());
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
-    <Container onClick={() => history.push(`/coupons/coupon/1`)}>
-      <div className="field">
-        <h6>DISCOUNT</h6>
-      </div>
-      <div className="field">{renderStatus(2)}</div>
-      <div className="field">
-        <EnabledButton enabled={false} type="button">
-          Enable
-        </EnabledButton>
-      </div>
-      <div className="field">
-        <ButtonsContainer>
-          <ActionButtonContainer
-            onClick={(e) => {
-              e.stopPropagation();
-              setActionsMenuOpen(true);
-            }}
-          >
-            <button className="icon">
-              <BsThreeDotsVertical size={18} />
-            </button>
-            <CSSTransition
-              in={actionsMenuOpen}
-              classNames="menu"
-              unmountOnExit
-              timeout={100}
+    <>
+      <Container onClick={() => history.push(`/coupons/coupon/${coupon.id}`)}>
+        <div className="field">
+          <h6>{coupon.name[language]}</h6>
+        </div>
+        <div className="field">{renderStatus(2)}</div>
+        <div className="field">
+          <EnabledButton enabled={false} type="button">
+            Enable
+          </EnabledButton>
+        </div>
+        <div className="field">
+          <ButtonsContainer>
+            <ActionButtonContainer
+              onClick={(e) => {
+                e.stopPropagation();
+
+                setActionsMenuOpen(true);
+              }}
             >
-              <ClickAwayListener onClickAway={() => setActionsMenuOpen(false)}>
-                <ul>
-                  <li>
-                    <button>
-                      <span className="icon">
-                        <RiDeleteBinLine size={15} />
-                      </span>
-                      <p>Delete Coupon</p>
-                    </button>
-                  </li>
-                </ul>
-              </ClickAwayListener>
-            </CSSTransition>
-          </ActionButtonContainer>
-        </ButtonsContainer>
-      </div>
-    </Container>
+              <button className="icon">
+                <BsThreeDotsVertical size={18} />
+              </button>
+              <CSSTransition
+                in={actionsMenuOpen}
+                classNames="menu"
+                unmountOnExit
+                timeout={100}
+              >
+                <Popover closeFunction={() => setActionsMenuOpen(false)}>
+                  <Button
+                    text="Delete Coupon"
+                    padding="0.5rem"
+                    bg="white"
+                    color="#444"
+                    hoverColor="#b72b2b"
+                    textSize="0.8rem"
+                    Icon={RiDeleteBinLine}
+                    iconSize={15}
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      setActionsMenuOpen(false);
+                      setModalOpen(true);
+                    }}
+                  />
+                </Popover>
+              </CSSTransition>
+            </ActionButtonContainer>
+          </ButtonsContainer>
+        </div>
+      </Container>
+      <CSSTransition
+        in={deleteError}
+        classNames="error-toast"
+        unmountOnExit
+        timeout={200}
+      >
+        <ErrorToast
+          text="Something Went Wrong"
+          btnText="Close"
+          closeFunction={reset}
+        />
+      </CSSTransition>
+      <ConfirmationModal
+        isOpen={modalOpen}
+        closeFunction={() => setModalOpen(false)}
+        desc="Are you sure you want to delete this coupon ?"
+        successButtonText="Delete"
+        successFunction={() => handleDeleteCoupon(coupon.id)}
+        title="Delete Coupon"
+        styles={{
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+          },
+        }}
+      />
+    </>
   );
 };
 
@@ -95,6 +161,7 @@ const Container = styled.div`
     justify-content: center;
     padding: 0.5rem;
     text-align: center;
+    position: relative;
     h6 {
       font-size: 0.8rem;
       font-weight: ${(props) => props.theme.font.bold};
@@ -104,7 +171,8 @@ const Container = styled.div`
 
 const ButtonsContainer = styled.div`
   button.icon {
-    display: inline-block;
+    display: block;
+    position: relative;
     cursor: pointer;
     padding: 0.25rem;
     border-radius: 50%;
@@ -118,41 +186,6 @@ const ButtonsContainer = styled.div`
 `;
 const ActionButtonContainer = styled.div`
   position: relative;
-
-  ul {
-    position: absolute;
-    bottom: -3px;
-    right: 8px;
-    z-index: 10;
-    background-color: #fff;
-    transform-origin: right;
-    box-shadow: ${(props) => props.theme.shadow};
-    border-radius: 5px;
-  }
-  ul li button {
-    padding: 0.5rem;
-    display: block;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.9rem;
-    color: ${(props) => props.color};
-    transition: all 75ms ease;
-    &:hover {
-      color: ${(props) => props.theme.headingColor};
-      background-color: ${(props) => props.theme.highlightColor};
-    }
-    p {
-      margin: 0 0.5rem;
-    }
-  }
-  span.icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.25rem;
-  }
 `;
 const Status = styled.div`
   display: flex;

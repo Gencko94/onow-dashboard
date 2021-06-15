@@ -4,6 +4,7 @@ export interface COUPON {
     [key: string]: string;
   };
   code: string;
+  start_date: string;
   end_date: string;
   discount_type: string;
   free_delivery: string;
@@ -13,7 +14,7 @@ export interface COUPON {
   total_uses: number;
   uses_per_user: number;
   enabled: boolean;
-  coupon_coverage: number;
+  couponCoverage: number;
   special_products: string[];
   special_categories: string[];
 }

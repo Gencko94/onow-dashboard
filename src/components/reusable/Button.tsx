@@ -1,5 +1,6 @@
 import { IconType } from "react-icons/lib";
 import styled, { css } from "styled-components";
+import Ripple from "./Ripple";
 
 interface IProps {
   /**
@@ -10,6 +11,10 @@ interface IProps {
    * Button Text
    */
   text: string;
+  /**
+   * Button Text Size . default is 1rem
+   */
+  textSize?: string;
   /**
    * Icon
    */
@@ -25,7 +30,7 @@ interface IProps {
   /**
    * Button Background color , There are presets but you can pass customer hex value
    */
-  bg: "primary" | "danger" | "blue" | "green" | string;
+  bg: "primary" | "danger" | "blue" | "green" | "white" | string;
   /**
    * Button Text color , defaults to White.
    */
@@ -42,6 +47,23 @@ interface IProps {
    * button ```margin```
    */
   margin?: string;
+
+  /**
+   * Button With Ripple Effect.
+   */
+  withRipple?: boolean;
+  /**
+   * On Hover background color
+   */
+  hoverBg?: string;
+  /**
+   * On Hover text color
+   */
+  hoverColor?: string;
+  /**
+   * button shadow
+   */
+  shadow?: boolean;
 }
 
 const Button = ({
@@ -55,9 +77,15 @@ const Button = ({
   iconSize = 30,
   withTransition,
   margin = "none",
+  withRipple,
+  textSize = "1rem",
+  hoverBg,
+  hoverColor,
+  shadow,
 }: IProps) => {
   return (
     <ButtonWrapper
+      textSize={textSize}
       margin={margin}
       withTransition={withTransition}
       bg={bg}
@@ -65,6 +93,9 @@ const Button = ({
       color={color}
       onClick={onClick}
       type={type}
+      hoverBg={hoverBg}
+      hoverColor={hoverColor}
+      shadow={shadow}
     >
       {Icon && (
         <span className="icon">
@@ -72,6 +103,7 @@ const Button = ({
         </span>
       )}
       <p className="text">{text}</p>
+      {withRipple && <Ripple />}
     </ButtonWrapper>
   );
 };
@@ -80,9 +112,13 @@ export default Button;
 export const ButtonWrapper = styled.button<{
   padding: string;
   color: string;
-  bg: "primary" | "danger" | "blue" | "green" | string;
+  bg: "primary" | "danger" | "blue" | "green" | "white" | string;
   withTransition?: boolean;
   margin: string;
+  textSize: string;
+  hoverBg?: string;
+  hoverColor?: string;
+  shadow?: boolean;
 }>(
   ({
     theme: { breakpoints, green, shadow, mainColor, dangerRed },
@@ -91,6 +127,10 @@ export const ButtonWrapper = styled.button<{
     bg,
     withTransition,
     margin,
+    textSize,
+    hoverBg,
+    hoverColor,
+    shadow: boxShadow,
   }) => `
       background-color: ${
         bg === "primary"
@@ -101,9 +141,11 @@ export const ButtonWrapper = styled.button<{
           ? dangerRed
           : bg === "green"
           ? green
+          : bg === "white"
+          ? "#fff"
           : bg
       };
-      box-shadow: ${shadow};
+      box-shadow: ${boxShadow && shadow};
       display: flex;
       margin:${margin};
       justify-content:center;
@@ -111,22 +153,28 @@ export const ButtonWrapper = styled.button<{
       border-radius: 6px;
       padding: ${padding};
       position: relative;
+      overflow:hidden;
       color: ${color};
-      transition:transform 75ms ease;
+      transition: all 100ms ease;
+     
+     
       .icon {
           display: flex;
           align-items: center;
           justify-content: center;
         }
         p {
-            font-size:0.9rem;
+            font-size:${textSize};
             margin: 0 0.25rem;
         }
-       
+        &:hover {
+          background-color:${hoverBg};
+          color: ${hoverColor};
+        }
+        
         ${
           withTransition &&
           css`
-            transition: transform 75ms ease;
             &:hover {
               transform: translateY(-2px);
             }

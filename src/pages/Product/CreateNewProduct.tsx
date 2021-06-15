@@ -1,4 +1,5 @@
 import { createContext, Dispatch, SetStateAction, useState } from "react";
+import { useMutation } from "react-query";
 
 import styled from "styled-components";
 
@@ -8,6 +9,7 @@ import CreateProductTabs from "../../components/AddProduct/CreateProductTabs/Cre
 import CreateProductPricingAndOptions from "../../components/AddProduct/ProductVariations/CreateProductPricingAndOptions";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { NEW_PRODUCT } from "../../interfaces/products/create-new-product";
+import { createProduct } from "../../utils/queries";
 
 type ContextProps = {
   activeTab: 0 | 1 | 2;
@@ -20,6 +22,7 @@ export const NewProductContext = createContext<Partial<ContextProps>>({});
 
 const CreateNewProduct = () => {
   const [activeTab, setActiveTab] = useState<0 | 1 | 2>(0);
+  const { mutateAsync: createProductMutation } = useMutation(createProduct);
   const [formValues, setFormValues] = useState<Partial<NEW_PRODUCT>>({
     category_id: [],
     allow_attachments: false,
@@ -43,7 +46,33 @@ const CreateNewProduct = () => {
       ...data,
     });
   };
-
+  const submitForm = async (data: any) => {
+    console.log(data);
+    try {
+      await createProductMutation({
+        active: 1,
+        quantity: 1,
+        allow_attachments: data.allow_attachments,
+        allow_side_notes: data.allow_side_notes,
+        branch_availability: data.branch_availability,
+        product_category_id: data.category_id[0].id,
+        description_ar: data.description.ar,
+        description_en: data.description.en,
+        images: data.images,
+        max_qty_per_user: data.max_qty_per_user,
+        name_en: data.name.en,
+        name_ar: data.name.ar,
+        options: data.options,
+        prep_time: data.prep_time,
+        price: data.price,
+        price_by_options: data.price_by_options,
+        sku: data.sku,
+        slug: data.slug,
+      } as any);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <NewProductContext.Provider
       value={{ activeTab, setActiveTab, updateData, formValues }}
@@ -58,7 +87,9 @@ const CreateNewProduct = () => {
       <Wrapper>
         {activeTab === 0 && <CreateProductGeneralInfo />}
         {activeTab === 1 && <CreateProductPricingAndOptions />}
-        {activeTab === 2 && <CreateProductOrderingAndBranchAvailability />}
+        {activeTab === 2 && (
+          <CreateProductOrderingAndBranchAvailability submitForm={submitForm} />
+        )}
       </Wrapper>
     </NewProductContext.Provider>
   );
