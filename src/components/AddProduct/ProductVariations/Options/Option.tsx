@@ -151,6 +151,7 @@ const Variation = ({ option, index, removeOption }: IProps) => {
       {fields.length === 0 && (
         <div className="no-values-container">
           <EmptyTable
+            height="100%"
             btnText="Add New Option Value"
             text="No Values were Added"
             withButton

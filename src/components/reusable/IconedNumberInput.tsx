@@ -93,6 +93,7 @@ const IconedNumberInput = ({
           type="number"
           min={min}
           max={max!}
+          step="any"
           {...register(name, {
             required: required ? requiredMessage : false,
             min: {

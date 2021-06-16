@@ -16,6 +16,7 @@ import DateIconedInput from "../../reusable/Inputs/DateIconedInput";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import IconedNumberInput from "../../reusable/IconedNumberInput";
 import Select from "../../reusable/Select";
+import { AiOutlineTag } from "react-icons/ai";
 interface IProps {
   register: UseFormRegister<any>;
   errors: DeepMap<any, FieldError>;
@@ -100,6 +101,7 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           label="Minimum order amount"
           name="min_total_order"
           min={0}
+          desc="0 For no minimum amount"
         />
         <Controller
           control={control}
@@ -119,7 +121,6 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
                 onChange={(val) => onChange(val.value)}
                 errors={errors?.discount_type}
                 options={options}
-                defaultValue="fixed"
                 getOptionLabel={(option: any) => option.label[language]}
                 getOptionValue={(option: any) => option.value}
               />
@@ -155,7 +156,6 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
                 onChange={(val) => onChange(val.value)}
                 errors={errors?.free_delivery}
                 options={freeDeliveryOptions}
-                defaultValue="0"
                 getOptionLabel={(option: any) => option.label[language]}
                 getOptionValue={(option) => option.value}
               />
@@ -184,6 +184,17 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           label="Total Uses"
           name="total_uses"
           desc="Leave Blank for unlimited"
+          min={0}
+        />
+        <IconedNumberInput
+          Icon={AiOutlineTag}
+          errors={errors?.max_discount}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Max Discount"
+          name="max_discount"
+          desc="Keep 0 For no max discount"
           min={0}
         />
 

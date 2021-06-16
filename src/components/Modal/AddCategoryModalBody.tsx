@@ -19,10 +19,9 @@ interface IProps {
 }
 const AddCategoryModalBody = ({ control, errors }: IProps) => {
   const { formValues } = useContext(NewProductContext);
-  const categories = useWatch({
+  const formCategory = useWatch({
     name: "category_id",
     control,
-    defaultValue: formValues?.category_id,
   });
   const { data } = useQuery<MINI_CATEGORY[]>(
     "mini-categories",
@@ -37,12 +36,10 @@ const AddCategoryModalBody = ({ control, errors }: IProps) => {
     category: MINI_CATEGORY,
     onChange: (...event: any[]) => void
   ) {
-    const found = categories?.find((i: any) => i.id === category.id);
-
-    if (!found) {
-      onChange([...categories!, category]);
+    if (category.id === formCategory) {
+      onChange(undefined);
     } else {
-      onChange(categories?.filter((i: any) => i.id !== category.id));
+      onChange(category.id);
     }
   }
 
@@ -58,7 +55,7 @@ const AddCategoryModalBody = ({ control, errors }: IProps) => {
         render={({ field: { onChange } }) => {
           return (
             <Container>
-              <div className="chips">
+              {/* <div className="chips">
                 <p className="text">Selected Categories :</p>
                 <div className="chips-wrapper">
                   {categories?.map((cat: any) => {
@@ -76,7 +73,7 @@ const AddCategoryModalBody = ({ control, errors }: IProps) => {
                     <p className="error-message">Please Select a Category</p>
                   )}
                 </div>
-              </div>
+              </div> */}
 
               <div className="table">
                 {data?.map((category) => {
@@ -98,9 +95,7 @@ const AddCategoryModalBody = ({ control, errors }: IProps) => {
                           <h6>{category.name[language]}</h6>
                         </div>
                         <Checkbox
-                          checked={Boolean(
-                            categories?.find((i: any) => i.id === category.id)
-                          )}
+                          checked={formCategory === category.id}
                           onChange={(e) => {
                             e.stopPropagation();
                             handleToggleCategories(category, onChange);
@@ -129,9 +124,7 @@ const AddCategoryModalBody = ({ control, errors }: IProps) => {
                               </div>
                             </div>
                             <Checkbox
-                              checked={Boolean(
-                                categories?.find((i: any) => i.id === child.id)
-                              )}
+                              checked={formCategory === child.id}
                               onChange={(e) => {
                                 e.stopPropagation();
                                 handleToggleCategories(child, onChange);

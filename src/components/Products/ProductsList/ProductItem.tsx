@@ -1,21 +1,30 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { CSSTransition } from "react-transition-group";
-import ClickAwayListener from "react-click-away-listener";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 import { useHistory } from "react-router";
 import { PRODUCT } from "../../../interfaces/products/products";
 import { useTranslation } from "react-i18next";
-import { FiCopy } from "react-icons/fi";
 import Checkbox from "../../reusable/Inputs/Checkbox";
+import Popover from "../../reusable/Popover";
+import Button from "../../reusable/Button";
+import { Dispatch } from "react";
 
 interface IProps {
   product: PRODUCT;
+  handleDeleteCoupon: (id: number) => Promise<void>;
+  setModalStatus: Dispatch<
+    SetStateAction<{ id: number | null; open: boolean }>
+  >;
 }
 
-const ProductItem = ({ product }: IProps) => {
+const ProductItem = ({
+  product,
+  handleDeleteCoupon,
+  setModalStatus,
+}: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   const {
@@ -42,79 +51,79 @@ const ProductItem = ({ product }: IProps) => {
     }
   };
   return (
-    <Container onClick={() => history.push(`/product/1`)}>
-      <div className="field">
-        <Checkbox
-          checked={true}
-          onChange={(e) => {
-            e.stopPropagation();
-          }}
-        />
-      </div>
-      <div className="field">
-        <img
-          className="img"
-          src={product.images.find((i) => i.is_default === true)?.url}
-          alt={product.name[language]}
-        />
-      </div>
-      <div className="field">
-        <h6>{product.name[language]}</h6>
-      </div>
-      <div className="field">
-        <h6>6</h6>
-      </div>
-      <div className="field">
-        <h6>Men</h6>
-      </div>
-      {/* <div className="field">
+    <>
+      <Container onClick={() => history.push(`/product/1`)}>
+        <div className="field">
+          <Checkbox
+            checked={true}
+            onChange={(e) => {
+              e.stopPropagation();
+            }}
+          />
+        </div>
+        <div className="field">
+          <img
+            className="img"
+            src={product.images?.[0].url}
+            alt={product.name[language]}
+          />
+        </div>
+        <div className="field">
+          <h6>{product.name[language]}</h6>
+        </div>
+        <div className="field">
+          <h6>{product.quantity}</h6>
+        </div>
+        <div className="field">
+          <h6>{product.category.name}</h6>
+        </div>
+        {/* <div className="field">
         <EnabledButton enabled={false} type="button">
           Enable
         </EnabledButton>
       </div> */}
-      <div className="field">{renderStatus(2)}</div>
-      <div className="field">
-        <ButtonsContainer>
-          <ActionButtonContainer
-            onClick={(e) => {
-              e.stopPropagation();
-              setActionsMenuOpen(true);
-            }}
-          >
-            <button className="icon">
-              <BsThreeDotsVertical size={18} />
-            </button>
-            <CSSTransition
-              in={actionsMenuOpen}
-              classNames="menu"
-              unmountOnExit
-              timeout={100}
+        <div className="field">{renderStatus(2)}</div>
+        <div className="field">
+          <ButtonsContainer>
+            <ActionButtonContainer
+              onClick={(e) => {
+                e.stopPropagation();
+                setActionsMenuOpen(true);
+              }}
             >
-              <ClickAwayListener onClickAway={() => setActionsMenuOpen(false)}>
-                <ul>
-                  <li>
-                    <button>
-                      <span className="icon">
-                        <RiDeleteBinLine size={15} />
-                      </span>
-                      <p>Delete Product</p>
-                    </button>
-                  </li>
-                  <li>
-                    <button>
-                      <span className="icon">
-                        <FiCopy size={15} />
-                      </span>
-                      <p>Copy Product</p>
-                    </button>
-                  </li>
-                </ul>
-              </ClickAwayListener>
-            </CSSTransition>
-          </ActionButtonContainer>
-        </ButtonsContainer>
-      </div>
-    </Container>
+              <button className="icon">
+                <BsThreeDotsVertical size={18} />
+              </button>
+              <CSSTransition
+                in={actionsMenuOpen}
+                classNames="menu"
+                unmountOnExit
+                timeout={100}
+              >
+                <Popover closeFunction={() => setActionsMenuOpen(false)}>
+                  <Button
+                    text="Delete Coupon"
+                    padding="0.5rem"
+                    bg="white"
+                    color="#444"
+                    hoverColor="#b72b2b"
+                    textSize="0.8rem"
+                    Icon={RiDeleteBinLine}
+                    iconSize={15}
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      setActionsMenuOpen(false);
+                      setModalStatus({ open: true, id: product.id });
+                    }}
+                  />
+                </Popover>
+              </CSSTransition>
+            </ActionButtonContainer>
+          </ButtonsContainer>
+        </div>
+      </Container>
+    </>
   );
 };
 
@@ -164,44 +173,6 @@ const ButtonsContainer = styled.div`
 `;
 const ActionButtonContainer = styled.div`
   position: relative;
-
-  ul {
-    position: absolute;
-    bottom: -3px;
-    right: 8px;
-    z-index: 10;
-    background-color: #fff;
-    transform-origin: right;
-    box-shadow: ${(props) => props.theme.shadow};
-    border-radius: 5px;
-  }
-  ul li button {
-    padding: 0.5rem;
-    display: block;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.9rem;
-    color: ${(props) => props.color};
-    transition: all 75ms ease;
-    p {
-      margin: 0 0.5rem;
-    }
-    .icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0.25rem;
-      transition: color 75ms ease;
-    }
-    &:hover {
-      .icon {
-        color: ${(props) => props.theme.mainColor};
-      }
-      background-color: ${(props) => props.theme.highlightColor};
-    }
-  }
 `;
 const Status = styled.div`
   display: flex;

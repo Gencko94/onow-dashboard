@@ -25,8 +25,8 @@ export interface NEW_COUPON {
   start_date: string;
   end_date: string;
   code: string;
-  discount_type: string;
-  free_delivery: boolean;
+  discount_type: "fixed" | "percent";
+  free_delivery: "0" | "1";
   amount: string;
   max_discount: number;
   min_total_order: number;

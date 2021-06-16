@@ -1,8 +1,11 @@
 import { PRODUCT } from "../interfaces/products/products";
-import { category1 } from "./fakeData";
 
 export const product1: PRODUCT = {
-  category: [category1],
+  category: {
+    name: "test",
+    id: 1,
+  },
+  quantity: 1,
   category_id: ["1"],
   description: {
     ar: "fdsa",

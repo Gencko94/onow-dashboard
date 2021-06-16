@@ -32,7 +32,7 @@ const ProductGeneralInformation = ({ data }: IProps) => {
       description: data.description,
       slug: data.slug,
 
-      category: data.category,
+      category: data.category as any,
     },
   });
   console.log(methods.watch().category);

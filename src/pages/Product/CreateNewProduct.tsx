@@ -24,7 +24,6 @@ const CreateNewProduct = () => {
   const [activeTab, setActiveTab] = useState<0 | 1 | 2>(0);
   const { mutateAsync: createProductMutation } = useMutation(createProduct);
   const [formValues, setFormValues] = useState<Partial<NEW_PRODUCT>>({
-    category_id: [],
     allow_attachments: false,
     allow_side_notes: true,
     branch_availability: {
@@ -55,13 +54,12 @@ const CreateNewProduct = () => {
         allow_attachments: data.allow_attachments,
         allow_side_notes: data.allow_side_notes,
         branch_availability: data.branch_availability,
-        product_category_id: data.category_id[0].id,
-        description_ar: data.description.ar,
-        description_en: data.description.en,
+        product_category_id: data.category_id,
+        description: data.description,
         images: data.images,
         max_qty_per_user: data.max_qty_per_user,
-        name_en: data.name.en,
-        name_ar: data.name.ar,
+        name: data.name,
+
         options: data.options,
         prep_time: data.prep_time,
         price: data.price,

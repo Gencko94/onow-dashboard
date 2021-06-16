@@ -111,7 +111,7 @@ const CustomerProfileOrders = ({ orders }: IProps) => {
             );
           })}
         {orders.length === 0 && (
-          <EmptyTable text="This customer has no orders yet" />
+          <EmptyTable height="100%" text="This customer has no orders yet" />
         )}
       </div>
     </Container>

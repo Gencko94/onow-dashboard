@@ -2,15 +2,16 @@ import styled from "styled-components";
 
 import AddCategoryModalBody from "../../Modal/AddCategoryModalBody";
 
-import { Control, DeepMap, FieldError, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 import { useTranslation } from "react-i18next";
 import { firstTabInfo } from "./CreateProductGeneralInfo";
-interface IProps {
-  control: Control<firstTabInfo>;
-  errors: DeepMap<firstTabInfo, FieldError>;
-}
-const CreateProductCategories = ({ control, errors }: IProps) => {
+
+const CreateProductCategories = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<firstTabInfo>();
   const {
     i18n: { language },
   } = useTranslation();

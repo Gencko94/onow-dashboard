@@ -7,8 +7,9 @@ import {
   GET_ORDERS_RESPONSE,
   ORDERS_FILTERS,
 } from "../interfaces/orders/orders";
-import { COUPON } from "../interfaces/coupons/coupons";
+import { COUPON, NEW_COUPON } from "../interfaces/coupons/coupons";
 import { NEW_PRODUCT } from "../interfaces/products/create-new-product";
+import { PRODUCT } from "../interfaces/products/products";
 
 const uri = "https://new-version.o-now.net/customer-api";
 
@@ -154,6 +155,16 @@ export const getCoupons = async (sortBy: any): Promise<COUPON[]> => {
   const res = await axios.get(`${uri}/coupons`, config);
   return res.data.results;
 };
+export const createCoupon = async (coupon: NEW_COUPON): Promise<COUPON[]> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.post(`${uri}/coupons`, coupon, config);
+  return res.data.results;
+};
 export const editCoupon = async (coupon: any): Promise<COUPON[]> => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
@@ -164,7 +175,9 @@ export const editCoupon = async (coupon: any): Promise<COUPON[]> => {
   const res = await axios.put(`${uri}/coupons/${coupon.id}`, coupon, config);
   return res.data.results;
 };
-export const deleteCoupon = async (id: string): Promise<COUPON[]> => {
+export const deleteCoupon = async (
+  id: string
+): Promise<{ results: "Deleted" }> => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
     headers: {
@@ -176,19 +189,43 @@ export const deleteCoupon = async (id: string): Promise<COUPON[]> => {
 };
 
 //Products
+//Get
 
+export const getProducts = async (): Promise<PRODUCT[]> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.get(`${uri}/products`, config);
+  return res.data.results;
+};
 //Create
 export const createProduct = async (product: NEW_PRODUCT) => {
   const t = localStorage.getItem("dshtid");
   console.log(product);
-  const formData = new FormData();
-  // formData.append("file", product.images);
+  // const formData = new FormData();
+  // formData.append("file", product.images[0]);
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
-      "Content-Type": "multipart/form-data",
+      // "Content-Type": "multipart/form-data",
     },
   };
   const res = await axios.post(`${uri}/products`, product, config);
+  return res.data.results;
+};
+//Delete
+export const deleteProduct = async (
+  id: string
+): Promise<{ results: "Deleted" }> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.delete(`${uri}/products/${id}`, config);
   return res.data.results;
 };

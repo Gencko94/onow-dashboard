@@ -78,7 +78,7 @@ const CouponProducts = ({
       <div className="box">
         <Controller
           control={control}
-          name="couponCoverage"
+          name="coupon_coverage"
           render={({ field: { value, onChange } }) => {
             return (
               <Select

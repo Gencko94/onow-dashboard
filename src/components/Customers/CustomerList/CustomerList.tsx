@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import styled from "styled-components";
 import { CUSTOMER } from "../../../interfaces/customers/customers";
-import TableEmpty from "../../reusable/TableEmpty";
+import EmptyTable from "../../reusable/EmptyTable";
 import TableHead from "../../reusable/TableHead";
 import CustomerItem from "./CustomerItem/CustomerItem";
 
@@ -21,7 +21,9 @@ const CustomerList = ({ data }: IProps) => {
   return (
     <Container>
       <TableHead cols={cols} gridCols="1fr 1fr 1fr 0.5fr" />
-      {data.length === 0 && <TableEmpty title="No Customers were Added " />}
+      {data.length === 0 && (
+        <EmptyTable height="300px" text="No Customers were Added " />
+      )}
       {data.map((customer) => (
         <CustomerItem key={customer.id} customer={customer} />
       ))}

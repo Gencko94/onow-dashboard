@@ -2,7 +2,7 @@ export interface NEW_PRODUCT {
   name: {
     [key: string]: string;
   };
-  category_id: number[];
+  category_id: number;
   images: File[];
   description: {
     [key: string]: string;
@@ -53,7 +53,7 @@ export type OPTION_VALUE = {
   sku: string;
 };
 export interface NEW_PRODUCT_FORM_PROPS {
-  category_id: number[];
+  category_id: number;
   name: {
     [key: string]: string;
   };

@@ -6,7 +6,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { useHistory } from "react-router";
 import { COUPON } from "../../../interfaces/coupons/coupons";
 import { useTranslation } from "react-i18next";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { deleteCoupon } from "../../../utils/queries";
 import ErrorToast from "../../reusable/ErrorToast";
 import Button from "../../reusable/Button";
@@ -14,11 +14,13 @@ import Popover from "../../reusable/Popover";
 import ConfirmationModal from "../../reusable/ConfirmationModal";
 interface IProps {
   coupon: COUPON;
+  sortBy: any;
 }
 
-const CouponItem = ({ coupon }: IProps) => {
+const CouponItem = ({ coupon, sortBy }: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const queryClient = useQueryClient();
   const history = useHistory();
   const {
     i18n: { language },
@@ -29,7 +31,16 @@ const CouponItem = ({ coupon }: IProps) => {
     mutateAsync,
     reset,
     isError: deleteError,
-  } = useMutation(deleteCoupon);
+  } = useMutation(deleteCoupon, {
+    onSuccess: () => {
+      queryClient.setQueryData<COUPON[] | undefined>(
+        ["coupons", sortBy],
+        (prev) => {
+          return prev?.filter((i) => i.id !== coupon.id);
+        }
+      );
+    },
+  });
 
   const renderStatus = (id: number) => {
     // if Enabled

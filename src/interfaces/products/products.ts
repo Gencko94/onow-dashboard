@@ -26,12 +26,16 @@ interface PRODUCT_IMAGE {
 }
 export type PRODUCT = {
   id: number;
+  quantity: number;
   name: {
     [key: string]: string;
   };
   category_id: string[];
   slug: string;
-  category: MINI_CATEGORY[];
+  category: {
+    name: string;
+    id: number;
+  };
   images: PRODUCT_IMAGE[];
   description: {
     [key: string]: string;

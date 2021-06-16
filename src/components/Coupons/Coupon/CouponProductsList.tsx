@@ -31,7 +31,7 @@ const CouponProductsList = ({ title, control }: IProps) => {
           return (
             <div className="list">
               {special_products.length === 0 && (
-                <EmptyTable text="No Products Added" />
+                <EmptyTable height="100%" text="No Products Added" />
               )}
               {special_products.map((product: any) => (
                 <div className="search-result">

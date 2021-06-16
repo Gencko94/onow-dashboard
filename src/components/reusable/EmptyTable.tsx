@@ -1,10 +1,16 @@
 import styled from "styled-components";
+import Button from "./Button";
 
 interface BaseProps {
   /**
    * Text to show in the Empty Table.
    */
   text: string;
+  /**
+   * Container ```height```
+   */
+  height: string;
+  iconImage?: string;
 }
 interface WithButton extends BaseProps {
   /**
@@ -22,41 +28,50 @@ interface WithoutButton extends BaseProps {
 }
 type IProps = WithButton | WithoutButton;
 
-const EmptyTable = ({ btnText, text, withButton, cb }: IProps) => {
+const EmptyTable = ({
+  btnText,
+  text,
+  withButton,
+  cb,
+  height,
+  iconImage,
+}: IProps) => {
   return (
-    <Container>
-      <p>{text}</p>
-      {withButton && (
-        <button onClick={() => cb?.()} type="button">
-          {btnText}
-        </button>
+    <Container height={height}>
+      {iconImage && <img src={iconImage} alt="" />}
+      <p className="title">{text}</p>
+      {withButton && btnText && (
+        <Button
+          text={btnText}
+          bg="green"
+          padding="0.5rem"
+          textSize="0.9rem"
+          withRipple
+          withTransition
+          onClick={() => cb?.()}
+        />
       )}
     </Container>
   );
 };
 
 export default EmptyTable;
-const Container = styled.div(
-  ({ theme: { breakpoints, mainColor } }) => `
+const Container = styled.div<{ height: string }>(
+  ({ theme: { breakpoints, font }, height }) => `
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    // height:200px;
-    height:100%;
-    p {
+    height:${height};
+    p.title {
       margin-bottom:0.5rem;
+      font-size:1.1rem;
+      font-weight:${font.semibold};
+      margin:1.5rem 0;
     }
-    button {
-      background-color:${mainColor};
-      color:#fff;
-      padding:0.5rem;
-      font-size:0.9rem;
-      border-radius:6px;
-      transition:transform 75ms ease;
-      &:hover {
-      transform:translateY(-2px);
-      }
+    img {
+      max-height:100px;
     }
+   
 `
 );

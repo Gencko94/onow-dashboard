@@ -1,18 +1,18 @@
 import { useContext } from "react";
-import { DeepMap, FieldError, UseFormRegister } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
 import { firstTabInfo } from "./CreateProductGeneralInfo";
-interface IProps {
-  register: UseFormRegister<firstTabInfo>;
-  errors: DeepMap<firstTabInfo, FieldError>;
-}
 
-const CreateProductNameAndDescription = ({ register, errors }: IProps) => {
+const CreateProductNameAndDescription = () => {
   const { formValues } = useContext(NewProductContext);
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<firstTabInfo>();
   return (
     <Container>
       <div className="title-container">

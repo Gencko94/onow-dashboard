@@ -1,13 +1,14 @@
-import { Control, DeepMap, FieldError, UseFormSetValue } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import FileUploader from "../../../utils/FileUploader";
 import { firstTabInfo } from "./CreateProductGeneralInfo";
-interface IProps {
-  control: Control<firstTabInfo>;
-  setValue: UseFormSetValue<firstTabInfo>;
-  errors: DeepMap<firstTabInfo, FieldError>;
-}
-const CreateProductImage = ({ control, errors, setValue }: IProps) => {
+
+const CreateProductImage = () => {
+  const {
+    control,
+    formState: { errors },
+    setValue,
+  } = useFormContext<firstTabInfo>();
   return (
     <Container>
       <div className="title-container">

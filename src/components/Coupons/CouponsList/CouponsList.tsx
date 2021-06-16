@@ -30,7 +30,7 @@ const CouponsList = () => {
 
       <div>
         {data!.map((coupon) => (
-          <CouponItem key={coupon.id} coupon={coupon} />
+          <CouponItem key={coupon.id} coupon={coupon} sortBy={sortBy} />
         ))}
       </div>
     </Container>

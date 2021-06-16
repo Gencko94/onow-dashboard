@@ -5,14 +5,19 @@ import CreateProductCategories from "./CreateProductCategories";
 import ProductDescription from "./ProductDescription";
 import CreateProductImage from "./CreateProductImage";
 import CreateProductNameAndDescription from "./CreateProductNameAndDescription";
-import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
+import {
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
 import { useContext } from "react";
 import Flex from "../../StyledComponents/Flex";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import BlueButton from "../../reusable/BlueButton";
 
 export interface firstTabInfo {
-  category_id: number[];
+  category_id: number;
   name: {
     [key: string]: string;
   };
@@ -24,48 +29,48 @@ export interface firstTabInfo {
 }
 
 const CreateProductGeneralInfo = () => {
-  const { updateData, setActiveTab } = useContext(NewProductContext);
-  const {
-    register,
-    control,
-    formState: { errors },
-    setValue,
-    handleSubmit,
-    watch,
-  } = useForm<firstTabInfo>();
+  const { updateData, setActiveTab, formValues } =
+    useContext(NewProductContext);
+  const methods = useForm<firstTabInfo>({
+    defaultValues: {
+      category_id: formValues?.category_id,
+      description: formValues?.description,
+      name: formValues?.name,
+      images: formValues?.images,
+      slug: formValues?.slug,
+    },
+  });
   const onSubmit: SubmitHandler<firstTabInfo> = (data) => {
     console.log(data);
 
     setActiveTab?.(1);
-    updateData?.(watch());
+    updateData?.(methods.watch());
   };
   const onError: SubmitErrorHandler<firstTabInfo> = (errors) => {
     console.log(errors);
   };
 
   return (
-    <Container>
-      <Flex justify="flex-end">
-        <BlueButton
-          onClick={handleSubmit(onSubmit, onError)}
-          type="submit"
-          title="Next"
-        />
-      </Flex>
-      <Grid cols="1fr 1fr" gap="1rem">
-        <CreateProductNameAndDescription register={register} errors={errors} />
+    <FormProvider {...methods}>
+      <Container>
+        <Flex justify="flex-end">
+          <BlueButton
+            onClick={methods.handleSubmit(onSubmit, onError)}
+            type="submit"
+            title="Next"
+          />
+        </Flex>
+        <Grid cols="1fr 1fr" gap="1rem">
+          <CreateProductNameAndDescription />
 
-        <CreateProductCategories control={control} errors={errors} />
-      </Grid>
+          <CreateProductCategories />
+        </Grid>
 
-      <Hr />
-      <CreateProductImage
-        setValue={setValue}
-        control={control}
-        errors={errors}
-      />
-      {/* <ProductDescription /> */}
-    </Container>
+        <Hr />
+        <CreateProductImage />
+        {/* <ProductDescription /> */}
+      </Container>
+    </FormProvider>
   );
 };
 
@@ -74,9 +79,4 @@ const Container = styled.div`
   ${GridWrapper} {
     margin-bottom: 2rem;
   }
-  /* background-color: #fff;
-  box-shadow: ${(props) => props.theme.shadow};
-  padding: 0.75rem;
-  border-radius: 5px;
-  align-self: flex-start; */
 `;
