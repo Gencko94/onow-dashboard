@@ -1,18 +1,25 @@
 import { useContext } from "react";
 import { useFormContext } from "react-hook-form";
+import { BiDetail } from "react-icons/bi";
+import { FaBoxes } from "react-icons/fa";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
+import IconedNumberInput from "../../reusable/IconedNumberInput";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
+import QuantityInput from "../../reusable/Inputs/QuantityInput";
 import { firstTabInfo } from "./CreateProductGeneralInfo";
 
 const CreateProductNameAndDescription = () => {
   const { formValues } = useContext(NewProductContext);
   const {
     register,
+    control,
+    watch,
     formState: { errors },
   } = useFormContext<firstTabInfo>();
+  const quantity = watch("quantity");
   return (
     <Container>
       <div className="title-container">
@@ -59,7 +66,28 @@ const CreateProductNameAndDescription = () => {
           name="description.ar"
           defaultValue={formValues?.description?.ar}
         />
-        <div className="slug">
+        <IconedInput
+          Icon={BiDetail}
+          errors={errors?.sku}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="SKU"
+          name="sku"
+          defaultValue={formValues?.sku}
+        />
+
+        <QuantityInput
+          unlimited={quantity === "unlimited"}
+          control={control}
+          errors={errors?.quantity}
+          required
+          requiredMessage="Required"
+          label="Quantity"
+          name="quantity"
+        />
+
+        <div style={{ gridColumn: "1/3" }}>
           <PrefixedInput
             errors={errors?.slug}
             label="Slug"
@@ -100,9 +128,7 @@ const Container = styled.div(
   @media ${breakpoints.md} {
     .box {
       grid-template-columns: 1fr 1fr;
-      .slug {
-        grid-column:1/3;
-      }
+     
 
     }
   }

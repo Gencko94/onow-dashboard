@@ -23,6 +23,7 @@ export interface thirdTabProps {
   };
   allow_side_notes: boolean;
   allow_attachments: boolean;
+  active: 0 | 1;
   branch_availability: {
     all: boolean;
     branches: number[];
@@ -41,6 +42,7 @@ const CreateProductOrderingAndBranchAvailability = ({ submitForm }: IProps) => {
       branch_availability: formValues?.branch_availability,
       max_qty_per_user: formValues?.max_qty_per_user,
       prep_time: formValues?.prep_time,
+      active: formValues?.active,
     },
   });
   const onSubmit: SubmitHandler<thirdTabProps> = (data) => {

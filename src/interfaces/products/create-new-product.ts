@@ -2,6 +2,8 @@ export interface NEW_PRODUCT {
   name: {
     [key: string]: string;
   };
+  active: 1 | 0;
+  quantity: number | "unlimited";
   category_id: number;
   images: File[];
   description: {

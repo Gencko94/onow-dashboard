@@ -5,7 +5,6 @@ import CustomersPanel from "../components/Customers/CustomersPanel/CustomersPane
 import AddCustomerModal from "../components/Modal/AddCustomerModal";
 
 import { getCustomers } from "../utils/queries";
-import ModalHead from "../components/reusable/ModalHead";
 import { CUSTOMER } from "../interfaces/customers/customers";
 import Modal from "../components/Modal/Modal";
 

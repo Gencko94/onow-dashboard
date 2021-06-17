@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 interface IProps {
   /**
@@ -9,13 +9,15 @@ interface IProps {
    * 	Boolean indicated whether the input is checked.
    */
   checked: boolean;
+  small?: boolean;
+  id?: string;
 }
 
-const Checkbox = ({ checked, onChange }: IProps) => {
+const Checkbox = ({ checked, onChange, small, id }: IProps) => {
   return (
-    <Container checked={checked}>
+    <Container checked={checked} small={small}>
       <span className="check">
-        <input type="checkbox" onChange={onChange} checked={checked} />
+        <input id={id} type="checkbox" onChange={onChange} checked={checked} />
         <svg
           className="svg"
           focusable="false"
@@ -34,8 +36,8 @@ const Checkbox = ({ checked, onChange }: IProps) => {
 };
 
 export default Checkbox;
-const Container = styled.span<{ checked: boolean }>`
-  /* display: inline-block; */
+const Container = styled.span<{ checked: boolean; small?: boolean }>`
+  display: inline-block;
   position: relative;
   color: ${(props) => props.theme.mainColor};
   padding: 7px;
@@ -79,4 +81,13 @@ const Container = styled.span<{ checked: boolean }>`
     flex-shrink: 0;
     user-select: none;
   }
+  ${(props) =>
+    props.small &&
+    css`
+      padding: 5px 3px;
+      .svg {
+        width: 0.75em;
+        height: 0.75em;
+      }
+    `}
 `;

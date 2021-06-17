@@ -1,4 +1,3 @@
-import { string } from "yup/lib/locale";
 import { MINI_CATEGORY } from "../interfaces/categories/categories";
 
 export const miniCategories: MINI_CATEGORY[] = [
@@ -25,6 +24,7 @@ export const miniCategories: MINI_CATEGORY[] = [
   },
   {
     id: 5,
+
     image: "/images/product.webp",
     name: {
       ar: "المنظفات",

@@ -1,5 +1,3 @@
-import { NullLiteral } from "typescript";
-
 export type QUICK_ADD_CATEGORY = {
   name: string;
   name_ar: string;
@@ -48,15 +46,14 @@ export type MINI_CATEGORY = {
    */
   children?: MINI_CATEGORY[];
 };
-export interface NEW_CATEGORY {
+export type NEW_CATEGORY = {
   id: number;
   name: {
     [key: string]: string;
   };
   slug: string;
-  parent: CATEGORY | null;
-  image: string;
-  active: boolean;
+  parent_id: number;
+  image: File;
+  active: 0 | 1;
   seo_description: string;
-  as_child: boolean;
-}
+};

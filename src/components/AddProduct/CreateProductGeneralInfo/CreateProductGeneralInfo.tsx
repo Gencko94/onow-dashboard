@@ -26,6 +26,8 @@ export interface firstTabInfo {
   };
   slug: string;
   images: File[];
+  quantity: number | "unlimited";
+  sku: string;
 }
 
 const CreateProductGeneralInfo = () => {
@@ -35,9 +37,11 @@ const CreateProductGeneralInfo = () => {
     defaultValues: {
       category_id: formValues?.category_id,
       description: formValues?.description,
+      quantity: formValues?.quantity,
       name: formValues?.name,
       images: formValues?.images,
       slug: formValues?.slug,
+      sku: formValues?.sku,
     },
   });
   const onSubmit: SubmitHandler<firstTabInfo> = (data) => {

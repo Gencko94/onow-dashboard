@@ -33,6 +33,8 @@ const CreateNewProduct = () => {
     options: [],
     images: [],
     max_qty_per_user: 0,
+    active: 1,
+    quantity: "unlimited",
     prep_time: {
       time: 0,
       unit: "minutes",

@@ -1,8 +1,22 @@
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import CategoryInfo from "../../components/Categories/Category/CategoryInfo";
-import CategoryProducts from "../../components/Categories/Category/CategoryProducts";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
+import Button from "../../components/reusable/Button";
+import Flex from "../../components/StyledComponents/Flex";
 import { NEW_CATEGORY } from "../../interfaces/categories/categories";
+
+export interface NEW_CATEGORY_FORM {
+  id: number;
+  name: {
+    [key: string]: string;
+  };
+  slug: string;
+  parent_id: number;
+  image: File;
+  active: 0 | 1;
+  seo_description: string;
+  as_child: boolean;
+}
 
 const CreateNewCategory = () => {
   const {
@@ -10,7 +24,11 @@ const CreateNewCategory = () => {
     register,
     setValue,
     formState: { errors },
-  } = useForm<NEW_CATEGORY>();
+    handleSubmit,
+  } = useForm<NEW_CATEGORY_FORM>();
+  const onSubmit: SubmitHandler<NEW_CATEGORY_FORM> = (data) => {
+    console.log(data);
+  };
   return (
     <div>
       <Breadcrumbs
@@ -18,18 +36,25 @@ const CreateNewCategory = () => {
         parentLabel="Categories"
         parentTarget="/categories"
       />
-      <CategoryInfo
-        setValue={setValue}
-        control={control}
-        errors={errors}
-        register={register}
-      />
-      {/* <CategoryProducts
-        setValue={setValue}
-        control={control}
-        errors={errors}
-        register={register}
-      /> */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Flex justify="flex-end">
+          <Button
+            type="submit"
+            text="Create new category"
+            bg="green"
+            padding="0.5rem"
+            textSize="0.9rem"
+            withRipple
+            withTransition
+          />
+        </Flex>
+        <CategoryInfo
+          setValue={setValue}
+          control={control}
+          errors={errors}
+          register={register}
+        />
+      </form>
     </div>
   );
 };

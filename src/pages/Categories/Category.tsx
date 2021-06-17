@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import CategoryInfo from "../../components/Categories/Category/CategoryInfo";
-import CategoryProducts from "../../components/Categories/Category/CategoryProducts";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { CATEGORY } from "../../interfaces/categories/categories";
 
@@ -24,12 +23,6 @@ const Category = () => {
         errors={errors}
         register={register}
       />
-      {/* <CategoryProducts
-        setValue={setValue}
-        control={control}
-        errors={errors}
-        register={register}
-      /> */}
     </div>
   );
 };

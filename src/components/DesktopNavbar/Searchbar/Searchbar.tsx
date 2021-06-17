@@ -1,24 +1,27 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import { BiChevronDown } from 'react-icons/bi';
-import { GoSearch } from 'react-icons/go';
-export type SEARCH_OPTIONS = 'Order' | 'Customer';
+import { useState } from "react";
+import styled from "styled-components";
+import { BiChevronDown } from "react-icons/bi";
+import { GoSearch } from "react-icons/go";
+export type SEARCH_OPTIONS = "order" | "customer" | "product";
 export type PLACEHOLDER_OPTIONS =
-  | 'Search by Order No, Client No'
-  | 'Search By Customer Name, Phone Number';
+  | "Search by Order No, Client No"
+  | "Search By Customer Name, Phone Number"
+  | "Search for products";
 
 const Searchbar = () => {
-  const [option, setOption] = useState<SEARCH_OPTIONS>('Customer');
+  const [option, setOption] = useState<SEARCH_OPTIONS>("customer");
   const [placeholder, setPlaceholder] = useState<PLACEHOLDER_OPTIONS>(
-    'Search By Customer Name, Phone Number'
+    "Search By Customer Name, Phone Number"
   );
   const [menuOpen, setMenuOpen] = useState(false);
   const handleChangeOption = (option: SEARCH_OPTIONS) => {
     setOption(option);
-    if (option === 'Order') {
-      setPlaceholder('Search By Customer Name, Phone Number');
-    } else if (option === 'Customer') {
-      setPlaceholder('Search by Order No, Client No');
+    if (option === "order") {
+      setPlaceholder("Search by Order No, Client No");
+    } else if (option === "customer") {
+      setPlaceholder("Search By Customer Name, Phone Number");
+    } else if (option === "product") {
+      setPlaceholder("Search for products");
     }
   };
   return (
@@ -29,10 +32,13 @@ const Searchbar = () => {
         <BiChevronDown size={19} />
         {menuOpen && (
           <OptionsContainer>
-            <Option onClick={() => handleChangeOption('Customer')}>
+            <Option onClick={() => handleChangeOption("customer")}>
               Customer
             </Option>
-            <Option onClick={() => handleChangeOption('Order')}>Order</Option>
+            <Option onClick={() => handleChangeOption("order")}>Order</Option>
+            <Option onClick={() => handleChangeOption("product")}>
+              Product
+            </Option>
           </OptionsContainer>
         )}
       </Options>
@@ -47,11 +53,10 @@ export default Searchbar;
 const Container = styled.div`
   display: grid;
   flex: auto;
+  background-color: #fff;
   grid-template-columns: minmax(100px, 1fr) 100px 40px;
-  /* border: ${props => props.theme.border}; */
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 5px;
-  /* overflow: hidden; */
 `;
 const Input = styled.input`
   padding: 0.5rem;
@@ -65,8 +70,8 @@ const Options = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-right: ${props => props.theme.border};
-  border-left: ${props => props.theme.border};
+  border-right: ${(props) => props.theme.border};
+  border-left: ${(props) => props.theme.border};
   position: relative;
   cursor: pointer;
 `;
@@ -77,8 +82,8 @@ const SearchButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${props => props.theme.btnText};
-  background-color: ${props => props.theme.green};
+  color: ${(props) => props.theme.btnText};
+  background-color: ${(props) => props.theme.green};
 `;
 const OptionsContainer = styled.div`
   position: absolute;
@@ -86,7 +91,7 @@ const OptionsContainer = styled.div`
   top: 110%;
   left: 0;
   right: 0;
-  box-shadow: ${props => props.theme.shadow};
+  box-shadow: ${(props) => props.theme.shadow};
   border-radius: 5px;
   overflow: hidden;
 `;
@@ -94,10 +99,10 @@ const Option = styled.div`
   padding: 0.5rem;
   font-size: 0.8rem;
   background-color: #fff;
-  color: ${props => props.theme.subHeading};
+  color: ${(props) => props.theme.subHeading};
   transition: all 75ms ease;
   &:hover {
-    color: ${props => props.theme.headingColor};
-    font-weight: ${props => props.theme.font.semibold};
+    color: ${(props) => props.theme.headingColor};
+    font-weight: ${(props) => props.theme.font.semibold};
   }
 `;

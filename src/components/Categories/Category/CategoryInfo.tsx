@@ -106,7 +106,7 @@ const CategoryInfo = ({ control, errors, register, setValue }: IProps) => {
                     }
                   }
                   onChange={(val) => onChange(val.value)}
-                  label="As a child category"
+                  label="As Sub-Category"
                   errors={errors?.as_child}
                   options={subCategoryOptions}
                   defaultValue={false}
@@ -177,7 +177,7 @@ export default CategoryInfo;
 
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `
-  margin: 2rem 0;
+  margin: 1rem 0;
   .title-container {
     padding: 1rem 0;
     color: ${mainColor};

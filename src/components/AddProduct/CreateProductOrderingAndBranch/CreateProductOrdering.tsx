@@ -105,6 +105,25 @@ const CreateProductOrdering = () => {
             }}
           />
         )}
+        <Controller
+          control={control}
+          name="active"
+          render={({ field: { value, onChange } }) => {
+            return (
+              <CheckToggle
+                label="Show Product in store"
+                checked={value === 1 ? true : false}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    onChange(1);
+                  } else {
+                    onChange(0);
+                  }
+                }}
+              />
+            );
+          }}
+        />
       </Grid>
     </Container>
   );
