@@ -15,7 +15,7 @@ import {
 import InputErrorMessage from "./InputErrorMessage";
 
 interface IProps<T> {
-  label: string;
+  label?: string;
   value: T;
   options: T[];
   defaultValue?: any;
@@ -84,7 +84,7 @@ export default function Select<T>({
   }, []);
   return (
     <Container>
-      <label>{t(label)}</label>
+      {label && <label>{t(label)}</label>}
 
       <S
         ref={ref}

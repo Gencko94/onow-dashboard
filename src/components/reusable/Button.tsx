@@ -64,6 +64,10 @@ interface IProps {
    * button shadow
    */
   shadow?: boolean;
+  /**
+   * With Border
+   */
+  border?: boolean;
 }
 
 const Button = ({
@@ -82,6 +86,7 @@ const Button = ({
   hoverBg,
   hoverColor,
   shadow,
+  border,
 }: IProps) => {
   return (
     <ButtonWrapper
@@ -96,6 +101,7 @@ const Button = ({
       hoverBg={hoverBg}
       hoverColor={hoverColor}
       shadow={shadow}
+      border={border}
     >
       {Icon && (
         <span className="icon">
@@ -119,9 +125,17 @@ export const ButtonWrapper = styled.button<{
   hoverBg?: string;
   hoverColor?: string;
   shadow?: boolean;
+  border?: boolean;
 }>(
   ({
-    theme: { breakpoints, green, shadow, mainColor, dangerRed },
+    theme: {
+      breakpoints,
+      green,
+      shadow,
+      mainColor,
+      dangerRed,
+      border: themeBorder,
+    },
     padding,
     color,
     bg,
@@ -130,6 +144,7 @@ export const ButtonWrapper = styled.button<{
     textSize,
     hoverBg,
     hoverColor,
+    border,
     shadow: boxShadow,
   }) => `
       background-color: ${
@@ -155,6 +170,7 @@ export const ButtonWrapper = styled.button<{
       position: relative;
       overflow:hidden;
       color: ${color};
+      border:${border && themeBorder};
       transition: all 100ms ease;
      
      

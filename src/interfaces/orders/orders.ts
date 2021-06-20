@@ -3,12 +3,12 @@ export type GET_ORDERS_RESPONSE = {
   orders: ORDER[];
   stats: STORE_ORDERS_STAT[];
 };
-type ORDER_CUSTOMER = {
+export type ORDER_CUSTOMER = {
   id: number;
   first_name: string;
   last_name: string;
   email?: string;
-  phoneNumber: string;
+  phone_number: string;
 };
 type ORDER_DELIVERY_LOCATION = {
   country_code: string;
@@ -31,6 +31,8 @@ export interface ORDER {
     code: string;
     amount: string;
   };
+  amount: string;
+  subTotal: string;
   delivery_location?: ORDER_DELIVERY_LOCATION;
   pickup_branch?: string;
   created_at: string;

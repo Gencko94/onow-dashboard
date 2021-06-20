@@ -1,71 +1,109 @@
-import { useRef, useState } from "react";
+import { parseISO } from "date-fns";
+import { format } from "date-fns/esm";
+import { useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import Select, { GroupTypeBase, Styles } from "react-select";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
+import { orderStatuses } from "../../../fakeData/fakeOrderStatuses";
+import { ORDER_STATUS } from "../../../interfaces/orders/orders";
 import Modal from "../../Modal/Modal";
+import OrderStatusChip from "../../reusable/OrderStatusChip";
+import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
+import Grid, { GridWrapper } from "../../StyledComponents/Grid";
 import ChangeOrderStatusModalBody from "./ChangeOrderStatusModalBody";
 
-const OrderInfo = () => {
+interface IProps {
+  date: string;
+  orderStatus: ORDER_STATUS;
+  orderId: number;
+}
+
+const OrderInfo = ({ date, orderId, orderStatus }: IProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const generateOrderStatusDiv = (id: number) => {
+  const {
+    i18n: { language },
+  } = useTranslation();
+  const resolveColor = (id: number) => {
     switch (id) {
       case 1:
-        return (
-          <OrderStatusContainer
-            color="#a13b00"
-            onClick={() => setModalOpen(true)}
-          >
-            <p>Waiting for Payment</p>
-            <MdKeyboardArrowRight size={18} />
-          </OrderStatusContainer>
-        );
+        return "#f8d300";
       case 2:
-        return (
-          <OrderStatusContainer
-            color="#f8d300"
-            onClick={() => setModalOpen(true)}
-          >
-            <p>Waiting for Payment</p>
-            <MdKeyboardArrowRight size={18} />
-          </OrderStatusContainer>
-        );
-
+        return "#1b5bff";
       case 3:
-        return <OrderStatusContainer></OrderStatusContainer>;
+        return "#2dd4eb";
       case 4:
-        return <OrderStatusContainer></OrderStatusContainer>;
+        return "#02be02";
       case 5:
-        return <OrderStatusContainer></OrderStatusContainer>;
-      case 6:
-        return <OrderStatusContainer></OrderStatusContainer>;
-      case 7:
-        return <OrderStatusContainer></OrderStatusContainer>;
-
-      default:
-        return <OrderStatusContainer></OrderStatusContainer>;
+        return "#e60f07";
     }
   };
-  return (
-    <Container ref={ref}>
-      <div className="title-container">
-        <h6 className="title">Order Information </h6>
-      </div>
-      <div className="content">
-        <div className="flex">
-          <p className="label">Order Status : </p>
-          {generateOrderStatusDiv(1)}
-        </div>
-        <div className="flex">
-          <p className="label">Order Date : </p>
-          <p className="value">1/1/2021 18:00 AM</p>
-        </div>
-        <div className="flex">
-          <p className="label">Payment Mode :</p>
-          <p className="value">Cash On Delivery</p>
-        </div>
-      </div>
+  const selectStyles:
+    | Partial<Styles<any, false, GroupTypeBase<any>>>
+    | undefined = useMemo(() => {
+    return {
+      control: (provided) => ({
+        ...provided,
+        fontSize: "0.9rem",
+        minHeight: "35px",
+        backgroundColor: resolveColor(orderStatus.id),
+        border: "none",
+        color: "#fff",
+      }),
+      dropdownIndicator: (provided) => ({
+        ...provided,
+        padding: "6px",
+        display: "grid",
+        color: "#fff",
+      }),
+      option: (provided) => ({
+        ...provided,
+        fontSize: "0.9rem",
+      }),
+      menu: (provided) => ({
+        ...provided,
 
+        zIndex: 200,
+      }),
+      singleValue: (provided) => ({
+        ...provided,
+        color: "#fff",
+      }),
+      indicatorSeparator: (provided) => ({
+        ...provided,
+        color: "#fff",
+      }),
+    };
+  }, []);
+  return (
+    <Container>
+      <Grid cols="1fr 1fr 1fr" gap="1rem" p={2}>
+        <Flex items="center" justify="flex-start">
+          <p className="label">Order Number</p>
+          <p className="value">{orderId}</p>
+        </Flex>
+        <Flex items="center" justify="center">
+          <p className="label">Order Date</p>
+          <p className="value">
+            {format(parseISO(date), "dd-MM-yyyy / HH:mm:ss")}
+          </p>
+        </Flex>
+        <Flex items="center">
+          <p className="label">Order Status</p>
+          <div className="value" style={{ flex: 1 }}>
+            <Select
+              options={orderStatuses}
+              onChange={(option) => {}}
+              value={orderStatus}
+              styles={selectStyles}
+              getOptionLabel={(option) => option.title[language]}
+              getOptionValue={(option) => option.id.toString()}
+            />
+          </div>
+        </Flex>
+      </Grid>
       <Modal
         isOpen={modalOpen}
         title="Change order Status"
@@ -79,51 +117,17 @@ const OrderInfo = () => {
 
 export default OrderInfo;
 const Container = styled.div`
+  border-bottom: ${(props) => props.theme.border};
   background: ${(props) => props.color};
-  box-shadow: ${(props) => props.theme.shadow};
-  border-radius: 5px;
-
-  .title-container {
-    padding: 0.75rem;
-    background-color: ${(props) => props.theme.overlayColor};
-    border-bottom: ${(props) => props.theme.border};
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .title {
-    font-weight: ${(props) => props.theme.font.xbold};
-  }
-  .flex {
-    padding: 0.5rem 0.5rem;
-    display: flex;
-    /* gap: 5px; */
-    align-items: center;
-
-    /* grid-template-columns: auto 1fr; */
-
-    p.label {
-      color: ${(props) => props.theme.subHeading};
-      /* font-size: 0.9rem; */
-    }
-    p.value {
-      font-size: 0.9rem;
-      margin: 0 0.25rem;
-      font-weight: ${(props) => props.theme.font.semibold};
-    }
-  }
-`;
-const OrderStatusContainer = styled.button`
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: ${(props) => props.color};
-  padding: 0.25rem 0.5rem;
-  margin: 0 0.25rem;
-  color: #fff;
   p {
-    margin: 0 0.25rem;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+  }
+  p.label {
+    color: ${(props) => props.theme.mainColor};
+    font-weight: ${(props) => props.theme.font.semibold};
+  }
+  .value {
+    color: ${(props) => props.theme.subHeading};
+    margin: 0 0.5rem;
   }
 `;

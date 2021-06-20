@@ -24,7 +24,7 @@ const ProductCategories = () => {
         <h5>Product Categories</h5>
       </div>
 
-      <CategoriesList>
+      <CategoriesList error={Boolean(errors?.category)}>
         <ProductCategoryList control={control} errors={errors.category} />
       </CategoriesList>
     </Container>
@@ -51,11 +51,12 @@ const Container = styled.div(
   }
   `
 );
-const CategoriesList = styled.div`
+const CategoriesList = styled.div<{ error: boolean }>`
   overflow-y: auto;
   position: relative;
   background-color: #fff;
-  box-shadow: ${(props) => props.theme.shadow};
+  box-shadow: ${(props) =>
+    props.error ? props.theme.errorShadow : props.theme.shadow};
   border-radius: 6px;
   flex: 1;
 

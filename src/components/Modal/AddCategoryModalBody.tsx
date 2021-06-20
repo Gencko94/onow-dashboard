@@ -37,7 +37,7 @@ const AddCategoryModalBody = ({ control, errors }: IProps) => {
     onChange: (...event: any[]) => void
   ) {
     if (category.id === formCategory) {
-      onChange(undefined);
+      onChange(null);
     } else {
       onChange(category.id);
     }

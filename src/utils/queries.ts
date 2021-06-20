@@ -5,6 +5,7 @@ import { GET_GOOGLE_MAP_DATA, MapCoordinates } from "../interfaces/maps/maps";
 import { GET_STORES_RESPONSE } from "../interfaces/stores/stores";
 import {
   GET_ORDERS_RESPONSE,
+  ORDER,
   ORDERS_FILTERS,
 } from "../interfaces/orders/orders";
 import { COUPON, NEW_COUPON } from "../interfaces/coupons/coupons";
@@ -134,6 +135,20 @@ export const getOrders = async ({
   const res = await axios.get(`${uri}/get-orders`, config);
   return res.data.results;
 };
+
+export const getOrder = async (id: string): Promise<ORDER> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+      StoreId: 1,
+    },
+  };
+  const res = await axios.get(`${uri}/orders/${id}`, config);
+  return res.data.results;
+};
+
+// End of orders
 export const getCoupon = async (id: string): Promise<COUPON> => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
@@ -199,6 +214,16 @@ export const getProducts = async (): Promise<PRODUCT[]> => {
     },
   };
   const res = await axios.get(`${uri}/products`, config);
+  return res.data.results;
+};
+export const getProduct = async (id: string): Promise<PRODUCT> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.get(`${uri}/products/${id}`, config);
   return res.data.results;
 };
 //Create

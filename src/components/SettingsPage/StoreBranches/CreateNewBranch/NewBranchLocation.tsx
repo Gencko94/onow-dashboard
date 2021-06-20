@@ -1,4 +1,4 @@
-import { Control } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { IoMdCash } from "react-icons/io";
@@ -9,13 +9,8 @@ import styled from "styled-components";
 import IconedInput from "../../../reusable/Inputs/IconedInput";
 import IconedNumberInput from "../../../reusable/IconedNumberInput";
 import InlineMap from "../../../reusable/InlineMap";
+import { firstBranchTabInfo } from "./NewBranchInfoAndLocation";
 
-interface IProps {
-  register: any;
-  errors: any;
-  setValue: any;
-  control: Control<any>;
-}
 const options = [
   {
     title: {
@@ -32,7 +27,13 @@ const options = [
     value: "fixed",
   },
 ];
-const BranchLocation = ({ control, errors, register, setValue }: IProps) => {
+const NewBranchLocation = () => {
+  const {
+    control,
+    formState: { errors },
+    register,
+    setValue,
+  } = useFormContext<firstBranchTabInfo>();
   const {
     i18n: { language },
   } = useTranslation();
@@ -97,7 +98,7 @@ const BranchLocation = ({ control, errors, register, setValue }: IProps) => {
   );
 };
 
-export default BranchLocation;
+export default NewBranchLocation;
 
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `

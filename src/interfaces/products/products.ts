@@ -30,7 +30,7 @@ export type PRODUCT = {
   name: {
     [key: string]: string;
   };
-  category_id: string[];
+  sku: string;
   slug: string;
   category: {
     name: string;

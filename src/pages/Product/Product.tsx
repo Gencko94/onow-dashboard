@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import styled from "styled-components";
@@ -9,12 +8,11 @@ import ProductOrderingAndBranchAvailability from "../../components/Product/Produ
 import ProductPricingAndOptions from "../../components/Product/ProductPricingAndOptions/ProductPricingAndOptions";
 import ProductTabs from "../../components/Product/ProductTabs/ProductTabs";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
-
-import { getSingleProduct } from "../../utils/test-queries";
+import { getProduct } from "../../utils/queries";
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
-  const { data } = useQuery(["product", id], () => getSingleProduct(id), {
+  const { data } = useQuery(["product", id], () => getProduct(id), {
     suspense: true,
   });
   const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3>(0);

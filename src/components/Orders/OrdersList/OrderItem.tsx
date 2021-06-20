@@ -20,7 +20,7 @@ const OrderItem = ({ order }: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   return (
-    <Container onClick={() => history.push("/orders/1")}>
+    <Container onClick={() => history.push(`/orders/${order.order_id}`)}>
       {/* <div className="field">
         <CheckboxContainer>
           <BsCheck size={15} />

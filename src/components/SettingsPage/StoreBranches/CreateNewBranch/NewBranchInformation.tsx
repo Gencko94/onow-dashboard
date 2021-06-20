@@ -1,33 +1,17 @@
-import {
-  Control,
-  Controller,
-  SubmitErrorHandler,
-  SubmitHandler,
-} from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { FiCalendar, FiUser, FiUsers } from "react-icons/fi";
 import { IoMdCash } from "react-icons/io";
 import { MdSubtitles } from "react-icons/md";
 
 import styled from "styled-components";
 import CheckToggle from "../../../reusable/CheckToggle";
-import DateIconedInput from "../../../reusable/Inputs/DateIconedInput";
 import IconedInput from "../../../reusable/Inputs/IconedInput";
 import IconedNumberInput from "../../../reusable/IconedNumberInput";
-import Select from "../../../reusable/Select";
-import { useForm } from "react-hook-form";
-import { useContext } from "react";
-import { NewBranchContext } from "../../../../pages/SettingsPages/Branches/CreateNewBranch";
-import { BRANCH_ADDRESS } from "../../../../interfaces/settings/branches-warehouses/branches-warehouses";
-import { firstBranchTabInfo } from "../CreateNewBranch/NewBranchInfoAndLocation";
 
-interface IProps {
-  register: any;
-  errors: any;
+import { useFormContext } from "react-hook-form";
+import { firstBranchTabInfo } from "./NewBranchInfoAndLocation";
 
-  control: Control<any>;
-}
 const options = [
   {
     title: {
@@ -45,28 +29,16 @@ const options = [
   },
 ];
 
-const BranchInformation = ({ control, errors, register }: IProps) => {
+const NewBranchInformation = () => {
   const {
     i18n: { language },
   } = useTranslation();
-  const { updateData, setActiveTab, formValues } = useContext(NewBranchContext);
-  const methods = useForm<firstBranchTabInfo>({
-    defaultValues: {
-      address: formValues?.address,
-      contact_info: formValues?.contact_info,
-      name: formValues?.name,
-    },
-  });
-  const onSubmit: SubmitHandler<firstBranchTabInfo> = (data) => {
-    console.log(data);
 
-    setActiveTab?.(1);
-    updateData?.(methods.watch());
-  };
-  const onError: SubmitErrorHandler<firstBranchTabInfo> = (errors) => {
-    console.log(errors);
-  };
-
+  const {
+    control,
+    formState: { errors },
+    register,
+  } = useFormContext<firstBranchTabInfo>();
   return (
     <Container>
       <div className="title-container">
@@ -149,7 +121,7 @@ const BranchInformation = ({ control, errors, register }: IProps) => {
   );
 };
 
-export default BranchInformation;
+export default NewBranchInformation;
 
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `

@@ -5,8 +5,9 @@ export const product1: PRODUCT = {
     name: "test",
     id: 1,
   },
+  sku: "123",
   quantity: 1,
-  category_id: ["1"],
+
   description: {
     ar: "fdsa",
     en: "fdsa",

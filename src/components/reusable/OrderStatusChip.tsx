@@ -40,7 +40,7 @@ const Container = styled.div<{ bg?: string }>(
   display: flex;
   align-items: center;
   border-radius: 12px;
-  width: 100%;
+  // width: 100%;
   p {
     font-size: 0.8rem;
     margin: 0 0.25rem;
@@ -49,7 +49,7 @@ const Container = styled.div<{ bg?: string }>(
   @media ${breakpoints.xl}{
     p {
       font-weight: ${font.regular};
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
   }

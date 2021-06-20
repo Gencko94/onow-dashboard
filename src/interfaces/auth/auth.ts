@@ -5,7 +5,7 @@ export type USER = {
   phone: string;
   reset_token: string;
   email: string;
-  stores: STORE[];
+  store: STORE;
 };
 
 export type LOGIN_FORM = {

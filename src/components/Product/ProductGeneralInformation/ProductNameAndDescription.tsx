@@ -1,17 +1,22 @@
 import { useFormContext } from "react-hook-form";
+import { BiDetail } from "react-icons/bi";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 
-import { EDIT_PRODUCT_GENERAL_INFO } from "../../../interfaces/products/update-product";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
+import QuantityInput from "../../reusable/Inputs/QuantityInput";
 import { FORM_PROPS } from "./ProductGeneralInformation";
 
 const ProductNameAndDescription = () => {
   const {
     register,
+    control,
+    watch,
     formState: { errors },
   } = useFormContext<FORM_PROPS>();
+  const quantity = watch("quantity");
+
   return (
     <Container>
       <div className="title-container">
@@ -53,6 +58,25 @@ const ProductNameAndDescription = () => {
           requiredMessage="Required"
           label="Short Description Arabic"
           name="description.ar"
+        />
+        <IconedInput
+          Icon={BiDetail}
+          errors={errors?.sku}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="SKU"
+          name="sku"
+        />
+
+        <QuantityInput
+          unlimited={quantity === "unlimited"}
+          control={control}
+          errors={errors?.quantity}
+          required
+          requiredMessage="Required"
+          label="Quantity"
+          name="quantity"
         />
         <div className="slug">
           <PrefixedInput

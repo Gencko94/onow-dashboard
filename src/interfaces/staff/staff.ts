@@ -12,7 +12,7 @@ export type STAFF_PERMISSIONS = {
   products: PRODUCTS_PERMISSIONS;
 };
 export type CUSTOMERS_PERMISSIONS = {
-  createCustomer: boolean;
+  createCustomer: boolean; // convert to array of strings
   deleteCustomer: boolean;
   editCustomer: boolean;
   visitCustomers: boolean;

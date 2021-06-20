@@ -1,7 +1,7 @@
 import { CSSProperties, FC } from "react";
 import styled from "styled-components";
 interface IProps {
-  justify?: string;
+  justify?: "flex-start" | "center" | "flex-end";
   items?: string;
   padding?: string;
   margin?: string;

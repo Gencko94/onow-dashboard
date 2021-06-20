@@ -4,11 +4,13 @@ import { ORDER, STORE_ORDERS } from "../interfaces/orders/orders";
 export const order1: ORDER = {
   order_id: 1,
   created_at: "2021-05-07T22:35:39.246Z",
+  amount: "1",
+  subTotal: "4",
   order_customer: {
     id: 1,
     first_name: "Ahmad",
     last_name: "Zaaza",
-    phoneNumber: "+965978954",
+    phone_number: "+965978954",
   },
   payment_status: {
     id: 2,

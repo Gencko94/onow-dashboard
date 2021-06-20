@@ -36,7 +36,7 @@ export default function ProtectedRoute({ Component, path }: IProps) {
                   )}
                   onReset={reset}
                 >
-                  <Component storeId={user?.stores[0].id} />{" "}
+                  <Component storeId={user?.store.id} />{" "}
                 </ErrorBoundary>
               )}
             </QueryErrorResetBoundary>

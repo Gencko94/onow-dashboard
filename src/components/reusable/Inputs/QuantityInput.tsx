@@ -105,7 +105,7 @@ const QuantityInput = ({
                 defaultValue={defaultValue}
                 type="number"
                 min={0}
-                step="any"
+                step={1}
                 value={value}
                 onChange={onChange}
               />

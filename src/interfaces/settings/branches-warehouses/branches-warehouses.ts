@@ -69,6 +69,8 @@ export interface NEW_BRANCH {
   country: string;
   city: string;
   cod_enabled: boolean;
+  pickup_enabled: boolean;
+  delivery_enabled: boolean;
   cod_cost: number;
   address: BRANCH_ADDRESS;
   working_hours: WORKING_HOURS;

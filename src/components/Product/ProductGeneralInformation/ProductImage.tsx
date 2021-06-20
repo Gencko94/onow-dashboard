@@ -30,7 +30,7 @@ const ProductImage = ({ data }: IProps) => {
         </p>
       </DescriptionBox>
       <ExistingImages>
-        {data.images.map((image) => {
+        {data.images?.map((image) => {
           return (
             <div className="wrapper">
               <img src={image.url} alt="" />

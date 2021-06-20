@@ -115,8 +115,9 @@ const ContentContainer = styled.div(
   gap: 1.5rem;
   
   .stat-item {
-    background-color: ${boxColor};
-    box-shadow: ${shadow};
+    background-color: rgba(255,255,255,0.5);
+   
+    box-shadow:  0px -5px 25px -10px #e098447e;
     border-radius: 8px;
     flex: auto;
     padding: 1rem;

@@ -23,7 +23,9 @@ export interface FORM_PROPS {
     [key: string]: string;
   };
   slug: string;
-  category: MINI_CATEGORY[];
+  category: { id: number; name: string };
+  sku: string;
+  quantity: number | "unlimited";
 }
 const ProductGeneralInformation = ({ data }: IProps) => {
   const methods = useForm<FORM_PROPS>({
@@ -31,11 +33,11 @@ const ProductGeneralInformation = ({ data }: IProps) => {
       name: data.name,
       description: data.description,
       slug: data.slug,
-
-      category: data.category as any,
+      quantity: data.quantity,
+      category: data.category,
+      sku: data.sku,
     },
   });
-  console.log(methods.watch().category);
   const onSubmit: SubmitHandler<FORM_PROPS> = (data) => {
     console.log(data);
   };

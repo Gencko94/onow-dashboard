@@ -17,24 +17,20 @@ const ProjectSwitcher = () => {
     i18n: { language },
   } = useTranslation();
 
-  if (user?.stores.length === 0) return null;
+  // if (user?.store.length === 0) return null;
   return (
     <Container>
       <Project>
         <img
           className="logo"
           src="/images/storeLogo.png"
-          alt={user?.stores[0].storeName[language]}
+          alt={user?.store.storeName[language]}
         />
         <div className="name-container">
-          <p className="name">{user?.stores[0].storeName[language]}</p>
+          <p className="name">{user?.store.storeName[language]}</p>
 
-          <a
-            className="link"
-            href={`http://${user?.stores[0].domain}`}
-            target="#"
-          >
-            <p>{user?.stores[0].domain}</p>
+          <a className="link" href={`http://${user?.store.domain}`} target="#">
+            <p>{user?.store.domain}</p>
             <BiLinkExternal size={10} />
           </a>
         </div>

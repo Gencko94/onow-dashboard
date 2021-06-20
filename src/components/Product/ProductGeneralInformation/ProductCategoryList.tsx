@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 
 import { MINI_CATEGORY } from "../../../interfaces/categories/categories";
 import Checkbox from "../../reusable/Inputs/Checkbox";
-import Chip from "../../reusable/Chip";
 import { getMiniCategories } from "../../../utils/test-queries";
 
 interface IProps {
@@ -33,13 +32,15 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
     category: MINI_CATEGORY,
     onChange: (...event: any[]) => void
   ) {
-    const found = formValues.category?.find((i: any) => i.id === category.id);
+    const found = formValues.category?.id === category.id;
 
-    if (!found) {
+    console.log(formValues);
+    // console.log(found);
+    if (found) {
       console.log("found");
-      onChange([...formValues.category!, category]);
+      onChange(null);
     } else {
-      onChange(formValues?.category?.filter((i: any) => i.id !== category.id));
+      onChange({ name: category.name.en, id: category.id });
     }
   }
 
@@ -53,26 +54,6 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
       render={({ field: { onChange } }) => {
         return (
           <Container>
-            <div className="chips">
-              <p className="text">Selected Categories :</p>
-              <div className="chips-wrapper">
-                {formValues.category?.map((cat: any) => {
-                  return (
-                    <Chip
-                      key={cat.id}
-                      text={cat.name[language]}
-                      onClick={(e) => {
-                        handleToggleCategories(cat, onChange);
-                      }}
-                    />
-                  );
-                })}
-                {errors && (
-                  <p className="error-message">Please Select a Category</p>
-                )}
-              </div>
-            </div>
-
             <div className="table">
               {data?.map((category) => {
                 return (
@@ -93,11 +74,7 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
                         <h6>{category.name[language]}</h6>
                       </div>
                       <Checkbox
-                        checked={Boolean(
-                          formValues.category?.find(
-                            (i: any) => i.id === category.id
-                          )
-                        )}
+                        checked={formValues?.category?.id === category.id}
                         onChange={(e) => {
                           e.stopPropagation();
                           handleToggleCategories(category, onChange);
@@ -126,11 +103,7 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
                             </div>
                           </div>
                           <Checkbox
-                            checked={Boolean(
-                              formValues.category?.find(
-                                (i: any) => i.id === child.id
-                              )
-                            )}
+                            checked={formValues?.category?.id === child.id}
                             onChange={(e) => {
                               e.stopPropagation();
                               handleToggleCategories(child, onChange);

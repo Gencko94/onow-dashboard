@@ -52,7 +52,7 @@ const ProductItem = ({
   };
   return (
     <>
-      <Container onClick={() => history.push(`/product/1`)}>
+      <Container onClick={() => history.push(`/product/${product.id}`)}>
         <div className="field">
           <Checkbox
             checked={true}
