@@ -6,6 +6,7 @@ import { STAFF_MEMBER } from "../../../interfaces/staff/staff";
 import CheckboxWithLabel from "../../reusable/CheckboxWithLabel";
 import CheckToggle from "../../reusable/CheckToggle";
 import Checkbox from "../../reusable/Inputs/Checkbox";
+import { productPermissions } from "../../../data/userPermissions";
 
 interface IProps {
   control: Control<STAFF_MEMBER>;
@@ -16,27 +17,37 @@ const ProductsPermissions = ({ control, permissions, setValue }: IProps) => {
   const { t } = useTranslation();
   const permissionsValues: any = useWatch<STAFF_MEMBER>({
     control,
-    name: "permissions.products",
+    name: "permissions",
   });
   function checkIfAllChecked() {
-    let allChecked = true;
-    Object.keys(permissionsValues).map((entry) => {
-      console.log(permissionsValues[entry]);
-      if (permissionsValues[entry] === false) {
-        allChecked = false;
-      }
-    });
-    return allChecked;
+    const checked = productPermissions.every((i) =>
+      permissionsValues.includes(i)
+    );
+    return checked;
   }
   function checkAllValues() {
-    Object.keys(permissionsValues).forEach((value: any) => {
-      setValue(`permissions.products.${value}`, true);
-    });
+    const set = new Set([
+      ...permissionsValues,
+      "createProduct",
+      "deleteProduct",
+      "editProduct",
+      "hideProduct",
+      "visitProducts",
+    ]);
+    setValue(`permissions`, Array.from(set));
   }
   function unCheckAllValues() {
-    Object.keys(permissionsValues).forEach((value: any) => {
-      setValue(`permissions.products.${value}`, false);
-    });
+    setValue(
+      `permissions`,
+      permissionsValues.filter(
+        (i: any) =>
+          i !== "createProduct" &&
+          i !== "deleteProduct" &&
+          i !== "editProduct" &&
+          i !== "hideProduct" &&
+          i !== "visitProducts"
+      )
+    );
   }
   return (
     <Container>
@@ -60,19 +71,27 @@ const ProductsPermissions = ({ control, permissions, setValue }: IProps) => {
             label="Select All"
           />
         </div>
-        {permissions.products.map((key: any) => {
+        {productPermissions.map((key: any) => {
           return (
             <div className="item">
               <Controller
                 control={control}
-                name={`permissions.products.${key}` as any}
+                name={`permissions`}
                 render={({ field: { value, onChange } }) => {
                   return (
                     <CheckToggle
                       label={key}
                       key={key}
-                      checked={value}
-                      onChange={(e) => onChange(e.target.checked)}
+                      checked={value.includes(key)}
+                      onChange={(e) => {
+                        if (value.includes(key)) {
+                          onChange(
+                            permissionsValues.filter((i: any) => i !== key)
+                          );
+                        } else {
+                          onChange([...permissionsValues, key]);
+                        }
+                      }}
                     />
                   );
                 }}

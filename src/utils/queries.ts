@@ -254,3 +254,40 @@ export const deleteProduct = async (
   const res = await axios.delete(`${uri}/products/${id}`, config);
   return res.data.results;
 };
+
+//Staff Members
+
+export const getStaffMembers = async () => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.get(`${uri}/staff-users`, config);
+  return res.data.results;
+};
+export const getStaffMember = async (id: string) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.get(`${uri}/staff-users/${id}`, config);
+  return res.data.results;
+};
+
+export const deleteStaffMember = async (
+  id: string
+): Promise<{ results: "Deleted" }> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.delete(`${uri}/staff-users/${id}`, config);
+  return res.data.results;
+};
+// End of Staff members

@@ -5,16 +5,14 @@ import AddButton from "../../components/reusable/AddButton";
 import ExportAs from "../../components/reusable/ExportAs";
 import StaffItem from "../../components/Staff/StaffItem";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
-import { getStoreStaffMembers } from "../../utils/test-queries";
 import TableHead from "../../components/reusable/TableHead";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
+import { getStaffMembers } from "../../utils/queries";
 
 const Staff = () => {
-  const { data } = useQuery<STAFF_MEMBER[]>(
-    "staff-members",
-    getStoreStaffMembers,
-    { suspense: true }
-  );
+  const { data } = useQuery<STAFF_MEMBER[]>("staff-members", getStaffMembers, {
+    suspense: true,
+  });
   const cols = useMemo(
     () => [
       {

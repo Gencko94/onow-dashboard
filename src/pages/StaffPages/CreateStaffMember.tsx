@@ -19,27 +19,21 @@ const CreateStaffMember = () => {
     formState: { errors },
   } = useForm<NEW_STAFF_MEMBER>({
     defaultValues: {
-      permissions: {
-        customers: {
-          createCustomer: true,
-          deleteCustomer: true,
-          editCustomer: true,
-          visitCustomers: false,
-        },
-        orders: {
-          createOrder: true,
-          deleteOrder: true,
-          editOrder: true,
-          visitOrders: true,
-        },
-        products: {
-          createProduct: true,
-          deleteProduct: true,
-          editProduct: true,
-          hideProduct: true,
-          visitProducts: true,
-        },
-      },
+      permissions: [
+        "createCustomer",
+        "deleteCustomer",
+        "editCustomer",
+        "visitCustomers",
+        "createProduct",
+        "deleteProduct",
+        "editProduct",
+        "hideProduct",
+        "visitProducts",
+        "createOrder",
+        "deleteOrder",
+        "editOrder",
+        "visitOrders",
+      ],
     },
   });
   const role = watch("role");
@@ -68,7 +62,7 @@ const CreateStaffMember = () => {
           errors={errors}
           control={control}
         />
-        {role === "staff" && (
+        {role === "STAFF" && (
           <StaffMemberPermissions
             setValue={setValue}
             control={control}

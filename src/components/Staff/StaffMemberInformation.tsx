@@ -16,14 +16,14 @@ const roleOptions: { label: { [key: string]: string }; value: string }[] = [
       ar: "(لديه جميع الصلاحيات)مدير",
       en: "Admin (Has all Permissions)",
     },
-    value: "admin",
+    value: "ADMIN",
   },
   {
     label: {
       ar: "عضو",
       en: "Staff Member",
     },
-    value: "staff",
+    value: "STAFF",
   },
 ];
 const branches: {

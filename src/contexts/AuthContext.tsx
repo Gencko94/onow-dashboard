@@ -20,7 +20,6 @@ const AuthContext: React.FC = ({ children }) => {
   const queryClient = useQueryClient();
   const { data: user } = useQuery("auth", getUser, {
     suspense: true,
-    // useErrorBoundary: false,
   });
   const logOut = () => {
     localStorage.removeItem("dshtid");

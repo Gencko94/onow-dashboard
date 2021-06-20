@@ -94,10 +94,10 @@ const ProductsList = () => {
       <ConfirmationModal
         isOpen={modalStatus.open}
         closeFunction={() => setModalStatus({ id: null, open: false })}
-        desc="Are you sure you want to delete this coupon ?"
+        desc="Are you sure you want to delete this product ?"
         successButtonText="Delete"
         successFunction={() => handleDeleteCoupon(modalStatus.id!)}
-        title="Delete Coupon"
+        title="Delete Product"
         styles={{
           content: {
             top: "50%",

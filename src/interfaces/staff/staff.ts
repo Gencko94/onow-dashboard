@@ -2,40 +2,36 @@ export interface STAFF_MEMBER {
   name: string;
   email: string;
   phone: string;
-  role: "super_user" | "admin" | "staff";
+  role: "SUPER_USER" | "ADMIN" | "STAFF";
   id: number;
   permissions: STAFF_PERMISSIONS;
 }
-export type STAFF_PERMISSIONS = {
-  customers: CUSTOMERS_PERMISSIONS;
-  orders: ORDERS_PERMISSIONS;
-  products: PRODUCTS_PERMISSIONS;
-};
-export type CUSTOMERS_PERMISSIONS = {
-  createCustomer: boolean; // convert to array of strings
-  deleteCustomer: boolean;
-  editCustomer: boolean;
-  visitCustomers: boolean;
-};
-export type ORDERS_PERMISSIONS = {
-  createOrder: boolean;
-  deleteOrder: boolean;
-  editOrder: boolean;
-  visitOrders: boolean;
-};
-export type PRODUCTS_PERMISSIONS = {
-  createProduct: boolean;
-  hideProduct: boolean;
-  deleteProduct: boolean;
-  editProduct: boolean;
-  visitProducts: boolean;
-};
+export type STAFF_PERMISSIONS = string[];
+export type CUSTOMERS_PERMISSIONS = [
+  "createCustomer",
+  "deleteCustomer",
+  "editCustomer",
+  "visitCustomers"
+];
+export type ORDERS_PERMISSIONS = [
+  "createOrder",
+  "deleteOrder",
+  "editOrder",
+  "visitOrders"
+];
+export type PRODUCTS_PERMISSIONS = [
+  "createProduct",
+  "deleteProduct",
+  "editProduct",
+  "hideProduct",
+  "visitProducts"
+];
 export interface NEW_STAFF_MEMBER {
   name: string;
   phone: string;
   email: string;
   password: string;
-  role: "staff" | "admin";
+  role: "STAFF" | "ADMIN";
   permissions: STAFF_PERMISSIONS;
   branch_id: number;
 }

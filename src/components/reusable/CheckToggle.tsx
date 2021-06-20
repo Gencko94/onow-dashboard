@@ -30,7 +30,7 @@ const CheckToggle = ({ checked, onChange, label, desc }: IProps) => {
       </div>
       <Toggle
         id={label}
-        checked={checked as boolean}
+        checked={checked}
         className="react-custom-toggle"
         onChange={onChange}
       />

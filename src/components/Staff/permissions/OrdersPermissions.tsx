@@ -2,6 +2,7 @@ import { Control, Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { FcRules } from "react-icons/fc";
 import styled from "styled-components";
+import { ordersPermissions } from "../../../data/userPermissions";
 import { STAFF_MEMBER } from "../../../interfaces/staff/staff";
 import CheckboxWithLabel from "../../reusable/CheckboxWithLabel";
 import CheckToggle from "../../reusable/CheckToggle";
@@ -16,27 +17,37 @@ const OrdersPermissions = ({ control, permissions, setValue }: IProps) => {
   const { t } = useTranslation();
   const permissionsValues: any = useWatch<STAFF_MEMBER>({
     control,
-    name: "permissions.orders",
+    name: "permissions",
   });
+  console.log(permissionsValues);
   function checkIfAllChecked() {
-    let allChecked = true;
-    Object.keys(permissionsValues).map((entry) => {
-      console.log(permissionsValues[entry]);
-      if (permissionsValues[entry] === false) {
-        allChecked = false;
-      }
-    });
-    return allChecked;
+    const checked = ordersPermissions.every((i) =>
+      permissionsValues.includes(i)
+    );
+
+    return checked;
   }
   function checkAllValues() {
-    Object.keys(permissionsValues).forEach((value: any) => {
-      setValue(`permissions.orders.${value}`, true);
-    });
+    const set = new Set([
+      ...permissionsValues,
+      "createOrder",
+      "deleteOrder",
+      "editOrder",
+      "visitOrders",
+    ]);
+    setValue(`permissions`, Array.from(set));
   }
   function unCheckAllValues() {
-    Object.keys(permissionsValues).forEach((value: any) => {
-      setValue(`permissions.orders.${value}`, false);
-    });
+    setValue(
+      `permissions`,
+      permissionsValues.filter(
+        (i: any) =>
+          i !== "createOrder" &&
+          i !== "deleteOrder" &&
+          i !== "editOrder" &&
+          i !== "visitOrders"
+      )
+    );
   }
   return (
     <Container>
@@ -60,19 +71,27 @@ const OrdersPermissions = ({ control, permissions, setValue }: IProps) => {
             label="Select All"
           />
         </div>
-        {permissions.orders.map((key: any) => {
+        {ordersPermissions.map((key: any) => {
           return (
             <div className="item">
               <Controller
                 control={control}
-                name={`permissions.orders.${key}` as any}
+                name={`permissions`}
                 render={({ field: { value, onChange } }) => {
                   return (
                     <CheckToggle
                       label={key}
                       key={key}
-                      checked={value}
-                      onChange={(e) => onChange(e.target.checked)}
+                      checked={value.includes(key)}
+                      onChange={(e) => {
+                        if (value.includes(key)) {
+                          onChange(
+                            permissionsValues.filter((i: any) => i !== key)
+                          );
+                        } else {
+                          onChange([...permissionsValues, key]);
+                        }
+                      }}
                     />
                   );
                 }}
