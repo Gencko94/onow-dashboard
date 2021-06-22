@@ -250,11 +250,18 @@ export const deleteCoupon = async (
 //Products
 //Get
 
-export const getProducts = async (): Promise<PRODUCT[]> => {
+export const getProducts = async (sortBy: {
+  field: string;
+  order: string;
+}): Promise<PRODUCT[]> => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
+    },
+    params: {
+      sort: sortBy.order,
+      field: sortBy.field,
     },
   };
   const res = await axios.get(`${uri}/products`, config);

@@ -14,16 +14,20 @@ import { Dispatch } from "react";
 
 interface IProps {
   product: PRODUCT;
-  handleDeleteCoupon: (id: number) => Promise<void>;
+  handleDeleteProduct: (id: number) => Promise<void>;
   setModalStatus: Dispatch<
     SetStateAction<{ id: number | null; open: boolean }>
   >;
+  selectedRows: number[];
+  handleToggleRows: (rowId: number) => void;
 }
 
 const ProductItem = ({
   product,
-  handleDeleteCoupon,
+  handleDeleteProduct,
   setModalStatus,
+  handleToggleRows,
+  selectedRows,
 }: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
@@ -52,12 +56,16 @@ const ProductItem = ({
   };
   return (
     <>
-      <Container onClick={() => history.push(`/product/${product.id}`)}>
+      <Container
+        selected={selectedRows.includes(product.id)}
+        // onClick={() => history.push(`/product/${product.id}`)}
+      >
         <div className="field">
           <Checkbox
-            checked={true}
+            checked={selectedRows.includes(product.id)}
             onChange={(e) => {
               e.stopPropagation();
+              handleToggleRows(product.id);
             }}
           />
         </div>
@@ -73,6 +81,9 @@ const ProductItem = ({
         </div>
         <div className="field">
           <h6>{product.quantity}</h6>
+        </div>
+        <div className="field">
+          <h6>{product.price}</h6>
         </div>
         <div className="field">
           <h6>{product.category.name}</h6>
@@ -128,15 +139,16 @@ const ProductItem = ({
 };
 
 export default ProductItem;
-const Container = styled.div`
+const Container = styled.div<{ selected: boolean }>`
   display: grid;
-  grid-template-columns: 50px 1fr 1fr 1fr 1fr 1fr 1fr;
-  background-color: #fff;
+  grid-template-columns: 50px 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  background-color: ${(props) =>
+    props.selected ? props.theme.accentColor : "#fff"};
   gap: 1rem;
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
   &:hover {
-    background-color: ${(props) => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.accentColor};
   }
   .img {
     width: 50px;

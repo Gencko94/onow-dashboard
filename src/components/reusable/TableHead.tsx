@@ -50,6 +50,7 @@ const TableHead = ({
 export default TableHead;
 const Container = styled.div<{ cols: number | string; gap: string }>(
   ({ theme: { breakpoints, border }, cols, gap }) => `
+    background-color:#fff;
     display:grid;
     grid-template-columns: ${
       typeof cols === "string" ? cols : `repeat(${cols},1fr)`
