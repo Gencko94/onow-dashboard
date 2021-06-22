@@ -17,6 +17,7 @@ import Layout from "./layout/Layout";
 
 import AuthContext from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import ApplicationContext from "./contexts/ApplicationContext";
 
 const CreateNewProduct = lazy(() => import("./pages/Product/CreateNewProduct"));
 const Product = lazy(() => import("./pages/Product/Product"));
@@ -104,141 +105,152 @@ function App() {
               <QueryClientProvider client={queryClient}>
                 <AuthContext>
                   <ThemeProvider>
-                    <GlobalStyle />
-                    <ScrollToTopOnMount />
-                    <Switch>
-                      <Route exact path="/" component={Login} />
-                      <Layout>
-                        <ProtectedRoute
-                          path="/dashboard"
-                          Component={Dashboard}
-                        />
-                        <ProtectedRoute path="/products" Component={Products} />
-                        <ProtectedRoute
-                          path="/products/product/create"
-                          Component={CreateNewProduct}
-                        />
-                        <ProtectedRoute
-                          path="/product/:id"
-                          Component={Product}
-                        />
-                        <ProtectedRoute
-                          path="/categories"
-                          Component={Categories}
-                        />
-                        <ProtectedRoute
-                          path="/categories/category/:id"
-                          Component={Category}
-                        />
-                        <ProtectedRoute
-                          path="/categories/create"
-                          Component={CreateNewCategory}
-                        />
-                        <ProtectedRoute path="/brands" Component={Brands} />
-                        <ProtectedRoute
-                          path="/brands/brand/:id"
-                          Component={Brand}
-                        />
-                        <ProtectedRoute
-                          path="/brands/create"
-                          Component={CreateNewBrand}
-                        />
-                        <ProtectedRoute path="/orders" Component={Orders} />
-                        <ProtectedRoute path="/orders/:id" Component={Order} />
-                        <ProtectedRoute
-                          path="/customers"
-                          Component={Customers}
-                        />
-                        <ProtectedRoute path="/coupons" Component={Coupons} />
-                        <ProtectedRoute
-                          path="/coupons/coupon/:id"
-                          Component={Coupon}
-                        />
-                        <ProtectedRoute
-                          path="/coupons/create"
-                          Component={CreateNewCoupon}
-                        />
-                        <ProtectedRoute
-                          path="/website-layout"
-                          Component={WebsiteLayout}
-                        />
-                        <ProtectedRoute
-                          path="/website-layout/design-select/:type"
-                          Component={DesignSelectionPage}
-                        />
-                        <ProtectedRoute
-                          path="/website-layout/block-customize/header/:id"
-                          Component={HeaderCustomizer}
-                        />
-                        <ProtectedRoute
-                          path="/website-layout/block-customize/footer/:id"
-                          Component={FooterCustomizer}
-                        />
-                        <ProtectedRoute
-                          path="/website-layout/block-customize/product-grid/:id"
-                          Component={ProductListGridCustomizer}
-                        />
-                        <ProtectedRoute
-                          path="/customers/:id"
-                          Component={CustomerProfile}
-                        />
+                    <ApplicationContext>
+                      <GlobalStyle />
+                      <ScrollToTopOnMount />
+                      <Switch>
+                        <Route exact path="/" component={Login} />
+                        <Layout>
+                          <ProtectedRoute
+                            path="/dashboard"
+                            Component={Dashboard}
+                          />
+                          <ProtectedRoute
+                            path="/products"
+                            Component={Products}
+                          />
+                          <ProtectedRoute
+                            path="/products/product/create"
+                            Component={CreateNewProduct}
+                          />
+                          <ProtectedRoute
+                            path="/product/:id"
+                            Component={Product}
+                          />
+                          <ProtectedRoute
+                            path="/categories"
+                            Component={Categories}
+                          />
+                          <ProtectedRoute
+                            path="/categories/category/:id"
+                            Component={Category}
+                          />
+                          <ProtectedRoute
+                            path="/categories/create"
+                            Component={CreateNewCategory}
+                          />
+                          <ProtectedRoute path="/brands" Component={Brands} />
+                          <ProtectedRoute
+                            path="/brands/brand/:id"
+                            Component={Brand}
+                          />
+                          <ProtectedRoute
+                            path="/brands/create"
+                            Component={CreateNewBrand}
+                          />
+                          <ProtectedRoute path="/orders" Component={Orders} />
+                          <ProtectedRoute
+                            path="/orders/:id"
+                            Component={Order}
+                          />
+                          <ProtectedRoute
+                            path="/customers"
+                            Component={Customers}
+                          />
+                          <ProtectedRoute path="/coupons" Component={Coupons} />
+                          <ProtectedRoute
+                            path="/coupons/coupon/:id"
+                            Component={Coupon}
+                          />
+                          <ProtectedRoute
+                            path="/coupons/create"
+                            Component={CreateNewCoupon}
+                          />
+                          <ProtectedRoute
+                            path="/website-layout"
+                            Component={WebsiteLayout}
+                          />
+                          <ProtectedRoute
+                            path="/website-layout/design-select/:type"
+                            Component={DesignSelectionPage}
+                          />
+                          <ProtectedRoute
+                            path="/website-layout/block-customize/header/:id"
+                            Component={HeaderCustomizer}
+                          />
+                          <ProtectedRoute
+                            path="/website-layout/block-customize/footer/:id"
+                            Component={FooterCustomizer}
+                          />
+                          <ProtectedRoute
+                            path="/website-layout/block-customize/product-grid/:id"
+                            Component={ProductListGridCustomizer}
+                          />
+                          <ProtectedRoute
+                            path="/customers/:id"
+                            Component={CustomerProfile}
+                          />
 
-                        <ProtectedRoute path="/settings" Component={Settings} />
-                        <ProtectedRoute
-                          path="/settings/account-settings"
-                          Component={AccountSettings}
-                        />
-                        <ProtectedRoute
-                          path="/settings/branches"
-                          Component={Branches}
-                        />
-                        <ProtectedRoute
-                          path="/settings/store-information"
-                          Component={StoreInformation}
-                        />
-                        <ProtectedRoute
-                          path="/settings/payment-methods"
-                          Component={StorePaymentMethods}
-                        />
-                        <ProtectedRoute
-                          path="/settings/payment-methods/create-payment-gateway-account"
-                          Component={CreatePaymentGatewayAccount}
-                        />
-                        <ProtectedRoute
-                          path="/settings/store-identity"
-                          Component={StoreIdentity}
-                        />
-                        <ProtectedRoute
-                          path="/settings/seo"
-                          Component={StoreSEO}
-                        />
-                        <ProtectedRoute
-                          path="/settings/staff"
-                          Component={Staff}
-                        />
-                        <ProtectedRoute
-                          path="/settings/staff/:id"
-                          Component={StaffMember}
-                        />
-                        <ProtectedRoute
-                          path="/settings/staff/member/create"
-                          Component={CreateStaffMember}
-                        />
-                        <ProtectedRoute
-                          path="/settings/branches/branch/:id"
-                          Component={Branch}
-                        />
+                          <ProtectedRoute
+                            path="/settings"
+                            Component={Settings}
+                          />
+                          <ProtectedRoute
+                            path="/settings/account-settings"
+                            Component={AccountSettings}
+                          />
+                          <ProtectedRoute
+                            path="/settings/branches"
+                            Component={Branches}
+                          />
+                          <ProtectedRoute
+                            path="/settings/store-information"
+                            Component={StoreInformation}
+                          />
+                          <ProtectedRoute
+                            path="/settings/payment-methods"
+                            Component={StorePaymentMethods}
+                          />
+                          <ProtectedRoute
+                            path="/settings/payment-methods/create-payment-gateway-account"
+                            Component={CreatePaymentGatewayAccount}
+                          />
+                          <ProtectedRoute
+                            path="/settings/store-identity"
+                            Component={StoreIdentity}
+                          />
+                          <ProtectedRoute
+                            path="/settings/seo"
+                            Component={StoreSEO}
+                          />
+                          <ProtectedRoute
+                            path="/settings/staff"
+                            Component={Staff}
+                          />
+                          <ProtectedRoute
+                            path="/settings/staff/:id"
+                            Component={StaffMember}
+                          />
+                          <ProtectedRoute
+                            path="/settings/staff/member/create"
+                            Component={CreateStaffMember}
+                          />
+                          <ProtectedRoute
+                            path="/settings/branches/branch/:id"
+                            Component={Branch}
+                          />
 
-                        <ProtectedRoute
-                          path="/settings/branches/create/branch"
-                          Component={CreateNewBranch}
-                        />
-                        <ProtectedRoute
-                          path="/settings/store-currencies"
-                          Component={StoreCurrencies}
-                        />
-                      </Layout>
-                    </Switch>
+                          <ProtectedRoute
+                            path="/settings/branches/create/branch"
+                            Component={CreateNewBranch}
+                          />
+                          <ProtectedRoute
+                            path="/settings/store-currencies"
+                            Component={StoreCurrencies}
+                          />
+                        </Layout>
+                      </Switch>
+                    </ApplicationContext>
                   </ThemeProvider>
                 </AuthContext>
               </QueryClientProvider>

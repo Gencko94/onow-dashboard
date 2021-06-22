@@ -4,6 +4,8 @@ import { useContext } from "react";
 import { AuthProvider } from "../../contexts/AuthContext";
 import { QueryErrorResetBoundary } from "react-query";
 import { ErrorBoundary } from "react-error-boundary";
+import canVisitPage from "../../utils/canVisitPage";
+import NotAuthorized from "../../pages/NotAuthorized";
 
 interface IProps {
   path: string;
@@ -19,28 +21,36 @@ export default function ProtectedRoute({ Component, path }: IProps) {
       path={path}
       render={({ location }) => {
         if (user) {
-          return (
-            <QueryErrorResetBoundary>
-              {({ reset }) => (
-                <ErrorBoundary
-                  fallbackRender={({ error, resetErrorBoundary }) => (
-                    <div>
-                      Something went wrong , please try again
-                      <button onClick={() => resetErrorBoundary()}>
-                        Try again
-                      </button>
-                      <pre style={{ whiteSpace: "normal" }}>
-                        {error.message}
-                      </pre>
-                    </div>
-                  )}
-                  onReset={reset}
-                >
-                  <Component storeId={user?.store.id} />{" "}
-                </ErrorBoundary>
-              )}
-            </QueryErrorResetBoundary>
-          );
+          if (
+            canVisitPage({
+              permissions: user.permissions,
+              path,
+              role: user.role,
+            })
+          ) {
+            return (
+              <QueryErrorResetBoundary>
+                {({ reset }) => (
+                  <ErrorBoundary
+                    fallbackRender={({ error, resetErrorBoundary }) => (
+                      <div>
+                        Something went wrong , please try again
+                        <button onClick={() => resetErrorBoundary()}>
+                          Try again
+                        </button>
+                        <pre style={{ whiteSpace: "normal" }}>
+                          {error.message}
+                        </pre>
+                      </div>
+                    )}
+                    onReset={reset}
+                  >
+                    <Component storeId={user?.store.id} />{" "}
+                  </ErrorBoundary>
+                )}
+              </QueryErrorResetBoundary>
+            );
+          } else return <NotAuthorized />;
         } else {
           return (
             <Redirect

@@ -9,20 +9,22 @@ import {
   useQueryClient,
 } from "react-query";
 import { useHistory, useParams } from "react-router-dom";
-import { CSSTransition } from "react-transition-group";
 import CouponInfo from "../../components/Coupons/Coupon/CouponInfo";
 import CouponProducts from "../../components/Coupons/Coupon/CouponProducts";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
 import ConfirmationModal from "../../components/reusable/ConfirmationModal";
-import ErrorToast from "../../components/reusable/ErrorToast";
+import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Flex from "../../components/StyledComponents/Flex";
+import useToast from "../../hooks/useToast";
 import { COUPON } from "../../interfaces/coupons/coupons";
+import extractError from "../../utils/extractError";
 import Loading from "../../utils/Loading";
 import { deleteCoupon, editCoupon, getCoupon } from "../../utils/queries";
 
 const Coupon = () => {
   const queryClient = useQueryClient();
+  const { handleCloseToast, setToastStatus } = useToast();
   const { id } = useParams<{ id: string }>();
   const { replace } = useHistory();
   const { data } = useQuery(["coupon", id], () => getCoupon(id), {
@@ -47,11 +49,8 @@ const Coupon = () => {
   const [modalOpen, setModalOpen] = useState(false);
   // Delete Mutation
 
-  const {
-    mutateAsync: deleteMutation,
-    reset: resetDeleteMutation,
-    isError: deleteError,
-  } = useMutation(deleteCoupon);
+  const { mutateAsync: deleteMutation, reset: resetDeleteMutation } =
+    useMutation(deleteCoupon);
   const onSubmit = async (data: COUPON) => {
     console.log({
       ...data,
@@ -73,11 +72,24 @@ const Coupon = () => {
     }
   };
   const handleDeleteCoupon = async (id: number) => {
-    // try {
-    await deleteMutation(id.toString());
-    // } catch (error) {
-    // console.log(error);
-    // }
+    try {
+      await deleteMutation(id.toString());
+    } catch (error) {
+      const { responseError } = extractError(error);
+      if (responseError) {
+        console.log(responseError);
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            resetDeleteMutation();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
   };
   console.log(data);
   return (
@@ -95,34 +107,36 @@ const Coupon = () => {
         >
           <Suspense fallback={<Loading />}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Breadcrumbs
-                childLabel="Coupon"
-                parentLabel="Coupons"
-                parentTarget="/coupons"
-              />
-              <Flex justify="flex-end">
-                <Button
-                  withTransition
-                  text="Save Changes"
-                  type="submit"
-                  padding="0.5rem"
-                  bg="green"
-                  withRipple
-                  margin="0 1rem"
-                  textSize="0.9rem"
+              <HeaderContainer>
+                <Breadcrumbs
+                  childLabel="Coupon"
+                  parentLabel="Coupons"
+                  parentTarget="/coupons"
                 />
-                <Button
-                  withTransition
-                  textSize="0.9rem"
-                  text="Delete Coupon"
-                  padding="0.5rem"
-                  bg="danger"
-                  withRipple
-                  Icon={RiDeleteBinLine}
-                  iconSize={20}
-                  onClick={() => setModalOpen(true)}
-                />
-              </Flex>
+                <Flex justify="flex-end">
+                  <Button
+                    withTransition
+                    text="Save Changes"
+                    type="submit"
+                    padding="0.5rem"
+                    bg="green"
+                    withRipple
+                    margin="0 1rem"
+                    textSize="0.9rem"
+                  />
+                  <Button
+                    withTransition
+                    textSize="0.9rem"
+                    text="Delete Coupon"
+                    padding="0.5rem"
+                    bg="danger"
+                    withRipple
+                    Icon={RiDeleteBinLine}
+                    iconSize={20}
+                    onClick={() => setModalOpen(true)}
+                  />
+                </Flex>
+              </HeaderContainer>
               <CouponInfo
                 errors={errors}
                 register={register}
@@ -134,18 +148,7 @@ const Coupon = () => {
                 control={control}
               />
             </form>
-            <CSSTransition
-              in={deleteError}
-              classNames="error-toast"
-              unmountOnExit
-              timeout={200}
-            >
-              <ErrorToast
-                text="Something Went Wrong"
-                btnText="Close"
-                closeFunction={resetDeleteMutation}
-              />
-            </CSSTransition>
+
             <ConfirmationModal
               isOpen={modalOpen}
               closeFunction={() => setModalOpen(false)}

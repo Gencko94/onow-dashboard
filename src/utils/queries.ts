@@ -11,6 +11,7 @@ import {
 import { COUPON, NEW_COUPON } from "../interfaces/coupons/coupons";
 import { NEW_PRODUCT } from "../interfaces/products/create-new-product";
 import { PRODUCT } from "../interfaces/products/products";
+import { NEW_STAFF_MEMBER, STAFF_MEMBER } from "../interfaces/staff/staff";
 
 const uri = "https://new-version.o-now.net/customer-api";
 
@@ -37,6 +38,49 @@ export const getUser = async (): Promise<USER | undefined> => {
 export const userLogin = async (data: LOGIN_FORM): Promise<LOGIN_RESPONSE> => {
   const res = await axios.post(`${uri}/login`, data);
   return res.data;
+};
+export const updateUserAccount = async (user: USER) => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.post(
+    `${uri}/update-user/${user.id}`,
+    {
+      first_name: user.firstName,
+      last_name: user.lastName,
+      email: user.email,
+      phone: user.phone,
+      country_id: 1,
+    },
+    config
+  );
+  return res.data.results;
+};
+export const changeUserPassword = async ({
+  userId,
+  current_password,
+  password,
+}: {
+  userId: number;
+  current_password: string;
+  password: string;
+}) => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+    params: { current_password, password },
+  };
+  const res = await axios.post(
+    `${uri}/update-user-password/${userId}`,
+    {},
+    config
+  );
+  return res.data.results;
 };
 export const getUserStores = async (): Promise<GET_STORES_RESPONSE> => {
   const t = localStorage.getItem("dshtid");
@@ -277,7 +321,38 @@ export const getStaffMember = async (id: string) => {
   const res = await axios.get(`${uri}/staff-users/${id}`, config);
   return res.data.results;
 };
+export const createStaffMember = async (staff: NEW_STAFF_MEMBER) => {
+  const t = localStorage.getItem("dshtid");
+  console.log(staff, "New Staff");
 
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.post(
+    `${uri}/staff-users`,
+    { ...staff, country_id: 2, branch_id: 3 },
+    config
+  );
+  return res.data.results;
+};
+export const editStaffMember = async (staff: STAFF_MEMBER) => {
+  const t = localStorage.getItem("dshtid");
+  console.log(staff, "Edited Staff");
+
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${uri}/staff-users/${staff.id}`,
+    { ...staff, country_id: 2, branch_id: 3 },
+    config
+  );
+  return res.data.results;
+};
 export const deleteStaffMember = async (
   id: string
 ): Promise<{ results: "Deleted" }> => {

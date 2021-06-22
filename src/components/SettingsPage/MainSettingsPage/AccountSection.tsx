@@ -5,7 +5,7 @@ import SettingsCard from "../../reusable/SettingsCard";
 const AccountSection = () => {
   return (
     <Container>
-      <h5>Account Settings</h5>
+      <h5 className="title">Account Settings</h5>
       <div className="cards-container">
         <SettingsCard
           title="Account Settings"
@@ -13,12 +13,7 @@ const AccountSection = () => {
           Icon={FcSettings}
           desc="Preview & Edit Account Information"
         />
-        <SettingsCard
-          title="Password"
-          target="/settings/password"
-          Icon={FcLock}
-          desc="Change your password"
-        />
+
         <SettingsCard
           title="Subscription"
           target="/settings/subscription"
@@ -33,7 +28,9 @@ const AccountSection = () => {
 export default AccountSection;
 const Container = styled.div`
   margin: 2rem 0;
-
+  .title {
+    color: ${(props) => props.theme.mainColor};
+  }
   .cards-container {
     display: grid;
     margin: 1rem 0;

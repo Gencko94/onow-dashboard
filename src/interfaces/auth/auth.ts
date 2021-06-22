@@ -1,3 +1,5 @@
+import { STAFF_PERMISSIONS } from "../staff/staff";
+
 export type USER = {
   id: number;
   firstName: string;
@@ -6,6 +8,8 @@ export type USER = {
   reset_token: string;
   email: string;
   store: STORE;
+  permissions: STAFF_PERMISSIONS;
+  role: "SUPER_USER" | "STAFF" | "ADMIN";
 };
 
 export type LOGIN_FORM = {

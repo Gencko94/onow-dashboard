@@ -1,3 +1,4 @@
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { RiErrorWarningLine } from "react-icons/ri";
 import styled from "styled-components";
 import Flex from "../StyledComponents/Flex";
@@ -7,12 +8,17 @@ interface IProps {
   text: string;
   btnText: string;
   closeFunction: () => void;
+  type: "success" | "error";
 }
 
-const ErrorToast = ({ text, btnText, closeFunction }: IProps) => {
+const Toast = ({ text, btnText, closeFunction, type }: IProps) => {
   return (
-    <Container>
-      <RiErrorWarningLine size={40} />
+    <Container type={type}>
+      {type === "error" ? (
+        <RiErrorWarningLine size={40} />
+      ) : (
+        <IoIosCheckmarkCircleOutline size={40} />
+      )}
       <div className="content">
         <h6>{text}</h6>
         <Flex justify="flex-end">
@@ -24,7 +30,7 @@ const ErrorToast = ({ text, btnText, closeFunction }: IProps) => {
               closeFunction();
             }}
             bg="transparent"
-            hoverBg="#b72b2b"
+            hoverBg="#f8f8f83b"
             padding="0.25rem"
             textSize="0.8rem"
           />
@@ -34,9 +40,12 @@ const ErrorToast = ({ text, btnText, closeFunction }: IProps) => {
   );
 };
 
-export default ErrorToast;
-const Container = styled.div`
-  background-color: rgba(238, 24, 24, 0.95);
+export default Toast;
+const Container = styled.div<{ type: "error" | "success" }>`
+  background-color: ${(props) =>
+    props.type === "error"
+      ? "rgba(238, 24, 24, 0.95)"
+      : "rgba(20, 148, 20, 0.95)"};
   color: #fff;
   display: grid;
   grid-template-columns: 0.2fr 1fr;
@@ -47,6 +56,7 @@ const Container = styled.div`
   top: 75px;
   right: 0px;
   align-items: center;
+  z-index: 1000;
   min-width: 350px;
   h6 {
     font-size: 0.8rem;

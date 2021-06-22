@@ -4,22 +4,18 @@ import { FcRules } from "react-icons/fc";
 import styled from "styled-components";
 import { ordersPermissions } from "../../../data/userPermissions";
 import { STAFF_MEMBER } from "../../../interfaces/staff/staff";
-import CheckboxWithLabel from "../../reusable/CheckboxWithLabel";
 import CheckToggle from "../../reusable/CheckToggle";
-import Checkbox from "../../reusable/Inputs/Checkbox";
 
 interface IProps {
   control: Control<STAFF_MEMBER>;
-  permissions: any;
   setValue: any;
 }
-const OrdersPermissions = ({ control, permissions, setValue }: IProps) => {
+const OrdersPermissions = ({ control, setValue }: IProps) => {
   const { t } = useTranslation();
   const permissionsValues: any = useWatch<STAFF_MEMBER>({
     control,
     name: "permissions",
   });
-  console.log(permissionsValues);
   function checkIfAllChecked() {
     const checked = ordersPermissions.every((i) =>
       permissionsValues.includes(i)

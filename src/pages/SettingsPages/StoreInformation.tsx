@@ -1,4 +1,5 @@
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
+import HeaderContainer from "../../components/reusable/HeaderContainer";
 import StoreNameAndDescription from "../../components/SettingsPage/StoreInformation/StoreNameAndDescription";
 import StoreSocialNetwork from "../../components/SettingsPage/StoreInformation/StoreSocialNetwork";
 import StoreTechnicalSupport from "../../components/SettingsPage/StoreInformation/StoreTechnicalSupport";
@@ -6,11 +7,13 @@ import StoreTechnicalSupport from "../../components/SettingsPage/StoreInformatio
 const StoreInformation = () => {
   return (
     <div>
-      <Breadcrumbs
-        childLabel="Store Properties"
-        parentLabel="Settings"
-        parentTarget="/settings"
-      />
+      <HeaderContainer>
+        <Breadcrumbs
+          childLabel="Store Properties"
+          parentLabel="Settings"
+          parentTarget="/settings"
+        />
+      </HeaderContainer>
       <StoreNameAndDescription />
       <StoreTechnicalSupport />
       <StoreSocialNetwork />

@@ -1,18 +1,19 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
-import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
+import useToast from "../../../hooks/useToast";
 import { PRODUCT } from "../../../interfaces/products/products";
+import extractError from "../../../utils/extractError";
 import { deleteProduct, getProducts } from "../../../utils/queries";
 import ConfirmationModal from "../../reusable/ConfirmationModal";
 import EmptyTable from "../../reusable/EmptyTable";
-import ErrorToast from "../../reusable/ErrorToast";
 import TableHead from "../../reusable/TableHead";
 import ProductItem from "./ProductItem";
 
 const ProductsList = () => {
   const history = useHistory();
+  const { setToastStatus, handleCloseToast } = useToast();
   const [modalStatus, setModalStatus] = useState<{
     open: boolean;
     id: number | null;
@@ -21,11 +22,7 @@ const ProductsList = () => {
   const { data } = useQuery("products", getProducts, { suspense: true });
   // Delete Mutation
 
-  const {
-    mutateAsync,
-    reset,
-    isError: deleteError,
-  } = useMutation(deleteProduct, {
+  const { mutateAsync, reset } = useMutation(deleteProduct, {
     onSuccess: (data, productId) => {
       queryClient.setQueryData<PRODUCT[] | undefined>("products", (prev) => {
         return prev?.filter((i) => i.id !== parseInt(productId));
@@ -37,7 +34,19 @@ const ProductsList = () => {
     try {
       await mutateAsync(id.toString());
     } catch (error) {
-      console.log(error);
+      const { responseError } = extractError(error);
+      if (responseError) {
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "success",
+        });
+      }
     }
   };
 
@@ -79,18 +88,7 @@ const ProductsList = () => {
           />
         );
       })}
-      <CSSTransition
-        in={deleteError}
-        classNames="error-toast"
-        unmountOnExit
-        timeout={200}
-      >
-        <ErrorToast
-          text="Something Went Wrong"
-          btnText="Close"
-          closeFunction={reset}
-        />
-      </CSSTransition>
+
       <ConfirmationModal
         isOpen={modalStatus.open}
         closeFunction={() => setModalStatus({ id: null, open: false })}

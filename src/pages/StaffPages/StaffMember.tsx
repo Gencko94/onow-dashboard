@@ -5,24 +5,27 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
-import { CSSTransition } from "react-transition-group";
-import styled from "styled-components";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
 import ConfirmationModal from "../../components/reusable/ConfirmationModal";
-import DeleteButton from "../../components/reusable/DeleteButton";
-import ErrorToast from "../../components/reusable/ErrorToast";
+import HeaderContainer from "../../components/reusable/HeaderContainer";
 import StaffMemberInformation from "../../components/Staff/StaffMemberInformation";
 import StaffMemberPermissions from "../../components/Staff/StaffMemberPermissions";
 import Flex from "../../components/StyledComponents/Flex";
-import Grid, { GridWrapper } from "../../components/StyledComponents/Grid";
 import { userPermissions } from "../../data/userPermissions";
+import useToast from "../../hooks/useToast";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
-import { deleteStaffMember, getStaffMember } from "../../utils/queries";
+import extractError from "../../utils/extractError";
+import {
+  deleteStaffMember,
+  editStaffMember,
+  getStaffMember,
+} from "../../utils/queries";
 
 const StaffMember = () => {
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
+  const { setToastStatus, handleCloseToast } = useToast();
   const [modalOpen, setModalOpen] = useState(false);
   const history = useHistory();
   const { data } = useQuery<STAFF_MEMBER>(
@@ -31,21 +34,22 @@ const StaffMember = () => {
     { suspense: true }
   );
 
-  const {
-    mutateAsync: deleteStaff,
-    isError: deleteError,
-    reset,
-  } = useMutation(deleteStaffMember, {
-    onSuccess: () => {
-      queryClient.setQueryData<STAFF_MEMBER[] | undefined>(
-        "staff-members",
-        (prev) => {
-          return prev?.filter((i) => i.id !== parseInt(id));
-        }
-      );
-      history.replace("/settings/staff");
-    },
-  });
+  const { mutateAsync: deleteStaff, reset: resetDelete } = useMutation(
+    deleteStaffMember,
+    {
+      onSuccess: () => {
+        queryClient.setQueryData<STAFF_MEMBER[] | undefined>(
+          "staff-members",
+          (prev) => {
+            return prev?.filter((i) => i.id !== parseInt(id));
+          }
+        );
+        history.replace("/settings/staff");
+      },
+    }
+  );
+  const { mutateAsync: editStaff, reset: resetEdit } =
+    useMutation(editStaffMember);
   const {
     register,
     control,
@@ -53,54 +57,104 @@ const StaffMember = () => {
     watch,
     setValue,
     formState: { errors },
-  } = useForm<STAFF_MEMBER>({ defaultValues: data });
+  } = useForm<STAFF_MEMBER>({
+    defaultValues: {
+      ...data,
+      permissions: data?.permissions.map((i: any) => i.name),
+    },
+  });
   const role = watch("role");
-
-  const onSubmit: SubmitHandler<STAFF_MEMBER> = (data) => {
+  const permissions = watch("permissions");
+  console.log(permissions, "Acual Data");
+  const onSubmit: SubmitHandler<STAFF_MEMBER> = async (data) => {
     console.log(data);
+    try {
+      await editStaff(data);
+      setToastStatus?.({
+        open: true,
+        text: "Changes saved successfully",
+        fn: () => {
+          handleCloseToast?.();
+        },
+        type: "success",
+      });
+    } catch (error) {
+      const { responseError, unknownError } = extractError(error);
+      if (responseError) {
+        console.log(responseError);
+        setToastStatus?.({
+          open: true,
+          text: JSON.stringify(responseError),
+          fn: () => {
+            resetEdit();
+          },
+          type: "error",
+        });
+      } else if (unknownError) {
+        setToastStatus?.({
+          open: true,
+          text: "Something Went Wrong",
+          fn: () => {
+            resetEdit();
+          },
+          type: "error",
+        });
+      }
+    }
   };
+
   const handleDeleteStaffMember = async () => {
     try {
       await deleteStaff(id);
     } catch (error) {
-      console.log(error);
+      const { responseError, unknownError } = extractError(error);
+      if (responseError) {
+        console.log(responseError);
+      } else if (unknownError) {
+        setToastStatus?.({
+          open: true,
+          text: "Something Went Wrong",
+          fn: () => {
+            resetDelete();
+          },
+          type: "error",
+        });
+      }
     }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Container>
-        <Grid cols="1fr 0.5fr" gap="1rem">
-          <Breadcrumbs
-            childLabel="Staff Member"
-            parentLabel="Staff"
-            parentTarget="/settings/staff"
+      <HeaderContainer>
+        <Breadcrumbs
+          childLabel="Staff Member"
+          parentLabel="Staff"
+          parentTarget="/settings/staff"
+        />
+        <Flex margin="1rem" justify="flex-end">
+          <Button
+            type="submit"
+            text="Save Changes"
+            padding="0.5rem"
+            bg="green"
+            withTransition
+            margin="0 1rem"
+            withRipple
+            textSize="0.9rem"
           />
-          <Flex margin="1rem" justify="flex-end">
-            <Button
-              type="submit"
-              text="Save Changes"
-              padding="0.5rem"
-              bg="green"
-              withTransition
-              margin="0 1rem"
-              withRipple
-              textSize="0.9rem"
-            />
-            <Button
-              text="Delete Staff Member"
-              padding="0.5rem"
-              Icon={RiDeleteBinLine}
-              bg="danger"
-              iconSize={20}
-              textSize="0.9rem"
-              withRipple
-              onClick={() => {
-                setModalOpen(true);
-              }}
-            />
-          </Flex>
-        </Grid>
-      </Container>
+          <Button
+            text="Delete Staff Member"
+            padding="0.5rem"
+            Icon={RiDeleteBinLine}
+            bg="danger"
+            iconSize={20}
+            textSize="0.9rem"
+            withRipple
+            onClick={() => {
+              setModalOpen(true);
+            }}
+          />
+        </Flex>
+      </HeaderContainer>
 
       <StaffMemberInformation
         register={register}
@@ -114,18 +168,7 @@ const StaffMember = () => {
           permissions={userPermissions}
         />
       )}
-      <CSSTransition
-        in={deleteError}
-        classNames="error-toast"
-        unmountOnExit
-        timeout={200}
-      >
-        <ErrorToast
-          text="Something Went Wrong"
-          btnText="Close"
-          closeFunction={reset}
-        />
-      </CSSTransition>
+
       <ConfirmationModal
         isOpen={modalOpen}
         closeFunction={() => setModalOpen(false)}
@@ -149,10 +192,3 @@ const StaffMember = () => {
 };
 
 export default StaffMember;
-const Container = styled.div`
-  margin-bottom: 1rem;
-  ${GridWrapper} {
-    box-shadow: ${(props) => props.theme.shadow};
-    border-radius: 6px;
-  }
-`;

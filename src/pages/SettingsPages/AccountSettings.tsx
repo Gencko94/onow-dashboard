@@ -1,72 +1,139 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import IconedInput from "../../components/reusable/Inputs/IconedInput";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
-import { STAFF_MEMBER } from "../../interfaces/staff/staff";
+import { useContext } from "react";
+import { AuthProvider } from "../../contexts/AuthContext";
+import { USER } from "../../interfaces/auth/auth";
+import PhoneInput from "../../components/reusable/Inputs/PhoneInput";
+import HeaderContainer from "../../components/reusable/HeaderContainer";
+import AccountPassword from "../../components/SettingsPage/MainSettingsPage/AccountSettings/AccountPassword";
+import Flex from "../../components/StyledComponents/Flex";
+import Button from "../../components/reusable/Button";
+import { AiOutlineMail } from "react-icons/ai";
+import { useMutation } from "react-query";
+import { updateUserAccount } from "../../utils/queries";
+
+import extractError from "../../utils/extractError";
+import useToast from "../../hooks/useToast";
 
 const AccountSettings = () => {
+  const { user } = useContext(AuthProvider);
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<STAFF_MEMBER>();
-  const onSubmit: SubmitHandler<STAFF_MEMBER> = (data) => {
+    setError,
+  } = useForm<USER>({ defaultValues: user });
+  const { handleCloseToast, setToastStatus } = useToast();
+  const { mutateAsync: updateUser, reset } = useMutation(updateUserAccount);
+  const onSubmit: SubmitHandler<USER> = async (data) => {
     console.log(data);
+    try {
+      await updateUser(data);
+      setToastStatus?.({
+        fn: () => handleCloseToast?.(),
+        open: true,
+        text: "Changes Saved successfully",
+        type: "success",
+      });
+    } catch (error) {
+      const { responseError } = extractError(error);
+      console.log(responseError);
+
+      if (responseError) {
+        console.log(responseError);
+      } else {
+        setToastStatus?.({
+          open: true,
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          type: "error",
+          text: "Something Went Wrong",
+        });
+      }
+    }
   };
   return (
-    <div>
-      <Breadcrumbs
-        childLabel="Account"
-        parentLabel="Settings"
-        parentTarget="/settings"
-      />
-      <AccountInformationSection>
+    <Container>
+      <HeaderContainer>
+        <Breadcrumbs
+          childLabel="Account"
+          parentLabel="Settings"
+          parentTarget="/settings"
+        />
+      </HeaderContainer>
+      <form style={{ margin: "2rem 0 " }} onSubmit={handleSubmit(onSubmit)}>
         <h5>Account Information</h5>
-        <div className="container">
+        <div onSubmit={handleSubmit(onSubmit)} className="container">
           <IconedInput
             Icon={MdSubtitles}
-            errors={errors?.name!}
+            errors={errors?.firstName}
             register={register}
             required
             requiredMessage="Required"
-            label="Name"
-            name="name"
+            label="First Name"
+            name="firstName"
           />
-          {/* <div>
-            <label>Name</label>
-            <div className="input-container">
-              <span className="icon">
-                <MdSubtitles size={20} />
-              </span>
-              <input {...register("name", { required: "Required" })} />
-            </div>
-            <p className="error">{errors?.name?.message}</p>
-          </div> */}
           <IconedInput
             Icon={MdSubtitles}
-            errors={errors.phone}
+            errors={errors?.lastName}
             register={register}
             required
             requiredMessage="Required"
-            label="Phone number"
+            label="Last Name"
+            name="lastName"
+          />
+          <Controller
             name="phone"
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <PhoneInput
+                  label="Phone Number"
+                  value={value}
+                  errors={errors?.phone}
+                  onChange={(data) => onChange(`+${data}`)}
+                />
+              );
+            }}
+          />
+          <IconedInput
+            Icon={AiOutlineMail}
+            errors={errors?.email}
+            register={register}
+            required
+            requiredMessage="Required"
+            label="Email"
+            name="email"
           />
         </div>
-      </AccountInformationSection>
-      <PasswordSection>
-        <h5>Password</h5>
-        <div className="container"></div>
-      </PasswordSection>
-    </div>
+        <Flex margin="1rem" justify="center">
+          <Button
+            type="submit"
+            withRipple
+            withTransition
+            text="Save Changes"
+            textSize="0.9rem"
+            bg="green"
+            padding="0.5rem"
+            onClick={handleSubmit(onSubmit)}
+          />
+        </Flex>
+      </form>
+
+      <AccountPassword id={user!.id} />
+    </Container>
   );
 };
 
 export default AccountSettings;
 
-const AccountInformationSection = styled.div`
-  margin: 2rem 0;
+const Container = styled.div`
   h5 {
     margin-bottom: 1rem;
     color: ${(props) => props.theme.mainColor};
@@ -79,11 +146,5 @@ const AccountInformationSection = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-  }
-`;
-const PasswordSection = styled.div`
-  margin: 2rem 0;
-  h5 {
-    margin-bottom: 1rem;
   }
 `;

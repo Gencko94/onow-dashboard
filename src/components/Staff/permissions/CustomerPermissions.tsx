@@ -3,18 +3,14 @@ import { useTranslation } from "react-i18next";
 import { FcConferenceCall } from "react-icons/fc";
 import styled from "styled-components";
 import { customerPermissions } from "../../../data/userPermissions";
-import {
-  STAFF_MEMBER,
-  STAFF_PERMISSIONS,
-} from "../../../interfaces/staff/staff";
+import { STAFF_MEMBER } from "../../../interfaces/staff/staff";
 import CheckToggle from "../../reusable/CheckToggle";
 
 interface IProps {
   control: Control<STAFF_MEMBER>;
-  permissions: STAFF_PERMISSIONS;
   setValue: any;
 }
-const CustomerPermissions = ({ control, permissions, setValue }: IProps) => {
+const CustomerPermissions = ({ control, setValue }: IProps) => {
   const { t } = useTranslation();
   const permissionsValues: any = useWatch<STAFF_MEMBER>({
     control,
@@ -71,13 +67,48 @@ const CustomerPermissions = ({ control, permissions, setValue }: IProps) => {
             label="Select All"
           />
         </div>
-        {customerPermissions.map((key: any) => {
+        <Controller
+          control={control}
+          name="permissions"
+          render={({ field: { onChange, value } }) => {
+            return (
+              <div>
+                {customerPermissions.map((key: any) => {
+                  return (
+                    <div key={key} className="item">
+                      <CheckToggle
+                        label={key}
+                        checked={permissionsValues.includes(key)}
+                        onChange={(e) => {
+                          if (permissionsValues.includes(key)) {
+                            console.log("remove");
+                            setValue(
+                              "permissions",
+                              permissionsValues.filter((i: any) => i !== key)
+                            );
+                          } else {
+                            console.log("add", [...permissionsValues, key]);
+                            setValue("permissions", [
+                              ...permissionsValues,
+                              key,
+                            ]);
+                          }
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          }}
+        />
+        {/* {customerPermissions.map((key: any) => {
           return (
-            <div className="item">
+            <div key={key} className="item">
               <Controller
                 control={control}
-                name={`permissions`}
-                render={({ field: { value, onChange } }) => {
+                name="permissions"
+                render={({ field: { onChange, value } }) => {
                   return (
                     <CheckToggle
                       label={key}
@@ -85,11 +116,13 @@ const CustomerPermissions = ({ control, permissions, setValue }: IProps) => {
                       checked={value.includes(key)}
                       onChange={(e) => {
                         if (value.includes(key)) {
+                          console.log("remove");
                           onChange(
                             permissionsValues.filter((i: any) => i !== key)
                           );
                         } else {
-                          onChange([...permissionsValues, key]);
+                          console.log("add", [...permissionsValues, key]);
+                          onChange(["create"]);
                         }
                       }}
                     />
@@ -98,7 +131,7 @@ const CustomerPermissions = ({ control, permissions, setValue }: IProps) => {
               />
             </div>
           );
-        })}
+        })} */}
       </div>
     </Container>
   );

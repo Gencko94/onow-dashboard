@@ -102,7 +102,7 @@ const ProductItem = ({
               >
                 <Popover closeFunction={() => setActionsMenuOpen(false)}>
                   <Button
-                    text="Delete Coupon"
+                    text="Delete Product"
                     padding="0.5rem"
                     bg="white"
                     color="#444"

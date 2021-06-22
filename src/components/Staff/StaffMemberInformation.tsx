@@ -4,7 +4,9 @@ import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import IconedInput from "../reusable/Inputs/IconedInput";
+import PhoneInput from "../reusable/Inputs/PhoneInput";
 import Select from "../reusable/Select";
+
 interface IProps {
   register: any;
   errors: any;
@@ -57,15 +59,24 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
           label="Full Name"
           name="name"
         />
-        <IconedInput
-          Icon={AiOutlinePhone}
-          errors={errors?.phone}
-          register={register}
-          required
-          requiredMessage="Required"
-          label="Phone Number"
+
+        <Controller
           name="phone"
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <PhoneInput
+                errors={errors?.phone}
+                label="Phone Number"
+                onChange={(value) => {
+                  onChange(`+${value}`);
+                }}
+                value={value}
+              />
+            );
+          }}
         />
+
         <IconedInput
           Icon={AiOutlineMail}
           errors={errors?.email}

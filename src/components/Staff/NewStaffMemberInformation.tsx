@@ -1,10 +1,11 @@
 import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
+import { AiOutlineMail } from "react-icons/ai";
 import { CgPassword } from "react-icons/cg";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import IconedInput from "../reusable/Inputs/IconedInput";
+import PhoneInput from "../reusable/Inputs/PhoneInput";
 import Select from "../reusable/Select";
 interface IProps {
   register: any;
@@ -17,14 +18,14 @@ const roleOptions: { label: { [key: string]: string }; value: string }[] = [
       ar: "(لديه جميع الصلاحيات)مدير",
       en: "Admin (Has all Permissions)",
     },
-    value: "admin",
+    value: "ADMIN",
   },
   {
     label: {
       ar: "عضو",
       en: "Staff Member",
     },
-    value: "staff",
+    value: "STAFF",
   },
 ];
 const branches: {
@@ -53,22 +54,39 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
       <div className="box">
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors?.name}
+          errors={errors?.first_name}
           register={register}
           required
           requiredMessage="Required"
-          label="Full Name"
-          name="name"
+          label="First Name"
+          name="first_name"
         />
         <IconedInput
-          Icon={AiOutlinePhone}
-          errors={errors?.phone}
+          Icon={MdSubtitles}
+          errors={errors?.last_name}
           register={register}
           required
           requiredMessage="Required"
-          label="Phone Number"
-          name="phone"
+          label="Last Name"
+          name="last_name"
         />
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <PhoneInput
+                errors={errors?.phone}
+                label="Phone Number"
+                onChange={(value) => {
+                  onChange(`+${value}`);
+                }}
+                value={value}
+              />
+            );
+          }}
+        />
+
         <IconedInput
           Icon={AiOutlineMail}
           errors={errors?.email}
@@ -100,7 +118,9 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
                 options={branches}
                 label="Accessible Branches"
                 onChange={(options) => {
-                  onChange(options.map((option: any) => option.value));
+                  onChange(
+                    options.map((option: any) => parseInt(option.value))[0]
+                  );
                 }}
                 value={branches.find((i) => i.value === value)}
                 isMulti
@@ -110,7 +130,7 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
         />
         <Controller
           control={control}
-          name="role"
+          name="roles"
           rules={{ required: "Required" }}
           render={({ field: { onChange, value } }) => {
             return (

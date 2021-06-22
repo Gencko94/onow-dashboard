@@ -3,17 +3,14 @@ import { useTranslation } from "react-i18next";
 import { FcTreeStructure } from "react-icons/fc";
 import styled from "styled-components";
 import { STAFF_MEMBER } from "../../../interfaces/staff/staff";
-import CheckboxWithLabel from "../../reusable/CheckboxWithLabel";
 import CheckToggle from "../../reusable/CheckToggle";
-import Checkbox from "../../reusable/Inputs/Checkbox";
 import { productPermissions } from "../../../data/userPermissions";
 
 interface IProps {
   control: Control<STAFF_MEMBER>;
-  permissions: any;
   setValue: any;
 }
-const ProductsPermissions = ({ control, permissions, setValue }: IProps) => {
+const ProductsPermissions = ({ control, setValue }: IProps) => {
   const { t } = useTranslation();
   const permissionsValues: any = useWatch<STAFF_MEMBER>({
     control,

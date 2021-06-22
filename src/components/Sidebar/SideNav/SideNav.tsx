@@ -1,9 +1,5 @@
 import styled, { css } from "styled-components";
 import { Link, useLocation } from "react-router-dom";
-import { BiHomeAlt } from "react-icons/bi";
-import { RiCoupon3Line, RiFileList3Line } from "react-icons/ri";
-import { IoPeopleOutline } from "react-icons/io5";
-import { AiFillSetting, AiOutlineBarChart } from "react-icons/ai";
 
 import {
   FcAdvertising,
@@ -17,42 +13,25 @@ import {
   FcSupport,
   FcViewDetails,
 } from "react-icons/fc";
+import canVisitPage from "../../../utils/canVisitPage";
+import { useContext } from "react";
+import { AuthProvider } from "../../../contexts/AuthContext";
 // import { useState } from "react";
 const SideNav = () => {
   const { pathname } = useLocation();
+  const { user } = useContext(AuthProvider);
   // const [openedItem, setOpenedItem] = useState<number | null>(null);
   return (
     <Container>
-      <SideNavItem
-      // onClick={() => {
-      //   if (openedItem === 1) {
-      //     return setOpenedItem(null);
-      //   }
-      //   setOpenedItem(1);
-      // }}
-      // opened={openedItem === 1}
-      >
+      <SideNavItem>
         <SideNavLink isActive={pathname.includes("/dashboard")} to="/dashboard">
           <span className="icon">
             <FcHome size={20} />
           </span>
           <h6>Dashboard</h6>
         </SideNavLink>
-        {/* <div className="submenu">
-          <SubMenuLink isActive={pathname === "/dashboard"} to="/dashboard">
-            Dashboard
-          </SubMenuLink>
-        </div> */}
       </SideNavItem>
-      <SideNavItem
-      // onClick={() => {
-      //   if (openedItem === 2) {
-      //     return setOpenedItem(null);
-      //   }
-      //   setOpenedItem(2);
-      // }}
-      // opened={openedItem === 2}
-      >
+      <SideNavItem>
         <SideNavLink isActive={pathname.includes("/products")} to="/products">
           <span className="icon">
             <FcViewDetails size={20} />
@@ -60,15 +39,7 @@ const SideNav = () => {
           <h6>Products</h6>
         </SideNavLink>
       </SideNavItem>
-      <SideNavItem
-      // onClick={() => {
-      //   if (openedItem === 2) {
-      //     return setOpenedItem(null);
-      //   }
-      //   setOpenedItem(2);
-      // }}
-      // opened={openedItem === 2}
-      >
+      <SideNavItem>
         <SideNavLink
           isActive={pathname.includes("/categories")}
           to="/categories"
@@ -79,31 +50,15 @@ const SideNav = () => {
           <h6>Categories</h6>
         </SideNavLink>
       </SideNavItem>
-      <SideNavItem
-      // onClick={() => {
-      //   if (openedItem === 2) {
-      //     return setOpenedItem(null);
-      //   }
-      //   setOpenedItem(2);
-      // }}
-      // opened={openedItem === 2}
-      >
+      {/* <SideNavItem>
         <SideNavLink isActive={pathname.includes("/brands")} to="/brands">
           <span className="icon">
             <FcShop size={20} />
           </span>
           <h6>Brands</h6>
         </SideNavLink>
-      </SideNavItem>
-      <SideNavItem
-      // onClick={() => {
-      //   if (openedItem === 3) {
-      //     return setOpenedItem(null);
-      //   }
-      //   setOpenedItem(3);
-      // }}
-      // opened={openedItem === 3}
-      >
+      </SideNavItem> */}
+      <SideNavItem>
         <SideNavLink isActive={pathname.includes("/orders")} to="/orders">
           <span className="icon">
             <FcRules size={20} />
@@ -111,31 +66,25 @@ const SideNav = () => {
           <h6>Orders</h6>
         </SideNavLink>
       </SideNavItem>
-      <SideNavItem
-      // onClick={() => {
-      //   if (openedItem === 4) {
-      //     return setOpenedItem(null);
-      //   }
-      //   setOpenedItem(4);
-      // }}
-      // opened={openedItem === 4}
-      >
-        <SideNavLink isActive={pathname.includes("/customers")} to="/customers">
-          <span className="icon">
-            <FcConferenceCall size={20} />
-          </span>
-          <h6>Customers</h6>
-        </SideNavLink>
-      </SideNavItem>
-      <SideNavItem
-      // onClick={() => {
-      //   if (openedItem === 5) {
-      //     return setOpenedItem(null);
-      //   }
-      //   setOpenedItem(5);
-      // }}
-      // opened={openedItem === 5}
-      >
+
+      {canVisitPage({
+        permissions: user?.permissions,
+        path: "/customers",
+        role: user?.role,
+      }) && (
+        <SideNavItem>
+          <SideNavLink
+            isActive={pathname.includes("/customers")}
+            to="/customers"
+          >
+            <span className="icon">
+              <FcConferenceCall size={20} />
+            </span>
+            <h6>Customers</h6>
+          </SideNavLink>
+        </SideNavItem>
+      )}
+      <SideNavItem>
         <SideNavLink isActive={pathname.includes("/settings")} to="/settings">
           <span className="icon">
             <FcSupport size={20} />
@@ -144,15 +93,7 @@ const SideNav = () => {
         </SideNavLink>
       </SideNavItem>
 
-      <SideNavItem
-      // onClick={() => {
-      //   if (openedItem === 5) {
-      //     return setOpenedItem(null);
-      //   }
-      //   setOpenedItem(5);
-      // }}
-      // opened={openedItem === 5}
-      >
+      <SideNavItem>
         <SideNavLink isActive={pathname.includes("/coupons")} to="/coupons">
           <span className="icon">
             <FcAdvertising size={20} />
@@ -160,15 +101,7 @@ const SideNav = () => {
           <h6>Coupons</h6>
         </SideNavLink>
       </SideNavItem>
-      <SideNavItem
-      // onClick={() => {
-      //   if (openedItem === 6) {
-      //     return setOpenedItem(null);
-      //   }
-      //   setOpenedItem(6);
-      // }}
-      // opened={openedItem === 6}
-      >
+      <SideNavItem>
         <SideNavLink isActive={pathname.includes("/reports")} to="/reports">
           <span className="icon">
             <FcBullish size={20} />
@@ -176,15 +109,7 @@ const SideNav = () => {
           <h6>Reports</h6>
         </SideNavLink>
       </SideNavItem>
-      <SideNavItem
-      // onClick={() => {
-      //   if (openedItem === 7) {
-      //     return setOpenedItem(null);
-      //   }
-      //   setOpenedItem(7);
-      // }}
-      // opened={openedItem === 7}
-      >
+      <SideNavItem>
         <SideNavLink
           isActive={pathname === "/website-layout"}
           to="/website-layout"
@@ -216,12 +141,6 @@ const SideNavItem = styled.li`
   align-items: center;
   justify-content: space-between;
   display: block;
-  .submenu {
-    overflow: hidden;
-    max-height: 0;
-    transition: all 0.5s ease-out;
-    -webkit-transition: all 0.5s ease-out;
-  }
 `;
 const SideNavLink = styled(Link)<{ isActive: boolean }>`
   padding: 0.75rem 1rem;
@@ -255,6 +174,3 @@ const SideNavLink = styled(Link)<{ isActive: boolean }>`
       }
     `}
 `;
-// const SubMenuLink = styled(Link)<{ isActive: boolean }>`
-//   margin: 0 1rem;
-// `;

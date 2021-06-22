@@ -1,11 +1,12 @@
 import { useState } from "react";
-import ClickAwayListener from "react-click-away-listener";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useHistory } from "react-router";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
+import Button from "../reusable/Button";
+import Popover from "../reusable/Popover";
 
 interface IProps {
   member: STAFF_MEMBER;
@@ -22,7 +23,9 @@ const StaffItem = ({ member }: IProps) => {
           </CheckboxContainer>
         </div> */}
       <div className="field">
-        <h6>{member.name}</h6>
+        <h6>
+          {member.first_name} {member.last_name}
+        </h6>
       </div>
       <div className="field">
         <h6>{member.phone}</h6>
@@ -51,18 +54,24 @@ const StaffItem = ({ member }: IProps) => {
               unmountOnExit
               timeout={100}
             >
-              <ClickAwayListener onClickAway={() => setActionsMenuOpen(false)}>
-                <ul>
-                  <li>
-                    <button>
-                      <span className="icon">
-                        <RiDeleteBinLine size={15} />
-                      </span>
-                      <p>Delete</p>
-                    </button>
-                  </li>
-                </ul>
-              </ClickAwayListener>
+              <Popover closeFunction={() => setActionsMenuOpen(false)}>
+                <Button
+                  text="Delete Product"
+                  padding="0.5rem"
+                  bg="white"
+                  color="#444"
+                  hoverColor="#b72b2b"
+                  textSize="0.8rem"
+                  Icon={RiDeleteBinLine}
+                  iconSize={15}
+                  onClick={(e) => {
+                    e.stopPropagation();
+
+                    setActionsMenuOpen(false);
+                    // setModalStatus({ open: true, id: product.id });
+                  }}
+                />
+              </Popover>
             </CSSTransition>
           </ActionButtonContainer>
         </ButtonsContainer>
@@ -124,39 +133,4 @@ const ButtonsContainer = styled.div`
 `;
 const ActionButtonContainer = styled.div`
   position: relative;
-
-  ul {
-    position: absolute;
-    bottom: -3px;
-    right: 8px;
-    z-index: 10;
-    background-color: #fff;
-    transform-origin: right;
-    box-shadow: ${(props) => props.theme.shadow};
-    border-radius: 5px;
-  }
-  ul li button {
-    padding: 0.5rem;
-    display: block;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.9rem;
-    color: ${(props) => props.color};
-    transition: all 75ms ease;
-    &:hover {
-      color: ${(props) => props.theme.headingColor};
-      background-color: ${(props) => props.theme.highlightColor};
-    }
-    p {
-      margin: 0 0.5rem;
-    }
-  }
-  span.icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.25rem;
-  }
 `;

@@ -23,10 +23,8 @@ const AuthContext: React.FC = ({ children }) => {
   });
   const logOut = () => {
     localStorage.removeItem("dshtid");
-    queryClient.setQueryData("auth", null);
-    history.push("/");
+    queryClient.setQueryData("auth", undefined);
   };
-
   return (
     <AuthProvider.Provider
       value={{

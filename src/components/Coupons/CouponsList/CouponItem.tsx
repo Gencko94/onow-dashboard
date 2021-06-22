@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BsCheck, BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -8,10 +8,11 @@ import { COUPON } from "../../../interfaces/coupons/coupons";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteCoupon } from "../../../utils/queries";
-import ErrorToast from "../../reusable/ErrorToast";
 import Button from "../../reusable/Button";
 import Popover from "../../reusable/Popover";
 import ConfirmationModal from "../../reusable/ConfirmationModal";
+import useToast from "../../../hooks/useToast";
+import extractError from "../../../utils/extractError";
 interface IProps {
   coupon: COUPON;
   sortBy: any;
@@ -22,16 +23,13 @@ const CouponItem = ({ coupon, sortBy }: IProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const queryClient = useQueryClient();
   const history = useHistory();
+  const { setToastStatus, handleCloseToast } = useToast();
   const {
     i18n: { language },
   } = useTranslation();
   // Delete Mutation
 
-  const {
-    mutateAsync,
-    reset,
-    isError: deleteError,
-  } = useMutation(deleteCoupon, {
+  const { mutateAsync, reset } = useMutation(deleteCoupon, {
     onSuccess: () => {
       queryClient.setQueryData<COUPON[] | undefined>(
         ["coupons", sortBy],
@@ -64,7 +62,20 @@ const CouponItem = ({ coupon, sortBy }: IProps) => {
     try {
       await mutateAsync(id.toString());
     } catch (error) {
-      console.log(error);
+      const { responseError } = extractError(error);
+      if (responseError) {
+        console.log(responseError);
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
     }
   };
   return (
@@ -120,18 +131,7 @@ const CouponItem = ({ coupon, sortBy }: IProps) => {
           </ButtonsContainer>
         </div>
       </Container>
-      <CSSTransition
-        in={deleteError}
-        classNames="error-toast"
-        unmountOnExit
-        timeout={200}
-      >
-        <ErrorToast
-          text="Something Went Wrong"
-          btnText="Close"
-          closeFunction={reset}
-        />
-      </CSSTransition>
+
       <ConfirmationModal
         isOpen={modalOpen}
         closeFunction={() => setModalOpen(false)}

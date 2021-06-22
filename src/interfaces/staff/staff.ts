@@ -1,5 +1,6 @@
 export interface STAFF_MEMBER {
-  name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
   role: "SUPER_USER" | "ADMIN" | "STAFF";
@@ -27,11 +28,12 @@ export type PRODUCTS_PERMISSIONS = [
   "visitProducts"
 ];
 export interface NEW_STAFF_MEMBER {
-  name: string;
+  first_name: string;
+  last_name: string;
   phone: string;
   email: string;
   password: string;
-  role: "STAFF" | "ADMIN";
+  roles: "STAFF" | "ADMIN";
   permissions: STAFF_PERMISSIONS;
   branch_id: number;
 }

@@ -18,21 +18,9 @@ const StaffMemberPermissions = ({ control, permissions, setValue }: IProps) => {
       </div>
       <div className="box">
         <div className="grid">
-          <CustomerPermissions
-            setValue={setValue}
-            permissions={permissions}
-            control={control}
-          />
-          <OrdersPermissions
-            control={control}
-            permissions={permissions}
-            setValue={setValue}
-          />
-          <ProductsPermissions
-            control={control}
-            permissions={permissions}
-            setValue={setValue}
-          />
+          <CustomerPermissions setValue={setValue} control={control} />
+          <OrdersPermissions control={control} setValue={setValue} />
+          <ProductsPermissions control={control} setValue={setValue} />
         </div>
       </div>
     </Container>
