@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import React, { useMemo, useState } from "react";
+import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import useToast from "../../../hooks/useToast";
@@ -13,7 +13,7 @@ import LoadingTable from "../../reusable/LoadingTable";
 import TableHead from "../../reusable/TableHead";
 import Flex from "../../StyledComponents/Flex";
 import ProductItem from "./ProductItem";
-
+import Spinner from "react-loader-spinner";
 const ProductsList = () => {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
@@ -36,13 +36,22 @@ const ProductsList = () => {
     order: "desc",
   });
 
-  const { data, status, isFetching } = useQuery(
-    ["products", sortBy],
-    () => getProducts(sortBy),
-    {
-      keepPreviousData: true,
-    }
-  );
+  const { data, status, isFetching, fetchNextPage, hasNextPage } =
+    useInfiniteQuery(
+      ["products", sortBy],
+      ({ pageParam = 1 }) => getProducts(sortBy, pageParam),
+      {
+        keepPreviousData: true,
+
+        getNextPageParam: (lastPage) => {
+          if (lastPage.currentPage < lastPage.lastPage) {
+            return lastPage.currentPage + 1;
+          } else {
+            return undefined;
+          }
+        },
+      }
+    );
 
   // Delete Mutation
   const { mutateAsync, reset } = useMutation(deleteProduct, {
@@ -141,7 +150,7 @@ const ProductsList = () => {
         </Flex>
       )}
       <Container>
-        {data?.length !== 0 && (
+        {data?.pages.length !== 0 && (
           <TableHead
             activeSortBy={sortBy.field}
             activeOrder={sortBy.order}
@@ -150,8 +159,12 @@ const ProductsList = () => {
           />
         )}
         <div className="table">
-          {isFetching && "Fetching"}
-          {data?.length === 0 && (
+          {isFetching && (
+            <div className="loading">
+              <Spinner type="TailSpin" width={30} color="#f78f21" />
+            </div>
+          )}
+          {data?.pages.length === 0 && (
             <EmptyTable
               iconImage="/images/food.png"
               text="Oops, we didn't find any products !"
@@ -162,15 +175,20 @@ const ProductsList = () => {
             />
           )}
         </div>
-        {data?.map((product) => {
+        {data?.pages.map((group, i) => {
           return (
-            <ProductItem
-              product={product}
-              handleDeleteProduct={handleDeleteProduct}
-              setModalStatus={setModalStatus}
-              selectedRows={selectedRows}
-              handleToggleRows={handleToggleRows}
-            />
+            <React.Fragment key={i}>
+              {group.data.map((product: PRODUCT) => (
+                <ProductItem
+                  key={product.id}
+                  product={product}
+                  handleDeleteProduct={handleDeleteProduct}
+                  setModalStatus={setModalStatus}
+                  selectedRows={selectedRows}
+                  handleToggleRows={handleToggleRows}
+                />
+              ))}
+            </React.Fragment>
           );
         })}
 
@@ -193,6 +211,20 @@ const ProductsList = () => {
           }}
         />
       </Container>
+      {hasNextPage && (
+        <Flex margin="2rem 0" justify="center">
+          <Button
+            withRipple
+            text="Load More"
+            bg="green"
+            padding="0.25rem 0.5rem"
+            textSize="0.8rem"
+            onClick={() => {
+              fetchNextPage();
+            }}
+          />
+        </Flex>
+      )}
     </>
   );
 };
@@ -204,5 +236,10 @@ const Container = styled.div`
   border: ${(props) => props.theme.border};
   .table {
     background-color: #fff;
+    position: relative;
+  }
+  .loading {
+    position: absolute;
+    z-index: 2;
   }
 `;
