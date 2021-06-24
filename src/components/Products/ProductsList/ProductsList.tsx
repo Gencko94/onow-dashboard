@@ -66,9 +66,10 @@ const ProductsList = () => {
     isLoading: deleteLoading,
   } = useMutation(deleteProduct, {
     onSuccess: (data, productId) => {
-      queryClient.setQueryData<PRODUCT[] | undefined>("products", (prev) => {
-        return prev?.filter((i) => i.id !== parseInt(productId));
-      });
+      queryClient.invalidateQueries("products");
+      // queryClient.setQueryData<PRODUCT[] | undefined>("products", (prev) => {
+      //   return prev?.filter((i) => i.id !== parseInt(productId));
+      // });
     },
   });
 
@@ -154,23 +155,23 @@ const ProductsList = () => {
 
   return (
     <>
-      {selectedRows.length > 0 && (
-        <Flex justify="flex-end" margin="1rem 0 ">
-          <p>Selected Rows ({selectedRows.length}) : </p>
-          <Flex margin="0 0.5rem">
-            <Button
-              bg="danger"
-              padding="0.25rem"
-              textSize="0.8rem"
-              text="Delete Products"
-              withRipple
-              withTransition
-            />
-          </Flex>
+      <Flex justify="flex-end" margin="1rem 0 ">
+        <p>Selected Rows ({selectedRows.length}) : </p>
+        <Flex margin="0 0.5rem">
+          <Button
+            disabled={selectedRows.length === 0}
+            bg="danger"
+            padding="0.25rem"
+            textSize="0.8rem"
+            text="Delete Products"
+            withRipple
+            withTransition
+          />
         </Flex>
-      )}
+      </Flex>
+
       <Container>
-        {data?.pages.length !== 0 && (
+        {data?.pages[0].data.length !== 0 && (
           <TableHead
             activeSortBy={sortBy.field}
             activeOrder={sortBy.order}
@@ -184,7 +185,7 @@ const ProductsList = () => {
               <Spinner type="TailSpin" width={30} color="#f78f21" />
             </div>
           )}
-          {data?.pages.length === 0 && (
+          {data?.pages[0].data.length === 0 && (
             <EmptyTable
               iconImage="/images/food.png"
               text="Oops, we didn't find any products !"
@@ -202,7 +203,6 @@ const ProductsList = () => {
                 <ProductItem
                   key={product.id}
                   product={product}
-                  handleDeleteProduct={handleDeleteProduct}
                   setModalStatus={setModalStatus}
                   selectedRows={selectedRows}
                   handleToggleRows={handleToggleRows}
@@ -257,12 +257,15 @@ const Container = styled.div`
   border-radius: 8px;
   overflow: hidden;
   border: ${(props) => props.theme.border};
+
+  position: relative;
   .table {
     background-color: #fff;
-    position: relative;
   }
   .loading {
     position: absolute;
     z-index: 2;
+    top: -14px;
+    left: 15px;
   }
 `;

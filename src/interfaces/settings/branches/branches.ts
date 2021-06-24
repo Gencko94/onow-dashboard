@@ -3,6 +3,9 @@ export type BRANCH_ADDRESS = {
     lat: number;
     lng: number;
   };
+  address: {
+    [key: string]: string;
+  };
   street: string;
   avenue: string;
 };

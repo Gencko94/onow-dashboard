@@ -28,10 +28,10 @@ export interface NEW_COUPON {
   discount_type: "fixed" | "percent";
   free_delivery: "0" | "1";
   amount: string;
-  max_discount: number;
-  min_total_order: number;
-  total_uses: number;
-  uses_per_user: number;
+  max_discount: string;
+  min_total_order: string;
+  total_uses: string;
+  uses_per_user: string;
   enabled: boolean;
   coupon_coverage: number;
   special_products: string[];

@@ -14,7 +14,7 @@ import { Dispatch } from "react";
 
 interface IProps {
   product: PRODUCT;
-  handleDeleteProduct: (id: number) => Promise<void>;
+
   setModalStatus: Dispatch<
     SetStateAction<{ id: number | null; open: boolean }>
   >;
@@ -24,7 +24,7 @@ interface IProps {
 
 const ProductItem = ({
   product,
-  handleDeleteProduct,
+
   setModalStatus,
   handleToggleRows,
   selectedRows,
@@ -58,7 +58,7 @@ const ProductItem = ({
     <>
       <Container
         selected={selectedRows.includes(product.id)}
-        // onClick={() => history.push(`/product/${product.id}`)}
+        onClick={() => history.push(`/product/${product.id}`)}
       >
         <div className="field">
           <Checkbox

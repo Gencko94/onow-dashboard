@@ -5,7 +5,7 @@ export interface MapCoordinates {
 interface GetCurrentLocation {
   (
     successCallback: ({ lat, lng }: MapCoordinates) => void,
-    failureCallback: (error: GeolocationPositionError | string) => void
+    failureCallback: (error: GeolocationPositionError) => void
   ): void;
 }
 
@@ -23,8 +23,6 @@ const useCurrentLocation = () => {
           failureCallback(error);
         }
       );
-    } else {
-      failureCallback("not allowed");
     }
   };
 

@@ -1,16 +1,12 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { Control, Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { FiCalendar, FiUser, FiUsers } from "react-icons/fi";
-import { IoMdCash } from "react-icons/io";
 import { WiTime8, WiTime12 } from "react-icons/wi";
 
 import styled from "styled-components";
 import CheckToggle from "../../../reusable/CheckToggle";
-import DateIconedInput from "../../../reusable/Inputs/DateIconedInput";
-import IconedInput from "../../../reusable/Inputs/IconedInput";
-import Select from "../../../reusable/Select";
+
 import TableHead from "../../../reusable/TableHead";
 import TimeIconedInput from "../../../reusable/TimeIconedInput";
 
@@ -20,10 +16,27 @@ interface IProps {
 
   control: Control<any>;
 }
-
+const days: [
+  "saturday",
+  "sunday",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday"
+] = [
+  "saturday",
+  "sunday",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+];
 const BranchWorkingHours = ({ control, errors, register }: IProps) => {
   const {
     i18n: { language },
+    t,
   } = useTranslation();
   const cols = useMemo(
     () => [
@@ -33,7 +46,7 @@ const BranchWorkingHours = ({ control, errors, register }: IProps) => {
     ],
     []
   );
-  const workingHours = useWatch({
+  const working_hours = useWatch({
     control,
     name: "working_hours",
   });
@@ -46,122 +59,40 @@ const BranchWorkingHours = ({ control, errors, register }: IProps) => {
       <div className="box">
         <TableHead gap="2rem" cols={cols} gridCols="1fr 0.5fr 0.5fr" />
         <div className="table">
-          {/* Saturday */}
-          <Controller
-            control={control}
-            name="working_hours.saturday.enabled"
-            render={({ field: { value, onChange } }) => {
-              return (
-                <CheckToggle
-                  checked={value}
-                  onChange={onChange}
-                  label="Saturday"
+          {days.map((day) => {
+            return (
+              <React.Fragment key={day}>
+                <Controller
+                  control={control}
+                  name={`working_hours.${day}.enabled` as any}
+                  render={({ field: { value, onChange } }) => {
+                    return (
+                      <CheckToggle
+                        checked={value}
+                        onChange={onChange}
+                        label={t(day)}
+                      />
+                    );
+                  }}
                 />
-              );
-            }}
-          />
 
-          <TimeIconedInput
-            enabled={workingHours.saturday.enabled}
-            control={control}
-            errors={errors}
-            Icon={WiTime8}
-            name="working_hours.saturday.from"
-          />
-          <TimeIconedInput
-            enabled={workingHours.saturday.enabled}
-            control={control}
-            errors={errors}
-            Icon={WiTime12}
-            name="working_hours.saturday.to"
-          />
-          {/* Sunday */}
-          <Controller
-            control={control}
-            name="working_hours.sunday.enabled"
-            render={({ field: { value, onChange } }) => {
-              return (
-                <CheckToggle
-                  checked={value}
-                  onChange={onChange}
-                  label="Sunday"
+                <TimeIconedInput
+                  enabled={working_hours?.[day]?.enabled}
+                  control={control}
+                  errors={errors}
+                  Icon={WiTime8}
+                  name={`working_hours.${day}.from`}
                 />
-              );
-            }}
-          />
-
-          <TimeIconedInput
-            enabled={workingHours.sunday.enabled}
-            control={control}
-            errors={errors}
-            Icon={WiTime8}
-            name="working_hours.sunday.from"
-          />
-          <TimeIconedInput
-            enabled={workingHours.sunday.enabled}
-            control={control}
-            errors={errors}
-            Icon={WiTime12}
-            name="working_hours.sunday.to"
-          />
-          {/* Monday */}
-          <Controller
-            control={control}
-            name="working_hours.monday.enabled"
-            render={({ field: { value, onChange } }) => {
-              return (
-                <CheckToggle
-                  checked={value}
-                  onChange={onChange}
-                  label="Monday"
+                <TimeIconedInput
+                  enabled={working_hours?.saturday?.enabled}
+                  control={control}
+                  errors={errors}
+                  Icon={WiTime12}
+                  name="working_hours.saturday.to"
                 />
-              );
-            }}
-          />
-
-          <TimeIconedInput
-            enabled={workingHours.monday.enabled}
-            control={control}
-            errors={errors}
-            Icon={WiTime8}
-            name="working_hours.monday.from"
-          />
-          <TimeIconedInput
-            enabled={workingHours.monday.enabled}
-            control={control}
-            errors={errors}
-            Icon={WiTime12}
-            name="working_hours.monday.to"
-          />
-          {/* Tuesday */}
-          <Controller
-            control={control}
-            name="working_hours.tuesday.enabled"
-            render={({ field: { value, onChange } }) => {
-              return (
-                <CheckToggle
-                  checked={value}
-                  onChange={onChange}
-                  label="Tuesday"
-                />
-              );
-            }}
-          />
-
-          <TimeIconedInput
-            enabled={workingHours.tuesday.enabled}
-            control={control}
-            errors={errors}
-            Icon={WiTime8}
-            name="working_hours.tuesday.from"
-          />
-          <TimeIconedInput
-            enabled={workingHours.tuesday.enabled}
-            control={control}
-            errors={errors}
-            Icon={WiTime12}
-            name="working_hours.tuesday.to"
-          />
+              </React.Fragment>
+            );
+          })}
         </div>
       </div>
     </Container>
@@ -171,18 +102,18 @@ const BranchWorkingHours = ({ control, errors, register }: IProps) => {
 export default BranchWorkingHours;
 
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  ({ theme: { breakpoints, mainColor, border, bodyColor } }) => `
   margin: 2rem 0;
   .title-container {
     padding: 1rem 0;
     color: ${mainColor};
   }
   .box {
-    background-color: #fff;
-    box-shadow: ${shadow};
+    background-color: ${bodyColor};
+    border: ${border};
     border-radius: 6px;
-   }
-.table {
+  }
+  .table {
     padding: 1rem;    
     display: grid;
     grid-template-columns: 1fr;

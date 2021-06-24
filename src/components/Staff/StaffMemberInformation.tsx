@@ -1,6 +1,6 @@
 import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
+import { AiOutlineMail } from "react-icons/ai";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import IconedInput from "../reusable/Inputs/IconedInput";

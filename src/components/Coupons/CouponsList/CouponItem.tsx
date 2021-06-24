@@ -1,44 +1,31 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useHistory } from "react-router";
 import { COUPON } from "../../../interfaces/coupons/coupons";
 import { useTranslation } from "react-i18next";
-import { useMutation, useQueryClient } from "react-query";
-import { deleteCoupon } from "../../../utils/queries";
+
 import Button from "../../reusable/Button";
 import Popover from "../../reusable/Popover";
-import ConfirmationModal from "../../reusable/ConfirmationModal";
-import useToast from "../../../hooks/useToast";
-import extractError from "../../../utils/extractError";
+
 interface IProps {
   coupon: COUPON;
   sortBy: any;
+  setModalStatus: Dispatch<
+    SetStateAction<{ id: number | null; open: boolean }>
+  >;
 }
 
-const CouponItem = ({ coupon, sortBy }: IProps) => {
+const CouponItem = ({ coupon, sortBy, setModalStatus }: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const queryClient = useQueryClient();
+
   const history = useHistory();
-  const { setToastStatus, handleCloseToast } = useToast();
+
   const {
     i18n: { language },
   } = useTranslation();
-  // Delete Mutation
-
-  const { mutateAsync, reset } = useMutation(deleteCoupon, {
-    onSuccess: () => {
-      queryClient.setQueryData<COUPON[] | undefined>(
-        ["coupons", sortBy],
-        (prev) => {
-          return prev?.filter((i) => i.id !== coupon.id);
-        }
-      );
-    },
-  });
 
   const renderStatus = (id: number) => {
     // if Enabled
@@ -58,26 +45,7 @@ const CouponItem = ({ coupon, sortBy }: IProps) => {
       );
     }
   };
-  const handleDeleteCoupon = async (id: number) => {
-    try {
-      await mutateAsync(id.toString());
-    } catch (error) {
-      const { responseError } = extractError(error);
-      if (responseError) {
-        console.log(responseError);
-      } else {
-        setToastStatus?.({
-          fn: () => {
-            reset();
-            handleCloseToast?.();
-          },
-          open: true,
-          text: "Something went wrong",
-          type: "error",
-        });
-      }
-    }
-  };
+
   return (
     <>
       <Container onClick={() => history.push(`/coupons/coupon/${coupon.id}`)}>
@@ -120,9 +88,8 @@ const CouponItem = ({ coupon, sortBy }: IProps) => {
                     iconSize={15}
                     onClick={(e) => {
                       e.stopPropagation();
-
+                      setModalStatus({ open: true, id: coupon.id });
                       setActionsMenuOpen(false);
-                      setModalOpen(true);
                     }}
                   />
                 </Popover>
@@ -131,25 +98,6 @@ const CouponItem = ({ coupon, sortBy }: IProps) => {
           </ButtonsContainer>
         </div>
       </Container>
-
-      <ConfirmationModal
-        isOpen={modalOpen}
-        closeFunction={() => setModalOpen(false)}
-        desc="Are you sure you want to delete this coupon ?"
-        successButtonText="Delete"
-        successFunction={() => handleDeleteCoupon(coupon.id)}
-        title="Delete Coupon"
-        styles={{
-          content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-          },
-        }}
-      />
     </>
   );
 };

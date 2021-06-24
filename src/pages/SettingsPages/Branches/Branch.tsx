@@ -3,7 +3,7 @@ import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
 import BranchInformation from "../../../components/SettingsPage/StoreBranches/Branches/BranchInformation";
 import BranchLocation from "../../../components/SettingsPage/StoreBranches/Branches/BranchLocation";
 import BranchWorkingHours from "../../../components/SettingsPage/StoreBranches/Branches/BranchWorkingHours";
-import { BRANCH } from "../../../interfaces/settings/branches-warehouses/branches-warehouses";
+import { BRANCH } from "../../../interfaces/settings/branches/branches";
 
 const Branch = () => {
   const {
@@ -36,11 +36,11 @@ const Branch = () => {
           control={control}
         />
         <button>Submit</button>
-        {/* <BranchWorkingHours
+        <BranchWorkingHours
           errors={errors}
           register={register}
           control={control}
-        /> */}
+        />
       </form>
     </div>
   );

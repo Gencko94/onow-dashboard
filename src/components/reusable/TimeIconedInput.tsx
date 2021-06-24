@@ -65,7 +65,7 @@ interface IProps {
   requiredMessage?: string;
   label?: string;
   control: Control<any>;
-  enabled: boolean;
+  enabled: boolean | undefined;
 }
 
 const TimeIconedInput = ({

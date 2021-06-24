@@ -11,7 +11,6 @@ import {
 import { BiCurrentLocation } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import useCurrentLocation from "../../hooks/useCurrentLocation";
@@ -19,6 +18,8 @@ import { Libraries } from "@react-google-maps/api/dist/utils/make-load-script-ur
 import { GoogleMapsResult, MapCoordinates } from "../../interfaces/maps/maps";
 import { useQuery } from "react-query";
 import { getGoogleMapsLocation } from "../../utils/queries";
+import Button from "./Button";
+import useToast from "../../hooks/useToast";
 
 interface IProps {
   mapCenter?: MapCoordinates;
@@ -38,7 +39,7 @@ const InlineMap = ({
     t,
   } = useTranslation(["map"]);
   const { data, isLoading } = useQuery(
-    ["google-maps-result           ", marker, language],
+    ["google-maps-result", marker, language],
     () =>
       getGoogleMapsLocation({
         coords: {
@@ -56,7 +57,7 @@ const InlineMap = ({
 
   const [outOfBorder, setOutOfBorder] = useState<boolean>(false);
   const { getCurrentLocation } = useCurrentLocation();
-
+  const { handleCloseToast, setToastStatus } = useToast();
   const { mode } = useContext(ThemeContext);
   const libraries = useMemo<Libraries>(() => ["places"], []);
   const history = useHistory();
@@ -209,69 +210,54 @@ const InlineMap = ({
       {outOfBorder && (
         <OutOfBorderContainer>{t("cannot-deliver-here")}</OutOfBorderContainer>
       )}
-      {/* <ConfirmationContainer>
-        <MapIcon
+      <MapIcon>
+        <Button
+          bg="primary"
+          withRipple
+          padding="0.25rem"
+          text="Get my location"
+          textSize="0.8rem"
+          Icon={BiCurrentLocation}
+          iconSize={20}
+          type="button"
           onClick={() =>
             getCurrentLocation(
               ({ lat, lng }) => {
                 panTo({ lat, lng });
               },
               (error) => {
-                console.log(error);
+                let message: string;
+                if (error.message === "User denied Geolocation") {
+                  message = "Please Allow the browser to get your location";
+                } else {
+                  message = "Something went wrong, Please try again later";
+                }
+                setToastStatus?.({
+                  open: true,
+                  fn: () => handleCloseToast?.(),
+                  text: message,
+                  type: "error",
+                });
               }
             )
           }
-        >
-          <BiCurrentLocation size={30} />
-        </MapIcon>
-        
-      </ConfirmationContainer> */}
+        />
+      </MapIcon>
     </GoogleMap>
   );
 };
 
 export default InlineMap;
 
-const ConfirmationContainer = styled.div`
+const MapIcon = styled.button`
   z-index: 50;
-  bottom: 30px;
   position: absolute;
   left: 0;
   right: 0;
-  max-width: 90%;
-  margin: 0 auto;
-  padding: 0.5em;
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const ConfirmButton = styled.button<{ outOfBorder: boolean }>(
-  ({
-    theme: { breakpoints, btnPrimaryLight, btnText, font, btnBorder },
-    outOfBorder,
-  }) => `
-  border-radius: 12px;
-  font-size: 1rem;
-  background-color: ${outOfBorder ? "gray" : btnPrimaryLight};
-  color: ${btnText};
-  padding: 0.5rem 0.5rem;
-  font-weight: ${font.bold};
-  border: 1px solid ${btnBorder};
-  margin: 0 1rem;
-  @media ${breakpoints.md}{
-  font-size:1.1rem;
-  }
-`
-);
-const MapIcon = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${(props) => props.theme.dangerRed};
   padding: 0.25rem;
-  border-radius: 50%;
-  color: ${(props) => props.theme.btnText};
 `;
 
 const OutOfBorderContainer = styled.div`

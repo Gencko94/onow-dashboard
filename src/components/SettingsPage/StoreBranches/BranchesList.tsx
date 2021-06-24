@@ -32,4 +32,5 @@ const Container = styled.div`
   overflow: hidden;
   border: ${(props) => props.theme.border};
   box-shadow: ${(props) => props.theme.shadow};
+  margin: 2rem 0;
 `;

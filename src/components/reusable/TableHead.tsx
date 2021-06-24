@@ -66,6 +66,7 @@ const Field = styled.button<{ active: boolean; sortable: boolean }>(
     active,
     sortable,
   }) => `
+  cursor:default;
   display:flex;
   align-items:center;
   justify-content:center;

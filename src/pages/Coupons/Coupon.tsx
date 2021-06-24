@@ -30,14 +30,17 @@ const Coupon = () => {
   const { data } = useQuery(["coupon", id], () => getCoupon(id), {
     suspense: true,
   });
-  const { mutateAsync: editMutation } = useMutation(editCoupon, {
-    onSuccess: (data) => {
-      queryClient.setQueryData(["coupon", id], (prev) => {
-        return data;
-      });
-      replace("/coupons");
-    },
-  });
+  const { mutateAsync: editMutation, isLoading: editLoading } = useMutation(
+    editCoupon,
+    {
+      onSuccess: (data) => {
+        queryClient.setQueryData(["coupon", id], (prev) => {
+          return data;
+        });
+        replace("/coupons");
+      },
+    }
+  );
   const {
     formState: { errors },
     register,
@@ -47,38 +50,67 @@ const Coupon = () => {
     defaultValues: { ...data },
   });
   const [modalOpen, setModalOpen] = useState(false);
+
   // Delete Mutation
 
-  const { mutateAsync: deleteMutation, reset: resetDeleteMutation } =
-    useMutation(deleteCoupon);
+  const {
+    mutateAsync: deleteMutation,
+    reset: resetDeleteMutation,
+    isLoading: deleteLoading,
+  } = useMutation(deleteCoupon);
   const onSubmit = async (data: COUPON) => {
     console.log({
       ...data,
     });
     try {
       await editMutation({
-        name_ar: data.name.ar,
-        name_en: data.name.en,
+        ...data,
+        name: data.name,
         code: data.code,
         special_products: data.special_products.map((i: any) => i.id),
         special_categories: data.special_categories,
-        coupon_coverage: data.couponCoverage,
+        couponCoverage: data.couponCoverage,
         max_discount: data.max_discount,
         min_total_order: data.min_total_order,
         id: data.id,
       });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleDeleteCoupon = async (id: number) => {
-    try {
-      await deleteMutation(id.toString());
+      setToastStatus?.({
+        open: true,
+        fn: handleCloseToast!,
+        text: "Coupon Changes saved Successfully",
+        type: "success",
+      });
+      replace("/coupons");
     } catch (error) {
       const { responseError } = extractError(error);
       if (responseError) {
         console.log(responseError);
       } else {
+        setToastStatus?.({
+          open: true,
+          fn: handleCloseToast!,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
+  };
+  const handleDeleteCoupon = async (id: number) => {
+    try {
+      await deleteMutation(id.toString());
+      setToastStatus?.({
+        open: true,
+        fn: handleCloseToast!,
+        text: "Coupon Deleted Successfully",
+        type: "success",
+      });
+      replace("/coupons");
+    } catch (error) {
+      const { responseError, unknownError } = extractError(error);
+      if (responseError) {
+        console.log(responseError);
+      } else if (unknownError) {
+        console.log("here");
         setToastStatus?.({
           fn: () => {
             resetDeleteMutation();
@@ -123,6 +155,8 @@ const Coupon = () => {
                     withRipple
                     margin="0 1rem"
                     textSize="0.9rem"
+                    isLoading={editLoading}
+                    disabled={editLoading}
                   />
                   <Button
                     withTransition
@@ -150,6 +184,7 @@ const Coupon = () => {
             </form>
 
             <ConfirmationModal
+              isLoading={deleteLoading}
               isOpen={modalOpen}
               closeFunction={() => setModalOpen(false)}
               desc="Are you sure you want to delete this coupon ?"

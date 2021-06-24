@@ -8,6 +8,7 @@ import ProductOrderingAndBranchAvailability from "../../components/Product/Produ
 import ProductPricingAndOptions from "../../components/Product/ProductPricingAndOptions/ProductPricingAndOptions";
 import ProductTabs from "../../components/Product/ProductTabs/ProductTabs";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
+import HeaderContainer from "../../components/reusable/HeaderContainer";
 import { getProduct } from "../../utils/queries";
 
 const Product = () => {
@@ -18,11 +19,13 @@ const Product = () => {
   const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3>(0);
   return (
     <div>
-      <Breadcrumbs
-        childLabel="Product"
-        parentLabel="Products"
-        parentTarget="/products"
-      />
+      <HeaderContainer>
+        <Breadcrumbs
+          childLabel="Product"
+          parentLabel="Products"
+          parentTarget="/products"
+        />
+      </HeaderContainer>
 
       <ProductTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
@@ -33,7 +36,7 @@ const Product = () => {
           <ProductOrderingAndBranchAvailability data={data!} />
         )}
 
-        {activeTab === 3 && <ProductPromotions />}
+        {/* {activeTab === 3 && <ProductPromotions />} */}
       </Wrapper>
     </div>
   );

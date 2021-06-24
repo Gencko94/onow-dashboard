@@ -59,6 +59,7 @@ export default EmptyTable;
 const Container = styled.div<{ height: string }>(
   ({ theme: { breakpoints, font }, height }) => `
     display:flex;
+    background-color:#fff;
     flex-direction:column;
     align-items:center;
     justify-content:center;

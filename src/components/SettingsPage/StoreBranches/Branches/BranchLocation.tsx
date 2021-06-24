@@ -1,14 +1,13 @@
 import { Control } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { IoMdCash } from "react-icons/io";
-import { MdSubtitles } from "react-icons/md";
-
 import styled from "styled-components";
 
 import IconedInput from "../../../reusable/Inputs/IconedInput";
-import IconedNumberInput from "../../../reusable/IconedNumberInput";
+
 import InlineMap from "../../../reusable/InlineMap";
+import Textarea from "../../../reusable/Textarea";
+import { IoLocate } from "react-icons/io5";
 
 interface IProps {
   register: any;
@@ -44,33 +43,38 @@ const BranchLocation = ({ control, errors, register, setValue }: IProps) => {
       <div className="box">
         <div className="inputs">
           <IconedInput
-            Icon={MdSubtitles}
-            errors={errors?.address?.street}
+            Icon={IoLocate}
+            errors={errors?.address?.coords?.lat}
             register={register}
             required
             requiredMessage="Required"
-            label="Street"
-            name="address.street"
+            label="Latitude"
+            name="address.coords.lat"
           />
           <IconedInput
-            Icon={MdSubtitles}
-            errors={errors?.name?.ar}
+            Icon={IoLocate}
+            errors={errors?.address?.coords?.lng}
             register={register}
             required
             requiredMessage="Required"
-            label="Branch Name Arabic"
-            name="name.ar"
+            label="Longitude"
+            name="address.coords.lng"
           />
-
-          <IconedNumberInput
-            Icon={IoMdCash}
-            errors={errors?.cod_cost}
+          <Textarea
+            errors={errors?.address?.address?.en}
             register={register}
             required
             requiredMessage="Required"
-            label="Cash on Delivery cost"
-            name="cod_cost"
-            min={0}
+            label="Address in English"
+            name="address.address.en"
+          />
+          <Textarea
+            errors={errors?.address?.address?.ar}
+            register={register}
+            required
+            requiredMessage="Required"
+            label="Address in Arabic"
+            name="address.address.ar"
           />
         </div>
 
@@ -100,15 +104,15 @@ const BranchLocation = ({ control, errors, register, setValue }: IProps) => {
 export default BranchLocation;
 
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  ({ theme: { breakpoints, mainColor, border, bodyColor } }) => `
   margin: 2rem 0;
   .title-container {
     padding: 1rem 0;
     color: ${mainColor};
   }
   .box {
-    background-color: #fff;
-    box-shadow: ${shadow};
+    background-color: ${bodyColor};
+    border: ${border};
     border-radius: 6px;
     padding: 1rem;
 }

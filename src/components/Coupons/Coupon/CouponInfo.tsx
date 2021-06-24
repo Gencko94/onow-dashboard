@@ -169,7 +169,7 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           register={register}
           required
           requiredMessage="Required"
-          label="Uses Per User"
+          label="Uses Per Customer"
           name="uses_per_user"
           desc="Leave Blank for unlimited"
           min={0}
@@ -179,8 +179,6 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           Icon={FiUsers}
           errors={errors?.total_uses}
           register={register}
-          required
-          requiredMessage="Required"
           label="Total Uses"
           name="total_uses"
           desc="Leave Blank for unlimited"

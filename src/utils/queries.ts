@@ -40,7 +40,7 @@ export const userLogin = async (data: LOGIN_FORM): Promise<LOGIN_RESPONSE> => {
   const res = await axios.post(`${uri}/login`, data);
   return res.data;
 };
-export const updateUserAccount = async (user: USER) => {
+export const updateUserAccount = async (user: USER): Promise<USER> => {
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {
@@ -58,7 +58,7 @@ export const updateUserAccount = async (user: USER) => {
     },
     config
   );
-  return res.data.results;
+  return res.data.result.userInfo;
 };
 export const changeUserPassword = async ({
   userId,
@@ -215,16 +215,23 @@ export const getCoupon = async (id: string): Promise<COUPON> => {
   const res = await axios.get(`${uri}/coupons/${id}`, config);
   return res.data.results;
 };
-export const getCoupons = async (sortBy: any): Promise<COUPON[]> => {
+export const getCoupons = async (sortBy: any, pageParam: number) => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
     },
-    // params: sortBy,
+    params: {
+      limit: 20,
+      page: pageParam,
+    },
   };
   const res = await axios.get(`${uri}/coupons`, config);
-  return res.data.results;
+  return {
+    data: res.data.results.data,
+    currentPage: res.data.results.pagination.current,
+    lastPage: res.data.results.pagination.last,
+  };
 };
 export const createCoupon = async (coupon: NEW_COUPON): Promise<COUPON[]> => {
   const t = localStorage.getItem("dshtid");
@@ -236,7 +243,7 @@ export const createCoupon = async (coupon: NEW_COUPON): Promise<COUPON[]> => {
   const res = await axios.post(`${uri}/coupons`, coupon, config);
   return res.data.results;
 };
-export const editCoupon = async (coupon: any): Promise<COUPON[]> => {
+export const editCoupon = async (coupon: COUPON): Promise<COUPON[]> => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
     headers: {

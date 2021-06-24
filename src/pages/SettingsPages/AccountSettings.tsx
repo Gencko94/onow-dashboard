@@ -12,7 +12,7 @@ import AccountPassword from "../../components/SettingsPage/MainSettingsPage/Acco
 import Flex from "../../components/StyledComponents/Flex";
 import Button from "../../components/reusable/Button";
 import { AiOutlineMail } from "react-icons/ai";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { updateUserAccount } from "../../utils/queries";
 
 import extractError from "../../utils/extractError";
@@ -20,6 +20,7 @@ import useToast from "../../hooks/useToast";
 
 const AccountSettings = () => {
   const { user } = useContext(AuthProvider);
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -28,7 +29,22 @@ const AccountSettings = () => {
     setError,
   } = useForm<USER>({ defaultValues: user });
   const { handleCloseToast, setToastStatus } = useToast();
-  const { mutateAsync: updateUser, reset } = useMutation(updateUserAccount);
+  const {
+    mutateAsync: updateUser,
+    reset,
+    isLoading,
+  } = useMutation(updateUserAccount, {
+    onSuccess: (data) => {
+      queryClient.setQueryData<USER | undefined>("auth", (prev) => {
+        if (prev) {
+          return {
+            ...prev,
+            ...data,
+          };
+        }
+      });
+    },
+  });
   const onSubmit: SubmitHandler<USER> = async (data) => {
     console.log(data);
     try {
@@ -114,6 +130,8 @@ const AccountSettings = () => {
         </div>
         <Flex margin="1rem" justify="center">
           <Button
+            isLoading={isLoading}
+            disabled={isLoading}
             type="submit"
             withRipple
             withTransition

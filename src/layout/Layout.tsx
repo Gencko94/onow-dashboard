@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
 import { CSSTransition } from "react-transition-group";
 import styled, { css } from "styled-components";
@@ -11,12 +11,19 @@ import Loading from "../utils/Loading";
 
 const Layout: React.FC = ({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState(true);
-  const { toastStatus } = useToast();
+  const { toastStatus, handleCloseToast } = useToast();
   const handleToggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
   console.log(toastStatus);
   const { isDesktop } = useResponsive();
+  useEffect(() => {
+    if (toastStatus?.open) {
+      setTimeout(() => {
+        handleCloseToast?.();
+      }, 3000);
+    }
+  }, [toastStatus?.open]);
   return (
     <ContentContainer>
       <CSSTransition

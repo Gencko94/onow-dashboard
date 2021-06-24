@@ -1,26 +1,15 @@
-import {
-  Control,
-  Controller,
-  SubmitErrorHandler,
-  SubmitHandler,
-} from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { FiCalendar, FiUser, FiUsers } from "react-icons/fi";
 import { IoMdCash } from "react-icons/io";
-import { MdSubtitles } from "react-icons/md";
+import { MdSmartphone, MdSubtitles } from "react-icons/md";
 
 import styled from "styled-components";
 import CheckToggle from "../../../reusable/CheckToggle";
-import DateIconedInput from "../../../reusable/Inputs/DateIconedInput";
 import IconedInput from "../../../reusable/Inputs/IconedInput";
 import IconedNumberInput from "../../../reusable/IconedNumberInput";
-import Select from "../../../reusable/Select";
-import { useForm } from "react-hook-form";
-import { useContext } from "react";
-import { NewBranchContext } from "../../../../pages/SettingsPages/Branches/CreateNewBranch";
-import { BRANCH_ADDRESS } from "../../../../interfaces/settings/branches-warehouses/branches-warehouses";
-import { firstBranchTabInfo } from "../CreateNewBranch/NewBranchInfoAndLocation";
+
+import { AiOutlinePhone, AiOutlineWhatsApp } from "react-icons/ai";
 
 interface IProps {
   register: any;
@@ -49,23 +38,6 @@ const BranchInformation = ({ control, errors, register }: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
-  const { updateData, setActiveTab, formValues } = useContext(NewBranchContext);
-  const methods = useForm<firstBranchTabInfo>({
-    defaultValues: {
-      address: formValues?.address,
-      contact_info: formValues?.contact_info,
-      name: formValues?.name,
-    },
-  });
-  const onSubmit: SubmitHandler<firstBranchTabInfo> = (data) => {
-    console.log(data);
-
-    setActiveTab?.(1);
-    updateData?.(methods.watch());
-  };
-  const onError: SubmitErrorHandler<firstBranchTabInfo> = (errors) => {
-    console.log(errors);
-  };
 
   return (
     <Container>
@@ -101,6 +73,27 @@ const BranchInformation = ({ control, errors, register }: IProps) => {
           label="Cash on Delivery cost"
           name="cod_cost"
           min={0}
+        />
+        <IconedInput
+          Icon={MdSmartphone}
+          errors={errors?.contact_info?.mobile}
+          register={register}
+          label="Mobile"
+          name="contact_info.mobile"
+        />
+        <IconedInput
+          Icon={AiOutlinePhone}
+          errors={errors?.contact_info?.landline}
+          register={register}
+          label="Landline"
+          name="contact_info.landline"
+        />
+        <IconedInput
+          Icon={AiOutlineWhatsApp}
+          errors={errors?.contact_info?.whatsapp}
+          register={register}
+          label="Whatsapp"
+          name="contact_info.whatsapp"
         />
         <Controller
           control={control}
@@ -152,15 +145,15 @@ const BranchInformation = ({ control, errors, register }: IProps) => {
 export default BranchInformation;
 
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  ({ theme: { breakpoints, mainColor, border, bodyColor } }) => `
   margin: 2rem 0;
   .title-container {
     padding: 1rem 0;
     color: ${mainColor};
   }
   .box {
-    background-color: #fff;
-    box-shadow: ${shadow};
+    background-color: ${bodyColor};
+    border: ${border};
     border-radius: 6px;
     padding: 1rem;
     display: grid;

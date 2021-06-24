@@ -21,12 +21,10 @@ const ApplicationContext: React.FC = ({ children }) => {
     type: "success",
   });
   const handleCloseToast = () => {
-    setToastStatus({
-      fn: () => {},
+    setToastStatus((prev) => ({
+      ...prev,
       open: false,
-      text: "",
-      type: "success",
-    });
+    }));
   };
   return (
     <ApplicationProvider.Provider

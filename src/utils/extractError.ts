@@ -5,6 +5,7 @@ const extractError = (error: any) => {
   if (error.response) {
     responseError = JSON.parse(error.response.data.error);
   } else {
+    console.log("here");
     unknownError = error;
   }
   return {

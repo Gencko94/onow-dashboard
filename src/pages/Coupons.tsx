@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { QueryErrorResetBoundary } from "react-query";
-import styled from "styled-components";
 import CouponsList from "../components/Coupons/CouponsList/CouponsList";
 import CouponsPanel from "../components/Coupons/CouponsPanel/CouponsPanel";
 import Loading from "../utils/Loading";
