@@ -1,8 +1,17 @@
+import { ImSpinner2, ImSpinner8 } from "react-icons/im";
 import { IconType } from "react-icons/lib";
 import styled, { css } from "styled-components";
 import Ripple from "./Ripple";
 
 interface IProps {
+  /**
+   * isLoading boolean , Renders a loading state.
+   */
+  isLoading?: boolean;
+  /**
+   * Button Disabled
+   */
+  disabled?: boolean;
   /**
    * ```onClick``` handler
    */
@@ -87,6 +96,8 @@ const Button = ({
   hoverColor,
   shadow,
   border,
+  isLoading,
+  disabled,
 }: IProps) => {
   return (
     <ButtonWrapper
@@ -102,13 +113,19 @@ const Button = ({
       hoverColor={hoverColor}
       shadow={shadow}
       border={border}
+      disabled={disabled}
     >
-      {Icon && (
+      {!isLoading && Icon && (
         <span className="icon">
           <Icon size={iconSize} />
         </span>
       )}
-      <p className="text">{text}</p>
+      {isLoading && (
+        <span className="loading">
+          <ImSpinner2 className="loading" />
+        </span>
+      )}
+      {!isLoading && <p className="text">{text}</p>}
       {withRipple && <Ripple />}
     </ButtonWrapper>
   );
@@ -146,6 +163,7 @@ export const ButtonWrapper = styled.button<{
     hoverColor,
     border,
     shadow: boxShadow,
+    disabled,
   }) => `
       background-color: ${
         bg === "primary"
@@ -172,7 +190,15 @@ export const ButtonWrapper = styled.button<{
       color: ${color};
       border:${border && themeBorder};
       transition: all 100ms ease;
-     
+     .loading {
+      animation: spinner 2s infinite linear forwards;
+     };
+    @keyframes spinner {
+      
+      100% {
+        transform : rotate(360deg);
+      }
+    }
      
       .icon {
           display: flex;
@@ -194,6 +220,13 @@ export const ButtonWrapper = styled.button<{
             &:hover {
               transform: translateY(-2px);
             }
+          `
+        }
+        ${
+          disabled &&
+          css`
+            background-color: #a7a2a2;
+            color: #fff;
           `
         }
       

@@ -1,16 +1,18 @@
-import { Dispatch, SetStateAction, useMemo } from "react";
+import React, { Dispatch, SetStateAction, useMemo } from "react";
+import { InfiniteData } from "react-query";
 import styled from "styled-components";
-import { ORDER } from "../../../interfaces/orders/orders";
+import { GET_ORDERS_RESPONSE, ORDER } from "../../../interfaces/orders/orders";
 import { ORDER_SORT } from "../../../pages/Orders";
+import Button from "../../reusable/Button";
 import ExportAs from "../../reusable/ExportAs";
 import TableHead from "../../reusable/TableHead";
 import OrderItem from "./OrderItem";
 interface IProps {
-  orders: ORDER[];
+  data: InfiniteData<GET_ORDERS_RESPONSE>;
   sortBy: ORDER_SORT;
   setSortBy: Dispatch<SetStateAction<ORDER_SORT>>;
 }
-const OrdersList = ({ orders, setSortBy, sortBy }: IProps) => {
+const OrdersList = ({ data, setSortBy, sortBy }: IProps) => {
   const cols = useMemo(
     () => [
       { title: "id", sortable: false },
@@ -115,8 +117,12 @@ const OrdersList = ({ orders, setSortBy, sortBy }: IProps) => {
         />
 
         <div>
-          {orders.map((order) => (
-            <OrderItem order={order} key={order.order_id} />
+          {data.pages.map((group, i) => (
+            <React.Fragment key={i}>
+              {group.orders.map((order) => (
+                <OrderItem order={order} key={order.order_id} />
+              ))}
+            </React.Fragment>
           ))}
         </div>
       </TableContainer>

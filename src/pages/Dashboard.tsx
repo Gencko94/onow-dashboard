@@ -11,7 +11,7 @@ const Dashboard = () => {
 
       <DashboardStatPanel />
       <RealTimeOrders />
-      <DashboardBestSeller />
+      {/* <DashboardBestSeller /> */}
     </Container>
   );
 };

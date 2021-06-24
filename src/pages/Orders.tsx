@@ -1,10 +1,20 @@
 import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { QueryErrorResetBoundary, useQuery } from "react-query";
+import {
+  InfiniteData,
+  QueryErrorResetBoundary,
+  useInfiniteQuery,
+  useQuery,
+} from "react-query";
 import OrdersList from "../components/Orders/OrdersList/OrdersList";
 import OrdersPanel from "../components/Orders/OrdersPanel/OrdersPanel";
 import OrdersThumbnails from "../components/Orders/OrdersThumbnails/OrdersThumbnails";
-import { ORDERS_FILTERS } from "../interfaces/orders/orders";
+import Button from "../components/reusable/Button";
+import Flex from "../components/StyledComponents/Flex";
+import {
+  GET_ORDERS_RESPONSE,
+  ORDERS_FILTERS,
+} from "../interfaces/orders/orders";
 import Loading from "../utils/Loading";
 import { getOrders } from "../utils/queries";
 
@@ -37,13 +47,23 @@ const Orders = ({ storeId }: { storeId: number }) => {
     by: "orderDate",
     order: "desc",
   });
-  const { data } = useQuery(
-    ["store-orders", storeId, filters],
-    () => getOrders({ storeId, filters }),
-    {
-      suspense: true,
-    }
-  );
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery<GET_ORDERS_RESPONSE>(
+      ["store-orders", storeId, filters],
+      ({ pageParam = 1 }) => getOrders({ storeId, filters, pageParam }),
+      {
+        suspense: true,
+        keepPreviousData: true,
+        getNextPageParam: (lastPage) => {
+          if (lastPage.currentPage < lastPage.lastPage) {
+            return lastPage.currentPage + 1;
+          } else {
+            return undefined;
+          }
+        },
+      }
+    );
+  console.log(data);
   return (
     <QueryErrorResetBoundary>
       {({ reset }) => (
@@ -60,14 +80,26 @@ const Orders = ({ storeId }: { storeId: number }) => {
           <Suspense fallback={<Loading />}>
             <OrdersPanel filters={filters} setFilters={setFilters} />
             <hr />
-            <OrdersThumbnails stats={data!.stats} />
+            <OrdersThumbnails stats={data!.pages[0].stats} />
             <hr />
 
-            <OrdersList
-              orders={data!.orders}
-              sortBy={sortBy}
-              setSortBy={setSortBy}
-            />
+            <OrdersList data={data!} sortBy={sortBy} setSortBy={setSortBy} />
+            {hasNextPage && (
+              <Flex margin="2rem 0" justify="center">
+                <Button
+                  isLoading={isFetchingNextPage}
+                  disabled={isFetchingNextPage}
+                  withRipple
+                  text="Load More"
+                  bg="green"
+                  padding="0.25rem 0.5rem"
+                  textSize="0.8rem"
+                  onClick={() => {
+                    fetchNextPage();
+                  }}
+                />
+              </Flex>
+            )}
           </Suspense>
         </ErrorBoundary>
       )}

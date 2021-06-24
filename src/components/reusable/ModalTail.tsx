@@ -18,9 +18,18 @@ interface IProps {
    * Success Button Text.
    */
   btnText: string;
+  /**
+   * Success button loading state
+   */
+  isLoading?: boolean;
 }
 
-const ModalTail = ({ btnText, closeFunction, successCb }: IProps) => {
+const ModalTail = ({
+  btnText,
+  closeFunction,
+  successCb,
+  isLoading,
+}: IProps) => {
   return (
     <Flex padding="0.5rem 0.5rem" justify="flex-end">
       <Button
@@ -33,10 +42,11 @@ const ModalTail = ({ btnText, closeFunction, successCb }: IProps) => {
         margin="0 0.5rem"
         onClick={() => {
           successCb();
-          closeFunction();
         }}
         textSize="0.8rem"
         iconSize={20}
+        isLoading={isLoading}
+        disabled={isLoading}
       />
       <Button
         text="Cancel"

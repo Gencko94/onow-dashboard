@@ -12,6 +12,7 @@ import { COUPON, NEW_COUPON } from "../interfaces/coupons/coupons";
 import { NEW_PRODUCT } from "../interfaces/products/create-new-product";
 import { PRODUCT } from "../interfaces/products/products";
 import { NEW_STAFF_MEMBER, STAFF_MEMBER } from "../interfaces/staff/staff";
+import { InfiniteData } from "react-query";
 
 const uri = "https://new-version.o-now.net/customer-api";
 
@@ -156,6 +157,7 @@ export const getGoogleMapsLocation = async ({
   const res = await axios.get(
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&language=${language}`
   );
+  console.log(res.data);
   return res.data;
 };
 
@@ -163,21 +165,31 @@ export const getGoogleMapsLocation = async ({
 type GET_ORDERS_REQUEST = {
   storeId: number;
   filters: ORDERS_FILTERS;
+  pageParam: number;
 };
 export const getOrders = async ({
   storeId,
   filters,
-}: GET_ORDERS_REQUEST): Promise<GET_ORDERS_RESPONSE> => {
+  pageParam,
+}: GET_ORDERS_REQUEST) => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
       StoreId: storeId,
     },
-    // params: filters,
+    params: {
+      page: pageParam,
+      limit: 1,
+    },
   };
   const res = await axios.get(`${uri}/get-orders`, config);
-  return res.data.results;
+  return {
+    orders: res.data.results.orders.data,
+    lastPage: res.data.results.orders.pagination.last,
+    currentPage: res.data.results.orders.pagination.current,
+    stats: res.data.results.stats,
+  };
 };
 
 export const getOrder = async (id: string): Promise<ORDER> => {

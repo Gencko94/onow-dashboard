@@ -2,6 +2,8 @@ export type STATUS = "";
 export type GET_ORDERS_RESPONSE = {
   orders: ORDER[];
   stats: STORE_ORDERS_STAT[];
+  lastPage: number;
+  currentPage: number;
 };
 export type ORDER_CUSTOMER = {
   id: number;

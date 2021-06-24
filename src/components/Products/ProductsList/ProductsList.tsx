@@ -36,25 +36,35 @@ const ProductsList = () => {
     order: "desc",
   });
 
-  const { data, status, isFetching, fetchNextPage, hasNextPage } =
-    useInfiniteQuery(
-      ["products", sortBy],
-      ({ pageParam = 1 }) => getProducts(sortBy, pageParam),
-      {
-        keepPreviousData: true,
+  const {
+    data,
+    status,
+    isFetching,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    ["products", sortBy],
+    ({ pageParam = 1 }) => getProducts(sortBy, pageParam),
+    {
+      keepPreviousData: true,
 
-        getNextPageParam: (lastPage) => {
-          if (lastPage.currentPage < lastPage.lastPage) {
-            return lastPage.currentPage + 1;
-          } else {
-            return undefined;
-          }
-        },
-      }
-    );
+      getNextPageParam: (lastPage) => {
+        if (lastPage.currentPage < lastPage.lastPage) {
+          return lastPage.currentPage + 1;
+        } else {
+          return undefined;
+        }
+      },
+    }
+  );
 
   // Delete Mutation
-  const { mutateAsync, reset } = useMutation(deleteProduct, {
+  const {
+    mutateAsync,
+    reset,
+    isLoading: deleteLoading,
+  } = useMutation(deleteProduct, {
     onSuccess: (data, productId) => {
       queryClient.setQueryData<PRODUCT[] | undefined>("products", (prev) => {
         return prev?.filter((i) => i.id !== parseInt(productId));
@@ -65,7 +75,17 @@ const ProductsList = () => {
   const handleDeleteProduct = async (id: number) => {
     try {
       await mutateAsync(id.toString());
+      setModalStatus({ id: null, open: false });
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Product Deleted Successfully",
+        type: "success",
+      });
     } catch (error) {
+      setModalStatus({ id: null, open: false });
       const { responseError } = extractError(error);
       if (responseError) {
       } else {
@@ -76,7 +96,7 @@ const ProductsList = () => {
           },
           open: true,
           text: "Something went wrong",
-          type: "success",
+          type: "error",
         });
       }
     }
@@ -199,6 +219,7 @@ const ProductsList = () => {
           successButtonText="Delete"
           successFunction={() => handleDeleteProduct(modalStatus.id!)}
           title="Delete Product"
+          isLoading={deleteLoading}
           styles={{
             content: {
               top: "50%",
@@ -214,6 +235,8 @@ const ProductsList = () => {
       {hasNextPage && (
         <Flex margin="2rem 0" justify="center">
           <Button
+            isLoading={isFetchingNextPage}
+            disabled={isFetchingNextPage}
             withRipple
             text="Load More"
             bg="green"

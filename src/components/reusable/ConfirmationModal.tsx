@@ -41,6 +41,10 @@ interface ModalProps {
    * Custom styles for the modal
    */
   styles?: ReactModal.Styles;
+  /**
+   * Success button loading state
+   */
+  isLoading?: boolean;
 }
 const ConfirmationModal = ({
   closeFunction,
@@ -50,6 +54,7 @@ const ConfirmationModal = ({
   successFunction,
   successButtonText,
   desc,
+  isLoading,
 }: ModalProps) => {
   return (
     <ReactModal
@@ -68,6 +73,7 @@ const ConfirmationModal = ({
           btnText={successButtonText}
           successCb={successFunction}
           closeFunction={closeFunction}
+          isLoading={isLoading}
         />
       </Body>
     </ReactModal>
