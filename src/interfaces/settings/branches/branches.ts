@@ -6,8 +6,6 @@ export type BRANCH_ADDRESS = {
   address: {
     [key: string]: string;
   };
-  street: string;
-  avenue: string;
 };
 export type WORKING_HOURS = {
   saturday: {
@@ -52,10 +50,11 @@ export interface BRANCH {
     ar: string;
     en: string;
   };
-  country: string;
-  city: string;
+
   cod_enabled: boolean;
-  cod_cost: number;
+  cod_cost: string;
+  pickup_enabled: boolean;
+  delivery_enabled: boolean;
   address: BRANCH_ADDRESS;
   working_hours: WORKING_HOURS;
   contact_info: {
@@ -83,5 +82,3 @@ export interface NEW_BRANCH {
     whatsapp: string;
   };
 }
-export interface WAREHOUSE {}
-export interface NEW_WAREHOUSE {}

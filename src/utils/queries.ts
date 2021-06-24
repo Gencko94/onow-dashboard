@@ -375,7 +375,6 @@ export const createStaffMember = async (staff: NEW_STAFF_MEMBER) => {
 };
 export const editStaffMember = async (staff: STAFF_MEMBER) => {
   const t = localStorage.getItem("dshtid");
-  console.log(staff, "Edited Staff");
 
   const config: AxiosRequestConfig = {
     headers: {
@@ -402,3 +401,37 @@ export const deleteStaffMember = async (
   return res.data.results;
 };
 // End of Staff members
+
+//Categories
+
+export const getCategories = async (pageParam: number) => {
+  const t = localStorage.getItem("dshtid");
+
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+    params: {
+      limit: 20,
+      page: pageParam,
+    },
+  };
+  const res = await axios.get(`${uri}/product-categories`, config);
+  return {
+    data: res.data.results.data,
+    currentPage: res.data.results.pagination.current,
+    lastPage: res.data.results.pagination.last,
+  };
+};
+export const deleteCategory = async (
+  id: string
+): Promise<{ results: "Deleted" }> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.delete(`${uri}/product-categories/${id}`, config);
+  return res.data.results;
+};

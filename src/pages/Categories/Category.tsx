@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import CategoryInfo from "../../components/Categories/Category/CategoryInfo";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
+import HeaderContainer from "../../components/reusable/HeaderContainer";
 import { CATEGORY } from "../../interfaces/categories/categories";
 
 const Category = () => {
@@ -12,11 +13,13 @@ const Category = () => {
   } = useForm<CATEGORY>();
   return (
     <div>
-      <Breadcrumbs
-        childLabel="Category"
-        parentLabel="Categories"
-        parentTarget="/categories"
-      />
+      <HeaderContainer>
+        <Breadcrumbs
+          childLabel="Category"
+          parentLabel="Categories"
+          parentTarget="/categories"
+        />
+      </HeaderContainer>
       <CategoryInfo
         setValue={setValue}
         control={control}

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import ClickAwayListener from "react-click-away-listener";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -9,8 +9,22 @@ import { useHistory } from "react-router";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import SubCategoriesList from "./SubCategoriesList";
 import Checkbox from "../../reusable/Inputs/Checkbox";
+import { CATEGORY } from "../../../interfaces/categories/categories";
+interface IProps {
+  category: CATEGORY;
 
-const CategoryItem = () => {
+  setModalStatus: Dispatch<
+    SetStateAction<{ id: number | null; open: boolean }>
+  >;
+  selectedRows: number[];
+  handleToggleRows: (rowId: number) => void;
+}
+const CategoryItem = ({
+  handleToggleRows,
+  category,
+  selectedRows,
+  setModalStatus,
+}: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const history = useHistory();
