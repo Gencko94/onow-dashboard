@@ -1,15 +1,21 @@
 import styled from "styled-components";
 
 import SubCategoryItem from "./SubCategoryItem";
-
-const SubCategoriesList = () => {
+interface IProps {
+  selectedRows: number[];
+  handleToggleRows: (rowId: number) => void;
+}
+const SubCategoriesList = ({ handleToggleRows, selectedRows }: IProps) => {
   return (
     <Container>
       <h6 className="title">Sub Categories</h6>
 
-      <div className="table">
+      <div className="sub-table">
         {[0, 1, 2, 3].map((i) => (
-          <SubCategoryItem />
+          <SubCategoryItem
+            handleToggleRows={handleToggleRows}
+            selectedRows={selectedRows}
+          />
         ))}
       </div>
     </Container>
@@ -25,9 +31,11 @@ const Container = styled.div`
   background-color: #dbdbdb;
   /* padding-bottom: 2rem; */
   .title {
-    padding: 1rem;
+    padding: 0.75rem;
   }
-  .table {
-    padding: 0 1rem 1rem 1rem;
+  .sub-table {
+    border-radius: 6px;
+    overflow: hidden;
+    padding: 0 0.75rem 0.75rem 0.75rem;
   }
 `;

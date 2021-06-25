@@ -24,7 +24,10 @@ const SideNav = () => {
   return (
     <Container>
       <SideNavItem>
-        <SideNavLink isActive={pathname.includes("/dashboard")} to="/dashboard">
+        <SideNavLink
+          isCurrent={pathname.includes("/dashboard")}
+          to="/dashboard"
+        >
           <span className="icon">
             <FcHome size={20} />
           </span>
@@ -32,7 +35,7 @@ const SideNav = () => {
         </SideNavLink>
       </SideNavItem>
       <SideNavItem>
-        <SideNavLink isActive={pathname.includes("/products")} to="/products">
+        <SideNavLink isCurrent={pathname.includes("/products")} to="/products">
           <span className="icon">
             <FcViewDetails size={20} />
           </span>
@@ -41,7 +44,7 @@ const SideNav = () => {
       </SideNavItem>
       <SideNavItem>
         <SideNavLink
-          isActive={pathname.includes("/categories")}
+          isCurrent={pathname.includes("/categories")}
           to="/categories"
         >
           <span className="icon">
@@ -51,7 +54,7 @@ const SideNav = () => {
         </SideNavLink>
       </SideNavItem>
       {/* <SideNavItem>
-        <SideNavLink isActive={pathname.includes("/brands")} to="/brands">
+        <SideNavLink isCurrent={pathname.includes("/brands")} to="/brands">
           <span className="icon">
             <FcShop size={20} />
           </span>
@@ -59,7 +62,7 @@ const SideNav = () => {
         </SideNavLink>
       </SideNavItem> */}
       <SideNavItem>
-        <SideNavLink isActive={pathname.includes("/orders")} to="/orders">
+        <SideNavLink isCurrent={pathname.includes("/orders")} to="/orders">
           <span className="icon">
             <FcRules size={20} />
           </span>
@@ -74,7 +77,7 @@ const SideNav = () => {
       }) && (
         <SideNavItem>
           <SideNavLink
-            isActive={pathname.includes("/customers")}
+            isCurrent={pathname.includes("/customers")}
             to="/customers"
           >
             <span className="icon">
@@ -85,7 +88,7 @@ const SideNav = () => {
         </SideNavItem>
       )}
       <SideNavItem>
-        <SideNavLink isActive={pathname.includes("/settings")} to="/settings">
+        <SideNavLink isCurrent={pathname.includes("/settings")} to="/settings">
           <span className="icon">
             <FcSupport size={20} />
           </span>
@@ -94,7 +97,7 @@ const SideNav = () => {
       </SideNavItem>
 
       <SideNavItem>
-        <SideNavLink isActive={pathname.includes("/coupons")} to="/coupons">
+        <SideNavLink isCurrent={pathname.includes("/coupons")} to="/coupons">
           <span className="icon">
             <FcAdvertising size={20} />
           </span>
@@ -102,7 +105,7 @@ const SideNav = () => {
         </SideNavLink>
       </SideNavItem>
       <SideNavItem>
-        <SideNavLink isActive={pathname.includes("/reports")} to="/reports">
+        <SideNavLink isCurrent={pathname.includes("/reports")} to="/reports">
           <span className="icon">
             <FcBullish size={20} />
           </span>
@@ -111,7 +114,7 @@ const SideNav = () => {
       </SideNavItem>
       <SideNavItem>
         <SideNavLink
-          isActive={pathname === "/website-layout"}
+          isCurrent={pathname === "/website-layout"}
           to="/website-layout"
         >
           <span className="icon">
@@ -142,7 +145,7 @@ const SideNavItem = styled.li`
   justify-content: space-between;
   display: block;
 `;
-const SideNavLink = styled(Link)<{ isActive: boolean }>`
+const SideNavLink = styled(Link)<{ isCurrent: boolean }>`
   padding: 0.75rem 1rem;
   border-radius: 10px;
   display: flex;
@@ -162,7 +165,7 @@ const SideNavLink = styled(Link)<{ isActive: boolean }>`
     font-weight: ${(props) => props.theme.font.regular};
   }
   ${(props) =>
-    props.isActive &&
+    props.isCurrent &&
     css`
       font-weight: ${(props) => props.theme.font.semibold};
       background-color: ${(props) => props.theme.mainColor};

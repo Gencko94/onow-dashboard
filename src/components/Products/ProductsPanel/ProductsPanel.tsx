@@ -7,7 +7,7 @@ import { BiPlus } from "react-icons/bi";
 const ProductsPanel = () => {
   const history = useHistory();
   return (
-    <Flex justify="space-between" items="center" padding="0.75rem">
+    <Flex justify="flex-end" items="center" padding="0.75rem">
       <Button
         onClick={() => history.push("/products/product/create")}
         bg="green"

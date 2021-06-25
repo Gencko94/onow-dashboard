@@ -67,7 +67,7 @@ const Container = styled.span<{ checked: boolean; small?: boolean }>`
     margin: 0;
     opacity: 0;
     padding: 0;
-    z-index: 1;
+    z-index: 10;
     position: absolute;
   }
 

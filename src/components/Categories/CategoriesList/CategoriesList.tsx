@@ -7,13 +7,13 @@ import { CATEGORY } from "../../../interfaces/categories/categories";
 import extractError from "../../../utils/extractError";
 import { deleteCategory, getCategories } from "../../../utils/queries";
 import Button from "../../reusable/Button";
-import ConfirmationModal from "../../reusable/ConfirmationModal";
 import EmptyTable from "../../reusable/EmptyTable";
 import LoadingTable from "../../reusable/LoadingTable";
 import TableHead from "../../reusable/TableHead";
 import Flex from "../../StyledComponents/Flex";
 import CategoryItem from "./CategoryItem";
 import Spinner from "react-loader-spinner";
+import useConfirmationModal from "../../../hooks/useConfirmationModal";
 
 interface GET_CATEGORIES_RES {
   data: CATEGORY[];
@@ -28,10 +28,7 @@ const CategoriesList = () => {
 
   const { setToastStatus, handleCloseToast } = useToast();
 
-  const [modalStatus, setModalStatus] = useState<{
-    open: boolean;
-    id: number | null;
-  }>({ open: false, id: null });
+  const { handleCloseConfirmationModal } = useConfirmationModal();
 
   const queryClient = useQueryClient();
   const {
@@ -57,11 +54,7 @@ const CategoriesList = () => {
     }
   );
   // Delete Mutation
-  const {
-    mutateAsync,
-    reset,
-    isLoading: deleteLoading,
-  } = useMutation(deleteCategory, {
+  const { mutateAsync, reset } = useMutation(deleteCategory, {
     onSuccess: (data, categoryId) => {
       queryClient.invalidateQueries("categories");
       // queryClient.setQueryData<PRODUCT[] | undefined>("products", (prev) => {
@@ -72,9 +65,10 @@ const CategoriesList = () => {
   const cols = useMemo(
     () => [
       { title: "", sortable: false },
+      { title: "ID", sortable: false },
       { title: "name", sortable: false },
       { title: "image", sortable: false },
-      { title: "numberOfProducts", sortable: false },
+
       { title: "status", sortable: false },
       { title: "actions", sortable: false },
     ],
@@ -83,17 +77,17 @@ const CategoriesList = () => {
   const handleDeleteCategory = async (id: number) => {
     try {
       await mutateAsync(id.toString());
-      setModalStatus({ id: null, open: false });
+      handleCloseConfirmationModal?.();
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
         },
         open: true,
-        text: "Product Deleted Successfully",
+        text: "Category Deleted Successfully",
         type: "success",
       });
     } catch (error) {
-      setModalStatus({ id: null, open: false });
+      handleCloseConfirmationModal?.();
       const { responseError } = extractError(error);
       if (responseError) {
       } else {
@@ -120,7 +114,7 @@ const CategoriesList = () => {
   return (
     <>
       <Container>
-        <Flex justify="flex-end" margin="1rem 0 ">
+        <Flex justify="flex-start" margin="1rem 0 ">
           <p>Selected Rows ({selectedRows.length}) : </p>
           <Flex margin="0 0.5rem">
             <Button
@@ -134,11 +128,11 @@ const CategoriesList = () => {
             />
           </Flex>
         </Flex>
-        {data?.pages[0].data.length !== 0 && (
-          <TableHead cols={cols} gridCols="100px 1fr 1fr 1fr 1fr 1fr " />
-        )}
 
-        <div>
+        <div className="table">
+          {data?.pages[0].data.length !== 0 && (
+            <TableHead cols={cols} gridCols="100px 100px 1fr 1fr 1fr 1fr" />
+          )}
           {isFetching && (
             <div className="loading">
               <Spinner type="TailSpin" width={30} color="#f78f21" />
@@ -161,34 +155,15 @@ const CategoriesList = () => {
                   <CategoryItem
                     key={category.id}
                     category={category}
-                    setModalStatus={setModalStatus}
                     selectedRows={selectedRows}
                     handleToggleRows={handleToggleRows}
+                    handleDeleteCategory={handleDeleteCategory}
                   />
                 ))}
               </React.Fragment>
             );
           })}
         </div>
-        <ConfirmationModal
-          isOpen={modalStatus.open}
-          closeFunction={() => setModalStatus({ id: null, open: false })}
-          desc="Are you sure you want to delete this product ?"
-          successButtonText="Delete"
-          successFunction={() => handleDeleteCategory(modalStatus.id!)}
-          title="Delete Product"
-          isLoading={deleteLoading}
-          styles={{
-            content: {
-              top: "50%",
-              left: "50%",
-              right: "auto",
-              bottom: "auto",
-              marginRight: "-50%",
-              transform: "translate(-50%, -50%)",
-            },
-          }}
-        />
       </Container>
       {hasNextPage && (
         <Flex margin="2rem 0" justify="center">
@@ -212,11 +187,12 @@ const CategoriesList = () => {
 
 export default CategoriesList;
 const Container = styled.div`
-  border-radius: 8px;
-  overflow: hidden;
-  border: ${(props) => props.theme.border};
-  box-shadow: ${(props) => props.theme.shadow};
-  position: relative;
+  .table {
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    border: ${(props) => props.theme.border};
+  }
   .loading {
     position: absolute;
     z-index: 2;

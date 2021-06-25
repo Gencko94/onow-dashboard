@@ -3,8 +3,10 @@ import ClickAwayListener from "react-click-away-listener";
 import { CSSTransition } from "react-transition-group";
 import styled, { css } from "styled-components";
 import DesktopNavbar from "../components/DesktopNavbar/DesktopNavbar";
+import ConfirmationModal from "../components/reusable/ConfirmationModal";
 import Toast from "../components/reusable/Toast";
 import Sidebar from "../components/Sidebar/Sidebar";
+import useConfirmationModal from "../hooks/useConfirmationModal";
 import useResponsive from "../hooks/useResponsive";
 import useToast from "../hooks/useToast";
 import Loading from "../utils/Loading";
@@ -12,6 +14,8 @@ import Loading from "../utils/Loading";
 const Layout: React.FC = ({ children }) => {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const { toastStatus, handleCloseToast } = useToast();
+  const { confirmationModalStatus, handleCloseConfirmationModal } =
+    useConfirmationModal();
   const handleToggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
@@ -53,6 +57,24 @@ const Layout: React.FC = ({ children }) => {
           <Sidebar />
         </ClickAwayListener>
       </CSSTransition>
+      <ConfirmationModal
+        isOpen={confirmationModalStatus!.open}
+        closeFunction={confirmationModalStatus!.closeCb}
+        desc={confirmationModalStatus!.desc}
+        successButtonText="Delete"
+        successFunction={confirmationModalStatus!.successCb}
+        title="Delete Product"
+        styles={{
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+          },
+        }}
+      />
 
       <Content drawerOpen={drawerOpen}>
         <DesktopNavbar handleToggleDrawer={handleToggleDrawer} />

@@ -3,16 +3,12 @@ import { USER, LOGIN_FORM, LOGIN_RESPONSE } from "../interfaces/auth/auth";
 import { CUSTOMER, NEW_CUSTOMER } from "../interfaces/customers/customers";
 import { GET_GOOGLE_MAP_DATA, MapCoordinates } from "../interfaces/maps/maps";
 import { GET_STORES_RESPONSE } from "../interfaces/stores/stores";
-import {
-  GET_ORDERS_RESPONSE,
-  ORDER,
-  ORDERS_FILTERS,
-} from "../interfaces/orders/orders";
+import { ORDER, ORDERS_FILTERS } from "../interfaces/orders/orders";
 import { COUPON, NEW_COUPON } from "../interfaces/coupons/coupons";
 import { NEW_PRODUCT } from "../interfaces/products/create-new-product";
 import { PRODUCT } from "../interfaces/products/products";
 import { NEW_STAFF_MEMBER, STAFF_MEMBER } from "../interfaces/staff/staff";
-import { InfiniteData } from "react-query";
+import { CATEGORY } from "../interfaces/categories/categories";
 
 const uri = "https://new-version.o-now.net/customer-api";
 
@@ -422,6 +418,16 @@ export const getCategories = async (pageParam: number) => {
     currentPage: res.data.results.pagination.current,
     lastPage: res.data.results.pagination.last,
   };
+};
+export const getCategory = async (id: string): Promise<CATEGORY> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.get(`${uri}/product-categories/${id}`, config);
+  return res.data.results;
 };
 export const deleteCategory = async (
   id: string

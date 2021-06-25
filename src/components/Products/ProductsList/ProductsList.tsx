@@ -14,17 +14,14 @@ import TableHead from "../../reusable/TableHead";
 import Flex from "../../StyledComponents/Flex";
 import ProductItem from "./ProductItem";
 import Spinner from "react-loader-spinner";
+import useConfirmationModal from "../../../hooks/useConfirmationModal";
 const ProductsList = () => {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
+  const { handleCloseConfirmationModal } = useConfirmationModal();
 
   const history = useHistory();
 
   const { setToastStatus, handleCloseToast } = useToast();
-
-  const [modalStatus, setModalStatus] = useState<{
-    open: boolean;
-    id: number | null;
-  }>({ open: false, id: null });
 
   const queryClient = useQueryClient();
 
@@ -76,7 +73,7 @@ const ProductsList = () => {
   const handleDeleteProduct = async (id: number) => {
     try {
       await mutateAsync(id.toString());
-      setModalStatus({ id: null, open: false });
+      handleCloseConfirmationModal?.();
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -86,7 +83,8 @@ const ProductsList = () => {
         type: "success",
       });
     } catch (error) {
-      setModalStatus({ id: null, open: false });
+      handleCloseConfirmationModal?.();
+
       const { responseError } = extractError(error);
       if (responseError) {
       } else {
@@ -155,7 +153,7 @@ const ProductsList = () => {
 
   return (
     <>
-      <Flex justify="flex-end" margin="1rem 0 ">
+      <Flex margin="1rem 0 ">
         <p>Selected Rows ({selectedRows.length}) : </p>
         <Flex margin="0 0.5rem">
           <Button
@@ -201,9 +199,9 @@ const ProductsList = () => {
             <React.Fragment key={i}>
               {group.data.map((product: PRODUCT) => (
                 <ProductItem
+                  handleDeleteProduct={handleDeleteProduct}
                   key={product.id}
                   product={product}
-                  setModalStatus={setModalStatus}
                   selectedRows={selectedRows}
                   handleToggleRows={handleToggleRows}
                 />
@@ -211,26 +209,6 @@ const ProductsList = () => {
             </React.Fragment>
           );
         })}
-
-        <ConfirmationModal
-          isOpen={modalStatus.open}
-          closeFunction={() => setModalStatus({ id: null, open: false })}
-          desc="Are you sure you want to delete this product ?"
-          successButtonText="Delete"
-          successFunction={() => handleDeleteProduct(modalStatus.id!)}
-          title="Delete Product"
-          isLoading={deleteLoading}
-          styles={{
-            content: {
-              top: "50%",
-              left: "50%",
-              right: "auto",
-              bottom: "auto",
-              marginRight: "-50%",
-              transform: "translate(-50%, -50%)",
-            },
-          }}
-        />
       </Container>
       {hasNextPage && (
         <Flex margin="2rem 0" justify="center">

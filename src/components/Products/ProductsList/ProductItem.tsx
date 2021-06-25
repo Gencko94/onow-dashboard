@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { RiDeleteBinLine } from "react-icons/ri";
 
@@ -10,25 +10,26 @@ import { useTranslation } from "react-i18next";
 import Checkbox from "../../reusable/Inputs/Checkbox";
 import Popover from "../../reusable/Popover";
 import Button from "../../reusable/Button";
-import { Dispatch } from "react";
+
+import { FlexWrapper } from "../../StyledComponents/Flex";
+
+import useConfirmationModal from "../../../hooks/useConfirmationModal";
 
 interface IProps {
   product: PRODUCT;
-
-  setModalStatus: Dispatch<
-    SetStateAction<{ id: number | null; open: boolean }>
-  >;
+  handleDeleteProduct: (id: number) => void;
   selectedRows: number[];
   handleToggleRows: (rowId: number) => void;
 }
 
 const ProductItem = ({
   product,
-
-  setModalStatus,
+  handleDeleteProduct,
   handleToggleRows,
   selectedRows,
 }: IProps) => {
+  const { setConfirmationModalStatus, handleCloseConfirmationModal } =
+    useConfirmationModal();
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   const {
@@ -55,86 +56,101 @@ const ProductItem = ({
     }
   };
   return (
-    <>
-      <Container
-        selected={selectedRows.includes(product.id)}
-        onClick={() => history.push(`/product/${product.id}`)}
-      >
-        <div className="field">
-          <Checkbox
-            checked={selectedRows.includes(product.id)}
-            onChange={(e) => {
-              e.stopPropagation();
-              handleToggleRows(product.id);
-            }}
-          />
-        </div>
-        <div className="field">
-          <img
-            className="img"
-            src={product.images?.[0].url}
-            alt={product.name[language]}
-          />
-        </div>
-        <div className="field">
-          <h6>{product.name[language]}</h6>
-        </div>
-        <div className="field">
-          <h6>{product.quantity}</h6>
-        </div>
-        <div className="field">
-          <h6>{product.price}</h6>
-        </div>
-        <div className="field">
-          <h6>{product.category.name}</h6>
-        </div>
-        {/* <div className="field">
+    <Container selected={selectedRows.includes(product.id)}>
+      <div className="field">
+        <Checkbox
+          checked={selectedRows.includes(product.id)}
+          onChange={(e) => {
+            handleToggleRows(product.id);
+            e.stopPropagation();
+          }}
+        />
+      </div>
+      <div className="field">
+        <img
+          className="img"
+          src={product.images?.[0].url}
+          alt={product.name[language]}
+        />
+      </div>
+      <div className="field">
+        <h6>{product.name[language]}</h6>
+      </div>
+      <div className="field">
+        <h6>{product.quantity}</h6>
+      </div>
+      <div className="field">
+        <h6>{product.price}</h6>
+      </div>
+      <div className="field">
+        <h6>{product.category.name}</h6>
+      </div>
+      {/* <div className="field">
         <EnabledButton enabled={false} type="button">
           Enable
         </EnabledButton>
       </div> */}
-        <div className="field">{renderStatus(2)}</div>
-        <div className="field">
-          <ButtonsContainer>
-            <ActionButtonContainer
-              onClick={(e) => {
-                e.stopPropagation();
-                setActionsMenuOpen(true);
+      <div className="field">{renderStatus(2)}</div>
+      <div className="field">
+        <ButtonsContainer>
+          <ActionButtonContainer
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <button
+              onClick={() => {
+                setActionsMenuOpen(!actionsMenuOpen);
               }}
+              className="icon"
             >
-              <button className="icon">
-                <BsThreeDotsVertical size={18} />
-              </button>
-              <CSSTransition
-                in={actionsMenuOpen}
-                classNames="menu"
-                unmountOnExit
-                timeout={100}
-              >
-                <Popover closeFunction={() => setActionsMenuOpen(false)}>
-                  <Button
-                    text="Delete Product"
-                    padding="0.5rem"
-                    bg="white"
-                    color="#444"
-                    hoverColor="#b72b2b"
-                    textSize="0.8rem"
-                    Icon={RiDeleteBinLine}
-                    iconSize={15}
-                    onClick={(e) => {
-                      e.stopPropagation();
+              <BsThreeDotsVertical size={18} />
+            </button>
+            <CSSTransition
+              in={actionsMenuOpen}
+              classNames="menu"
+              unmountOnExit
+              timeout={100}
+            >
+              <Popover closeFunction={() => setActionsMenuOpen(false)}>
+                <Button
+                  text="Delete Product"
+                  padding="0.5rem"
+                  bg="white"
+                  color="#444"
+                  hoverColor="#b72b2b"
+                  textSize="0.8rem"
+                  Icon={RiDeleteBinLine}
+                  iconSize={15}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setConfirmationModalStatus?.({
+                      open: true,
+                      desc: "Are you sure you want to delete this Product ?",
+                      title: "Delete Product",
+                      closeCb: handleCloseConfirmationModal!,
+                      successCb: () => handleDeleteProduct(product.id),
+                    });
+                  }}
+                />
+              </Popover>
+            </CSSTransition>
 
-                      setActionsMenuOpen(false);
-                      setModalStatus({ open: true, id: product.id });
-                    }}
-                  />
-                </Popover>
-              </CSSTransition>
-            </ActionButtonContainer>
-          </ButtonsContainer>
-        </div>
-      </Container>
-    </>
+            <Button
+              bg="primary"
+              padding="0.5rem"
+              text="Edit"
+              textSize="0.7rem"
+              withRipple
+              withTransition
+              onClick={() => {
+                history.push(`/product/${product.id}`);
+              }}
+            />
+          </ActionButtonContainer>
+        </ButtonsContainer>
+      </div>
+    </Container>
   );
 };
 
@@ -183,7 +199,7 @@ const ButtonsContainer = styled.div`
     }
   }
 `;
-const ActionButtonContainer = styled.div`
+const ActionButtonContainer = styled(FlexWrapper)`
   position: relative;
 `;
 const Status = styled.div`

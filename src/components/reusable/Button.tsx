@@ -1,4 +1,4 @@
-import { ImSpinner2, ImSpinner8 } from "react-icons/im";
+import { ImSpinner2 } from "react-icons/im";
 import { IconType } from "react-icons/lib";
 import styled, { css } from "styled-components";
 import Ripple from "./Ripple";

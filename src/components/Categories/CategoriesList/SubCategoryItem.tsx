@@ -9,8 +9,11 @@ import { useHistory } from "react-router";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import SubCategoriesList from "./SubCategoriesList";
 import Checkbox from "../../reusable/Inputs/Checkbox";
-
-const SubCategoryItem = () => {
+interface IProps {
+  selectedRows: number[];
+  handleToggleRows: (rowId: number) => void;
+}
+const SubCategoryItem = ({ handleToggleRows, selectedRows }: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const history = useHistory();
@@ -110,7 +113,10 @@ const SubCategoryItem = () => {
         timeout={250}
         unmountOnExit
       >
-        <SubCategoriesList />
+        <SubCategoriesList
+          handleToggleRows={handleToggleRows}
+          selectedRows={selectedRows}
+        />
       </CSSTransition>
     </>
   );

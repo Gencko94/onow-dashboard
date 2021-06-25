@@ -1,7 +1,9 @@
 import { SubmitHandler, useForm } from "react-hook-form";
+import { BiPlus } from "react-icons/bi";
 import CategoryInfo from "../../components/Categories/Category/CategoryInfo";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
+import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Flex from "../../components/StyledComponents/Flex";
 import { NEW_CATEGORY } from "../../interfaces/categories/categories";
 
@@ -30,17 +32,18 @@ const CreateNewCategory = () => {
     console.log(data);
   };
   return (
-    <div>
-      <Breadcrumbs
-        childLabel="Create New Category"
-        parentLabel="Categories"
-        parentTarget="/categories"
-      />
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <HeaderContainer>
+        <Breadcrumbs
+          childLabel="Create New Category"
+          parentLabel="Categories"
+          parentTarget="/categories"
+        />
         <Flex justify="flex-end">
           <Button
             type="submit"
-            text="Create new category"
+            text="Submit Data"
+            Icon={BiPlus}
             bg="green"
             padding="0.5rem"
             textSize="0.9rem"
@@ -48,14 +51,14 @@ const CreateNewCategory = () => {
             withTransition
           />
         </Flex>
-        <CategoryInfo
-          setValue={setValue}
-          control={control}
-          errors={errors}
-          register={register}
-        />
-      </form>
-    </div>
+      </HeaderContainer>
+      <CategoryInfo
+        setValue={setValue}
+        control={control}
+        errors={errors}
+        register={register}
+      />
+    </form>
   );
 };
 

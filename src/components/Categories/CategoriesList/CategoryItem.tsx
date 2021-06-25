@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
-import ClickAwayListener from "react-click-away-listener";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 import { useHistory } from "react-router";
@@ -10,12 +9,15 @@ import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import SubCategoriesList from "./SubCategoriesList";
 import Checkbox from "../../reusable/Inputs/Checkbox";
 import { CATEGORY } from "../../../interfaces/categories/categories";
+import { useTranslation } from "react-i18next";
+import Button from "../../reusable/Button";
+import Popover from "../../reusable/Popover";
+import { FlexWrapper } from "../../StyledComponents/Flex";
+import DefaultImage from "../../reusable/DefaultImage";
+import useConfirmationModal from "../../../hooks/useConfirmationModal";
 interface IProps {
   category: CATEGORY;
-
-  setModalStatus: Dispatch<
-    SetStateAction<{ id: number | null; open: boolean }>
-  >;
+  handleDeleteCategory: (id: number) => void;
   selectedRows: number[];
   handleToggleRows: (rowId: number) => void;
 }
@@ -23,21 +25,26 @@ const CategoryItem = ({
   handleToggleRows,
   category,
   selectedRows,
-  setModalStatus,
+  handleDeleteCategory,
 }: IProps) => {
+  const { setConfirmationModalStatus, handleCloseConfirmationModal } =
+    useConfirmationModal();
+  const {
+    i18n: { language },
+  } = useTranslation();
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const history = useHistory();
-  const renderStatus = (id: number) => {
-    switch (id) {
-      case 1:
+  const renderStatus = (active: boolean) => {
+    switch (active) {
+      case true:
         return (
           <Status color="green">
             <span className="dot" />
             <h6>Active</h6>
           </Status>
         );
-      case 2:
+      case false:
         return (
           <Status color="#b72b2b">
             <span className="dot" />
@@ -50,38 +57,46 @@ const CategoryItem = ({
   };
   return (
     <>
-      <Container onClick={() => history.push(`/categories/category/1`)}>
+      <Container>
         <div className="btns-container">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setSubmenuOpen(!submenuOpen);
-            }}
-            className="menu-toggler"
-          >
-            {submenuOpen ? (
-              <BiChevronUp size={25} />
-            ) : (
-              <BiChevronDown size={25} />
-            )}
-          </button>
+          {category.children && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSubmenuOpen(!submenuOpen);
+              }}
+              className="menu-toggler"
+            >
+              {submenuOpen ? (
+                <BiChevronUp size={25} />
+              ) : (
+                <BiChevronDown size={25} />
+              )}
+            </button>
+          )}
           <Checkbox
-            checked={true}
+            checked={selectedRows.includes(category.id)}
             onChange={(e) => {
+              handleToggleRows(category.id);
               e.stopPropagation();
             }}
           />
         </div>
         <div className="field">
-          <h6>Name</h6>
+          <h6>{category.id}</h6>
         </div>
-        <div className="field">image</div>
-        <div className="field">{renderStatus(2)}</div>
         <div className="field">
-          <EnabledButton enabled={false} type="button">
-            Enable
-          </EnabledButton>
+          <h6>{category.name[language]}</h6>
         </div>
+        <div className="field">
+          {category.image ? (
+            <img src={category.image} alt={category.name[language]} />
+          ) : (
+            <DefaultImage circular border height="50px" width="50px" />
+          )}
+        </div>
+        <div className="field">{renderStatus(category.active)}</div>
+
         <div className="field">
           <ButtonsContainer>
             <ActionButtonContainer
@@ -99,33 +114,59 @@ const CategoryItem = ({
                 unmountOnExit
                 timeout={100}
               >
-                <ClickAwayListener
-                  onClickAway={() => setActionsMenuOpen(false)}
-                >
-                  <ul>
-                    <li>
-                      <button>
-                        <span className="icon">
-                          <RiDeleteBinLine size={15} />
-                        </span>
-                        <p>Delete Coupon</p>
-                      </button>
-                    </li>
-                  </ul>
-                </ClickAwayListener>
+                <Popover closeFunction={() => setActionsMenuOpen(false)}>
+                  <Button
+                    text="Delete Category"
+                    padding="0.5rem"
+                    bg="white"
+                    color="#444"
+                    hoverColor="#b72b2b"
+                    textSize="0.8rem"
+                    Icon={RiDeleteBinLine}
+                    iconSize={15}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActionsMenuOpen(false);
+                      setConfirmationModalStatus?.({
+                        open: true,
+                        desc: "Are you sure you want to delete this Category ?",
+                        title: "Delete Category",
+                        successCb: () => handleDeleteCategory(category.id),
+                        closeCb: handleCloseConfirmationModal!,
+                      });
+                    }}
+                  />
+                </Popover>
               </CSSTransition>
+              <Button
+                bg="primary"
+                padding="0.5rem"
+                text="Edit"
+                textSize="0.7rem"
+                withRipple
+                withTransition
+                margin="0 0.25rem"
+                onClick={() => {
+                  history.push(`/categories/category/${category.id}`);
+                }}
+              />
             </ActionButtonContainer>
           </ButtonsContainer>
         </div>
       </Container>
-      <CSSTransition
-        in={submenuOpen}
-        classNames="sub-categories"
-        timeout={250}
-        unmountOnExit
-      >
-        <SubCategoriesList />
-      </CSSTransition>
+      {category.children && (
+        <CSSTransition
+          in={submenuOpen}
+          classNames="sub-categories"
+          timeout={250}
+          unmountOnExit
+        >
+          <SubCategoriesList
+            handleToggleRows={handleToggleRows}
+            selectedRows={selectedRows}
+          />
+        </CSSTransition>
+      )}
     </>
   );
 };
@@ -133,7 +174,7 @@ const CategoryItem = ({
 export default CategoryItem;
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 100px 100px 1fr 1fr 1fr 1fr;
   background-color: #fff;
   gap: 1rem;
   cursor: pointer;
@@ -171,9 +212,6 @@ const Container = styled.div`
 `;
 
 const ButtonsContainer = styled.div`
-  /* display: grid; */
-  /* grid-template-columns: 1fr 1fr; */
-  /* gap: 0.5rem; */
   button.icon {
     display: inline-block;
     cursor: pointer;
@@ -187,43 +225,9 @@ const ButtonsContainer = styled.div`
     }
   }
 `;
-const ActionButtonContainer = styled.div`
+const ActionButtonContainer = styled(FlexWrapper)`
   position: relative;
-
-  ul {
-    position: absolute;
-    bottom: -3px;
-    right: 8px;
-    z-index: 10;
-    background-color: #fff;
-    transform-origin: right;
-    box-shadow: ${(props) => props.theme.shadow};
-    border-radius: 5px;
-  }
-  ul li button {
-    padding: 0.5rem;
-    display: block;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.9rem;
-    color: ${(props) => props.color};
-    transition: all 75ms ease;
-    &:hover {
-      color: ${(props) => props.theme.headingColor};
-      background-color: ${(props) => props.theme.highlightColor};
-    }
-    p {
-      margin: 0 0.5rem;
-    }
-  }
-  span.icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.25rem;
-  }
+  align-items: center;
 `;
 const Status = styled.div`
   display: flex;
@@ -241,16 +245,4 @@ const Status = styled.div`
 
     margin: 0 0.25rem;
   }
-`;
-const EnabledButton = styled.button<{ enabled: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  padding: 0.25rem 0.5rem;
-  background-color: ${(props) =>
-    props.enabled ? props.theme.dangerRed : props.theme.green};
-  color: ${(props) => props.theme.btnText};
-  border: ${(props) => props.theme.border};
-  border-radius: 5px;
 `;

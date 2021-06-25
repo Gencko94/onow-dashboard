@@ -10,10 +10,19 @@ interface IProps {
   items?: string;
   padding?: string;
   margin?: string;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
-const Flex: FC<IProps> = ({ children, items, justify, padding, margin }) => {
+const Flex: FC<IProps> = ({
+  children,
+  items,
+  justify,
+  padding,
+  margin,
+  onClick,
+}) => {
   return (
     <FlexWrapper
+      onClick={onClick}
       style={
         {
           "--justify": justify,

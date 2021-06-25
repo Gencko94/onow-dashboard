@@ -3,6 +3,11 @@ interface ApplicationContextProps {
   toastStatus: TOAST_STATUS;
   setToastStatus: React.Dispatch<React.SetStateAction<TOAST_STATUS>>;
   handleCloseToast: () => void;
+  confirmationModalStatus: CONFIRMATION_MODAL_STATUS;
+  setConfirmationModalStatus: React.Dispatch<
+    React.SetStateAction<CONFIRMATION_MODAL_STATUS>
+  >;
+  handleCloseConfirmationModal: () => void;
 }
 export type TOAST_STATUS = {
   open: boolean;
@@ -10,16 +15,37 @@ export type TOAST_STATUS = {
   fn: () => void;
   type: "success" | "error";
 };
+export type CONFIRMATION_MODAL_STATUS = {
+  open: boolean;
+  title: string;
+  desc: string;
+  successCb: () => void;
+  closeCb: () => void;
+};
 export const ApplicationProvider = createContext<
   Partial<ApplicationContextProps>
 >({});
 const ApplicationContext: React.FC = ({ children }) => {
+  const [confirmationModalStatus, setConfirmationModalStatus] =
+    useState<CONFIRMATION_MODAL_STATUS>({
+      open: false,
+      closeCb: () => {},
+      successCb: () => {},
+      desc: "",
+      title: "",
+    });
   const [toastStatus, setToastStatus] = useState<TOAST_STATUS>({
     open: false,
     text: "",
     fn: () => {},
     type: "success",
   });
+  const handleCloseConfirmationModal = () => {
+    setConfirmationModalStatus((prev) => ({
+      ...prev,
+      open: false,
+    }));
+  };
   const handleCloseToast = () => {
     setToastStatus((prev) => ({
       ...prev,
@@ -28,7 +54,14 @@ const ApplicationContext: React.FC = ({ children }) => {
   };
   return (
     <ApplicationProvider.Provider
-      value={{ toastStatus, setToastStatus, handleCloseToast }}
+      value={{
+        toastStatus,
+        setToastStatus,
+        handleCloseToast,
+        handleCloseConfirmationModal,
+        confirmationModalStatus,
+        setConfirmationModalStatus,
+      }}
     >
       {children}
     </ApplicationProvider.Provider>
