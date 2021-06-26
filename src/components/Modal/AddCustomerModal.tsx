@@ -111,7 +111,7 @@ const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
             name="country_id"
             control={control}
             rules={{ required: "Required" }}
-            defaultValue={countryOptions[0]}
+            defaultValue={parseInt(countryOptions[0].key)}
             render={({ field: { ref, onChange } }) => (
               <>
                 <Select

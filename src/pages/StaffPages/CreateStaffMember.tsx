@@ -55,7 +55,6 @@ const CreateStaffMember = () => {
         if (errors.email.includes("The email has already been taken.")) {
           setError("email", {
             message: "The email has already been taken.",
-            shouldFocus: true,
           });
         }
       } else {

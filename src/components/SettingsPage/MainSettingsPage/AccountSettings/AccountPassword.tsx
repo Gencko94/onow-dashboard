@@ -44,7 +44,6 @@ const AccountPassword = ({ id }: IProps) => {
       if (responseError.current_password) {
         setError("current_password", {
           message: "Password Not Correct",
-          shouldFocus: true,
         });
       }
 

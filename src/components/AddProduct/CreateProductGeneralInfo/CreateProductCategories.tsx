@@ -19,7 +19,7 @@ const CreateProductCategories = () => {
   return (
     <Container>
       <div className="title-container">
-        <h5>Product Categories</h5>
+        <h5>Product Category</h5>
       </div>
 
       <CategoriesList error={Boolean(errors?.category_id)}>

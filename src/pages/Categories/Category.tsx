@@ -26,6 +26,7 @@ const Category = () => {
     control,
     register,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<CATEGORY>({ defaultValues: data });
   // Delete Mutation
@@ -80,7 +81,7 @@ const Category = () => {
         />
       </HeaderContainer>
       <CategoryInfo
-        setValue={setValue}
+        watch={watch}
         control={control}
         errors={errors}
         register={register}

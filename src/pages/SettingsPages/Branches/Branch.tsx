@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
+import HeaderContainer from "../../../components/reusable/HeaderContainer";
 import BranchInformation from "../../../components/SettingsPage/StoreBranches/Branches/BranchInformation";
 import BranchLocation from "../../../components/SettingsPage/StoreBranches/Branches/BranchLocation";
 import BranchWorkingHours from "../../../components/SettingsPage/StoreBranches/Branches/BranchWorkingHours";
@@ -18,11 +19,13 @@ const Branch = () => {
   };
   return (
     <div>
-      <Breadcrumbs
-        childLabel="Branch"
-        parentLabel="Branches"
-        parentTarget="/settings/branches"
-      />
+      <HeaderContainer>
+        <Breadcrumbs
+          childLabel="Branch"
+          parentLabel="Branches"
+          parentTarget="/settings/branches"
+        />
+      </HeaderContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
         <BranchInformation
           errors={errors}

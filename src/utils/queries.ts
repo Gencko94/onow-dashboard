@@ -8,7 +8,7 @@ import { COUPON, NEW_COUPON } from "../interfaces/coupons/coupons";
 import { NEW_PRODUCT } from "../interfaces/products/create-new-product";
 import { PRODUCT } from "../interfaces/products/products";
 import { NEW_STAFF_MEMBER, STAFF_MEMBER } from "../interfaces/staff/staff";
-import { CATEGORY } from "../interfaces/categories/categories";
+import { CATEGORY, NEW_CATEGORY } from "../interfaces/categories/categories";
 
 const uri = "https://new-version.o-now.net/customer-api";
 
@@ -306,15 +306,39 @@ export const getProduct = async (id: string): Promise<PRODUCT> => {
 export const createProduct = async (product: NEW_PRODUCT) => {
   const t = localStorage.getItem("dshtid");
   console.log(product);
-  // const formData = new FormData();
-  // formData.append("file", product.images[0]);
+  const formData = new FormData();
+  // Appending Form Data
+  formData.append("name", JSON.stringify(product.name));
+  product.images.forEach((image) => formData.append("images", image));
+
+  formData.append("description", JSON.stringify(product.description));
+  formData.append("price", JSON.stringify(product.price));
+  formData.append("price_by_options", JSON.stringify(product.price_by_options));
+  formData.append("sku", product.sku);
+  formData.append("prep_time", JSON.stringify(product.prep_time));
+  formData.append("allow_side_notes", JSON.stringify(product.allow_side_notes));
+  formData.append(
+    "allow_attachments",
+    JSON.stringify(product.allow_attachments)
+  );
+  formData.append("max_qty_per_user", JSON.stringify(product.max_qty_per_user));
+  formData.append(
+    "branch_availability",
+    JSON.stringify(product.branch_availability)
+  );
+  formData.append("options", JSON.stringify(product.options));
+  formData.append("product_category_id", JSON.stringify(product.category_id));
+  formData.append("active", JSON.stringify(true));
+  formData.append("slug", JSON.stringify(product.slug));
+
+  formData.append("file", product.images[0]);
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
-      // "Content-Type": "multipart/form-data",
+      "Content-Type": "multipart/form-data",
     },
   };
-  const res = await axios.post(`${uri}/products`, product, config);
+  const res = await axios.post(`${uri}/products`, formData, config);
   return res.data.results;
 };
 //Delete
@@ -328,6 +352,23 @@ export const deleteProduct = async (
     },
   };
   const res = await axios.delete(`${uri}/products/${id}`, config);
+  return res.data.results;
+};
+//Delete Multiple
+export const deleteMultipleProducts = async (
+  ids: number[]
+): Promise<{ results: "Deleted" }> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${uri}/delete-multi-products`,
+    { productIds: ids },
+    config
+  );
   return res.data.results;
 };
 
@@ -400,7 +441,7 @@ export const deleteStaffMember = async (
 
 //Categories
 
-export const getCategories = async (pageParam: number) => {
+export const getCategories = async (pageParam: number, limit?: number) => {
   const t = localStorage.getItem("dshtid");
 
   const config: AxiosRequestConfig = {
@@ -408,7 +449,7 @@ export const getCategories = async (pageParam: number) => {
       Authorization: t ? `Bearer ${t}` : "",
     },
     params: {
-      limit: 20,
+      limit: limit ?? 20,
       page: pageParam,
     },
   };
@@ -429,6 +470,31 @@ export const getCategory = async (id: string): Promise<CATEGORY> => {
   const res = await axios.get(`${uri}/product-categories/${id}`, config);
   return res.data.results;
 };
+
+//Create Category
+
+export const createCategory = async (
+  category: NEW_CATEGORY
+): Promise<CATEGORY> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+      "Content-Type": "multipart/form-data",
+      StoreId: 1,
+    },
+  };
+  const formData = new FormData();
+  console.log(category.image);
+  formData.append("active", "1");
+  formData.append("name", JSON.stringify(category.name));
+  formData.append("description", JSON.stringify(category.description));
+  formData.append("image", category.image);
+  formData.append("slug", category.slug);
+  const res = await axios.post(`${uri}/product-categories`, formData, config);
+  return res.data.results;
+};
+// Delete Category
 export const deleteCategory = async (
   id: string
 ): Promise<{ results: "Deleted" }> => {

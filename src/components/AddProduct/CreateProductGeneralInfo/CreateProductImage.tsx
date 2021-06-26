@@ -24,6 +24,7 @@ const CreateProductImage = () => {
         control={control}
         accept="image/*"
         multiple
+        name="images"
         setValue={setValue}
       />
       {/* <ErrorMessage>{errors?.images && "Required"}</ErrorMessage> */}

@@ -2,16 +2,17 @@ import { MdSubdirectoryArrowRight } from "react-icons/md";
 import styled from "styled-components";
 
 import { Control, Controller, useWatch } from "react-hook-form";
-import { MINI_CATEGORY } from "../../interfaces/categories/categories";
+import { CATEGORY } from "../../interfaces/categories/categories";
 
-import Chip from "../reusable/Chip";
-import { useQuery } from "react-query";
-import { getMiniCategories } from "../../utils/test-queries";
+import { useInfiniteQuery } from "react-query";
 import { useTranslation } from "react-i18next";
 import Checkbox from "../reusable/Inputs/Checkbox";
 import { firstTabInfo } from "../AddProduct/CreateProductGeneralInfo/CreateProductGeneralInfo";
 import { NewProductContext } from "../../pages/Product/CreateNewProduct";
-import { useContext } from "react";
+import React, { useContext } from "react";
+import { getCategories } from "../../utils/queries";
+import LoadingTable from "../reusable/LoadingTable";
+import DefaultImage from "../reusable/DefaultImage";
 
 interface IProps {
   control: Control<firstTabInfo>;
@@ -23,17 +24,35 @@ const AddCategoryModalBody = ({ control, errors }: IProps) => {
     name: "category_id",
     control,
   });
-  const { data } = useQuery<MINI_CATEGORY[]>(
-    "mini-categories",
-    getMiniCategories,
-    { suspense: true }
+
+  const {
+    data,
+    status,
+    isFetching,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    "categories",
+    ({ pageParam = 1 }) => getCategories(pageParam),
+    {
+      keepPreviousData: true,
+
+      getNextPageParam: (lastPage) => {
+        if (lastPage.currentPage < lastPage.lastPage) {
+          return lastPage.currentPage + 1;
+        } else {
+          return undefined;
+        }
+      },
+    }
   );
   const {
     i18n: { language },
   } = useTranslation();
 
   function handleToggleCategories(
-    category: MINI_CATEGORY,
+    category: CATEGORY,
     onChange: (...event: any[]) => void
   ) {
     if (category.id === formCategory) {
@@ -76,64 +95,78 @@ const AddCategoryModalBody = ({ control, errors }: IProps) => {
               </div> */}
 
               <div className="table">
-                {data?.map((category) => {
+                {status === "loading" && <LoadingTable />}
+                {data?.pages.map((group, i) => {
                   return (
-                    <div key={category.id}>
-                      <CategoryItem>
-                        <div
-                          className="field"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleToggleCategories(category, onChange);
-                          }}
-                        >
-                          <img
-                            src={category.image}
-                            alt={category.name[language]}
-                            className="img"
-                          />
-                          <h6>{category.name[language]}</h6>
-                        </div>
-                        <Checkbox
-                          checked={formCategory === category.id}
-                          onChange={(e) => {
-                            e.stopPropagation();
-                            handleToggleCategories(category, onChange);
-                          }}
-                        />
-                      </CategoryItem>
-                      {category?.children?.map((child) => {
+                    <React.Fragment key={i}>
+                      {group.data.map((category: CATEGORY) => {
                         return (
-                          <SubCategoryItem key={child.id}>
-                            <div
-                              onClick={(e) => {
-                                e.stopPropagation();
-
-                                handleToggleCategories(child, onChange);
-                              }}
-                              className="field"
-                            >
-                              <div className="title">
-                                <MdSubdirectoryArrowRight />
-                                <img
-                                  src={child.image}
-                                  alt={child.name[language]}
-                                  className="img"
-                                />
-                                <h6>{child.name[language]}</h6>
+                          <div key={category.id}>
+                            <CategoryItem active={formCategory === category.id}>
+                              <div
+                                className="field"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleToggleCategories(category, onChange);
+                                }}
+                              >
+                                {category.image ? (
+                                  <img
+                                    src={category.image}
+                                    alt={category.name[language]}
+                                  />
+                                ) : (
+                                  <DefaultImage
+                                    circular
+                                    border
+                                    height="50px"
+                                    width="50px"
+                                  />
+                                )}
+                                <h6>{category.name[language]}</h6>
                               </div>
-                            </div>
-                            <Checkbox
-                              checked={formCategory === child.id}
-                              onChange={(e) => {
-                                e.stopPropagation();
-                                handleToggleCategories(child, onChange);
-                              }}
-                            />
-                          </SubCategoryItem>
+                              <Checkbox
+                                checked={formCategory === category.id}
+                                onChange={(e) => {
+                                  e.stopPropagation();
+                                  handleToggleCategories(category, onChange);
+                                }}
+                              />
+                            </CategoryItem>
+                            {category?.children?.map((child: CATEGORY) => {
+                              return (
+                                <SubCategoryItem key={child.id}>
+                                  <div
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleToggleCategories(child, onChange);
+                                    }}
+                                    className="field"
+                                  >
+                                    <div className="title">
+                                      <MdSubdirectoryArrowRight />
+                                      <img
+                                        src={child.image}
+                                        alt={child.name[language]}
+                                        className="img"
+                                      />
+                                      <h6>{child.name[language]}</h6>
+                                    </div>
+                                  </div>
+                                  <Checkbox
+                                    checked={formCategory === child.id}
+                                    onChange={(e) => {
+                                      e.stopPropagation();
+                                      handleToggleCategories(child, onChange);
+                                    }}
+                                  />
+                                </SubCategoryItem>
+                              );
+                            })}
+                          </div>
                         );
                       })}
-                    </div>
+                    </React.Fragment>
                   );
                 })}
               </div>
@@ -175,9 +208,9 @@ const Container = styled.div`
     }
   }
   .table {
-    border: ${(props) => props.theme.border};
     margin: 0 auto;
-    height: 340px;
+    /* height: 340px; */
+    max-height: 100%;
     overflow: auto;
     .img {
       height: 40px;
@@ -189,10 +222,11 @@ const Container = styled.div`
   }
 `;
 
-const CategoryItem = styled.div`
+const CategoryItem = styled.div<{ active: boolean }>`
   display: block;
   width: 100%;
-  background-color: ${(props) => props.theme.accentColor};
+  background-color: ${(props) =>
+    props.active ? props.theme.accentColor : "#fff"};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -209,6 +243,7 @@ const CategoryItem = styled.div`
     align-items: center;
     h6 {
       font-size: 0.9rem;
+      margin: 0 0.5rem;
       font-weight: ${(props) => props.theme.font.bold};
     }
   }

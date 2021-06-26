@@ -147,7 +147,7 @@ const CategoryItem = ({
                 withTransition
                 margin="0 0.25rem"
                 onClick={() => {
-                  history.push(`/categories/category/${category.id}`);
+                  history.push(`/categories/${category.id}`);
                 }}
               />
             </ActionButtonContainer>
@@ -177,7 +177,7 @@ const Container = styled.div`
   grid-template-columns: 100px 100px 1fr 1fr 1fr 1fr;
   background-color: #fff;
   gap: 1rem;
-  cursor: pointer;
+
   border-bottom: ${(props) => props.theme.border};
   &:hover {
     background-color: ${(props) => props.theme.highlightColor};

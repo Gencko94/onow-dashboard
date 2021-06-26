@@ -33,10 +33,13 @@ export type PRODUCT = {
   sku: string;
   slug: string;
   category: {
-    name: string;
+    name: {
+      [key: string]: string;
+    };
     id: number;
   };
-  images: PRODUCT_IMAGE[];
+  image: string;
+  // images: PRODUCT_IMAGE[];
   description: {
     [key: string]: string;
   };

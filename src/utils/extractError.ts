@@ -1,11 +1,13 @@
 const extractError = (error: any) => {
   let responseError = undefined;
   let unknownError = undefined;
-  console.log(error);
   if (error.response) {
-    responseError = JSON.parse(error.response.data.error);
+    try {
+      responseError = JSON.parse(error.response.data.error);
+    } catch (e) {
+      responseError = error.response.data.error;
+    }
   } else {
-    console.log("here");
     unknownError = error;
   }
   return {

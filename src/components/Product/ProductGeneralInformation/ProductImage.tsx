@@ -1,11 +1,8 @@
-import { useForm, useFormContext } from "react-hook-form";
-import { RiCloseCircleFill } from "react-icons/ri";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
 import { PRODUCT } from "../../../interfaces/products/products";
 import { ADD_PRODUCT_IMAGE } from "../../../interfaces/products/update-product";
 import FileUploader from "../../../utils/FileUploader";
-import Button from "../../reusable/Button";
 
 interface IProps {
   data: PRODUCT;
@@ -29,27 +26,12 @@ const ProductImage = ({ data }: IProps) => {
           food, Truly delectable images will help your products sell themselfs.
         </p>
       </DescriptionBox>
-      <ExistingImages>
-        {data.images?.map((image) => {
-          return (
-            <div className="wrapper">
-              <img src={image.url} alt="" />
-              <button className="icon" type="button">
-                <RiCloseCircleFill size={30} />
-              </button>
-              {image.is_default ? (
-                "Default Image"
-              ) : (
-                <Button bg="green" padding="0.25rem" text="Mark as default" />
-              )}
-            </div>
-          );
-        })}
-      </ExistingImages>
+
       <FileUploader
         control={control}
         accept="image/*"
         multiple
+        name="images"
         setValue={setValue}
       />
       <ErrorMessage>{errors?.images && "Required"}</ErrorMessage>
@@ -92,25 +74,7 @@ const DescriptionBox = styled.div`
   border-radius: 6px;
   font-size: 0.9rem;
 `;
-const ExistingImages = styled.div`
-  display: grid;
-  margin: 1rem 0;
-  grid-template-columns: repeat(auto-fit, 150px);
-  gap: 1rem;
-  .wrapper {
-    position: relative;
-    img {
-      border: ${(props) => props.theme.border};
-      margin-bottom: 1rem;
-    }
-    .icon {
-      position: absolute;
-      top: -10px;
-      right: -8px;
-      color: ${(props) => props.theme.dangerRed};
-    }
-  }
-`;
+
 const ErrorMessage = styled.p`
   font-size: 0.7rem;
   padding-top: 0.25rem;

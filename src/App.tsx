@@ -124,7 +124,7 @@ function App() {
                             Component={CreateNewProduct}
                           />
                           <ProtectedRoute
-                            path="/product/:id"
+                            path="/products/:id"
                             Component={Product}
                           />
                           <ProtectedRoute
@@ -132,11 +132,11 @@ function App() {
                             Component={Categories}
                           />
                           <ProtectedRoute
-                            path="/categories/category/:id"
+                            path="/categories/:id"
                             Component={Category}
                           />
                           <ProtectedRoute
-                            path="/categories/create"
+                            path="/categories/category/create"
                             Component={CreateNewCategory}
                           />
                           <ProtectedRoute path="/brands" Component={Brands} />

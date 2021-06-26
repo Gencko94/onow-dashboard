@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 
-import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { MdMail, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { useContext, useState } from "react";
 import { useTranslation, Trans } from "react-i18next/";
 import { LOGIN_FORM } from "../interfaces/auth/auth";
@@ -11,6 +11,9 @@ import { useMutation, useQueryClient } from "react-query";
 import { userLogin } from "../utils/queries";
 import { AuthProvider } from "../contexts/AuthContext";
 import * as Yup from "yup";
+import Button from "../components/reusable/Button";
+import IconedInput from "../components/reusable/Inputs/IconedInput";
+import PasswordInput from "../components/reusable/Inputs/PasswordInput";
 
 const Login = () => {
   const { t, ready, i18n } = useTranslation(["login"]);
@@ -20,7 +23,6 @@ const Login = () => {
     password: Yup.string().required("Required Field").min(6, t("min-6")),
   });
   const queryClient = useQueryClient();
-  const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
   const location = useLocation<string>();
 
@@ -82,13 +84,6 @@ const Login = () => {
       }
     }
   };
-  const handleShowPassword = () => {
-    if (showPassword) {
-      setShowPassword(false);
-    } else {
-      setShowPassword(true);
-    }
-  };
 
   if (user) {
     return <Redirect to="/dashboard" />;
@@ -103,13 +98,26 @@ const Login = () => {
         </Header>
         <FormContainer>
           <Form onSubmit={handleSubmit(onSubmit)}>
-            <InputContainer>
+            <IconedInput
+              Icon={MdMail}
+              errors={errors?.login}
+              name="login"
+              register={register}
+              label="Email"
+            />
+            {/* <InputContainer>
               <Label>{t("email")}</Label>
               <Input {...register("login")} />
 
               <ErrorMessage>{errors.login?.message}</ErrorMessage>
-            </InputContainer>
-            <InputContainer>
+            </InputContainer> */}
+            <PasswordInput
+              errors={errors?.password}
+              name="password"
+              register={register}
+              label="Password"
+            />
+            {/* <InputContainer>
               <Label>{t("password")}</Label>
               <PasswordInputContainer>
                 <Input
@@ -129,15 +137,18 @@ const Login = () => {
               </PasswordInputContainer>
 
               <ErrorMessage>{errors.password?.message}</ErrorMessage>
-            </InputContainer>
-
-            <SubmitButton
+            </InputContainer> */}
+            <Button
+              width="100%"
+              bg="primary"
+              padding="0.5rem"
+              text="Login"
               type="submit"
+              isLoading={isSubmitting}
               disabled={isSubmitting}
-              loading={isSubmitting}
-            >
-              {t("login")}
-            </SubmitButton>
+              withRipple
+              withTransition
+            />
           </Form>
         </FormContainer>
         <Footer>
@@ -194,14 +205,12 @@ const Header = styled.div`
 `;
 const LogoContainer = styled(Link)`
   display: block;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   display: flex;
 
   align-items: center;
   justify-content: center;
-  /* box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2); */
-  /* border-radius: 50%; */
 `;
 const FormContainer = styled.div`
   padding: 0.75rem 0.75rem;
@@ -209,94 +218,14 @@ const FormContainer = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
   background-color: #fff;
   border-radius: 12px;
+  min-width: 300px;
   margin-bottom: 0.5rem;
   background: ${(props) => props.theme.overlayColor};
 `;
 const Form = styled.form`
   padding: 0rem 0.25rem;
 `;
-const InputContainer = styled.div`
-  margin-bottom: 0.25rem;
-`;
-const Label = styled.label`
-  color: ${({ theme }) => theme.headingColor};
-  margin-bottom: 0.4rem;
-  font-size: 0.8rem;
-  font-weight: ${(props) => props.theme.font.semibold};
-  display: block;
-`;
-const PhoneInputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  border-radius: 5px;
-  overflow: hidden;
-  border: 1px solid ${(props) => props.theme.btnBorder};
-  background-color: ${(props) => props.theme.inputColorLight};
-`;
-const PhoneKey = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: ${(props) => props.theme.font.semibold};
-  padding: 0.5rem;
-  font-size: 0.9rem;
-`;
-const PhoneInput = styled.input`
-  padding: 0.5rem;
-  width: 100%;
-  font-size: 0.9rem;
 
-  color: ${(props) => props.theme.subHeading};
-`;
-const PasswordInputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  background-color: ${(props) => props.theme.inputColorLight};
-  border-radius: 5px;
-  overflow: hidden;
-  border: ${(props) => props.theme.btnBorder};
-`;
-const Input = styled.input`
-  padding: 0.5rem;
-  border: ${(props) => props.theme.btnBorder};
-  width: 100%;
-  font-size: 0.9rem;
-  border-radius: 5px;
-  background-color: ${(props) => props.theme.inputColorLight};
-  color: ${(props) => props.theme.subHeading};
-`;
-const ShowPassword = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* border-left: 1px solid rgba(0, 0, 0, 0.1); */
-  padding: 0.5rem;
-  background-color: ${(props) => props.theme.inputColorLight};
-`;
-const ErrorMessage = styled.p`
-  color: ${(props) => props.theme.dangerRed};
-  font-size: 0.8rem;
-  margin-top: 0.25rem;
-  height: 19.2px;
-`;
-const SubmitButton = styled.button<{ loading: boolean }>`
-  width: 100%;
-  padding: 0.5rem;
-  background-color: ${(props) =>
-    props.loading ? "gray" : props.theme.btnPrimaryLight};
-  color: ${(props) => props.theme.btnText};
-  font-weight: ${(props) => props.theme.font.regular};
-  border-radius: 5px;
-  border: ${(props) => props.theme.btnBorder};
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  transition: background-color 75ms;
-  &:hover {
-    background-color: ${(props) => props.theme.btnPrimaryDark};
-  }
-
-  margin-top: 0.5rem;
-`;
 const Footer = styled.div`
   padding: 0.5rem;
   text-align: center;

@@ -12,15 +12,11 @@ export interface CATEGORY {
   parent_id: number;
   image: string;
   slug: string;
-  children?: {
-    id: number;
-    name: {
-      [key: string]: string;
-    };
-  }[];
-  seo_description: string;
+  children?: CATEGORY[];
+  description: {
+    [key: string]: string;
+  };
   active: boolean;
-  as_child: boolean;
 }
 export type MINI_CATEGORY = {
   /**
@@ -47,7 +43,6 @@ export type MINI_CATEGORY = {
   children?: MINI_CATEGORY[];
 };
 export type NEW_CATEGORY = {
-  id: number;
   name: {
     [key: string]: string;
   };
@@ -55,5 +50,7 @@ export type NEW_CATEGORY = {
   parent_id: number;
   image: File;
   active: 0 | 1;
-  seo_description: string;
+  description: {
+    [key: string]: string;
+  };
 };

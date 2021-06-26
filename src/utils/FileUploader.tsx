@@ -7,9 +7,10 @@ const convertBytesToKB = (bytes: number) => Math.round(bytes / 1000);
 interface IProps {
   accept: string;
   control: Control<any> | undefined;
-  multiple: boolean;
+  multiple?: boolean;
   maxFileSizeInBytes?: number;
   setValue: UseFormSetValue<any>;
+  name: string;
 }
 const FileUploader = ({
   multiple,
@@ -17,6 +18,7 @@ const FileUploader = ({
   accept,
   maxFileSizeInBytes = DEFAULT_MAX_FILE_SIZE_IN_BYTES,
   setValue,
+  name,
 }: IProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [images, setImages] = useState<{ [key: string]: File }>({});
@@ -53,7 +55,7 @@ const FileUploader = ({
   const removeImage = (fileName: string) => {
     delete images[fileName];
     setImages({ ...images });
-    setValue?.("images", convertNestedObjectToArray({ ...images }));
+    setValue?.(name, convertNestedObjectToArray({ ...images }));
   };
   return (
     <Container>
@@ -76,7 +78,7 @@ const FileUploader = ({
         <p className="desc">Accepted Formats : .jpeg .png .jpg</p>
         <Controller
           control={control}
-          name="images"
+          name={name}
           render={({ field: { onChange, value, ref } }) => (
             <>
               <DragInput

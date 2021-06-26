@@ -23,8 +23,9 @@ interface IProps {
    * example : ```p={2}``` === ```2 * 0.25rem```
    */
   p?: number;
+  margin?: string;
 }
-const Grid: FC<IProps> = ({ children, rows, cols, gap, items, p }) => {
+const Grid: FC<IProps> = ({ children, rows, cols, gap, items, p, margin }) => {
   return (
     <GridWrapper
       style={
@@ -34,6 +35,7 @@ const Grid: FC<IProps> = ({ children, rows, cols, gap, items, p }) => {
           "--items": items,
           "--rows": rows,
           "--padding": `${p! * 0.25}rem`,
+          "--margin": margin,
         } as CSSProperties
       }
     >
@@ -50,4 +52,5 @@ export const GridWrapper = styled.div`
   gap: var(--gap);
   align-items: var(--items, normal);
   padding: var(--padding, 0);
+  margin: var(--margin, 0);
 `;

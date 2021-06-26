@@ -19,7 +19,6 @@ const Layout: React.FC = ({ children }) => {
   const handleToggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
-  console.log(toastStatus);
   const { isDesktop } = useResponsive();
   useEffect(() => {
     if (toastStatus?.open) {

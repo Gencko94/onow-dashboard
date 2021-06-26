@@ -23,7 +23,7 @@ export interface FORM_PROPS {
     [key: string]: string;
   };
   slug: string;
-  category: { id: number; name: string };
+  category: { id: number; name: { [key: string]: string } };
   sku: string;
   quantity: number | "unlimited";
 }

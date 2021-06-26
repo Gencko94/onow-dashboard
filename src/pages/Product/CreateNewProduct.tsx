@@ -8,6 +8,7 @@ import CreateProductOrderingAndBranchAvailability from "../../components/AddProd
 import CreateProductTabs from "../../components/AddProduct/CreateProductTabs/CreateProductTabs";
 import CreateProductPricingAndOptions from "../../components/AddProduct/ProductVariations/CreateProductPricingAndOptions";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
+import HeaderContainer from "../../components/reusable/HeaderContainer";
 import { NEW_PRODUCT } from "../../interfaces/products/create-new-product";
 import { createProduct } from "../../utils/queries";
 
@@ -77,11 +78,13 @@ const CreateNewProduct = () => {
     <NewProductContext.Provider
       value={{ activeTab, setActiveTab, updateData, formValues }}
     >
-      <Breadcrumbs
-        childLabel="Create New Product"
-        parentLabel="Products"
-        parentTarget="/products"
-      />
+      <HeaderContainer>
+        <Breadcrumbs
+          childLabel="Create New Product"
+          parentLabel="Products"
+          parentTarget="/products"
+        />
+      </HeaderContainer>
       <CreateProductTabs />
 
       <Wrapper>

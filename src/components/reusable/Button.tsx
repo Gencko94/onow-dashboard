@@ -77,6 +77,10 @@ interface IProps {
    * With Border
    */
   border?: boolean;
+  /**
+   * button Width
+   */
+  width?: string;
 }
 
 const Button = ({
@@ -98,6 +102,7 @@ const Button = ({
   border,
   isLoading,
   disabled,
+  width,
 }: IProps) => {
   return (
     <ButtonWrapper
@@ -114,6 +119,7 @@ const Button = ({
       shadow={shadow}
       border={border}
       disabled={disabled}
+      width={width}
     >
       {!isLoading && Icon && (
         <span className="icon">
@@ -143,6 +149,7 @@ export const ButtonWrapper = styled.button<{
   hoverColor?: string;
   shadow?: boolean;
   border?: boolean;
+  width?: string;
 }>(
   ({
     theme: {
@@ -164,6 +171,7 @@ export const ButtonWrapper = styled.button<{
     border,
     shadow: boxShadow,
     disabled,
+    width,
   }) => `
       background-color: ${
         bg === "primary"
@@ -178,6 +186,7 @@ export const ButtonWrapper = styled.button<{
           ? "#fff"
           : bg
       };
+      width:${width};
       box-shadow: ${boxShadow && shadow};
       display: flex;
       margin:${margin};

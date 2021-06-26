@@ -67,11 +67,7 @@ const ProductItem = ({
         />
       </div>
       <div className="field">
-        <img
-          className="img"
-          src={product.images?.[0].url}
-          alt={product.name[language]}
-        />
+        <img className="img" src={product.image} alt={product.name[language]} />
       </div>
       <div className="field">
         <h6>{product.name[language]}</h6>
@@ -83,7 +79,7 @@ const ProductItem = ({
         <h6>{product.price}</h6>
       </div>
       <div className="field">
-        <h6>{product.category.name}</h6>
+        <h6>{product.category?.name[language]}</h6>
       </div>
       {/* <div className="field">
         <EnabledButton enabled={false} type="button">
@@ -141,10 +137,11 @@ const ProductItem = ({
               padding="0.5rem"
               text="Edit"
               textSize="0.7rem"
+              margin="0 0.5rem"
               withRipple
               withTransition
               onClick={() => {
-                history.push(`/product/${product.id}`);
+                history.push(`/products/${product.id}`);
               }}
             />
           </ActionButtonContainer>
@@ -161,7 +158,7 @@ const Container = styled.div<{ selected: boolean }>`
   background-color: ${(props) =>
     props.selected ? props.theme.accentColor : "#fff"};
   gap: 1rem;
-  cursor: pointer;
+
   border-bottom: ${(props) => props.theme.border};
   &:hover {
     background-color: ${(props) => props.theme.accentColor};
@@ -170,6 +167,7 @@ const Container = styled.div<{ selected: boolean }>`
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    object-fit: cover;
     border: ${(props) => props.theme.border};
   }
   .field {

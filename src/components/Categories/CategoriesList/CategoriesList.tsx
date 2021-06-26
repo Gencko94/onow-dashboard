@@ -114,20 +114,22 @@ const CategoriesList = () => {
   return (
     <>
       <Container>
-        <Flex justify="flex-start" margin="1rem 0 ">
-          <p>Selected Rows ({selectedRows.length}) : </p>
-          <Flex margin="0 0.5rem">
-            <Button
-              disabled={selectedRows.length === 0}
-              bg="danger"
-              padding="0.25rem"
-              textSize="0.8rem"
-              text="Delete Categories"
-              withRipple
-              withTransition
-            />
+        {data?.pages[0].data.length !== 0 && (
+          <Flex justify="flex-start" margin="1rem 0 ">
+            <p>Selected Rows ({selectedRows.length}) : </p>
+            <Flex margin="0 0.5rem">
+              <Button
+                disabled={selectedRows.length === 0}
+                bg="danger"
+                padding="0.25rem"
+                textSize="0.8rem"
+                text="Delete Categories"
+                withRipple
+                withTransition
+              />
+            </Flex>
           </Flex>
-        </Flex>
+        )}
 
         <div className="table">
           {data?.pages[0].data.length !== 0 && (
@@ -141,11 +143,11 @@ const CategoriesList = () => {
           {data?.pages[0].data.length === 0 && (
             <EmptyTable
               iconImage="/images/food.png"
-              text="Oops, we didn't find any products !"
+              text="Oops, we didn't find any categories !"
               height="400px"
               withButton
-              btnText="Create New Product"
-              cb={() => history.push("/products/product/create")}
+              btnText="Create New Category"
+              cb={() => history.push("/categories/category/create")}
             />
           )}
           {data?.pages.map((group, i) => {

@@ -5,7 +5,11 @@ import styled from "styled-components";
 import useToast from "../../../hooks/useToast";
 import { PRODUCT } from "../../../interfaces/products/products";
 import extractError from "../../../utils/extractError";
-import { deleteProduct, getProducts } from "../../../utils/queries";
+import {
+  deleteMultipleProducts,
+  deleteProduct,
+  getProducts,
+} from "../../../utils/queries";
 import Button from "../../reusable/Button";
 import ConfirmationModal from "../../reusable/ConfirmationModal";
 import EmptyTable from "../../reusable/EmptyTable";
@@ -15,6 +19,7 @@ import Flex from "../../StyledComponents/Flex";
 import ProductItem from "./ProductItem";
 import Spinner from "react-loader-spinner";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import Grid from "../../StyledComponents/Grid";
 const ProductsList = () => {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const { handleCloseConfirmationModal } = useConfirmationModal();
@@ -64,9 +69,16 @@ const ProductsList = () => {
   } = useMutation(deleteProduct, {
     onSuccess: (data, productId) => {
       queryClient.invalidateQueries("products");
-      // queryClient.setQueryData<PRODUCT[] | undefined>("products", (prev) => {
-      //   return prev?.filter((i) => i.id !== parseInt(productId));
-      // });
+    },
+  });
+  // Multiple Delete Mutation
+  const {
+    mutateAsync: deleteMultiple,
+    reset: resetMultipleDelete,
+    isLoading: multipleDeleteLoading,
+  } = useMutation(deleteMultipleProducts, {
+    onSuccess: (data, productId) => {
+      queryClient.invalidateQueries("products");
     },
   });
 
@@ -80,6 +92,45 @@ const ProductsList = () => {
         },
         open: true,
         text: "Product Deleted Successfully",
+        type: "success",
+      });
+    } catch (error) {
+      handleCloseConfirmationModal?.();
+
+      const { responseError } = extractError(error);
+      if (responseError) {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: responseError,
+          type: "error",
+        });
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
+  };
+  const handleDeleteMultipleProducts = async (ids: number[]) => {
+    try {
+      await deleteMultiple(ids);
+      handleCloseConfirmationModal?.();
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Products Deleted Successfully",
         type: "success",
       });
     } catch (error) {
@@ -153,20 +204,29 @@ const ProductsList = () => {
 
   return (
     <>
-      <Flex margin="1rem 0 ">
-        <p>Selected Rows ({selectedRows.length}) : </p>
-        <Flex margin="0 0.5rem">
-          <Button
-            disabled={selectedRows.length === 0}
-            bg="danger"
-            padding="0.25rem"
-            textSize="0.8rem"
-            text="Delete Products"
-            withRipple
-            withTransition
-          />
+      {data?.pages[0].data.length !== 0 && (
+        <Flex margin="1rem 0 ">
+          <p>Selected Rows ({selectedRows.length}) : </p>
+          <Flex margin="0 0.5rem">
+            <Button
+              width="100%"
+              disabled={selectedRows.length === 0 || multipleDeleteLoading}
+              bg="danger"
+              padding="0.25rem"
+              textSize="0.8rem"
+              text={`Delete ${
+                selectedRows.length > 0 ? selectedRows.length : ""
+              } Products`}
+              withRipple
+              withTransition
+              isLoading={multipleDeleteLoading}
+              onClick={() => {
+                handleDeleteMultipleProducts(selectedRows);
+              }}
+            />
+          </Flex>
         </Flex>
-      </Flex>
+      )}
 
       <Container>
         {data?.pages[0].data.length !== 0 && (

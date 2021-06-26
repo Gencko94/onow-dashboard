@@ -118,8 +118,8 @@ const Variation = ({ option, index, removeOption }: IProps) => {
         )}
         <Controller
           control={control}
-          defaultValue={options[index].required}
-          name={`options.${index}.required` as const}
+          defaultValue={options?.[index]?.required}
+          name={`options.${index}.required` as any}
           render={({ field: { value, onChange, ref } }) => {
             return (
               <Select

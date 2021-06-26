@@ -17,7 +17,7 @@ interface WithButton extends BaseProps {
    * Adds a button to the ```div```
    * Providing ```withButton``` will require ```btnText``` and ```cb```.
    */
-  withButton: boolean;
+  withButton?: boolean;
   btnText?: string;
   cb?: () => void;
 }
