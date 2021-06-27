@@ -1,11 +1,6 @@
 import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import {
-  InfiniteData,
-  QueryErrorResetBoundary,
-  useInfiniteQuery,
-  useQuery,
-} from "react-query";
+import { QueryErrorResetBoundary, useInfiniteQuery } from "react-query";
 import OrdersList from "../components/Orders/OrdersList/OrdersList";
 import OrdersPanel from "../components/Orders/OrdersPanel/OrdersPanel";
 import OrdersThumbnails from "../components/Orders/OrdersThumbnails/OrdersThumbnails";
@@ -63,7 +58,7 @@ const Orders = ({ storeId }: { storeId: number }) => {
         },
       }
     );
-  console.log(data);
+
   return (
     <QueryErrorResetBoundary>
       {({ reset }) => (

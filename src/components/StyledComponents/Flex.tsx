@@ -41,7 +41,7 @@ export default Flex;
 export const FlexWrapper = styled.div`
   display: flex;
   justify-content: var(--justify, normal);
-  align-items: var(--items, normal);
+  align-items: var(--items, center);
   padding: var(--padding, 0);
   margin: var(--margin, 0);
 `;

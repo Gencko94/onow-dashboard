@@ -14,6 +14,7 @@ import Button from "../../reusable/Button";
 import { FlexWrapper } from "../../StyledComponents/Flex";
 
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import DefaultImage from "../../reusable/DefaultImage";
 
 interface IProps {
   product: PRODUCT;
@@ -67,13 +68,24 @@ const ProductItem = ({
         />
       </div>
       <div className="field">
-        <img className="img" src={product.image} alt={product.name[language]} />
+        <h6>{product.id}</h6>
+      </div>
+      <div className="field">
+        {product.image ? (
+          <img
+            className="img"
+            src={product.image}
+            alt={product.name[language]}
+          />
+        ) : (
+          <DefaultImage circular border height="50px" width="50px" />
+        )}
       </div>
       <div className="field">
         <h6>{product.name[language]}</h6>
       </div>
       <div className="field">
-        <h6>{product.quantity}</h6>
+        <h6>{product.quantity === "unlimited" ? "-" : product.quantity}</h6>
       </div>
       <div className="field">
         <h6>{product.price}</h6>
@@ -81,71 +93,65 @@ const ProductItem = ({
       <div className="field">
         <h6>{product.category?.name[language]}</h6>
       </div>
-      {/* <div className="field">
-        <EnabledButton enabled={false} type="button">
-          Enable
-        </EnabledButton>
-      </div> */}
+
       <div className="field">{renderStatus(2)}</div>
       <div className="field">
-        <ButtonsContainer>
-          <ActionButtonContainer
-            onClick={(e) => {
-              e.stopPropagation();
+        <ActionButtonContainer
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <button
+            onClick={() => {
+              setActionsMenuOpen(!actionsMenuOpen);
             }}
+            className="icon"
           >
-            <button
-              onClick={() => {
-                setActionsMenuOpen(!actionsMenuOpen);
-              }}
-              className="icon"
-            >
-              <BsThreeDotsVertical size={18} />
-            </button>
-            <CSSTransition
-              in={actionsMenuOpen}
-              classNames="menu"
-              unmountOnExit
-              timeout={100}
-            >
-              <Popover closeFunction={() => setActionsMenuOpen(false)}>
-                <Button
-                  text="Delete Product"
-                  padding="0.5rem"
-                  bg="white"
-                  color="#444"
-                  hoverColor="#b72b2b"
-                  textSize="0.8rem"
-                  Icon={RiDeleteBinLine}
-                  iconSize={15}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setConfirmationModalStatus?.({
-                      open: true,
-                      desc: "Are you sure you want to delete this Product ?",
-                      title: "Delete Product",
-                      closeCb: handleCloseConfirmationModal!,
-                      successCb: () => handleDeleteProduct(product.id),
-                    });
-                  }}
-                />
-              </Popover>
-            </CSSTransition>
+            <BsThreeDotsVertical size={18} />
+          </button>
+          <CSSTransition
+            in={actionsMenuOpen}
+            classNames="menu"
+            unmountOnExit
+            timeout={100}
+          >
+            <Popover closeFunction={() => setActionsMenuOpen(false)}>
+              <Button
+                text="Delete Product"
+                padding="0.5rem"
+                bg="white"
+                color="#444"
+                hoverColor="#b72b2b"
+                textSize="0.8rem"
+                Icon={RiDeleteBinLine}
+                iconSize={15}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setConfirmationModalStatus?.({
+                    open: true,
+                    desc: "Are you sure you want to delete this Product ?",
+                    title: "Delete Product",
+                    closeCb: handleCloseConfirmationModal!,
+                    successCb: () => handleDeleteProduct(product.id),
+                  });
+                }}
+              />
+            </Popover>
+          </CSSTransition>
 
-            <Button
-              bg="primary"
-              padding="0.5rem"
-              text="Edit"
-              textSize="0.7rem"
-              margin="0 0.5rem"
-              withRipple
-              withTransition
-              onClick={() => {
-                history.push(`/products/${product.id}`);
-              }}
-            />
-          </ActionButtonContainer>
-        </ButtonsContainer>
+          <Button
+            bg="primary"
+            padding="0.5rem"
+            text="Edit"
+            textSize="0.7rem"
+            margin="0 0.5rem"
+            withRipple
+            withTransition
+            onClick={() => {
+              history.push(`/products/${product.id}`);
+            }}
+          />
+        </ActionButtonContainer>
       </div>
     </Container>
   );
@@ -154,7 +160,7 @@ const ProductItem = ({
 export default ProductItem;
 const Container = styled.div<{ selected: boolean }>`
   display: grid;
-  grid-template-columns: 50px 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 50px 50px 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   background-color: ${(props) =>
     props.selected ? props.theme.accentColor : "#fff"};
   gap: 1rem;
@@ -164,11 +170,10 @@ const Container = styled.div<{ selected: boolean }>`
     background-color: ${(props) => props.theme.accentColor};
   }
   .img {
-    width: 50px;
     height: 50px;
-    border-radius: 50%;
+    width: 50px;
+    border-radius: 50px;
     object-fit: cover;
-    border: ${(props) => props.theme.border};
   }
   .field {
     display: flex;
@@ -183,7 +188,8 @@ const Container = styled.div<{ selected: boolean }>`
   }
 `;
 
-const ButtonsContainer = styled.div`
+const ActionButtonContainer = styled(FlexWrapper)`
+  position: relative;
   button.icon {
     display: inline-block;
     cursor: pointer;
@@ -196,9 +202,6 @@ const ButtonsContainer = styled.div`
       background-color: #e6e6e6;
     }
   }
-`;
-const ActionButtonContainer = styled(FlexWrapper)`
-  position: relative;
 `;
 const Status = styled.div`
   display: flex;

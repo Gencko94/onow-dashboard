@@ -20,7 +20,9 @@ export default function ProtectedRoute({ Component, path }: IProps) {
       exact
       path={path}
       render={({ location }) => {
+        // Check if authentication is successful.
         if (user) {
+          // If Successful , check user permissions.
           if (
             canVisitPage({
               permissions: user.permissions,
@@ -50,8 +52,10 @@ export default function ProtectedRoute({ Component, path }: IProps) {
                 )}
               </QueryErrorResetBoundary>
             );
+            // User Don't have permissions
           } else return <NotAuthorized />;
         } else {
+          // No Token or Broken Token
           return (
             <Redirect
               to={{

@@ -66,8 +66,8 @@ const CategoriesList = () => {
     () => [
       { title: "", sortable: false },
       { title: "ID", sortable: false },
-      { title: "name", sortable: false },
       { title: "image", sortable: false },
+      { title: "name", sortable: false },
 
       { title: "status", sortable: false },
       { title: "actions", sortable: false },

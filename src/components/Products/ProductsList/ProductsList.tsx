@@ -11,16 +11,17 @@ import {
   getProducts,
 } from "../../../utils/queries";
 import Button from "../../reusable/Button";
-import ConfirmationModal from "../../reusable/ConfirmationModal";
 import EmptyTable from "../../reusable/EmptyTable";
 import LoadingTable from "../../reusable/LoadingTable";
 import TableHead from "../../reusable/TableHead";
-import Flex from "../../StyledComponents/Flex";
+import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
 import ProductItem from "./ProductItem";
 import Spinner from "react-loader-spinner";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
-import Grid from "../../StyledComponents/Grid";
+import { useQueryParams } from "../../../hooks/useQueryParams";
+import { IoCloseCircleOutline } from "react-icons/io5";
 const ProductsList = () => {
+  const { search } = useQueryParams();
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const { handleCloseConfirmationModal } = useConfirmationModal();
 
@@ -46,10 +47,10 @@ const ProductsList = () => {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    ["products", sortBy],
-    ({ pageParam = 1 }) => getProducts(sortBy, pageParam),
+    ["products", sortBy, search],
+    ({ pageParam = 1 }) => getProducts(sortBy, pageParam, search as string),
     {
-      keepPreviousData: true,
+      keepPreviousData: search !== "" ? false : true,
 
       getNextPageParam: (lastPage) => {
         if (lastPage.currentPage < lastPage.lastPage) {
@@ -141,7 +142,7 @@ const ProductsList = () => {
       } else {
         setToastStatus?.({
           fn: () => {
-            reset();
+            resetMultipleDelete();
             handleCloseToast?.();
           },
           open: true,
@@ -155,6 +156,7 @@ const ProductsList = () => {
   const cols = useMemo(
     () => [
       { title: " ", sortable: false },
+      { title: "id", sortable: false },
       { title: "image", sortable: false },
       {
         title: "name",
@@ -188,7 +190,7 @@ const ProductsList = () => {
         },
       },
       { title: "category", sortable: false },
-      { title: "enabled", sortable: false },
+      { title: "status", sortable: false },
       { title: "actions", sortable: false },
     ],
     [sortBy.field, sortBy.order]
@@ -201,11 +203,11 @@ const ProductsList = () => {
     }
   };
   if (status === "loading") return <LoadingTable />;
-
+  console.log(search);
   return (
     <>
       {data?.pages[0].data.length !== 0 && (
-        <Flex margin="1rem 0 ">
+        <Flex margin="1rem 0" justify="flex-end">
           <p>Selected Rows ({selectedRows.length}) : </p>
           <Flex margin="0 0.5rem">
             <Button
@@ -227,14 +229,41 @@ const ProductsList = () => {
           </Flex>
         </Flex>
       )}
-
+      {search && (
+        <SearchContainer>
+          <p className="search-text">
+            Search Results for{" "}
+            <strong>
+              <i>{search}</i>
+            </strong>
+          </p>
+          <Flex margin="0 0.5rem" items="center">
+            <Button
+              Icon={IoCloseCircleOutline}
+              iconSize={20}
+              width="100%"
+              bg="danger"
+              margin="0 2rem"
+              padding="0.25rem"
+              textSize="0.7rem"
+              text="Clear search"
+              withRipple
+              withTransition
+              isLoading={multipleDeleteLoading}
+              onClick={() => {
+                history.replace("/products");
+              }}
+            />
+          </Flex>
+        </SearchContainer>
+      )}
       <Container>
         {data?.pages[0].data.length !== 0 && (
           <TableHead
             activeSortBy={sortBy.field}
             activeOrder={sortBy.order}
             cols={cols}
-            gridCols="50px 1fr 1fr 1fr 1fr 1fr 1fr 1fr "
+            gridCols="50px 50px 1fr 1fr 1fr 1fr 1fr 1fr 1fr "
           />
         )}
         <div className="table">
@@ -305,5 +334,14 @@ const Container = styled.div`
     z-index: 2;
     top: -14px;
     left: 15px;
+  }
+`;
+const SearchContainer = styled(FlexWrapper)`
+  background-color: #fff;
+  padding: 0.5rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+  .search-text {
+    font-size: 0.9rem;
   }
 `;

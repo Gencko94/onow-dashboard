@@ -1,27 +1,34 @@
 import styled from "styled-components";
-import { BsCardHeading } from "react-icons/bs";
-import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
-import { HiOutlineMail } from "react-icons/hi";
-import { MdDateRange, MdSubtitles } from "react-icons/md";
+import { AiOutlineMail } from "react-icons/ai";
+import { MdSubtitles } from "react-icons/md";
 import { CUSTOMER } from "../../interfaces/customers/customers";
-import { format } from "date-fns";
-import { parseISO } from "date-fns/esm";
+
 import IconedInput from "../reusable/Inputs/IconedInput";
-import { useForm } from "react-hook-form";
-import SuccessButton from "../reusable/SuccessButton";
+import { Control, Controller, DeepMap } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
+import { FieldError } from "react-hook-form";
+import PhoneInput from "../reusable/Inputs/PhoneInput";
+import { format, parseISO } from "date-fns";
 interface IProps {
-  data: CUSTOMER;
+  errors: DeepMap<CUSTOMER, FieldError>;
+  register: UseFormRegister<CUSTOMER>;
+  control: Control<CUSTOMER>;
+  joinDate: string;
 }
 
-const CustomerProfileInfo = ({ data }: IProps) => {
-  const {
-    register,
-    formState: { errors },
-  } = useForm<CUSTOMER>();
+const CustomerProfileInfo = ({
+  errors,
+  register,
+  control,
+  joinDate,
+}: IProps) => {
   return (
     <Container>
       <div className="title-container">
-        <h5>Customer Personal Info</h5>
+        <h5 className="title">Customer Personal Info</h5>
+        <p className="join-date">
+          Join Date : {format(parseISO(joinDate), "dd/MM/yyyy")}{" "}
+        </p>
       </div>
       <div className="box">
         <IconedInput
@@ -42,7 +49,21 @@ const CustomerProfileInfo = ({ data }: IProps) => {
           label="Last Name"
           name="last_name"
         />
-        <IconedInput
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field: { onChange, value } }) => {
+            return (
+              <PhoneInput
+                errors={errors?.phone}
+                label="Phone Number"
+                onChange={() => {}}
+                value={value}
+              />
+            );
+          }}
+        />
+        {/* <IconedInput
           Icon={AiOutlinePhone}
           errors={errors?.phone}
           register={register}
@@ -50,7 +71,7 @@ const CustomerProfileInfo = ({ data }: IProps) => {
           requiredMessage="Required"
           label="Phone Number"
           name="phone"
-        />
+        /> */}
         <IconedInput
           Icon={AiOutlineMail}
           errors={errors?.email}
@@ -60,9 +81,6 @@ const CustomerProfileInfo = ({ data }: IProps) => {
           label="Email Address"
           name="email"
         />
-      </div>
-      <div className="save-container">
-        <SuccessButton title="Save Changes" cb={() => {}} />
       </div>
     </Container>
   );
@@ -75,7 +93,12 @@ const Container = styled.div(
   margin: 2rem 0;
   .title-container {
     padding: 1rem 0;
-    color: ${mainColor};
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    .title {
+      color: ${mainColor};
+    }
   }
   .box {
     background-color: #fff;
@@ -92,17 +115,6 @@ const Container = styled.div(
 
     }
   }
-  .save-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    button {
-      background-color: ${green};
-      padding: 0.5rem;
-      border-radius: 6px;
-      color: #fff;
-    }
-  }
+  
   `
 );

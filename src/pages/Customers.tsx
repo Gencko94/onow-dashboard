@@ -9,16 +9,11 @@ import { CUSTOMER } from "../interfaces/customers/customers";
 import Modal from "../components/Modal/Modal";
 
 const Customers = ({ storeId }: { storeId: number }) => {
-  const { data } = useQuery<CUSTOMER[]>(
-    ["customers", storeId],
-    () => getCustomers(storeId),
-    { suspense: true }
-  );
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <div>
       <CustomersPanel setModalOpen={setModalOpen} />
-      <CustomerList data={data!} />
+      <CustomerList />
       <Modal
         isOpen={modalOpen}
         closeFunction={() => setModalOpen(false)}

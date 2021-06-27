@@ -5,6 +5,12 @@ export type GET_ORDERS_RESPONSE = {
   lastPage: number;
   currentPage: number;
 };
+export type GET_ORDERS_BY_CUSTOMER_RESPONSE = {
+  orders: ORDER[];
+
+  lastPage: number;
+  currentPage: number;
+};
 export type ORDER_CUSTOMER = {
   id: number;
   first_name: string;

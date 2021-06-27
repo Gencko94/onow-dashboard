@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import { BiChevronDown } from "react-icons/bi";
 import { GoSearch } from "react-icons/go";
+import { useHistory } from "react-router-dom";
+import ClickAwayListener from "react-click-away-listener";
 export type SEARCH_OPTIONS = "order" | "customer" | "product";
 export type PLACEHOLDER_OPTIONS =
   | "Search by Order No, Client No"
@@ -9,7 +11,9 @@ export type PLACEHOLDER_OPTIONS =
   | "Search for products";
 
 const Searchbar = () => {
+  const history = useHistory();
   const [option, setOption] = useState<SEARCH_OPTIONS>("customer");
+  let inputRef = useRef<HTMLInputElement>(null);
   const [placeholder, setPlaceholder] = useState<PLACEHOLDER_OPTIONS>(
     "Search By Customer Name, Phone Number"
   );
@@ -24,25 +28,37 @@ const Searchbar = () => {
       setPlaceholder("Search for products");
     }
   };
+  const handleSearch = () => {
+    if (option === "product") {
+      history.push(`/products?search=${inputRef.current?.value}`);
+    }
+  };
   return (
-    <Container>
-      <Input placeholder={placeholder} />
-      <Options onClick={() => setMenuOpen(!menuOpen)}>
+    <Container
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSearch();
+      }}
+    >
+      <Input ref={inputRef} placeholder={placeholder} />
+      <Options type="button" onClick={() => setMenuOpen(!menuOpen)}>
         <SelectedOption>{option}</SelectedOption>
         <BiChevronDown size={19} />
         {menuOpen && (
-          <OptionsContainer>
-            <Option onClick={() => handleChangeOption("customer")}>
-              Customer
-            </Option>
-            <Option onClick={() => handleChangeOption("order")}>Order</Option>
-            <Option onClick={() => handleChangeOption("product")}>
-              Product
-            </Option>
-          </OptionsContainer>
+          <ClickAwayListener onClickAway={() => setMenuOpen(false)}>
+            <OptionsContainer>
+              <Option onClick={() => handleChangeOption("customer")}>
+                Customer
+              </Option>
+              <Option onClick={() => handleChangeOption("order")}>Order</Option>
+              <Option onClick={() => handleChangeOption("product")}>
+                Product
+              </Option>
+            </OptionsContainer>
+          </ClickAwayListener>
         )}
       </Options>
-      <SearchButton>
+      <SearchButton type="submit" onClick={() => handleSearch()}>
         <GoSearch size={16} />
       </SearchButton>
     </Container>
@@ -50,13 +66,14 @@ const Searchbar = () => {
 };
 
 export default Searchbar;
-const Container = styled.div`
+const Container = styled.form`
   display: grid;
   flex: auto;
   background-color: #fff;
   grid-template-columns: minmax(100px, 1fr) 100px 40px;
   box-shadow: ${(props) => props.theme.shadow};
-  border-radius: 5px;
+  border-radius: 6px;
+  max-width: 500px;
 `;
 const Input = styled.input`
   padding: 0.5rem;

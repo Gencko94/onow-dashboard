@@ -9,6 +9,7 @@ import { NEW_PRODUCT } from "../interfaces/products/create-new-product";
 import { PRODUCT } from "../interfaces/products/products";
 import { NEW_STAFF_MEMBER, STAFF_MEMBER } from "../interfaces/staff/staff";
 import { CATEGORY, NEW_CATEGORY } from "../interfaces/categories/categories";
+import { ORDER_SORT } from "../pages/Orders";
 
 const uri = "https://new-version.o-now.net/customer-api";
 
@@ -99,12 +100,12 @@ export const getUserStores = async (): Promise<GET_STORES_RESPONSE> => {
   return result;
 };
 
-export const getCustomers = async (storeId: number): Promise<CUSTOMER[]> => {
+export const getCustomers = async (): Promise<CUSTOMER[]> => {
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
-      StoreId: storeId,
+      StoreId: 1,
     },
   };
   const res = await axios.get(`${uri}/clients-store`, config);
@@ -140,7 +141,31 @@ export const createCustomer = async ({
   const res = await axios.post(`${uri}/clients`, data, config);
   return res.data.results;
 };
-
+export const editCustomer = async (customer: CUSTOMER): Promise<CUSTOMER> => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+      StoreId: 1,
+    },
+  };
+  const res = await axios.put(`${uri}/clients`, customer, config);
+  return res.data.results;
+};
+export const deleteCustomer = async (
+  id: number
+): Promise<{ message: string }> => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+      StoreId: 1,
+    },
+  };
+  const res = await axios.delete(`${uri}/clients/${id}`, config);
+  return res.data.results;
+};
+// End of Customers
 //  Google Maps
 
 export const getGoogleMapsLocation = async ({
@@ -199,7 +224,36 @@ export const getOrder = async (id: string): Promise<ORDER> => {
   const res = await axios.get(`${uri}/orders/${id}`, config);
   return res.data.results;
 };
-
+type GET_ORDERS_BY_CUSTOMER_REQUEST = {
+  sortBy: ORDER_SORT;
+  pageParam: number;
+  customerId: number;
+  limit?: number;
+};
+export const getOrdersByCustomer = async ({
+  sortBy,
+  pageParam,
+  customerId,
+  limit = 20,
+}: GET_ORDERS_BY_CUSTOMER_REQUEST) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+      StoreId: 1,
+    },
+    params: {
+      page: pageParam,
+      limit,
+    },
+  };
+  const res = await axios.get(`${uri}/orders-client/${customerId}`, config);
+  return {
+    orders: res.data.results.data,
+    lastPage: res.data.results.pagination.last,
+    currentPage: res.data.results.pagination.current,
+  };
+};
 // End of orders
 export const getCoupon = async (id: string): Promise<COUPON> => {
   const t = localStorage.getItem("dshtid");
@@ -270,9 +324,9 @@ export const getProducts = async (
     field: string;
     order: string;
   },
-  pageParam: number
+  pageParam: number,
+  search?: string
 ) => {
-  console.log(pageParam);
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
     headers: {
@@ -283,6 +337,7 @@ export const getProducts = async (
       field: sortBy.field,
       page: pageParam,
       limit: 20,
+      search,
     },
   };
   const res = await axios.get(`${uri}/products`, config);

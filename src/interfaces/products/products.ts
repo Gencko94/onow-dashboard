@@ -26,7 +26,7 @@ interface PRODUCT_IMAGE {
 }
 export type PRODUCT = {
   id: number;
-  quantity: number;
+  quantity: number | "unlimited";
   name: {
     [key: string]: string;
   };

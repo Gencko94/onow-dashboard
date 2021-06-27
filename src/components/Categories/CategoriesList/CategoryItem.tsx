@@ -86,9 +86,6 @@ const CategoryItem = ({
           <h6>{category.id}</h6>
         </div>
         <div className="field">
-          <h6>{category.name[language]}</h6>
-        </div>
-        <div className="field">
           {category.image ? (
             <img
               className="img"
@@ -98,6 +95,9 @@ const CategoryItem = ({
           ) : (
             <DefaultImage circular border height="50px" width="50px" />
           )}
+        </div>
+        <div className="field">
+          <h6>{category.name[language]}</h6>
         </div>
         <div className="field">{renderStatus(category.active)}</div>
 

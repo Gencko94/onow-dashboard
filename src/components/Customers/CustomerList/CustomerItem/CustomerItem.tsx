@@ -1,27 +1,45 @@
 import styled from "styled-components";
-import { BsCheck, BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import ClickAwayListener from "react-click-away-listener";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { ImProfile } from "react-icons/im";
 import { useHistory } from "react-router";
 import { CUSTOMER } from "../../../../interfaces/customers/customers";
+import Checkbox from "../../../reusable/Inputs/Checkbox";
+import Popover from "../../../reusable/Popover";
+import Button from "../../../reusable/Button";
+import useConfirmationModal from "../../../../hooks/useConfirmationModal";
+import { FlexWrapper } from "../../../StyledComponents/Flex";
 
 interface IProps {
   customer: CUSTOMER;
+  selectedRows: number[];
+  handleToggleRows: (rowId: number) => void;
+  handleDeleteCustomer: (id: number) => void;
 }
 
-const CustomerItem = ({ customer }: IProps) => {
+const CustomerItem = ({
+  customer,
+  handleDeleteCustomer,
+  handleToggleRows,
+  selectedRows,
+}: IProps) => {
+  const { handleCloseConfirmationModal, setConfirmationModalStatus } =
+    useConfirmationModal();
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   return (
-    <Container>
-      {/* <div className="field">
-        <CheckboxContainer>
-          <BsCheck size={15} />
-        </CheckboxContainer>
-      </div> */}
+    <Container selected={selectedRows.includes(customer.id)}>
+      <div className="field">
+        <Checkbox
+          checked={selectedRows.includes(customer.id)}
+          onChange={(e) => {
+            handleToggleRows(customer.id);
+            e.stopPropagation();
+          }}
+        />
+      </div>
       <div className="field">
         <h6>{`${customer.first_name} ${customer.last_name}`}</h6>
       </div>
@@ -32,53 +50,74 @@ const CustomerItem = ({ customer }: IProps) => {
         <h6>{customer.email} </h6>
       </div>
       <div className="field">
-        <ButtonsContainer>
+        <ActionButtonContainer onClick={() => setActionsMenuOpen(true)}>
           <button
-            onClick={() => history.push("/customers/1")}
+            onClick={() => {
+              setActionsMenuOpen(!actionsMenuOpen);
+            }}
             className="icon"
-            title="Visit Profile"
           >
-            <ImProfile size={18} />
+            <BsThreeDotsVertical size={18} />
           </button>
-          <ActionButtonContainer onClick={() => setActionsMenuOpen(true)}>
-            <button className="icon">
-              <BsThreeDotsVertical size={18} />
-            </button>
-            <CSSTransition
-              in={actionsMenuOpen}
-              classNames="menu"
-              unmountOnExit
-              timeout={100}
-            >
-              <ClickAwayListener onClickAway={() => setActionsMenuOpen(false)}>
-                <ul>
-                  <li>
-                    <button>
-                      <span className="icon">
-                        <RiDeleteBinLine size={15} />
-                      </span>
-                      <p>Delete</p>
-                    </button>
-                  </li>
-                </ul>
-              </ClickAwayListener>
-            </CSSTransition>
-          </ActionButtonContainer>
-        </ButtonsContainer>
+          <CSSTransition
+            in={actionsMenuOpen}
+            classNames="menu"
+            unmountOnExit
+            timeout={100}
+          >
+            <ClickAwayListener onClickAway={() => setActionsMenuOpen(false)}>
+              <Popover closeFunction={() => setActionsMenuOpen(false)}>
+                <Button
+                  text="Delete Customer"
+                  padding="0.5rem"
+                  bg="white"
+                  color="#444"
+                  hoverColor="#b72b2b"
+                  textSize="0.8rem"
+                  Icon={RiDeleteBinLine}
+                  iconSize={15}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setConfirmationModalStatus?.({
+                      open: true,
+                      desc: "Are you sure you want to delete this customer ?",
+                      title: "Delete Customer",
+                      closeCb: handleCloseConfirmationModal!,
+                      successCb: () => handleDeleteCustomer(customer.id),
+                    });
+                  }}
+                />
+              </Popover>
+            </ClickAwayListener>
+          </CSSTransition>
+          <Button
+            bg="primary"
+            padding="0.5rem"
+            text="Edit"
+            textSize="0.7rem"
+            margin="0 0.5rem"
+            withRipple
+            withTransition
+            onClick={() => {
+              history.push(`/customers/${customer.id}`);
+            }}
+          />
+        </ActionButtonContainer>
       </div>
     </Container>
   );
 };
 
 export default CustomerItem;
-const Container = styled.div`
+const Container = styled.div<{ selected: boolean }>`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 0.5fr;
-  background-color: #fff;
+  grid-template-columns: 100px 1fr 1fr 1fr 0.5fr;
+  background-color: ${(props) =>
+    props.selected ? props.theme.accentColor : "#fff"};
   gap: 1rem;
   border-bottom: ${(props) => props.theme.border};
   &:hover {
-    background-color: ${(props) => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.accentColor};
   }
 
   .field {
@@ -93,23 +132,9 @@ const Container = styled.div`
     }
   }
 `;
-const CheckboxContainer = styled.button`
-  border: ${(props) => props.theme.border};
-  border-radius: 5px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;
-  &:hover {
-    background-color: ${(props) => props.theme.accentColor};
-  }
-`;
-const ButtonsContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+
+const ActionButtonContainer = styled(FlexWrapper)`
+  position: relative;
   button.icon {
     display: inline-block;
     cursor: pointer;
@@ -121,43 +146,5 @@ const ButtonsContainer = styled.div`
     &:hover {
       background-color: #e6e6e6;
     }
-  }
-`;
-const ActionButtonContainer = styled.div`
-  position: relative;
-
-  ul {
-    position: absolute;
-    bottom: -3px;
-    right: 8px;
-    z-index: 10;
-    background-color: #fff;
-    transform-origin: right;
-    box-shadow: ${(props) => props.theme.shadow};
-    border-radius: 5px;
-  }
-  ul li button {
-    padding: 0.5rem;
-    display: block;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.9rem;
-    color: ${(props) => props.color};
-    transition: all 75ms ease;
-    &:hover {
-      color: ${(props) => props.theme.headingColor};
-      background-color: ${(props) => props.theme.highlightColor};
-    }
-    p {
-      margin: 0 0.5rem;
-    }
-  }
-  span.icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.25rem;
   }
 `;
