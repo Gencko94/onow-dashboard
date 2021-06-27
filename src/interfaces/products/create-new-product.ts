@@ -4,7 +4,7 @@ export interface NEW_PRODUCT {
   };
   active: 1 | 0;
   quantity: number | "unlimited";
-  category_id: number;
+  product_category_id: number;
   images: File[];
   description: {
     [key: string]: string;

@@ -99,6 +99,7 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
                             >
                               {category.image ? (
                                 <img
+                                  className="img"
                                   src={category.image}
                                   alt={category.name[language]}
                                 />
@@ -219,6 +220,12 @@ const CategoryItem = styled.div<{ active: boolean }>`
   border-bottom: ${(props) => props.theme.border};
   &:hover {
     /* background-color: ${(props) => props.theme.highlightColor}; */
+  }
+  .img {
+    border-radius: 50%;
+    width: 25px;
+    object-fit: cover;
+    height: 25px;
   }
 
   .field {

@@ -35,7 +35,7 @@ const CreateProductGeneralInfo = () => {
     useContext(NewProductContext);
   const methods = useForm<firstTabInfo>({
     defaultValues: {
-      category_id: formValues?.category_id,
+      category_id: formValues?.product_category_id,
       description: formValues?.description,
       quantity: formValues?.quantity,
       name: formValues?.name,

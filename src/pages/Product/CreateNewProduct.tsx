@@ -27,6 +27,7 @@ const CreateNewProduct = () => {
   const [formValues, setFormValues] = useState<Partial<NEW_PRODUCT>>({
     allow_attachments: false,
     allow_side_notes: true,
+    price_by_options: false,
     branch_availability: {
       all: true,
       branches: [],

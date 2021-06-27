@@ -70,30 +70,10 @@ const AddCategoryModalBody = ({ control, errors }: IProps) => {
         rules={{
           required: "Required",
         }}
-        defaultValue={formValues?.category_id}
+        defaultValue={formValues?.product_category_id}
         render={({ field: { onChange } }) => {
           return (
             <Container>
-              {/* <div className="chips">
-                <p className="text">Selected Categories :</p>
-                <div className="chips-wrapper">
-                  {categories?.map((cat: any) => {
-                    return (
-                      <Chip
-                        key={cat.id}
-                        text={cat.name[language]}
-                        onClick={(e) => {
-                          handleToggleCategories(cat, onChange);
-                        }}
-                      />
-                    );
-                  })}
-                  {errors && (
-                    <p className="error-message">Please Select a Category</p>
-                  )}
-                </div>
-              </div> */}
-
               <div className="table">
                 {status === "loading" && <LoadingTable />}
                 {data?.pages.map((group, i) => {
@@ -240,6 +220,7 @@ const CategoryItem = styled.div<{ active: boolean }>`
     border-radius: 50%;
     width: 25px;
     height: 25px;
+    object-fit: cover;
   }
   .field {
     padding: 0.5rem;

@@ -367,7 +367,7 @@ export const createProduct = async (product: NEW_PRODUCT) => {
   product.images.forEach((image) => formData.append("images", image));
 
   formData.append("description", JSON.stringify(product.description));
-  formData.append("price", JSON.stringify(product.price));
+  formData.append("price", product.price as any);
   formData.append("price_by_options", JSON.stringify(product.price_by_options));
   formData.append("sku", product.sku);
   formData.append("prep_time", JSON.stringify(product.prep_time));
@@ -382,8 +382,8 @@ export const createProduct = async (product: NEW_PRODUCT) => {
     JSON.stringify(product.branch_availability)
   );
   formData.append("options", JSON.stringify(product.options));
-  formData.append("product_category_id", JSON.stringify(product.category_id));
-  formData.append("active", JSON.stringify(true));
+  formData.append("product_category_id", product.product_category_id as any);
+  formData.append("active", 1 as any);
   formData.append("slug", JSON.stringify(product.slug));
 
   formData.append("file", product.images[0]);
