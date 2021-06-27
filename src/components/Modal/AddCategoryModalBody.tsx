@@ -112,6 +112,7 @@ const AddCategoryModalBody = ({ control, errors }: IProps) => {
                               >
                                 {category.image ? (
                                   <img
+                                    className="img"
                                     src={category.image}
                                     alt={category.name[language]}
                                   />
@@ -235,7 +236,11 @@ const CategoryItem = styled.div<{ active: boolean }>`
   &:hover {
     /* background-color: ${(props) => props.theme.highlightColor}; */
   }
-
+  .img {
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+  }
   .field {
     padding: 0.5rem;
     flex: 1;

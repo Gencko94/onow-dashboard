@@ -59,7 +59,7 @@ const CategoryItem = ({
     <>
       <Container>
         <div className="btns-container">
-          {category.children && (
+          {category.children.length > 0 && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -90,7 +90,11 @@ const CategoryItem = ({
         </div>
         <div className="field">
           {category.image ? (
-            <img src={category.image} alt={category.name[language]} />
+            <img
+              className="img"
+              src={category.image}
+              alt={category.name[language]}
+            />
           ) : (
             <DefaultImage circular border height="50px" width="50px" />
           )}
@@ -154,7 +158,7 @@ const CategoryItem = ({
           </ButtonsContainer>
         </div>
       </Container>
-      {category.children && (
+      {category.children.length > 0 && (
         <CSSTransition
           in={submenuOpen}
           classNames="sub-categories"
@@ -164,6 +168,8 @@ const CategoryItem = ({
           <SubCategoriesList
             handleToggleRows={handleToggleRows}
             selectedRows={selectedRows}
+            categories={category.children}
+            handleDeleteCategory={handleDeleteCategory}
           />
         </CSSTransition>
       )}
@@ -192,6 +198,12 @@ const Container = styled.div`
     h6 {
       font-size: 0.8rem;
       font-weight: ${(props) => props.theme.font.bold};
+    }
+    .img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50px;
+      object-fit: cover;
     }
   }
   .btns-container {

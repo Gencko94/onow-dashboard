@@ -12,7 +12,7 @@ export interface CATEGORY {
   parent_id: number;
   image: string;
   slug: string;
-  children?: CATEGORY[];
+  children: CATEGORY[];
   description: {
     [key: string]: string;
   };

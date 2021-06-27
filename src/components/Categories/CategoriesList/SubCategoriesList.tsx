@@ -1,20 +1,31 @@
 import styled from "styled-components";
+import { CATEGORY } from "../../../interfaces/categories/categories";
 
 import SubCategoryItem from "./SubCategoryItem";
 interface IProps {
   selectedRows: number[];
   handleToggleRows: (rowId: number) => void;
+  categories: CATEGORY[];
+  handleDeleteCategory: (id: number) => void;
 }
-const SubCategoriesList = ({ handleToggleRows, selectedRows }: IProps) => {
+const SubCategoriesList = ({
+  categories,
+  handleToggleRows,
+  selectedRows,
+  handleDeleteCategory,
+}: IProps) => {
   return (
     <Container>
       <h6 className="title">Sub Categories</h6>
 
       <div className="sub-table">
-        {[0, 1, 2, 3].map((i) => (
+        {categories.map((category) => (
           <SubCategoryItem
+            key={category.id}
+            category={category}
             handleToggleRows={handleToggleRows}
             selectedRows={selectedRows}
+            handleDeleteCategory={handleDeleteCategory}
           />
         ))}
       </div>

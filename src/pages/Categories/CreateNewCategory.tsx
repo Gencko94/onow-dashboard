@@ -7,7 +7,6 @@ import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Flex from "../../components/StyledComponents/Flex";
-import Hr from "../../components/StyledComponents/Hr";
 import useToast from "../../hooks/useToast";
 import { CATEGORY } from "../../interfaces/categories/categories";
 import extractError from "../../utils/extractError";
@@ -97,6 +96,7 @@ const CreateNewCategory = () => {
         </Flex>
       </HeaderContainer>
       <CategoryInfo
+        setValue={setValue}
         watch={watch}
         control={control}
         errors={errors}

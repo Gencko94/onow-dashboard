@@ -491,6 +491,7 @@ export const createCategory = async (
   formData.append("description", JSON.stringify(category.description));
   formData.append("image", category.image);
   formData.append("slug", category.slug);
+  formData.append("parent_id", JSON.stringify(category.parent_id));
   const res = await axios.post(`${uri}/product-categories`, formData, config);
   return res.data.results;
 };

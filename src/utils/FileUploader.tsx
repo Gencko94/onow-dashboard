@@ -33,7 +33,7 @@ const FileUploader = ({
     for (let file of Array.from(files)) {
       if (file.size <= maxFileSizeInBytes) {
         if (!multiple) {
-          return { file };
+          return { [file.name]: file };
         }
         addedImages[file.name] = file;
       }
@@ -53,6 +53,7 @@ const FileUploader = ({
     }
   };
   const removeImage = (fileName: string) => {
+    console.log(images);
     delete images[fileName];
     setImages({ ...images });
     setValue?.(name, convertNestedObjectToArray({ ...images }));

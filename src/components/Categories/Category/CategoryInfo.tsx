@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -16,20 +17,27 @@ interface IProps {
   errors: any;
   watch: any;
   control: Control<any>;
+  setValue?: any;
 }
 
 const CategoryInfo = ({
   control,
   errors,
   register,
-
+  setValue,
   watch,
 }: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
   const formCategory = watch("parent_category");
+  const nameEn: string = watch("name.en");
   // console.log(form);
+  useEffect(() => {
+    if (nameEn) {
+      setValue?.("slug", nameEn.toLowerCase().split(" ").join("-"));
+    }
+  }, [nameEn]);
   return (
     <Container>
       <Grid cols="2fr 1fr" gap="1rem">
