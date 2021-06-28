@@ -16,12 +16,12 @@ export const product1: PRODUCT = {
     en: "fdsa",
   },
   id: 1,
-  // images: [
-  //   {
-  //     is_default: false,
-  //     url: "/images/product.webp",
-  //   },
-  // ],
+  images: [
+    {
+      is_default: false,
+      url: "/images/product.webp",
+    },
+  ],
   image: "/",
   name: {
     ar: "fds",

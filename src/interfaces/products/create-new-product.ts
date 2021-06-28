@@ -6,6 +6,7 @@ export interface NEW_PRODUCT {
   quantity: number | "unlimited";
   product_category_id: number;
   images: File[];
+  thumbnail: File;
   description: {
     [key: string]: string;
   };

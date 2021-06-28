@@ -1,26 +1,37 @@
-import { useRef, useState } from "react";
-import { Control, Controller, UseFormSetValue } from "react-hook-form";
-import { RiDeleteBinLine } from "react-icons/ri";
+import { useEffect, useRef, useState } from "react";
+import { IoMdCloseCircle } from "react-icons/io";
 import styled from "styled-components";
+import convertUrlToFile from "./convertUrlToFile";
 const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 1000000;
 const convertBytesToKB = (bytes: number) => Math.round(bytes / 1000);
 interface IProps {
-  accept: string;
-  control: Control<any> | undefined;
-  name: string;
+  accept: ".png, .jpg, .jpeg" | ".png" | ".jpg" | ".jpeg";
+  image: File | string;
   maxFileSizeInBytes?: number;
-  setValue?: UseFormSetValue<any> | undefined;
+  onChange: (file: File) => void;
+  onRemove: () => void;
 }
 const MiniFileUploader = ({
-  control,
   accept,
   maxFileSizeInBytes = DEFAULT_MAX_FILE_SIZE_IN_BYTES,
-  setValue,
-  name,
+  onChange,
+  onRemove,
+  image,
 }: IProps) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const [image, setImage] = useState<File | null>(null);
+  // const formImages = watch?.(name);
 
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [file, setFile] = useState<File | null>(() => {
+    // if (formImages) return file;
+    return null;
+  });
+  useEffect(() => {
+    if (typeof image === "string") {
+      convertUrlToFile(image).then((data) => console.log(setFile(data)));
+    } else {
+      setFile(image);
+    }
+  }, [image]);
   // Image Validation
   const addFilesAndValidate = (files: FileList) => {
     let addedImage;
@@ -31,42 +42,54 @@ const MiniFileUploader = ({
     }
     return addedImage;
   };
+
   const handleAddNewFiles = (
     files: FileList | null,
     cb: (file: File) => void
   ) => {
     if (files?.length) {
       const addedImage = addFilesAndValidate(files);
-      setImage(addedImage!);
+      // setImage(addedImage!);
       //   const fileArray = convertNestedObjectToArray(allFiles);
       cb(addedImage!);
     }
   };
   const removeImage = () => {
-    setImage(null);
-    setValue?.(name, undefined);
+    onRemove();
+    setFile(null);
+    // setImage(null);
+    // setValue?.(name, undefined);
   };
   return (
     <Container>
       <DragFileInputContainer>
         <div className="img-preview">
-          {!image && <DragDropText>Drag and drop here</DragDropText>}
-          {image && (
+          {!file && (
+            <>
+              <img
+                className="upload-img"
+                src="/images/upload.png"
+                alt="upload"
+              />
+              <DragDropText>Drag and drop here</DragDropText>
+            </>
+          )}
+          {file && (
             <FilePreviewContainer>
               {/* <PreviewList> */}
               <PreviewContainer>
-                <ImagePreview src={URL.createObjectURL(image)} />
+                <ImagePreview src={URL.createObjectURL(file)} />
                 <ImageMetaData>
-                  <p>{image?.name}</p>
+                  <p>{file?.name}</p>
                   <div className="flex">
-                    <p>{convertBytesToKB(image!.size)} kb</p>
+                    <p>{convertBytesToKB(file!.size)} kb</p>
                     <button
                       type="button"
                       onClick={() => {
                         removeImage();
                       }}
                     >
-                      <RiDeleteBinLine size={22} />
+                      <IoMdCloseCircle size={35} />
                     </button>
                   </div>
                 </ImageMetaData>
@@ -76,7 +99,7 @@ const MiniFileUploader = ({
             </FilePreviewContainer>
           )}
         </div>
-        {!image && (
+        {!file && (
           <UploadFileButton
             type="button"
             onClick={() => {
@@ -86,25 +109,16 @@ const MiniFileUploader = ({
             Browse Files
           </UploadFileButton>
         )}
-        <Controller
-          control={control}
-          name={name}
-          rules={{ required: "Required" }}
-          render={({ field: { onChange, value, ref } }) => (
-            <>
-              <DragInput
-                accept={accept}
-                type="file"
-                onChange={(e) => {
-                  handleAddNewFiles(e.target.files, onChange);
-                }}
-                ref={(e: any) => {
-                  ref = e;
-                  inputRef.current = e;
-                }}
-              />
-            </>
-          )}
+
+        <DragInput
+          accept={accept}
+          type="file"
+          onChange={(e) => {
+            handleAddNewFiles(e.target.files, onChange);
+          }}
+          ref={(e: any) => {
+            inputRef.current = e;
+          }}
         />
       </DragFileInputContainer>
     </Container>
@@ -131,6 +145,10 @@ const DragFileInputContainer = styled.div`
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
+  }
+  .upload-img {
+    width: 70px;
+    height: 100px;
   }
 `;
 const DragInput = styled.input`
@@ -176,7 +194,7 @@ const PreviewContainer = styled.div`
   height: 100%;
 
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 const ImagePreview = styled.img`
   width: 100%;
@@ -200,10 +218,13 @@ const ImageMetaData = styled.div`
     flex: 1;
   }
   button {
+    position: absolute;
+    top: -10px;
+    right: -10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: ${(props) => props.theme.dangerRed};
   }
   .flex {
     display: flex;

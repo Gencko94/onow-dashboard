@@ -84,12 +84,12 @@ const BrandInfo = ({ control, errors, register, setValue }: IProps) => {
         </div>
         <div className="image-section">
           <h5>Brand Image</h5>
-          <MiniFileUploader
+          {/* <MiniFileUploader
             control={control}
             accept="image/*"
             setValue={setValue}
             name="image"
-          />
+          /> */}
           <div className="specs">
             <p>Preffered width and height : 32px(width) X 32px(height)</p>
             <p>Maximum size allowed : 2048KB</p>

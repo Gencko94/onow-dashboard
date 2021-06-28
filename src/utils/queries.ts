@@ -365,7 +365,7 @@ export const createProduct = async (product: NEW_PRODUCT) => {
   // Appending Form Data
   formData.append("name", JSON.stringify(product.name));
   product.images.forEach((image) => formData.append("images", image));
-
+  formData.append("thumbnail", product.thumbnail);
   formData.append("description", JSON.stringify(product.description));
   formData.append("price", product.price as any);
   formData.append("price_by_options", JSON.stringify(product.price_by_options));
@@ -382,6 +382,7 @@ export const createProduct = async (product: NEW_PRODUCT) => {
     JSON.stringify(product.branch_availability)
   );
   formData.append("options", JSON.stringify(product.options));
+  formData.append("quantity", JSON.stringify(product.quantity) as any);
   formData.append("product_category_id", product.product_category_id as any);
   formData.append("active", 1 as any);
   formData.append("slug", JSON.stringify(product.slug));

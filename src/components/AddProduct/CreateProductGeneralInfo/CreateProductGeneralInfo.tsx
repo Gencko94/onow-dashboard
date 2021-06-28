@@ -14,7 +14,7 @@ import {
 import { useContext } from "react";
 import Flex from "../../StyledComponents/Flex";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
-import BlueButton from "../../reusable/BlueButton";
+import Button from "../../reusable/Button";
 
 export interface firstTabInfo {
   category_id: number;
@@ -26,6 +26,7 @@ export interface firstTabInfo {
   };
   slug: string;
   images: File[];
+  thumbnail: File;
   quantity: number | "unlimited";
   sku: string;
 }
@@ -35,10 +36,11 @@ const CreateProductGeneralInfo = () => {
     useContext(NewProductContext);
   const methods = useForm<firstTabInfo>({
     defaultValues: {
-      category_id: formValues?.product_category_id,
+      category_id: formValues?.category_id,
       description: formValues?.description,
       quantity: formValues?.quantity,
       name: formValues?.name,
+      thumbnail: formValues?.thumbnail,
       images: formValues?.images,
       slug: formValues?.slug,
       sku: formValues?.sku,
@@ -58,10 +60,13 @@ const CreateProductGeneralInfo = () => {
     <FormProvider {...methods}>
       <Container>
         <Flex justify="flex-end">
-          <BlueButton
-            onClick={methods.handleSubmit(onSubmit, onError)}
+          <Button
             type="submit"
-            title="Next"
+            onClick={methods.handleSubmit(onSubmit, onError)}
+            text="Next"
+            bg="blue"
+            padding="0.5rem"
+            textSize="0.9rem"
           />
         </Flex>
         <Grid cols="1fr 1fr" gap="1rem">

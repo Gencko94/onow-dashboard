@@ -11,6 +11,7 @@ interface IProps {
   maxFileSizeInBytes?: number;
   setValue: UseFormSetValue<any>;
   name: string;
+  watch?: any;
 }
 const FileUploader = ({
   multiple,
@@ -19,16 +20,24 @@ const FileUploader = ({
   maxFileSizeInBytes = DEFAULT_MAX_FILE_SIZE_IN_BYTES,
   setValue,
   name,
+  watch,
 }: IProps) => {
+  const formImages = watch?.(name);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [images, setImages] = useState<{ [key: string]: File }>({});
+  const [images, setImages] = useState<{ [key: string]: File }>(() => {
+    if (formImages) {
+      const images = addFilesAndValidate(formImages);
+      return { ...images };
+    }
+    return {};
+  });
 
   const convertNestedObjectToArray = (obj: { [key: string]: File }): File[] => {
     return Object.keys(obj).map((key) => obj[key]);
   };
 
   // Image Validation
-  const addFilesAndValidate = (files: FileList) => {
+  function addFilesAndValidate(files: FileList) {
     const addedImages: { [key: string]: File } = {};
     for (let file of Array.from(files)) {
       if (file.size <= maxFileSizeInBytes) {
@@ -39,7 +48,7 @@ const FileUploader = ({
       }
     }
     return { ...addedImages };
-  };
+  }
   const handleAddNewFiles = (
     files: FileList | null,
     cb: (files: File[]) => void
@@ -72,11 +81,11 @@ const FileUploader = ({
         >
           Browse Files
         </button>
-        <p className="desc">
+        {/* <p className="desc">
           Preffered width and height : 32px(width) X 32px(height)
         </p>
         <p className="desc">Maximum size allowed : 2048KB</p>
-        <p className="desc">Accepted Formats : .jpeg .png .jpg</p>
+        <p className="desc">Accepted Formats : .jpeg .png .jpg</p> */}
         <Controller
           control={control}
           name={name}
@@ -131,8 +140,8 @@ const FileUploader = ({
 
 export default FileUploader;
 const Container = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* display: grid; */
+  /* grid-template-columns: 1fr; */
   background-color: #fff;
 
   border-radius: 6px;
@@ -144,7 +153,7 @@ const DragFileInputContainer = styled.div`
   border-width: 2px;
   border-radius: 5px;
   background-color: ${(props) => props.theme.overlayColor};
-  padding: 35px 20px;
+  padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -181,7 +190,8 @@ const DragInput = styled.input`
 `;
 const DragDropText = styled.p`
   font-weight: ${(props) => props.theme.font.semibold};
-  letter-spacing: 1.5px;
+  /* letter-spacing: 1.5px; */
+  font-size: 0.9rem;
   margin-top: 0;
   text-align: center;
 `;
@@ -189,16 +199,16 @@ const DragDropText = styled.p`
 const FilePreviewContainer = styled.div``;
 const PreviewList = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 150px));
+  grid-template-columns: repeat(auto-fit, minmax(50px, 175px));
 
-  gap: 0.5rem;
+  gap: 1rem;
   height: 335px;
   max-height: 335px;
   overflow-y: auto;
   padding: 1rem;
 `;
 const PreviewContainer = styled.div`
-  width: 150px;
+  width: auto;
   height: 150px;
   border-radius: 8px;
   position: relative;

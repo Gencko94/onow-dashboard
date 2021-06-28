@@ -26,6 +26,7 @@ export interface FORM_PROPS {
   category: { id: number; name: { [key: string]: string } };
   sku: string;
   quantity: number | "unlimited";
+  image: string | File;
 }
 const ProductGeneralInformation = ({ data }: IProps) => {
   const methods = useForm<FORM_PROPS>({
@@ -36,6 +37,7 @@ const ProductGeneralInformation = ({ data }: IProps) => {
       quantity: data.quantity,
       category: data.category,
       sku: data.sku,
+      image: data.image,
     },
   });
   const onSubmit: SubmitHandler<FORM_PROPS> = (data) => {
@@ -56,9 +58,6 @@ const ProductGeneralInformation = ({ data }: IProps) => {
           <ProductCategories />
         </FormProvider>
       </Grid>
-
-      <Hr />
-      <ProductImage data={data} />
     </Container>
   );
 };

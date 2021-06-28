@@ -134,6 +134,7 @@ const ProductsList = () => {
         text: "Products Deleted Successfully",
         type: "success",
       });
+      setSelectedRows([]);
     } catch (error) {
       handleCloseConfirmationModal?.();
 

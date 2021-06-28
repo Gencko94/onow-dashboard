@@ -1,6 +1,8 @@
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import FileUploader from "../../../utils/FileUploader";
+import MiniFileUploader from "../../../utils/MiniFileUploader";
+import Grid from "../../StyledComponents/Grid";
 import { firstTabInfo } from "./CreateProductGeneralInfo";
 
 const CreateProductImage = () => {
@@ -8,6 +10,7 @@ const CreateProductImage = () => {
     control,
     formState: { errors },
     setValue,
+    watch,
   } = useFormContext<firstTabInfo>();
   return (
     <Container>
@@ -20,13 +23,36 @@ const CreateProductImage = () => {
           food, Truly delectable images will help your products sell themselfs.
         </p>
       </DescriptionBox>
-      <FileUploader
-        control={control}
-        accept="image/*"
-        multiple
-        name="images"
-        setValue={setValue}
-      />
+      <Grid cols="1fr 1fr" gap="1rem">
+        <Box>
+          <h6 className="title">Product Main Image</h6>
+          <Controller
+            control={control}
+            name="thumbnail"
+            render={({ field: { onChange, value, ref } }) => (
+              <MiniFileUploader
+                onChange={(file) => {
+                  onChange(file);
+                }}
+                accept=".png, .jpg, .jpeg"
+                image={value}
+                onRemove={() => onChange(undefined)}
+              />
+            )}
+          />
+        </Box>
+        <Box>
+          <h6 className="title">Product Image Gallery</h6>
+          <FileUploader
+            control={control}
+            accept="image/*"
+            multiple
+            name="images"
+            setValue={setValue}
+            watch={watch}
+          />
+        </Box>
+      </Grid>
       {/* <ErrorMessage>{errors?.images && "Required"}</ErrorMessage> */}
     </Container>
   );
@@ -35,7 +61,6 @@ const CreateProductImage = () => {
 export default CreateProductImage;
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `
-  margin: 2rem 0;
   display:flex;
   flex-direction:column;
   .title-container {
@@ -72,3 +97,12 @@ const ErrorMessage = styled.p`
   padding-top: 0.25rem;
   color: ${(props) => props.theme.dangerRed};
 `;
+const Box = styled.div(
+  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  padding:1rem;
+  .title {
+    margin-bottom:1rem;
+    text-align:center;
+  }
+  `
+);

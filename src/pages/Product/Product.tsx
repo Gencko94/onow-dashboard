@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 import ProductPromotions from "../../components/AddProduct/ProductPromotions/ProductPromotions";
 import ProductGeneralInformation from "../../components/Product/ProductGeneralInformation/ProductGeneralInformation";
+import ProductImaging from "../../components/Product/ProductImages/ProductImaging";
 import ProductOrderingAndBranchAvailability from "../../components/Product/ProductOrderingAndBranchAvailability/ProductOrderingAndBranchAvailability";
 import ProductPricingAndOptions from "../../components/Product/ProductPricingAndOptions/ProductPricingAndOptions";
 import ProductTabs from "../../components/Product/ProductTabs/ProductTabs";
@@ -16,7 +17,7 @@ const Product = () => {
   const { data } = useQuery(["product", id], () => getProduct(id), {
     suspense: true,
   });
-  const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3>(0);
+  const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3 | 4>(0);
   return (
     <div>
       <HeaderContainer>
@@ -31,8 +32,9 @@ const Product = () => {
 
       <Wrapper>
         {activeTab === 0 && <ProductGeneralInformation data={data!} />}
-        {activeTab === 1 && <ProductPricingAndOptions data={data!} />}
-        {activeTab === 2 && (
+        {activeTab === 1 && <ProductImaging data={data!} />}
+        {activeTab === 2 && <ProductPricingAndOptions data={data!} />}
+        {activeTab === 3 && (
           <ProductOrderingAndBranchAvailability data={data!} />
         )}
 

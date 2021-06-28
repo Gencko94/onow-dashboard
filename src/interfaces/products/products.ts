@@ -30,6 +30,7 @@ export type PRODUCT = {
   name: {
     [key: string]: string;
   };
+
   sku: string;
   slug: string;
   category: {
@@ -39,7 +40,7 @@ export type PRODUCT = {
     id: number;
   };
   image: string;
-  // images: PRODUCT_IMAGE[];
+  images: PRODUCT_IMAGE[];
   description: {
     [key: string]: string;
   };

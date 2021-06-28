@@ -9,14 +9,13 @@ import CreateProductTabs from "../../components/AddProduct/CreateProductTabs/Cre
 import CreateProductPricingAndOptions from "../../components/AddProduct/ProductVariations/CreateProductPricingAndOptions";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
-import { NEW_PRODUCT } from "../../interfaces/products/create-new-product";
 import { createProduct } from "../../utils/queries";
 
 type ContextProps = {
   activeTab: 0 | 1 | 2;
   setActiveTab: Dispatch<SetStateAction<0 | 1 | 2>>;
   updateData: (data: any) => void;
-  formValues: Partial<NEW_PRODUCT>;
+  formValues: any;
 };
 
 export const NewProductContext = createContext<Partial<ContextProps>>({});
@@ -24,7 +23,7 @@ export const NewProductContext = createContext<Partial<ContextProps>>({});
 const CreateNewProduct = () => {
   const [activeTab, setActiveTab] = useState<0 | 1 | 2>(0);
   const { mutateAsync: createProductMutation } = useMutation(createProduct);
-  const [formValues, setFormValues] = useState<Partial<NEW_PRODUCT>>({
+  const [formValues, setFormValues] = useState({
     allow_attachments: false,
     allow_side_notes: true,
     price_by_options: false,
@@ -54,7 +53,7 @@ const CreateNewProduct = () => {
     try {
       await createProductMutation({
         active: 1,
-        quantity: 1,
+        quantity: data.quantity,
         allow_attachments: data.allow_attachments,
         allow_side_notes: data.allow_side_notes,
         branch_availability: data.branch_availability,
@@ -63,7 +62,7 @@ const CreateNewProduct = () => {
         images: data.images,
         max_qty_per_user: data.max_qty_per_user,
         name: data.name,
-
+        thumbnail: data.thumbnail,
         options: data.options,
         prep_time: data.prep_time,
         price: data.price,

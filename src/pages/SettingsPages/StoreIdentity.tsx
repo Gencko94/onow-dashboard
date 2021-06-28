@@ -34,12 +34,12 @@ const StoreIdentity = () => {
                 <p>Maximum size allowed : 2048KB</p>
                 <p>Accepted Formats : .jpeg .png .jpg .svg</p>
               </div>
-              <MiniFileUploader
+              {/* <MiniFileUploader
                 control={control}
                 accept="image/*"
                 setValue={setValue}
                 name="logo"
-              />
+              /> */}
               <div className="demo-container">
                 <img src="/images/logo_helper.png" alt="" />
               </div>
@@ -54,12 +54,12 @@ const StoreIdentity = () => {
                 <p>Maximum size allowed : 2048KB</p>
                 <p>Accepted Formats : .jpeg .png .jpg</p>
               </div>
-              <MiniFileUploader
+              {/* <MiniFileUploader
                 control={control}
                 accept="image/*"
                 setValue={setValue}
                 name="icon"
-              />
+              /> */}
               <div className="demo-container">
                 <img src="/images/icon_helper.png" alt="" />
               </div>
