@@ -47,7 +47,12 @@ const Coupon = () => {
     handleSubmit,
     control,
   } = useForm<COUPON>({
-    defaultValues: { ...data },
+    defaultValues: {
+      ...data,
+      special_categories: data?.special_categories.map(
+        (category: any) => category.id
+      ),
+    },
   });
   const [modalOpen, setModalOpen] = useState(false);
 

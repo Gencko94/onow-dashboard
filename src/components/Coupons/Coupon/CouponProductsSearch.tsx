@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { GoSearch } from "react-icons/go";
 import styled from "styled-components";
 import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
 import { useDebounce } from "use-debounce";
-import { useQuery } from "react-query";
-import { searchProducts } from "../../../utils/test-queries";
-import { SEARCH_RESULTS_PRODUCT } from "../../../interfaces/search/search";
-import ClickAwayListener from "react-click-away-listener";
+import { useInfiniteQuery, useQuery } from "react-query";
 import Grid from "../../StyledComponents/Grid";
 import { useTranslation } from "react-i18next";
 import Loader from "react-loader-spinner";
-import { MINI_PRODUCT } from "../../../interfaces/products/products";
+import { PRODUCT } from "../../../interfaces/products/products";
 import { Control, Controller } from "react-hook-form";
 import { useWatch } from "react-hook-form";
+import { searchProducts } from "../../../utils/queries";
+import DefaultImage from "../../reusable/DefaultImage";
 
 interface IProps {
   control: Control<any>;
@@ -24,17 +23,42 @@ const CouponProductsSearch = ({ title, control }: IProps) => {
   const [searchValue, setSearchValue] = useState("");
   const [debouncedSearchValue] = useDebounce(searchValue, 500);
 
-  const { data, isLoading } = useQuery<SEARCH_RESULTS_PRODUCT>(
-    ["product-search", debouncedSearchValue],
-    () => searchProducts(debouncedSearchValue),
-    { enabled: debouncedSearchValue !== "" }
+  // const { data, isLoading } = useQuery<SEARCH_RESULTS_PRODUCT>(
+  //   ["product-search", debouncedSearchValue],
+  //   () => searchProducts(debouncedSearchValue),
+  //   { enabled: debouncedSearchValue !== "" }
+  // );
+  const {
+    data,
+    status,
+    isFetching,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    ["search-products", debouncedSearchValue],
+    ({ pageParam = 1 }) => searchProducts(debouncedSearchValue, pageParam),
+    {
+      keepPreviousData: true,
+      enabled: Boolean(debouncedSearchValue),
+
+      getNextPageParam: (lastPage) => {
+        if (lastPage.currentPage < lastPage.lastPage) {
+          return lastPage.currentPage + 1;
+        } else {
+          return undefined;
+        }
+      },
+    }
   );
+
   const covered_data = useWatch({
     control,
     name: "special_products",
   });
-  const handleAddProduct = (product: MINI_PRODUCT, onChange: any) => {
-    const found = covered_data.find((i: any) => i.id === product.id);
+  const handleAddProduct = (product: PRODUCT, onChange: any) => {
+    console.log(covered_data);
+    const found = covered_data.find((i: PRODUCT) => i.id === product.id);
     if (!found) {
       onChange([...covered_data, product]);
     }
@@ -61,10 +85,10 @@ const CouponProductsSearch = ({ title, control }: IProps) => {
             <h6>{title}</h6>
           </div>
         )}
-        {data?.length === 0 && searchValue !== "" && (
+        {data?.pages[0].data.length === 0 && searchValue !== "" && (
           <div className="no-products">No Products were found</div>
         )}
-        {isLoading && (
+        {isFetching && (
           <div className="loading">
             <Loader height="30px" width="30px" type="TailSpin" />
             <p>Searching...</p>
@@ -76,20 +100,41 @@ const CouponProductsSearch = ({ title, control }: IProps) => {
           render={({ field: { onChange } }) => {
             return (
               <SearchResults>
-                {data?.map((item) => (
-                  <div
-                    className="search-result"
-                    onClick={() => handleAddProduct(item, onChange)}
-                  >
-                    <Grid cols="50px 1fr" gap="0.25rem">
-                      <img src={item.image} alt={item.name[i18n.language]} />
-                      <div className="info">
-                        <p className="name">{item.name[i18n.language]}</p>
-                        <p className="price">{item.price}</p>
-                      </div>
-                    </Grid>
-                  </div>
-                ))}
+                {data?.pages.map((group, i) => {
+                  return (
+                    <React.Fragment key={i}>
+                      {group.data.map((product: PRODUCT) => (
+                        <div
+                          className="search-result"
+                          onClick={() => handleAddProduct(product, onChange)}
+                        >
+                          <Grid cols="50px 1fr" gap="0.25rem">
+                            {product.image ? (
+                              <img
+                                className="img"
+                                src={product.image}
+                                alt={product.name[i18n.language]}
+                              />
+                            ) : (
+                              <DefaultImage
+                                circular
+                                border
+                                height="50px"
+                                width="50px"
+                              />
+                            )}
+                            <div className="info">
+                              <p className="name">
+                                {product.name[i18n.language]}
+                              </p>
+                              <p className="price">{product.price}</p>
+                            </div>
+                          </Grid>
+                        </div>
+                      ))}
+                    </React.Fragment>
+                  );
+                })}
               </SearchResults>
             );
           }}
@@ -127,6 +172,12 @@ const Container = styled.div`
     border-bottom: ${(props) => props.theme.border};
     &:hover {
       background-color: ${(props) => props.theme.highlightColor};
+    }
+    .img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50px;
+      object-fit: cover;
     }
     .info {
       padding: 0.25rem;

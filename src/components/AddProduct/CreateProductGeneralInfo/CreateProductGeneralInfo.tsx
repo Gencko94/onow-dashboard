@@ -27,7 +27,7 @@ export interface firstTabInfo {
   slug: string;
   images: File[];
   thumbnail: File;
-  quantity: number | "unlimited";
+  quantity: string | "unlimited";
   sku: string;
 }
 

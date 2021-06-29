@@ -2,6 +2,7 @@ import { Control, Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { MdCancel } from "react-icons/md";
 import styled from "styled-components";
+import DefaultImage from "../../reusable/DefaultImage";
 import EmptyTable from "../../reusable/EmptyTable";
 import Grid from "../../StyledComponents/Grid";
 
@@ -36,10 +37,20 @@ const CouponProductsList = ({ title, control }: IProps) => {
               {special_products.map((product: any) => (
                 <div className="search-result">
                   <Grid cols="50px 1fr 50px" gap="0.25rem">
-                    <img
-                      src={product.image}
-                      alt={product.name[i18n.language]}
-                    />
+                    {product.image ? (
+                      <img
+                        className="img"
+                        src={product.image}
+                        alt={product.name[i18n.language]}
+                      />
+                    ) : (
+                      <DefaultImage
+                        circular
+                        border
+                        height="50px"
+                        width="50px"
+                      />
+                    )}
                     <div className="info">
                       <p className="name">{product.name[i18n.language]}</p>
                       <p className="price">{product.price}</p>
@@ -84,6 +95,12 @@ const Container = styled.div`
     border-bottom: ${(props) => props.theme.border};
     &:hover {
       background-color: ${(props) => props.theme.highlightColor};
+    }
+    .img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50px;
+      object-fit: cover;
     }
     .info {
       padding: 0.25rem;

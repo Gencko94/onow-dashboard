@@ -73,7 +73,7 @@ const CouponProducts = ({
   return (
     <Container>
       <div className="title-container">
-        <h5>Coupon Products</h5>
+        <h5>Coupon Coverage</h5>
       </div>
       <div className="box">
         <Controller
@@ -90,7 +90,10 @@ const CouponProducts = ({
                     };
                   }
                 }
-                onChange={(val) => onChange(val.value)}
+                onChange={(val) => {
+                  console.log(val);
+                  onChange(parseInt(val.value));
+                }}
                 errors={errors?.couponCoverage}
                 getOptionLabel={(option: any) => option.label[language]}
                 getOptionValue={(option) => option.value.toString()}

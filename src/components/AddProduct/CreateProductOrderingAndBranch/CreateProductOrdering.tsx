@@ -37,7 +37,6 @@ const CreateProductOrdering = () => {
           register={register}
           min={0}
           desc="0 For Unlimited"
-          // defaultValue={formValues?.max_qty_per_user}
         />
         <IconedNumberInput
           label="Preperation Time"

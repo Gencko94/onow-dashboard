@@ -33,11 +33,11 @@ const CreateNewProduct = () => {
     },
     options: [],
     images: [],
-    max_qty_per_user: 0,
+    max_qty_per_user: "0",
     active: 1,
     quantity: "unlimited",
     prep_time: {
-      time: 0,
+      time: "0",
       unit: "minutes",
     },
   });
@@ -50,10 +50,12 @@ const CreateNewProduct = () => {
   };
   const submitForm = async (data: any) => {
     console.log(data);
+
     try {
+      const regex = /^0+(?!$)/;
       await createProductMutation({
         active: 1,
-        quantity: data.quantity,
+        quantity: data.quantity.replace(regex, ""),
         allow_attachments: data.allow_attachments,
         allow_side_notes: data.allow_side_notes,
         branch_availability: data.branch_availability,
@@ -62,7 +64,7 @@ const CreateNewProduct = () => {
         images: data.images,
         max_qty_per_user: data.max_qty_per_user,
         name: data.name,
-        thumbnail: data.thumbnail,
+        thumbnail: data.thumbnail!,
         options: data.options,
         prep_time: data.prep_time,
         price: data.price,

@@ -36,16 +36,16 @@ const ProductItem = ({
   const {
     i18n: { language },
   } = useTranslation();
-  const renderStatus = (id: number) => {
-    switch (id) {
-      case 1:
+  const renderStatus = (status: boolean) => {
+    switch (status) {
+      case true:
         return (
           <Status color="green">
             <span className="dot" />
             <h6>Active</h6>
           </Status>
         );
-      case 2:
+      case false:
         return (
           <Status color="#b72b2b">
             <span className="dot" />
@@ -94,7 +94,7 @@ const ProductItem = ({
         <h6>{product.category?.name[language]}</h6>
       </div>
 
-      <div className="field">{renderStatus(2)}</div>
+      <div className="field">{renderStatus(product.active)}</div>
       <div className="field">
         <ActionButtonContainer
           onClick={(e) => {
@@ -126,6 +126,7 @@ const ProductItem = ({
                 Icon={RiDeleteBinLine}
                 iconSize={15}
                 onClick={(e) => {
+                  setActionsMenuOpen(false);
                   e.stopPropagation();
                   setConfirmationModalStatus?.({
                     open: true,

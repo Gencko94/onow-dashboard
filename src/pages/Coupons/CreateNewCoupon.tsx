@@ -11,9 +11,29 @@ import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Flex from "../../components/StyledComponents/Flex";
 import useToast from "../../hooks/useToast";
 import { NEW_COUPON } from "../../interfaces/coupons/coupons";
+import { PRODUCT } from "../../interfaces/products/products";
 import extractError from "../../utils/extractError";
 import { createCoupon } from "../../utils/queries";
 
+type NEW_COUPON_FORM = {
+  name: {
+    [key: string]: string;
+  };
+  start_date: string;
+  end_date: string;
+  code: string;
+  discount_type: "fixed" | "percent";
+  free_delivery: "0" | "1";
+  amount: string;
+  max_discount: string;
+  min_total_order: string;
+  total_uses: string;
+  uses_per_user: string;
+  enabled: boolean;
+  coupon_coverage: number;
+  special_products: PRODUCT[];
+  special_categories: number[];
+};
 const CreateNewCoupon = () => {
   const history = useHistory();
   const { handleCloseToast, setToastStatus } = useToast();
@@ -22,7 +42,7 @@ const CreateNewCoupon = () => {
     register,
     handleSubmit,
     control,
-  } = useForm<NEW_COUPON>({
+  } = useForm<NEW_COUPON_FORM>({
     defaultValues: {
       special_categories: [],
       special_products: [],
@@ -36,15 +56,8 @@ const CreateNewCoupon = () => {
     },
   });
   const { mutateAsync, isLoading } = useMutation(createCoupon);
-  const onSubmit: SubmitHandler<NEW_COUPON> = async (data) => {
-    const regex = /^0+(?!$)/;
-    console.log({
-      ...data,
-      total_uses: data.total_uses.replace(regex, ""),
-      uses_per_user: data.uses_per_user.replace(regex, ""),
-      max_discount: data.max_discount.replace(regex, ""),
-      min_total_order: data.min_total_order.replace(regex, ""),
-    });
+  const onSubmit: SubmitHandler<NEW_COUPON_FORM> = async (data) => {
+    console.log(data);
     try {
       const regex = /^0+(?!$)/;
       await mutateAsync({
@@ -53,6 +66,7 @@ const CreateNewCoupon = () => {
         uses_per_user: data.uses_per_user.replace(regex, ""),
         max_discount: data.max_discount.replace(regex, ""),
         min_total_order: data.min_total_order.replace(regex, ""),
+        special_products: data.special_products?.map((i) => i.id),
       });
       setToastStatus?.({
         open: true,
@@ -62,10 +76,11 @@ const CreateNewCoupon = () => {
       });
       history.replace("/coupons");
     } catch (error) {
-      const { responseError } = extractError(error);
+      const { responseError, unknownError } = extractError(error);
       if (responseError) {
         console.log(responseError);
       } else {
+        console.log(unknownError);
         setToastStatus?.({
           open: true,
           fn: handleCloseToast!,

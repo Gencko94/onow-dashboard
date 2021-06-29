@@ -365,7 +365,9 @@ export const createProduct = async (product: NEW_PRODUCT) => {
   // Appending Form Data
   formData.append("name", JSON.stringify(product.name));
   product.images.forEach((image) => formData.append("images", image));
-  formData.append("thumbnail", product.thumbnail);
+  if (product.thumbnail) {
+    formData.append("thumbnail", product.thumbnail);
+  }
   formData.append("description", JSON.stringify(product.description));
   formData.append("price", product.price as any);
   formData.append("price_by_options", JSON.stringify(product.price_by_options));
@@ -427,7 +429,25 @@ export const deleteMultipleProducts = async (
   );
   return res.data.results;
 };
-
+// Search for products
+export const searchProducts = async (search: string, pageParam: number) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+    params: {
+      search,
+      pageParam,
+    },
+  };
+  const res = await axios.get(`${uri}/products`, config);
+  return {
+    data: res.data.results.data,
+    lastPage: res.data.results.pagination.last,
+    currentPage: res.data.results.pagination.current,
+  };
+};
 //Staff Members
 
 export const getStaffMembers = async () => {

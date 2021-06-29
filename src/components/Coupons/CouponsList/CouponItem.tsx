@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useHistory } from "react-router";
@@ -9,109 +9,138 @@ import { useTranslation } from "react-i18next";
 
 import Button from "../../reusable/Button";
 import Popover from "../../reusable/Popover";
+import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import Checkbox from "../../reusable/Inputs/Checkbox";
+import { FlexWrapper } from "../../StyledComponents/Flex";
 
 interface IProps {
   coupon: COUPON;
-  sortBy: any;
-  setModalStatus: Dispatch<
-    SetStateAction<{ id: number | null; open: boolean }>
-  >;
+  handleDeleteCoupon: (id: number) => void;
+  selectedRows: number[];
+  handleToggleRows: (rowId: number) => void;
 }
 
-const CouponItem = ({ coupon, sortBy, setModalStatus }: IProps) => {
+const CouponItem = ({
+  coupon,
+  handleDeleteCoupon,
+  handleToggleRows,
+  selectedRows,
+}: IProps) => {
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
-
+  const { setConfirmationModalStatus, handleCloseConfirmationModal } =
+    useConfirmationModal();
   const history = useHistory();
 
   const {
     i18n: { language },
   } = useTranslation();
 
-  const renderStatus = (id: number) => {
-    // if Enabled
-    if (id === 1) {
-      return (
-        <Status color="green">
-          <span className="dot" />
-          <h6>Active</h6>
-        </Status>
-      );
-    } else if (id === 0) {
-      return (
-        <Status color="#b72b2b">
-          <span className="dot" />
-          <h6>Disabled</h6>
-        </Status>
-      );
+  const renderStatus = (status: boolean) => {
+    switch (status) {
+      case true:
+        return (
+          <Status color="green">
+            <span className="dot" />
+            <h6>Active</h6>
+          </Status>
+        );
+      case false:
+        return (
+          <Status color="#b72b2b">
+            <span className="dot" />
+            <h6>Disabled</h6>
+          </Status>
+        );
+      default:
+        break;
     }
   };
 
   return (
-    <>
-      <Container onClick={() => history.push(`/coupons/coupon/${coupon.id}`)}>
-        <div className="field">
-          <h6>{coupon.name[language]}</h6>
-        </div>
-        <div className="field">{renderStatus(2)}</div>
-        <div className="field">
-          <EnabledButton enabled={false} type="button">
-            Enable
-          </EnabledButton>
-        </div>
-        <div className="field">
-          <ButtonsContainer>
-            <ActionButtonContainer
-              onClick={(e) => {
-                e.stopPropagation();
+    <Container selected={selectedRows.includes(coupon.id)}>
+      <div className="field">
+        <Checkbox
+          checked={selectedRows.includes(coupon.id)}
+          onChange={(e) => {
+            handleToggleRows(coupon.id);
+            e.stopPropagation();
+          }}
+        />
+      </div>
+      <div className="field">
+        <h6>{coupon.name[language]}</h6>
+      </div>
+      <div className="field">{coupon.code}</div>
+      <div className="field">{renderStatus(coupon.enabled)}</div>
+      <div className="field">
+        <ActionButtonContainer
+          onClick={(e) => {
+            e.stopPropagation();
 
-                setActionsMenuOpen(true);
-              }}
-            >
-              <button className="icon">
-                <BsThreeDotsVertical size={18} />
-              </button>
-              <CSSTransition
-                in={actionsMenuOpen}
-                classNames="menu"
-                unmountOnExit
-                timeout={100}
-              >
-                <Popover closeFunction={() => setActionsMenuOpen(false)}>
-                  <Button
-                    text="Delete Coupon"
-                    padding="0.5rem"
-                    bg="white"
-                    color="#444"
-                    hoverColor="#b72b2b"
-                    textSize="0.8rem"
-                    Icon={RiDeleteBinLine}
-                    iconSize={15}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setModalStatus({ open: true, id: coupon.id });
-                      setActionsMenuOpen(false);
-                    }}
-                  />
-                </Popover>
-              </CSSTransition>
-            </ActionButtonContainer>
-          </ButtonsContainer>
-        </div>
-      </Container>
-    </>
+            setActionsMenuOpen(true);
+          }}
+        >
+          <button className="icon">
+            <BsThreeDotsVertical size={18} />
+          </button>
+          <CSSTransition
+            in={actionsMenuOpen}
+            classNames="menu"
+            unmountOnExit
+            timeout={100}
+          >
+            <Popover closeFunction={() => setActionsMenuOpen(false)}>
+              <Button
+                text="Delete Coupon"
+                padding="0.5rem"
+                bg="white"
+                color="#444"
+                hoverColor="#b72b2b"
+                textSize="0.8rem"
+                Icon={RiDeleteBinLine}
+                iconSize={15}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActionsMenuOpen(false);
+                  setConfirmationModalStatus?.({
+                    open: true,
+                    desc: "Are you sure you want to delete this coupon ?",
+                    title: "Delete Coupon",
+                    closeCb: handleCloseConfirmationModal!,
+                    successCb: () => handleDeleteCoupon(coupon.id),
+                  });
+                }}
+              />
+            </Popover>
+          </CSSTransition>
+          <Button
+            bg="primary"
+            padding="0.5rem"
+            text="Edit"
+            textSize="0.7rem"
+            margin="0 0.5rem"
+            withRipple
+            withTransition
+            onClick={() => {
+              history.push(`/coupons/coupon/${coupon.id}`);
+            }}
+          />
+        </ActionButtonContainer>
+      </div>
+    </Container>
   );
 };
 
 export default CouponItem;
-const Container = styled.div`
+const Container = styled.div<{ selected: boolean }>`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  background-color: #fff;
+  grid-template-columns: 100px 1fr 1fr 1fr 1fr;
+  background-color: ${(props) =>
+    props.selected ? props.theme.accentColor : "#fff"};
   gap: 1rem;
-  cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
   &:hover {
-    background-color: ${(props) => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.accentColor};
   }
 
   .field {
@@ -128,10 +157,10 @@ const Container = styled.div`
   }
 `;
 
-const ButtonsContainer = styled.div`
+const ActionButtonContainer = styled(FlexWrapper)`
+  position: relative;
   button.icon {
-    display: block;
-    position: relative;
+    display: inline-block;
     cursor: pointer;
     padding: 0.25rem;
     border-radius: 50%;
@@ -142,9 +171,6 @@ const ButtonsContainer = styled.div`
       background-color: #e6e6e6;
     }
   }
-`;
-const ActionButtonContainer = styled.div`
-  position: relative;
 `;
 const Status = styled.div`
   display: flex;
@@ -162,16 +188,4 @@ const Status = styled.div`
 
     margin: 0 0.25rem;
   }
-`;
-const EnabledButton = styled.button<{ enabled: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  padding: 0.25rem 0.5rem;
-  background-color: ${(props) =>
-    props.enabled ? props.theme.dangerRed : props.theme.green};
-  color: ${(props) => props.theme.btnText};
-  border: ${(props) => props.theme.border};
-  border-radius: 5px;
 `;

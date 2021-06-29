@@ -1,6 +1,7 @@
 import { PRODUCT } from "../interfaces/products/products";
 
 export const product1: PRODUCT = {
+  active: true,
   category: {
     name: {
       ar: "fdsa",

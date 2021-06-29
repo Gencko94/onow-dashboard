@@ -1,3 +1,6 @@
+import { CATEGORY } from "../categories/categories";
+import { PRODUCT } from "../products/products";
+
 export interface COUPON {
   id: number;
   name: {
@@ -15,8 +18,8 @@ export interface COUPON {
   uses_per_user: number;
   enabled: boolean;
   couponCoverage: number;
-  special_products: string[];
-  special_categories: string[];
+  special_products: PRODUCT[];
+  special_categories: number[];
 }
 export interface NEW_COUPON {
   name: {
@@ -34,6 +37,6 @@ export interface NEW_COUPON {
   uses_per_user: string;
   enabled: boolean;
   coupon_coverage: number;
-  special_products: string[];
-  special_categories: string[];
+  special_products: number[];
+  special_categories: number[];
 }

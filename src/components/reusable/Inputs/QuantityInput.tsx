@@ -117,7 +117,7 @@ const QuantityInput = ({
                 checked={value === "unlimited"}
                 onChange={() => {
                   if (value === "unlimited") {
-                    onChange(1);
+                    onChange("1");
                   } else {
                     onChange("unlimited");
                   }

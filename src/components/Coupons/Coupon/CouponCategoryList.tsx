@@ -3,27 +3,55 @@ import styled from "styled-components";
 
 import { Control, Controller, useWatch } from "react-hook-form";
 
-import { useQuery } from "react-query";
+import { useInfiniteQuery, useQuery } from "react-query";
 
 import { useTranslation } from "react-i18next";
 
-import { MINI_CATEGORY } from "../../../interfaces/categories/categories";
+import {
+  CATEGORY,
+  MINI_CATEGORY,
+} from "../../../interfaces/categories/categories";
 import Checkbox from "../../reusable/Inputs/Checkbox";
 import Chip from "../../reusable/Chip";
 import { getMiniCategories } from "../../../utils/test-queries";
+import { getCategories } from "../../../utils/queries";
+import DefaultImage from "../../reusable/DefaultImage";
+import LoadingTable from "../../reusable/LoadingTable";
+import React from "react";
 
 interface IProps {
   control: Control<any>;
   errors: any;
 }
 const CouponCategoryList = ({ control, errors }: IProps) => {
-  const formValues = useWatch({
+  const special_categories = useWatch({
     control,
+    name: "special_categories",
   });
-  const { data, isLoading } = useQuery<MINI_CATEGORY[]>(
-    "mini-categories",
-    getMiniCategories
+  console.log(special_categories, "special Categories");
+  const {
+    data,
+    status,
+    isFetching,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    "categories",
+    ({ pageParam = 1 }) => getCategories(pageParam),
+    {
+      keepPreviousData: true,
+
+      getNextPageParam: (lastPage) => {
+        if (lastPage.currentPage < lastPage.lastPage) {
+          return lastPage.currentPage + 1;
+        } else {
+          return undefined;
+        }
+      },
+    }
   );
+
   const {
     i18n: { language },
   } = useTranslation();
@@ -32,129 +60,173 @@ const CouponCategoryList = ({ control, errors }: IProps) => {
     category: MINI_CATEGORY,
     onChange: (...event: any[]) => void
   ) {
-    const found = formValues.special_categories?.find(
-      (i: any) => i.id === category.id
-    );
+    const found = special_categories.find((id: number) => id === category.id);
 
-    if (!found) {
+    // console.log(formValues);
+    // console.log(found);
+    if (found) {
       console.log("found");
-      onChange([...formValues.special_categories!, category]);
+      onChange(special_categories.filter((id: number) => id !== category.id));
     } else {
-      onChange(
-        formValues?.special_categories?.filter((i: any) => i.id !== category.id)
-      );
+      onChange([...special_categories, category.id]);
     }
   }
-
   return (
-    <Controller
-      control={control}
-      name="special_categories"
-      rules={{
-        required: "Required",
-      }}
-      render={({ field: { onChange } }) => {
-        return (
-          <Container>
-            <div className="chips">
-              <p className="text">Selected Categories :</p>
-              <div className="chips-wrapper">
-                {formValues.special_categories?.map((cat: any) => {
-                  return (
-                    <Chip
-                      key={cat.id}
-                      text={cat.name[language]}
-                      onClick={(e) => {
-                        handleToggleCategories(cat, onChange);
-                      }}
-                    />
-                  );
-                })}
-                {errors && (
-                  <p className="error-message">Please Select a Category</p>
-                )}
-              </div>
-            </div>
+    <Container>
+      <div className="title-container">
+        <h6>Select Categories</h6>
+      </div>
 
-            <div className="table">
-              {data?.map((category) => {
-                return (
-                  <div key={category.id}>
-                    <CategoryItem>
-                      <div
-                        className="field"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleToggleCategories(category, onChange);
-                        }}
-                      >
-                        <img
-                          src={category.image}
-                          alt={category.name[language]}
-                          className="img"
-                        />
-                        <h6>{category.name[language]}</h6>
-                      </div>
-                      <Checkbox
-                        checked={Boolean(
-                          formValues.special_categories?.find(
-                            (i: any) => i.id === category.id
-                          )
-                        )}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          handleToggleCategories(category, onChange);
-                        }}
-                      />
-                    </CategoryItem>
-                    {category?.children?.map((child) => {
-                      return (
-                        <SubCategoryItem key={child.id}>
-                          <div
-                            onClick={(e) => {
-                              e.stopPropagation();
-
-                              handleToggleCategories(child, onChange);
-                            }}
-                            className="field"
-                          >
-                            <div className="title">
-                              <MdSubdirectoryArrowRight />
-                              <img
-                                src={child.image}
-                                alt={child.name[language]}
-                                className="img"
-                              />
-                              <h6>{child.name[language]}</h6>
+      <CategoriesList error={Boolean(errors?.category)}>
+        <Controller
+          control={control}
+          name="special_categories"
+          rules={{
+            required: "Required",
+          }}
+          render={({ field: { onChange } }) => {
+            return (
+              <Container>
+                <div className="table">
+                  {status === "loading" && <LoadingTable />}
+                  {data?.pages.map((group, i) => {
+                    return (
+                      <React.Fragment key={i}>
+                        {group.data.map((category: CATEGORY) => {
+                          return (
+                            <div key={category.id}>
+                              <CategoryItem
+                                active={special_categories.includes(
+                                  category.id
+                                )}
+                              >
+                                <div
+                                  className="field"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleToggleCategories(category, onChange);
+                                  }}
+                                >
+                                  {category.image ? (
+                                    <img
+                                      className="img"
+                                      src={category.image}
+                                      alt={category.name[language]}
+                                    />
+                                  ) : (
+                                    <DefaultImage
+                                      circular
+                                      border
+                                      height="50px"
+                                      width="50px"
+                                    />
+                                  )}
+                                  <h6>{category.name[language]}</h6>
+                                </div>
+                                <Checkbox
+                                  checked={special_categories.includes(
+                                    category.id
+                                  )}
+                                  onChange={(e) => {
+                                    e.stopPropagation();
+                                    handleToggleCategories(category, onChange);
+                                  }}
+                                />
+                              </CategoryItem>
+                              {category?.children?.map((child: CATEGORY) => {
+                                return (
+                                  <SubCategoryItem key={child.id}>
+                                    <div
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleToggleCategories(child, onChange);
+                                      }}
+                                      className="field"
+                                    >
+                                      <div className="title">
+                                        <MdSubdirectoryArrowRight />
+                                        <img
+                                          src={child.image}
+                                          alt={child.name[language]}
+                                          className="img"
+                                        />
+                                        <h6>{child.name[language]}</h6>
+                                      </div>
+                                    </div>
+                                    <Checkbox
+                                      checked={
+                                        special_categories.includes(
+                                          category.id
+                                        ) ||
+                                        special_categories.includes(child.id)
+                                      }
+                                      onChange={(e) => {
+                                        e.stopPropagation();
+                                        handleToggleCategories(child, onChange);
+                                      }}
+                                    />
+                                  </SubCategoryItem>
+                                );
+                              })}
                             </div>
-                          </div>
-                          <Checkbox
-                            checked={Boolean(
-                              formValues.special_categories?.find(
-                                (i: any) => i.id === child.id
-                              )
-                            )}
-                            onChange={(e) => {
-                              e.stopPropagation();
-                              handleToggleCategories(child, onChange);
-                            }}
-                          />
-                        </SubCategoryItem>
-                      );
-                    })}
-                  </div>
-                );
-              })}
-            </div>
-          </Container>
-        );
-      }}
-    />
+                          );
+                        })}
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
+              </Container>
+            );
+          }}
+        />
+      </CategoriesList>
+    </Container>
   );
 };
 
 export default CouponCategoryList;
-const Container = styled.div`
+const Container = styled.div(
+  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  
+  display:flex;
+  flex-direction:column;
+  
+  .title-container {
+    padding: 1rem 0;
+    color: ${mainColor};
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+ 
+  @media ${breakpoints.md} {
+    
+  }
+  `
+);
+const CategoriesList = styled.div<{ error: boolean }>`
+  overflow-y: auto;
+  position: relative;
+  background-color: #fff;
+  box-shadow: ${(props) => (props.error ? props.theme.errorShadow : "")};
+  border: ${(props) => props.theme.border};
+  border-radius: 6px;
+  flex: 1;
+
+  .empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    .text {
+      margin-bottom: 0.5rem;
+    }
+  }
   .table-title {
     padding: 1rem;
     color: ${(props) => props.theme.mainColor};
@@ -183,9 +255,8 @@ const Container = styled.div`
     }
   }
   .table {
-    border: ${(props) => props.theme.border};
-    margin: 0 auto;
-    height: 340px;
+    /* margin: 0 auto; */
+    max-height: 100%;
     overflow: auto;
     .img {
       height: 40px;
@@ -196,11 +267,11 @@ const Container = styled.div`
     }
   }
 `;
-
-const CategoryItem = styled.div`
+const CategoryItem = styled.div<{ active: boolean }>`
   display: block;
   width: 100%;
-  background-color: ${(props) => props.theme.accentColor};
+  background-color: ${(props) =>
+    props.active ? props.theme.accentColor : "#fff"};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -209,6 +280,12 @@ const CategoryItem = styled.div`
   &:hover {
     /* background-color: ${(props) => props.theme.highlightColor}; */
   }
+  .img {
+    border-radius: 50%;
+    width: 25px;
+    object-fit: cover;
+    height: 25px;
+  }
 
   .field {
     padding: 0.5rem;
@@ -216,7 +293,8 @@ const CategoryItem = styled.div`
     display: flex;
     align-items: center;
     h6 {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
+      margin: 0 0.5rem;
       font-weight: ${(props) => props.theme.font.bold};
     }
   }
@@ -248,7 +326,7 @@ const SubCategoryItem = styled.div`
       align-items: center;
     }
     h6 {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       font-weight: ${(props) => props.theme.font.semibold};
     }
   }
