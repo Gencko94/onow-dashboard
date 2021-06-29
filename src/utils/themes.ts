@@ -52,3 +52,6 @@ export const darkTheme = {
   mainGradient: "linear-gradient(90deg, #fe0488, #f78f21)",
   borderHovered: "rgba(0,0,0,0.3)",
 };
+
+export const up = (breakpoint: string) => `@media (min-width: ${breakpoint}`;
+export const down = (breakpoint: string) => `@media (max-width: ${breakpoint}`;

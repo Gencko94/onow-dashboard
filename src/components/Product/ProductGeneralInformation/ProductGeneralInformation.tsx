@@ -1,15 +1,13 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { MdSave } from "react-icons/md";
 import styled from "styled-components";
-import { MINI_CATEGORY } from "../../../interfaces/categories/categories";
 import { PRODUCT } from "../../../interfaces/products/products";
+import Button from "../../reusable/Button";
 
-import SaveButton from "../../reusable/SaveButton";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
-import Hr from "../../StyledComponents/Hr";
 import ProductCategories from "./ProductCategories";
 
-import ProductImage from "./ProductImage";
 import ProductNameAndDescription from "./ProductNameAndDescription";
 
 interface IProps {
@@ -46,12 +44,17 @@ const ProductGeneralInformation = ({ data }: IProps) => {
   return (
     <Container>
       <Flex justify="flex-end">
-        <SaveButton
-          title="Save Changes"
+        <Button
+          text="Save Changes"
+          textSize="0.9rem"
+          iconSize={25}
+          Icon={MdSave}
+          bg="green"
+          padding="0.5rem"
           onClick={methods.handleSubmit(onSubmit)}
         />
       </Flex>
-      <Grid cols="1fr 1fr" gap="1rem">
+      <Grid cols="repeat(auto-fit,minmax(350px,1fr))" gap="1rem">
         <FormProvider {...methods}>
           <ProductNameAndDescription />
 

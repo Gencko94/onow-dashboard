@@ -31,7 +31,7 @@ const ProductGridStyleEditor = () => {
           <ProductSelector control={control} watch={watch} />
         )}
       </Grid>
-      <Heading tag="h5" mb={1}>
+      <Heading tag="h5" mb="1rem">
         Appearance
       </Heading>
       {values.type === "grid" && <ProductGridItemsPerRowEditor />}

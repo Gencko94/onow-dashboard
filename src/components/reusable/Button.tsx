@@ -1,6 +1,7 @@
 import { ImSpinner2 } from "react-icons/im";
 import { IconType } from "react-icons/lib";
 import styled, { css } from "styled-components";
+import useResponsive from "../../hooks/useResponsive";
 import Ripple from "./Ripple";
 
 interface IProps {
@@ -104,6 +105,7 @@ const Button = ({
   disabled,
   width,
 }: IProps) => {
+  const { isDesktop } = useResponsive();
   return (
     <ButtonWrapper
       textSize={textSize}
@@ -123,7 +125,7 @@ const Button = ({
     >
       {!isLoading && Icon && (
         <span className="icon">
-          <Icon size={iconSize} />
+          <Icon size={isDesktop ? iconSize : iconSize - 5} />
         </span>
       )}
       {isLoading && (
@@ -199,45 +201,48 @@ export const ButtonWrapper = styled.button<{
       color: ${color};
       border:${border && themeBorder};
       transition: all 100ms ease;
-     .loading {
-      animation: spinner 2s infinite linear forwards;
-     };
-    @keyframes spinner {
-      
-      100% {
-        transform : rotate(360deg);
-      }
+    .loading {
+    animation: spinner 2s infinite linear forwards;
+    };
+  @keyframes spinner {
+    
+    100% {
+      transform : rotate(360deg);
     }
-     
-      .icon {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        p {
-            font-size:${textSize};
-            margin: 0 0.25rem;
-        }
-        &:hover {
-          background-color:${hoverBg};
-          color: ${hoverColor};
-        }
-        
-        ${
-          withTransition &&
-          css`
-            &:hover {
-              transform: translateY(-2px);
-            }
-          `
-        }
-        ${
-          disabled &&
-          css`
-            background-color: #a7a2a2;
-            color: #fff;
-          `
-        }
+  }
+    .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      p {
+        font-size:${`calc(${textSize} - 0.1rem)`}; 
+          margin: 0 0.25rem;
+      }
+      &:hover {
+        background-color:${hoverBg};
+        color: ${hoverColor};
+      }
       
-      `
+      ${
+        withTransition &&
+        css`
+          &:hover {
+            transform: translateY(-2px);
+          }
+        `
+      }
+      ${
+        disabled &&
+        css`
+          background-color: #a7a2a2;
+          color: #fff;
+        `
+      };
+    @media ${breakpoints.md}{
+    p {
+      font-size:${textSize};
+    }
+  }
+    `
 );

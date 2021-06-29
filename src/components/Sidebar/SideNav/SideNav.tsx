@@ -133,23 +133,35 @@ const Container = styled.ul(
   height: calc(100vh - 298px);
   overflow-y: auto;
   @media ${breakpoints.md} {
-
     height: calc(100vh - 288px);
   }
   
   `
 );
-const SideNavItem = styled.li`
+const SideNavItem = styled.li(
+  ({ theme: { breakpoints, font } }) => `
   display: flex;
   align-items: center;
   justify-content: space-between;
   display: block;
-`;
+  h6 {
+    margin: 0 0.5rem;
+    font-size: 0.8rem;
+    font-weight: ${font.regular};
+  };
+  @media ${breakpoints.md} {
+    h6 {
+      font-size: 0.9rem;
+    }
+  }
+  
+  `
+);
+
 const SideNavLink = styled(Link)<{ isCurrent: boolean }>`
   padding: 0.75rem 1rem;
   border-radius: 10px;
   display: flex;
-  margin: 0 0.5rem;
   align-items: center;
 
   .icon {
@@ -159,11 +171,7 @@ const SideNavLink = styled(Link)<{ isCurrent: boolean }>`
     display: flex;
     align-items: center;
   }
-  h6 {
-    margin: 0 0.5rem;
-    font-size: 0.9rem;
-    font-weight: ${(props) => props.theme.font.regular};
-  }
+
   ${(props) =>
     props.isCurrent &&
     css`

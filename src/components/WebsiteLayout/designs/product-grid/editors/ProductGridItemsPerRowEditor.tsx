@@ -44,7 +44,7 @@ const ProductGridItemsPerRowEditor = () => {
   }, []);
   return (
     <Container>
-      <Heading tag="h6" mb={0.5}>
+      <Heading tag="h6" mb="0.5rem">
         Number of Items per row :
       </Heading>
       <Grid cols="repeat(3,1fr)" gap="0.5rem" items="center">

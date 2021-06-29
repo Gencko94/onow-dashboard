@@ -4,21 +4,32 @@ import ProjectSwitcher from "./ProjectSwitcher/ProjectSwitcher";
 import SideNav from "./SideNav/SideNav";
 import SideUser from "./SideUser/SideUser";
 import Hr from "../StyledComponents/Hr";
+import ClickAwayListener from "react-click-away-listener";
+import { Dispatch, SetStateAction } from "react";
 
 interface IProps {
-  // drawerOpen: boolean;
+  setDrawerOpen: Dispatch<SetStateAction<boolean>>;
+  isDesktop: boolean;
 }
 
-const Sidebar = ({}: IProps) => {
+const Sidebar = ({ setDrawerOpen, isDesktop }: IProps) => {
   return (
-    <Container>
-      <SidebarOnowLogo />
-      <Hr m="1" />
-      <ProjectSwitcher />
-      <SideNav />
-      <Hr m="1" />
-      <SideUser />
-    </Container>
+    <ClickAwayListener
+      onClickAway={() => {
+        if (!isDesktop) {
+          setDrawerOpen(false);
+        }
+      }}
+    >
+      <Container>
+        <SidebarOnowLogo />
+        <Hr m="1" />
+        <ProjectSwitcher />
+        <SideNav />
+        <Hr m="1" />
+        <SideUser />
+      </Container>
+    </ClickAwayListener>
   );
 };
 
@@ -33,15 +44,11 @@ const Container = styled.aside(
   left:0;
   width:300px;
   z-index:3;
+  padding:0.5rem;
   display: flex;
   flex-direction: column;
   @media ${breakpoints.md}{
-
     z-index:1;
   }
-
-  
-  
-  
   `
 );

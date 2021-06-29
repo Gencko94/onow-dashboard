@@ -45,7 +45,9 @@ const Grid: FC<IProps> = ({ children, rows, cols, gap, items, p, margin }) => {
 };
 
 export default Grid;
-export const GridWrapper = styled.div`
+export const GridWrapper = styled.div(
+  ({ theme: { breakpoints, font } }) => `
+
   display: grid;
   grid-template-columns: var(--cols);
   grid-template-rows: var(--rows);
@@ -53,4 +55,8 @@ export const GridWrapper = styled.div`
   align-items: var(--items, normal);
   padding: var(--padding, 0);
   margin: var(--margin, 0);
-`;
+  @media ${breakpoints.md}{
+    
+  }
+  `
+);

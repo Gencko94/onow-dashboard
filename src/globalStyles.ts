@@ -1,6 +1,9 @@
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle(
+  ({ theme: { breakpoints, shadow, bodyColor, textColor, borderHovered } }) => `
+
+
 * ,*::before,*::after{
 	vertical-align: baseline;
 	font-size: 100%;
@@ -42,8 +45,8 @@ body {
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
-  background-color:${(props) => props.theme.bodyColor};
-  color:${(props) => props.theme.textColor};
+  background-color:${bodyColor};
+  color:${textColor};
   transition:background-color 200ms ease;
   
 }
@@ -66,30 +69,31 @@ select {
   -moz-osx-font-smoothing: inherit;
 }
 h1 {
-  font-size:2.25rem;
+  font-size:2rem;
   line-height:2.5rem; 
 }
 h2 {
-  font-size:2rem;
+  font-size:1.75rem;
   line-height:2.25rem; 
 }
 h3 {
-  font-size:1.75rem;
+  font-size:1.5rem;
   line-height:2rem; 
 }
 
 h4 {
-  font-size:1.5rem;
+  font-size:1.25rem;
   line-height:1.75rem;  
 }
 h5 {
-  font-size:1.25rem;
+  font-size:1rem;
   line-height:1.5rem;  
 }
 h6 {
-  font-size:1rem;
+  font-size:0.75rem;
   line-height:1.25rem; 
 }
+
 p {
   /* line-height:1 */
 }
@@ -106,15 +110,41 @@ input , textarea {
  transition:200ms all ease;
  &:hover {
 
-  border-color:${(props) => props.theme.borderHovered} !important;
+  border-color:${borderHovered} !important;
  }
 }
 input:focus, textarea:focus {
-  border-color:${(props) => props.theme.borderHovered} !important;
+  border-color:${borderHovered} !important;
 
 }
-/* input:hover {
-} */
-`;
+@media ${breakpoints.md}{
+  h1 {
+    font-size:2.25rem;
+    line-height:2.5rem; 
+  }
+  h2 {
+    font-size:2rem;
+    line-height:2.25rem; 
+  }
+  h3 {
+    font-size:1.75rem;
+    line-height:2rem; 
+  }
+  
+  h4 {
+    font-size:1.5rem;
+    line-height:1.75rem;  
+  }
+  h5 {
+    font-size:1.25rem;
+    line-height:1.5rem;  
+  }
+  h6 {
+    font-size:1rem;
+    line-height:1.25rem; 
+  }
+}
+`
+);
 
 export default GlobalStyle;

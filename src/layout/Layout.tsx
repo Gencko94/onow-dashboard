@@ -12,14 +12,20 @@ import useToast from "../hooks/useToast";
 import Loading from "../utils/Loading";
 
 const Layout: React.FC = ({ children }) => {
-  const [drawerOpen, setDrawerOpen] = useState(true);
+  const { isDesktop } = useResponsive();
+  const [drawerOpen, setDrawerOpen] = useState(() => {
+    if (isDesktop) {
+      return true;
+    } else {
+      return false;
+    }
+  });
   const { toastStatus, handleCloseToast } = useToast();
   const { confirmationModalStatus, handleCloseConfirmationModal } =
     useConfirmationModal();
   const handleToggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
-  const { isDesktop } = useResponsive();
   useEffect(() => {
     if (toastStatus?.open) {
       setTimeout(() => {
@@ -27,6 +33,13 @@ const Layout: React.FC = ({ children }) => {
       }, 3000);
     }
   }, [toastStatus?.open]);
+  useEffect(() => {
+    if (isDesktop) {
+      setDrawerOpen(true);
+    } else {
+      setDrawerOpen(false);
+    }
+  }, [isDesktop]);
   return (
     <ContentContainer>
       <CSSTransition
@@ -48,13 +61,7 @@ const Layout: React.FC = ({ children }) => {
         classNames="side-menu"
         unmountOnExit
       >
-        <ClickAwayListener
-          onClickAway={() => {
-            if (!isDesktop) setDrawerOpen(false);
-          }}
-        >
-          <Sidebar />
-        </ClickAwayListener>
+        <Sidebar isDesktop={isDesktop} setDrawerOpen={setDrawerOpen} />
       </CSSTransition>
       <ConfirmationModal
         isOpen={confirmationModalStatus!.open}
@@ -77,9 +84,7 @@ const Layout: React.FC = ({ children }) => {
 
       <Content drawerOpen={drawerOpen}>
         <DesktopNavbar handleToggleDrawer={handleToggleDrawer} />
-        <Suspense fallback={<Loading />}>
-          <div className="page-container">{children}</div>
-        </Suspense>
+        <Suspense fallback={<Loading />}>{children}</Suspense>
       </Content>
     </ContentContainer>
   );
@@ -91,7 +96,6 @@ const ContentContainer = styled.div(
   ({ theme: { breakpoints } }) => `
   display:block
   min-height: 100vh;
-  width:100vw;
   @media ${breakpoints.md}{
   }
   `
@@ -105,14 +109,10 @@ const Content = styled.div<{ drawerOpen: boolean }>(
   background-color:#f3f3f3;
   transition: all 250ms ease-out;
   margin-left:0;
-  .page-container {
-    padding:0.5rem;
-  }
+  
   @media ${breakpoints.md}{
     
-    .page-container {
-      padding:0.75rem;
-    }
+   
     
     ${
       drawerOpen &&

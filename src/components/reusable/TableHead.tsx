@@ -52,8 +52,9 @@ const Container = styled.div<{ cols: number | string; gap: string }>(
   ({ theme: { breakpoints, border }, cols, gap }) => `
     background-color:#fff;
     display:grid;
+    // overflow-x:auto;
     grid-template-columns: ${
-      typeof cols === "string" ? cols : `repeat(${cols},1fr)`
+      typeof cols === "string" ? cols : `repeat(${cols},minmax(100px,1fr))`
     };
     gap:${gap};
     border-bottom:${border};

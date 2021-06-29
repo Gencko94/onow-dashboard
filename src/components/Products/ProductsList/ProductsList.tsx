@@ -259,15 +259,19 @@ const ProductsList = () => {
         </SearchContainer>
       )}
       <Container>
-        {data?.pages[0].data.length !== 0 && (
-          <TableHead
-            activeSortBy={sortBy.field}
-            activeOrder={sortBy.order}
-            cols={cols}
-            gridCols="50px 50px 1fr 1fr 1fr 1fr 1fr 1fr 1fr "
-          />
-        )}
         <div className="table">
+          {data?.pages[0].data.length !== 0 && (
+            <TableHead
+              activeSortBy={sortBy.field}
+              activeOrder={sortBy.order}
+              cols={cols}
+              gap="0.5rem"
+              gridCols="repeat(2, minmax(35px, 50px)) repeat(
+                7,
+                minmax(100px, 1fr)
+              );"
+            />
+          )}
           {isFetching && (
             <div className="loading">
               <Spinner type="TailSpin" width={30} color="#f78f21" />
@@ -283,22 +287,22 @@ const ProductsList = () => {
               cb={() => history.push("/products/product/create")}
             />
           )}
+          {data?.pages.map((group, i) => {
+            return (
+              <React.Fragment key={i}>
+                {group.data.map((product: PRODUCT) => (
+                  <ProductItem
+                    handleDeleteProduct={handleDeleteProduct}
+                    key={product.id}
+                    product={product}
+                    selectedRows={selectedRows}
+                    handleToggleRows={handleToggleRows}
+                  />
+                ))}
+              </React.Fragment>
+            );
+          })}
         </div>
-        {data?.pages.map((group, i) => {
-          return (
-            <React.Fragment key={i}>
-              {group.data.map((product: PRODUCT) => (
-                <ProductItem
-                  handleDeleteProduct={handleDeleteProduct}
-                  key={product.id}
-                  product={product}
-                  selectedRows={selectedRows}
-                  handleToggleRows={handleToggleRows}
-                />
-              ))}
-            </React.Fragment>
-          );
-        })}
       </Container>
       {hasNextPage && (
         <Flex margin="2rem 0" justify="center">
@@ -323,12 +327,13 @@ const ProductsList = () => {
 export default ProductsList;
 const Container = styled.div`
   border-radius: 8px;
-  overflow: hidden;
   border: ${(props) => props.theme.border};
 
   position: relative;
   .table {
     background-color: #fff;
+    overflow-x: auto;
+    /* min-width: 760px; */
   }
   .loading {
     position: absolute;

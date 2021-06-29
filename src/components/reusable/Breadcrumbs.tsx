@@ -35,22 +35,36 @@ const Breadcrumbs = ({ childLabel, parentLabel, parentTarget }: IProps) => {
 };
 
 export default Breadcrumbs;
-const Container = styled.div`
+
+const Container = styled.aside(
+  ({ theme: { breakpoints, shadow } }) => `
   border-radius: 6px;
 
   h5 {
+    font-size:1rem;
     margin-bottom: 0.5rem;
   }
   .links-container {
     display: flex;
+    font-size:0.9rem;
     .chevron {
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 0.75rem;
     }
+  };
+  @media ${breakpoints.md} {
+    h5 {
+      font-size:1.25rem;
+    };
+    .links-container {
+      font-size:1rem;
+
+    }
   }
-`;
+  `
+);
 const MainLink = styled(Link)`
   /* font-size: 0.9rem; */
   color: ${(props) => props.theme.mainColor};

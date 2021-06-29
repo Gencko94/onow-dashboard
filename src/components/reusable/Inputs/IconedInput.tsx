@@ -99,14 +99,30 @@ const IconedInput = ({
 };
 
 export default IconedInput;
-const Container = styled.div<{ rtl: boolean; error: boolean }>`
+const Container = styled.div<{ rtl: boolean; error: boolean }>(
+  ({
+    theme: {
+      breakpoints,
+      font,
+      headingColor,
+      border,
+      inputColorLight,
+      mainColor,
+      borderHovered,
+      dangerRed,
+    },
+    error,
+    rtl,
+  }) => `
+
+
   label {
-    color: ${({ theme }) => theme.headingColor};
-    margin-bottom: 0.75rem;
-    font-size: 0.9rem;
-    font-weight: ${(props) => props.theme.font.regular};
+    color: ${headingColor};
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: ${font.regular};
     display: block;
-  }
+  };
   .input-container {
     display: flex;
     position: relative;
@@ -114,8 +130,8 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     justify-content: center;
 
     background-color: #fff;
-    color: ${(props) => props.theme.headingColor};
-    border: ${(props) => props.theme.border};
+    color: ${headingColor};
+    border: ${border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
@@ -124,40 +140,50 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${(props) => props.theme.mainColor};
-      background-color: ${(props) => props.theme.inputColorLight};
-      border-right: ${(props) => props.theme.border};
-      ${(props) =>
-        props.rtl &&
+      color: ${mainColor};
+      background-color: ${inputColorLight};
+      border-right: ${border};
+      ${
+        rtl &&
         css`
           border-right: none;
-          border-left: ${(props) => props.theme.border};
-        `}
-    }
+          border-left: ${border};
+        `
+      }
+    };
 
     input {
       flex: 1;
       padding: 0.4rem;
       font-size: 0.9rem;
       width: 50px;
-    }
+    };
     &:hover,
     &:focus-within {
-      border-color: ${(props) => props.theme.borderHovered};
-      background-color: ${(props) => props.theme.inputColorLight};
+      border-color: ${borderHovered};
+      background-color: ${inputColorLight};
     }
-    ${(props) =>
-      props.error &&
+    ${
+      error &&
       css`
-        border-color: ${(props) => props.theme.dangerRed} !important;
-      `}
-  }
+        border-color: ${dangerRed} !important;
+      `
+    }
+  };
 
   .desc {
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
 
-    color: ${(props) => props.theme.mainColor};
-  }
-`;
+    color: ${mainColor};
+  };
+  @media  ${breakpoints.md}{
+    label {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+  };
+  `
+);

@@ -6,6 +6,7 @@ import styled from "styled-components";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
 import QuantityInput from "../../reusable/Inputs/QuantityInput";
+import Heading from "../../StyledComponents/Heading";
 import { FORM_PROPS } from "./ProductGeneralInformation";
 
 const ProductNameAndDescription = () => {
@@ -20,7 +21,9 @@ const ProductNameAndDescription = () => {
   return (
     <Container>
       <div className="title-container">
-        <h5>Product Naming & Description</h5>
+        <Heading color="primary" tag="h5">
+          Product Naming & Description
+        </Heading>
       </div>
       <div className="box">
         <IconedInput
@@ -97,29 +100,31 @@ const ProductNameAndDescription = () => {
 
 export default ProductNameAndDescription;
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
-  margin: 2rem 0;
+  ({ theme: { breakpoints, mainColor, border, bodyColor } }) => `
+  margin: 1rem 0;
   display:flex;
   flex-direction:column;
   .title-container {
     padding: 1rem 0;
-    color: ${mainColor};
+    
   }
   .box {
     flex:1;
-    background-color: #fff;
-    box-shadow: ${shadow};
+    background-color:${bodyColor} ;
+    border: ${border};
     border-radius: 6px;
-    padding: 1rem;
+    padding: 0.5rem;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
     gap: 1rem;
   }
   @media ${breakpoints.md} {
     .box {
-      grid-template-columns: 1fr 1fr;
+      padding: 1rem;
+      
+      
       .slug {
-        grid-column:1/3;
+        grid-column:span 2;
       }
 
     }

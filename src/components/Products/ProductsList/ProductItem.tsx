@@ -161,11 +161,15 @@ const ProductItem = ({
 export default ProductItem;
 const Container = styled.div<{ selected: boolean }>`
   display: grid;
-  grid-template-columns: 50px 50px 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  /* overflow-x: auto; */
+  grid-template-columns: repeat(2, minmax(35px, 50px)) repeat(
+      7,
+      minmax(100px, 1fr)
+    );
   background-color: ${(props) =>
     props.selected ? props.theme.accentColor : "#fff"};
-  gap: 1rem;
-
+  gap: 0.5rem;
+  width: 100%;
   border-bottom: ${(props) => props.theme.border};
   &:hover {
     background-color: ${(props) => props.theme.accentColor};
@@ -180,7 +184,7 @@ const Container = styled.div<{ selected: boolean }>`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 0;
+    padding: 0.5rem;
     text-align: center;
     h6 {
       font-size: 0.8rem;

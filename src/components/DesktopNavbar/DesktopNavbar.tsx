@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
-import NavIconsDesktop from './NavIconsDesktop/NavIconsDesktop';
-import Searchbar from './Searchbar/Searchbar';
+import { useEffect, useState } from "react";
+import styled, { css } from "styled-components";
+import NavIconsDesktop from "./NavIconsDesktop/NavIconsDesktop";
+import Searchbar from "./Searchbar/Searchbar";
 
 interface IProps {
   handleToggleDrawer: () => void;
@@ -18,9 +18,9 @@ const DesktopNavbar = ({ handleToggleDrawer }: IProps) => {
         setSticky(false);
       }
     };
-    window.addEventListener('scroll', checkScrolling);
+    window.addEventListener("scroll", checkScrolling);
     return () => {
-      window.removeEventListener('scroll', checkScrolling);
+      window.removeEventListener("scroll", checkScrolling);
     };
   }, []);
   return (

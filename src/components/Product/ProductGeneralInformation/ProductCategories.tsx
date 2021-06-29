@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
-import AddCategoryModalBody from "../../Modal/AddCategoryModalBody";
-
 import { useFormContext } from "react-hook-form";
 
 import { useTranslation } from "react-i18next";
 import { EDIT_PRODUCT_GENERAL_INFO } from "../../../interfaces/products/update-product";
 import ProductCategoryList from "./ProductCategoryList";
 import { FORM_PROPS } from "./ProductGeneralInformation";
+import Heading from "../../StyledComponents/Heading";
 
 const ProductCategories = () => {
   const {
@@ -21,7 +20,9 @@ const ProductCategories = () => {
   return (
     <Container>
       <div className="title-container">
-        <h5>Product Category</h5>
+        <Heading color="primary" tag="h5">
+          Product Category
+        </Heading>
       </div>
 
       <CategoriesList error={Boolean(errors?.category)}>
@@ -34,7 +35,7 @@ const ProductCategories = () => {
 export default ProductCategories;
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `
-  margin: 2rem 0;
+  margin: 1rem 0;
   display:flex;
   flex-direction:column;
   
