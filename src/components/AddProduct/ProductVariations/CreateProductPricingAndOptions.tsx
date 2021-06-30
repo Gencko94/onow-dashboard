@@ -10,9 +10,9 @@ import {
 } from "react-hook-form";
 import { PRODUCT_OPTION } from "../../../interfaces/products/create-new-product";
 import Flex from "../../StyledComponents/Flex";
-import BlueButton from "../../reusable/BlueButton";
 import { useContext } from "react";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
+import Button from "../../reusable/Button";
 export interface secondTabProps {
   price: number;
   price_by_options: boolean;
@@ -69,23 +69,31 @@ const CreateProductPricingAndOptions = () => {
 
   return (
     <FormProvider {...methods}>
-      <Flex justify="flex-end">
-        <BlueButton
-          onClick={() => {
-            console.log(methods.watch());
-            updateData?.(methods.watch());
-            setActiveTab?.(0);
-          }}
-          type="button"
-          title="back"
-        />
-        <BlueButton
-          onClick={methods.handleSubmit(onSubmit, onError)}
-          type="submit"
-          title="Next"
-        />
-      </Flex>
       <Container onSubmit={methods.handleSubmit(onSubmit, onError)}>
+        <Flex justify="flex-end">
+          <Button
+            text="Back"
+            bg="blue"
+            onClick={() => {
+              updateData?.(methods.watch());
+              setActiveTab?.(0);
+            }}
+            padding="0.5rem"
+            textSize="0.9rem"
+            margin="0 0.5rem"
+            withRipple
+            withTransition
+          />
+          <Button
+            withRipple
+            withTransition
+            text="Next"
+            bg="blue"
+            type="submit"
+            padding="0.5rem"
+            textSize="0.9rem"
+          />
+        </Flex>
         <CreateProductPricing />
         <Hr />
         <CreateProductOptions />

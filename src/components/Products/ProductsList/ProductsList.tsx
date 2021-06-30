@@ -326,14 +326,13 @@ const ProductsList = () => {
 
 export default ProductsList;
 const Container = styled.div`
-  border-radius: 8px;
+  border-radius: 6px;
   border: ${(props) => props.theme.border};
 
   position: relative;
   .table {
-    background-color: #fff;
     overflow-x: auto;
-    /* min-width: 760px; */
+    background-color: #fff;
   }
   .loading {
     position: absolute;

@@ -7,6 +7,7 @@ import CheckToggle from "../../reusable/CheckToggle";
 import IconedNumberInput from "../../reusable/IconedNumberInput";
 import Select from "../../reusable/Select";
 import Grid from "../../StyledComponents/Grid";
+import Heading from "../../StyledComponents/Heading";
 import { thirdTabProps } from "./CreateProductOrderingAndBranchAvailability";
 
 const unitsOptions = [
@@ -25,10 +26,12 @@ const CreateProductOrdering = () => {
   return (
     <Container>
       <div className="title-container">
-        <h5>Product Ordering Options</h5>
+        <Heading tag="h5" mb="0.5rem" color="primary">
+          Product Ordering Options
+        </Heading>
       </div>
 
-      <Grid cols="1fr  1fr 0.2fr" gap="0.5rem">
+      <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
         <IconedNumberInput
           label="Maximum ordering quantity per customer"
           Icon={RiHandCoinLine}
@@ -45,12 +48,10 @@ const CreateProductOrdering = () => {
           min={0}
           name="prep_time.time"
           register={register}
-          // defaultValue={formValues?.max_qty_per_user}
         />
         <Controller
           control={control}
           name="prep_time.unit"
-          // defaultValue={formValues?.prep_time?.unit}
           render={({ field: { value, onChange } }) => {
             return (
               <Select
@@ -72,7 +73,7 @@ const CreateProductOrdering = () => {
           }}
         />
       </Grid>
-      <Grid cols="1fr 1fr" gap="3.5rem">
+      <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="2rem">
         <Controller
           control={control}
           name="allow_side_notes"
@@ -131,7 +132,6 @@ const CreateProductOrdering = () => {
 export default CreateProductOrdering;
 const Container = styled.div`
   .title-container {
-    margin-bottom: 1rem;
-    color: ${(props) => props.theme.mainColor};
+    padding: 1rem 0;
   }
 `;

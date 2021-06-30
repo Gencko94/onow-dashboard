@@ -57,12 +57,10 @@ const ProductTabs = ({ setActiveTab, activeTab }: IProps) => {
 
 export default ProductTabs;
 const Container = styled.div`
-  /* box-shadow: ${(props) => props.theme.shadow}; */
   padding-top: 0.5rem;
-  /* min-height: calc(100vh - 100px); */
   border-radius: 5px;
   overflow-x: auto;
-  /* background-color: #fff; */
+
   display: flex;
   gap: 0.5rem;
 `;

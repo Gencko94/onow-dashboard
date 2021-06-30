@@ -8,7 +8,9 @@ import styled from "styled-components";
 
 import IconedInput from "../../../reusable/Inputs/IconedInput";
 import PrefixedIconedInput from "../../../reusable/Inputs/PrefixedIconedInput";
-import Flex, { FlexWrapper } from "../../../StyledComponents/Flex";
+import Flex from "../../../StyledComponents/Flex";
+import Grid from "../../../StyledComponents/Grid";
+import Heading from "../../../StyledComponents/Heading";
 import { secondTabProps } from "../CreateProductPricingAndOptions";
 interface IProps {
   index: number;
@@ -37,7 +39,10 @@ const OptionValue = ({
 
   return (
     <Container>
-      <Flex justify="flex-end">
+      <Flex items="center" justify="space-between" margin="0 0 1rem 0">
+        <Heading tag="h6" color="subheading">
+          Option {parentIndex + 1} Value {index + 1}
+        </Heading>
         <button
           type="button"
           onClick={() => {
@@ -48,7 +53,7 @@ const OptionValue = ({
           <TiDelete size={30} />
         </button>
       </Flex>
-      <div className="inputs">
+      <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
         <IconedInput
           Icon={MdSubtitles}
           errors={errors?.options?.[parentIndex]?.values?.[index]?.name?.en}
@@ -88,29 +93,21 @@ const OptionValue = ({
           desc="Leave empty for unlimited"
           defaultValue={options?.[index].qty}
         />
-      </div>
+      </Grid>
     </Container>
   );
 };
 
 export default OptionValue;
-const Container = styled.div`
-  background-color: ${(props) => props.theme.overlayColor};
+const Container = styled.div(
+  ({ theme: { breakpoints, border, dangerRed, overlayColor } }) => `
+  background-color: ${overlayColor};
   padding: 0.5rem 1rem 1rem 1rem;
-  border: ${(props) => props.theme.border};
+  border: ${border};
   border-radius: 6px;
   margin: 1rem 0;
-  ${FlexWrapper} {
-    margin: 0 !important;
-    .delete {
-      color: ${(props) => props.theme.dangerRed};
-    }
+  .delete {
+    color: ${dangerRed};
   }
-  .inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 0.5rem;
-  }
-  .values {
-  }
-`;
+  `
+);

@@ -113,27 +113,33 @@ const CategoriesList = () => {
   if (status === "loading") return <LoadingTable />;
   return (
     <>
-      <Container>
-        {data?.pages[0].data.length !== 0 && (
-          <Flex justify="flex-start" margin="1rem 0 ">
-            <p>Selected Rows ({selectedRows.length}) : </p>
-            <Flex margin="0 0.5rem">
-              <Button
-                disabled={selectedRows.length === 0}
-                bg="danger"
-                padding="0.25rem"
-                textSize="0.8rem"
-                text="Delete Categories"
-                withRipple
-                withTransition
-              />
-            </Flex>
+      {data?.pages[0].data.length !== 0 && (
+        <Flex justify="flex-start" margin="1rem 0 ">
+          <p>Selected Rows ({selectedRows.length}) : </p>
+          <Flex margin="0 0.5rem">
+            <Button
+              disabled={selectedRows.length === 0}
+              bg="danger"
+              padding="0.25rem"
+              textSize="0.8rem"
+              text="Delete Categories"
+              withRipple
+              withTransition
+            />
           </Flex>
-        )}
-
+        </Flex>
+      )}
+      <Container>
         <div className="table">
           {data?.pages[0].data.length !== 0 && (
-            <TableHead cols={cols} gridCols="100px 100px 1fr 1fr 1fr 1fr" />
+            <TableHead
+              cols={cols}
+              gap="0.5rem"
+              gridCols="repeat(2, 85px) repeat(
+              7,
+              minmax(100px, 1fr)
+            );"
+            />
           )}
           {isFetching && (
             <div className="loading">
@@ -189,11 +195,12 @@ const CategoriesList = () => {
 
 export default CategoriesList;
 const Container = styled.div`
+  position: relative;
+  border-radius: 6px;
+  border: ${(props) => props.theme.border};
   .table {
-    position: relative;
-    border-radius: 6px;
-    overflow: hidden;
-    border: ${(props) => props.theme.border};
+    overflow-x: auto;
+    background-color: #fff;
   }
   .loading {
     position: absolute;

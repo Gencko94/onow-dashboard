@@ -102,9 +102,16 @@ const CreateNewProduct = () => {
 
 export default CreateNewProduct;
 
-const Wrapper = styled.div`
-  box-shadow: 0px 4px 7px 2px rgb(213, 213, 213);
+const Wrapper = styled.div(
+  ({ theme: { breakpoints, shadow } }) => `
+
+  box-shadow: ${shadow};
   border-radius: 0 6px 6px 6px;
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #fff;
-`;
+  ${breakpoints.md}{
+    
+    padding: 1rem;
+  }
+  `
+);

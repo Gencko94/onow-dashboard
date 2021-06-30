@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import Grid, { GridWrapper } from "../../StyledComponents/Grid";
+import Grid from "../../StyledComponents/Grid";
 import Hr from "../../StyledComponents/Hr";
 import CreateProductCategories from "./CreateProductCategories";
 import ProductDescription from "./ProductDescription";
@@ -58,18 +57,17 @@ const CreateProductGeneralInfo = () => {
 
   return (
     <FormProvider {...methods}>
-      <Container>
+      <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
         <Flex justify="flex-end">
           <Button
             type="submit"
-            onClick={methods.handleSubmit(onSubmit, onError)}
             text="Next"
             bg="blue"
             padding="0.5rem"
             textSize="0.9rem"
           />
         </Flex>
-        <Grid cols="1fr 1fr" gap="1rem">
+        <Grid cols="repeat(auto-fit,minmax(350px,1fr))" gap="1rem">
           <CreateProductNameAndDescription />
 
           <CreateProductCategories />
@@ -78,14 +76,9 @@ const CreateProductGeneralInfo = () => {
         <Hr />
         <CreateProductImage />
         {/* <ProductDescription /> */}
-      </Container>
+      </form>
     </FormProvider>
   );
 };
 
 export default CreateProductGeneralInfo;
-const Container = styled.div`
-  ${GridWrapper} {
-    margin-bottom: 2rem;
-  }
-`;

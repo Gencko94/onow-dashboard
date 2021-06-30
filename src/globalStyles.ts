@@ -90,7 +90,7 @@ h5 {
   line-height:1.5rem;  
 }
 h6 {
-  font-size:0.75rem;
+  font-size:0.85rem;
   line-height:1.25rem; 
 }
 

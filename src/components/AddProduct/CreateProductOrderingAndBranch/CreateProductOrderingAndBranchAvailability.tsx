@@ -73,7 +73,6 @@ const CreateProductOrderingAndBranchAvailability = ({ submitForm }: IProps) => {
           <Button
             withRipple
             withTransition
-            margin="0 0.5rem"
             type="submit"
             bg="green"
             padding=" 0.5rem"

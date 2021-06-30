@@ -159,7 +159,7 @@ const SideNavItem = styled.li(
 );
 
 const SideNavLink = styled(Link)<{ isCurrent: boolean }>`
-  padding: 0.75rem 1rem;
+  padding: 0.5rem;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -183,5 +183,8 @@ const SideNavLink = styled(Link)<{ isCurrent: boolean }>`
         color: ${(props) => props.theme.mainColor};
         box-shadow: none;
       }
-    `}
+    `};
+  @media (min-width: 768px) {
+    padding: 0.75rem 1rem;
+  }
 `;

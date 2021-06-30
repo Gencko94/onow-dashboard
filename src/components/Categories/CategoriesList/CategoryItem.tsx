@@ -180,9 +180,9 @@ const CategoryItem = ({
 export default CategoryItem;
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 100px 100px 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(2, 85px) repeat(5, minmax(100px, 1fr));
   background-color: #fff;
-  gap: 1rem;
+  gap: 0.5rem;
 
   border-bottom: ${(props) => props.theme.border};
   &:hover {

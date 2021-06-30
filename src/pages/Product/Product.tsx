@@ -16,6 +16,8 @@ const Product = () => {
   const { id } = useParams<{ id: string }>();
   const { data } = useQuery(["product", id], () => getProduct(id), {
     suspense: true,
+    // useErrorBoundary: false,
+    // onError: (err: any) => console.log(err.response),
   });
   const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3 | 4>(0);
   return (

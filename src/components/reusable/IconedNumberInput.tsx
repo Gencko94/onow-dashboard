@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { IconType } from "react-icons/lib";
 
 import styled, { css } from "styled-components";
+import useResponsive from "../../hooks/useResponsive";
 interface BaseInput {
   /**
    * 	An object with field errors. Obtainable from ```formState.errors```
@@ -80,12 +81,13 @@ const IconedNumberInput = ({
   const {
     i18n: { language },
   } = useTranslation();
+  const { isDesktop } = useResponsive();
   return (
     <Container rtl={language === "ar"} error={Boolean(errors?.message)}>
       <label>{label}</label>
       <div className="input-container">
         <span className="icon">
-          <Icon size={21} />
+          <Icon size={isDesktop ? 21 : 19} />
         </span>
 
         <input
@@ -110,14 +112,29 @@ const IconedNumberInput = ({
 };
 
 export default IconedNumberInput;
-const Container = styled.div<{ rtl: boolean; error: boolean }>`
+const Container = styled.div<{ rtl: boolean; error: boolean }>(
+  ({
+    theme: {
+      breakpoints,
+      font,
+      subHeading,
+      headingColor,
+      border,
+      inputColorLight,
+      mainColor,
+      borderHovered,
+      dangerRed,
+    },
+    error,
+    rtl,
+  }) => `
   label {
-    color: ${({ theme }) => theme.headingColor};
+    color: ${headingColor};
     margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: ${(props) => props.theme.font.regular};
+    font-size: 0.8rem;
+    font-weight: ${font.regular};
     display: block;
-  }
+  };
   .input-container {
     display: flex;
     position: relative;
@@ -125,8 +142,8 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     justify-content: center;
 
     background-color: #fff;
-    color: ${(props) => props.theme.headingColor};
-    border: ${(props) => props.theme.border};
+    color: ${headingColor};
+    border: ${border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
@@ -135,45 +152,63 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${(props) => props.theme.subHeading};
-      background-color: ${(props) => props.theme.inputColorLight};
-      border-right: ${(props) => props.theme.border};
-      ${(props) =>
-        props.rtl &&
+      color: ${subHeading};
+      background-color: ${inputColorLight};
+      border-right: ${border};
+      ${
+        rtl &&
         css`
           border-right: none;
           border-left: ${(props) => props.theme.border};
-        `}
-    }
+        `
+      }
+    };
 
     input {
       flex: 1;
       padding: 0.4rem;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       width: 50px;
     }
     &:hover,
     &:focus-within {
-      border-color: ${(props) => props.theme.borderHovered};
-      background-color: ${(props) => props.theme.inputColorLight};
-    }
-    ${(props) =>
-      props.error &&
+      border-color: ${borderHovered};
+      background-color: ${inputColorLight};
+    };
+    ${
+      error &&
       css`
         border-color: ${(props) => props.theme.dangerRed} !important;
-      `}
-  }
+      `
+    }
+  };
   .error {
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    color: ${(props) => props.theme.dangerRed};
-  }
+    color: ${dangerRed};
+  };
   .desc {
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
     /* color: #7c7c7c; */
-    color: ${(props) => props.theme.mainColor};
-  }
-`;
+    color: ${mainColor};
+  };
+  @media  ${breakpoints.md}{
+    label {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    };
+    .input-container{
+      
+      input {
+        font-size: 0.9rem;
+      }
+    }
+
+  };
+
+  };
+`
+);

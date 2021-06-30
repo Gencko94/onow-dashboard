@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
+import { BiPlus } from "react-icons/bi";
 
 import styled from "styled-components";
 
-import AddButton from "../../../reusable/AddButton";
-import EmptyTable from "../../../reusable/EmptyTable";
+import Button from "../../../reusable/Button";
 import Flex, { FlexWrapper } from "../../../StyledComponents/Flex";
+import Heading from "../../../StyledComponents/Heading";
 import { secondTabProps } from "../CreateProductPricingAndOptions";
 
 import Option from "./Option";
@@ -25,49 +26,36 @@ const Options = ({
   const priceByOptions = watch("price_by_options");
   useEffect(() => {
     if (options.length === 0) {
-      append({
-        max_picks: 0,
-        required: priceByOptions ? true : false,
-        name: { ar: "", en: "" },
-        select_type: "single",
-        values: [
-          {
-            name: {
-              ar: "",
-              en: "",
+      append(
+        {
+          max_picks: 0,
+          required: priceByOptions ? true : false,
+          name: { ar: "", en: "" },
+          select_type: "single",
+          values: [
+            {
+              name: {
+                ar: "",
+                en: "",
+              },
+              price: "",
+              qty: 0,
+              sku: "",
             },
-            price: "",
-            qty: 0,
-            sku: "",
-          },
-        ],
-      });
+          ],
+        },
+        { shouldFocus: false }
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Container>
-      <h6 className="title">Product Options</h6>
+      <Heading color="primary" tag="h6" mb="0.5rem">
+        Options
+      </Heading>
       {/* If No Options Show this */}
-      {fields.length === 0 && (
-        <div className="no-variations-container">
-          <EmptyTable
-            height="100%"
-            btnText="Add New Option"
-            text="No Options were Added"
-            withButton
-            cb={() =>
-              append({
-                required: false,
-                select_type: "single",
-                values: [
-                  { name: { ar: "", en: "" }, price: "", qty: 0, sku: "" },
-                ],
-              })
-            }
-          />
-        </div>
-      )}
+
       {fields.length > 0 && (
         <>
           <div className="list">
@@ -81,18 +69,32 @@ const Options = ({
                 />
               );
             })}
-            <Flex items="center" justify="center">
-              <AddButton
-                title="Add Another Option"
-                cb={() =>
-                  append({
-                    required: false,
-                    select_type: "single",
-                    values: [
-                      { name: { ar: "", en: "" }, price: "", qty: 0, sku: "" },
-                    ],
-                  })
+            <Flex items="center" justify="center" margin="1rem 0">
+              <Button
+                withRipple
+                withTransition
+                text="Add Another Option"
+                bg="green"
+                padding="0.5rem"
+                onClick={() =>
+                  append(
+                    {
+                      required: false,
+                      select_type: "single",
+                      values: [
+                        {
+                          name: { ar: "", en: "" },
+                          price: "",
+                          qty: 0,
+                          sku: "",
+                        },
+                      ],
+                    },
+                    { shouldFocus: false }
+                  )
                 }
+                textSize="0.9rem"
+                Icon={BiPlus}
               />
             </Flex>
           </div>
@@ -103,21 +105,8 @@ const Options = ({
 };
 
 export default Options;
-const Container = styled.div`
+const Container = styled.div(
+  ({ theme: { breakpoints } }) => `
   padding: 1rem 0;
-  .title {
-    margin: 1rem 0;
-    color: ${(props) => props.theme.mainColor};
-  }
-  .no-variations-container {
-    background-color: ${(props) => props.theme.overlayColor};
-    height: 200px;
-    border: ${(props) => props.theme.border};
-    border-radius: 6px;
-  }
-  .list {
-    ${FlexWrapper} {
-      margin: 1rem 0;
-    }
-  }
-`;
+  `
+);

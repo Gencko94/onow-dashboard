@@ -100,7 +100,7 @@ const ProductNameAndDescription = () => {
 
 export default ProductNameAndDescription;
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, border, bodyColor } }) => `
+  ({ theme: { breakpoints, border, bodyColor } }) => `
   margin: 1rem 0;
   display:flex;
   flex-direction:column;

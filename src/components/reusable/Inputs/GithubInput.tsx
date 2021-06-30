@@ -53,25 +53,43 @@ const GithubInput = ({
 };
 
 export default GithubInput;
-const Container = styled.div`
+const Container = styled.div(
+  ({ theme: { breakpoints, headingColor, subHeading, font } }) => `
   display: flex;
   align-items: center;
-
+  gap:1rem;
   .text-container {
     flex: auto;
+    h6 {
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+    }
+    .first-subtitle {
+      color: ${headingColor};
+      font-size: 0.7rem;
+      margin-bottom: 0.25rem;
+    }
+    .second-subtitle {
+      color: ${subHeading};
+      font-size: 0.7rem;
+      font-weight: ${font.light};
+    }
+  }
+  @media ${breakpoints.md}{
     h6 {
       margin-bottom: 0.25rem;
       font-size: 0.9rem;
     }
     .first-subtitle {
-      color: ${(props) => props.theme.headingColor};
+      color: ${headingColor};
       font-size: 0.8rem;
       margin-bottom: 0.25rem;
     }
     .second-subtitle {
-      color: ${(props) => props.theme.subHeading};
+      color: ${subHeading};
       font-size: 0.75rem;
-      font-weight: ${(props) => props.theme.font.light};
+      font-weight: ${font.light};
     }
   }
-`;
+  `
+);

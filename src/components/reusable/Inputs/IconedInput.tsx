@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { IconType } from "react-icons/lib";
 
 import styled, { css } from "styled-components";
+import useResponsive from "../../../hooks/useResponsive";
 import InputErrorMessage from "../InputErrorMessage";
 interface BaseInput {
   /**
@@ -74,13 +75,13 @@ const IconedInput = ({
   const {
     i18n: { language },
   } = useTranslation();
-
+  const { isDesktop } = useResponsive();
   return (
     <Container rtl={language === "ar"} error={Boolean(errors?.message)}>
       {label && <label>{label}</label>}
       <div className="input-container">
         <span className="icon">
-          <Icon size={21} />
+          <Icon size={isDesktop ? 21 : 19} />
         </span>
 
         <input
@@ -155,7 +156,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     input {
       flex: 1;
       padding: 0.4rem;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       width: 50px;
     };
     &:hover,
@@ -182,6 +183,12 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     label {
       font-size: 0.9rem;
       margin-bottom: 0.75rem;
+    };
+    .input-container{
+      
+      input {
+        font-size: 0.9rem;
+      }
     }
 
   };

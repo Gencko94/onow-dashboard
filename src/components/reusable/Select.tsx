@@ -106,18 +106,24 @@ export default function Select<T>({
   );
 }
 
-const Container = styled.div`
+const Container = styled.div(
+  ({ theme: { breakpoints, headingColor, font, dangerRed } }) => `
   label {
-    color: ${({ theme }) => theme.headingColor};
+    color: ${headingColor};
     margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: ${(props) => props.theme.font.regular};
+    font-size: 0.8rem;
+    font-weight: ${font.regular};
     display: inline-block;
   }
   .error {
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    color: ${(props) => props.theme.dangerRed};
+    color: ${dangerRed};
   }
-`;
+  @media ${breakpoints.md}{
+    font-size: 0.9rem;
+    
+  }
+  `
+);

@@ -7,6 +7,7 @@ import GithubInput from "../../reusable/Inputs/GithubInput";
 import PrefixedIconedInput from "../../reusable/Inputs/PrefixedIconedInput";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import { useContext } from "react";
+import Heading from "../../StyledComponents/Heading";
 
 const CreateProductPricing = () => {
   const {
@@ -23,7 +24,9 @@ const CreateProductPricing = () => {
   return (
     <Container>
       <div className="title-container">
-        <h5>Product Pricing</h5>
+        <Heading color="primary" tag="h5" mb="1.5rem">
+          Product Pricing
+        </Heading>
       </div>
       <div className="inputs-container">
         <PrefixedIconedInput
@@ -67,22 +70,15 @@ const CreateProductPricing = () => {
 export default CreateProductPricing;
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor } }) => `
-    .title-container {
-        color: ${mainColor};
-        margin-bottom:1rem;
-    }
+  .inputs-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap:1rem;
+  }
+  @media ${breakpoints.md}{
     .inputs-container {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap:1rem;
-    }
-    @media ${breakpoints.md}{
-        .inputs-container {
-           
-            grid-template-columns: 1fr 1fr 1fr;
-        }
-
-
-    }
-    `
+      grid-template-columns: 1fr 1fr 1fr;
+  }
+ }
+`
 );

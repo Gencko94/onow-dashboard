@@ -71,11 +71,10 @@ export const changeUserPassword = async ({
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
     },
-    params: { current_password, password },
   };
   const res = await axios.post(
     `${uri}/update-user-password/${userId}`,
-    {},
+    { current_password, password },
     config
   );
   return res.data.results;

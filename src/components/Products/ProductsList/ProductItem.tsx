@@ -161,7 +161,7 @@ const ProductItem = ({
 export default ProductItem;
 const Container = styled.div<{ selected: boolean }>`
   display: grid;
-  /* overflow-x: auto; */
+
   grid-template-columns: repeat(2, minmax(35px, 50px)) repeat(
       7,
       minmax(100px, 1fr)

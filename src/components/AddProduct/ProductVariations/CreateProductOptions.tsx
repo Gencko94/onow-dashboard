@@ -3,6 +3,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import styled from "styled-components";
 
 import GithubInput from "../../reusable/Inputs/GithubInput";
+import Heading from "../../StyledComponents/Heading";
 import { secondTabProps } from "./CreateProductPricingAndOptions";
 
 import Options from "./Options/Options";
@@ -14,7 +15,9 @@ const CreateProductOptions = () => {
   return (
     <Container>
       <div className="title-container">
-        <h5>Product Options</h5>
+        <Heading color="primary" tag="h5" mb="1.5rem">
+          Product Options
+        </Heading>
       </div>
       <Controller
         name="variations_enabled"
@@ -48,10 +51,7 @@ const CreateProductOptions = () => {
 export default CreateProductOptions;
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor } }) => `
-    .title-container {
-        color: ${mainColor};
-        margin-bottom:1rem;
-    }
+   
     .inputs-container {
         display: grid;
         grid-template-columns: 1fr;

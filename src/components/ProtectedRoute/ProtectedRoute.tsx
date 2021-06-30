@@ -6,6 +6,7 @@ import { QueryErrorResetBoundary } from "react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import canVisitPage from "../../utils/canVisitPage";
 import NotAuthorized from "../../pages/NotAuthorized";
+import ErrorBoundaryComponent from "../reusable/ErrorBoundaryComponent";
 
 interface IProps {
   path: string;
@@ -34,17 +35,8 @@ export default function ProtectedRoute({ Component, path }: IProps) {
               <QueryErrorResetBoundary>
                 {({ reset }) => (
                   <ErrorBoundary
-                    fallbackRender={({ error, resetErrorBoundary }) => (
-                      <div>
-                        Something went wrong , please try again
-                        <button onClick={() => resetErrorBoundary()}>
-                          Try again
-                        </button>
-                        <pre style={{ whiteSpace: "normal" }}>
-                          {error.message}
-                        </pre>
-                      </div>
-                    )}
+                    onError={(err) => console.log(err)}
+                    FallbackComponent={ErrorBoundaryComponent}
                     onReset={reset}
                   >
                     <Component storeId={user?.store.id} />{" "}

@@ -39,14 +39,15 @@ export default Breadcrumbs;
 const Container = styled.aside(
   ({ theme: { breakpoints, shadow } }) => `
   border-radius: 6px;
-
   h5 {
     font-size:1rem;
     margin-bottom: 0.5rem;
   }
   .links-container {
+    white-space:nowrap;
     display: flex;
     font-size:0.9rem;
+    align-items: center;
     .chevron {
       display: flex;
       align-items: center;
@@ -67,5 +68,6 @@ const Container = styled.aside(
 );
 const MainLink = styled(Link)`
   /* font-size: 0.9rem; */
+  display: block;
   color: ${(props) => props.theme.mainColor};
 `;

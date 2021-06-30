@@ -1,14 +1,13 @@
 import { useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { BiDetail } from "react-icons/bi";
-import { FaBoxes } from "react-icons/fa";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
-import IconedNumberInput from "../../reusable/IconedNumberInput";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
 import QuantityInput from "../../reusable/Inputs/QuantityInput";
+import Heading from "../../StyledComponents/Heading";
 import { firstTabInfo } from "./CreateProductGeneralInfo";
 
 const CreateProductNameAndDescription = () => {
@@ -23,7 +22,9 @@ const CreateProductNameAndDescription = () => {
   return (
     <Container>
       <div className="title-container">
-        <h5>Product Naming & Description</h5>
+        <Heading color="primary" tag="h5">
+          Product Naming & Description
+        </Heading>
       </div>
       <div className="box">
         <IconedInput
@@ -87,7 +88,7 @@ const CreateProductNameAndDescription = () => {
           name="quantity"
         />
 
-        <div style={{ gridColumn: "1/3" }}>
+        <div className="slug">
           <PrefixedInput
             errors={errors?.slug}
             label="Slug"
@@ -107,28 +108,31 @@ const CreateProductNameAndDescription = () => {
 
 export default CreateProductNameAndDescription;
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
- 
+  ({ theme: { breakpoints, border, bodyColor } }) => `
   display:flex;
   flex-direction:column;
   .title-container {
     padding: 1rem 0;
-    color: ${mainColor};
+    
   }
   .box {
     flex:1;
-    background-color: #fff;
-    box-shadow: ${shadow};
+    background-color:${bodyColor} ;
+    border: ${border};
     border-radius: 6px;
-    padding: 1rem;
+    padding: 0.5rem;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
     gap: 1rem;
   }
   @media ${breakpoints.md} {
     .box {
-      grid-template-columns: 1fr 1fr;
-     
+      padding: 1rem;
+      
+      
+      .slug {
+        grid-column:span 2;
+      }
 
     }
   }
