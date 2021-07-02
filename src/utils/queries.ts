@@ -8,7 +8,11 @@ import { COUPON, NEW_COUPON } from "../interfaces/coupons/coupons";
 import { NEW_PRODUCT } from "../interfaces/products/create-new-product";
 import { PRODUCT } from "../interfaces/products/products";
 import { NEW_STAFF_MEMBER, STAFF_MEMBER } from "../interfaces/staff/staff";
-import { CATEGORY, NEW_CATEGORY } from "../interfaces/categories/categories";
+import {
+  CATEGORY,
+  EDIT_CATEGORY,
+  NEW_CATEGORY,
+} from "../interfaces/categories/categories";
 import { ORDER_SORT } from "../pages/Orders";
 
 const uri = "https://new-version.o-now.net/customer-api";
@@ -47,8 +51,8 @@ export const updateUserAccount = async (user: USER): Promise<USER> => {
   const res = await axios.post(
     `${uri}/update-user/${user.id}`,
     {
-      first_name: user.firstName,
-      last_name: user.lastName,
+      first_name: user.first_name,
+      last_name: user.last_name,
       email: user.email,
       phone: user.phone,
       country_id: 1,
@@ -568,6 +572,23 @@ export const createCategory = async (
   formData.append("slug", category.slug);
   formData.append("parent_id", JSON.stringify(category.parent_id));
   const res = await axios.post(`${uri}/product-categories`, formData, config);
+  return res.data.results;
+};
+// Edit Category
+
+export const editCategory = async (category: EDIT_CATEGORY) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+      StoreId: 1,
+    },
+  };
+  const res = await axios.post(
+    `${uri}/product-categories/${category.id}`,
+    { ...category, seo_description: "1" },
+    config
+  );
   return res.data.results;
 };
 // Delete Category

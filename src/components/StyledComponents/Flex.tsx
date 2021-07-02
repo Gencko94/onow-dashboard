@@ -11,6 +11,7 @@ interface IProps {
   padding?: string;
   margin?: string;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
+  wrap?: boolean;
 }
 const Flex: FC<IProps> = ({
   children,
@@ -19,6 +20,7 @@ const Flex: FC<IProps> = ({
   padding,
   margin,
   onClick,
+  wrap,
 }) => {
   return (
     <FlexWrapper
@@ -29,6 +31,7 @@ const Flex: FC<IProps> = ({
           "--items": items,
           "--padding": padding,
           "--margin": margin,
+          "--wrap": wrap ? "wrap" : "nowrap",
         } as CSSProperties
       }
     >
@@ -44,4 +47,5 @@ export const FlexWrapper = styled.div`
   align-items: var(--items, center);
   padding: var(--padding, 0);
   margin: var(--margin, 0);
+  flex-wrap: var(--wrap, nowrap);
 `;

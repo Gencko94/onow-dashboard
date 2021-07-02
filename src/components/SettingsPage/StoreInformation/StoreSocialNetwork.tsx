@@ -3,6 +3,11 @@ import { useTranslation } from "react-i18next";
 
 import styled from "styled-components";
 import { STORE_SOCIAL_NETWORK } from "../../../interfaces/settings/store-properties/store-properties";
+import Button from "../../reusable/Button";
+import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
+import Flex from "../../StyledComponents/Flex";
+import Grid from "../../StyledComponents/Grid";
+import Heading from "../../StyledComponents/Heading";
 
 const StoreSocialNetwork = () => {
   const {
@@ -14,73 +19,59 @@ const StoreSocialNetwork = () => {
   } = useTranslation();
 
   return (
-    <Container>
-      <div className="title-container">
-        <h5>Social network accounts</h5>
-      </div>
+    <div>
+      <Heading tag="h5" color="primary" margin="2rem 0">
+        Social network accounts
+      </Heading>
+
       <Box>
         <div className="section">
-          <div className="grid">
-            <div>
-              <label>Instagram</label>
-              <div className="input-container">
-                <span className="link">
-                  <p>https://instagram.com/</p>
-                </span>
-                <input {...register("instagram")} />
-              </div>
-              <p className="error">{errors?.instagram?.message}</p>
-            </div>
-            <div>
-              <label>Twitter</label>
-              <div className="input-container">
-                <span className="link">
-                  <p>https://www.twitter.com/</p>
-                </span>
-                <input {...register("twitter")} />
-              </div>
-              <p className="error">{errors?.twitter?.message}</p>
-            </div>
-            <div>
-              <label>Snapchat</label>
-
-              <div className="input-container">
-                <span className="link">
-                  <p>https://www.snapchat.com/add/</p>
-                </span>
-                <input {...register("snapchat", { required: "Required" })} />
-              </div>
-              <p className="error">{errors?.snapchat?.message}</p>
-            </div>
-            <div>
-              <label>Facebook</label>
-
-              <div className="input-container">
-                <span className="link">
-                  <p>https://www.facebook.com/</p>
-                </span>
-                <input {...register("facebook", { required: "Required" })} />
-              </div>
-
-              <p className="error">{errors?.facebook?.message}</p>
-            </div>
-          </div>
+          <Grid cols="repeat(auto-fill,minmax(300px,1fr))" gap="1rem">
+            <PrefixedInput
+              label="Instagram"
+              errors={errors.instagram}
+              name="instagram"
+              prefixText="https://instagram.com/"
+              register={register}
+            />
+            <PrefixedInput
+              label="Twitter"
+              errors={errors.twitter}
+              name="twitter"
+              prefixText="https://www.twitter.com/"
+              register={register}
+            />
+            <PrefixedInput
+              label="Snapchat"
+              errors={errors.snapchat}
+              name="snapchat"
+              prefixText="https://www.snapchat.com/add/"
+              register={register}
+            />
+            <PrefixedInput
+              label="Facebook"
+              errors={errors.facebook}
+              name="facebook"
+              prefixText="https://www.facebook.com/"
+              register={register}
+            />
+          </Grid>
         </div>
-        <div className="save-container">
-          <button>Save Changes</button>
-        </div>
+        <Flex items="center" justify="center" padding="1rem">
+          <Button
+            text="Save"
+            bg="green"
+            padding="0.5rem"
+            withRipple
+            withTransition
+          />
+        </Flex>
       </Box>
-    </Container>
+    </div>
   );
 };
 
 export default StoreSocialNetwork;
-const Container = styled.div`
-  .title-container {
-    padding: 2rem 0;
-    color: ${(props) => props.theme.mainColor};
-  }
-`;
 
 const Box = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
@@ -89,73 +80,5 @@ const Box = styled.div`
   .section {
     padding: 1rem;
     border-bottom: ${(props) => props.theme.border};
-    .section-title {
-      margin-bottom: 1.5rem;
-      font-size: 1.1rem;
-      font-weight: ${(props) => props.theme.font.xbold};
-    }
-    label {
-      color: ${({ theme }) => theme.headingColor};
-      margin-bottom: 0.4rem;
-      font-size: 0.9rem;
-      font-weight: ${(props) => props.theme.font.regular};
-      display: inline-block;
-    }
-
-    .error {
-      height: 20px;
-      font-size: 0.7rem;
-      padding-top: 0.25rem;
-      color: ${(props) => props.theme.dangerRed};
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      .input-container {
-        display: flex;
-        position: relative;
-        align-items: center;
-        justify-content: center;
-        background-color: ${(props) => props.theme.inputColorLight};
-        color: ${(props) => props.theme.headingColor};
-        border: ${(props) => props.theme.border};
-        border-radius: 5px;
-        transition: all 150ms ease;
-        &:hover,
-        &:focus-within {
-          border-color: ${(props) => props.theme.borderHovered};
-          background-color: ${(props) => props.theme.inputColorLight};
-        }
-      }
-      .link {
-        padding: 0.4rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: ${(props) => props.theme.subHeading};
-        font-size: 0.9rem;
-      }
-      input {
-        flex: 1;
-        padding: 0.4rem;
-        font-size: 0.9rem;
-        width: 50px;
-        background-color: #fff;
-      }
-    }
-  }
-  .save-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    button {
-      background-color: ${(props) => props.theme.green};
-      padding: 0.5rem;
-      border-radius: 6px;
-      color: #fff;
-    }
   }
 `;

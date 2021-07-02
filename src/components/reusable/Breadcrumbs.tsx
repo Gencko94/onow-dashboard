@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Heading from "../StyledComponents/Heading";
 
 interface IProps {
   /**
@@ -22,7 +23,10 @@ const Breadcrumbs = ({ childLabel, parentLabel, parentTarget }: IProps) => {
   const { t } = useTranslation();
   return (
     <Container>
-      <h5>{childLabel}</h5>
+      <Heading color="primary" tag="h5" mb="0.5rem">
+        {childLabel}
+      </Heading>
+
       <div className="links-container">
         <MainLink to={parentTarget}>{t(parentLabel)}</MainLink>
         <span className="chevron">
@@ -39,10 +43,7 @@ export default Breadcrumbs;
 const Container = styled.aside(
   ({ theme: { breakpoints, shadow } }) => `
   border-radius: 6px;
-  h5 {
-    font-size:1rem;
-    margin-bottom: 0.5rem;
-  }
+ 
   .links-container {
     white-space:nowrap;
     display: flex;
@@ -56,9 +57,7 @@ const Container = styled.aside(
     }
   };
   @media ${breakpoints.md} {
-    h5 {
-      font-size:1.25rem;
-    };
+    
     .links-container {
       font-size:1rem;
 

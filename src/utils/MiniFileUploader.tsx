@@ -22,7 +22,6 @@ const MiniFileUploader = ({
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | null>(() => {
-    // if (formImages) return file;
     return null;
   });
   useEffect(() => {

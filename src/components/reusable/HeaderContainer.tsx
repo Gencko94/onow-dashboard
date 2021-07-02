@@ -11,7 +11,7 @@ export const HeaderWrapper = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
   border-radius: 6px;
   display: grid;
-  grid-template-columns: 1fr 0.5fr;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1rem;
   align-items: center;
   padding: 0.75rem 1rem;

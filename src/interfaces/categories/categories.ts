@@ -54,3 +54,15 @@ export type NEW_CATEGORY = {
     [key: string]: string;
   };
 };
+export interface EDIT_CATEGORY {
+  id: number;
+  active: 0 | 1;
+  name: {
+    [key: string]: string;
+  };
+  slug: string;
+  parent_id: number;
+  description: {
+    [key: string]: string;
+  };
+}

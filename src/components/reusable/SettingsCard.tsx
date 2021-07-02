@@ -1,6 +1,8 @@
 import { IconType } from "react-icons/lib";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import useResponsive from "../../hooks/useResponsive";
+import Heading from "../StyledComponents/Heading";
 
 interface IProps {
   title: string;
@@ -10,12 +12,15 @@ interface IProps {
 }
 
 const SettingsCard = ({ desc, title, Icon, target }: IProps) => {
+  const { isDesktop } = useResponsive();
   return (
     <Container to={target}>
       <span className="icon">
-        <Icon size={45} />
+        <Icon size={isDesktop ? 45 : 35} />
       </span>
-      <p className="title">{title}</p>
+      <Heading tag="h6" color="primary" mb="0.25rem">
+        {title}
+      </Heading>
       <p className="desc">{desc}</p>
     </Container>
   );
@@ -39,9 +44,7 @@ const Container = styled(Link)`
     justify-content: center;
     color: ${(props) => props.theme.subHeading};
   }
-  p.title {
-    font-weight: ${(props) => props.theme.font.semibold};
-  }
+
   p.desc {
     font-size: 0.8rem;
     color: ${(props) => props.theme.subHeading};

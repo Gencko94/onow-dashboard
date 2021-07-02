@@ -180,7 +180,7 @@ const CategoryItem = ({
 export default CategoryItem;
 const Container = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 85px) repeat(5, minmax(100px, 1fr));
+  grid-template-columns: repeat(2, 85px) repeat(4, minmax(100px, 1fr));
   background-color: #fff;
   gap: 0.5rem;
 

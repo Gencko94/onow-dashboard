@@ -85,7 +85,7 @@ const CreateNewCategory = () => {
             isLoading={isLoading}
             disabled={isLoading}
             type="submit"
-            text="Submit Data"
+            text="Submit"
             Icon={BiPlus}
             bg="green"
             padding="0.5rem"

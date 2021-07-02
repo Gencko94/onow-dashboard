@@ -12,6 +12,7 @@ import IconedInput from "../../reusable/Inputs/IconedInput";
 import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
 import Textarea from "../../reusable/Textarea";
 import Grid from "../../StyledComponents/Grid";
+import Heading from "../../StyledComponents/Heading";
 interface IProps {
   register: any;
   errors: any;
@@ -30,7 +31,7 @@ const CategoryInfo = ({
   const {
     i18n: { language },
   } = useTranslation();
-  const formCategory = watch("parent_category");
+  const formCategoryId = watch("parent_id");
   const nameEn: string = watch("name.en");
   // console.log(form);
   useEffect(() => {
@@ -40,10 +41,12 @@ const CategoryInfo = ({
   }, [nameEn]);
   return (
     <Container>
-      <Grid cols="2fr 1fr" gap="1rem">
+      <Grid cols="repeat(auto-fit,minmax(310px,1fr))" gap="1rem">
         <div>
           <div className="title-container">
-            <h5>Category Information</h5>
+            <Heading tag="h5" color="primary">
+              Category Information
+            </Heading>
           </div>
           <div className="box">
             <IconedInput
@@ -96,11 +99,13 @@ const CategoryInfo = ({
         </div>
         <div className="categories-section">
           <div className="title-container">
-            <h5>Category Parent</h5>
+            <Heading tag="h5" color="primary">
+              Category Parent
+            </Heading>
           </div>
           <Controller
             control={control}
-            name="parent_category"
+            name="parent_id"
             rules={{
               required: "Required",
             }}
@@ -109,7 +114,7 @@ const CategoryInfo = ({
                 <div className="category-list">
                   <CategorySelection
                     errors={errors?.parent_id}
-                    formCategory={formCategory}
+                    formCategoryId={formCategoryId}
                     onChange={onChange}
                   />
                 </div>
@@ -129,7 +134,6 @@ const Container = styled.div(
   margin: 1rem 0;
   .title-container {
     padding: 1rem 0;
-    color: ${mainColor};
   }
   
     .box {
@@ -138,12 +142,12 @@ const Container = styled.div(
       border-radius: 6px;
       padding: 1rem;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
       gap: 1rem;
     }
     .categories-section {
       display:flex;
-      // align-items:center;
+     
       flex-direction:column;
       .category-list {
         flex:1;

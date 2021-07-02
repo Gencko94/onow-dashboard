@@ -9,6 +9,7 @@ const ErrorBoundaryComponent = ({ resetErrorBoundary, error }: IProps) => {
   if (error.response) {
     if (error.response.status === 404) {
       return <NotFound />;
+    } else if (error.response.status === 401) {
     }
   }
   return (

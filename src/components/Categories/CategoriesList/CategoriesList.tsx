@@ -135,10 +135,7 @@ const CategoriesList = () => {
             <TableHead
               cols={cols}
               gap="0.5rem"
-              gridCols="repeat(2, 85px) repeat(
-              7,
-              minmax(100px, 1fr)
-            );"
+              gridCols="repeat(2, 85px) repeat(4, minmax(100px, 1fr))"
             />
           )}
           {isFetching && (

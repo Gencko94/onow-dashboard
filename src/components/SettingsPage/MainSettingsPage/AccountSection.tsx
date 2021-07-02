@@ -1,12 +1,20 @@
-import { FcSettings, FcLock, FcPositiveDynamic } from "react-icons/fc";
+import { FcSettings, FcPositiveDynamic } from "react-icons/fc";
 import styled from "styled-components";
 import SettingsCard from "../../reusable/SettingsCard";
+import Grid from "../../StyledComponents/Grid";
+import Heading from "../../StyledComponents/Heading";
 
 const AccountSection = () => {
   return (
     <Container>
-      <h5 className="title">Account Settings</h5>
-      <div className="cards-container">
+      <Heading tag="h5" color="primary" mb="2rem">
+        Account Settings
+      </Heading>
+      <Grid
+        cols="repeat(auto-fill,minmax(250px,1fr))"
+        gap="2rem"
+        margin="1rem 0"
+      >
         <SettingsCard
           title="Account Settings"
           target="/settings/account-settings"
@@ -20,7 +28,7 @@ const AccountSection = () => {
           Icon={FcPositiveDynamic}
           desc="Manage your subscription at O-Now "
         />
-      </div>
+      </Grid>
     </Container>
   );
 };
@@ -28,13 +36,4 @@ const AccountSection = () => {
 export default AccountSection;
 const Container = styled.div`
   margin: 2rem 0;
-  .title {
-    color: ${(props) => props.theme.mainColor};
-  }
-  .cards-container {
-    display: grid;
-    margin: 1rem 0;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2rem;
-  }
 `;

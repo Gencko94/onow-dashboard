@@ -44,7 +44,7 @@ interface IProps {
   /**
    * Button Text color , defaults to White.
    */
-  color?: string;
+  color?: "primary" | string;
   /**
    * if ```true``` button will be transitioned up
    */
@@ -161,6 +161,7 @@ export const ButtonWrapper = styled.button<{
       mainColor,
       dangerRed,
       border: themeBorder,
+      font,
     },
     padding,
     color,
@@ -173,9 +174,10 @@ export const ButtonWrapper = styled.button<{
     border,
     shadow: boxShadow,
     disabled,
+
     width,
   }) => `
-      background-color: ${
+      background: ${
         bg === "primary"
           ? mainColor
           : bg === "blue"
@@ -196,9 +198,10 @@ export const ButtonWrapper = styled.button<{
       align-items: center;
       border-radius: 6px;
       padding: ${padding};
+      // font-weight:${font.semibold};
       position: relative;
       overflow:hidden;
-      color: ${color};
+      color: ${color === "primary" ? mainColor : color};
       border:${border && themeBorder};
       transition: all 100ms ease;
     .loading {
@@ -220,7 +223,7 @@ export const ButtonWrapper = styled.button<{
           margin: 0 0.25rem;
       }
       &:hover {
-        background-color:${hoverBg};
+        background:${hoverBg};
         color: ${hoverColor};
       }
       
@@ -235,7 +238,7 @@ export const ButtonWrapper = styled.button<{
       ${
         disabled &&
         css`
-          background-color: #a7a2a2;
+          background: #a7a2a2;
           color: #fff;
         `
       };

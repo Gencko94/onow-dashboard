@@ -88,21 +88,21 @@ const AccountSettings = () => {
         <div onSubmit={handleSubmit(onSubmit)} className="container">
           <IconedInput
             Icon={MdSubtitles}
-            errors={errors?.firstName}
+            errors={errors?.first_name}
             register={register}
             required
             requiredMessage="Required"
             label="First Name"
-            name="firstName"
+            name="first_name"
           />
           <IconedInput
             Icon={MdSubtitles}
-            errors={errors?.lastName}
+            errors={errors?.last_name}
             register={register}
             required
             requiredMessage="Required"
             label="Last Name"
-            name="lastName"
+            name="last_name"
           />
           <Controller
             name="phone"
@@ -152,10 +152,6 @@ const AccountSettings = () => {
 export default AccountSettings;
 
 const Container = styled.div`
-  h5 {
-    margin-bottom: 1rem;
-    color: ${(props) => props.theme.mainColor};
-  }
   .container {
     background-color: #fff;
     box-shadow: ${(props) => props.theme.shadow};

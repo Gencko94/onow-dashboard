@@ -8,18 +8,26 @@ import {
   FcTimeline,
   FcSearch,
   FcManager,
-  FcCurrencyExchange,
+  FcDocument,
 } from "react-icons/fc";
 import styled from "styled-components";
 import SettingsCard from "../../reusable/SettingsCard";
+import Grid from "../../StyledComponents/Grid";
+import Heading from "../../StyledComponents/Heading";
 
 const StoreSection = () => {
   return (
     <Container>
       <div className="title">
-        <h5>Store Settings</h5>
+        <Heading tag="h5" color="primary" mb="2rem">
+          Store Settings
+        </Heading>
       </div>
-      <div className="cards-container">
+      <Grid
+        cols="repeat(auto-fill,minmax(250px,1fr))"
+        gap="2rem"
+        margin="1rem 0"
+      >
         <SettingsCard
           title="Store Information"
           target="/settings/store-information"
@@ -57,11 +65,17 @@ const StoreSection = () => {
           desc="Manage your orders payment methods"
         />
         <SettingsCard
+          title="Store Legal pages"
+          target="/settings/legal-pages"
+          Icon={FcDocument}
+          desc="Pages like Privacy Policy - About Us ..."
+        />
+        {/* <SettingsCard
           title="Store Currencies"
           target="/settings/store-currencies"
           Icon={FcCurrencyExchange}
           desc="Adjust your currencies used throughout your store"
-        />
+        /> */}
         <SettingsCard
           title="SEO"
           target="/settings/seo"
@@ -80,7 +94,7 @@ const StoreSection = () => {
           Icon={FcManager}
           desc="Manage your staff roles"
         />
-      </div>
+      </Grid>
     </Container>
   );
 };
@@ -88,17 +102,4 @@ const StoreSection = () => {
 export default StoreSection;
 const Container = styled.div`
   margin: 2rem 0;
-  .title {
-    color: ${(props) => props.theme.mainColor};
-  }
-  .cards-container {
-    display: grid;
-    margin: 1rem 0;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 2rem;
-    /* background-color: #fff;
-    padding: 1rem;
-    box-shadow: ${(props) => props.theme.shadow};
-    border-radius: 6px; */
-  }
 `;

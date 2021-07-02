@@ -85,6 +85,7 @@ const CouponsList = () => {
         text: "Coupon Deleted Successfully",
         type: "success",
       });
+      handleCloseConfirmationModal?.();
     } catch (error) {
       const { responseError } = extractError(error);
       if (responseError) {

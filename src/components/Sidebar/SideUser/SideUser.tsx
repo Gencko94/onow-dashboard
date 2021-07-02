@@ -13,7 +13,7 @@ const SideUser = () => {
     <Container>
       <div className="user">
         <img className="img" src="/images/user.jpg" alt="user" />
-        <p className="name">{`${user?.firstName} ${user?.lastName}`}</p>
+        <p className="name">{`${user?.first_name} ${user?.last_name}`}</p>
       </div>
       <button onClick={() => setMenuOpen(true)} className="menu-toggle">
         <BiDotsVerticalRounded size={22} />

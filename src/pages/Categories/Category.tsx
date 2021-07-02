@@ -1,24 +1,25 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import CategoryInfo from "../../components/Categories/Category/CategoryInfo";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
-import ConfirmationModal from "../../components/reusable/ConfirmationModal";
+import Button from "../../components/reusable/Button";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
+import Grid from "../../components/StyledComponents/Grid";
+import useConfirmationModal from "../../hooks/useConfirmationModal";
 import useToast from "../../hooks/useToast";
 import { CATEGORY } from "../../interfaces/categories/categories";
 import extractError from "../../utils/extractError";
-import { deleteCategory, getCategory } from "../../utils/queries";
+import { deleteCategory, editCategory, getCategory } from "../../utils/queries";
+import CategoryImage from "./CategoryImage";
 
 const Category = () => {
-  const [modalStatus, setModalStatus] = useState<{
-    open: boolean;
-    id: number | null;
-  }>({ open: false, id: null });
+  const history = useHistory();
   const queryClient = useQueryClient();
   const { handleCloseToast, setToastStatus } = useToast();
   const { id } = useParams<{ id: string }>();
+  const { handleCloseConfirmationModal, setConfirmationModalStatus } =
+    useConfirmationModal();
   const { data } = useQuery(["category", id], () => getCategory(id), {
     suspense: true,
   });
@@ -27,11 +28,25 @@ const Category = () => {
     register,
     setValue,
     watch,
+    handleSubmit,
     formState: { errors },
   } = useForm<CATEGORY>({ defaultValues: data });
+  // Edit Mutation
+  const {
+    mutateAsync: editMutation,
+    reset: resetEdit,
+    isLoading: editLoading,
+  } = useMutation(editCategory, {
+    onSuccess: (data, categoryId) => {
+      queryClient.invalidateQueries("categories");
+      // queryClient.setQueryData<PRODUCT[] | undefined>("products", (prev) => {
+      //   return prev?.filter((i) => i.id !== parseInt(productId));
+      // });
+    },
+  });
   // Delete Mutation
   const {
-    mutateAsync,
+    mutateAsync: deleteMutation,
     reset,
     isLoading: deleteLoading,
   } = useMutation(deleteCategory, {
@@ -42,22 +57,60 @@ const Category = () => {
       // });
     },
   });
+
   const handleDeleteCategory = async (id: number) => {
     try {
-      await mutateAsync(id.toString());
-      setModalStatus({ id: null, open: false });
+      await deleteMutation(id.toString());
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
         },
         open: true,
-        text: "Product Deleted Successfully",
+        text: "Category Deleted Successfully",
         type: "success",
       });
+      history.replace("/categories");
     } catch (error) {
-      setModalStatus({ id: null, open: false });
       const { responseError } = extractError(error);
       if (responseError) {
+        console.log(responseError);
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
+  };
+  // Edit Mutation execution
+  const onSubmit: SubmitHandler<CATEGORY> = async (data) => {
+    try {
+      await editMutation({
+        id: data.id,
+        active: data.active ? 1 : 0,
+        name: data.name,
+        parent_id: data.parent_id,
+        slug: data.slug,
+        description: data.description,
+      });
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Category Edited Successfully",
+        type: "success",
+      });
+      history.replace("/categories");
+    } catch (error) {
+      const { responseError } = extractError(error);
+      if (responseError) {
+        console.log(responseError);
       } else {
         setToastStatus?.({
           fn: () => {
@@ -72,13 +125,47 @@ const Category = () => {
     }
   };
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <HeaderContainer>
         <Breadcrumbs
           childLabel="Category"
           parentLabel="Categories"
           parentTarget="/categories"
         />
+        {/* <Flex wrap justify="flex-end"> */}
+        <Grid cols="auto auto" gap="0.5rem">
+          <Button
+            text="Save Changes"
+            bg="green"
+            padding="0.5rem"
+            withRipple
+            withTransition
+            type="submit"
+            isLoading={editLoading}
+            disabled={editLoading}
+          />
+          <Button
+            text="Delete"
+            bg="danger"
+            padding="0.5rem"
+            withRipple
+            isLoading={deleteLoading}
+            disabled={deleteLoading}
+            withTransition
+            onClick={() => {
+              setConfirmationModalStatus?.({
+                open: true,
+                title: "Delete Category",
+                desc: "Are you sure you want to delete this category?",
+                successCb: () => {
+                  handleDeleteCategory(data!.id);
+                },
+                closeCb: handleCloseConfirmationModal!,
+              });
+            }}
+          />
+        </Grid>
+        {/* </Flex> */}
       </HeaderContainer>
       <CategoryInfo
         watch={watch}
@@ -86,26 +173,8 @@ const Category = () => {
         errors={errors}
         register={register}
       />
-      <ConfirmationModal
-        isOpen={modalStatus.open}
-        closeFunction={() => setModalStatus({ id: null, open: false })}
-        desc="Are you sure you want to delete this Category ?"
-        successButtonText="Delete"
-        successFunction={() => handleDeleteCategory(modalStatus.id!)}
-        title="Delete Product"
-        isLoading={deleteLoading}
-        styles={{
-          content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-          },
-        }}
-      />
-    </div>
+      <CategoryImage control={control} errors={errors} setValue={setValue} />
+    </form>
   );
 };
 

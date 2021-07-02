@@ -16,11 +16,12 @@ import { getCategories } from "../../utils/queries";
 import EmptyTable from "./EmptyTable";
 
 interface IProps {
-  formCategory: CATEGORY;
+  formCategoryId: number;
   errors: any;
   onChange: (...event: any[]) => void;
 }
-const CategorySelection = ({ errors, formCategory, onChange }: IProps) => {
+const CategorySelection = ({ errors, formCategoryId, onChange }: IProps) => {
+  console.log(formCategoryId);
   const {
     data,
     status,
@@ -51,14 +52,14 @@ const CategorySelection = ({ errors, formCategory, onChange }: IProps) => {
     category: CATEGORY,
     onChange: (...event: any[]) => void
   ) {
-    const found = formCategory?.id === category.id;
+    const found = formCategoryId === category.id;
 
     // console.log(found);
     if (found) {
       console.log("found");
       onChange(null);
     } else {
-      onChange({ name: category.name.en, id: category.id });
+      onChange(category.id);
     }
   }
 
@@ -75,7 +76,7 @@ const CategorySelection = ({ errors, formCategory, onChange }: IProps) => {
               {group.data.map((category: CATEGORY) => {
                 return (
                   <div key={category.id}>
-                    <CategoryItem active={formCategory?.id === category.id}>
+                    <CategoryItem active={formCategoryId === category.id}>
                       <div
                         className="field"
                         onClick={(e) => {
@@ -93,14 +94,14 @@ const CategorySelection = ({ errors, formCategory, onChange }: IProps) => {
                           <DefaultImage
                             circular
                             border
-                            height="50px"
-                            width="50px"
+                            height="35px"
+                            width="35px"
                           />
                         )}
                         <h6>{category.name[language]}</h6>
                       </div>
                       <Checkbox
-                        checked={formCategory?.id === category.id}
+                        checked={formCategoryId === category.id}
                         onChange={(e) => {
                           e.stopPropagation();
                           handleToggleCategories(category, onChange);
@@ -118,7 +119,9 @@ const CategorySelection = ({ errors, formCategory, onChange }: IProps) => {
                             className="field"
                           >
                             <div className="title">
-                              <MdSubdirectoryArrowRight />
+                              <span className="icon">
+                                <MdSubdirectoryArrowRight />
+                              </span>
                               <img
                                 src={child.image}
                                 alt={child.name[language]}
@@ -128,7 +131,7 @@ const CategorySelection = ({ errors, formCategory, onChange }: IProps) => {
                             </div>
                           </div>
                           <Checkbox
-                            checked={formCategory?.id === child.id}
+                            checked={formCategoryId === child.id}
                             onChange={(e) => {
                               e.stopPropagation();
                               handleToggleCategories(child, onChange);
@@ -165,11 +168,10 @@ const Container = styled.div`
     height: 100%;
     overflow: auto;
     .img {
-      height: 25px;
-      width: 25px;
+      height: 35px;
+      width: 35px;
       border-radius: 50%;
       border: ${(props) => props.theme.border};
-      margin: 0 0.5rem;
     }
   }
 `;
@@ -219,7 +221,7 @@ const SubCategoryItem = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 0.5rem;
-    padding-left: 2rem;
+    padding-left: 0.5rem;
     flex: 1;
 
     .title {
@@ -229,6 +231,10 @@ const SubCategoryItem = styled.div`
     h6 {
       font-size: 0.9rem;
       font-weight: ${(props) => props.theme.font.semibold};
+      margin: 0 0.5rem;
+    }
+    .icon {
+      margin: 0 0.5rem;
     }
   }
 `;

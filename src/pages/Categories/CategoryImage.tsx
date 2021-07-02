@@ -1,6 +1,9 @@
-import { Control, SetFieldValue, useForm } from "react-hook-form";
+import { Control, Controller, SetFieldValue, useForm } from "react-hook-form";
 import styled from "styled-components";
+import Heading from "../../components/StyledComponents/Heading";
+import useConfirmationModal from "../../hooks/useConfirmationModal";
 import FileUploader from "../../utils/FileUploader";
+import MiniFileUploader from "../../utils/MiniFileUploader";
 
 interface IProps {
   errors: any;
@@ -9,19 +12,43 @@ interface IProps {
 }
 
 const CategoryImage = ({ control, errors, setValue }: IProps) => {
+  const { handleCloseConfirmationModal, setConfirmationModalStatus } =
+    useConfirmationModal();
   return (
     <Container>
       <div className="title-container">
-        <h5>Category Image</h5>
+        <Heading tag="h5" color="primary">
+          Category Image
+        </Heading>
       </div>
 
-      <FileUploader
-        control={control}
-        accept="image/*"
-        name="image"
-        setValue={setValue}
-      />
-      <ErrorMessage>{errors?.image && "Required"}</ErrorMessage>
+      <div className="box">
+        <Controller
+          control={control}
+          name="image"
+          render={({ field: { onChange, value } }) => {
+            return (
+              <MiniFileUploader
+                accept=".png, .jpg, .jpeg"
+                image={value}
+                onChange={(image) => {
+                  onChange(image);
+                }}
+                onRemove={() => {
+                  setConfirmationModalStatus?.({
+                    open: true,
+                    desc: "Are you sure you want to delete this category image ?",
+                    title: "Delete Category Image",
+                    closeCb: handleCloseConfirmationModal!,
+                    successCb: () => {},
+                  });
+                }}
+              />
+            );
+          }}
+        />
+        <ErrorMessage>{errors?.image && "Required"}</ErrorMessage>
+      </div>
     </Container>
   );
 };
@@ -33,7 +60,6 @@ const Container = styled.div(
   flex-direction:column;
   .title-container {
     padding: 1rem 0;
-    color: ${mainColor};
   }
   .box {
     flex:1;
@@ -43,11 +69,11 @@ const Container = styled.div(
     padding: 1rem;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
+    // gap: 1rem;
   }
   @media ${breakpoints.md} {
     .box {
-      grid-template-columns: 1fr 1fr ;
+      grid-template-columns: 1fr ;
 
     }
   }

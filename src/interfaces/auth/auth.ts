@@ -2,8 +2,8 @@ import { STAFF_PERMISSIONS } from "../staff/staff";
 
 export type USER = {
   id: number;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   phone: string;
   reset_token: string;
   email: string;

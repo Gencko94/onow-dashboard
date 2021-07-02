@@ -8,7 +8,11 @@ import {
 import { MdSmartphone } from "react-icons/md";
 import styled from "styled-components";
 import { STORE_TECHNICAL_SUPPORT } from "../../../interfaces/settings/store-properties/store-properties";
+import Button from "../../reusable/Button";
 import IconedInput from "../../reusable/Inputs/IconedInput";
+import Flex from "../../StyledComponents/Flex";
+import Grid from "../../StyledComponents/Grid";
+import Heading from "../../StyledComponents/Heading";
 
 const StoreTechnicalSupport = () => {
   const {
@@ -20,13 +24,13 @@ const StoreTechnicalSupport = () => {
   } = useTranslation();
 
   return (
-    <Container>
-      <div className="title-container">
-        <h5>Technical Support</h5>
-      </div>
+    <div>
+      <Heading tag="h5" color="primary" margin="2rem 0">
+        Technical support
+      </Heading>
       <Box>
         <div className="section">
-          <div className="grid">
+          <Grid cols="repeat(auto-fill,minmax(300px,1fr))" gap="1rem">
             <IconedInput
               Icon={MdSmartphone}
               errors={errors?.phone}
@@ -64,23 +68,23 @@ const StoreTechnicalSupport = () => {
               requiredMessage="Phone Required"
               label="Landline"
             />
-          </div>
+          </Grid>
         </div>
-        <div className="save-container">
-          <button>Save Changes</button>
-        </div>
+        <Flex items="center" justify="center" padding="1rem">
+          <Button
+            text="Save"
+            bg="green"
+            padding="0.5rem"
+            withRipple
+            withTransition
+          />
+        </Flex>
       </Box>
-    </Container>
+    </div>
   );
 };
 
 export default StoreTechnicalSupport;
-const Container = styled.div`
-  .title-container {
-    padding: 2rem 0;
-    color: ${(props) => props.theme.mainColor};
-  }
-`;
 
 const Box = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
@@ -93,24 +97,6 @@ const Box = styled.div`
       margin-bottom: 1.5rem;
       font-size: 1.1rem;
       font-weight: ${(props) => props.theme.font.xbold};
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-  }
-  .save-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    button {
-      background-color: ${(props) => props.theme.green};
-      padding: 0.5rem;
-      border-radius: 6px;
-      color: #fff;
     }
   }
 `;

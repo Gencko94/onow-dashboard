@@ -84,7 +84,9 @@ const Layout: React.FC = ({ children }) => {
 
       <Content drawerOpen={drawerOpen}>
         <DesktopNavbar handleToggleDrawer={handleToggleDrawer} />
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        <Suspense fallback={<Loading />}>
+          <div className="body">{children}</div>
+        </Suspense>
       </Content>
     </ContentContainer>
   );
@@ -109,7 +111,9 @@ const Content = styled.div<{ drawerOpen: boolean }>(
   background-color:#f3f3f3;
   transition: all 250ms ease-out;
   margin-left:0;
-  
+  .body {
+    padding:0.5rem;
+  }
   @media ${breakpoints.md}{
     
    

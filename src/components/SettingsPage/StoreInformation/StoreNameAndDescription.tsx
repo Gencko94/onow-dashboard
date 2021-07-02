@@ -1,11 +1,18 @@
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { MdSubtitles } from "react-icons/md";
+import { BiBuilding } from "react-icons/bi";
+import { FaRoad } from "react-icons/fa";
+import { MdLocalPostOffice, MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 import { countryList } from "../../../data/countryList";
 import { STORE_INFORMATION } from "../../../interfaces/settings/store-properties/store-properties";
+import Button from "../../reusable/Button";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import Select from "../../reusable/Select";
+import Textarea from "../../reusable/Textarea";
+import Flex from "../../StyledComponents/Flex";
+import Grid from "../../StyledComponents/Grid";
+import Heading from "../../StyledComponents/Heading";
 
 const StoreNameAndDescription = () => {
   const {
@@ -22,14 +29,17 @@ const StoreNameAndDescription = () => {
     console.log(data);
   };
   return (
-    <Container>
-      <div className="title-container">
-        <h5>Store Information</h5>
-      </div>
+    <div>
+      <Heading tag="h5" color="primary" margin="2rem 0">
+        Store Information
+      </Heading>
       <Box>
         <div className="section">
-          <h6 className="section-title">Store Name</h6>
-          <div className="store-name-grid">
+          <Heading tag="h5" color="heading" mb="1rem">
+            Store Name
+          </Heading>
+
+          <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="1rem">
             <IconedInput
               Icon={MdSubtitles}
               errors={errors?.name?.en}
@@ -49,23 +59,27 @@ const StoreNameAndDescription = () => {
               requiredMessage="Name Required"
               label="Store Name Arabic"
             />
-
-            <div className="description">
-              <label>Store Description</label>
-
-              <textarea
-                rows={4}
-                {...register("description", { required: "Required" })}
-              />
-
-              <p className="error">{errors?.description?.message}</p>
-            </div>
+          </Grid>
+          <div className="description">
+            <Heading tag="h5" color="heading" mb="1rem">
+              Store Description
+            </Heading>
+            <Textarea
+              errors={errors?.description}
+              label="Store Description"
+              name="description"
+              register={register}
+              required
+              requiredMessage="Required"
+            />
           </div>
         </div>
 
         <div className="section">
-          <h6 className="section-title">Store Headquarters</h6>
-          <div className="store-headquarters">
+          <Heading tag="h5" color="heading" mb="1rem">
+            Store Headquarters
+          </Heading>
+          <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="1rem">
             {/* <Select
               control={control}
               defaultValue={countryList[0]}
@@ -145,63 +159,52 @@ const StoreNameAndDescription = () => {
                 )}
               />
             </div> */}
-            <div>
-              <label>Avenue</label>
-              <input
-                className="input"
-                {...register("headquarters.avenue", { required: "Required" })}
-              />
-              <p className="error">{errors?.headquarters?.avenue?.message}</p>
-            </div>
-            <div>
-              <label>Street</label>
-              <input
-                className="input"
-                {...register("headquarters.street", { required: "Required" })}
-              />
-              <p className="error">{errors?.headquarters?.street?.message}</p>
-            </div>
-            <div>
-              <label>Building Number</label>
-              <input
-                className="input"
-                {...register("headquarters.buildingNo", {
-                  required: "Required",
-                })}
-              />
-              <p className="error">
-                {errors?.headquarters?.buildingNo?.message}
-              </p>
-            </div>
-            <div>
-              <label>P.O Address</label>
-              <input
-                className="input"
-                {...register("headquarters.poAddress", {
-                  required: "Required",
-                })}
-              />
-              <p className="error">
-                {errors?.headquarters?.poAddress?.message}
-              </p>
-            </div>
-          </div>
+            <IconedInput
+              label="Avenue"
+              register={register}
+              errors={errors?.headquarters?.avenue}
+              Icon={FaRoad}
+              name="headquarters.avenue"
+            />
+            <IconedInput
+              label="Street"
+              register={register}
+              errors={errors?.headquarters?.street}
+              Icon={FaRoad}
+              name="headquarters.street"
+            />
+            <IconedInput
+              label="Building Number"
+              register={register}
+              errors={errors?.headquarters?.buildingNo}
+              Icon={BiBuilding}
+              name="headquarters.buildingNo"
+            />
+            <IconedInput
+              label="P.O Address"
+              register={register}
+              errors={errors?.headquarters?.poAddress}
+              Icon={MdLocalPostOffice}
+              name="headquarters.poAddress"
+            />
+          </Grid>
         </div>
-        <div className="save-container">
-          <button onClick={handleSubmit(onSubmit)}>Save Changes</button>
-        </div>
+        <Flex items="center" justify="center" padding="1rem">
+          <Button
+            onClick={handleSubmit(onSubmit)}
+            text="Save"
+            bg="green"
+            padding="0.5rem"
+            withRipple
+            withTransition
+          />
+        </Flex>
       </Box>
-    </Container>
+    </div>
   );
 };
 
 export default StoreNameAndDescription;
-const Container = styled.div`
-  .title-container {
-    padding: 2rem 0;
-    color: ${(props) => props.theme.mainColor};
-  }
-`;
 
 const Box = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
@@ -210,69 +213,21 @@ const Box = styled.div`
   .section {
     border-bottom: ${(props) => props.theme.border};
     padding: 1rem;
-    .section-title {
-      margin-bottom: 1.5rem;
-      font-size: 1.1rem;
-      font-weight: ${(props) => props.theme.font.xbold};
-    }
 
-    .error {
-      height: 20px;
-      font-size: 0.7rem;
-      padding-top: 0.25rem;
-      color: ${(props) => props.theme.dangerRed};
-    }
-
-    .store-name-grid {
+    /* .store-name-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
 
       .description {
         grid-column: 1/3;
-        textarea {
-          width: 100%;
-          border: ${(props) => props.theme.border};
-          border-radius: 6px;
-          background-color: ${(props) => props.theme.accentColor};
-          padding: 0.4rem;
-          font-size: 0.9rem;
-        }
       }
-    }
+    } */
     .store-headquarters {
       display: grid;
       grid-template-columns: 1fr 1fr;
       column-gap: 1rem;
       row-gap: 0.5rem;
-      label {
-        color: ${({ theme }) => theme.headingColor};
-        margin-bottom: 0.4rem;
-        font-size: 0.9rem;
-        font-weight: ${(props) => props.theme.font.regular};
-        display: inline-block;
-      }
-      input.input {
-        flex: 1;
-        padding: 0.4rem;
-        font-size: 0.9rem;
-        width: 100%;
-        background-color: #fff;
-        border: ${(props) => props.theme.border};
-        border-radius: 6px;
-      }
-    }
-  }
-  .save-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    button {
-      background-color: ${(props) => props.theme.green};
-      padding: 0.5rem;
-      border-radius: 6px;
-      color: #fff;
     }
   }
 `;
