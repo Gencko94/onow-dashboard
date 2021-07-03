@@ -5,7 +5,7 @@ const convertUrlToFile = async (url: string) => {
   let metadata = {
     type: data.type,
   };
-  return new File([data], "test.jpg", metadata);
   // ... do something with the file or return it
+  return new File([data], "test.jpg", metadata);
 };
 export default convertUrlToFile;

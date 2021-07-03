@@ -1,10 +1,14 @@
 import { Controller, useForm } from "react-hook-form";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { IoMdCloseCircle } from "react-icons/io";
 import styled from "styled-components";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import { PRODUCT } from "../../../interfaces/products/products";
 import { ADD_PRODUCT_IMAGE } from "../../../interfaces/products/update-product";
 import FileUploader from "../../../utils/FileUploader";
 import MiniFileUploader from "../../../utils/MiniFileUploader";
+import Button from "../../reusable/Button";
+import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
 
 interface IProps {
@@ -22,7 +26,8 @@ const ProductImage = ({ data }: IProps) => {
   } = useForm<ADD_PRODUCT_IMAGE>({
     defaultValues: { images: [], image: data.image },
   });
-
+  const image = watch("image");
+  const images = watch("images");
   return (
     <Container>
       <div className="title-container">
@@ -35,33 +40,80 @@ const ProductImage = ({ data }: IProps) => {
         </p>
       </DescriptionBox>
 
-      <Grid cols="1fr 1fr" gap="1rem">
+      <Grid cols="1fr" gap="1rem">
+        <PreviewContainer>
+          <Grid cols="repeat(auto-fill,minmax(200px,1fr))" gap="1rem">
+            {image && (
+              <div className="img-preview">
+                <img src={image} alt={`main`} />
+                <div className="default-container">
+                  <Flex items="center" justify="center" padding="0.25rem">
+                    <p>Default Image</p>
+                    <span>
+                      <AiOutlineCheckCircle size={20} />
+                    </span>
+                  </Flex>
+                </div>
+                <button
+                  className="remove"
+                  type="button"
+                  onClick={() => {
+                    // removeThumbnailImage();
+                  }}
+                >
+                  <IoMdCloseCircle size={35} />
+                </button>
+              </div>
+            )}
+            {images.map((image, index) => {
+              return (
+                <div className="img-preview">
+                  <img src={image} alt={`i-${index}`} />
+                  <div className="default-container">
+                    <Flex items="center" justify="center" padding="0.25rem">
+                      <Button
+                        // onClick={() => setDefaultImage(image)}
+                        text="Set as Default Image"
+                        textSize="0.8rem"
+                        bg="green"
+                        padding="0.25rem"
+                        withRipple
+                      />
+                    </Flex>
+                  </div>
+                  <button
+                    className="remove"
+                    type="button"
+                    onClick={() => {
+                      // removeImage(image);
+                    }}
+                  >
+                    <IoMdCloseCircle size={35} />
+                  </button>
+                </div>
+              );
+            })}
+          </Grid>
+        </PreviewContainer>
+
         <Box>
-          <h6 className="title">Product Main Image</h6>
           <Controller
             control={control}
-            name="image"
+            name="images"
             render={({ field: { onChange, value, ref } }) => (
-              <MiniFileUploader
-                onChange={(file) => {
-                  onChange(file);
-                }}
-                image={value}
+              <FileUploader
                 accept=".png, .jpg, .jpeg"
-                onRemove={() => onChange(undefined)}
+                onChange={(file: File | File[]) => {
+                  // if (!Array.isArray(file)) {
+                  //   if (images.length === 0 && !image) {
+                  //     setValue("thumbnail", file);
+                  //   } else {
+                  //     onChange([...images, file]);
+                  //   }
+                  // }
+                }}
               />
             )}
-          />
-        </Box>
-        <Box>
-          <h6 className="title">Product Image Gallery</h6>
-          <FileUploader
-            control={control}
-            accept="image/*"
-            multiple
-            name="images"
-            setValue={setValue}
-            watch={watch}
           />
         </Box>
       </Grid>
@@ -117,6 +169,44 @@ const Box = styled.div(
   .title {
     margin-bottom:1rem;
     text-align:center;
+  }
+  `
+);
+const PreviewContainer = styled.div(
+  ({ theme: { breakpoints, accentColor, green, dangerRed, border } }) => `
+  padding:1rem;
+  .img-preview {
+    position:relative;
+    border-radius:6px;
+    border:${border};
+    img {
+      width:100%;
+      object-fit:cover;
+      max-height:200px;
+      min-height:200px;
+      object-position:top;
+      border-bottom:${border};
+    }
+    .default-container {
+      p {
+        font-size:0.9rem;
+      }
+      span {
+        margin: 0 0.25rem;
+        color:${green};
+        display:flex;
+        align-items:center;
+      }
+    }
+    .remove {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: ${dangerRed};
+    }
   }
   `
 );

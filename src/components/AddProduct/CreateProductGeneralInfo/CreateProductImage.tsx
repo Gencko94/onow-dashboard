@@ -1,59 +1,192 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { useEffect } from "react";
+import { useContext } from "react";
+import {
+  Controller,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { IoMdCloseCircle } from "react-icons/io";
 import styled from "styled-components";
+import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import FileUploader from "../../../utils/FileUploader";
-import MiniFileUploader from "../../../utils/MiniFileUploader";
+import Button from "../../reusable/Button";
+import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
-import { firstTabInfo } from "./CreateProductGeneralInfo";
+import Heading from "../../StyledComponents/Heading";
 
+interface ImageProps {
+  thumbnail: File;
+  images: File[];
+}
 const CreateProductImage = () => {
-  const {
-    control,
-    formState: { errors },
-    setValue,
-    watch,
-  } = useFormContext<firstTabInfo>();
+  const { updateData, setActiveTab, formValues } =
+    useContext(NewProductContext);
+  const { control, watch, setValue, handleSubmit } = useForm<ImageProps>({
+    defaultValues: {
+      images: [],
+    },
+  });
+  const onSubmit: SubmitHandler<ImageProps> = (data) => {
+    console.log(data);
+
+    setActiveTab?.(2);
+    updateData?.(data);
+  };
+  const onError: SubmitErrorHandler<ImageProps> = (errors) => {
+    console.log(errors);
+  };
+  useEffect(() => {
+    setValue("thumbnail", formValues?.thumbnail);
+    setValue("images", formValues?.images);
+  }, []);
+  const thumbnail = watch("thumbnail");
+  console.log(thumbnail);
+  const images = watch("images");
+  const setDefaultImage = (image: File) => {
+    if (thumbnail) {
+      setValue("thumbnail", image);
+      setValue(
+        "images",
+        images
+          .filter((i) => i.lastModified !== image.lastModified)
+          .concat(thumbnail)
+      );
+    }
+  };
+  const removeThumbnailImage = () => {
+    setValue("thumbnail", images[0]);
+    setValue(
+      "images",
+      images.filter((i) => i.lastModified !== images[0].lastModified)
+    );
+  };
+  const removeImage = (image: File) => {
+    setValue(
+      "images",
+      images.filter((i) => i.lastModified !== image.lastModified)
+    );
+  };
   return (
     <Container>
-      <div className="title-container">
-        <h5>Product Imaging</h5>
-      </div>
-      <DescriptionBox>
-        <p>
-          High Quality product images are very important when you're offering
-          food, Truly delectable images will help your products sell themselfs.
-        </p>
-      </DescriptionBox>
-      <Grid cols="1fr 1fr" gap="1rem">
-        <Box>
-          <h6 className="title">Product Main Image</h6>
-          <Controller
-            control={control}
-            name="thumbnail"
-            render={({ field: { onChange, value, ref } }) => (
-              <MiniFileUploader
-                onChange={(file) => {
-                  onChange(file);
-                }}
-                accept=".png, .jpg, .jpeg"
-                image={value}
-                onRemove={() => onChange(undefined)}
-              />
-            )}
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
+        <Flex justify="flex-end">
+          <Button
+            text="Back"
+            bg="blue"
+            onClick={() => {
+              console.log(thumbnail);
+              updateData?.({
+                thumbnail,
+                images,
+              });
+              setActiveTab?.(0);
+            }}
+            padding="0.5rem"
+            textSize="0.9rem"
+            margin="0 0.5rem"
+            withRipple
+            withTransition
           />
-        </Box>
-        <Box>
-          <h6 className="title">Product Image Gallery</h6>
-          <FileUploader
-            control={control}
-            accept="image/*"
-            multiple
-            name="images"
-            setValue={setValue}
-            watch={watch}
+          <Button
+            type="submit"
+            text="Next"
+            bg="blue"
+            padding="0.5rem"
+            textSize="0.9rem"
           />
-        </Box>
-      </Grid>
-      {/* <ErrorMessage>{errors?.images && "Required"}</ErrorMessage> */}
+        </Flex>
+        <Heading tag="h5" color="primary" mb="1rem">
+          Product Imaging
+        </Heading>
+
+        <DescriptionBox>
+          <p>
+            High Quality product images are very important when you're offering
+            food, Truly delectable images will help your products sell
+            themselfs.
+          </p>
+        </DescriptionBox>
+        <Grid cols="1fr" gap="1rem">
+          <PreviewContainer>
+            <Grid cols="repeat(auto-fill,minmax(200px,1fr))" gap="1rem">
+              {thumbnail && (
+                <div className="img-preview">
+                  <img src={URL.createObjectURL(thumbnail)} alt={`main`} />
+                  <div className="default-container">
+                    <Flex items="center" justify="center" padding="0.25rem">
+                      <p>Default Image</p>
+                      <span>
+                        <AiOutlineCheckCircle size={20} />
+                      </span>
+                    </Flex>
+                  </div>
+                  <button
+                    className="remove"
+                    type="button"
+                    onClick={() => {
+                      removeThumbnailImage();
+                    }}
+                  >
+                    <IoMdCloseCircle size={35} />
+                  </button>
+                </div>
+              )}
+              {images.map((image, index) => {
+                return (
+                  <div className="img-preview">
+                    <img src={URL.createObjectURL(image)} alt={`i-${index}`} />
+                    <div className="default-container">
+                      <Flex items="center" justify="center" padding="0.25rem">
+                        <Button
+                          onClick={() => setDefaultImage(image)}
+                          text="Set as Default Image"
+                          textSize="0.8rem"
+                          bg="green"
+                          padding="0.25rem"
+                          withRipple
+                        />
+                      </Flex>
+                    </div>
+                    <button
+                      className="remove"
+                      type="button"
+                      onClick={() => {
+                        removeImage(image);
+                      }}
+                    >
+                      <IoMdCloseCircle size={35} />
+                    </button>
+                  </div>
+                );
+              })}
+            </Grid>
+          </PreviewContainer>
+
+          <Box>
+            <Controller
+              control={control}
+              name="images"
+              render={({ field: { onChange, value, ref } }) => (
+                <FileUploader
+                  accept=".png, .jpg, .jpeg"
+                  onChange={(file: File | File[]) => {
+                    if (!Array.isArray(file)) {
+                      if (images.length === 0 && !thumbnail) {
+                        setValue("thumbnail", file);
+                      } else {
+                        onChange([...images, file]);
+                      }
+                    }
+                  }}
+                />
+              )}
+            />
+          </Box>
+        </Grid>
+        {/* <ErrorMessage>{errors?.images && "Required"}</ErrorMessage> */}
+      </form>
     </Container>
   );
 };
@@ -61,12 +194,8 @@ const CreateProductImage = () => {
 export default CreateProductImage;
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `
-  display:flex;
-  flex-direction:column;
-  .title-container {
-    padding: 1rem 0;
-    color: ${mainColor};
-  }
+ 
+  
   .box {
     flex:1;
     background-color: #fff;
@@ -103,6 +232,44 @@ const Box = styled.div(
   .title {
     margin-bottom:1rem;
     text-align:center;
+  }
+  `
+);
+const PreviewContainer = styled.div(
+  ({ theme: { breakpoints, accentColor, green, dangerRed, border } }) => `
+  padding:1rem;
+  .img-preview {
+    position:relative;
+    border-radius:6px;
+    border:${border};
+    img {
+      width:100%;
+      object-fit:cover;
+      max-height:200px;
+      min-height:200px;
+      object-position:top;
+      border-bottom:${border};
+    }
+    .default-container {
+      p {
+        font-size:0.9rem;
+      }
+      span {
+        margin: 0 0.25rem;
+        color:${green};
+        display:flex;
+        align-items:center;
+      }
+    }
+    .remove {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: ${dangerRed};
+    }
   }
   `
 );

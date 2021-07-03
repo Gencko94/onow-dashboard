@@ -367,7 +367,7 @@ export const createProduct = async (product: NEW_PRODUCT) => {
   const formData = new FormData();
   // Appending Form Data
   formData.append("name", JSON.stringify(product.name));
-  product.images.forEach((image) => formData.append("images", image));
+  product.images.forEach((image) => formData.append("images[]", image));
   if (product.thumbnail) {
     formData.append("thumbnail", product.thumbnail);
   }
@@ -389,10 +389,9 @@ export const createProduct = async (product: NEW_PRODUCT) => {
   formData.append("options", JSON.stringify(product.options));
   formData.append("quantity", JSON.stringify(product.quantity) as any);
   formData.append("product_category_id", product.product_category_id as any);
-  formData.append("active", 1 as any);
+  formData.append("active", product.active as any);
   formData.append("slug", JSON.stringify(product.slug));
 
-  formData.append("file", product.images[0]);
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",

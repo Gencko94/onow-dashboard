@@ -17,6 +17,7 @@ import IconedInput from "../../reusable/Inputs/IconedInput";
 import IconedNumberInput from "../../reusable/IconedNumberInput";
 import Select from "../../reusable/Select";
 import { AiOutlineTag } from "react-icons/ai";
+import Heading from "../../StyledComponents/Heading";
 interface IProps {
   register: UseFormRegister<any>;
   errors: DeepMap<any, FieldError>;
@@ -61,9 +62,10 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
   } = useTranslation();
   return (
     <Container>
-      <div className="title-container">
-        <h5>Coupon Information</h5>
-      </div>
+      <Heading tag="h5" color="primary" margin="2rem 0">
+        Coupon Information
+      </Heading>
+
       <div className="box">
         <IconedInput
           Icon={MdSubtitles}
@@ -218,12 +220,9 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
 }
 
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  ({ theme: { breakpoints, shadow } }) => `
   margin: 1rem 0;
-  .title-container {
-    padding: 1rem 0;
-    color: ${mainColor};
-  }
+  
   .box {
     background-color: #fff;
     box-shadow: ${shadow};

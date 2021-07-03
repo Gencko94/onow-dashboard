@@ -24,8 +24,7 @@ export interface firstTabInfo {
     [key: string]: string;
   };
   slug: string;
-  images: File[];
-  thumbnail: File;
+
   quantity: string | "unlimited";
   sku: string;
 }
@@ -39,8 +38,7 @@ const CreateProductGeneralInfo = () => {
       description: formValues?.description,
       quantity: formValues?.quantity,
       name: formValues?.name,
-      thumbnail: formValues?.thumbnail,
-      images: formValues?.images,
+
       slug: formValues?.slug,
       sku: formValues?.sku,
     },
@@ -49,7 +47,7 @@ const CreateProductGeneralInfo = () => {
     console.log(data);
 
     setActiveTab?.(1);
-    updateData?.(methods.watch());
+    updateData?.(data);
   };
   const onError: SubmitErrorHandler<firstTabInfo> = (errors) => {
     console.log(errors);
@@ -74,7 +72,7 @@ const CreateProductGeneralInfo = () => {
         </Grid>
 
         <Hr />
-        <CreateProductImage />
+        {/* <CreateProductImage /> */}
         {/* <ProductDescription /> */}
       </form>
     </FormProvider>

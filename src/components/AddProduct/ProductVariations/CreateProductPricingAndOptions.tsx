@@ -54,7 +54,7 @@ const CreateProductPricingAndOptions = () => {
 
     if (safeToProceed === true) {
       updateData?.(data);
-      setActiveTab?.(2);
+      setActiveTab?.(3);
     } else {
       console.log("One Must be Required");
       methods.setError("options.0.required", {
@@ -76,7 +76,7 @@ const CreateProductPricingAndOptions = () => {
             bg="blue"
             onClick={() => {
               updateData?.(methods.watch());
-              setActiveTab?.(0);
+              setActiveTab?.(1);
             }}
             padding="0.5rem"
             textSize="0.9rem"

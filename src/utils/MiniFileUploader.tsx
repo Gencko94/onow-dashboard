@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import styled from "styled-components";
+import { convertBytesToKB } from "./convertBytesToKB";
 import convertUrlToFile from "./convertUrlToFile";
 const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 1000000;
-const convertBytesToKB = (bytes: number) => Math.round(bytes / 1000);
 interface IProps {
   accept: ".png, .jpg, .jpeg" | ".png" | ".jpg" | ".jpeg";
   image: File | string;

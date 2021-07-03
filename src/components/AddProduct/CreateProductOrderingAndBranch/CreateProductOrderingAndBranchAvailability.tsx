@@ -65,7 +65,7 @@ const CreateProductOrderingAndBranchAvailability = ({ submitForm }: IProps) => {
             text="Back"
             onClick={() => {
               updateData?.(methods.watch());
-              setActiveTab?.(1);
+              setActiveTab?.(2);
             }}
             withRipple
             withTransition

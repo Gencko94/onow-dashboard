@@ -29,6 +29,6 @@ export interface EDIT_PRODUCT_ORDER_OPTIONS {
   };
 }
 export interface ADD_PRODUCT_IMAGE {
-  images: File[];
-  image: string | File;
+  images: string[];
+  image: string;
 }

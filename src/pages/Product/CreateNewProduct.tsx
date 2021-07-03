@@ -4,6 +4,7 @@ import { useMutation } from "react-query";
 import styled from "styled-components";
 
 import CreateProductGeneralInfo from "../../components/AddProduct/CreateProductGeneralInfo/CreateProductGeneralInfo";
+import CreateProductImage from "../../components/AddProduct/CreateProductGeneralInfo/CreateProductImage";
 import CreateProductOrderingAndBranchAvailability from "../../components/AddProduct/CreateProductOrderingAndBranch/CreateProductOrderingAndBranchAvailability";
 import CreateProductTabs from "../../components/AddProduct/CreateProductTabs/CreateProductTabs";
 import CreateProductPricingAndOptions from "../../components/AddProduct/ProductVariations/CreateProductPricingAndOptions";
@@ -12,8 +13,8 @@ import HeaderContainer from "../../components/reusable/HeaderContainer";
 import { createProduct } from "../../utils/queries";
 
 type ContextProps = {
-  activeTab: 0 | 1 | 2;
-  setActiveTab: Dispatch<SetStateAction<0 | 1 | 2>>;
+  activeTab: 0 | 1 | 2 | 3;
+  setActiveTab: Dispatch<SetStateAction<0 | 1 | 2 | 3>>;
   updateData: (data: any) => void;
   formValues: any;
 };
@@ -21,7 +22,7 @@ type ContextProps = {
 export const NewProductContext = createContext<Partial<ContextProps>>({});
 
 const CreateNewProduct = () => {
-  const [activeTab, setActiveTab] = useState<0 | 1 | 2>(0);
+  const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3>(0);
   const { mutateAsync: createProductMutation } = useMutation(createProduct);
   const [formValues, setFormValues] = useState({
     allow_attachments: false,
@@ -31,6 +32,7 @@ const CreateNewProduct = () => {
       all: true,
       branches: [],
     },
+    thumbnail: undefined,
     options: [],
     images: [],
     max_qty_per_user: "0",
@@ -43,10 +45,11 @@ const CreateNewProduct = () => {
   });
 
   const updateData = (data: any) => {
-    setFormValues({
-      ...formValues,
+    console.log(formValues, "old");
+    setFormValues((prev) => ({
+      ...prev,
       ...data,
-    });
+    }));
   };
   const submitForm = async (data: any) => {
     console.log(data);
@@ -54,7 +57,7 @@ const CreateNewProduct = () => {
     try {
       const regex = /^0+(?!$)/;
       await createProductMutation({
-        active: 1,
+        active: data.active,
         quantity: data.quantity.replace(regex, ""),
         allow_attachments: data.allow_attachments,
         allow_side_notes: data.allow_side_notes,
@@ -91,8 +94,9 @@ const CreateNewProduct = () => {
 
       <Wrapper>
         {activeTab === 0 && <CreateProductGeneralInfo />}
-        {activeTab === 1 && <CreateProductPricingAndOptions />}
-        {activeTab === 2 && (
+        {activeTab === 1 && <CreateProductImage />}
+        {activeTab === 2 && <CreateProductPricingAndOptions />}
+        {activeTab === 3 && (
           <CreateProductOrderingAndBranchAvailability submitForm={submitForm} />
         )}
       </Wrapper>

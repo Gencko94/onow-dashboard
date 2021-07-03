@@ -56,8 +56,10 @@ const CategoriesList = styled.div<{ error: boolean }>`
   overflow-y: auto;
   position: relative;
   background-color: #fff;
-  box-shadow: ${(props) =>
-    props.error ? props.theme.errorShadow : props.theme.shadow};
+  border: ${(props) =>
+    props.error ? `1px solid ${props.theme.dangerRed}` : props.theme.border};
+  /* box-shadow: ${(props) =>
+    props.error ? props.theme.errorShadow : props.theme.shadow}; */
   border-radius: 6px;
   flex: 1;
 

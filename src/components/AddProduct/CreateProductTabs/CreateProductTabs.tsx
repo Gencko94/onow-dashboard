@@ -9,11 +9,14 @@ const CreateProductTabs = () => {
       <TabItem type="button" active={activeTab === 0}>
         General Product Info
       </TabItem>
-
       <TabItem type="button" active={activeTab === 1}>
+        Product Images
+      </TabItem>
+
+      <TabItem type="button" active={activeTab === 2}>
         Pricing & Product Options
       </TabItem>
-      <TabItem type="button" active={activeTab === 2}>
+      <TabItem type="button" active={activeTab === 3}>
         Ordering Options & Branch Availability
       </TabItem>
     </Container>

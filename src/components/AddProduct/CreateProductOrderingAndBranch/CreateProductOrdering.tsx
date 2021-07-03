@@ -114,10 +114,10 @@ const CreateProductOrdering = () => {
                 label="Show Product in store"
                 checked={value === 1 ? true : false}
                 onChange={(e) => {
-                  if (e.target.checked) {
-                    onChange(1);
-                  } else {
+                  if (value === 1) {
                     onChange(0);
+                  } else {
+                    onChange(1);
                   }
                 }}
               />

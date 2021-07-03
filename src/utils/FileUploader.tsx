@@ -1,72 +1,49 @@
-import { useRef, useState } from "react";
-import { Control, Controller, UseFormSetValue } from "react-hook-form";
-import { RiDeleteBinLine } from "react-icons/ri";
+import { useRef } from "react";
 import styled from "styled-components";
 const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 1000000;
-const convertBytesToKB = (bytes: number) => Math.round(bytes / 1000);
 interface IProps {
-  accept: string;
-  control: Control<any> | undefined;
+  accept: ".png, .jpg, .jpeg" | ".png" | ".jpg" | ".jpeg";
+  onChange: (file: File | File[]) => void;
   multiple?: boolean;
   maxFileSizeInBytes?: number;
-  setValue: UseFormSetValue<any>;
-  name: string;
-  watch?: any;
 }
 const FileUploader = ({
   multiple,
-  control,
+  onChange,
   accept,
-  maxFileSizeInBytes = DEFAULT_MAX_FILE_SIZE_IN_BYTES,
-  setValue,
-  name,
-  watch,
-}: IProps) => {
-  const formImages = watch?.(name);
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const [images, setImages] = useState<{ [key: string]: File }>(() => {
-    if (formImages) {
-      const images = addFilesAndValidate(formImages);
-      return { ...images };
-    }
-    return {};
-  });
 
-  const convertNestedObjectToArray = (obj: { [key: string]: File }): File[] => {
-    return Object.keys(obj).map((key) => obj[key]);
-  };
+  maxFileSizeInBytes = DEFAULT_MAX_FILE_SIZE_IN_BYTES,
+}: IProps) => {
+  // const formImages = watch?.(name);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   // Image Validation
   function addFilesAndValidate(files: FileList) {
-    const addedImages: { [key: string]: File } = {};
+    let images = [];
     for (let file of Array.from(files)) {
       if (file.size <= maxFileSizeInBytes) {
         if (!multiple) {
-          return { [file.name]: file };
+          return file;
         }
-        addedImages[file.name] = file;
+        images.push(file);
       }
     }
-    return { ...addedImages };
+    return images;
   }
   const handleAddNewFiles = (
     files: FileList | null,
-    cb: (files: File[]) => void
+    cb: (files: File | File[]) => void
   ) => {
+    // console.log(files);
     if (files?.length) {
-      const newFiles = addFilesAndValidate(files);
-      const allFiles = { ...images, ...newFiles };
-      setImages(allFiles);
-      const fileArray = convertNestedObjectToArray(allFiles);
-      cb(fileArray);
+      const file = addFilesAndValidate(files);
+      // const allFiles = { ...images, ...newFiles };
+      // setImages(allFiles);
+      // const fileArray = convertNestedObjectToArray(allFiles);
+      cb(file);
     }
   };
-  const removeImage = (fileName: string) => {
-    console.log(images);
-    delete images[fileName];
-    setImages({ ...images });
-    setValue?.(name, convertNestedObjectToArray({ ...images }));
-  };
+
   return (
     <Container>
       <DragFileInputContainer>
@@ -81,59 +58,19 @@ const FileUploader = ({
         >
           Browse Files
         </button>
-        {/* <p className="desc">
-          Preffered width and height : 32px(width) X 32px(height)
-        </p>
-        <p className="desc">Maximum size allowed : 2048KB</p>
-        <p className="desc">Accepted Formats : .jpeg .png .jpg</p> */}
-        <Controller
-          control={control}
-          name={name}
-          render={({ field: { onChange, value, ref } }) => (
-            <>
-              <DragInput
-                multiple={multiple}
-                accept={accept}
-                type="file"
-                onChange={(e) => {
-                  handleAddNewFiles(e.target.files, onChange);
-                }}
-                ref={(e: any) => {
-                  ref = e;
-                  inputRef.current = e;
-                }}
-              />
-            </>
-          )}
+
+        <DragInput
+          multiple={multiple}
+          accept={accept}
+          type="file"
+          onChange={(e) => {
+            handleAddNewFiles(e.target.files, onChange);
+          }}
+          ref={(e: any) => {
+            inputRef.current = e;
+          }}
         />
       </DragFileInputContainer>
-      <FilePreviewContainer>
-        {Object.keys(images).length !== 0 && (
-          <PreviewList>
-            {convertNestedObjectToArray(images).map((file) => {
-              return (
-                <PreviewContainer>
-                  <ImagePreview src={URL.createObjectURL(file)} />
-                  <ImageMetaData>
-                    {/* <p>{file.name}</p> */}
-                    <div className="flex">
-                      <p>{convertBytesToKB(file.size)} kb</p>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          removeImage(file.name);
-                        }}
-                      >
-                        <RiDeleteBinLine size={22} />
-                      </button>
-                    </div>
-                  </ImageMetaData>
-                </PreviewContainer>
-              );
-            })}
-          </PreviewList>
-        )}
-      </FilePreviewContainer>
     </Container>
   );
 };
@@ -194,58 +131,4 @@ const DragDropText = styled.p`
   font-size: 0.9rem;
   margin-top: 0;
   text-align: center;
-`;
-
-const FilePreviewContainer = styled.div``;
-const PreviewList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50px, 175px));
-
-  gap: 1rem;
-  height: 335px;
-  max-height: 335px;
-  overflow-y: auto;
-  padding: 1rem;
-`;
-const PreviewContainer = styled.div`
-  width: auto;
-  height: 150px;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
-`;
-const ImagePreview = styled.img`
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-  border-radius: 6px;
-`;
-const ImageMetaData = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0.5rem;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  font-weight: ${(props) => props.theme.font.bold};
-  background-color: rgba(5, 5, 5, 0.55);
-  font-size: 0.8rem;
-  p {
-    flex: 1;
-  }
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-  }
-  .flex {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
 `;

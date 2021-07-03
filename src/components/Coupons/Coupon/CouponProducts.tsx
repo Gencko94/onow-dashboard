@@ -64,7 +64,7 @@ const CouponProducts = ({
 }: IProps) => {
   const coverage = useWatch({
     control,
-    name: "couponCoverage",
+    name: "coupon_coverage",
   });
   console.log(coverage);
   const {
