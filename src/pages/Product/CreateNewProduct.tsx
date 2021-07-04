@@ -22,7 +22,7 @@ type ContextProps = {
 export const NewProductContext = createContext<Partial<ContextProps>>({});
 
 const CreateNewProduct = () => {
-  const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3>(0);
+  const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3>(3);
   const { mutateAsync: createProductMutation } = useMutation(createProduct);
   const [formValues, setFormValues] = useState({
     allow_attachments: false,
@@ -30,7 +30,7 @@ const CreateNewProduct = () => {
     price_by_options: false,
     branch_availability: {
       all: true,
-      branches: [],
+      branches: [] as number[],
     },
     thumbnail: undefined,
     options: [],

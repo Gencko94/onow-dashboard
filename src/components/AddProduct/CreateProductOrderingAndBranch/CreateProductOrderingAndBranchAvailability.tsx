@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {
   FormProvider,
   SubmitErrorHandler,
@@ -39,12 +39,16 @@ const CreateProductOrderingAndBranchAvailability = ({ submitForm }: IProps) => {
     defaultValues: {
       allow_attachments: formValues?.allow_attachments,
       allow_side_notes: formValues?.allow_side_notes,
-      branch_availability: formValues?.branch_availability,
+      branch_availability: {
+        all: formValues?.branch_availability.all,
+        branches: formValues?.branch_availability.branches || [],
+      },
       max_qty_per_user: formValues?.max_qty_per_user,
       prep_time: formValues?.prep_time,
       active: formValues?.active,
     },
   });
+  console.log(methods.watch());
   const onSubmit: SubmitHandler<thirdTabProps> = (data) => {
     updateData?.(data);
 
@@ -53,6 +57,9 @@ const CreateProductOrderingAndBranchAvailability = ({ submitForm }: IProps) => {
   const onError: SubmitErrorHandler<thirdTabProps> = (errors) => {
     console.log(errors);
   };
+  // useEffect(() => {
+  //   methods.setValue("branch_availability", formValues?.branch_availability);
+  // }, []);
   return (
     <FormProvider {...methods}>
       <Container onSubmit={methods.handleSubmit(onSubmit, onError)}>

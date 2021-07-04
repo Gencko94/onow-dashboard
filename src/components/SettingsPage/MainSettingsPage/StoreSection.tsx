@@ -83,8 +83,8 @@ const StoreSection = () => {
           desc="Search Engine optimization improvments"
         />
         <SettingsCard
-          title="Maintanance Mode"
-          target="/settings/maintanance-mode"
+          title="Maintenance Mode"
+          target="/settings/maintenance-mode"
           Icon={FcVlc}
           desc="Put your store into maintanance mode "
         />

@@ -3,8 +3,10 @@ export type STORE_INFORMATION = {
     en: string;
     ar: string;
   };
-  description: string;
-  headquarters: STORE_HEADQUARTERS;
+  description: {
+    en: string;
+    ar: string;
+  };
 };
 export type STORE_HEADQUARTERS = {
   country: string;
@@ -27,3 +29,22 @@ export type STORE_SOCIAL_NETWORK = {
   facebook: string;
   snapchat: string;
 };
+export interface GET_STORE_INFORMATION {
+  name: {
+    en: string;
+    ar: string;
+  };
+  description: {
+    en: string;
+    ar: string;
+  };
+  // headquarters: STORE_HEADQUARTERS;
+  phone: string;
+  whatsapp: string;
+  landline: string;
+  email: string;
+  instagram: string;
+  twitter: string;
+  facebook: string;
+  snapchat: string;
+}
