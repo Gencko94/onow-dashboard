@@ -53,6 +53,7 @@ body {
 img {
   max-width: 100%;
   display: block;
+  font-size:0.7rem;
 }
 a {
   text-decoration:none;

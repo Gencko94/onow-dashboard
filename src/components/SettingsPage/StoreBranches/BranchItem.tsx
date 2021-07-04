@@ -2,23 +2,38 @@ import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
-import ClickAwayListener from "react-click-away-listener";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 import { useHistory } from "react-router";
-const BranchItem = () => {
+import { BRANCH } from "../../../interfaces/settings/branches/branches";
+import Button from "../../reusable/Button";
+import Popover from "../../reusable/Popover";
+import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import { FlexWrapper } from "../../StyledComponents/Flex";
+import { useTranslation } from "react-i18next";
+
+interface IProps {
+  branch: BRANCH;
+  handleDeleteBranch: (id: number) => void;
+}
+const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
+  const { setConfirmationModalStatus, handleCloseConfirmationModal } =
+    useConfirmationModal();
+  const {
+    i18n: { language },
+  } = useTranslation();
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
-  const renderStatus = (id: number) => {
-    switch (id) {
-      case 1:
+  const renderStatus = (status: boolean) => {
+    switch (status) {
+      case true:
         return (
           <Status color="green">
             <span className="dot" />
             <h6>Active</h6>
           </Status>
         );
-      case 2:
+      case false:
         return (
           <Status color="#b72b2b">
             <span className="dot" />
@@ -30,48 +45,85 @@ const BranchItem = () => {
     }
   };
   return (
-    <Container onClick={() => history.push(`/settings/branches/branch/1`)}>
+    <Container>
       <div className="field">
-        <h6>Branch 1</h6>
-      </div>
-      <div className="field">{renderStatus(2)}</div>
-      <div className="field">
-        <EnabledButton enabled={false} type="button">
-          Enable
-        </EnabledButton>
+        <h6>{branch.id}</h6>
       </div>
       <div className="field">
-        <ButtonsContainer>
-          <ActionButtonContainer
-            onClick={(e) => {
-              e.stopPropagation();
-              setActionsMenuOpen(true);
+        <h6>{branch.name[language]}</h6>
+      </div>
+
+      <div className="field">{branch.contact_info.mobile}</div>
+      <div className="field">{renderStatus(branch.active)}</div>
+      <div className="field">
+        <Button
+          bg="primary"
+          padding="0.5rem"
+          text="Edit"
+          textSize="0.7rem"
+          margin="0 0.5rem"
+          withRipple
+          withTransition
+          onClick={() => {
+            history.push(`/settings/branches/branch/${branch.id}`);
+          }}
+        />
+        <Button
+          bg="blue"
+          padding="0.5rem"
+          text="Delivery Locations"
+          textSize="0.7rem"
+          margin="0 0.5rem"
+          withRipple
+          withTransition
+          onClick={() => {
+            history.push(`/settings/branches/branch/${branch.id}`);
+          }}
+        />
+        <ActionButtonContainer
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <button
+            onClick={() => {
+              setActionsMenuOpen(!actionsMenuOpen);
             }}
+            className="icon"
           >
-            <button className="icon">
-              <BsThreeDotsVertical size={18} />
-            </button>
-            <CSSTransition
-              in={actionsMenuOpen}
-              classNames="menu"
-              unmountOnExit
-              timeout={100}
-            >
-              <ClickAwayListener onClickAway={() => setActionsMenuOpen(false)}>
-                <ul>
-                  <li>
-                    <button>
-                      <span className="icon">
-                        <RiDeleteBinLine size={15} />
-                      </span>
-                      <p>Delete Branch</p>
-                    </button>
-                  </li>
-                </ul>
-              </ClickAwayListener>
-            </CSSTransition>
-          </ActionButtonContainer>
-        </ButtonsContainer>
+            <BsThreeDotsVertical size={18} />
+          </button>
+          <CSSTransition
+            in={actionsMenuOpen}
+            classNames="menu"
+            unmountOnExit
+            timeout={100}
+          >
+            <Popover closeFunction={() => setActionsMenuOpen(false)}>
+              <Button
+                text="Delete Branch"
+                padding="0.5rem"
+                bg="white"
+                color="#444"
+                hoverColor="#b72b2b"
+                textSize="0.8rem"
+                Icon={RiDeleteBinLine}
+                iconSize={15}
+                onClick={(e) => {
+                  setActionsMenuOpen(false);
+                  e.stopPropagation();
+                  setConfirmationModalStatus?.({
+                    open: true,
+                    desc: "Are you sure you want to delete this branch ?",
+                    title: "Delete Branch",
+                    closeCb: handleCloseConfirmationModal!,
+                    successCb: () => handleDeleteBranch(branch.id),
+                  });
+                }}
+              />
+            </Popover>
+          </CSSTransition>
+        </ActionButtonContainer>
       </div>
     </Container>
   );
@@ -80,15 +132,24 @@ const BranchItem = () => {
 export default BranchItem;
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  grid-template-columns: minmax(70px, 1fr) repeat(3, minmax(100px, 1fr)) minmax(
+      210px,
+      1fr
+    );
   background-color: #fff;
-  gap: 1rem;
-  cursor: pointer;
+  gap: 0.5rem;
+  width: 100%;
   border-bottom: ${(props) => props.theme.border};
   &:hover {
-    background-color: ${(props) => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.accentColor};
   }
-
+  .img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    object-fit: cover;
+  }
   .field {
     display: flex;
     align-items: center;
@@ -102,7 +163,8 @@ const Container = styled.div`
   }
 `;
 
-const ButtonsContainer = styled.div`
+const ActionButtonContainer = styled(FlexWrapper)`
+  position: relative;
   button.icon {
     display: inline-block;
     cursor: pointer;
@@ -114,44 +176,6 @@ const ButtonsContainer = styled.div`
     &:hover {
       background-color: #e6e6e6;
     }
-  }
-`;
-const ActionButtonContainer = styled.div`
-  position: relative;
-
-  ul {
-    position: absolute;
-    bottom: -3px;
-    right: 8px;
-    z-index: 10;
-    background-color: #fff;
-    transform-origin: right;
-    box-shadow: ${(props) => props.theme.shadow};
-    border-radius: 5px;
-  }
-  ul li button {
-    padding: 0.5rem;
-    display: block;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.9rem;
-    color: ${(props) => props.color};
-    transition: all 75ms ease;
-    &:hover {
-      color: ${(props) => props.theme.headingColor};
-      background-color: ${(props) => props.theme.highlightColor};
-    }
-    p {
-      margin: 0 0.5rem;
-    }
-  }
-  span.icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.25rem;
   }
 `;
 const Status = styled.div`
@@ -170,16 +194,4 @@ const Status = styled.div`
 
     margin: 0 0.25rem;
   }
-`;
-const EnabledButton = styled.button<{ enabled: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-  padding: 0.25rem 0.5rem;
-  background-color: ${(props) =>
-    props.enabled ? props.theme.dangerRed : props.theme.green};
-  color: ${(props) => props.theme.btnText};
-  border: ${(props) => props.theme.border};
-  border-radius: 5px;
 `;

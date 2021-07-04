@@ -47,12 +47,12 @@ export type WORKING_HOURS = {
 export interface BRANCH {
   id: number;
   name: {
-    ar: string;
-    en: string;
+    [key: string]: string;
   };
-
+  active: boolean;
   cod_enabled: boolean;
   cod_cost: string;
+  busy: boolean;
   pickup_enabled: boolean;
   delivery_enabled: boolean;
   address: BRANCH_ADDRESS;
@@ -65,15 +65,14 @@ export interface BRANCH {
 }
 export interface NEW_BRANCH {
   name: {
-    ar: string;
-    en: string;
+    [key: string]: string;
   };
-  country: string;
-  city: string;
+  busy: boolean;
+  active: 1 | 0;
   cod_enabled: boolean;
   pickup_enabled: boolean;
   delivery_enabled: boolean;
-  cod_cost: number;
+  cod_cost: string;
   address: BRANCH_ADDRESS;
   working_hours: WORKING_HOURS;
   contact_info: {

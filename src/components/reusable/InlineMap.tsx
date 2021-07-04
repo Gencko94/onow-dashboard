@@ -165,7 +165,7 @@ const InlineMap = ({
             ],
     };
   }, []);
-  console.log(data);
+  // console.log(data);
 
   const mapRef = useRef<any>();
   const onMapLoad = useCallback((map: any) => {
@@ -219,7 +219,6 @@ const InlineMap = ({
           textSize="0.8rem"
           Icon={BiCurrentLocation}
           iconSize={20}
-          type="button"
           onClick={() =>
             getCurrentLocation(
               ({ lat, lng }) => {
@@ -250,7 +249,7 @@ const InlineMap = ({
 export default InlineMap;
 
 const MapIcon = styled.button`
-  z-index: 50;
+  z-index: 9;
   position: absolute;
   left: 0;
   right: 0;

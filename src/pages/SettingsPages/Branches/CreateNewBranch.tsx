@@ -1,6 +1,7 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { BiPlus } from "react-icons/bi";
-import styled from "styled-components";
+import { useMutation } from "react-query";
+import { useHistory } from "react-router-dom";
 import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
 import Button from "../../../components/reusable/Button";
 import HeaderContainer from "../../../components/reusable/HeaderContainer";
@@ -9,18 +10,24 @@ import BranchLocation from "../../../components/SettingsPage/StoreBranches/Branc
 
 import BranchWorkingHours from "../../../components/SettingsPage/StoreBranches/Branches/BranchWorkingHours";
 import Flex from "../../../components/StyledComponents/Flex";
+import useToast from "../../../hooks/useToast";
 
 import { NEW_BRANCH } from "../../../interfaces/settings/branches/branches";
+import extractError from "../../../utils/extractError";
+import { createBranch } from "../../../utils/queries";
 
 const CreateNewBranch = () => {
-  const {
-    formState: { errors },
-    register,
-    handleSubmit,
-    setValue,
-    control,
-  } = useForm<NEW_BRANCH>({
+  const history = useHistory();
+  const { handleCloseToast, setToastStatus } = useToast();
+  const { mutateAsync, isLoading } = useMutation(createBranch);
+  const methods = useForm<NEW_BRANCH>({
     defaultValues: {
+      cod_cost: "0",
+      busy: false,
+      cod_enabled: true,
+      active: 1,
+      delivery_enabled: true,
+      pickup_enabled: true,
       working_hours: {
         saturday: { enabled: true, from: "09:00", to: "21:00" },
         sunday: { enabled: true, from: "09:00", to: "21:00" },
@@ -33,11 +40,35 @@ const CreateNewBranch = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<NEW_BRANCH> = (data: NEW_BRANCH) => {
+  const onSubmit: SubmitHandler<NEW_BRANCH> = async (data) => {
     console.log(data);
+    try {
+      const regex = /^0+(?!$)/;
+      // await mutateAsync(data);
+      // setToastStatus?.({
+      //   open: true,
+      //   fn: handleCloseToast!,
+      //   text: "Branch Created Successfully",
+      //   type: "success",
+      // });
+      // history.replace("/settings/branches");
+    } catch (error) {
+      const { responseError, unknownError } = extractError(error);
+      if (responseError) {
+        console.log(responseError);
+      } else {
+        console.log(unknownError);
+        setToastStatus?.({
+          open: true,
+          fn: handleCloseToast!,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={methods.handleSubmit(onSubmit)}>
       <HeaderContainer>
         <Breadcrumbs
           childLabel="Create New Branch"
@@ -53,28 +84,19 @@ const CreateNewBranch = () => {
             iconSize={25}
             withRipple
             withTransition
+            isLoading={isLoading}
+            disabled={isLoading}
             text="Submit Data"
             type="submit"
           />
         </Flex>
       </HeaderContainer>
 
-      <BranchInformation
-        errors={errors}
-        register={register}
-        control={control}
-      />
-      <BranchLocation
-        setValue={setValue}
-        errors={errors}
-        register={register}
-        control={control}
-      />
-      <BranchWorkingHours
-        errors={errors}
-        register={register}
-        control={control}
-      />
+      <FormProvider {...methods}>
+        <BranchInformation />
+        <BranchLocation />
+        <BranchWorkingHours />
+      </FormProvider>
     </form>
   );
 };

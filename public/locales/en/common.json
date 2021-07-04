@@ -1,3 +1,7 @@
 {
-  "Welcome_to_React": "Welcome to React"
+  "phone-number": "Phone Number",
+  "id": "ID",
+  "enabled": "Enabled",
+  "actions": "Actions",
+  "branch-name": "Branch Name"
 }

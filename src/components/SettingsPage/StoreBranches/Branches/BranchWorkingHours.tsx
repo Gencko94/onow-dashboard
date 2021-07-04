@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Control, Controller, useWatch } from "react-hook-form";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { WiTime8, WiTime12 } from "react-icons/wi";
@@ -9,13 +9,10 @@ import CheckToggle from "../../../reusable/CheckToggle";
 
 import TableHead from "../../../reusable/TableHead";
 import TimeIconedInput from "../../../reusable/TimeIconedInput";
+import Flex from "../../../StyledComponents/Flex";
+import Grid from "../../../StyledComponents/Grid";
+import Heading from "../../../StyledComponents/Heading";
 
-interface IProps {
-  register: any;
-  errors: any;
-
-  control: Control<any>;
-}
 const days: [
   "saturday",
   "sunday",
@@ -33,7 +30,12 @@ const days: [
   "thursday",
   "friday",
 ];
-const BranchWorkingHours = ({ control, errors, register }: IProps) => {
+const BranchWorkingHours = () => {
+  const {
+    formState: { errors },
+
+    control,
+  } = useFormContext();
   const {
     i18n: { language },
     t,
@@ -53,29 +55,35 @@ const BranchWorkingHours = ({ control, errors, register }: IProps) => {
 
   return (
     <Container>
-      <div className="title-container">
-        <h5>Branch Working Hours</h5>
-      </div>
-      <div className="box">
-        <TableHead gap="2rem" cols={cols} gridCols="1fr 0.5fr 0.5fr" />
-        <div className="table">
-          {days.map((day) => {
-            return (
-              <React.Fragment key={day}>
-                <Controller
-                  control={control}
-                  name={`working_hours.${day}.enabled` as any}
-                  render={({ field: { value, onChange } }) => {
-                    return (
-                      <CheckToggle
-                        checked={value}
-                        onChange={onChange}
-                        label={t(day)}
-                      />
-                    );
-                  }}
-                />
-
+      <Heading tag="h5" color="primary" margin="2rem 0">
+        Branch Working Hours
+      </Heading>
+      {/* <TableHead gap="2rem" cols={cols} gridCols="1fr 0.5fr 0.5fr" /> */}
+      {days.map((day) => {
+        return (
+          <div className="box">
+            <Grid
+              key={day}
+              cols="repeat(auto-fit,minmax(250px,1fr))"
+              // cols="repeat(auto-fit,minmax(300px,1fr))"
+              gap="1rem"
+              p={3}
+            >
+              <Controller
+                control={control}
+                name={`working_hours.${day}.enabled` as any}
+                render={({ field: { value, onChange } }) => {
+                  return (
+                    <CheckToggle
+                      checked={value}
+                      onChange={onChange}
+                      label={t(day)}
+                    />
+                  );
+                }}
+              />
+              <Grid gap="0.5rem" cols="0.2fr 1fr" items="center">
+                <p>From</p>
                 <TimeIconedInput
                   enabled={working_hours?.[day]?.enabled}
                   control={control}
@@ -83,6 +91,9 @@ const BranchWorkingHours = ({ control, errors, register }: IProps) => {
                   Icon={WiTime8}
                   name={`working_hours.${day}.from`}
                 />
+              </Grid>
+              <Grid gap="0.5rem" cols="0.2fr 1fr" items="center">
+                <p>To</p>
                 <TimeIconedInput
                   enabled={working_hours?.saturday?.enabled}
                   control={control}
@@ -90,11 +101,11 @@ const BranchWorkingHours = ({ control, errors, register }: IProps) => {
                   Icon={WiTime12}
                   name="working_hours.saturday.to"
                 />
-              </React.Fragment>
-            );
-          })}
-        </div>
-      </div>
+              </Grid>
+            </Grid>
+          </div>
+        );
+      })}
     </Container>
   );
 };
@@ -102,16 +113,14 @@ const BranchWorkingHours = ({ control, errors, register }: IProps) => {
 export default BranchWorkingHours;
 
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, border, bodyColor } }) => `
-  margin: 2rem 0;
-  .title-container {
-    padding: 1rem 0;
-    color: ${mainColor};
-  }
+  ({ theme: { breakpoints, shadow, bodyColor } }) => `
+ 
   .box {
     background-color: ${bodyColor};
-    border: ${border};
+    
     border-radius: 6px;
+    margin: 1rem 0 ;
+    box-shadow:${shadow};
   }
   .table {
     padding: 1rem;    

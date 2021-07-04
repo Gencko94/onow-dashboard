@@ -14,6 +14,7 @@ import {
   NEW_CATEGORY,
 } from "../interfaces/categories/categories";
 import { ORDER_SORT } from "../pages/Orders";
+import { BRANCH, NEW_BRANCH } from "../interfaces/settings/branches/branches";
 
 const uri = "https://new-version.o-now.net/customer-api";
 
@@ -181,7 +182,7 @@ export const getGoogleMapsLocation = async ({
   const res = await axios.get(
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&language=${language}`
   );
-  console.log(res.data);
+  // console.log(res.data);
   return res.data;
 };
 
@@ -601,5 +602,69 @@ export const deleteCategory = async (
     },
   };
   const res = await axios.delete(`${uri}/product-categories/${id}`, config);
+  return res.data.results;
+};
+
+// Branches
+
+export const getBranches = async (pageParam: number, limit?: number) => {
+  const t = localStorage.getItem("dshtid");
+
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+    params: {
+      limit: limit ?? 20,
+      page: pageParam,
+    },
+  };
+  const res = await axios.get(`${uri}/list-branchs`, config);
+  return {
+    data: res.data.results.data,
+    currentPage: res.data.results.pagination.current,
+    lastPage: res.data.results.pagination.last,
+  };
+};
+export const getBranch = async (id: string): Promise<BRANCH> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.get(`${uri}/pickups/${id}`, config);
+  return res.data.results;
+};
+export const createBranch = async (data: NEW_BRANCH): Promise<BRANCH> => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.post(`${uri}/pickups`, data, config);
+  return res.data.results;
+};
+export const editBranch = async (branch: BRANCH) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.post(`${uri}/pickups/${branch.id}`, branch, config);
+  return res.data.results;
+};
+export const deleteBranch = async (
+  id: string
+): Promise<{ results: "Deleted" }> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.delete(`${uri}/pickups/${id}`, config);
   return res.data.results;
 };

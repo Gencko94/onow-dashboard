@@ -1,5 +1,4 @@
 import React, { Suspense, useEffect, useState } from "react";
-import ClickAwayListener from "react-click-away-listener";
 import { CSSTransition } from "react-transition-group";
 import styled, { css } from "styled-components";
 import DesktopNavbar from "../components/DesktopNavbar/DesktopNavbar";
@@ -10,6 +9,7 @@ import useConfirmationModal from "../hooks/useConfirmationModal";
 import useResponsive from "../hooks/useResponsive";
 import useToast from "../hooks/useToast";
 import Loading from "../utils/Loading";
+import ScrollToTop from "../utils/ScrollToTop";
 
 const Layout: React.FC = ({ children }) => {
   const { isDesktop } = useResponsive();
@@ -20,12 +20,14 @@ const Layout: React.FC = ({ children }) => {
       return false;
     }
   });
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   const { toastStatus, handleCloseToast } = useToast();
-  const { confirmationModalStatus, handleCloseConfirmationModal } =
-    useConfirmationModal();
+  const { confirmationModalStatus } = useConfirmationModal();
   const handleToggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
+
+  // Close Toast after timeout
   useEffect(() => {
     if (toastStatus?.open) {
       setTimeout(() => {
@@ -33,6 +35,8 @@ const Layout: React.FC = ({ children }) => {
       }, 3000);
     }
   }, [toastStatus?.open]);
+
+  // Close Drawer when switching to mobile
   useEffect(() => {
     if (isDesktop) {
       setDrawerOpen(true);
@@ -40,6 +44,22 @@ const Layout: React.FC = ({ children }) => {
       setDrawerOpen(false);
     }
   }, [isDesktop]);
+
+  // Scroll to top button config
+  useEffect(() => {
+    const checkScrolling = () => {
+      if (window.scrollY >= 350) {
+        setShowScrollToTop(true);
+      } else {
+        setShowScrollToTop(false);
+      }
+    };
+    window.addEventListener("scroll", checkScrolling);
+    return () => {
+      window.removeEventListener("scroll", checkScrolling);
+    };
+  }, []);
+
   return (
     <ContentContainer>
       <CSSTransition
@@ -62,6 +82,14 @@ const Layout: React.FC = ({ children }) => {
         unmountOnExit
       >
         <Sidebar isDesktop={isDesktop} setDrawerOpen={setDrawerOpen} />
+      </CSSTransition>
+      <CSSTransition
+        in={showScrollToTop}
+        timeout={250}
+        classNames="scroll-btn"
+        unmountOnExit
+      >
+        <ScrollToTop />
       </CSSTransition>
       <ConfirmationModal
         isOpen={confirmationModalStatus!.open}

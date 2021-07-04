@@ -171,3 +171,17 @@
 .error-toast-exit-active {
   transition: all 200ms;
 }
+.scroll-btn-enter {
+  opacity: 0;
+}
+.scroll-btn-enter-active {
+  opacity: 1;
+  transition: all 100ms;
+}
+.scroll-btn-exit {
+  opacity: 1;
+}
+.scroll-btn-exit-active {
+  opacity: 0;
+  transition: all 100ms;
+}

@@ -63,6 +63,7 @@ const Container = styled.div(
     h6 {
       margin-bottom: 0.25rem;
       font-size: 0.8rem;
+      // font-weight: ${font.bold};
     }
     .first-subtitle {
       color: ${headingColor};

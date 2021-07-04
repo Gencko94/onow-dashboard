@@ -1,4 +1,4 @@
-import { Control } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import styled from "styled-components";
@@ -8,40 +8,26 @@ import IconedInput from "../../../reusable/Inputs/IconedInput";
 import InlineMap from "../../../reusable/InlineMap";
 import Textarea from "../../../reusable/Textarea";
 import { IoLocate } from "react-icons/io5";
+import Heading from "../../../StyledComponents/Heading";
+import Grid from "../../../StyledComponents/Grid";
 
-interface IProps {
-  register: any;
-  errors: any;
-  setValue: any;
-  control: Control<any>;
-}
-const options = [
-  {
-    title: {
-      ar: "نسبة",
-      en: "Percent",
-    },
-    value: "percent",
-  },
-  {
-    title: {
-      ar: "مبلغ ثابت",
-      en: "Fixed Amount",
-    },
-    value: "fixed",
-  },
-];
-const BranchLocation = ({ control, errors, register, setValue }: IProps) => {
+const BranchLocation = () => {
+  const {
+    formState: { errors },
+    register,
+
+    setValue,
+  } = useFormContext();
   const {
     i18n: { language },
   } = useTranslation();
   return (
     <Container>
-      <div className="title-container">
-        <h5>Branch Location</h5>
-      </div>
+      <Heading tag="h5" color="primary" margin="2rem 0">
+        Branch Location
+      </Heading>
       <div className="box">
-        <div className="inputs">
+        <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
           <IconedInput
             Icon={IoLocate}
             errors={errors?.address?.coords?.lat}
@@ -60,6 +46,8 @@ const BranchLocation = ({ control, errors, register, setValue }: IProps) => {
             label="Longitude"
             name="address.coords.lng"
           />
+        </Grid>
+        <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
           <Textarea
             errors={errors?.address?.address?.en}
             register={register}
@@ -76,7 +64,7 @@ const BranchLocation = ({ control, errors, register, setValue }: IProps) => {
             label="Address in Arabic"
             name="address.address.ar"
           />
-        </div>
+        </Grid>
 
         <div className="map-container">
           <div className="label">
@@ -93,7 +81,7 @@ const BranchLocation = ({ control, errors, register, setValue }: IProps) => {
           </div>
           <p className="desc">
             Selecting an accurate location will make it easy to customers and
-            shipment companies to find your branch/warehouse
+            delivery companies to find your branch
           </p>
         </div>
       </div>
@@ -105,40 +93,36 @@ export default BranchLocation;
 
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, border, bodyColor } }) => `
-  margin: 2rem 0;
-  .title-container {
-    padding: 1rem 0;
-    color: ${mainColor};
-  }
+ 
   .box {
     background-color: ${bodyColor};
     border: ${border};
     border-radius: 6px;
     padding: 1rem;
 }
-.box {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    align-items:flex-start;
+// .box {
+//     display: grid;
+//     grid-template-columns: 1fr;
+//     gap: 1rem;
+//     align-items:flex-start;
 
-}
-.inputs {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    
+// }
+.map-container {
+  .map {
+    height:300px;
+    margin:1rem 0;  
+  }
+  .desc {
+    font-size:0.8rem;
+  }
 }
 @media ${breakpoints.md} {
     .box {
         grid-template-columns: 1fr 0.8fr;
       }
-    .inputs {
-      grid-template-columns: 1fr 1fr;
-    }
+   
     .map-container {
-      .label {
-      }
+      
       .map {
         height:300px;
         margin:1rem 0;  

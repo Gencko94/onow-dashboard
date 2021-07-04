@@ -1,3 +1,7 @@
 {
-  "Welcome_to_React": "اهلا بكم"
+  "phone-number": "رقم الهاتف",
+  "id": "الرمز",
+  "enabled": "مفعل",
+  "actions": "الخيارات",
+  "branch-name": "إسم الفرع"
 }

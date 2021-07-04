@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useForm } from "react-hook-form";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -13,9 +13,9 @@ import CouponInfo from "../../components/Coupons/Coupon/CouponInfo";
 import CouponProducts from "../../components/Coupons/Coupon/CouponProducts";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
-import ConfirmationModal from "../../components/reusable/ConfirmationModal";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Flex from "../../components/StyledComponents/Flex";
+import useConfirmationModal from "../../hooks/useConfirmationModal";
 import useToast from "../../hooks/useToast";
 import { COUPON } from "../../interfaces/coupons/coupons";
 import extractError from "../../utils/extractError";
@@ -25,6 +25,8 @@ import { deleteCoupon, editCoupon, getCoupon } from "../../utils/queries";
 const Coupon = () => {
   const queryClient = useQueryClient();
   const { handleCloseToast, setToastStatus } = useToast();
+  const { handleCloseConfirmationModal, setConfirmationModalStatus } =
+    useConfirmationModal();
   const { id } = useParams<{ id: string }>();
   const { replace } = useHistory();
   const { data } = useQuery(["coupon", id], () => getCoupon(id), {
@@ -54,7 +56,6 @@ const Coupon = () => {
       ),
     },
   });
-  const [modalOpen, setModalOpen] = useState(false);
 
   // Delete Mutation
 
@@ -100,9 +101,9 @@ const Coupon = () => {
       }
     }
   };
-  const handleDeleteCoupon = async (id: number) => {
+  const handleDeleteCoupon = async () => {
     try {
-      await deleteMutation(id.toString());
+      await deleteMutation(id);
       setToastStatus?.({
         open: true,
         fn: handleCloseToast!,
@@ -172,7 +173,15 @@ const Coupon = () => {
                     withRipple
                     Icon={RiDeleteBinLine}
                     iconSize={20}
-                    onClick={() => setModalOpen(true)}
+                    onClick={() =>
+                      setConfirmationModalStatus?.({
+                        open: true,
+                        closeCb: handleCloseConfirmationModal!,
+                        desc: "Are you sure you want to delete this Coupon ?",
+                        title: "Delete Coupon",
+                        successCb: handleDeleteCoupon,
+                      })
+                    }
                   />
                 </Flex>
               </HeaderContainer>
@@ -187,26 +196,6 @@ const Coupon = () => {
                 control={control}
               />
             </form>
-
-            <ConfirmationModal
-              isLoading={deleteLoading}
-              isOpen={modalOpen}
-              closeFunction={() => setModalOpen(false)}
-              desc="Are you sure you want to delete this coupon ?"
-              successButtonText="Delete"
-              successFunction={() => handleDeleteCoupon(data!.id)}
-              title="Delete Coupon"
-              styles={{
-                content: {
-                  top: "50%",
-                  left: "50%",
-                  right: "auto",
-                  bottom: "auto",
-                  marginRight: "-50%",
-                  transform: "translate(-50%, -50%)",
-                },
-              }}
-            />
           </Suspense>
         </ErrorBoundary>
       )}
