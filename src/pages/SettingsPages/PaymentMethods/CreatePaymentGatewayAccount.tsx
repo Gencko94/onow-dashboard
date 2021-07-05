@@ -138,7 +138,7 @@ const CreatePaymentGatewayAccount = () => {
                   }}
                   label="National ID Front Side"
                 />
-                <p className="error">{errors?.id_front_side?.type?.message}</p>
+                <p className="error">{errors?.id_front_side?.message}</p>
               </div>
             )}
           />
@@ -155,7 +155,7 @@ const CreatePaymentGatewayAccount = () => {
                   }}
                   label="National ID Back Side"
                 />
-                <p className="error">{errors?.id_back_side?.type?.message}</p>
+                <p className="error">{errors?.id_back_side?.message}</p>
               </div>
             )}
           />
@@ -237,9 +237,7 @@ const CreatePaymentGatewayAccount = () => {
                       }}
                       label="License Copy"
                     />
-                    <p className="error">
-                      {errors?.license_copy?.type?.message}
-                    </p>
+                    <p className="error">{errors?.license_copy?.message}</p>
                   </div>
                 )}
               />
@@ -257,7 +255,7 @@ const CreatePaymentGatewayAccount = () => {
                       label="Your Authorized Signature"
                     />
                     <p className="error">
-                      {errors?.authorized_signature?.type?.message}
+                      {errors?.authorized_signature?.message}
                     </p>
                   </div>
                 )}

@@ -104,16 +104,24 @@ export const getUserStores = async (): Promise<GET_STORES_RESPONSE> => {
   return result;
 };
 
-export const getCustomers = async (): Promise<CUSTOMER[]> => {
+export const getCustomers = async (pageParam: number, search?: string) => {
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
       StoreId: 1,
+      params: {
+        pageParam,
+        search,
+      },
     },
   };
-  const res = await axios.get(`${uri}/clients-store`, config);
-  return res.data.results;
+  const res = await axios.get(`${uri}/clients`, config);
+  return {
+    data: res.data.results.data,
+    lastPage: res.data.results.pagination.last,
+    currentPage: res.data.results.pagination.current,
+  };
 };
 
 export const getSingleCustomer = async (

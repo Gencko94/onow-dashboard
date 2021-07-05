@@ -17,6 +17,7 @@ import { updateUserAccount } from "../../utils/queries";
 
 import extractError from "../../utils/extractError";
 import useToast from "../../hooks/useToast";
+import Heading from "../../components/StyledComponents/Heading";
 
 const AccountSettings = () => {
   const { user } = useContext(AuthProvider);
@@ -84,7 +85,9 @@ const AccountSettings = () => {
         />
       </HeaderContainer>
       <form style={{ margin: "2rem 0 " }} onSubmit={handleSubmit(onSubmit)}>
-        <h5>Account Information</h5>
+        <Heading tag="h5" mb="1rem" color="primary">
+          Account Information
+        </Heading>
         <div onSubmit={handleSubmit(onSubmit)} className="container">
           <IconedInput
             Icon={MdSubtitles}

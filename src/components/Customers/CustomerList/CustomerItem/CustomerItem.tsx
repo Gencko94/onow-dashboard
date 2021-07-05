@@ -111,7 +111,10 @@ const CustomerItem = ({
 export default CustomerItem;
 const Container = styled.div<{ selected: boolean }>`
   display: grid;
-  grid-template-columns: 100px 1fr 1fr 1fr 0.5fr;
+  grid-template-columns: repeat(1, minmax(35px, 50px)) repeat(
+      4,
+      minmax(100px, 1fr)
+    );
   background-color: ${(props) =>
     props.selected ? props.theme.accentColor : "#fff"};
   gap: 1rem;

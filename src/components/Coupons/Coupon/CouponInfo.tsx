@@ -8,7 +8,7 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { BiBarcode } from "react-icons/bi";
-import { FiCalendar, FiUser, FiUsers } from "react-icons/fi";
+import { FiUser, FiUsers } from "react-icons/fi";
 import { IoMdCash } from "react-icons/io";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
@@ -169,8 +169,6 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           Icon={FiUser}
           errors={errors?.uses_per_user}
           register={register}
-          required
-          requiredMessage="Required"
           label="Uses Per Customer"
           name="uses_per_user"
           desc="Leave Blank for unlimited"

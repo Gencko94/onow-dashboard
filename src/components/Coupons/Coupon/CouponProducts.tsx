@@ -6,9 +6,9 @@ import CouponCategoryList from "./CouponCategoryList";
 import CouponProductsList from "./CouponProductsList";
 import CouponProductsSearch from "./CouponProductsSearch";
 interface IProps {
-  register: any;
+  setValue: any;
   errors: any;
-
+  watch: any;
   control: Control<any>;
 }
 
@@ -56,17 +56,13 @@ const options = [
     value: 6,
   },
 ];
-const CouponProducts = ({
-  control,
-  errors,
-
-  register,
-}: IProps) => {
-  const coverage = useWatch({
+const CouponProducts = ({ control, errors, watch, setValue }: IProps) => {
+  const coverage = watch("coupon_coverage");
+  const data = useWatch({
     control,
-    name: "coupon_coverage",
+    name: "special_products",
   });
-  console.log(coverage);
+  console.log(data);
   const {
     i18n: { language },
   } = useTranslation();
@@ -107,6 +103,7 @@ const CouponProducts = ({
 
         {(coverage === 3 || coverage === 4) && (
           <CouponProductsSearch
+            setValue={setValue}
             control={control}
             title={
               coverage === 3

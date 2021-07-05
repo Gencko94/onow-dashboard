@@ -1,5 +1,11 @@
-import { useMemo, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import React, { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { IoCloseCircleOutline } from "react-icons/io5";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
@@ -11,14 +17,46 @@ import { deleteCustomer, getCustomers } from "../../../utils/queries";
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
 import TableHead from "../../reusable/TableHead";
-import Flex from "../../StyledComponents/Flex";
+import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
 import CustomerItem from "./CustomerItem/CustomerItem";
-
-const CustomerList = () => {
-  const { data } = useQuery<CUSTOMER[]>(["customers"], () => getCustomers(), {
-    suspense: true,
-  });
+import Spinner from "react-loader-spinner";
+type GET_CUSTOMER_RES = {
+  data: CUSTOMER[];
+  currentPage: number;
+  lastPage: number;
+};
+const CustomerList = ({
+  setModalOpen,
+}: {
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const { search } = useQueryParams();
+
+  // const { data } = useQuery<CUSTOMER[]>("customers", getCustomers, {
+  //   suspense: true,
+  // });
+  const {
+    data,
+    status,
+    isFetching,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery<GET_CUSTOMER_RES>(
+    "customers",
+    ({ pageParam = 1 }) => getCustomers(pageParam, search as string),
+    {
+      keepPreviousData: search !== "" ? false : true,
+
+      getNextPageParam: (lastPage) => {
+        if (lastPage.currentPage < lastPage.lastPage) {
+          return lastPage.currentPage + 1;
+        } else {
+          return undefined;
+        }
+      },
+    }
+  );
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const { handleCloseConfirmationModal } = useConfirmationModal();
 
@@ -34,7 +72,17 @@ const CustomerList = () => {
     reset,
     isLoading: deleteLoading,
   } = useMutation(deleteCustomer, {
-    onSuccess: (data, productId) => {
+    onSuccess: (data, customerId) => {
+      queryClient.invalidateQueries("customers");
+    },
+  });
+  // Multiple Delete Mutation
+  const {
+    mutateAsync: deleteMultiple,
+    reset: resetMultipleDelete,
+    isLoading: multipleDeleteLoading,
+  } = useMutation(deleteCustomer, {
+    onSuccess: (data, customerId) => {
       queryClient.invalidateQueries("customers");
     },
   });
@@ -77,6 +125,38 @@ const CustomerList = () => {
       }
     }
   };
+  const handleDeleteMultipleCustomers = async (ids: number[]) => {
+    try {
+      // await deleteCustomerMutation(ids);
+      handleCloseConfirmationModal?.();
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Customers Deleted Successfully",
+        type: "success",
+      });
+      setSelectedRows([]);
+    } catch (error) {
+      handleCloseConfirmationModal?.();
+
+      const { responseError } = extractError(error);
+      if (responseError) {
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            resetMultipleDelete();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
+  };
+
   const cols = useMemo(
     () => [
       { title: "", sortable: false },
@@ -96,13 +176,13 @@ const CustomerList = () => {
   };
   return (
     <>
-      {data?.length !== 0 && (
+      {data?.pages[0].data.length !== 0 && (
         <Flex margin="1rem 0" justify="flex-end">
           <p>Selected Rows ({selectedRows.length}) : </p>
           <Flex margin="0 0.5rem">
             <Button
               width="100%"
-              // disabled={selectedRows.length === 0 || multipleDeleteLoading}
+              disabled={selectedRows.length === 0 || multipleDeleteLoading}
               bg="danger"
               padding="0.25rem"
               textSize="0.8rem"
@@ -111,15 +191,43 @@ const CustomerList = () => {
               } Customers`}
               withRipple
               withTransition
-              // isLoading={multipleDeleteLoading}
+              isLoading={multipleDeleteLoading}
               onClick={() => {
-                // handleDeleteMultipleProducts(selectedRows);
+                handleDeleteMultipleCustomers(selectedRows);
               }}
             />
           </Flex>
         </Flex>
       )}
-      <Container>
+      {search && (
+        <SearchContainer>
+          <p className="search-text">
+            Search Results for{" "}
+            <strong>
+              <i>{search}</i>
+            </strong>
+          </p>
+          <Flex margin="0 0.5rem" items="center">
+            <Button
+              Icon={IoCloseCircleOutline}
+              iconSize={20}
+              width="100%"
+              bg="danger"
+              margin="0 2rem"
+              padding="0.25rem"
+              textSize="0.7rem"
+              text="Clear search"
+              withRipple
+              withTransition
+              isLoading={multipleDeleteLoading}
+              onClick={() => {
+                history.replace("/customers");
+              }}
+            />
+          </Flex>
+        </SearchContainer>
+      )}
+      {/* <Container>
         <TableHead cols={cols} gridCols="100px 1fr 1fr 1fr 0.5fr" />
         {data!.length === 0 && (
           <EmptyTable height="300px" text="No Customers were Added " />
@@ -133,7 +241,69 @@ const CustomerList = () => {
             handleToggleRows={handleToggleRows}
           />
         ))}
+      </Container> */}
+      <Container>
+        <div className="table">
+          {data?.pages[0].data.length !== 0 && (
+            <TableHead
+              // activeSortBy={sortBy.field}
+              // activeOrder={sortBy.order}
+              cols={cols}
+              gap="0.5rem"
+              gridCols="repeat(1, minmax(35px, 50px)) repeat(
+                4,
+                minmax(100px, 1fr)
+              );"
+            />
+          )}
+          {isFetching && (
+            <div className="loading">
+              <Spinner type="TailSpin" width={30} color="#f78f21" />
+            </div>
+          )}
+          {data?.pages[0].data.length === 0 && (
+            <EmptyTable
+              iconImage="/images/food.png"
+              text="Oops, we didn't find any customers !"
+              height="400px"
+              withButton
+              btnText="Create New Customer"
+              cb={() => setModalOpen(true)}
+            />
+          )}
+          {data?.pages.map((group, i) => {
+            return (
+              <React.Fragment key={i}>
+                {group.data.map((customer) => (
+                  <CustomerItem
+                    selectedRows={selectedRows}
+                    handleDeleteCustomer={handleDeleteCustomer}
+                    key={customer.id}
+                    customer={customer}
+                    handleToggleRows={handleToggleRows}
+                  />
+                ))}
+              </React.Fragment>
+            );
+          })}
+        </div>
       </Container>
+      {hasNextPage && (
+        <Flex margin="2rem 0" justify="center">
+          <Button
+            isLoading={isFetchingNextPage}
+            disabled={isFetchingNextPage}
+            withRipple
+            text="Load More"
+            bg="green"
+            padding="0.25rem 0.5rem"
+            textSize="0.8rem"
+            onClick={() => {
+              fetchNextPage();
+            }}
+          />
+        </Flex>
+      )}
     </>
   );
 };
@@ -141,8 +311,27 @@ const CustomerList = () => {
 export default CustomerList;
 
 const Container = styled.div`
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 6px;
   border: ${(props) => props.theme.border};
-  box-shadow: ${(props) => props.theme.shadow};
+
+  position: relative;
+  .table {
+    overflow-x: auto;
+    background-color: #fff;
+  }
+  .loading {
+    position: absolute;
+    z-index: 2;
+    top: -14px;
+    left: 15px;
+  }
+`;
+const SearchContainer = styled(FlexWrapper)`
+  background-color: #fff;
+  padding: 0.5rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+  .search-text {
+    font-size: 0.9rem;
+  }
 `;

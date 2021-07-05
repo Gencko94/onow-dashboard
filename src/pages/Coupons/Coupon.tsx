@@ -48,6 +48,8 @@ const Coupon = () => {
     register,
     handleSubmit,
     control,
+    watch,
+    setValue,
   } = useForm<COUPON>({
     defaultValues: {
       ...data,
@@ -73,9 +75,13 @@ const Coupon = () => {
         ...data,
         name: data.name,
         code: data.code,
-        special_products: data.special_products.map((i: any) => i.id),
-        special_categories: data.special_categories,
-        couponCoverage: data.couponCoverage,
+        special_products:
+          data.coupon_coverage === 3 || data.coupon_coverage === 4
+            ? data.special_products?.map((i: any) => i.id)
+            : [],
+        special_categories:
+          data.coupon_coverage === 2 ? data.special_categories : [],
+        coupon_coverage: data.coupon_coverage,
         max_discount: data.max_discount,
         min_total_order: data.min_total_order,
         id: data.id,
@@ -192,8 +198,9 @@ const Coupon = () => {
               />
               <CouponProducts
                 errors={errors}
-                register={register}
                 control={control}
+                watch={watch}
+                setValue={setValue}
               />
             </form>
           </Suspense>

@@ -13,7 +13,7 @@ const Customers = ({ storeId }: { storeId: number }) => {
   return (
     <div>
       <CustomersPanel setModalOpen={setModalOpen} />
-      <CustomerList />
+      <CustomerList setModalOpen={setModalOpen} />
       <Modal
         isOpen={modalOpen}
         closeFunction={() => setModalOpen(false)}

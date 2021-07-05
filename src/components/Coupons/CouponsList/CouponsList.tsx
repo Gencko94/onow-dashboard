@@ -168,59 +168,67 @@ const CouponsList = () => {
         </Flex>
       )}
       <Container>
-        {data?.pages[0].data.length !== 0 && (
-          <TableHead cols={cols} gridCols="100px 1fr 1fr 1fr 1fr" />
-        )}
-
-        <div>
-          {isFetching && (
-            <div className="loading">
-              <Spinner type="TailSpin" width={30} color="#f78f21" />
-            </div>
-          )}
-          {data?.pages[0].data.length === 0 && (
-            <EmptyTable
-              iconImage="/images/food.png"
-              text="You have not added any coupons !"
-              height="400px"
-              withButton
-              btnText="Create New Coupon"
-              cb={() => history.push("/coupons/create")}
+        <div className="table">
+          {data?.pages[0].data.length !== 0 && (
+            <TableHead
+              cols={cols}
+              gridCols="repeat(1, minmax(35px, 50px)) repeat(
+            4,
+            minmax(100px, 1fr)
+          );"
             />
           )}
-          {data?.pages.map((group, i) => (
-            <React.Fragment key={i}>
-              {group.data.map((coupon) => {
-                return (
-                  <CouponItem
-                    key={coupon.id}
-                    handleToggleRows={handleToggleRows}
-                    selectedRows={selectedRows}
-                    coupon={coupon}
-                    handleDeleteCoupon={handleDeleteCoupon}
-                  />
-                );
-              })}
-            </React.Fragment>
-          ))}
+
+          <div>
+            {isFetching && (
+              <div className="loading">
+                <Spinner type="TailSpin" width={30} color="#f78f21" />
+              </div>
+            )}
+            {data?.pages[0].data.length === 0 && (
+              <EmptyTable
+                iconImage="/images/food.png"
+                text="You have not added any coupons !"
+                height="400px"
+                withButton
+                btnText="Create New Coupon"
+                cb={() => history.push("/coupons/create")}
+              />
+            )}
+            {data?.pages.map((group, i) => (
+              <React.Fragment key={i}>
+                {group.data.map((coupon) => {
+                  return (
+                    <CouponItem
+                      key={coupon.id}
+                      handleToggleRows={handleToggleRows}
+                      selectedRows={selectedRows}
+                      coupon={coupon}
+                      handleDeleteCoupon={handleDeleteCoupon}
+                    />
+                  );
+                })}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {hasNextPage && (
+            <Flex margin="2rem 0" justify="center">
+              <Button
+                isLoading={isFetchingNextPage}
+                disabled={isFetchingNextPage}
+                withRipple
+                text="Load More"
+                bg="green"
+                padding="0.25rem 0.5rem"
+                textSize="0.8rem"
+                onClick={() => {
+                  fetchNextPage();
+                }}
+              />
+            </Flex>
+          )}
         </div>
-
-        {hasNextPage && (
-          <Flex margin="2rem 0" justify="center">
-            <Button
-              isLoading={isFetchingNextPage}
-              disabled={isFetchingNextPage}
-              withRipple
-              text="Load More"
-              bg="green"
-              padding="0.25rem 0.5rem"
-              textSize="0.8rem"
-              onClick={() => {
-                fetchNextPage();
-              }}
-            />
-          </Flex>
-        )}
       </Container>
     </>
   );
@@ -228,11 +236,14 @@ const CouponsList = () => {
 
 export default CouponsList;
 const Container = styled.div`
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 6px;
   border: ${(props) => props.theme.border};
-  box-shadow: ${(props) => props.theme.shadow};
+
   position: relative;
+  .table {
+    overflow-x: auto;
+    background-color: #fff;
+  }
   .loading {
     position: absolute;
     z-index: 2;

@@ -16,13 +16,13 @@ import DefaultImage from "../../reusable/DefaultImage";
 interface IProps {
   control: Control<any>;
   title: string;
+  setValue: any;
 }
 
-const CouponProductsSearch = ({ title, control }: IProps) => {
+const CouponProductsSearch = ({ title, control, setValue }: IProps) => {
   const { i18n } = useTranslation();
   const [searchValue, setSearchValue] = useState("");
   const [debouncedSearchValue] = useDebounce(searchValue, 500);
-
   // const { data, isLoading } = useQuery<SEARCH_RESULTS_PRODUCT>(
   //   ["product-search", debouncedSearchValue],
   //   () => searchProducts(debouncedSearchValue),
@@ -39,7 +39,6 @@ const CouponProductsSearch = ({ title, control }: IProps) => {
     ["search-products", debouncedSearchValue],
     ({ pageParam = 1 }) => searchProducts(debouncedSearchValue, pageParam),
     {
-      keepPreviousData: true,
       enabled: Boolean(debouncedSearchValue),
 
       getNextPageParam: (lastPage) => {
@@ -60,7 +59,7 @@ const CouponProductsSearch = ({ title, control }: IProps) => {
     console.log(covered_data);
     const found = covered_data.find((i: PRODUCT) => i.id === product.id);
     if (!found) {
-      onChange([...covered_data, product]);
+      setValue("special_products", [...covered_data, product]);
     }
   };
 

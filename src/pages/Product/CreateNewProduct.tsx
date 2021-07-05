@@ -22,7 +22,7 @@ type ContextProps = {
 export const NewProductContext = createContext<Partial<ContextProps>>({});
 
 const CreateNewProduct = () => {
-  const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3>(3);
+  const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3>(0);
   const { mutateAsync: createProductMutation } = useMutation(createProduct);
   const [formValues, setFormValues] = useState({
     allow_attachments: false,
@@ -58,7 +58,10 @@ const CreateNewProduct = () => {
       const regex = /^0+(?!$)/;
       await createProductMutation({
         active: data.active,
-        quantity: data.quantity.replace(regex, ""),
+        quantity:
+          data.quantity === "unlimited"
+            ? null
+            : data.quantity.replace(regex, ""),
         allow_attachments: data.allow_attachments,
         allow_side_notes: data.allow_side_notes,
         branch_availability: data.branch_availability,

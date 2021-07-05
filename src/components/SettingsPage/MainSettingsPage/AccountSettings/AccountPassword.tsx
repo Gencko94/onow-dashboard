@@ -1,6 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 
 import useToast from "../../../../hooks/useToast";
@@ -9,6 +8,7 @@ import { changeUserPassword } from "../../../../utils/queries";
 import Button from "../../../reusable/Button";
 import PasswordInput from "../../../reusable/Inputs/PasswordInput";
 import Flex from "../../../StyledComponents/Flex";
+import Heading from "../../../StyledComponents/Heading";
 interface IProps {
   id: number;
 }
@@ -63,7 +63,9 @@ const AccountPassword = ({ id }: IProps) => {
   };
   return (
     <Container onSubmit={handleSubmit(onSubmit)}>
-      <h5 className="title">Change Account Password</h5>
+      <Heading tag="h5" mb="1rem" color="primary">
+        Change Account password
+      </Heading>
       <div className="container">
         <PasswordInput
           register={register}

@@ -27,8 +27,8 @@ type NEW_COUPON_FORM = {
   amount: string;
   max_discount: string;
   min_total_order: string;
-  total_uses: string;
-  uses_per_user: string;
+  total_uses: string | null;
+  uses_per_user: string | null;
   enabled: boolean;
   coupon_coverage: number;
   special_products: PRODUCT[];
@@ -42,6 +42,8 @@ const CreateNewCoupon = () => {
     register,
     handleSubmit,
     control,
+    watch,
+    setValue,
   } = useForm<NEW_COUPON_FORM>({
     defaultValues: {
       special_categories: [],
@@ -55,6 +57,8 @@ const CreateNewCoupon = () => {
       uses_per_user: "1",
     },
   });
+  console.log(watch());
+
   const { mutateAsync, isLoading } = useMutation(createCoupon);
   const onSubmit: SubmitHandler<NEW_COUPON_FORM> = async (data) => {
     console.log(data);
@@ -62,11 +66,16 @@ const CreateNewCoupon = () => {
       const regex = /^0+(?!$)/;
       await mutateAsync({
         ...data,
-        total_uses: data.total_uses.replace(regex, ""),
-        uses_per_user: data.uses_per_user.replace(regex, ""),
+        total_uses: data.total_uses?.replace(regex, "") || null,
+        uses_per_user: data.uses_per_user?.replace(regex, "") || null,
         max_discount: data.max_discount.replace(regex, ""),
         min_total_order: data.min_total_order.replace(regex, ""),
-        special_products: data.special_products?.map((i) => i.id),
+        special_products:
+          data.coupon_coverage === 3 || data.coupon_coverage === 4
+            ? data.special_products?.map((i) => i.id)
+            : [],
+        special_categories:
+          data.coupon_coverage === 2 ? data.special_categories : [],
       });
       setToastStatus?.({
         open: true,
@@ -117,7 +126,12 @@ const CreateNewCoupon = () => {
       </HeaderContainer>
 
       <CouponInfo errors={errors} register={register} control={control} />
-      <CouponProducts errors={errors} register={register} control={control} />
+      <CouponProducts
+        errors={errors}
+        setValue={setValue}
+        control={control}
+        watch={watch}
+      />
     </form>
   );
 };
