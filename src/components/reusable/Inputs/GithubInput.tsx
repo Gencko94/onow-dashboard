@@ -2,6 +2,7 @@ import { Control, Controller } from "react-hook-form";
 import styled from "styled-components";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
+import Heading from "../../StyledComponents/Heading";
 interface IProps {
   /**
    * Primary Label.
@@ -37,7 +38,9 @@ const GithubInput = ({
   return (
     <Container>
       <div className="text-container">
-        <h6>{label}</h6>
+        <Heading mb="0.25rem" weight="semibold" tag="h6">
+          {label}
+        </Heading>
         {desc && <p className="first-subtitle">{desc}</p>}
         {secondaryDesc && <p className="second-subtitle">{secondaryDesc}</p>}
       </div>
@@ -60,11 +63,7 @@ const Container = styled.div(
   gap:1rem;
   .text-container {
     flex: auto;
-    h6 {
-      margin-bottom: 0.25rem;
-      font-size: 0.8rem;
-      // font-weight: ${font.bold};
-    }
+   
     .first-subtitle {
       color: ${headingColor};
       font-size: 0.7rem;
@@ -77,19 +76,19 @@ const Container = styled.div(
     }
   }
   @media ${breakpoints.md}{
-    h6 {
-      margin-bottom: 0.25rem;
-      font-size: 0.9rem;
-    }
-    .first-subtitle {
-      color: ${headingColor};
-      font-size: 0.8rem;
-      margin-bottom: 0.25rem;
-    }
-    .second-subtitle {
-      color: ${subHeading};
-      font-size: 0.75rem;
-      font-weight: ${font.light};
+    .text-container {
+
+     
+      .first-subtitle {
+        color: ${headingColor};
+        font-size: 0.8rem;
+        margin-bottom: 0.25rem;
+      }
+      .second-subtitle {
+        color: ${subHeading};
+        font-size: 0.75rem;
+        font-weight: ${font.light};
+      }
     }
   }
   `

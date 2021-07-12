@@ -62,30 +62,33 @@ const Container = styled.div`
   overflow-x: auto;
 
   display: flex;
-  gap: 0.5rem;
+  /* gap: 0.5rem; */
 `;
 
 const TabItem = styled.button<{ active?: boolean }>(
   ({
-    theme: { breakpoints, mainColor, subHeading, font, headingColor },
+    theme: { breakpoints, mainColor, subHeading, font, headingColor, border },
     active,
   }) => `
   padding: 0.75rem 0.5rem;
-  transition: color 150ms ease;
+  transition: color 100ms ease;
   font-size: 0.8rem;
   white-space: nowrap;
   text-align: center;
-  border-radius: 6px 6px 0 0;
+  // border-radius: 6px 0 0 0;
   background-color: #fff;
-  
+  border-bottom:${border};
+  border-color:${active ? mainColor : border};
+  border-width:2px;
+  // background-color: ${active && mainColor};
   color: ${active ? mainColor : subHeading};
     
-  font-weight: ${active && font.bold};
+  font-weight: ${active && font.semibold};
   &:hover {
-    color: ${active && headingColor};
+    color: ${mainColor};
   }
   @media ${breakpoints.md}{
-    font-size: 0.9rem;
+    font-size: 1rem;
     padding: 0.75rem;
 
   }

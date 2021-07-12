@@ -9,7 +9,7 @@ export type USER = {
   email: string;
   store: STORE;
   permissions: STAFF_PERMISSIONS;
-  role: "SUPER_USER" | "STAFF" | "ADMIN";
+  roles: "SUPER_USER" | "STAFF" | "ADMIN";
 };
 
 export type LOGIN_FORM = {

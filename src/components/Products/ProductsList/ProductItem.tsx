@@ -15,12 +15,14 @@ import { FlexWrapper } from "../../StyledComponents/Flex";
 
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import DefaultImage from "../../reusable/DefaultImage";
+import CheckToggle from "../../reusable/CheckToggle";
 
 interface IProps {
   product: PRODUCT;
   handleDeleteProduct: (id: number) => void;
   selectedRows: number[];
   handleToggleRows: (rowId: number) => void;
+  handleActivateProduct: (id: number, active: number) => Promise<void>;
 }
 
 const ProductItem = ({
@@ -28,6 +30,7 @@ const ProductItem = ({
   handleDeleteProduct,
   handleToggleRows,
   selectedRows,
+  handleActivateProduct,
 }: IProps) => {
   const { setConfirmationModalStatus, handleCloseConfirmationModal } =
     useConfirmationModal();
@@ -36,26 +39,7 @@ const ProductItem = ({
   const {
     i18n: { language },
   } = useTranslation();
-  const renderStatus = (status: boolean) => {
-    switch (status) {
-      case true:
-        return (
-          <Status color="green">
-            <span className="dot" />
-            <h6>Active</h6>
-          </Status>
-        );
-      case false:
-        return (
-          <Status color="#b72b2b">
-            <span className="dot" />
-            <h6>Disabled</h6>
-          </Status>
-        );
-      default:
-        break;
-    }
-  };
+
   return (
     <Container selected={selectedRows.includes(product.id)}>
       <div className="field">
@@ -91,10 +75,21 @@ const ProductItem = ({
         <h6>{product.price}</h6>
       </div>
       <div className="field">
-        <h6>{product.category?.name[language]}</h6>
+        <h6>{product.category ? product.category?.name[language] : "-"}</h6>
       </div>
 
-      <div className="field">{renderStatus(product.active)}</div>
+      <div className="field">
+        <CheckToggle
+          checked={product.active}
+          onChange={() => {
+            if (product.active) {
+              handleActivateProduct(product.id, 0);
+            } else {
+              handleActivateProduct(product.id, 1);
+            }
+          }}
+        />
+      </div>
       <div className="field">
         <ActionButtonContainer
           onClick={(e) => {
@@ -119,9 +114,7 @@ const ProductItem = ({
               <Button
                 text="Delete Product"
                 padding="0.5rem"
-                bg="white"
-                color="#444"
-                hoverColor="#b72b2b"
+                bg="transparent"
                 textSize="0.8rem"
                 Icon={RiDeleteBinLine}
                 iconSize={15}
@@ -172,7 +165,7 @@ const Container = styled.div<{ selected: boolean }>`
   width: 100%;
   border-bottom: ${(props) => props.theme.border};
   &:hover {
-    background-color: ${(props) => props.theme.accentColor};
+    background-color: ${(props) => props.theme.accent1};
   }
   .img {
     height: 50px;
@@ -206,22 +199,5 @@ const ActionButtonContainer = styled(FlexWrapper)`
     &:hover {
       background-color: #e6e6e6;
     }
-  }
-`;
-const Status = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .dot {
-    width: 10px;
-    height: 10px;
-    background-color: ${(props) => props.color};
-    border-radius: 50%;
-  }
-  h6 {
-    /* font-size: 0.8rem; */
-    color: ${(props) => props.color};
-
-    margin: 0 0.25rem;
   }
 `;

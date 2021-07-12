@@ -103,9 +103,7 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
               <Button
                 text="Delete Branch"
                 padding="0.5rem"
-                bg="white"
-                color="#444"
-                hoverColor="#b72b2b"
+                bg="transparent"
                 textSize="0.8rem"
                 Icon={RiDeleteBinLine}
                 iconSize={15}

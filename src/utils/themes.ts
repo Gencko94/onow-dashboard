@@ -23,6 +23,16 @@ export const lightTheme = {
   boxColor: "#fff",
   iconColor: "#6f6f6f",
   mainGradient: "linear-gradient(90deg, #fe0488, #f78f21)",
+  // New Color
+  textPrimary: "#252525",
+  textPrimaryContrast: "#fff",
+  textSecondary: "#737373",
+  textSecondaryContrast: "#fbfbfb",
+  // New Accents
+  accent1: "#fafafa",
+  accent2: "#eaeaea",
+  accent3: "#999",
+  blue: "#2e87fc",
 };
 
 export const darkTheme = {
@@ -51,6 +61,16 @@ export const darkTheme = {
   iconColor: "#e4e4e4",
   mainGradient: "linear-gradient(90deg, #fe0488, #f78f21)",
   borderHovered: "rgba(0,0,0,0.3)",
+  // New Color
+  textPrimary: "#252525",
+  textPrimaryContrast: "#fff",
+  textSecondary: "#ececec",
+  textSecondaryContrast: "#fbfbfb",
+  // New Accents
+  accent1: "#111",
+  accent2: "#333",
+  accent3: "#444",
+  blue: "#2e87fc",
 };
 
 export const up = (breakpoint: string) => `@media (min-width: ${breakpoint}`;

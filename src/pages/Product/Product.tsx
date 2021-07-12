@@ -55,8 +55,7 @@ const Wrapper = styled.div(
   border-radius: 0 6px 6px 6px;
   padding: 0.5rem;
   background-color: #fff;
-  ${breakpoints.md}{
-    
+  @media ${breakpoints.md}{
     padding: 1rem;
   }
   `

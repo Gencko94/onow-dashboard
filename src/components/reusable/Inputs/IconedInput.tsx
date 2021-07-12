@@ -142,15 +142,8 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       align-items: center;
       justify-content: center;
       color: ${mainColor};
-      background-color: ${inputColorLight};
-      border-right: ${border};
-      ${
-        rtl &&
-        css`
-          border-right: none;
-          border-left: ${border};
-        `
-      }
+      
+      
     };
 
     input {
@@ -162,7 +155,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     &:hover,
     &:focus-within {
       border-color: ${borderHovered};
-      background-color: ${inputColorLight};
+   
     }
     ${
       error &&

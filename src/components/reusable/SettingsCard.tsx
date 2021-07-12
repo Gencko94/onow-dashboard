@@ -21,6 +21,7 @@ const SettingsCard = ({ desc, title, Icon, target }: IProps) => {
       <Heading tag="h6" color="primary" mb="0.25rem">
         {title}
       </Heading>
+
       <p className="desc">{desc}</p>
     </Container>
   );
@@ -48,7 +49,7 @@ const Container = styled(Link)`
   p.desc {
     font-size: 0.8rem;
     color: ${(props) => props.theme.subHeading};
-    font-weight: ${(props) => props.theme.font.light};
+    font-weight: ${(props) => props.theme.font.regular};
     text-align: center;
   }
   &:hover {

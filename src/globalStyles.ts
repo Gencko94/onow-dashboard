@@ -1,7 +1,9 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle(
-  ({ theme: { breakpoints, shadow, bodyColor, textColor, borderHovered } }) => `
+  ({
+    theme: { breakpoints, shadow, bodyColor, textPrimary, borderHovered },
+  }) => `
 
 
 * ,*::before,*::after{
@@ -46,7 +48,7 @@ body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
   background-color:${bodyColor};
-  color:${textColor};
+  color:${textPrimary};
   transition:background-color 200ms ease;
   
 }

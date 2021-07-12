@@ -15,17 +15,20 @@ import Popover from "../../reusable/Popover";
 import { FlexWrapper } from "../../StyledComponents/Flex";
 import DefaultImage from "../../reusable/DefaultImage";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import CheckToggle from "../../reusable/CheckToggle";
 interface IProps {
   category: CATEGORY;
   handleDeleteCategory: (id: number) => void;
   selectedRows: number[];
   handleToggleRows: (rowId: number) => void;
+  handleActivateCategory: (id: number, status: number) => void;
 }
 const CategoryItem = ({
   handleToggleRows,
   category,
   selectedRows,
   handleDeleteCategory,
+  handleActivateCategory,
 }: IProps) => {
   const { setConfirmationModalStatus, handleCloseConfirmationModal } =
     useConfirmationModal();
@@ -35,26 +38,7 @@ const CategoryItem = ({
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const history = useHistory();
-  const renderStatus = (active: boolean) => {
-    switch (active) {
-      case true:
-        return (
-          <Status color="green">
-            <span className="dot" />
-            <h6>Active</h6>
-          </Status>
-        );
-      case false:
-        return (
-          <Status color="#b72b2b">
-            <span className="dot" />
-            <h6>Disabled</h6>
-          </Status>
-        );
-      default:
-        break;
-    }
-  };
+
   return (
     <>
       <Container>
@@ -99,7 +83,18 @@ const CategoryItem = ({
         <div className="field">
           <h6>{category.name[language]}</h6>
         </div>
-        <div className="field">{renderStatus(category.active)}</div>
+        <div className="field">
+          <CheckToggle
+            checked={category.active}
+            onChange={() => {
+              if (category.active) {
+                handleActivateCategory(category.id, 0);
+              } else {
+                handleActivateCategory(category.id, 1);
+              }
+            }}
+          />
+        </div>
 
         <div className="field">
           <ButtonsContainer>
@@ -122,9 +117,7 @@ const CategoryItem = ({
                   <Button
                     text="Delete Category"
                     padding="0.5rem"
-                    bg="white"
-                    color="#444"
-                    hoverColor="#b72b2b"
+                    bg="transparent"
                     textSize="0.8rem"
                     Icon={RiDeleteBinLine}
                     iconSize={15}
@@ -186,7 +179,7 @@ const Container = styled.div`
 
   border-bottom: ${(props) => props.theme.border};
   &:hover {
-    background-color: ${(props) => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.accent1};
   }
 
   .field {
@@ -240,21 +233,4 @@ const ButtonsContainer = styled.div`
 const ActionButtonContainer = styled(FlexWrapper)`
   position: relative;
   align-items: center;
-`;
-const Status = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .dot {
-    width: 10px;
-    height: 10px;
-    background-color: ${(props) => props.color};
-    border-radius: 50%;
-  }
-  h6 {
-    /* font-size: 0.8rem; */
-    color: ${(props) => props.color};
-
-    margin: 0 0.25rem;
-  }
 `;

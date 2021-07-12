@@ -21,11 +21,11 @@ const ProductNameAndDescription = () => {
 
   return (
     <Container>
-      <Heading color="primary" tag="h5" margin="1rem 0">
+      <Heading color="primary" tag="h5" weight="semibold" mb="1rem">
         Product Naming & Description
       </Heading>
       <div className="box">
-        <Grid cols="repeat(auto-fill,minmax(300px,1fr)" gap="1rem">
+        <Grid cols="repeat(auto-fill,minmax(275px,1fr)" gap="1rem">
           <IconedInput
             Icon={MdSubtitles}
             errors={errors?.name?.en}
@@ -102,7 +102,7 @@ const ProductNameAndDescription = () => {
 export default ProductNameAndDescription;
 const Container = styled.div(
   ({ theme: { breakpoints, border, bodyColor } }) => `
-  margin: 1rem 0;
+  
   display:flex;
   flex-direction:column;
   .box {

@@ -5,7 +5,11 @@ import styled from "styled-components";
 import useToast from "../../../hooks/useToast";
 import { CATEGORY } from "../../../interfaces/categories/categories";
 import extractError from "../../../utils/extractError";
-import { deleteCategory, getCategories } from "../../../utils/queries";
+import {
+  activateCategory,
+  deleteCategory,
+  getCategories,
+} from "../../../utils/queries";
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
 import LoadingTable from "../../reusable/LoadingTable";
@@ -53,6 +57,16 @@ const CategoriesList = () => {
       },
     }
   );
+  // Activate Mutation
+  const {
+    mutateAsync: activationMutation,
+    reset: resetActivation,
+    isLoading: activationLoading,
+  } = useMutation(activateCategory, {
+    onSuccess: (data, categoryId) => {
+      queryClient.invalidateQueries("categories");
+    },
+  });
   // Delete Mutation
   const { mutateAsync, reset } = useMutation(deleteCategory, {
     onSuccess: (data, categoryId) => {
@@ -74,6 +88,45 @@ const CategoriesList = () => {
     ],
     []
   );
+  const handleActivateCategory = async (id: number, active: number) => {
+    try {
+      await activationMutation({ id, active });
+      handleCloseConfirmationModal?.();
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Product Status Changed",
+        type: "success",
+      });
+    } catch (error) {
+      handleCloseConfirmationModal?.();
+
+      const { responseError } = extractError(error);
+      if (responseError) {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: responseError,
+          type: "error",
+        });
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            resetActivation();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
+  };
   const handleDeleteCategory = async (id: number) => {
     try {
       await mutateAsync(id.toString());
@@ -163,6 +216,7 @@ const CategoriesList = () => {
                     selectedRows={selectedRows}
                     handleToggleRows={handleToggleRows}
                     handleDeleteCategory={handleDeleteCategory}
+                    handleActivateCategory={handleActivateCategory}
                   />
                 ))}
               </React.Fragment>

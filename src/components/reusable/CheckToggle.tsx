@@ -6,7 +6,7 @@ interface IProps {
   /**
    * 	The label of the input.
    */
-  label: string;
+  label?: string;
   /**
    * 	Optional description shown in a smaller size text below the label.
    */
@@ -24,10 +24,12 @@ interface IProps {
 const CheckToggle = ({ checked, onChange, label, desc }: IProps) => {
   return (
     <Toggler>
-      <div className="info">
-        <label htmlFor={label}>{label}</label>
-        <p className="desc">{desc}</p>
-      </div>
+      {label && (
+        <div className="info">
+          <label htmlFor={label}>{label}</label>
+          <p className="desc">{desc}</p>
+        </div>
+      )}
       <Toggle
         id={label}
         checked={checked}

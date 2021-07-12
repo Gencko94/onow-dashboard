@@ -138,7 +138,8 @@ const Container = styled.div(
   
     .box {
       background-color: #fff;
-      box-shadow: ${shadow};
+      // box-shadow: ${shadow};
+      border: ${border};
       border-radius: 6px;
       padding: 1rem;
       display: grid;
@@ -155,7 +156,7 @@ const Container = styled.div(
         overflow-y: auto;
         position: relative;
         background-color: #fff;
-        box-shadow:${shadow};
+        border: ${border};
         border-radius: 6px;
         
       }

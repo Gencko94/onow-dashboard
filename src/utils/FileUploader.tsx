@@ -14,7 +14,6 @@ const FileUploader = ({
 
   maxFileSizeInBytes = DEFAULT_MAX_FILE_SIZE_IN_BYTES,
 }: IProps) => {
-  // const formImages = watch?.(name);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   // Image Validation

@@ -21,7 +21,6 @@ interface IProps {
   onChange: (...event: any[]) => void;
 }
 const CategorySelection = ({ errors, formCategoryId, onChange }: IProps) => {
-  console.log(formCategoryId);
   const {
     data,
     status,
@@ -187,7 +186,7 @@ const CategoryItem = styled.div<{ active: boolean }>`
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
   &:hover {
-    /* background-color: ${(props) => props.theme.highlightColor}; */
+    background-color: ${(props) => props.theme.accent1};
   }
 
   .field {
@@ -211,9 +210,9 @@ const SubCategoryItem = styled.div`
   justify-content: space-between;
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
-  background-color: ${(props) => props.theme.highlightColor};
+  background-color: ${(props) => props.theme.accent1};
   &:hover {
-    background-color: ${(props) => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.accent2};
   }
 
   .field {

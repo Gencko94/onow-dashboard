@@ -132,7 +132,7 @@ const Category = () => {
           parentLabel="Categories"
           parentTarget="/categories"
         />
-        {/* <Flex wrap justify="flex-end"> */}
+
         <Grid cols="auto auto" gap="0.5rem">
           <Button
             text="Save Changes"
@@ -165,7 +165,6 @@ const Category = () => {
             }}
           />
         </Grid>
-        {/* </Flex> */}
       </HeaderContainer>
       <CategoryInfo
         watch={watch}
@@ -173,7 +172,12 @@ const Category = () => {
         errors={errors}
         register={register}
       />
-      <CategoryImage control={control} errors={errors} setValue={setValue} />
+      <CategoryImage
+        control={control}
+        errors={errors}
+        setValue={setValue}
+        id={data!.id}
+      />
     </form>
   );
 };

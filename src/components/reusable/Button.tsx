@@ -1,8 +1,11 @@
+import { useContext, useMemo } from "react";
 import { ImSpinner2 } from "react-icons/im";
 import { IconType } from "react-icons/lib";
 import styled, { css } from "styled-components";
+import { ThemeContext } from "../../contexts/ThemeContext";
 import useResponsive from "../../hooks/useResponsive";
 import Ripple from "./Ripple";
+import Color from "color";
 
 interface IProps {
   /**
@@ -40,7 +43,7 @@ interface IProps {
   /**
    * Button Background color , There are presets but you can pass customer hex value
    */
-  bg: "primary" | "danger" | "blue" | "green" | "white" | string;
+  bg: "primary" | "danger" | "blue" | "green" | "transparent";
   /**
    * Button Text color , defaults to White.
    */
@@ -82,6 +85,10 @@ interface IProps {
    * button Width
    */
   width?: string;
+  /**
+   * Text Transform uppercase
+   */
+  uppercase?: boolean;
 }
 
 const Button = ({
@@ -96,7 +103,7 @@ const Button = ({
   withTransition,
   margin = "none",
   withRipple,
-  textSize = "1rem",
+  textSize = "0.9rem",
   hoverBg,
   hoverColor,
   shadow,
@@ -104,19 +111,43 @@ const Button = ({
   isLoading,
   disabled,
   width,
+  uppercase,
 }: IProps) => {
   const { isDesktop } = useResponsive();
+  const { currentTheme } = useContext(ThemeContext);
+
+  const background = useMemo(() => {
+    switch (bg) {
+      case "blue":
+        return currentTheme.blue;
+      case "danger":
+        return currentTheme.dangerRed;
+      case "primary":
+        return currentTheme.primary;
+      case "green":
+        return currentTheme.green;
+    }
+  }, [
+    bg,
+    currentTheme.blue,
+    currentTheme.dangerRed,
+    currentTheme.primary,
+    currentTheme.green,
+  ]);
+  const hover = useMemo(() => {
+    return Color(background).darken(0.2).hex();
+  }, [background]);
   return (
     <ButtonWrapper
       textSize={textSize}
       margin={margin}
       withTransition={withTransition}
-      bg={bg}
+      bg={background}
       padding={padding}
       color={color}
       onClick={onClick}
       type={type}
-      hoverBg={hoverBg}
+      hoverBg={hoverBg ?? hover}
       hoverColor={hoverColor}
       shadow={shadow}
       border={border}
@@ -125,7 +156,7 @@ const Button = ({
     >
       {!isLoading && Icon && (
         <span className="icon">
-          <Icon size={isDesktop ? iconSize : iconSize - 5} />
+          <Icon size={isDesktop ? iconSize - 3 : iconSize - 5} />
         </span>
       )}
       {isLoading && (
@@ -143,7 +174,7 @@ export default Button;
 export const ButtonWrapper = styled.button<{
   padding: string;
   color: string;
-  bg: "primary" | "danger" | "blue" | "green" | "white" | string;
+  bg: "primary" | "danger" | "blue" | "green" | "transparent";
   withTransition?: boolean;
   margin: string;
   textSize: string;
@@ -152,6 +183,7 @@ export const ButtonWrapper = styled.button<{
   shadow?: boolean;
   border?: boolean;
   width?: string;
+  uppercase?: boolean;
 }>(
   ({
     theme: {
@@ -174,22 +206,10 @@ export const ButtonWrapper = styled.button<{
     border,
     shadow: boxShadow,
     disabled,
-
+    uppercase,
     width,
   }) => `
-      background: ${
-        bg === "primary"
-          ? mainColor
-          : bg === "blue"
-          ? "#2e87fc"
-          : bg === "danger"
-          ? dangerRed
-          : bg === "green"
-          ? green
-          : bg === "white"
-          ? "#fff"
-          : bg
-      };
+  background: ${bg};
       width:${width};
       box-shadow: ${boxShadow && shadow};
       display: flex;
@@ -198,10 +218,11 @@ export const ButtonWrapper = styled.button<{
       align-items: center;
       border-radius: 6px;
       padding: ${padding};
+      text-transform:${uppercase && "uppercase"};
       // font-weight:${font.semibold};
       position: relative;
       overflow:hidden;
-      color: ${color === "primary" ? mainColor : color};
+      color: ${color};
       border:${border && themeBorder};
       transition: all 100ms ease;
     .loading {

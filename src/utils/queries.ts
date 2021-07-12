@@ -16,7 +16,7 @@ import {
 import { ORDER_SORT } from "../pages/Orders";
 import { BRANCH, NEW_BRANCH } from "../interfaces/settings/branches/branches";
 
-const uri = "https://new-version.o-now.net/customer-api";
+export const customerUri = "https://new-version.o-now.net/customer-api";
 
 export const getUser = async (): Promise<USER | undefined> => {
   const t = localStorage.getItem("dshtid");
@@ -31,7 +31,7 @@ export const getUser = async (): Promise<USER | undefined> => {
     },
   };
   // generate proper error message in bad http method
-  const res = await instance.get(`${uri}/get-user`, config);
+  const res = await instance.get(`${customerUri}/get-user`, config);
   if (res.data.result) {
     return res.data.result.userInfo;
   } else {
@@ -39,7 +39,7 @@ export const getUser = async (): Promise<USER | undefined> => {
   }
 };
 export const userLogin = async (data: LOGIN_FORM): Promise<LOGIN_RESPONSE> => {
-  const res = await axios.post(`${uri}/login`, data);
+  const res = await axios.post(`${customerUri}/login`, data);
   return res.data;
 };
 export const updateUserAccount = async (user: USER): Promise<USER> => {
@@ -50,7 +50,7 @@ export const updateUserAccount = async (user: USER): Promise<USER> => {
     },
   };
   const res = await axios.post(
-    `${uri}/update-user/${user.id}`,
+    `${customerUri}/update-user/${user.id}`,
     {
       first_name: user.first_name,
       last_name: user.last_name,
@@ -78,7 +78,7 @@ export const changeUserPassword = async ({
     },
   };
   const res = await axios.post(
-    `${uri}/update-user-password/${userId}`,
+    `${customerUri}/update-user-password/${userId}`,
     { current_password, password },
     config
   );
@@ -91,7 +91,7 @@ export const getUserStores = async (): Promise<GET_STORES_RESPONSE> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`${uri}/stores`, config);
+  const res = await axios.get(`${customerUri}/stores`, config);
   const result = res.data.results.map((i: any) => ({
     id: i.id,
     domain: i.domain,
@@ -116,7 +116,7 @@ export const getCustomers = async (pageParam: number, search?: string) => {
       },
     },
   };
-  const res = await axios.get(`${uri}/clients`, config);
+  const res = await axios.get(`${customerUri}/clients`, config);
   return {
     data: res.data.results.data,
     lastPage: res.data.results.pagination.last,
@@ -133,7 +133,7 @@ export const getSingleCustomer = async (
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`${uri}/clients/${customerId}`, config);
+  const res = await axios.get(`${customerUri}/clients/${customerId}`, config);
   return res.data.results;
 };
 export const createCustomer = async ({
@@ -150,7 +150,7 @@ export const createCustomer = async ({
       StoreId: storeId,
     },
   };
-  const res = await axios.post(`${uri}/clients`, data, config);
+  const res = await axios.post(`${customerUri}/clients`, data, config);
   return res.data.results;
 };
 export const editCustomer = async (customer: CUSTOMER): Promise<CUSTOMER> => {
@@ -161,7 +161,7 @@ export const editCustomer = async (customer: CUSTOMER): Promise<CUSTOMER> => {
       StoreId: 1,
     },
   };
-  const res = await axios.put(`${uri}/clients`, customer, config);
+  const res = await axios.put(`${customerUri}/clients`, customer, config);
   return res.data.results;
 };
 export const deleteCustomer = async (
@@ -174,7 +174,7 @@ export const deleteCustomer = async (
       StoreId: 1,
     },
   };
-  const res = await axios.delete(`${uri}/clients/${id}`, config);
+  const res = await axios.delete(`${customerUri}/clients/${id}`, config);
   return res.data.results;
 };
 // End of Customers
@@ -216,7 +216,7 @@ export const getOrders = async ({
       limit: 1,
     },
   };
-  const res = await axios.get(`${uri}/get-orders`, config);
+  const res = await axios.get(`${customerUri}/get-orders`, config);
   return {
     orders: res.data.results.orders.data,
     lastPage: res.data.results.orders.pagination.last,
@@ -233,7 +233,7 @@ export const getOrder = async (id: string): Promise<ORDER> => {
       StoreId: 1,
     },
   };
-  const res = await axios.get(`${uri}/orders/${id}`, config);
+  const res = await axios.get(`${customerUri}/orders/${id}`, config);
   return res.data.results;
 };
 type GET_ORDERS_BY_CUSTOMER_REQUEST = {
@@ -259,7 +259,10 @@ export const getOrdersByCustomer = async ({
       limit,
     },
   };
-  const res = await axios.get(`${uri}/orders-client/${customerId}`, config);
+  const res = await axios.get(
+    `${customerUri}/orders-client/${customerId}`,
+    config
+  );
   return {
     orders: res.data.results.data,
     lastPage: res.data.results.pagination.last,
@@ -274,7 +277,7 @@ export const getCoupon = async (id: string): Promise<COUPON> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`${uri}/coupons/${id}`, config);
+  const res = await axios.get(`${customerUri}/coupons/${id}`, config);
   return res.data.results;
 };
 export const getCoupons = async (sortBy: any, pageParam: number) => {
@@ -288,7 +291,7 @@ export const getCoupons = async (sortBy: any, pageParam: number) => {
       page: pageParam,
     },
   };
-  const res = await axios.get(`${uri}/coupons`, config);
+  const res = await axios.get(`${customerUri}/coupons`, config);
   return {
     data: res.data.results.data,
     currentPage: res.data.results.pagination.current,
@@ -302,7 +305,7 @@ export const createCoupon = async (coupon: NEW_COUPON): Promise<COUPON[]> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.post(`${uri}/coupons`, coupon, config);
+  const res = await axios.post(`${customerUri}/coupons`, coupon, config);
   return res.data.results;
 };
 export const editCoupon = async (coupon: COUPON): Promise<COUPON[]> => {
@@ -312,7 +315,11 @@ export const editCoupon = async (coupon: COUPON): Promise<COUPON[]> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.put(`${uri}/coupons/${coupon.id}`, coupon, config);
+  const res = await axios.put(
+    `${customerUri}/coupons/${coupon.id}`,
+    coupon,
+    config
+  );
   return res.data.results;
 };
 export const deleteCoupon = async (
@@ -324,7 +331,7 @@ export const deleteCoupon = async (
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.delete(`${uri}/coupons/${id}`, config);
+  const res = await axios.delete(`${customerUri}/coupons/${id}`, config);
   return res.data.results;
 };
 
@@ -352,7 +359,7 @@ export const getProducts = async (
       search,
     },
   };
-  const res = await axios.get(`${uri}/products`, config);
+  const res = await axios.get(`${customerUri}/products`, config);
   return {
     data: res.data.results.data,
     lastPage: res.data.results.pagination.last,
@@ -366,7 +373,7 @@ export const getProduct = async (id: string): Promise<PRODUCT> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`${uri}/products/${id}`, config);
+  const res = await axios.get(`${customerUri}/products/${id}`, config);
   return res.data.results;
 };
 //Create
@@ -407,10 +414,31 @@ export const createProduct = async (product: NEW_PRODUCT) => {
       "Content-Type": "multipart/form-data",
     },
   };
-  const res = await axios.post(`${uri}/products`, formData, config);
+  const res = await axios.post(`${customerUri}/products`, formData, config);
   return res.data.results;
 };
+
 //Delete
+export const activateProduct = async ({
+  id,
+  active,
+}: {
+  id: number;
+  active: number;
+}): Promise<{ results: "Deleted" }> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/activate-product/${id}`,
+    { active },
+    config
+  );
+  return res.data.results;
+};
 export const deleteProduct = async (
   id: string
 ): Promise<{ results: "Deleted" }> => {
@@ -420,7 +448,7 @@ export const deleteProduct = async (
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.delete(`${uri}/products/${id}`, config);
+  const res = await axios.delete(`${customerUri}/products/${id}`, config);
   return res.data.results;
 };
 //Delete Multiple
@@ -434,7 +462,7 @@ export const deleteMultipleProducts = async (
     },
   };
   const res = await axios.put(
-    `${uri}/delete-multi-products`,
+    `${customerUri}/delete-multi-products`,
     { productIds: ids },
     config
   );
@@ -452,7 +480,7 @@ export const searchProducts = async (search: string, pageParam: number) => {
       pageParam,
     },
   };
-  const res = await axios.get(`${uri}/products`, config);
+  const res = await axios.get(`${customerUri}/products`, config);
   return {
     data: res.data.results.data,
     lastPage: res.data.results.pagination.last,
@@ -468,7 +496,7 @@ export const getStaffMembers = async () => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`${uri}/staff-users`, config);
+  const res = await axios.get(`${customerUri}/staff-users`, config);
   return res.data.results;
 };
 export const getStaffMember = async (id: string) => {
@@ -478,7 +506,7 @@ export const getStaffMember = async (id: string) => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`${uri}/staff-users/${id}`, config);
+  const res = await axios.get(`${customerUri}/staff-users/${id}`, config);
   return res.data.results;
 };
 export const createStaffMember = async (staff: NEW_STAFF_MEMBER) => {
@@ -491,7 +519,7 @@ export const createStaffMember = async (staff: NEW_STAFF_MEMBER) => {
     },
   };
   const res = await axios.post(
-    `${uri}/staff-users`,
+    `${customerUri}/staff-users`,
     { ...staff, country_id: 2, branch_id: 3 },
     config
   );
@@ -506,7 +534,7 @@ export const editStaffMember = async (staff: STAFF_MEMBER) => {
     },
   };
   const res = await axios.put(
-    `${uri}/staff-users/${staff.id}`,
+    `${customerUri}/staff-users/${staff.id}`,
     { ...staff, country_id: 2, branch_id: 3 },
     config
   );
@@ -521,7 +549,7 @@ export const deleteStaffMember = async (
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.delete(`${uri}/staff-users/${id}`, config);
+  const res = await axios.delete(`${customerUri}/staff-users/${id}`, config);
   return res.data.results;
 };
 // End of Staff members
@@ -540,7 +568,7 @@ export const getCategories = async (pageParam: number, limit?: number) => {
       page: pageParam,
     },
   };
-  const res = await axios.get(`${uri}/product-categories`, config);
+  const res = await axios.get(`${customerUri}/product-categories`, config);
   return {
     data: res.data.results.data,
     currentPage: res.data.results.pagination.current,
@@ -554,10 +582,32 @@ export const getCategory = async (id: string): Promise<CATEGORY> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`${uri}/product-categories/${id}`, config);
+  const res = await axios.get(
+    `${customerUri}/product-categories/${id}`,
+    config
+  );
   return res.data.results;
 };
-
+export const activateCategory = async ({
+  id,
+  active,
+}: {
+  id: number;
+  active: number;
+}): Promise<{ results: "Deleted" }> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/product-categories/product-categories-active/${id}`,
+    { active, _method: "PUT" },
+    config
+  );
+  return res.data.results;
+};
 //Create Category
 
 export const createCategory = async (
@@ -579,7 +629,11 @@ export const createCategory = async (
   formData.append("image", category.image);
   formData.append("slug", category.slug);
   formData.append("parent_id", JSON.stringify(category.parent_id));
-  const res = await axios.post(`${uri}/product-categories`, formData, config);
+  const res = await axios.post(
+    `${customerUri}/product-categories`,
+    formData,
+    config
+  );
   return res.data.results;
 };
 // Edit Category
@@ -593,8 +647,26 @@ export const editCategory = async (category: EDIT_CATEGORY) => {
     },
   };
   const res = await axios.post(
-    `${uri}/product-categories/${category.id}`,
+    `${customerUri}/product-categories/${category.id}`,
     { ...category, seo_description: "1" },
+    config
+  );
+  return res.data.results;
+};
+//Edit category image
+
+// Remove Category Image
+export const removeCategoryImage = async (id: number) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+
+  const res = await axios.get(
+    `${customerUri}/product-categories-remove-image/${id}`,
+
     config
   );
   return res.data.results;
@@ -609,7 +681,10 @@ export const deleteCategory = async (
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.delete(`${uri}/product-categories/${id}`, config);
+  const res = await axios.delete(
+    `${customerUri}/product-categories/${id}`,
+    config
+  );
   return res.data.results;
 };
 
@@ -627,7 +702,7 @@ export const getBranches = async (pageParam: number, limit?: number) => {
       page: pageParam,
     },
   };
-  const res = await axios.get(`${uri}/list-branchs`, config);
+  const res = await axios.get(`${customerUri}/list-branchs`, config);
   return {
     data: res.data.results.data,
     currentPage: res.data.results.pagination.current,
@@ -641,7 +716,7 @@ export const getBranch = async (id: string): Promise<BRANCH> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`${uri}/pickups/${id}`, config);
+  const res = await axios.get(`${customerUri}/pickups/${id}`, config);
   return res.data.results;
 };
 export const createBranch = async (data: NEW_BRANCH): Promise<BRANCH> => {
@@ -651,7 +726,7 @@ export const createBranch = async (data: NEW_BRANCH): Promise<BRANCH> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.post(`${uri}/pickups`, data, config);
+  const res = await axios.post(`${customerUri}/pickups`, data, config);
   return res.data.results;
 };
 export const editBranch = async (branch: BRANCH) => {
@@ -661,7 +736,11 @@ export const editBranch = async (branch: BRANCH) => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.post(`${uri}/pickups/${branch.id}`, branch, config);
+  const res = await axios.post(
+    `${customerUri}/pickups/${branch.id}`,
+    branch,
+    config
+  );
   return res.data.results;
 };
 export const deleteBranch = async (
@@ -673,6 +752,6 @@ export const deleteBranch = async (
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.delete(`${uri}/pickups/${id}`, config);
+  const res = await axios.delete(`${customerUri}/pickups/${id}`, config);
   return res.data.results;
 };

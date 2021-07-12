@@ -41,5 +41,21 @@ declare module "styled-components" {
     iconColor: string;
     mainGradient: string;
     borderHovered: string;
+
+    // New Colors
+    primary: string;
+    primaryLighter: string;
+    primaryDarker: string;
+    textPrimary: string;
+    textPrimaryContrast: string;
+    textSecondary: string;
+    textSecondaryContrast: string;
+    blue: string;
+    yellow: string;
+
+    // New Accents
+    accent1: string;
+    accent2: string;
+    accent3: string;
   }
 }

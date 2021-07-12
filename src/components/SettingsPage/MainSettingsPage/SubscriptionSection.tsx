@@ -20,7 +20,7 @@ const SubscriptionSection = () => {
           <Flex items="center" margin="60px 0 0 0">
             <Button
               text="Upgrade Plan"
-              bg="linear-gradient(90deg, #fe0488, #f78f21)"
+              bg="primary"
               padding="0.5rem"
               color="#fff"
               withRipple
@@ -60,7 +60,7 @@ const SubscriptionSection = () => {
         <Flex items="center" justify="center" margin="40px 0 0 0">
           <Button
             text="Upgrade Plan"
-            bg="linear-gradient(90deg, #fe0488, #f78f21)"
+            bg="primary"
             padding="0.5rem"
             color="#fff"
             withRipple
@@ -88,7 +88,7 @@ const Container = styled.div(
     background-color: #fff;
     
     .desc {
-      font-weight: ${font.light};
+      font-weight: ${font.regular};
       font-size: 0.8rem;
     }
     .img {

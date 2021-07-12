@@ -28,7 +28,7 @@ export default function ProtectedRoute({ Component, path }: IProps) {
             canVisitPage({
               permissions: user.permissions,
               path,
-              role: user.role,
+              role: user.roles,
             })
           ) {
             return (

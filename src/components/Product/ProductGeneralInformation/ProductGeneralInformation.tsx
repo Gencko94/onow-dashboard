@@ -43,7 +43,14 @@ const ProductGeneralInformation = ({ data }: IProps) => {
   };
   return (
     <Container>
-      <Flex justify="flex-end">
+      <Grid cols="repeat(auto-fit,minmax(350px,1fr))" gap="1rem">
+        <FormProvider {...methods}>
+          <ProductNameAndDescription />
+
+          <ProductCategories />
+        </FormProvider>
+      </Grid>
+      <Flex justify="center" margin="1rem 0 0 0">
         <Button
           text="Save Changes"
           textSize="0.9rem"
@@ -54,13 +61,6 @@ const ProductGeneralInformation = ({ data }: IProps) => {
           onClick={methods.handleSubmit(onSubmit)}
         />
       </Flex>
-      <Grid cols="repeat(auto-fit,minmax(350px,1fr))" gap="1rem">
-        <FormProvider {...methods}>
-          <ProductNameAndDescription />
-
-          <ProductCategories />
-        </FormProvider>
-      </Grid>
     </Container>
   );
 };

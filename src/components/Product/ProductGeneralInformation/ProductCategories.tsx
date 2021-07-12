@@ -19,11 +19,9 @@ const ProductCategories = () => {
 
   return (
     <Container>
-      <div className="title-container">
-        <Heading color="primary" tag="h5">
-          Product Category
-        </Heading>
-      </div>
+      <Heading color="primary" tag="h5" weight="semibold" mb="1rem ">
+        Product Category
+      </Heading>
 
       <CategoriesList error={Boolean(errors?.category)}>
         <ProductCategoryList control={control} errors={errors.category} />
@@ -35,17 +33,8 @@ const ProductCategories = () => {
 export default ProductCategories;
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `
-  margin: 1rem 0;
   display:flex;
   flex-direction:column;
-  
-  .title-container {
-    padding: 1rem 0;
-    color: ${mainColor};
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-  }
  
   @media ${breakpoints.md} {
     

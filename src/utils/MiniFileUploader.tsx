@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import styled from "styled-components";
-import { convertBytesToKB } from "./convertBytesToKB";
 import convertUrlToFile from "./convertUrlToFile";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import Flex, { FlexWrapper } from "../components/StyledComponents/Flex";
+import Button from "../components/reusable/Button";
 const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 1000000;
 interface IProps {
   accept: ".png, .jpg, .jpeg" | ".png" | ".jpg" | ".jpeg";
@@ -10,6 +13,7 @@ interface IProps {
   maxFileSizeInBytes?: number;
   onChange: (file: File) => void;
   onRemove: () => void;
+  progress?: number | null;
 }
 const MiniFileUploader = ({
   accept,
@@ -17,20 +21,11 @@ const MiniFileUploader = ({
   onChange,
   onRemove,
   image,
+  progress,
 }: IProps) => {
-  // const formImages = watch?.(name);
-
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [file, setFile] = useState<File | null>(() => {
-    return null;
-  });
-  useEffect(() => {
-    if (typeof image === "string") {
-      convertUrlToFile(image).then((data) => console.log(setFile(data)));
-    } else {
-      setFile(image);
-    }
-  }, [image]);
+  const [file, setFile] = useState<File | null>(null);
+
   // Image Validation
   const addFilesAndValidate = (files: FileList) => {
     let addedImage;
@@ -48,22 +43,26 @@ const MiniFileUploader = ({
   ) => {
     if (files?.length) {
       const addedImage = addFilesAndValidate(files);
-      // setImage(addedImage!);
-      //   const fileArray = convertNestedObjectToArray(allFiles);
+
       cb(addedImage!);
     }
   };
   const removeImage = () => {
     onRemove();
-    setFile(null);
-    // setImage(null);
-    // setValue?.(name, undefined);
   };
+  useEffect(() => {
+    if (typeof image === "string") {
+      convertUrlToFile(image).then((image) => setFile(image));
+    } else {
+      setFile(image);
+    }
+  }, [image]);
+
   return (
-    <Container>
+    <div>
       <DragFileInputContainer>
         <div className="img-preview">
-          {!file && (
+          {!image && !progress && (
             <>
               <img
                 className="upload-img"
@@ -75,13 +74,12 @@ const MiniFileUploader = ({
           )}
           {file && (
             <FilePreviewContainer>
-              {/* <PreviewList> */}
               <PreviewContainer>
                 <ImagePreview src={URL.createObjectURL(file)} />
                 <ImageMetaData>
-                  <p>{file?.name}</p>
+                  {/* <p>{image?.name}</p> */}
                   <div className="flex">
-                    <p>{convertBytesToKB(file!.size)} kb</p>
+                    {/* <p>{convertBytesToKB(file!.size)} kb</p> */}
                     <button
                       type="button"
                       onClick={() => {
@@ -93,21 +91,28 @@ const MiniFileUploader = ({
                   </div>
                 </ImageMetaData>
               </PreviewContainer>
-
-              {/* </PreviewList> */}
+            </FilePreviewContainer>
+          )}
+          {progress && progress !== 0 && (
+            <FilePreviewContainer>
+              <ProgressContainer>
+                {/* <Flex items="center" justify="center"> */}
+                <CircularProgressbar
+                  strokeWidth={2}
+                  value={progress}
+                  maxValue={100}
+                  styles={buildStyles({
+                    pathColor: "#f78f21",
+                    textSize: "0.7rem",
+                    textColor: "#f78f21",
+                  })}
+                  text={`${progress}% Uploaded`}
+                />
+                {/* </Flex> */}
+              </ProgressContainer>
             </FilePreviewContainer>
           )}
         </div>
-        {!file && (
-          <UploadFileButton
-            type="button"
-            onClick={() => {
-              inputRef?.current?.click();
-            }}
-          >
-            Browse Files
-          </UploadFileButton>
-        )}
 
         <DragInput
           accept={accept}
@@ -120,17 +125,26 @@ const MiniFileUploader = ({
           }}
         />
       </DragFileInputContainer>
-    </Container>
+      {!image && (
+        <Flex justify="center" margin="1rem 0">
+          <Button
+            text="Upload"
+            bg="green"
+            padding="0.5rem"
+            withTransition
+            onClick={() => {
+              inputRef?.current?.click();
+            }}
+          />
+        </Flex>
+      )}
+    </div>
   );
 };
 
 export default MiniFileUploader;
-const Container = styled.div``;
 const DragFileInputContainer = styled.div`
   position: relative;
-  /* border: ${(props) => props.theme.border}; */
-  /* border-radius: 5px; */
-  /* padding: 1rem; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -187,7 +201,15 @@ const FilePreviewContainer = styled.div`
   bottom: 0;
   z-index: 1;
 `;
+const ProgressContainer = styled(FlexWrapper)`
+  /* width: 150px; */
+  /* height: 150px; */
+  padding: 4rem;
+  align-items: center;
+  justify-content: center;
 
+  margin: 0 auto;
+`;
 const PreviewContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -211,7 +233,7 @@ const ImageMetaData = styled.div`
   display: flex;
   flex-direction: column;
   font-weight: ${(props) => props.theme.font.bold};
-  background-color: rgba(5, 5, 5, 0.35);
+  /* background-color: rgba(5, 5, 5, 0.35); */
   font-size: 0.8rem;
   p {
     flex: 1;

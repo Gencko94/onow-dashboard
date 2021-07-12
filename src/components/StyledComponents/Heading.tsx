@@ -7,6 +7,7 @@ interface IProps {
   color?: "primary" | "subheading" | "heading";
   padding?: string;
   margin?: string;
+  weight?: "light" | "regular" | "semibold" | "bold" | "xbold";
 }
 
 const Heading: FC<IProps> = ({
@@ -16,6 +17,7 @@ const Heading: FC<IProps> = ({
   mb,
   color = "heading",
   margin,
+  weight = "regular",
 }) => {
   return (
     <Wrapper
@@ -23,13 +25,13 @@ const Heading: FC<IProps> = ({
         {
           "--margin-b": `${mb}`,
           "--color": color,
-          "--padding": padding,
-          "--margin": margin,
         } as CSSProperties
       }
       as={tag}
       color={color}
       mb={mb}
+      weight={weight}
+      margin={margin}
     >
       {children}
     </Wrapper>
@@ -40,11 +42,17 @@ export default Heading;
 export const Wrapper = styled.h1<{
   color: "primary" | "subheading" | "heading";
   mb?: string;
+  weight: "light" | "regular" | "semibold" | "bold" | "xbold";
+  margin?: string;
+  padding?: string;
 }>(
   ({
-    theme: { breakpoints, mainColor, subHeading, headingColor },
+    theme: { breakpoints, mainColor, subHeading, headingColor, font },
     color,
     mb,
+    weight,
+    margin,
+    padding,
   }) => `
   color: ${
     color === "heading"
@@ -55,8 +63,9 @@ export const Wrapper = styled.h1<{
       ? subHeading
       : headingColor
   };
-  margin:var(--margin,0);
+  margin:${margin};
+  font-weight:${font[weight]};
   margin-bottom: ${mb ? mb : ""};
-  padding:var(--padding,0);
+  padding:${padding};
   `
 );

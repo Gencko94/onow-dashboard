@@ -6,6 +6,7 @@ import useToast from "../../../hooks/useToast";
 import { PRODUCT } from "../../../interfaces/products/products";
 import extractError from "../../../utils/extractError";
 import {
+  activateProduct,
   deleteMultipleProducts,
   deleteProduct,
   getProducts,
@@ -20,6 +21,7 @@ import Spinner from "react-loader-spinner";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import { useQueryParams } from "../../../hooks/useQueryParams";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import Product from "../../../pages/Product/Product";
 const ProductsList = () => {
   const { search } = useQueryParams();
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
@@ -62,6 +64,16 @@ const ProductsList = () => {
     }
   );
 
+  // Activate Mutation
+  const {
+    mutateAsync: activationMutation,
+    reset: resetActivation,
+    isLoading: activationLoading,
+  } = useMutation(activateProduct, {
+    onSuccess: (data, productId) => {
+      queryClient.invalidateQueries("products");
+    },
+  });
   // Delete Mutation
   const {
     mutateAsync,
@@ -113,6 +125,45 @@ const ProductsList = () => {
         setToastStatus?.({
           fn: () => {
             reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
+  };
+  const handleActivateProduct = async (id: number, active: number) => {
+    try {
+      await activationMutation({ id, active });
+      handleCloseConfirmationModal?.();
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Product Status Changed",
+        type: "success",
+      });
+    } catch (error) {
+      handleCloseConfirmationModal?.();
+
+      const { responseError } = extractError(error);
+      if (responseError) {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: responseError,
+          type: "error",
+        });
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            resetActivation();
             handleCloseToast?.();
           },
           open: true,
@@ -297,6 +348,7 @@ const ProductsList = () => {
                     product={product}
                     selectedRows={selectedRows}
                     handleToggleRows={handleToggleRows}
+                    handleActivateProduct={handleActivateProduct}
                   />
                 ))}
               </React.Fragment>

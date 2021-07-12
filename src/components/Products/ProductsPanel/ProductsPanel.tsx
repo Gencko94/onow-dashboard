@@ -4,10 +4,14 @@ import { useHistory } from "react-router";
 import Flex from "../../StyledComponents/Flex";
 import Button from "../../reusable/Button";
 import { BiPlus } from "react-icons/bi";
+import Heading from "../../StyledComponents/Heading";
 const ProductsPanel = () => {
   const history = useHistory();
   return (
-    <Flex justify="flex-end" items="center" padding="0.75rem">
+    <Flex justify="space-between" items="center" padding="0.75rem">
+      <Heading color="primary" tag="h3" weight="bold">
+        Products
+      </Heading>
       <Button
         onClick={() => history.push("/products/product/create")}
         bg="green"
