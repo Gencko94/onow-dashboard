@@ -13,7 +13,11 @@ import { useQueryParams } from "../../../hooks/useQueryParams";
 import useToast from "../../../hooks/useToast";
 import { CUSTOMER } from "../../../interfaces/customers/customers";
 import extractError from "../../../utils/extractError";
-import { deleteCustomer, getCustomers } from "../../../utils/queries";
+import {
+  deleteCustomer,
+  deleteMultipleCustomers,
+  getCustomers,
+} from "../../../utils/queries";
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
 import TableHead from "../../reusable/TableHead";
@@ -58,7 +62,8 @@ const CustomerList = ({
     }
   );
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
-  const { handleCloseConfirmationModal } = useConfirmationModal();
+  const { handleCloseConfirmationModal, setConfirmationModalStatus } =
+    useConfirmationModal();
 
   const history = useHistory();
 
@@ -81,7 +86,7 @@ const CustomerList = ({
     mutateAsync: deleteMultiple,
     reset: resetMultipleDelete,
     isLoading: multipleDeleteLoading,
-  } = useMutation(deleteCustomer, {
+  } = useMutation(deleteMultipleCustomers, {
     onSuccess: (data, customerId) => {
       queryClient.invalidateQueries("customers");
     },
@@ -127,8 +132,8 @@ const CustomerList = ({
   };
   const handleDeleteMultipleCustomers = async (ids: number[]) => {
     try {
-      // await deleteCustomerMutation(ids);
       handleCloseConfirmationModal?.();
+      await deleteMultiple(ids);
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -139,8 +144,6 @@ const CustomerList = ({
       });
       setSelectedRows([]);
     } catch (error) {
-      handleCloseConfirmationModal?.();
-
       const { responseError } = extractError(error);
       if (responseError) {
       } else {
@@ -193,7 +196,15 @@ const CustomerList = ({
               withTransition
               isLoading={multipleDeleteLoading}
               onClick={() => {
-                handleDeleteMultipleCustomers(selectedRows);
+                setConfirmationModalStatus?.({
+                  closeCb: handleCloseConfirmationModal!,
+                  desc: `Are you sure you want to delete ${selectedRows.length} customers ?`,
+                  open: true,
+                  successCb: () => {
+                    handleDeleteMultipleCustomers(selectedRows);
+                  },
+                  title: "Delete Customers",
+                });
               }}
             />
           </Flex>
@@ -227,21 +238,7 @@ const CustomerList = ({
           </Flex>
         </SearchContainer>
       )}
-      {/* <Container>
-        <TableHead cols={cols} gridCols="100px 1fr 1fr 1fr 0.5fr" />
-        {data!.length === 0 && (
-          <EmptyTable height="300px" text="No Customers were Added " />
-        )}
-        {data!.map((customer) => (
-          <CustomerItem
-            selectedRows={selectedRows}
-            handleDeleteCustomer={handleDeleteCustomer}
-            key={customer.id}
-            customer={customer}
-            handleToggleRows={handleToggleRows}
-          />
-        ))}
-      </Container> */}
+
       <Container>
         <div className="table">
           {data?.pages[0].data.length !== 0 && (

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -19,11 +19,18 @@ import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
 import ProductItem from "./ProductItem";
 import Spinner from "react-loader-spinner";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
-import { useQueryParams } from "../../../hooks/useQueryParams";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import Product from "../../../pages/Product/Product";
+import { ApplicationProvider } from "../../../contexts/ApplicationContext";
+import { useDebounce } from "use-debounce/lib";
 const ProductsList = () => {
-  const { search } = useQueryParams();
+  // const { search } = useQueryParams();
+  const {
+    globalSearchBarValue,
+    handleChangeGlobalSearchBar,
+    globalSearchType,
+    handleChangeGlobalSearchType,
+  } = useContext(ApplicationProvider);
+  const [debouncedSearchValue] = useDebounce(globalSearchBarValue, 500);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const { handleCloseConfirmationModal } = useConfirmationModal();
 
@@ -49,10 +56,11 @@ const ProductsList = () => {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    ["products", sortBy, search],
-    ({ pageParam = 1 }) => getProducts(sortBy, pageParam, search as string),
+    ["products", sortBy, debouncedSearchValue],
+    ({ pageParam = 1 }) =>
+      getProducts(sortBy, pageParam, debouncedSearchValue as string),
     {
-      keepPreviousData: search !== "" ? false : true,
+      keepPreviousData: globalSearchBarValue !== "" ? false : true,
 
       getNextPageParam: (lastPage) => {
         if (lastPage.currentPage < lastPage.lastPage) {
@@ -94,7 +102,11 @@ const ProductsList = () => {
       queryClient.invalidateQueries("products");
     },
   });
-
+  useEffect(() => {
+    if (globalSearchType !== "product") {
+      handleChangeGlobalSearchType?.("product");
+    }
+  }, [globalSearchType, handleChangeGlobalSearchType]);
   const handleDeleteProduct = async (id: number) => {
     try {
       await mutateAsync(id.toString());
@@ -255,7 +267,7 @@ const ProductsList = () => {
     }
   };
   if (status === "loading") return <LoadingTable />;
-  console.log(search);
+
   return (
     <>
       {data?.pages[0].data.length !== 0 && (
@@ -281,12 +293,12 @@ const ProductsList = () => {
           </Flex>
         </Flex>
       )}
-      {search && (
+      {debouncedSearchValue && (
         <SearchContainer>
           <p className="search-text">
             Search Results for{" "}
             <strong>
-              <i>{search}</i>
+              <i>{debouncedSearchValue}</i>
             </strong>
           </p>
           <Flex margin="0 0.5rem" items="center">
@@ -303,6 +315,7 @@ const ProductsList = () => {
               withTransition
               isLoading={multipleDeleteLoading}
               onClick={() => {
+                handleChangeGlobalSearchBar?.("");
                 history.replace("/products");
               }}
             />

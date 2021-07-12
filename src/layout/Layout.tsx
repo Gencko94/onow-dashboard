@@ -97,7 +97,7 @@ const Layout: React.FC = ({ children }) => {
         desc={confirmationModalStatus!.desc}
         successButtonText="Delete"
         successFunction={confirmationModalStatus!.successCb}
-        title="Delete Product"
+        title={confirmationModalStatus!.title}
         styles={{
           content: {
             top: "50%",

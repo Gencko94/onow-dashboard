@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { createContext, useState } from "react";
 interface ApplicationContextProps {
   toastStatus: TOAST_STATUS;
@@ -8,6 +9,12 @@ interface ApplicationContextProps {
     React.SetStateAction<CONFIRMATION_MODAL_STATUS>
   >;
   handleCloseConfirmationModal: () => void;
+  globalSearchBarValue: string;
+  handleChangeGlobalSearchBar: (search: string) => void;
+  globalSearchType: "order" | "customer" | "product";
+  handleChangeGlobalSearchType: (
+    type: "order" | "customer" | "product"
+  ) => void;
 }
 export type TOAST_STATUS = {
   open: boolean;
@@ -26,6 +33,10 @@ export const ApplicationProvider = createContext<
   Partial<ApplicationContextProps>
 >({});
 const ApplicationContext: React.FC = ({ children }) => {
+  const [globalSearchBarValue, setGlobalSearchBarValue] = useState("");
+  const [globalSearchType, setGlobalSearchType] = useState<
+    "order" | "customer" | "product"
+  >("product");
   const [confirmationModalStatus, setConfirmationModalStatus] =
     useState<CONFIRMATION_MODAL_STATUS>({
       open: false,
@@ -40,18 +51,40 @@ const ApplicationContext: React.FC = ({ children }) => {
     fn: () => {},
     type: "success",
   });
-  const handleCloseConfirmationModal = () => {
+  // const handleCloseConfirmationModal = () => {
+  //   setConfirmationModalStatus((prev) => ({
+  //     ...prev,
+  //     open: false,
+  //   }));
+  // };
+  // const handleCloseToast = () => {
+  //   setToastStatus((prev) => ({
+  //     ...prev,
+  //     open: false,
+  //   }));
+  // };
+
+  const handleCloseConfirmationModal = useCallback(() => {
     setConfirmationModalStatus((prev) => ({
       ...prev,
       open: false,
     }));
-  };
-  const handleCloseToast = () => {
+  }, []);
+  const handleCloseToast = useCallback(() => {
     setToastStatus((prev) => ({
       ...prev,
       open: false,
     }));
-  };
+  }, []);
+  const handleChangeGlobalSearchBar = useCallback((search: string) => {
+    setGlobalSearchBarValue(search);
+  }, []);
+  const handleChangeGlobalSearchType = useCallback(
+    (type: "order" | "customer" | "product") => {
+      setGlobalSearchType(type);
+    },
+    []
+  );
   return (
     <ApplicationProvider.Provider
       value={{
@@ -61,6 +94,10 @@ const ApplicationContext: React.FC = ({ children }) => {
         handleCloseConfirmationModal,
         confirmationModalStatus,
         setConfirmationModalStatus,
+        globalSearchBarValue,
+        handleChangeGlobalSearchBar,
+        handleChangeGlobalSearchType,
+        globalSearchType,
       }}
     >
       {children}

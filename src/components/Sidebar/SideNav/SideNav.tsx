@@ -81,6 +81,7 @@ const SideNav = () => {
         )
           return (
             <SideNavItem
+              key={item.target}
               Icon={item.icon}
               active={pathname.includes(item.target)}
               target={item.target}

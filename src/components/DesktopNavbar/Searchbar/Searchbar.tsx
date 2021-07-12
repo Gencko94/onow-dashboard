@@ -1,25 +1,31 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { BiChevronDown } from "react-icons/bi";
 import { GoSearch } from "react-icons/go";
 import { useHistory } from "react-router-dom";
 import ClickAwayListener from "react-click-away-listener";
-export type SEARCH_OPTIONS = "order" | "customer" | "product";
+import { useContext } from "react";
+import { ApplicationProvider } from "../../../contexts/ApplicationContext";
+// export type SEARCH_OPTIONS = "order" | "customer" | "product";
 export type PLACEHOLDER_OPTIONS =
   | "Search by Order No, Client No"
   | "Search By Customer Name, Phone Number"
   | "Search for products";
 
 const Searchbar = () => {
+  const {
+    globalSearchBarValue,
+    handleChangeGlobalSearchBar,
+    globalSearchType,
+    handleChangeGlobalSearchType,
+  } = useContext(ApplicationProvider);
   const history = useHistory();
-  const [option, setOption] = useState<SEARCH_OPTIONS>("customer");
-  let inputRef = useRef<HTMLInputElement>(null);
+
   const [placeholder, setPlaceholder] = useState<PLACEHOLDER_OPTIONS>(
     "Search By Customer Name, Phone Number"
   );
   const [menuOpen, setMenuOpen] = useState(false);
-  const handleChangeOption = (option: SEARCH_OPTIONS) => {
-    setOption(option);
+  const handleChangeOption = (option: "order" | "customer" | "product") => {
     if (option === "order") {
       setPlaceholder("Search by Order No, Client No");
     } else if (option === "customer") {
@@ -29,8 +35,8 @@ const Searchbar = () => {
     }
   };
   const handleSearch = () => {
-    if (option === "product") {
-      history.push(`/products?search=${inputRef.current?.value}`);
+    if (globalSearchType === "product") {
+      history.push(`/products`);
     }
   };
   return (
@@ -40,18 +46,39 @@ const Searchbar = () => {
         handleSearch();
       }}
     >
-      <Input ref={inputRef} placeholder={placeholder} />
+      <Input
+        value={globalSearchBarValue}
+        onChange={(e) => handleChangeGlobalSearchBar?.(e.target.value)}
+        placeholder={placeholder}
+      />
       <Options type="button" onClick={() => setMenuOpen(!menuOpen)}>
-        <SelectedOption>{option}</SelectedOption>
+        <SelectedOption>{globalSearchType}</SelectedOption>
         <BiChevronDown size={19} />
         {menuOpen && (
           <ClickAwayListener onClickAway={() => setMenuOpen(false)}>
             <OptionsContainer>
-              <Option onClick={() => handleChangeOption("customer")}>
+              <Option
+                onClick={() => {
+                  handleChangeOption("customer");
+                  handleChangeGlobalSearchType?.("customer");
+                }}
+              >
                 Customer
               </Option>
-              <Option onClick={() => handleChangeOption("order")}>Order</Option>
-              <Option onClick={() => handleChangeOption("product")}>
+              <Option
+                onClick={() => {
+                  handleChangeOption("order");
+                  handleChangeGlobalSearchType?.("order");
+                }}
+              >
+                Order
+              </Option>
+              <Option
+                onClick={() => {
+                  handleChangeOption("product");
+                  handleChangeGlobalSearchType?.("product");
+                }}
+              >
                 Product
               </Option>
             </OptionsContainer>

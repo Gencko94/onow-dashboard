@@ -171,10 +171,25 @@ export const deleteCustomer = async (
   const config = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
-      StoreId: 1,
     },
   };
   const res = await axios.delete(`${customerUri}/clients/${id}`, config);
+  return res.data.results;
+};
+export const deleteMultipleCustomers = async (
+  ids: number[]
+): Promise<{ message: string }> => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/delete-multi-clients`,
+    { clientsIds: ids },
+    config
+  );
   return res.data.results;
 };
 // End of Customers
