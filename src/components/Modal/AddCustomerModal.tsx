@@ -24,9 +24,8 @@ const countryOptions = [
 ];
 interface IProps {
   closeFunction: () => void;
-  storeId: number;
 }
-const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
+const AddCustomerModal = ({ closeFunction }: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
@@ -39,22 +38,16 @@ const AddCustomerModal = ({ closeFunction, storeId }: IProps) => {
   } = useForm<NEW_CUSTOMER>();
   const { mutateAsync: createNewCustomer } = useMutation(createCustomer, {
     onSuccess: (data) => {
-      queryClient.setQueryData<CUSTOMER[] | undefined>(
-        ["customers", storeId],
-        (prev) => {
-          if (prev) return [...prev, data];
-        }
-      );
+      queryClient.setQueryData<CUSTOMER[] | undefined>("customers", (prev) => {
+        if (prev) return [...prev, data];
+      });
     },
   });
   const onSubmit: SubmitHandler<NEW_CUSTOMER> = async (data) => {
     await createNewCustomer({
-      storeId,
-      data: {
-        ...data,
-        phone: `${phoneKey}${data.phone}`,
-        country_id: data.country_id,
-      },
+      ...data,
+      phone: `${phoneKey}${data.phone}`,
+      country_id: data.country_id,
     });
     console.log({
       ...data,

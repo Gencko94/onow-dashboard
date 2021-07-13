@@ -2,8 +2,13 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { MdSubtitles } from "react-icons/md";
+import { useMutation } from "react-query";
 import styled from "styled-components";
-import { STORE_INFORMATION } from "../../../interfaces/settings/store-properties/store-properties";
+import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useToast from "../../../hooks/useToast";
+import { STORE_NAME_AND_DESCRIPTION } from "../../../interfaces/settings/store-properties/store-properties";
+import extractError from "../../../utils/extractError";
+import { editStoreNameAndDescription } from "../../../utils/queries/settingsQueries";
 import Button from "../../reusable/Button";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import Textarea from "../../reusable/Textarea";
@@ -11,22 +16,59 @@ import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
 
-const StoreNameAndDescription = () => {
+interface StoreNameAndDescriptionProps {
+  data: STORE_NAME_AND_DESCRIPTION;
+}
+
+const StoreNameAndDescription = ({ data }: StoreNameAndDescriptionProps) => {
+  const { handleCloseConfirmationModal } = useConfirmationModal();
+  const { setToastStatus, handleCloseToast } = useToast();
   const {
     register,
-    control,
+
     handleSubmit,
     formState: { errors },
-  } = useForm<STORE_INFORMATION>();
+  } = useForm<STORE_NAME_AND_DESCRIPTION>({ defaultValues: { ...data } });
+  const { mutateAsync, isLoading, reset } = useMutation(
+    editStoreNameAndDescription
+  );
   const {
     i18n: { language },
   } = useTranslation();
 
-  const onSubmit = (data: STORE_INFORMATION) => {
+  const onSubmit = async (data: STORE_NAME_AND_DESCRIPTION) => {
     console.log(data);
+    try {
+      await mutateAsync(data);
+      handleCloseConfirmationModal?.();
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Settings Updated",
+        type: "success",
+      });
+    } catch (error) {
+      handleCloseConfirmationModal?.();
+
+      const { responseError } = extractError(error);
+      if (responseError) {
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
   };
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Heading tag="h5" color="primary" margin="2rem 0">
         Store Information
       </Heading>
@@ -120,8 +162,11 @@ const StoreNameAndDescription = () => {
         </div> */}
         <Flex items="center" justify="center" padding="1rem">
           <Button
+            isLoading={isLoading}
+            disabled={isLoading}
             onClick={handleSubmit(onSubmit)}
             text="Save"
+            type="submit"
             bg="green"
             padding="0.5rem"
             withRipple
@@ -129,7 +174,7 @@ const StoreNameAndDescription = () => {
           />
         </Flex>
       </Box>
-    </div>
+    </form>
   );
 };
 

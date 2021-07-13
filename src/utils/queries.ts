@@ -38,6 +38,7 @@ export const getUser = async (): Promise<USER | undefined> => {
     return undefined;
   }
 };
+
 export const userLogin = async (data: LOGIN_FORM): Promise<LOGIN_RESPONSE> => {
   const res = await axios.post(`${customerUri}/login`, data);
   return res.data;
@@ -50,7 +51,7 @@ export const updateUserAccount = async (user: USER): Promise<USER> => {
     },
   };
   const res = await axios.post(
-    `${customerUri}/update-user/${user.id}`,
+    `${customerUri}/update-user`,
     {
       first_name: user.first_name,
       last_name: user.last_name,
@@ -63,11 +64,9 @@ export const updateUserAccount = async (user: USER): Promise<USER> => {
   return res.data.result.userInfo;
 };
 export const changeUserPassword = async ({
-  userId,
   current_password,
   password,
 }: {
-  userId: number;
   current_password: string;
   password: string;
 }) => {
@@ -78,7 +77,7 @@ export const changeUserPassword = async ({
     },
   };
   const res = await axios.post(
-    `${customerUri}/update-user-password/${userId}`,
+    `${customerUri}/update-user-password`,
     { current_password, password },
     config
   );
@@ -109,7 +108,7 @@ export const getCustomers = async (pageParam: number, search?: string) => {
   const config = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
-      StoreId: 1,
+
       params: {
         pageParam,
         search,
@@ -136,18 +135,11 @@ export const getSingleCustomer = async (
   const res = await axios.get(`${customerUri}/clients/${customerId}`, config);
   return res.data.results;
 };
-export const createCustomer = async ({
-  storeId,
-  data,
-}: {
-  storeId: number;
-  data: NEW_CUSTOMER;
-}): Promise<CUSTOMER> => {
+export const createCustomer = async (data: NEW_CUSTOMER): Promise<CUSTOMER> => {
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
-      StoreId: storeId,
     },
   };
   const res = await axios.post(`${customerUri}/clients`, data, config);
@@ -158,7 +150,6 @@ export const editCustomer = async (customer: CUSTOMER): Promise<CUSTOMER> => {
   const config = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
-      StoreId: 1,
     },
   };
   const res = await axios.put(`${customerUri}/clients`, customer, config);
@@ -211,20 +202,14 @@ export const getGoogleMapsLocation = async ({
 
 // Orders
 type GET_ORDERS_REQUEST = {
-  storeId: number;
   filters: ORDERS_FILTERS;
   pageParam: number;
 };
-export const getOrders = async ({
-  storeId,
-  filters,
-  pageParam,
-}: GET_ORDERS_REQUEST) => {
+export const getOrders = async ({ filters, pageParam }: GET_ORDERS_REQUEST) => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
-      StoreId: storeId,
     },
     params: {
       page: pageParam,
@@ -245,7 +230,6 @@ export const getOrder = async (id: string): Promise<ORDER> => {
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
-      StoreId: 1,
     },
   };
   const res = await axios.get(`${customerUri}/orders/${id}`, config);
@@ -267,7 +251,6 @@ export const getOrdersByCustomer = async ({
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
-      StoreId: 1,
     },
     params: {
       page: pageParam,
@@ -649,7 +632,6 @@ export const createCategory = async (
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
       "Content-Type": "multipart/form-data",
-      StoreId: 1,
     },
   };
   const formData = new FormData();
@@ -674,10 +656,9 @@ export const editCategory = async (category: EDIT_CATEGORY) => {
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
-      StoreId: 1,
     },
   };
-  const res = await axios.post(
+  const res = await axios.put(
     `${customerUri}/product-categories/${category.id}`,
     { ...category, seo_description: "1" },
     config

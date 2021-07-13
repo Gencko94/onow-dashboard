@@ -1,6 +1,7 @@
 const extractError = (error: any) => {
   let responseError = undefined;
   let unknownError = undefined;
+  console.log(error);
   if (error.response) {
     try {
       responseError = JSON.parse(error.response.data.error);

@@ -1,4 +1,4 @@
-export type STORE_INFORMATION = {
+export type STORE_NAME_AND_DESCRIPTION = {
   name: {
     en: string;
     ar: string;

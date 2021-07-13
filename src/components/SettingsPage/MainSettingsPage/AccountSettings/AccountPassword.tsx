@@ -9,16 +9,17 @@ import Button from "../../../reusable/Button";
 import PasswordInput from "../../../reusable/Inputs/PasswordInput";
 import Flex from "../../../StyledComponents/Flex";
 import Heading from "../../../StyledComponents/Heading";
-interface IProps {
-  id: number;
-}
+
 interface PASSWORD_FORM {
   current_password: string;
   password: string;
 }
-const AccountPassword = ({ id }: IProps) => {
-  const { mutateAsync: changePassword, reset } =
-    useMutation(changeUserPassword);
+const AccountPassword = () => {
+  const {
+    mutateAsync: changePassword,
+    reset,
+    isLoading,
+  } = useMutation(changeUserPassword);
   const { handleCloseToast, setToastStatus } = useToast();
   const {
     register,
@@ -29,7 +30,6 @@ const AccountPassword = ({ id }: IProps) => {
   const onSubmit: SubmitHandler<PASSWORD_FORM> = async (data) => {
     try {
       await changePassword({
-        userId: id,
         current_password: data.current_password,
         password: data.password,
       });
@@ -41,7 +41,7 @@ const AccountPassword = ({ id }: IProps) => {
       });
     } catch (error) {
       const { responseError } = extractError(error);
-      if (responseError.current_password) {
+      if (responseError?.current_password) {
         setError("current_password", {
           message: "Password Not Correct",
         });
@@ -86,6 +86,8 @@ const AccountPassword = ({ id }: IProps) => {
       </div>
       <Flex margin="1rem" justify="center">
         <Button
+          isLoading={isLoading}
+          disabled={isLoading}
           type="submit"
           withRipple
           withTransition
@@ -93,7 +95,6 @@ const AccountPassword = ({ id }: IProps) => {
           textSize="0.9rem"
           bg="green"
           padding="0.5rem"
-          onClick={handleSubmit(onSubmit)}
         />
       </Flex>
     </Container>

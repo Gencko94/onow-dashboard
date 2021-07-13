@@ -23,7 +23,7 @@ export interface ORDER_SORT {
     | "customerName";
   order: "asc" | "desc";
 }
-const Orders = ({ storeId }: { storeId: number }) => {
+const Orders = () => {
   const [filters, setFilters] = useState<ORDERS_FILTERS>({
     orderStatus: null,
     paymentType: null,
@@ -44,8 +44,8 @@ const Orders = ({ storeId }: { storeId: number }) => {
   });
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery<GET_ORDERS_RESPONSE>(
-      ["store-orders", storeId, filters],
-      ({ pageParam = 1 }) => getOrders({ storeId, filters, pageParam }),
+      ["store-orders", filters],
+      ({ pageParam = 1 }) => getOrders({ filters, pageParam }),
       {
         suspense: true,
         keepPreviousData: true,

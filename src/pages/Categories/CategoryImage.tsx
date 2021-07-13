@@ -40,7 +40,7 @@ const CategoryImage = ({ control, errors, setValue, id }: IProps) => {
           let percentCompleted = Math.floor(
             (progressEvent.loaded * 100) / progressEvent.total
           );
-          console.log(percentCompleted);
+
           progressFn(percentCompleted);
         },
       };

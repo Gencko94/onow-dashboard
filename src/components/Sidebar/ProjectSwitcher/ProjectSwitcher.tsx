@@ -23,7 +23,7 @@ const ProjectSwitcher = () => {
       <Project>
         <img
           className="logo"
-          src="/images/storeLogo.png"
+          src={user?.store.logoUrl}
           alt={user?.store.storeName[language]}
         />
         <div className="name-container">

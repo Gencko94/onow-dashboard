@@ -32,3 +32,7 @@ export type LOGIN_RESPONSE = {
     userInfo: USER;
   };
 };
+export type INIT = {
+  user: USER;
+  store: STORE;
+};

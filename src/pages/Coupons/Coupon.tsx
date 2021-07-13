@@ -66,11 +66,13 @@ const Coupon = () => {
     reset: resetDeleteMutation,
     isLoading: deleteLoading,
   } = useMutation(deleteCoupon);
+
   const onSubmit = async (data: COUPON) => {
     console.log({
       ...data,
     });
     try {
+      console.log("hi");
       await editMutation({
         ...data,
         name: data.name,

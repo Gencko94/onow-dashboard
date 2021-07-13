@@ -1,25 +1,67 @@
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useMutation } from "react-query";
 
 import styled from "styled-components";
+import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useToast from "../../../hooks/useToast";
 import { STORE_SOCIAL_NETWORK } from "../../../interfaces/settings/store-properties/store-properties";
+import extractError from "../../../utils/extractError";
+import { editStoreSocialMedia } from "../../../utils/queries/settingsQueries";
 import Button from "../../reusable/Button";
 import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
-
-const StoreSocialNetwork = () => {
+interface StoreSocialNetworkProps {
+  data: STORE_SOCIAL_NETWORK;
+}
+const StoreSocialNetwork = ({ data }: StoreSocialNetworkProps) => {
+  const { handleCloseConfirmationModal } = useConfirmationModal();
+  const { setToastStatus, handleCloseToast } = useToast();
   const {
     register,
+    handleSubmit,
     formState: { errors },
-  } = useForm<STORE_SOCIAL_NETWORK>();
+  } = useForm<STORE_SOCIAL_NETWORK>({ defaultValues: { ...data } });
   const {
     i18n: { language },
   } = useTranslation();
+  const { mutateAsync, isLoading, reset } = useMutation(editStoreSocialMedia);
 
+  const onSubmit = async (data: STORE_SOCIAL_NETWORK) => {
+    console.log(data);
+    try {
+      await mutateAsync(data);
+      handleCloseConfirmationModal?.();
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Settings Updated",
+        type: "success",
+      });
+    } catch (error) {
+      handleCloseConfirmationModal?.();
+
+      const { responseError } = extractError(error);
+      if (responseError) {
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
+  };
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Heading tag="h5" color="primary" margin="2rem 0">
         Social network accounts
       </Heading>
@@ -59,6 +101,9 @@ const StoreSocialNetwork = () => {
         </div>
         <Flex items="center" justify="center" padding="1rem">
           <Button
+            isLoading={isLoading}
+            disabled={isLoading}
+            type="submit"
             text="Save"
             bg="green"
             padding="0.5rem"
@@ -67,7 +112,7 @@ const StoreSocialNetwork = () => {
           />
         </Flex>
       </Box>
-    </div>
+    </form>
   );
 };
 

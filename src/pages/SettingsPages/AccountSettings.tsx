@@ -35,16 +35,16 @@ const AccountSettings = () => {
     reset,
     isLoading,
   } = useMutation(updateUserAccount, {
-    onSuccess: (data) => {
-      queryClient.setQueryData<USER | undefined>("auth", (prev) => {
-        if (prev) {
-          return {
-            ...prev,
-            ...data,
-          };
-        }
-      });
-    },
+    // onSuccess: (data) => {
+    //   queryClient.setQueryData<USER | undefined>("auth", (prev) => {
+    //     if (prev) {
+    //       return {
+    //         ...prev,
+    //         ...data,
+    //       };
+    //     }
+    //   });
+    // },
   });
   const onSubmit: SubmitHandler<USER> = async (data) => {
     console.log(data);
@@ -147,7 +147,7 @@ const AccountSettings = () => {
         </Flex>
       </form>
 
-      <AccountPassword id={user!.id} />
+      <AccountPassword />
     </Container>
   );
 };

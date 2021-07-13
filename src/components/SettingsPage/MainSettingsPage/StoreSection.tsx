@@ -19,7 +19,7 @@ const StoreSection = () => {
   return (
     <Container>
       <div className="title">
-        <Heading tag="h5" color="primary" mb="2rem">
+        <Heading tag="h4" color="primary" mb="2rem">
           Store Settings
         </Heading>
       </div>

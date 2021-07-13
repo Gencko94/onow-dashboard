@@ -33,7 +33,8 @@ const CategoryInfo = ({
   } = useTranslation();
   const formCategoryId = watch("parent_id");
   const nameEn: string = watch("name.en");
-  // console.log(form);
+  const currentId: number = watch("id");
+
   useEffect(() => {
     if (nameEn) {
       setValue?.("slug", nameEn.toLowerCase().split(" ").join("-"));
@@ -43,11 +44,10 @@ const CategoryInfo = ({
     <Container>
       <Grid cols="repeat(auto-fit,minmax(310px,1fr))" gap="1rem">
         <div>
-          <div className="title-container">
-            <Heading tag="h5" color="primary">
-              Category Information
-            </Heading>
-          </div>
+          <Heading tag="h5" color="primary" margin="1rem 0" weight="semibold">
+            Category Information
+          </Heading>
+
           <div className="box">
             <IconedInput
               Icon={MdSubtitles}
@@ -99,16 +99,16 @@ const CategoryInfo = ({
         </div>
         <div className="categories-section">
           <div className="title-container">
-            <Heading tag="h5" color="primary">
+            <Heading tag="h5" color="primary" weight="semibold">
               Category Parent
             </Heading>
           </div>
           <Controller
             control={control}
             name="parent_id"
-            rules={{
-              required: "Required",
-            }}
+            // rules={{
+            //   required: "Required",
+            // }}
             render={({ field: { onChange } }) => {
               return (
                 <div className="category-list">
@@ -116,6 +116,7 @@ const CategoryInfo = ({
                     errors={errors?.parent_id}
                     formCategoryId={formCategoryId}
                     onChange={onChange}
+                    currentId={currentId}
                   />
                 </div>
               );

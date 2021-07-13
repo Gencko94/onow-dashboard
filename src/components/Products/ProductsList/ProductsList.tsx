@@ -32,7 +32,8 @@ const ProductsList = () => {
   } = useContext(ApplicationProvider);
   const [debouncedSearchValue] = useDebounce(globalSearchBarValue, 500);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
-  const { handleCloseConfirmationModal } = useConfirmationModal();
+  const { handleCloseConfirmationModal, setConfirmationModalStatus } =
+    useConfirmationModal();
 
   const history = useHistory();
 

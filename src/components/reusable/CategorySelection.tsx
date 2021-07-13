@@ -1,26 +1,30 @@
-import { MdSubdirectoryArrowRight } from "react-icons/md";
 import styled from "styled-components";
-
-import { Control, Controller, useWatch } from "react-hook-form";
 
 import { useInfiniteQuery } from "react-query";
 
 import { useTranslation } from "react-i18next";
 
 import React from "react";
-import Checkbox from "./Inputs/Checkbox";
+
 import { CATEGORY } from "../../interfaces/categories/categories";
-import DefaultImage from "./DefaultImage";
+
 import LoadingTable from "./LoadingTable";
 import { getCategories } from "../../utils/queries";
 import EmptyTable from "./EmptyTable";
+import CategorySelectionItem from "../Categories/CategorySelectionItem";
 
 interface IProps {
   formCategoryId: number;
   errors: any;
   onChange: (...event: any[]) => void;
+  currentId: number;
 }
-const CategorySelection = ({ errors, formCategoryId, onChange }: IProps) => {
+const CategorySelection = ({
+  errors,
+  formCategoryId,
+  onChange,
+  currentId,
+}: IProps) => {
   const {
     data,
     status,
@@ -32,8 +36,6 @@ const CategorySelection = ({ errors, formCategoryId, onChange }: IProps) => {
     "categories",
     ({ pageParam = 1 }) => getCategories(pageParam, 5000),
     {
-      keepPreviousData: true,
-
       getNextPageParam: (lastPage) => {
         if (lastPage.currentPage < lastPage.lastPage) {
           return lastPage.currentPage + 1;
@@ -73,72 +75,16 @@ const CategorySelection = ({ errors, formCategoryId, onChange }: IProps) => {
           return (
             <React.Fragment key={i}>
               {group.data.map((category: CATEGORY) => {
+                if (category.id === currentId) return null;
                 return (
                   <div key={category.id}>
-                    <CategoryItem active={formCategoryId === category.id}>
-                      <div
-                        className="field"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleToggleCategories(category, onChange);
-                        }}
-                      >
-                        {category.image ? (
-                          <img
-                            className="img"
-                            src={category.image}
-                            alt={category.name[language]}
-                          />
-                        ) : (
-                          <DefaultImage
-                            circular
-                            border
-                            height="35px"
-                            width="35px"
-                          />
-                        )}
-                        <h6>{category.name[language]}</h6>
-                      </div>
-                      <Checkbox
-                        checked={formCategoryId === category.id}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          handleToggleCategories(category, onChange);
-                        }}
-                      />
-                    </CategoryItem>
-                    {category?.children?.map((child: CATEGORY) => {
-                      return (
-                        <SubCategoryItem key={child.id}>
-                          <div
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleToggleCategories(child, onChange);
-                            }}
-                            className="field"
-                          >
-                            <div className="title">
-                              <span className="icon">
-                                <MdSubdirectoryArrowRight />
-                              </span>
-                              <img
-                                src={child.image}
-                                alt={child.name[language]}
-                                className="img"
-                              />
-                              <h6>{child.name[language]}</h6>
-                            </div>
-                          </div>
-                          <Checkbox
-                            checked={formCategoryId === child.id}
-                            onChange={(e) => {
-                              e.stopPropagation();
-                              handleToggleCategories(child, onChange);
-                            }}
-                          />
-                        </SubCategoryItem>
-                      );
-                    })}
+                    <CategorySelectionItem
+                      category={category}
+                      formCategoryId={formCategoryId}
+                      handleToggleCategories={handleToggleCategories}
+                      onChange={onChange}
+                      currentId={currentId}
+                    />
                   </div>
                 );
               })}
@@ -171,69 +117,6 @@ const Container = styled.div`
       width: 35px;
       border-radius: 50%;
       border: ${(props) => props.theme.border};
-    }
-  }
-`;
-
-const CategoryItem = styled.div<{ active: boolean }>`
-  display: block;
-  width: 100%;
-  background-color: ${(props) =>
-    props.active ? props.theme.accentColor : "#fff"};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  border-bottom: ${(props) => props.theme.border};
-  &:hover {
-    background-color: ${(props) => props.theme.accent1};
-  }
-
-  .field {
-    padding: 0.5rem;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    h6 {
-      font-size: 0.9rem;
-      margin: 0 0.5rem;
-      font-weight: ${(props) => props.theme.font.bold};
-    }
-  }
-`;
-const SubCategoryItem = styled.div`
-  background-color: #fff;
-  display: block;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  border-bottom: ${(props) => props.theme.border};
-  background-color: ${(props) => props.theme.accent1};
-  &:hover {
-    background-color: ${(props) => props.theme.accent2};
-  }
-
-  .field {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem;
-    padding-left: 0.5rem;
-    flex: 1;
-
-    .title {
-      display: flex;
-      align-items: center;
-    }
-    h6 {
-      font-size: 0.9rem;
-      font-weight: ${(props) => props.theme.font.semibold};
-      margin: 0 0.5rem;
-    }
-    .icon {
-      margin: 0 0.5rem;
     }
   }
 `;

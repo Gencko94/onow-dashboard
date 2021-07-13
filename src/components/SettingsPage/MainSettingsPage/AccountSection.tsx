@@ -7,7 +7,7 @@ import Heading from "../../StyledComponents/Heading";
 const AccountSection = () => {
   return (
     <Container>
-      <Heading tag="h5" color="primary" mb="2rem">
+      <Heading tag="h4" color="primary" mb="2rem">
         Account Settings
       </Heading>
       <Grid

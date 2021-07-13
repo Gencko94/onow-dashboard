@@ -12,7 +12,7 @@ interface IProps {
   image: File | string;
   maxFileSizeInBytes?: number;
   onChange: (file: File) => void;
-  onRemove: () => void;
+  onRemove?: () => void;
   progress?: number | null;
 }
 const MiniFileUploader = ({
@@ -48,7 +48,7 @@ const MiniFileUploader = ({
     }
   };
   const removeImage = () => {
-    onRemove();
+    onRemove?.();
   };
   useEffect(() => {
     if (typeof image === "string") {
@@ -77,18 +77,18 @@ const MiniFileUploader = ({
               <PreviewContainer>
                 <ImagePreview src={URL.createObjectURL(file)} />
                 <ImageMetaData>
-                  {/* <p>{image?.name}</p> */}
-                  <div className="flex">
-                    {/* <p>{convertBytesToKB(file!.size)} kb</p> */}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        removeImage();
-                      }}
-                    >
-                      <IoMdCloseCircle size={35} />
-                    </button>
-                  </div>
+                  {onRemove && (
+                    <div className="flex">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          removeImage();
+                        }}
+                      >
+                        <IoMdCloseCircle size={35} />
+                      </button>
+                    </div>
+                  )}
                 </ImageMetaData>
               </PreviewContainer>
             </FilePreviewContainer>
@@ -183,17 +183,8 @@ const DragDropText = styled.p`
   margin-top: 0;
   text-align: center;
 `;
-const UploadFileButton = styled.button`
-  z-index: 10;
-  position: relative;
-  padding: 0.5rem;
-  color: #fff;
-  border-radius: 5px;
-  margin-top: 0.5rem;
-  background-color: ${(props) => props.theme.green};
-`;
+
 const FilePreviewContainer = styled.div`
-  /* margin: 1rem 0; */
   position: absolute;
   top: 0;
   left: 0;
@@ -202,8 +193,6 @@ const FilePreviewContainer = styled.div`
   z-index: 1;
 `;
 const ProgressContainer = styled(FlexWrapper)`
-  /* width: 150px; */
-  /* height: 150px; */
   padding: 4rem;
   align-items: center;
   justify-content: center;
