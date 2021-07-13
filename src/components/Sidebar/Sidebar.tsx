@@ -37,6 +37,9 @@ export default Sidebar;
 const Container = styled.aside(
   ({ theme: { breakpoints, shadow } }) => `
   background-color: #fff;
+  
+  
+  
   box-shadow: ${shadow};
   position:fixed;
   top:0;
@@ -47,6 +50,23 @@ const Container = styled.aside(
   padding:0.5rem;
   display: flex;
   flex-direction: column;
+  &:before
+   {
+     z-index:-1;
+      content: ' ';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.3;
+      background-image:url(/images/t.gif);
+      // background-repeat: no-repeat;
+      // background-position: 50% 0;
+      // background-size: cover;
+    
+  }
   @media ${breakpoints.md}{
     z-index:1;
   }

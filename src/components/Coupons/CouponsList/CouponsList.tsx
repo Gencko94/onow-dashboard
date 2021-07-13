@@ -8,7 +8,11 @@ import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { COUPON } from "../../../interfaces/coupons/coupons";
 import extractError from "../../../utils/extractError";
-import { deleteCoupon, getCoupons } from "../../../utils/queries";
+import {
+  deleteCoupon,
+  deleteMultipleCoupons,
+  getCoupons,
+} from "../../../utils/queries";
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
 import LoadingTable from "../../reusable/LoadingTable";
@@ -24,7 +28,8 @@ const CouponsList = () => {
   const queryClient = useQueryClient();
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
 
-  const { handleCloseConfirmationModal } = useConfirmationModal();
+  const { handleCloseConfirmationModal, setConfirmationModalStatus } =
+    useConfirmationModal();
   const { handleCloseToast, setToastStatus } = useToast();
   const cols = useMemo(
     () => [
@@ -72,6 +77,16 @@ const CouponsList = () => {
       queryClient.invalidateQueries(["coupons", sortBy]);
     },
   });
+  // Delete Mutation
+  const {
+    mutateAsync: deleteMultiple,
+    reset: resetMultiple,
+    isLoading: multipleDeleteLoading,
+  } = useMutation(deleteMultipleCoupons, {
+    onSuccess: (data, couponId, context) => {
+      queryClient.invalidateQueries(["coupons", sortBy]);
+    },
+  });
 
   const handleDeleteCoupon = async (id: number) => {
     try {
@@ -104,8 +119,8 @@ const CouponsList = () => {
   };
   const handleDeleteMultipleCoupons = async (ids: number[]) => {
     try {
-      // await deleteMultiple(ids);
       handleCloseConfirmationModal?.();
+      await deleteMultiple(ids);
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -123,7 +138,7 @@ const CouponsList = () => {
       } else {
         setToastStatus?.({
           fn: () => {
-            // resetMultipleDelete();
+            resetMultiple();
             handleCloseToast?.();
           },
           open: true,
@@ -150,7 +165,7 @@ const CouponsList = () => {
           <Flex margin="0 0.5rem">
             <Button
               width="100%"
-              // disabled={selectedRows.length === 0 || multipleDeleteLoading}
+              disabled={selectedRows.length === 0 || multipleDeleteLoading}
               bg="danger"
               padding="0.25rem"
               textSize="0.8rem"
@@ -159,9 +174,17 @@ const CouponsList = () => {
               } Coupons`}
               withRipple
               withTransition
-              // isLoading={multipleDeleteLoading}
+              isLoading={multipleDeleteLoading}
               onClick={() => {
-                handleDeleteMultipleCoupons(selectedRows);
+                setConfirmationModalStatus?.({
+                  closeCb: handleCloseConfirmationModal!,
+                  open: true,
+                  desc: "Are you sure you want to delete these coupons ?",
+                  successCb: () => {
+                    handleDeleteMultipleCoupons(selectedRows);
+                  },
+                  title: "Delete Coupons",
+                });
               }}
             />
           </Flex>

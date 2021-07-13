@@ -349,6 +349,22 @@ export const deleteCoupon = async (
   const res = await axios.delete(`${customerUri}/coupons/${id}`, config);
   return res.data.results;
 };
+export const deleteMultipleCoupons = async (
+  ids: number[]
+): Promise<{ results: "Deleted" }> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/delete-multi-coupons`,
+    { ids },
+    config
+  );
+  return res.data.results;
+};
 
 //Products
 //Get
@@ -698,6 +714,23 @@ export const deleteCategory = async (
   };
   const res = await axios.delete(
     `${customerUri}/product-categories/${id}`,
+    config
+  );
+  return res.data.results;
+};
+// Delete Multiple Categories
+export const deleteMultipleCategories = async (
+  ids: number[]
+): Promise<{ results: "Deleted" }> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/delete-multi-product-categories`,
+    { ids },
     config
   );
   return res.data.results;

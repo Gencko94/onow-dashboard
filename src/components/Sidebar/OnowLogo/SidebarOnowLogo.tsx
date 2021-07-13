@@ -10,7 +10,7 @@ const SidebarOnowLogo = () => {
 
 export default SidebarOnowLogo;
 
-const Container = styled.aside(
+const Container = styled.div(
   ({ theme: { breakpoints, shadow } }) => `
   display: flex;
   align-items: center;

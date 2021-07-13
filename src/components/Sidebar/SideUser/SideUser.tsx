@@ -45,6 +45,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: #fff;
+
   border-radius: 8px;
   .user {
     display: flex;

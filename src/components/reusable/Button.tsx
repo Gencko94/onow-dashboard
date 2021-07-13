@@ -219,7 +219,6 @@ export const ButtonWrapper = styled.button<{
       border-radius: 6px;
       padding: ${padding};
       text-transform:${uppercase && "uppercase"};
-      // font-weight:${font.semibold};
       position: relative;
       overflow:hidden;
       color: ${color};

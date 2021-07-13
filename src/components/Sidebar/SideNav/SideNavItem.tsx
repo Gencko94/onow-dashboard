@@ -28,6 +28,7 @@ export default SideNavItem;
 const Container = styled.li(
   ({ theme: { breakpoints, font } }) => `
     display:block;
+    background-color:#fff;
     
     position:relative;
     overflow:hidden;

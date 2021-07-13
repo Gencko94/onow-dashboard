@@ -8,6 +8,7 @@ import extractError from "../../../utils/extractError";
 import {
   activateCategory,
   deleteCategory,
+  deleteMultipleCategories,
   getCategories,
 } from "../../../utils/queries";
 import Button from "../../reusable/Button";
@@ -32,7 +33,8 @@ const CategoriesList = () => {
 
   const { setToastStatus, handleCloseToast } = useToast();
 
-  const { handleCloseConfirmationModal } = useConfirmationModal();
+  const { handleCloseConfirmationModal, setConfirmationModalStatus } =
+    useConfirmationModal();
 
   const queryClient = useQueryClient();
   const {
@@ -69,6 +71,19 @@ const CategoriesList = () => {
   });
   // Delete Mutation
   const { mutateAsync, reset } = useMutation(deleteCategory, {
+    onSuccess: (data, categoryId) => {
+      queryClient.invalidateQueries("categories");
+      // queryClient.setQueryData<PRODUCT[] | undefined>("products", (prev) => {
+      //   return prev?.filter((i) => i.id !== parseInt(productId));
+      // });
+    },
+  });
+  // Delete multiple Mutation
+  const {
+    mutateAsync: multipleMutation,
+    reset: multipleReset,
+    isLoading: multipleLoading,
+  } = useMutation(deleteMultipleCategories, {
     onSuccess: (data, categoryId) => {
       queryClient.invalidateQueries("categories");
       // queryClient.setQueryData<PRODUCT[] | undefined>("products", (prev) => {
@@ -156,6 +171,35 @@ const CategoriesList = () => {
       }
     }
   };
+  const handleDeleteMultipleCategories = async (ids: number[]) => {
+    try {
+      handleCloseConfirmationModal?.();
+      await multipleMutation(ids);
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Categories Deleted Successfully",
+        type: "success",
+      });
+    } catch (error) {
+      handleCloseConfirmationModal?.();
+      const { responseError } = extractError(error);
+      if (responseError) {
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
+  };
   const handleToggleRows = (rowId: number) => {
     if (selectedRows.includes(rowId)) {
       setSelectedRows((prev) => prev.filter((i) => i !== rowId));
@@ -171,13 +215,25 @@ const CategoriesList = () => {
           <p>Selected Rows ({selectedRows.length}) : </p>
           <Flex margin="0 0.5rem">
             <Button
-              disabled={selectedRows.length === 0}
+              disabled={selectedRows.length === 0 || multipleLoading}
               bg="danger"
               padding="0.25rem"
               textSize="0.8rem"
               text="Delete Categories"
               withRipple
+              isLoading={multipleLoading}
               withTransition
+              onClick={() => {
+                setConfirmationModalStatus?.({
+                  closeCb: handleCloseConfirmationModal!,
+                  desc: "Are you sure you want to delete these categories ?",
+                  open: true,
+                  successCb: () => {
+                    handleDeleteMultipleCategories(selectedRows);
+                  },
+                  title: "Delete Categories",
+                });
+              }}
             />
           </Flex>
         </Flex>
