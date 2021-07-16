@@ -63,6 +63,8 @@ const CreateProductGeneralInfo = () => {
             bg="blue"
             padding="0.5rem"
             textSize="0.9rem"
+            withRipple
+            withTransition
           />
         </Flex>
         <Grid cols="repeat(auto-fit,minmax(350px,1fr))" gap="1rem">
@@ -71,7 +73,6 @@ const CreateProductGeneralInfo = () => {
           <CreateProductCategories />
         </Grid>
 
-        <Hr />
         {/* <CreateProductImage /> */}
         {/* <ProductDescription /> */}
       </form>

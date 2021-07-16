@@ -120,6 +120,10 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       borderHovered,
       dangerRed,
       subHeading,
+      accent1,
+      accent2,
+      textPrimary,
+      textSecondary,
     },
     error,
     rtl,
@@ -149,15 +153,8 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       align-items: center;
       justify-content: center;
       color: ${mainColor};
-      background-color: ${inputColorLight};
-      border-right: ${border};
-      ${
-        rtl &&
-        css`
-          border-right: none;
-          border-left: ${(props) => props.theme.border};
-        `
-      }
+      
+     
     }
 
     input {
@@ -166,13 +163,13 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       font-size: 0.8rem;
       width: 50px;
       &:disabled {
-        background-color: ${inputColorLight};
+        background-color: ${accent2};
       }
     }
     &:hover,
     &:focus-within {
       border-color: ${borderHovered};
-      background-color: ${inputColorLight};
+      background-color: ${accent1};
     }
     ${
       error &&
@@ -200,16 +197,11 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     font-size: 0.7rem;
     align-items: center;
     justify-content: center;
-    color: ${subHeading};
-    background-color: ${inputColorLight};
-    border-left: ${border};
-    ${
-      rtl &&
-      css`
-        border-left: none;
-        border-right: ${(props) => props.theme.border};
-      `
-    }
+    color: ${textSecondary};
+    font-weight:${font.semibold};
+    background-color: ${accent2};
+    
+   
   }
   @media  ${breakpoints.md}{
     label {

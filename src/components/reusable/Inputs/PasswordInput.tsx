@@ -2,7 +2,6 @@ import { useState } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { CgPassword } from "react-icons/cg";
-import { IconType } from "react-icons/lib";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 import styled, { css } from "styled-components";
@@ -113,23 +112,38 @@ const PasswordInput = ({
 };
 
 export default PasswordInput;
-const Container = styled.div<{ rtl: boolean; error: boolean }>`
+const Container = styled.div<{ rtl: boolean; error: boolean }>(
+  ({
+    theme: {
+      breakpoints,
+      font,
+      headingColor,
+      border,
+      inputColorLight,
+      mainColor,
+      borderHovered,
+      dangerRed,
+      accent1,
+    },
+    error,
+    rtl,
+  }) => `
   label {
-    color: ${({ theme }) => theme.headingColor};
+    color: ${headingColor};
     margin-bottom: 0.75rem;
-    font-size: 0.9rem;
-    font-weight: ${(props) => props.theme.font.regular};
+    font-size: 0.8rem;
+    font-weight: ${font.regular};
     display: block;
   }
   .input-container {
     display: flex;
     position: relative;
-    /* align-items: center; */
+    
     justify-content: center;
-
+    
     background-color: #fff;
-    color: ${(props) => props.theme.headingColor};
-    border: ${(props) => props.theme.border};
+    color: ${headingColor};
+    border: ${border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
@@ -138,45 +152,57 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${(props) => props.theme.mainColor};
-      background-color: ${(props) => props.theme.inputColorLight};
-      border-right: ${(props) => props.theme.border};
-      ${(props) =>
-        props.rtl &&
-        css`
-          border-right: none;
-          border-left: ${(props) => props.theme.border};
-        `}
+      color: ${mainColor};
     }
-
+    
     &:hover,
     &:focus-within {
-      border-color: ${(props) => props.theme.borderHovered};
-      background-color: ${(props) => props.theme.inputColorLight};
+      border-color: ${borderHovered};
+      background-color: ${accent1};
     }
-    ${(props) =>
-      props.error &&
+    ${
+      error &&
       css`
-        border-color: ${(props) => props.theme.dangerRed} !important;
-      `}
-  }
-  .visibility {
-    padding: 0.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .desc {
-    font-size: 0.7rem;
-    padding-top: 0.25rem;
-    height: 22px;
-
-    color: ${(props) => props.theme.mainColor};
-  }
-`;
-const Input = styled.input`
+        border-color: ${dangerRed} !important;
+      `
+    }
+    }
+    .visibility {
+      padding: 0.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .desc {
+      font-size: 0.7rem;
+      padding-top: 0.25rem;
+      height: 22px;
+      
+      color: ${mainColor};
+    }
+    @media  ${breakpoints.md}{
+      label {
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+      };
+  
+    };
+    `
+);
+const Input = styled.input(
+  ({ theme: { breakpoints } }) => `
   flex: 1;
   padding: 0.4rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   width: 50px;
-`;
+  @media  ${breakpoints.md}{
+  
+      
+      input {
+        font-size: 0.9rem;
+      }
+    
+
+  };
+  `
+);

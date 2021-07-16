@@ -30,8 +30,10 @@ export const lightTheme = {
   textSecondaryContrast: "#fbfbfb",
   // New Accents
   accent1: "#fafafa",
-  accent2: "#eaeaea",
-  accent3: "#999",
+  // accent2: "#eaeaea",
+  accent2: "#f1f1f1",
+  // accent3: "#999",
+  accent3: "#eaeaea",
   blue: "#2e87fc",
 };
 
@@ -68,8 +70,8 @@ export const darkTheme = {
   textSecondaryContrast: "#fbfbfb",
   // New Accents
   accent1: "#111",
-  accent2: "#333",
-  accent3: "#444",
+  accent2: "#222",
+  accent3: "#333",
   blue: "#2e87fc",
 };
 

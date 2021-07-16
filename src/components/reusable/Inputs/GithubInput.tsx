@@ -44,20 +44,19 @@ const GithubInput = ({
         {desc && <p className="first-subtitle">{desc}</p>}
         {secondaryDesc && <p className="second-subtitle">{secondaryDesc}</p>}
       </div>
-      <div>
-        <Toggle
-          defaultChecked={defaultValue}
-          checked={checked}
-          onChange={onChange}
-        />
-      </div>
+
+      <Toggle
+        defaultChecked={defaultValue}
+        checked={checked}
+        onChange={onChange}
+      />
     </Container>
   );
 };
 
 export default GithubInput;
 const Container = styled.div(
-  ({ theme: { breakpoints, headingColor, subHeading, font } }) => `
+  ({ theme: { breakpoints, textPrimary, textSecondary, font } }) => `
   display: flex;
   align-items: center;
   gap:1rem;
@@ -65,14 +64,14 @@ const Container = styled.div(
     flex: auto;
    
     .first-subtitle {
-      color: ${headingColor};
+      color: ${textPrimary};
       font-size: 0.7rem;
       margin-bottom: 0.25rem;
     }
     .second-subtitle {
-      color: ${subHeading};
+      color: ${textSecondary};
       font-size: 0.7rem;
-      font-weight: ${font.light};
+      font-weight: ${font.regular};
     }
   }
   @media ${breakpoints.md}{
@@ -80,14 +79,14 @@ const Container = styled.div(
 
      
       .first-subtitle {
-        color: ${headingColor};
+        color: ${textPrimary};
         font-size: 0.8rem;
         margin-bottom: 0.25rem;
       }
       .second-subtitle {
-        color: ${subHeading};
-        font-size: 0.75rem;
-        font-weight: ${font.light};
+        color: ${textSecondary};
+        font-size: 0.79rem;
+        font-weight: ${font.regular};
       }
     }
   }

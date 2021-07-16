@@ -23,11 +23,10 @@ const CreateProductPricing = () => {
   const priceByOptions = watch("price_by_options");
   return (
     <Container>
-      <div className="title-container">
-        <Heading color="primary" tag="h5" mb="1.5rem">
-          Product Pricing
-        </Heading>
-      </div>
+      <Heading color="primary" tag="h5" mb="1.5rem" weight="semibold">
+        Product Pricing
+      </Heading>
+
       <div className="inputs-container">
         <PrefixedIconedInput
           errors={errors.price}
@@ -51,7 +50,7 @@ const CreateProductPricing = () => {
                   if (errors.price) {
                     clearErrors("price");
                   }
-                  setValue("variations_enabled", true);
+                  setValue("options_enabled", true);
                 }
                 onChange(e.target.checked);
               }}

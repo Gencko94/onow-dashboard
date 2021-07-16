@@ -432,7 +432,7 @@ export const createProduct = async (product: NEW_PRODUCT) => {
   return res.data.results;
 };
 
-//Delete
+//Activation
 export const activateProduct = async ({
   id,
   active,
@@ -731,7 +731,7 @@ export const getBranches = async (pageParam: number, limit?: number) => {
       page: pageParam,
     },
   };
-  const res = await axios.get(`${customerUri}/list-branchs`, config);
+  const res = await axios.get(`${customerUri}/branches`, config);
   return {
     data: res.data.results.data,
     currentPage: res.data.results.pagination.current,
@@ -745,7 +745,7 @@ export const getBranch = async (id: string): Promise<BRANCH> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.get(`${customerUri}/pickups/${id}`, config);
+  const res = await axios.get(`${customerUri}/branches/${id}`, config);
   return res.data.results;
 };
 export const createBranch = async (data: NEW_BRANCH): Promise<BRANCH> => {

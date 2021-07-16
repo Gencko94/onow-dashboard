@@ -6,6 +6,7 @@ import { useFormContext } from "react-hook-form";
 
 import { useTranslation } from "react-i18next";
 import { firstTabInfo } from "./CreateProductGeneralInfo";
+import Heading from "../../StyledComponents/Heading";
 
 const CreateProductCategories = () => {
   const {
@@ -18,9 +19,9 @@ const CreateProductCategories = () => {
 
   return (
     <Container>
-      <div className="title-container">
-        <h5>Product Category</h5>
-      </div>
+      <Heading tag="h5" weight="semibold" color="primary" margin="1rem 0">
+        Product Category
+      </Heading>
 
       <CategoriesList error={Boolean(errors?.category_id)}>
         <AddCategoryModalBody
@@ -56,8 +57,8 @@ const CategoriesList = styled.div<{ error: boolean }>`
   overflow-y: auto;
   position: relative;
   background-color: #fff;
-  box-shadow: ${(props) =>
-    props.error ? props.theme.errorShadow : props.theme.shadow};
+  box-shadow: ${(props) => props.error && props.theme.errorShadow};
+  border: ${(props) => props.theme.border};
   border-radius: 6px;
   flex: 1;
 

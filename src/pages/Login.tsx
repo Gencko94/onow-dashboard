@@ -220,7 +220,7 @@ const FormContainer = styled.div`
   border-radius: 12px;
   min-width: 300px;
   margin-bottom: 0.5rem;
-  background: ${(props) => props.theme.overlayColor};
+  /* background: ${(props) => props.theme.overlayColor}; */
 `;
 const Form = styled.form`
   padding: 0rem 0.25rem;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Control, Controller, useWatch } from "react-hook-form";
 
-import { useInfiniteQuery, useQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 
 import { useTranslation } from "react-i18next";
 
@@ -12,11 +12,11 @@ import {
   MINI_CATEGORY,
 } from "../../../interfaces/categories/categories";
 import Checkbox from "../../reusable/Inputs/Checkbox";
-import { getMiniCategories } from "../../../utils/test-queries";
 import { getCategories } from "../../../utils/queries";
 import DefaultImage from "../../reusable/DefaultImage";
 import LoadingTable from "../../reusable/LoadingTable";
 import React from "react";
+import ProductCategoryItem from "./ProductCategoryItem";
 
 interface IProps {
   control: Control<any>;
@@ -52,7 +52,7 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
-
+  const categoryId = formValues.category?.id;
   function handleToggleCategories(
     category: MINI_CATEGORY,
     onChange: (...event: any[]) => void
@@ -82,6 +82,24 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
             <div className="table">
               {status === "loading" && <LoadingTable />}
               {data?.pages.map((group, i) => {
+                return (
+                  <React.Fragment key={i}>
+                    {group.data.map((category: CATEGORY) => {
+                      return (
+                        <div key={category.id}>
+                          <ProductCategoryItem
+                            category={category}
+                            formCategoryId={categoryId}
+                            handleToggleCategories={handleToggleCategories}
+                            onChange={onChange}
+                          />
+                        </div>
+                      );
+                    })}
+                  </React.Fragment>
+                );
+              })}
+              {/* {data?.pages.map((group, i) => {
                 return (
                   <React.Fragment key={i}>
                     {group.data.map((category: CATEGORY) => {
@@ -156,7 +174,7 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
                     })}
                   </React.Fragment>
                 );
-              })}
+              })} */}
             </div>
           </Container>
         );

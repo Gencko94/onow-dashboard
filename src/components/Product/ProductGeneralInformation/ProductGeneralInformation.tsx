@@ -1,7 +1,12 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { MdSave } from "react-icons/md";
+import { useMutation } from "react-query";
 import styled from "styled-components";
+import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useToast from "../../../hooks/useToast";
 import { PRODUCT } from "../../../interfaces/products/products";
+import extractError from "../../../utils/extractError";
+import { editProductGeneralInfo } from "../../../utils/queries/productQueries";
 import Button from "../../reusable/Button";
 
 import Flex from "../../StyledComponents/Flex";
@@ -23,23 +28,70 @@ export interface FORM_PROPS {
   slug: string;
   category: { id: number; name: { [key: string]: string } };
   sku: string;
-  quantity: number | "unlimited";
-  image: string | File;
+  quantity: string | "unlimited";
 }
 const ProductGeneralInformation = ({ data }: IProps) => {
+  const { handleCloseConfirmationModal } = useConfirmationModal();
+  const { setToastStatus, handleCloseToast } = useToast();
   const methods = useForm<FORM_PROPS>({
     defaultValues: {
       name: data.name,
       description: data.description,
       slug: data.slug,
-      quantity: data.quantity,
+      quantity: data.quantity.toString(),
       category: data.category,
       sku: data.sku,
-      image: data.image,
     },
   });
-  const onSubmit: SubmitHandler<FORM_PROPS> = (data) => {
-    console.log(data);
+  // Edit Mutation
+  const { mutateAsync, reset, isLoading } = useMutation(editProductGeneralInfo);
+  const onSubmit: SubmitHandler<FORM_PROPS> = async (formData: FORM_PROPS) => {
+    try {
+      const regex = /^0+(?!$)/;
+      await mutateAsync({
+        ...formData,
+        category: formData.category.id,
+        quantity:
+          formData.quantity === "unlimited"
+            ? null
+            : formData.quantity.replace(regex, ""),
+        id: data.id,
+      });
+      handleCloseConfirmationModal?.();
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Product Saved Successfully",
+        type: "success",
+      });
+    } catch (error) {
+      handleCloseConfirmationModal?.();
+
+      const { responseError } = extractError(error);
+      if (responseError) {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: responseError,
+          type: "error",
+        });
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
   };
   return (
     <Container>
@@ -58,6 +110,8 @@ const ProductGeneralInformation = ({ data }: IProps) => {
           Icon={MdSave}
           bg="green"
           padding="0.5rem"
+          isLoading={isLoading}
+          disabled={isLoading}
           onClick={methods.handleSubmit(onSubmit)}
         />
       </Flex>

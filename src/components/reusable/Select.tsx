@@ -123,7 +123,10 @@ const Container = styled.div(
   }
   @media ${breakpoints.md}{
     font-size: 0.9rem;
-    
+    label {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    };
   }
   `
 );

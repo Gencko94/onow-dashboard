@@ -26,7 +26,6 @@ const CreateProductBranches = () => {
     "branches",
     ({ pageParam = 1 }) => getBranches(pageParam),
     {
-      suspense: true,
       getNextPageParam: (lastPage) => {
         if (lastPage.currentPage < lastPage.lastPage) {
           return lastPage.currentPage + 1;
@@ -60,7 +59,7 @@ const CreateProductBranches = () => {
   };
   return (
     <Container>
-      <Heading tag="h5" mb="1rem" color="primary">
+      <Heading tag="h5" mb="1rem" color="primary" weight="semibold">
         Product Branch Availability
       </Heading>
       <Controller

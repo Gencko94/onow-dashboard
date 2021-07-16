@@ -42,6 +42,7 @@ const Variation = ({ option, index, removeOption }: IProps) => {
     // keyName: "id", default to "id", you can change the key name
   });
   const options = watch("options");
+  const optionsEnabled = watch("options_enabled");
   const optionType = watch(`options.${index}.select_type` as const);
 
   return (
@@ -67,7 +68,7 @@ const Variation = ({ option, index, removeOption }: IProps) => {
           name={`options.${index}.name.en`}
           register={register}
           label="Option Name English"
-          required
+          required={optionsEnabled}
           requiredMessage="Required"
           defaultValue={options[index]?.name?.en}
         />
@@ -77,7 +78,7 @@ const Variation = ({ option, index, removeOption }: IProps) => {
           name={`options.${index}.name.ar`}
           register={register}
           label="Option Name Arabic"
-          required
+          required={optionsEnabled}
           defaultValue={options[index]?.name?.ar}
           requiredMessage="Required"
         />
@@ -207,7 +208,6 @@ const Container = styled.div(
     padding: 0;
   }
   @media ${breakpoints.md}{
-    
     .values {
       padding: 0 1rem;
     }

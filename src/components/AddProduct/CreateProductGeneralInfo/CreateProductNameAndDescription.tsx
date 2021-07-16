@@ -22,7 +22,7 @@ const CreateProductNameAndDescription = () => {
   const quantity = watch("quantity");
   return (
     <Container>
-      <Heading color="primary" tag="h5" margin="1rem 0">
+      <Heading color="primary" weight="semibold" tag="h5" margin="1rem 0">
         Product Naming & Description
       </Heading>
 

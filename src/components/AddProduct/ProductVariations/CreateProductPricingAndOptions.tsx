@@ -16,7 +16,7 @@ import Button from "../../reusable/Button";
 export interface secondTabProps {
   price: number;
   price_by_options: boolean;
-  variations_enabled: boolean;
+  options_enabled: boolean;
   options: PRODUCT_OPTION[];
 }
 
@@ -26,7 +26,7 @@ const CreateProductPricingAndOptions = () => {
   const methods = useForm<secondTabProps>({
     defaultValues: {
       price: formValues?.price,
-      variations_enabled:
+      options_enabled:
         formValues?.price_by_options === true
           ? true
           : formValues?.options?.length! > 0

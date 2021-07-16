@@ -36,6 +36,7 @@ const OptionValue = ({
   } = useTranslation();
 
   const options = watch(`options.${parentIndex}.values` as any);
+  const optionsEnabled = watch("options_enabled");
 
   return (
     <Container>
@@ -60,7 +61,7 @@ const OptionValue = ({
           name={`options.${parentIndex}.values.${index}.name.en`}
           register={register}
           label="Value Name English"
-          required
+          required={optionsEnabled}
           requiredMessage="Required"
           defaultValue={options?.[index].name.en}
         />
@@ -72,7 +73,7 @@ const OptionValue = ({
           label="Value Name Arabic"
           defaultValue={options?.[index].name.ar}
           requiredMessage="Required"
-          required
+          required={optionsEnabled}
         />
         <PrefixedIconedInput
           errors={errors?.options?.[parentIndex]?.values?.[index]?.price}
@@ -100,8 +101,8 @@ const OptionValue = ({
 
 export default OptionValue;
 const Container = styled.div(
-  ({ theme: { breakpoints, border, dangerRed, overlayColor } }) => `
-  background-color: ${overlayColor};
+  ({ theme: { breakpoints, border, dangerRed, accent2 } }) => `
+  background-color: ${accent2};
   padding: 0.5rem 1rem 1rem 1rem;
   border: ${border};
   border-radius: 6px;

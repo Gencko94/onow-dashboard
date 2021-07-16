@@ -105,12 +105,14 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     theme: {
       breakpoints,
       font,
-      headingColor,
+      textPrimary,
+      textSecondary,
       border,
-      inputColorLight,
+
       mainColor,
       borderHovered,
       dangerRed,
+      accent1,
     },
     error,
     rtl,
@@ -118,7 +120,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
 
 
   label {
-    color: ${headingColor};
+    color: ${textPrimary};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
     font-weight: ${font.regular};
@@ -131,7 +133,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     justify-content: center;
 
     background-color: #fff;
-    color: ${headingColor};
+    color: ${textPrimary};
     border: ${border};
     overflow: hidden;
     border-radius: 6px;
@@ -155,6 +157,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     &:hover,
     &:focus-within {
       border-color: ${borderHovered};
+      background:${accent1}
    
     }
     ${

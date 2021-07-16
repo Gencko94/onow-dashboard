@@ -25,7 +25,7 @@ const Options = ({
   const options = watch("options");
   const priceByOptions = watch("price_by_options");
   useEffect(() => {
-    if (options.length === 0) {
+    if (options?.length === 0) {
       append(
         {
           max_picks: 0,
@@ -50,9 +50,9 @@ const Options = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <Container>
-      <Heading color="primary" tag="h6" mb="0.5rem">
-        Options
+    <div>
+      <Heading color="primary" tag="h5" mb="0.5rem" weight="semibold">
+        Options :
       </Heading>
       {/* If No Options Show this */}
 
@@ -100,13 +100,8 @@ const Options = ({
           </div>
         </>
       )}
-    </Container>
+    </div>
   );
 };
 
 export default Options;
-const Container = styled.div(
-  ({ theme: { breakpoints } }) => `
-  padding: 1rem 0;
-  `
-);

@@ -10,6 +10,7 @@ import MiniFileUploader from "../../../utils/MiniFileUploader";
 import Button from "../../reusable/Button";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
+import Heading from "../../StyledComponents/Heading";
 
 interface IProps {
   data: PRODUCT;
@@ -30,9 +31,9 @@ const ProductImage = ({ data }: IProps) => {
   const images = watch("images");
   return (
     <Container>
-      <div className="title-container">
-        <h5>Product Imaging</h5>
-      </div>
+      <Heading tag="h5" margin="1rem 0" weight="semibold" color="primary">
+        Product Imaging
+      </Heading>
       <DescriptionBox>
         <p>
           High Quality product images are very important when you're offering
@@ -125,13 +126,10 @@ const ProductImage = ({ data }: IProps) => {
 export default ProductImage;
 const Container = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `
-  margin: 2rem 0;
+ 
   display:flex;
   flex-direction:column;
-  .title-container {
-    padding: 1rem 0;
-    color: ${mainColor};
-  }
+  
   .box {
     flex:1;
     background-color: #fff;

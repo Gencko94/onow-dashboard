@@ -1,4 +1,3 @@
-import { MINI_CATEGORY } from "../categories/categories";
 import { PRODUCT_OPTION } from "./create-new-product";
 
 export type PRODUCTS_VIEW = "list" | "grid";

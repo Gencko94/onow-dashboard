@@ -24,12 +24,10 @@ const CreateProductOrdering = () => {
   } = useFormContext<thirdTabProps>();
   const allowSideNotes = watch("allow_side_notes");
   return (
-    <Container>
-      <div className="title-container">
-        <Heading tag="h5" mb="0.5rem" color="primary">
-          Product Ordering Options
-        </Heading>
-      </div>
+    <div>
+      <Heading tag="h5" margin="1rem 0" weight="semibold" color="primary">
+        Product Ordering Options
+      </Heading>
 
       <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
         <IconedNumberInput
@@ -125,13 +123,8 @@ const CreateProductOrdering = () => {
           }}
         />
       </Grid>
-    </Container>
+    </div>
   );
 };
 
 export default CreateProductOrdering;
-const Container = styled.div`
-  .title-container {
-    padding: 1rem 0;
-  }
-`;
