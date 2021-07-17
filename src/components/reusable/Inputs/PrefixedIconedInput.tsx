@@ -124,6 +124,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       accent2,
       textPrimary,
       textSecondary,
+      borderDanger,
     },
     error,
     rtl,
@@ -143,7 +144,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
 
     background-color: #fff;
     color: ${headingColor};
-    border: ${border};
+    border: ${error ? borderDanger : border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
@@ -171,12 +172,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       border-color: ${borderHovered};
       background-color: ${accent1};
     }
-    ${
-      error &&
-      css`
-        border-color: ${(props) => props.theme.dangerRed} !important;
-      `
-    }
+  
   }
   .error {
     font-size: 0.7rem;

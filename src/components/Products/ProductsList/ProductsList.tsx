@@ -109,9 +109,9 @@ const ProductsList = () => {
     }
   }, [globalSearchType, handleChangeGlobalSearchType]);
   const handleDeleteProduct = async (id: number) => {
+    handleCloseConfirmationModal?.();
     try {
       await mutateAsync(id.toString());
-      handleCloseConfirmationModal?.();
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -187,9 +187,9 @@ const ProductsList = () => {
     }
   };
   const handleDeleteMultipleProducts = async (ids: number[]) => {
+    handleCloseConfirmationModal?.();
     try {
       await deleteMultiple(ids);
-      handleCloseConfirmationModal?.();
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -200,8 +200,6 @@ const ProductsList = () => {
       });
       setSelectedRows([]);
     } catch (error) {
-      handleCloseConfirmationModal?.();
-
       const { responseError } = extractError(error);
       if (responseError) {
       } else {

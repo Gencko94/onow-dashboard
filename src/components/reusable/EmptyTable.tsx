@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Heading from "../StyledComponents/Heading";
 import Button from "./Button";
 
 interface BaseProps {
@@ -39,7 +40,9 @@ const EmptyTable = ({
   return (
     <Container height={height}>
       {iconImage && <img src={iconImage} alt="" />}
-      <p className="title">{text}</p>
+      <Heading tag="h5" color="heading" mb="1rem">
+        {text}
+      </Heading>
       {withButton && btnText && (
         <Button
           text={btnText}
@@ -59,7 +62,6 @@ export default EmptyTable;
 const Container = styled.div<{ height: string }>(
   ({ theme: { breakpoints, font }, height }) => `
     display:flex;
-    background-color:#fff;
     flex-direction:column;
     align-items:center;
     justify-content:center;

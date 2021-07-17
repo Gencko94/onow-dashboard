@@ -1,13 +1,12 @@
 import { BsCheck } from "react-icons/bs";
 
 import { MdClose } from "react-icons/md";
-import styled from "styled-components";
 import Flex from "../StyledComponents/Flex";
 import Button from "./Button";
 
 interface IProps {
   /**
-   * Specifies the Modal's head title.
+   * Success button callback function.
    */
   successCb: () => void;
   /**
@@ -22,6 +21,10 @@ interface IProps {
    * Success button loading state
    */
   isLoading?: boolean;
+  /**
+   * Success Button Type
+   */
+  btnType?: "submit" | "button";
 }
 
 const ModalTail = ({
@@ -29,6 +32,7 @@ const ModalTail = ({
   closeFunction,
   successCb,
   isLoading,
+  btnType,
 }: IProps) => {
   return (
     <Flex padding="0.5rem 0.5rem" justify="flex-end">
@@ -37,25 +41,26 @@ const ModalTail = ({
         bg="green"
         withRipple
         withTransition
-        padding="0.25rem 0.25rem"
+        padding="0.5rem 0.25rem"
         Icon={BsCheck}
         margin="0 0.5rem"
+        type={btnType}
         onClick={() => {
           successCb();
         }}
-        textSize="0.8rem"
-        iconSize={20}
+        textSize="0.9rem"
+        iconSize={22}
         isLoading={isLoading}
         disabled={isLoading}
       />
       <Button
         text="Cancel"
-        iconSize={20}
+        iconSize={22}
         bg="danger"
         withRipple
-        textSize="0.8rem"
+        textSize="0.9rem"
         withTransition
-        padding="0.25rem 0.25rem"
+        padding="0.5rem 0.25rem"
         Icon={MdClose}
         onClick={() => closeFunction()}
       />

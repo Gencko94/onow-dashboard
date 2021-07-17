@@ -12,10 +12,7 @@ interface IProps {
 }
 export interface FORM_PROPS {
   max_qty_per_user: number;
-  prep_time: {
-    time: number;
-    unit: string;
-  };
+  prep_time: number;
   allow_side_notes: boolean;
   allow_attachments: boolean;
   branch_availability: {

@@ -2,19 +2,11 @@ import { Controller, useFormContext } from "react-hook-form";
 import { GrServices } from "react-icons/gr";
 import { RiHandCoinLine } from "react-icons/ri";
 import styled from "styled-components";
-import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
 
 import CheckToggle from "../../reusable/CheckToggle";
 import IconedNumberInput from "../../reusable/IconedNumberInput";
-import IconedInput from "../../reusable/Inputs/IconedInput";
-import Select from "../../reusable/Select";
 import Grid from "../../StyledComponents/Grid";
 import { FORM_PROPS } from "./ProductOrderingAndBranchAvailability";
-
-const unitsOptions = [
-  { label: "Minutes", value: "m" },
-  { label: "Hours", value: "h" },
-];
 
 const ProductOrdering = () => {
   const {
@@ -41,35 +33,12 @@ const ProductOrdering = () => {
           desc="0 For Unlimited"
         />
         <IconedNumberInput
-          label="Preperation Time"
+          label="Preperation Time in Minutes"
           Icon={GrServices}
-          errors={errors.prep_time?.time}
+          errors={errors.prep_time}
           min={0}
-          name="prep_time.time"
+          name="prep_time"
           register={register}
-        />
-        <Controller
-          control={control}
-          name="prep_time.unit"
-          render={({ field: { value, onChange } }) => {
-            return (
-              <Select
-                value={
-                  unitsOptions.find((i) => i.value === value) as {
-                    value: string;
-                    label: string;
-                  }
-                }
-                options={unitsOptions}
-                label="Unit"
-                getOptionLabel={(option) => option.label}
-                getOptionValue={(option) => option.value}
-                errors={errors.prep_time?.unit}
-                defaultValue="m"
-                onChange={(val) => onChange(val.value)}
-              />
-            );
-          }}
         />
       </Grid>
       <Grid cols="1fr 1fr" gap="3.5rem">

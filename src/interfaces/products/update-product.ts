@@ -1,4 +1,4 @@
-import { PRODUCT_OPTION } from "../products/create-new-product";
+import { PRODUCT_OPTION } from "./products";
 
 export interface EDIT_PRODUCT_GENERAL_INFO {
   name: {

@@ -35,6 +35,7 @@ declare module "styled-components" {
     font: FontWeights;
     dangerRed: string;
     border: string;
+    borderDanger: string;
     seperator: string;
     maxWidthMd: string;
     maxWidthLg: string;

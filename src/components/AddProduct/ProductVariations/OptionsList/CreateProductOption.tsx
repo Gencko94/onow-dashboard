@@ -3,7 +3,7 @@ import { BiPlus } from "react-icons/bi";
 import { MdSubtitles } from "react-icons/md";
 import { TiDelete } from "react-icons/ti";
 import styled from "styled-components";
-import { PRODUCT_OPTION } from "../../../../interfaces/products/create-new-product";
+import { NEW_PRODUCT_OPTION } from "../../../../interfaces/products/create-new-product";
 import Button from "../../../reusable/Button";
 
 import IconedNumberInput from "../../../reusable/IconedNumberInput";
@@ -13,7 +13,7 @@ import Flex from "../../../StyledComponents/Flex";
 import Grid from "../../../StyledComponents/Grid";
 import Heading from "../../../StyledComponents/Heading";
 import { secondTabProps } from "../CreateProductPricingAndOptions";
-import OptionValue from "./OptionValue";
+import OptionValue from "./CreateProductOptionValue";
 const selectTypes = [
   { value: "single", label: "Single Select" },
   { value: "multiple", label: "Multiple Select" },
@@ -23,12 +23,12 @@ const requiredOptions = [
   { value: true, label: "Yes" },
 ];
 interface IProps {
-  option: PRODUCT_OPTION;
+  option: NEW_PRODUCT_OPTION;
   index: number;
   removeOption: (index?: number | number[] | undefined) => void;
 }
 
-const Variation = ({ option, index, removeOption }: IProps) => {
+const CreateProductOption = ({ option, index, removeOption }: IProps) => {
   const {
     control,
     watch,
@@ -193,7 +193,7 @@ const Variation = ({ option, index, removeOption }: IProps) => {
   );
 };
 
-export default Variation;
+export default CreateProductOption;
 const Container = styled.div(
   ({ theme: { breakpoints, border, dangerRed } }) => `
   border: ${border};

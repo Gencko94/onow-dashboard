@@ -118,7 +118,49 @@ input , textarea {
 }
 input:focus, textarea:focus {
   border-color:${borderHovered} !important;
+}
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+  z-index: 2;
+}
 
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+.ReactModal__Content {
+  transition: transform 200ms ease-in-out;
+  border-radius: 6px !important;
+  transform: translateY(100%);
+  padding: 0 !important;
+
+}
+
+.ReactModal__Content--after-open {
+  transform: translateY(0);
+}
+.new-option-modal {
+  position:absolute;
+  inset:130px 40px;
+  border:none;
+  outline:none;
+  background-color:#fff;
+  box-shadow:${shadow};
+}
+.new-option-value-modal {
+  position:absolute;
+  inset:110px 40px;
+  border:none;
+  outline:none;
+  background-color:#fff;
+  box-shadow:${shadow};
+}
+.ReactModal__Content--before-close {
+  transform: translateY(100%);
 }
 @media ${breakpoints.md}{
   h1 {
@@ -146,7 +188,17 @@ input:focus, textarea:focus {
     font-size:1rem;
     line-height:1.25rem; 
   }
+  .new-option-modal {
+    inset:340px;
+    
+    background-color:#fff;
+  }
+  .new-option-value-modal {
+    inset:340px;
+    background-color:#fff;
+  }
 }
+
 `
 );
 

@@ -33,18 +33,20 @@ export const product1: PRODUCT = {
   slug: "slug",
   options: [
     {
+      id: 1,
       name: { en: "Size", ar: "المقاس" },
-      select_type: "single",
+      selectType: "single",
       required: true,
       max_picks: 1,
       values: [
         {
+          id: 1,
           name: {
             ar: "صغير",
             en: "Small",
           },
           price: "0.3",
-          qty: 2,
+          quantity: 2,
           sku: "fdsa",
         },
       ],
@@ -54,10 +56,7 @@ export const product1: PRODUCT = {
   allow_side_notes: true,
   branch_availability: { all: true, branches: [] },
   max_qty_per_user: 2,
-  prep_time: {
-    time: 2,
-    unit: "minutes",
-  },
+  prep_time: 2,
 };
 
 export const products: PRODUCT[] = [product1];

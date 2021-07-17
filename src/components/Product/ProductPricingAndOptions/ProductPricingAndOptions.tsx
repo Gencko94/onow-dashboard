@@ -4,8 +4,7 @@ import { useMutation } from "react-query";
 import styled from "styled-components";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
-import { PRODUCT_OPTION } from "../../../interfaces/products/create-new-product";
-import { PRODUCT } from "../../../interfaces/products/products";
+import { PRODUCT, PRODUCT_OPTION } from "../../../interfaces/products/products";
 import extractError from "../../../utils/extractError";
 import { editProductPriceAndOptions } from "../../../utils/queries/productQueries";
 import Button from "../../reusable/Button";
@@ -26,7 +25,7 @@ export interface FORM_PROPS {
 const ProductPricingAndOptions = ({ data }: IProps) => {
   const methods = useForm<FORM_PROPS>({
     defaultValues: {
-      options: data.options,
+      // options: data.options,
       price_by_options: data.price_by_options,
       price: data.price,
       options_enabled: data.options.length > 0 ? true : false,
@@ -100,7 +99,7 @@ const ProductPricingAndOptions = ({ data }: IProps) => {
       <FormProvider {...methods}>
         <ProductPricing />
         <Hr />
-        <ProductOptions />
+        <ProductOptions options={data.options} />
       </FormProvider>
     </Container>
   );

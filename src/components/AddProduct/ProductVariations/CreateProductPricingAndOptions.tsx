@@ -8,7 +8,7 @@ import {
   SubmitHandler,
   useForm,
 } from "react-hook-form";
-import { PRODUCT_OPTION } from "../../../interfaces/products/create-new-product";
+import { NEW_PRODUCT_OPTION } from "../../../interfaces/products/create-new-product";
 import Flex from "../../StyledComponents/Flex";
 import { useContext } from "react";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
@@ -17,7 +17,7 @@ export interface secondTabProps {
   price: number;
   price_by_options: boolean;
   options_enabled: boolean;
-  options: PRODUCT_OPTION[];
+  options: NEW_PRODUCT_OPTION[];
 }
 
 const CreateProductPricingAndOptions = () => {

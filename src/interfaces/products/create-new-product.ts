@@ -15,10 +15,7 @@ export interface NEW_PRODUCT {
   price: number;
   price_by_options: boolean;
 
-  prep_time: {
-    time: number;
-    unit: string;
-  };
+  prep_time: number;
   allow_side_notes: boolean;
   allow_attachments: boolean;
   max_qty_per_user: number;
@@ -28,7 +25,7 @@ export interface NEW_PRODUCT {
     branches: number[];
   };
 
-  options: PRODUCT_OPTION[];
+  options: NEW_PRODUCT_OPTION[];
 }
 export type PRODUCT_PROMOTION = {
   type: "product_price" | "option_price";
@@ -37,17 +34,17 @@ export type PRODUCT_PROMOTION = {
   sale_end_date: string;
   values_skus: string[];
 };
-export type PRODUCT_OPTION = {
+export type NEW_PRODUCT_OPTION = {
   select_type: "single" | "multiple";
   max_picks: number | undefined;
   name: {
     [key: string]: string;
   };
   required: boolean;
-  values: OPTION_VALUE[];
+  values: NEW_OPTION_VALUE[];
 };
 
-export type OPTION_VALUE = {
+export type NEW_OPTION_VALUE = {
   name: {
     [key: string]: string;
   };
@@ -82,5 +79,5 @@ export interface NEW_PRODUCT_FORM_PROPS {
     branches: number[];
   };
   promotions: PRODUCT_PROMOTION;
-  options: PRODUCT_OPTION[];
+  options: NEW_PRODUCT_OPTION[];
 }

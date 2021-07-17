@@ -1,25 +1,22 @@
 import { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
-import styled from "styled-components";
-
 import GithubInput from "../../reusable/Inputs/GithubInput";
 import Heading from "../../StyledComponents/Heading";
 import Hr from "../../StyledComponents/Hr";
 import { secondTabProps } from "./CreateProductPricingAndOptions";
-
-import Options from "./Options/Options";
+import CreateProductOptionsList from "./OptionsList/CreateProductOptionsList";
 
 const CreateProductOptions = () => {
   const { control, watch, setValue, clearErrors } =
     useFormContext<secondTabProps>();
   const priceFromVariationsEnabled = watch("price_by_options");
-  const variationsEnabled = watch("options_enabled");
+  const optionsEnabled = watch("options_enabled");
   useEffect(() => {
-    if (!variationsEnabled) {
+    if (!optionsEnabled) {
       clearErrors("options");
     }
-  }, [variationsEnabled]);
+  }, [optionsEnabled]);
   return (
     <div>
       <Heading color="primary" tag="h5" mb="1.5rem" weight="semibold">
@@ -48,10 +45,12 @@ const CreateProductOptions = () => {
         )}
       />
 
-      {variationsEnabled && (
+      {optionsEnabled && (
         <>
           <Hr />
-          <Options priceFromVariationsEnabled={priceFromVariationsEnabled} />
+          <CreateProductOptionsList
+            priceFromVariationsEnabled={priceFromVariationsEnabled}
+          />
         </>
       )}
     </div>
@@ -59,20 +58,3 @@ const CreateProductOptions = () => {
 };
 
 export default CreateProductOptions;
-const Container = styled.div(
-  ({ theme: { breakpoints, mainColor } }) => `
-    // .inputs-container {
-    //     display: grid;
-    //     grid-template-columns: 1fr;
-    //     gap:1rem;
-    // }
-    // @media ${breakpoints.md}{
-    //     .inputs-container {
-           
-    //         grid-template-columns: 1fr 1fr 1fr;
-    //     }
-
-
-    // }
-    `
-);

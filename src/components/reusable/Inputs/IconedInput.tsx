@@ -113,19 +113,18 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       borderHovered,
       dangerRed,
       accent1,
+      borderDanger,
     },
     error,
     rtl,
   }) => `
-
-
   label {
     color: ${textPrimary};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
     font-weight: ${font.regular};
     display: block;
-  };
+  }
   .input-container {
     display: flex;
     position: relative;
@@ -134,39 +133,32 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
 
     background-color: #fff;
     color: ${textPrimary};
-    border: ${border};
+    border: ${error ? borderDanger : border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
+   
     .icon {
       padding: 0.4rem;
       display: flex;
       align-items: center;
       justify-content: center;
       color: ${mainColor};
-      
-      
-    };
+    }
 
     input {
       flex: 1;
       padding: 0.4rem;
       font-size: 0.8rem;
       width: 50px;
-    };
+    }
     &:hover,
     &:focus-within {
       border-color: ${borderHovered};
       background:${accent1}
    
     }
-    ${
-      error &&
-      css`
-        border-color: ${dangerRed} !important;
-      `
-    }
-  };
+  }
 
   .desc {
     font-size: 0.7rem;
@@ -174,12 +166,12 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     height: 22px;
 
     color: ${mainColor};
-  };
+  }
   @media  ${breakpoints.md}{
     label {
       font-size: 0.9rem;
       margin-bottom: 0.75rem;
-    };
+    }
     .input-container{
       
       input {

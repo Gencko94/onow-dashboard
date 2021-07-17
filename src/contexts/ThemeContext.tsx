@@ -39,6 +39,7 @@ const ThemeProvider: React.FC = ({ children }) => {
       maxWidthMd: "960px",
       maxWidthLg: "1100px",
       yellow: "#f5a623",
+      borderDanger: "1px solid #e23e3eac",
       primary: Color(theme.mainColor).lighten(0.2).hex(),
       primaryLighter: Color(theme.mainColor).lighten(0.2).hex(),
       primaryDarker: Color(theme.mainColor).darken(0.2).hex(),

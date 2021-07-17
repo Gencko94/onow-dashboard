@@ -38,10 +38,6 @@ const CreateNewProduct = () => {
     max_qty_per_user: "0",
     active: 1,
     quantity: "unlimited",
-    prep_time: {
-      time: "0",
-      unit: "minutes",
-    },
   });
 
   const updateData = (data: any) => {
@@ -72,8 +68,8 @@ const CreateNewProduct = () => {
         name: data.name,
         thumbnail: data.thumbnail!,
         options: data.options,
-        prep_time: data.prep_time,
-        price: data.price,
+        prep_time: parseInt(data.prep_time),
+        price: data.price ?? null,
         price_by_options: data.price_by_options,
         sku: data.sku,
         slug: data.slug,

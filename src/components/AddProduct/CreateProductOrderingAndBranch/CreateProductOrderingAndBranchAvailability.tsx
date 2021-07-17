@@ -17,10 +17,7 @@ import { NEW_PRODUCT } from "../../../interfaces/products/create-new-product";
 
 export interface thirdTabProps {
   max_qty_per_user: number;
-  prep_time: {
-    time: number;
-    unit: string;
-  };
+  prep_time: number;
   allow_side_notes: boolean;
   allow_attachments: boolean;
   active: 0 | 1;
@@ -86,7 +83,6 @@ const CreateProductOrderingAndBranchAvailability = ({ submitForm }: IProps) => {
             textSize="0.9rem"
             text="Create New Product"
             onClick={() => {
-              console.log("hi");
               methods.handleSubmit(onSubmit, onError);
             }}
           />

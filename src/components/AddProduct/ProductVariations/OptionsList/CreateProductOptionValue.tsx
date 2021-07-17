@@ -5,6 +5,7 @@ import { MdSubtitles } from "react-icons/md";
 import { RiHandCoinLine } from "react-icons/ri";
 import { TiDelete } from "react-icons/ti";
 import styled from "styled-components";
+import Button from "../../../reusable/Button";
 
 import IconedInput from "../../../reusable/Inputs/IconedInput";
 import PrefixedIconedInput from "../../../reusable/Inputs/PrefixedIconedInput";
@@ -19,7 +20,7 @@ interface IProps {
   valuesCount: number;
 }
 
-const OptionValue = ({
+const CreateProductOptionValue = ({
   index,
   parentIndex,
   removeValue,
@@ -40,7 +41,7 @@ const OptionValue = ({
 
   return (
     <Container>
-      <Flex items="center" justify="space-between" margin="0 0 1rem 0">
+      {/* <Flex items="center" justify="space-between" margin="0 0 1rem 0">
         <Heading tag="h6" color="subheading">
           Option {parentIndex + 1} Value {index + 1}
         </Heading>
@@ -53,7 +54,7 @@ const OptionValue = ({
         >
           <TiDelete size={30} />
         </button>
-      </Flex>
+      </Flex> */}
       <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
         <IconedInput
           Icon={MdSubtitles}
@@ -95,11 +96,12 @@ const OptionValue = ({
           defaultValue={options?.[index].qty}
         />
       </Grid>
+      <Button text="Save" padding="0.25rem" bg="green" />
     </Container>
   );
 };
 
-export default OptionValue;
+export default CreateProductOptionValue;
 const Container = styled.div(
   ({ theme: { breakpoints, border, dangerRed, accent2 } }) => `
   background-color: ${accent2};

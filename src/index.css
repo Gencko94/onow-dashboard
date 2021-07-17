@@ -94,33 +94,6 @@
 .react-calendar__navigation button {
   min-width: 35px;
 }
-.ReactModal__Overlay {
-  opacity: 0;
-  transition: opacity 200ms ease-in-out;
-  z-index: 2;
-}
-
-.ReactModal__Overlay--after-open {
-  opacity: 1;
-}
-
-.ReactModal__Overlay--before-close {
-  opacity: 0;
-}
-.ReactModal__Content {
-  transition: transform 200ms ease-in-out;
-  border-radius: 6px !important;
-  transform: translateY(100%);
-  padding: 0 !important;
-}
-
-.ReactModal__Content--after-open {
-  transform: translateY(0);
-}
-
-.ReactModal__Content--before-close {
-  transform: translateY(100%);
-}
 
 /* React Toggle */
 .react-custom-toggle.react-toggle--checked .react-toggle-track {

@@ -10,11 +10,6 @@ import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
 import { thirdTabProps } from "./CreateProductOrderingAndBranchAvailability";
 
-const unitsOptions = [
-  { label: "Minutes", value: "m" },
-  { label: "Hours", value: "h" },
-];
-
 const CreateProductOrdering = () => {
   const {
     register,
@@ -40,35 +35,12 @@ const CreateProductOrdering = () => {
           desc="0 For Unlimited"
         />
         <IconedNumberInput
-          label="Preperation Time"
+          label="Preperation Time in Minutes"
           Icon={GrServices}
-          errors={errors.prep_time?.time}
+          errors={errors.prep_time}
           min={0}
-          name="prep_time.time"
+          name="prep_time"
           register={register}
-        />
-        <Controller
-          control={control}
-          name="prep_time.unit"
-          render={({ field: { value, onChange } }) => {
-            return (
-              <Select
-                value={
-                  unitsOptions.find((i) => i.value === value) as {
-                    value: string;
-                    label: string;
-                  }
-                }
-                options={unitsOptions}
-                label="Unit"
-                getOptionLabel={(option) => option.label}
-                getOptionValue={(option) => option.value}
-                errors={errors.prep_time?.unit}
-                defaultValue="m"
-                onChange={(val) => onChange(val.value)}
-              />
-            );
-          }}
         />
       </Grid>
       <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="2rem">

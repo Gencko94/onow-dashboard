@@ -5,13 +5,14 @@ import { BiPlus } from "react-icons/bi";
 import styled from "styled-components";
 
 import Button from "../../../reusable/Button";
+import EmptyTable from "../../../reusable/EmptyTable";
 import Flex, { FlexWrapper } from "../../../StyledComponents/Flex";
 import Heading from "../../../StyledComponents/Heading";
 import { secondTabProps } from "../CreateProductPricingAndOptions";
 
-import Option from "./Option";
+import Option from "./CreateProductOption";
 
-const Options = ({
+const CreateProductOptionsList = ({
   priceFromVariationsEnabled,
 }: {
   priceFromVariationsEnabled: boolean;
@@ -55,7 +56,31 @@ const Options = ({
         Options :
       </Heading>
       {/* If No Options Show this */}
-
+      {/* <EmptyTable
+        text="You have not added any options"
+        height="200px"
+        withButton
+        btnText="Add new Option"
+        cb={() => {
+          append({
+            max_picks: 0,
+            required: priceByOptions ? true : false,
+            name: { ar: "", en: "" },
+            select_type: "single",
+            values: [
+              {
+                name: {
+                  ar: "",
+                  en: "",
+                },
+                price: "",
+                qty: 0,
+                sku: "",
+              },
+            ],
+          });
+        }}
+      /> */}
       {fields.length > 0 && (
         <>
           <div className="list">
@@ -104,4 +129,4 @@ const Options = ({
   );
 };
 
-export default Options;
+export default CreateProductOptionsList;

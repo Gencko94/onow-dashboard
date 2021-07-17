@@ -8,11 +8,7 @@ import Grid from "../../StyledComponents/Grid";
 import PrefixedIconedInput from "../../reusable/Inputs/PrefixedIconedInput";
 import { IoPricetagsOutline } from "react-icons/io5";
 import DateIconedInput from "../../reusable/Inputs/DateIconedInput";
-import {
-  NEW_PRODUCT_FORM_PROPS,
-  OPTION_VALUE,
-  PRODUCT_OPTION,
-} from "../../../interfaces/products/create-new-product";
+import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
 
 const promotionTypeOptions = [
   {

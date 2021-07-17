@@ -417,7 +417,9 @@ export const createProduct = async (product: NEW_PRODUCT) => {
     JSON.stringify(product.branch_availability)
   );
   formData.append("options", JSON.stringify(product.options));
-  formData.append("quantity", JSON.stringify(product.quantity) as any);
+  if (product.quantity) {
+    formData.append("quantity", JSON.stringify(product.quantity) as any);
+  }
   formData.append("product_category_id", product.product_category_id as any);
   formData.append("active", product.active as any);
   formData.append("slug", JSON.stringify(product.slug));
@@ -432,6 +434,142 @@ export const createProduct = async (product: NEW_PRODUCT) => {
   return res.data.results;
 };
 
+// Add Product Option
+export const addProductOption = async ({
+  productId,
+  option,
+}: {
+  productId: number;
+  option: any;
+}) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.post(
+    `${customerUri}/products/${productId}/option`,
+    option,
+    config
+  );
+  return res.data.results;
+};
+// Add Product Option Value
+export const addProductOptionValue = async ({
+  productId,
+  optionId,
+  value,
+}: {
+  productId: number;
+  optionId: number;
+  value: any;
+}) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.post(
+    `${customerUri}/products/${productId}/option/${optionId}`,
+    value,
+    config
+  );
+  return res.data.results;
+};
+// Edit Product Option
+export const editProductOption = async ({
+  productId,
+  optionId,
+  option,
+}: {
+  productId: number;
+  optionId: number;
+  option: any;
+}) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/products/${productId}/option/${optionId}`,
+    option,
+    config
+  );
+  return res.data.results;
+};
+// Edit Product Option Value
+export const editProductOptionValue = async ({
+  productId,
+  optionId,
+  valueId,
+  value,
+}: {
+  productId: number;
+  optionId: number;
+  valueId: number;
+  value: any;
+}) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/products/${productId}/option/${optionId}/${valueId}`,
+    value,
+    config
+  );
+  return res.data.results;
+};
+// Delete Product Option
+export const deleteProductOption = async ({
+  productId,
+  optionId,
+}: {
+  productId: number;
+  optionId: number;
+}) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.delete(
+    `${customerUri}/products/${productId}/option/${optionId}`,
+
+    config
+  );
+  return res.data.results;
+};
+// Delete Product Option Value
+export const deleteProductOptionValue = async ({
+  productId,
+  optionId,
+  valueId,
+}: {
+  productId: number;
+  optionId: number;
+  valueId: number;
+}) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.delete(
+    `${customerUri}/products/${productId}/option/${optionId}/${valueId}`,
+
+    config
+  );
+  return res.data.results;
+};
 //Activation
 export const activateProduct = async ({
   id,

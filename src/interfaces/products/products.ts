@@ -1,5 +1,3 @@
-import { PRODUCT_OPTION } from "./create-new-product";
-
 export type PRODUCTS_VIEW = "list" | "grid";
 export type PRODUCT_TYPE = {
   id: number;
@@ -49,14 +47,31 @@ export type PRODUCT = {
   price_by_options: boolean;
   options: PRODUCT_OPTION[];
   max_qty_per_user: number;
-  prep_time: {
-    time: number;
-    unit: string;
-  };
+
+  prep_time: number;
   allow_side_notes: boolean;
   allow_attachments: boolean;
   branch_availability: {
     all: boolean;
     branches: number[];
   };
+};
+export type OPTION_VALUE = {
+  id: number;
+  name: {
+    [key: string]: string;
+  };
+  price: string;
+  quantity: number | null;
+  sku: string;
+};
+export type PRODUCT_OPTION = {
+  id: number;
+  selectType: "single" | "multiple";
+  max_picks: number | undefined;
+  name: {
+    [key: string]: string;
+  };
+  required: boolean;
+  values: OPTION_VALUE[];
 };
