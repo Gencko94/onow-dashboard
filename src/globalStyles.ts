@@ -143,13 +143,16 @@ input:focus, textarea:focus {
 .ReactModal__Content--after-open {
   transform: translateY(0);
 }
-.new-option-modal {
+.modal {
   position:absolute;
-  inset:130px 40px;
   border:none;
   outline:none;
   background-color:#fff;
   box-shadow:${shadow};
+
+}
+.new-option-modal {
+  inset:130px 40px;
 }
 .new-option-value-modal {
   position:absolute;
@@ -158,6 +161,13 @@ input:focus, textarea:focus {
   outline:none;
   background-color:#fff;
   box-shadow:${shadow};
+}
+.maintenance-modal {
+  inset:240px;
+}
+.customer-modal {
+  
+  inset:215px 140px;
 }
 .ReactModal__Content--before-close {
   transform: translateY(100%);
@@ -196,6 +206,10 @@ input:focus, textarea:focus {
   .new-option-value-modal {
     inset:340px;
     background-color:#fff;
+  }
+  .customer-modal {
+  
+    inset:200px 240px;
   }
 }
 

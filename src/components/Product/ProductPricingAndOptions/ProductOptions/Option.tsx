@@ -116,7 +116,7 @@ const Option = ({ option, index, removeOption }: IProps) => {
             Select Type
           </Heading>
           <Heading tag="h6" color="subheading">
-            {option.selectType}
+            {option.select_type}
           </Heading>
         </div>
         <div>

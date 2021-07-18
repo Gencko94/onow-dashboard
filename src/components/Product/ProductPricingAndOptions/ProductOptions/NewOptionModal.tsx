@@ -48,7 +48,7 @@ interface ModalProps {
 }
 
 type NEW_OPTION = {
-  selectType: "single" | "multiple";
+  select_type: "single" | "multiple";
   max_picks: number | undefined;
   name: {
     [key: string]: string;
@@ -70,7 +70,7 @@ const NewOptionModal = ({
     watch,
     formState: { errors },
   } = useForm<NEW_OPTION>({ shouldUnregister: true });
-  const selectType = watch("selectType");
+  const selectType = watch("select_type");
   const required = watch("required");
   const onSubmit: SubmitHandler<NEW_OPTION> = (data) => {
     successFunction(data);
@@ -80,7 +80,7 @@ const NewOptionModal = ({
       isOpen={isOpen}
       onRequestClose={closeFunction}
       closeTimeoutMS={200}
-      className="new-option-modal"
+      className="new-option-modal modal"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Body>
@@ -107,7 +107,7 @@ const NewOptionModal = ({
             />
             <Controller
               control={control}
-              name={`selectType`}
+              name={`select_type`}
               render={({ field: { value, onChange, ref } }) => {
                 return (
                   <Select
@@ -120,7 +120,7 @@ const NewOptionModal = ({
                     }
                     options={selectTypes}
                     defaultValue={value}
-                    errors={errors?.selectType}
+                    errors={errors?.select_type}
                     getOptionLabel={(option) => option.label}
                     getOptionValue={(option) => option.value}
                     label="Option Type"

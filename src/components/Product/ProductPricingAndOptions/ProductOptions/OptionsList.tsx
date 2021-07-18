@@ -131,7 +131,7 @@ const OptionsList = ({ productOptions }: OptionsListProps) => {
           append({
             id: 432,
             required: vals.required,
-            selectType: vals.selectType,
+            select_type: vals.select_type,
             name: vals.name,
             max_picks: undefined,
             values: [],

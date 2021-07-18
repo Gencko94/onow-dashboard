@@ -35,7 +35,7 @@ export const product1: PRODUCT = {
     {
       id: 1,
       name: { en: "Size", ar: "المقاس" },
-      selectType: "single",
+      select_type: "single",
       required: true,
       max_picks: 1,
       values: [

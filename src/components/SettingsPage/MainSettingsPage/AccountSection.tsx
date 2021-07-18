@@ -1,10 +1,12 @@
 import { FcSettings, FcPositiveDynamic } from "react-icons/fc";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import SettingsCard from "../../reusable/SettingsCard";
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
 
 const AccountSection = () => {
+  const history = useHistory();
   return (
     <Container>
       <Heading tag="h4" color="primary" mb="2rem">
@@ -17,14 +19,14 @@ const AccountSection = () => {
       >
         <SettingsCard
           title="Account Settings"
-          target="/settings/account-settings"
+          cb={() => history.push("settings/account-settings")}
           Icon={FcSettings}
           desc="Preview & Edit Account Information"
         />
 
         <SettingsCard
           title="Subscription"
-          target="/settings/subscription"
+          cb={() => history.push("/settings/subscription")}
           Icon={FcPositiveDynamic}
           desc="Manage your subscription at O-Now "
         />

@@ -57,7 +57,6 @@ export const updateUserAccount = async (user: USER): Promise<USER> => {
       last_name: user.last_name,
       email: user.email,
       phone: user.phone,
-      country_id: 1,
     },
     config
   );

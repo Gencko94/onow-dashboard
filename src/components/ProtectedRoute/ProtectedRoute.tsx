@@ -10,7 +10,7 @@ import ErrorBoundaryComponent from "../reusable/ErrorBoundaryComponent";
 
 interface IProps {
   path: string;
-  Component: React.FC<{ storeId: number }>;
+  Component: React.FC;
 }
 
 export default function ProtectedRoute({ Component, path }: IProps) {
@@ -39,7 +39,7 @@ export default function ProtectedRoute({ Component, path }: IProps) {
                     FallbackComponent={ErrorBoundaryComponent}
                     onReset={reset}
                   >
-                    <Component storeId={user?.store.id} />{" "}
+                    <Component />{" "}
                   </ErrorBoundary>
                 )}
               </QueryErrorResetBoundary>

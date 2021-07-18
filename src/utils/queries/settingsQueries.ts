@@ -64,3 +64,17 @@ export const editStoreSocialMedia = async (data: STORE_SOCIAL_NETWORK) => {
   );
   return res.data.results;
 };
+export const toggleMaintenanceMode = async (status: boolean) => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.post(
+    `${customerUri}/store-maintenance/1`,
+    { maintenance: status },
+    config
+  );
+  return res.data.results;
+};

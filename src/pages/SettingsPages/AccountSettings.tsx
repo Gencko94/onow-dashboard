@@ -61,7 +61,9 @@ const AccountSettings = () => {
       console.log(responseError);
 
       if (responseError) {
-        console.log(responseError);
+        if (responseError.phone?.includes("phone belongs to another account")) {
+          setError("phone", { message: "This phone belongs to other user" });
+        }
       } else {
         setToastStatus?.({
           open: true,

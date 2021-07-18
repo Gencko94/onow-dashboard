@@ -1,4 +1,5 @@
 import React, { Suspense, useEffect, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { CSSTransition } from "react-transition-group";
 import styled, { css } from "styled-components";
 import DesktopNavbar from "../components/DesktopNavbar/DesktopNavbar";
@@ -61,62 +62,75 @@ const Layout: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <ContentContainer>
-      <CSSTransition
-        in={toastStatus?.open}
-        classNames="error-toast"
-        unmountOnExit
-        timeout={200}
-      >
-        <Toast
-          text={toastStatus!.text}
-          btnText="Close"
-          closeFunction={() => toastStatus?.fn()}
-          type={toastStatus!.type}
+    <ErrorBoundary
+      fallbackRender={({ error, resetErrorBoundary }) => (
+        <div>
+          Error Boundary
+          <button onClick={() => resetErrorBoundary()}>Try again</button>
+          <pre style={{ whiteSpace: "normal" }}>{error.message}</pre>
+        </div>
+      )}
+      onReset={() => {
+        window.location.reload();
+      }}
+    >
+      <ContentContainer>
+        <CSSTransition
+          in={toastStatus?.open}
+          classNames="error-toast"
+          unmountOnExit
+          timeout={200}
+        >
+          <Toast
+            text={toastStatus!.text}
+            btnText="Close"
+            closeFunction={() => toastStatus?.fn()}
+            type={toastStatus!.type}
+          />
+        </CSSTransition>
+        <CSSTransition
+          in={drawerOpen}
+          timeout={250}
+          classNames="side-menu"
+          unmountOnExit
+        >
+          <Sidebar isDesktop={isDesktop} setDrawerOpen={setDrawerOpen} />
+        </CSSTransition>
+        <CSSTransition
+          in={showScrollToTop}
+          timeout={250}
+          classNames="scroll-btn"
+          unmountOnExit
+        >
+          <ScrollToTop />
+        </CSSTransition>
+        <ConfirmationModal
+          isOpen={confirmationModalStatus!.open}
+          closeFunction={confirmationModalStatus!.closeCb}
+          desc={confirmationModalStatus!.desc}
+          successButtonText="Delete"
+          successFunction={confirmationModalStatus!.successCb}
+          title={confirmationModalStatus!.title}
+          styles={{
+            content: {
+              top: "50%",
+              left: "50%",
+              right: "auto",
+              bottom: "auto",
+              marginRight: "-50%",
+              transform: "translate(-50%, -50%)",
+            },
+          }}
         />
-      </CSSTransition>
-      <CSSTransition
-        in={drawerOpen}
-        timeout={250}
-        classNames="side-menu"
-        unmountOnExit
-      >
-        <Sidebar isDesktop={isDesktop} setDrawerOpen={setDrawerOpen} />
-      </CSSTransition>
-      <CSSTransition
-        in={showScrollToTop}
-        timeout={250}
-        classNames="scroll-btn"
-        unmountOnExit
-      >
-        <ScrollToTop />
-      </CSSTransition>
-      <ConfirmationModal
-        isOpen={confirmationModalStatus!.open}
-        closeFunction={confirmationModalStatus!.closeCb}
-        desc={confirmationModalStatus!.desc}
-        successButtonText="Delete"
-        successFunction={confirmationModalStatus!.successCb}
-        title={confirmationModalStatus!.title}
-        styles={{
-          content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-          },
-        }}
-      />
 
-      <Content drawerOpen={drawerOpen}>
-        <DesktopNavbar handleToggleDrawer={handleToggleDrawer} />
-        <Suspense fallback={<Loading />}>
-          <div className="body">{children}</div>
-        </Suspense>
-      </Content>
-    </ContentContainer>
+        <Content drawerOpen={drawerOpen}>
+          <DesktopNavbar handleToggleDrawer={handleToggleDrawer} />
+          <Suspense fallback={<Loading />}>
+            <div className="body">{children}</div>
+          </Suspense>
+        </Content>
+      </ContentContainer>
+    </ErrorBoundary>
   );
 };
 

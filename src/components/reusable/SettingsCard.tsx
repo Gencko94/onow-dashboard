@@ -8,13 +8,14 @@ interface IProps {
   title: string;
   desc: string;
   Icon: IconType;
-  target: string;
+
+  cb: () => void;
 }
 
-const SettingsCard = ({ desc, title, Icon, target }: IProps) => {
+const SettingsCard = ({ desc, title, Icon, cb }: IProps) => {
   const { isDesktop } = useResponsive();
   return (
-    <Container to={target}>
+    <Container onClick={() => cb()}>
       <span className="icon">
         <Icon size={isDesktop ? 45 : 35} />
       </span>
@@ -28,7 +29,7 @@ const SettingsCard = ({ desc, title, Icon, target }: IProps) => {
 };
 
 export default SettingsCard;
-const Container = styled(Link)`
+const Container = styled.div`
   border: ${(props) => props.theme.border};
   border-radius: 6px;
   background-color: #fff;
@@ -36,6 +37,7 @@ const Container = styled(Link)`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  cursor: pointer;
   padding: 1rem;
   transition: all 150ms ease;
   .icon {

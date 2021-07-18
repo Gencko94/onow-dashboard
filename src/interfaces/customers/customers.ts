@@ -4,8 +4,7 @@ export interface NEW_CUSTOMER {
   first_name: string;
   last_name: string;
   phone: string;
-  email?: string;
-  country_id: number;
+  email: string;
 }
 
 export interface CUSTOMER {

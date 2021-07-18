@@ -20,7 +20,7 @@ const ProjectSwitcher = () => {
   // if (user?.store.length === 0) return null;
   return (
     <Container>
-      <Project>
+      {/* <Project>
         <img
           className="logo"
           src={user?.store.logoUrl}
@@ -34,7 +34,7 @@ const ProjectSwitcher = () => {
             <BiLinkExternal size={10} />
           </a>
         </div>
-      </Project>
+      </Project> */}
     </Container>
   );
 };

@@ -83,7 +83,7 @@ const NewOptionValueModal = ({
       isOpen={isOpen}
       onRequestClose={closeFunction}
       closeTimeoutMS={200}
-      className="new-option-value-modal"
+      className="new-option-value-modal modal"
     >
       <form id="1" onSubmit={handleSubmit(onSubmit)}>
         <Body>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   FcPanorama,
   FcGlobe,
@@ -10,12 +11,16 @@ import {
   FcManager,
   FcDocument,
 } from "react-icons/fc";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import SettingsCard from "../../reusable/SettingsCard";
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
+import StoreMaintenanceModal from "../StoreMaintenanceModal";
 
 const StoreSection = () => {
+  const history = useHistory();
+  const [maintenanceModalOpen, setMaintenanceModalOpen] = useState(false);
   return (
     <Container>
       <div className="title">
@@ -30,71 +35,74 @@ const StoreSection = () => {
       >
         <SettingsCard
           title="Store Information"
-          target="/settings/store-information"
+          cb={() => history.push("/settings/store-information")}
           Icon={FcSupport}
           desc="Manage your store information"
         />
         <SettingsCard
           title="Store Identity"
-          target="/settings/store-identity"
+          cb={() => history.push("/settings/store-identity")}
           Icon={FcPanorama}
           desc="Manage your store identity"
         />
         <SettingsCard
           title="Store Branches"
-          target="/settings/branches"
+          cb={() => history.push("/settings/branches")}
           Icon={FcTimeline}
           desc="Manage your store branches"
         />
         <SettingsCard
           title="Store Domain"
-          target="/settings/store-domain"
+          cb={() => history.push("/settings/store-domain")}
           Icon={FcGlobe}
           desc="Manage your store domain name"
         />
         <SettingsCard
           title="Delivery & Shipment"
-          target="/settings/delivery-shipment"
+          cb={() => history.push("/settings/delivery-shipment")}
           Icon={FcInTransit}
           desc="Manage your delivery & shipment methods"
         />
         <SettingsCard
           title="Payment Methods"
-          target="/settings/payment-methods"
+          cb={() => history.push("/settings/payment-methods")}
           Icon={FcMoneyTransfer}
           desc="Manage your orders payment methods"
         />
         <SettingsCard
           title="Store Legal pages"
-          target="/settings/legal-pages"
+          cb={() => history.push("/settings/legal-pages")}
           Icon={FcDocument}
           desc="Pages like Privacy Policy - About Us ..."
         />
-        {/* <SettingsCard
-          title="Store Currencies"
-          target="/settings/store-currencies"
-          Icon={FcCurrencyExchange}
-          desc="Adjust your currencies used throughout your store"
-        /> */}
+
         <SettingsCard
           title="SEO"
-          target="/settings/seo"
+          cb={() => history.push("/settings/seo")}
           Icon={FcSearch}
           desc="Search Engine optimization improvments"
         />
         <SettingsCard
           title="Maintenance Mode"
-          target="/settings/maintenance-mode"
+          cb={() => {
+            setMaintenanceModalOpen(true);
+          }}
           Icon={FcVlc}
           desc="Put your store into maintanance mode "
         />
         <SettingsCard
           title="Store Staff"
-          target="/settings/staff"
+          cb={() => history.push("/settings/staff")}
           Icon={FcManager}
           desc="Manage your staff roles"
         />
       </Grid>
+      <StoreMaintenanceModal
+        isOpen={maintenanceModalOpen}
+        closeFunction={() => {
+          setMaintenanceModalOpen(false);
+        }}
+      />
     </Container>
   );
 };

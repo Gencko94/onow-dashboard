@@ -67,7 +67,7 @@ export type OPTION_VALUE = {
 };
 export type PRODUCT_OPTION = {
   id: number;
-  selectType: "single" | "multiple";
+  select_type: "single" | "multiple";
   max_picks: number | undefined;
   name: {
     [key: string]: string;
