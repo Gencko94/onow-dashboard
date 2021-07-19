@@ -16,6 +16,8 @@ const ProductOrdering = () => {
     formState: { errors },
   } = useFormContext<FORM_PROPS>();
   const allowSideNotes = watch("allow_side_notes");
+  const allowattach = watch("allow_attachments");
+  console.log(allowattach);
   return (
     <Container>
       <div className="title-container">

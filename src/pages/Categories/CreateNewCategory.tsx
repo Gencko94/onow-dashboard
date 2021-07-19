@@ -13,18 +13,18 @@ import extractError from "../../utils/extractError";
 import { createCategory } from "../../utils/queries";
 import CategoryImage from "./CategoryImage";
 
-export interface NEW_CATEGORY_FORM {
+export type NEW_CATEGORY_FORM = {
+  slug: string;
   name: {
     [key: string]: string;
   };
-  slug: string;
   parent_category: CATEGORY;
-  image: File[];
-  active: 0 | 1;
+  image: File;
+  active: boolean;
   description: {
     [key: string]: string;
   };
-}
+};
 
 const CreateNewCategory = () => {
   const history = useHistory();
@@ -34,20 +34,22 @@ const CreateNewCategory = () => {
     register,
     setValue,
     watch,
+    setError,
+
     formState: { errors },
     handleSubmit,
-  } = useForm<NEW_CATEGORY_FORM>();
+  } = useForm<any>({ defaultValues: { active: true } });
   const { mutateAsync: createCategoryMutation, isLoading } =
     useMutation(createCategory);
   const onSubmit: SubmitHandler<NEW_CATEGORY_FORM> = async (data) => {
     console.log(data);
     try {
       await createCategoryMutation({
-        active: 1,
-        image: data.image[0],
+        active: data.active ? 1 : 0,
+        image: data.image ?? null,
         description: data.description,
         name: data.name,
-        parent_id: data.parent_category?.id,
+        parent_id: data.parent_category?.id ?? null,
         slug: data.slug,
       });
       setToastStatus?.({
@@ -60,7 +62,15 @@ const CreateNewCategory = () => {
     } catch (error) {
       const { responseError } = extractError(error);
       if (responseError) {
-        console.log(responseError);
+        if (responseError.slug?.includes("The slug has already been taken.")) {
+          setError(
+            "slug",
+            {
+              message: "Slug has already been taken, Please type another one",
+            },
+            { shouldFocus: true }
+          );
+        }
       } else {
         setToastStatus?.({
           open: true,

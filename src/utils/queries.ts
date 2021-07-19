@@ -43,23 +43,14 @@ export const userLogin = async (data: LOGIN_FORM): Promise<LOGIN_RESPONSE> => {
   const res = await axios.post(`${customerUri}/login`, data);
   return res.data;
 };
-export const updateUserAccount = async (user: USER): Promise<USER> => {
+export const updateUserAccount = async (data: Partial<USER>): Promise<USER> => {
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.post(
-    `${customerUri}/update-user`,
-    {
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-      phone: user.phone,
-    },
-    config
-  );
+  const res = await axios.post(`${customerUri}/update-user`, data, config);
   return res.data.result.userInfo;
 };
 export const changeUserPassword = async ({
@@ -151,7 +142,16 @@ export const editCustomer = async (customer: CUSTOMER): Promise<CUSTOMER> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.put(`${customerUri}/clients`, customer, config);
+  const res = await axios.put(
+    `${customerUri}/clients/${customer.id}`,
+    {
+      first_name: customer.first_name,
+      last_name: customer.last_name,
+      phone: customer.phone,
+      email: customer.email,
+    },
+    config
+  );
   return res.data.results;
 };
 export const deleteCustomer = async (
@@ -404,7 +404,9 @@ export const createProduct = async (product: NEW_PRODUCT) => {
   formData.append("price", product.price as any);
   formData.append("price_by_options", JSON.stringify(product.price_by_options));
   formData.append("sku", product.sku);
-  formData.append("prep_time", JSON.stringify(product.prep_time));
+  if (product.prep_time) {
+    formData.append("prep_time", product.prep_time as any);
+  }
   formData.append("allow_side_notes", JSON.stringify(product.allow_side_notes));
   formData.append(
     "allow_attachments",
@@ -753,8 +755,8 @@ export const activateCategory = async ({
     },
   };
   const res = await axios.put(
-    `${customerUri}/product-categories/product-categories-active/${id}`,
-    { active, _method: "PUT" },
+    `${customerUri}/activate-category/${id}`,
+    { active },
     config
   );
   return res.data.results;
@@ -772,13 +774,16 @@ export const createCategory = async (
     },
   };
   const formData = new FormData();
-  console.log(category.image);
-  formData.append("active", "1");
+  formData.append("active", category.active as any);
   formData.append("name", JSON.stringify(category.name));
   formData.append("description", JSON.stringify(category.description));
-  formData.append("image", category.image);
+  if (category.image) {
+    formData.append("image", category.image);
+  }
+  if (category.parent_id) {
+    formData.append("parent_id", JSON.stringify(category.parent_id));
+  }
   formData.append("slug", category.slug);
-  formData.append("parent_id", JSON.stringify(category.parent_id));
   const res = await axios.post(
     `${customerUri}/product-categories`,
     formData,

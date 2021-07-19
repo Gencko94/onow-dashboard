@@ -2,7 +2,6 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { MdSave } from "react-icons/md";
 import { useMutation } from "react-query";
 import styled from "styled-components";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { PRODUCT, PRODUCT_OPTION } from "../../../interfaces/products/products";
 import extractError from "../../../utils/extractError";
@@ -31,7 +30,6 @@ const ProductPricingAndOptions = ({ data }: IProps) => {
       options_enabled: data.options.length > 0 ? true : false,
     },
   });
-  const { handleCloseConfirmationModal } = useConfirmationModal();
   const { setToastStatus, handleCloseToast } = useToast();
   // Edit Mutation
   const { mutateAsync, reset, isLoading } = useMutation(
@@ -45,7 +43,6 @@ const ProductPricingAndOptions = ({ data }: IProps) => {
         options: formData.options_enabled ? formData.options : [],
         id: data.id,
       });
-      handleCloseConfirmationModal?.();
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -55,8 +52,6 @@ const ProductPricingAndOptions = ({ data }: IProps) => {
         type: "success",
       });
     } catch (error) {
-      handleCloseConfirmationModal?.();
-
       const { responseError } = extractError(error);
       if (responseError) {
         setToastStatus?.({

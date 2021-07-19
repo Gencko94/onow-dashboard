@@ -1,5 +1,6 @@
 import { createContext, Dispatch, SetStateAction, useState } from "react";
 import { useMutation } from "react-query";
+import { useHistory } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -10,6 +11,8 @@ import CreateProductTabs from "../../components/AddProduct/CreateProductTabs/Cre
 import CreateProductPricingAndOptions from "../../components/AddProduct/ProductVariations/CreateProductPricingAndOptions";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
+import useToast from "../../hooks/useToast";
+import extractError from "../../utils/extractError";
 import { createProduct } from "../../utils/queries";
 
 type ContextProps = {
@@ -22,8 +25,14 @@ type ContextProps = {
 export const NewProductContext = createContext<Partial<ContextProps>>({});
 
 const CreateNewProduct = () => {
+  const { setToastStatus, handleCloseToast } = useToast();
   const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3>(0);
-  const { mutateAsync: createProductMutation } = useMutation(createProduct);
+  const {
+    mutateAsync: createProductMutation,
+    isLoading,
+    reset,
+  } = useMutation(createProduct);
+  const history = useHistory();
   const [formValues, setFormValues] = useState({
     allow_attachments: false,
     allow_side_notes: true,
@@ -74,8 +83,31 @@ const CreateNewProduct = () => {
         sku: data.sku,
         slug: data.slug,
       } as any);
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Product Created Successfully",
+        type: "success",
+      });
+      history.push("/products");
     } catch (error) {
       console.log(error);
+      const { responseError } = extractError(error);
+      if (responseError) {
+        console.log(responseError);
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
     }
   };
   return (
@@ -96,7 +128,10 @@ const CreateNewProduct = () => {
         {activeTab === 1 && <CreateProductImage />}
         {activeTab === 2 && <CreateProductPricingAndOptions />}
         {activeTab === 3 && (
-          <CreateProductOrderingAndBranchAvailability submitForm={submitForm} />
+          <CreateProductOrderingAndBranchAvailability
+            formLoading={isLoading}
+            submitForm={submitForm}
+          />
         )}
       </Wrapper>
     </NewProductContext.Provider>

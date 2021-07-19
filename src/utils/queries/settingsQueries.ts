@@ -20,7 +20,7 @@ export const getStoreInformation = async (): Promise<GET_STORE_INFORMATION> => {
 };
 export const editStoreNameAndDescription = async (
   data: STORE_NAME_AND_DESCRIPTION
-) => {
+): Promise<STORE_NAME_AND_DESCRIPTION> => {
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {
@@ -72,7 +72,7 @@ export const toggleMaintenanceMode = async (status: boolean) => {
     },
   };
   const res = await axios.post(
-    `${customerUri}/store-maintenance/1`,
+    `${customerUri}/store-maintenance`,
     { maintenance: status },
     config
   );

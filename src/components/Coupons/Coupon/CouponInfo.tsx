@@ -62,7 +62,7 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
   } = useTranslation();
   return (
     <Container>
-      <Heading tag="h5" color="primary" margin="2rem 0">
+      <Heading tag="h5" color="primary" margin="2rem 0" weight="bold">
         Coupon Information
       </Heading>
 

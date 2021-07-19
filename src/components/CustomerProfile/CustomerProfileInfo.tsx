@@ -9,6 +9,8 @@ import { UseFormRegister } from "react-hook-form";
 import { FieldError } from "react-hook-form";
 import PhoneInput from "../reusable/Inputs/PhoneInput";
 import { format, parseISO } from "date-fns";
+import Flex from "../StyledComponents/Flex";
+import Button from "../reusable/Button";
 interface IProps {
   errors: DeepMap<CUSTOMER, FieldError>;
   register: UseFormRegister<CUSTOMER>;
@@ -63,15 +65,7 @@ const CustomerProfileInfo = ({
             );
           }}
         />
-        {/* <IconedInput
-          Icon={AiOutlinePhone}
-          errors={errors?.phone}
-          register={register}
-          required
-          requiredMessage="Required"
-          label="Phone Number"
-          name="phone"
-        /> */}
+
         <IconedInput
           Icon={AiOutlineMail}
           errors={errors?.email}

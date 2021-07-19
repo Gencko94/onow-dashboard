@@ -79,6 +79,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       borderHovered,
       dangerRed,
       subHeading,
+      borderDanger,
     },
     error,
     rtl,
@@ -98,7 +99,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     
     background-color: #fff;
     color: ${headingColor};
-    border: ${border};
+    border: ${error ? borderDanger : border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
@@ -115,7 +116,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
         rtl &&
         css`
           border-right: none;
-          border-left: ${(props) => props.theme.border};
+          border-left: ${error ? borderDanger : border};
         `
       }
       }
@@ -130,12 +131,6 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       &:focus-within {
         border-color: ${borderHovered};
         background-color: ${inputColorLight};
-      }
-      ${
-        error &&
-        css`
-          border-color: ${(props) => props.theme.dangerRed} !important;
-        `
       }
       }
       .error {

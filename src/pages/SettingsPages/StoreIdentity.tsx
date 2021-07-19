@@ -1,12 +1,15 @@
+import { useContext } from "react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
 import styled from "styled-components";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Grid from "../../components/StyledComponents/Grid";
 import Heading from "../../components/StyledComponents/Heading";
 import Hr from "../../components/StyledComponents/Hr";
-import useConfirmationModal from "../../hooks/useConfirmationModal";
+import { AuthProvider } from "../../contexts/AuthContext";
+
 import useToast from "../../hooks/useToast";
 import { STORE_IDENTITY } from "../../interfaces/settings/store-identity/store-identity";
 import extractError from "../../utils/extractError";
@@ -14,15 +17,20 @@ import MiniFileUploader from "../../utils/MiniFileUploader";
 import { uploadFile } from "../../utils/uploadFile";
 
 const StoreIdentity = () => {
-  const {
-    control,
-    setValue,
-    formState: { errors },
-  } = useForm<STORE_IDENTITY>();
-  const { handleCloseConfirmationModal } = useConfirmationModal();
+  const { user } = useContext(AuthProvider);
+
+  const queryClient = useQueryClient();
+  const { control, setValue } = useForm<STORE_IDENTITY>({
+    defaultValues: {
+      logo: user!.store.logo,
+      favicon: user!.store.favicon,
+    },
+  });
   const { handleCloseToast, setToastStatus } = useToast();
   const [logoProgress, setLogoProgress] = useState<number | null>(null);
   const [iconProgress, setIconProgress] = useState<number | null>(null);
+
+  // Upload Logic
   const handleUploadLogo = async (file: File) => {
     try {
       await uploadFile({
@@ -33,8 +41,12 @@ const StoreIdentity = () => {
         onProgress: setLogoProgress,
       });
       setLogoProgress(null);
+      // Update Logo Form value
       setValue("logo", file);
-      // handleCloseConfirmationModal?.();
+
+      // Update the store logo in the background.
+      queryClient.invalidateQueries("auth");
+      // Show success toast
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -44,8 +56,6 @@ const StoreIdentity = () => {
         type: "success",
       });
     } catch (error) {
-      // handleCloseConfirmationModal?.();
-
       const { responseError } = extractError(error);
       if (responseError) {
         setToastStatus?.({
@@ -53,7 +63,7 @@ const StoreIdentity = () => {
             handleCloseToast?.();
           },
           open: true,
-          text: responseError,
+          text: "Something went wrong",
           type: "error",
         });
       } else {
@@ -79,7 +89,6 @@ const StoreIdentity = () => {
       });
       setIconProgress(null);
       setValue("favicon", file);
-      // handleCloseConfirmationModal?.();
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -89,8 +98,6 @@ const StoreIdentity = () => {
         type: "success",
       });
     } catch (error) {
-      // handleCloseConfirmationModal?.();
-
       const { responseError } = extractError(error);
       if (responseError) {
         setToastStatus?.({
@@ -124,7 +131,7 @@ const StoreIdentity = () => {
       </HeaderContainer>
       <Container>
         <div className="section">
-          <Heading tag="h4" color="primary" margin="1rem 0">
+          <Heading tag="h5" color="primary" margin="1rem 0" weight="semibold">
             Store Logo
           </Heading>
           <Box>
@@ -144,7 +151,6 @@ const StoreIdentity = () => {
                     <MiniFileUploader
                       image={value}
                       onChange={handleUploadLogo}
-                      onRemove={() => {}}
                       accept=".png, .jpg, .jpeg"
                       progress={logoProgress}
                     />
@@ -159,7 +165,7 @@ const StoreIdentity = () => {
         </div>
         <Hr />
         <div className="section">
-          <Heading tag="h4" color="primary" margin="1rem 0">
+          <Heading tag="h5" weight="semibold" color="primary" margin="1rem 0">
             Store Favicon
           </Heading>
           <Box>

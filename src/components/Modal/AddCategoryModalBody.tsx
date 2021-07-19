@@ -13,12 +13,15 @@ import React, { useContext } from "react";
 import { getCategories } from "../../utils/queries";
 import LoadingTable from "../reusable/LoadingTable";
 import DefaultImage from "../reusable/DefaultImage";
+import EmptyTable from "../reusable/EmptyTable";
+import { useHistory } from "react-router-dom";
 
 interface IProps {
   control: Control<firstTabInfo>;
   errors: boolean;
 }
 const AddCategoryModalBody = ({ control, errors }: IProps) => {
+  const history = useHistory();
   const { formValues } = useContext(NewProductContext);
   const formCategory = useWatch({
     name: "category_id",
@@ -64,6 +67,17 @@ const AddCategoryModalBody = ({ control, errors }: IProps) => {
 
   return (
     <>
+      {data?.pages[0].data.length === 0 && (
+        <EmptyTable
+          text="No Categories Found"
+          height="100%"
+          withButton
+          btnText="Create New Category"
+          cb={() => {
+            history.push("/categories/category/create");
+          }}
+        />
+      )}
       <Controller
         control={control}
         name="category_id"

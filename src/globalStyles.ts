@@ -200,16 +200,15 @@ input:focus, textarea:focus {
   }
   .new-option-modal {
     inset:340px;
-    
-    background-color:#fff;
   }
   .new-option-value-modal {
     inset:340px;
-    background-color:#fff;
   }
   .customer-modal {
-  
     inset:200px 240px;
+  }
+  .maintenance-modal {
+    inset:390px 340px;
   }
 }
 

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { BiDetail } from "react-icons/bi";
@@ -17,9 +18,16 @@ const CreateProductNameAndDescription = () => {
     register,
     control,
     watch,
+    setValue,
     formState: { errors },
   } = useFormContext<firstTabInfo>();
   const quantity = watch("quantity");
+  const nameEn = watch("name.en");
+  useEffect(() => {
+    if (nameEn) {
+      setValue?.("slug", nameEn.toLowerCase().split(" ").join("-"));
+    }
+  }, [nameEn]);
   return (
     <Container>
       <Heading color="primary" weight="semibold" tag="h5" margin="1rem 0">

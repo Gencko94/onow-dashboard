@@ -5,10 +5,9 @@ import { MdSubtitles } from "react-icons/md";
 import { RiHandCoinLine } from "react-icons/ri";
 import { TiDelete } from "react-icons/ti";
 import styled from "styled-components";
-import Button from "../../../reusable/Button";
 
 import IconedInput from "../../../reusable/Inputs/IconedInput";
-import PrefixedIconedInput from "../../../reusable/Inputs/PrefixedIconedInput";
+import PrefixedIconedNumberInput from "../../../reusable/Inputs/PrefixedIconedNumberInput";
 import Flex from "../../../StyledComponents/Flex";
 import Grid from "../../../StyledComponents/Grid";
 import Heading from "../../../StyledComponents/Heading";
@@ -41,7 +40,7 @@ const CreateProductOptionValue = ({
 
   return (
     <Container>
-      {/* <Flex items="center" justify="space-between" margin="0 0 1rem 0">
+      <Flex items="center" justify="space-between" margin="0 0 1rem 0">
         <Heading tag="h6" color="subheading">
           Option {parentIndex + 1} Value {index + 1}
         </Heading>
@@ -54,7 +53,7 @@ const CreateProductOptionValue = ({
         >
           <TiDelete size={30} />
         </button>
-      </Flex> */}
+      </Flex>
       <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
         <IconedInput
           Icon={MdSubtitles}
@@ -76,7 +75,7 @@ const CreateProductOptionValue = ({
           requiredMessage="Required"
           required={optionsEnabled}
         />
-        <PrefixedIconedInput
+        <PrefixedIconedNumberInput
           errors={errors?.options?.[parentIndex]?.values?.[index]?.price}
           Icon={IoPricetagsOutline}
           name={`options.${parentIndex}.values.${index}.price`}
@@ -85,6 +84,7 @@ const CreateProductOptionValue = ({
           prefix="KD"
           desc="Leave empty to disable"
           defaultValue={options?.[index].price}
+          min={0}
         />
         <IconedInput
           errors={errors?.options?.[parentIndex]?.values?.[index]?.qty}
@@ -96,7 +96,6 @@ const CreateProductOptionValue = ({
           defaultValue={options?.[index].qty}
         />
       </Grid>
-      <Button text="Save" padding="0.25rem" bg="green" />
     </Container>
   );
 };

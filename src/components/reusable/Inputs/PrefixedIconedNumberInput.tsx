@@ -2,9 +2,8 @@ import { FieldError, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IconType } from "react-icons/lib";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import useResponsive from "../../../hooks/useResponsive";
-import InputErrorMessage from "../InputErrorMessage";
 interface BaseInput {
   /**
    * 	An object with field errors. Obtainable from ```formState.errors```
@@ -37,14 +36,16 @@ interface BaseInput {
    */
   placeholder?: string;
   /**
-   * Default Value
+   * 	Prefix text.
    */
-  defaultValue?: any;
-
+  prefix?: string;
   /**
-   * Disabled Input boolean
+   * Whether the input is disabled
    */
   disabled?: boolean;
+  defaultValue?: any;
+  min: number;
+  max?: number;
 }
 interface RequiredInput extends BaseInput {
   /**
@@ -65,7 +66,7 @@ interface NotRequiredInput extends BaseInput {
 
 type IProps = RequiredInput | NotRequiredInput;
 
-const IconedInput = ({
+const PrefixedIconedNumberInput = ({
   errors,
   register,
   Icon,
@@ -75,13 +76,17 @@ const IconedInput = ({
   requiredMessage,
   placeholder,
   desc,
-  defaultValue,
+  prefix,
   disabled,
+  min,
+  max,
+  defaultValue,
 }: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
   const { isDesktop } = useResponsive();
+
   return (
     <Container rtl={language === "ar"} error={Boolean(errors?.message)}>
       {label && <label>{label}</label>}
@@ -89,45 +94,60 @@ const IconedInput = ({
         <span className="icon">
           <Icon size={isDesktop ? 21 : 19} />
         </span>
-
         <input
-          disabled={disabled}
           defaultValue={defaultValue}
+          type="number"
+          min={min}
+          max={max!}
+          step="any"
+          {...register(name, {
+            required: required ? requiredMessage : false,
+            min: {
+              value: min!,
+              message: "Only Positive",
+            },
+          })}
+        />
+        {/* <input
+          defaultValue={defaultValue}
+          disabled={disabled}
           placeholder={placeholder}
           {...register(name, {
             required: required ? requiredMessage : false,
           })}
-        />
+        /> */}
+        <span className="prefix">{prefix}</span>
       </div>
       {desc && <p className="desc">{desc}</p>}
-
-      <InputErrorMessage msg={errors?.message} />
+      <p className="error">{errors?.message}</p>
     </Container>
   );
 };
 
-export default IconedInput;
+export default PrefixedIconedNumberInput;
 const Container = styled.div<{ rtl: boolean; error: boolean }>(
   ({
     theme: {
       breakpoints,
       font,
-      textPrimary,
-      textSecondary,
+      headingColor,
       border,
-      accent2,
-
+      inputColorLight,
       mainColor,
       borderHovered,
       dangerRed,
+      subHeading,
       accent1,
+      accent2,
+      textPrimary,
+      textSecondary,
       borderDanger,
     },
     error,
     rtl,
   }) => `
   label {
-    color: ${textPrimary};
+    color: ${headingColor};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
     font-weight: ${font.regular};
@@ -140,16 +160,11 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     justify-content: center;
 
     background-color: #fff;
-    color: ${textPrimary};
+    color: ${headingColor};
     border: ${error ? borderDanger : border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
-    input:disabled {
-     background-color:${accent2};
-     cursor:not-allowed;
-     
-   } 
     .icon {
       padding: 0.4rem;
       display: flex;
@@ -157,6 +172,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       justify-content: center;
       color: ${mainColor};
       
+     
     }
 
     input {
@@ -164,15 +180,23 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       padding: 0.4rem;
       font-size: 0.8rem;
       width: 50px;
+      &:disabled {
+        background-color: ${accent2};
+      }
     }
     &:hover,
     &:focus-within {
       border-color: ${borderHovered};
-      background:${accent1}
+      background-color: ${accent1};
     }
-    
+  
   }
-
+  .error {
+    font-size: 0.7rem;
+    padding-top: 0.25rem;
+    height: 22px;
+    color: ${dangerRed};
+  }
   .desc {
     font-size: 0.7rem;
     padding-top: 0.25rem;
@@ -180,18 +204,32 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
 
     color: ${mainColor};
   }
+  .prefix {
+    padding: 0.4rem;
+    display: flex;
+    font-size: 0.7rem;
+    align-items: center;
+    justify-content: center;
+    color: ${textSecondary};
+    font-weight:${font.semibold};
+    background-color: ${accent2};
+    
+   
+  }
   @media  ${breakpoints.md}{
     label {
       font-size: 0.9rem;
       margin-bottom: 0.75rem;
-    }
+    };
     .input-container{
-      
       input {
         font-size: 0.9rem;
       }
+    };
+    .prefix {
+      font-size:0.8rem;
     }
 
   };
-  `
+`
 );

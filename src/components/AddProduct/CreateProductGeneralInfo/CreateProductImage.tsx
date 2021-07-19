@@ -42,7 +42,6 @@ const CreateProductImage = () => {
     setValue("images", formValues?.images);
   }, []);
   const thumbnail = watch("thumbnail");
-  console.log(thumbnail);
   const images = watch("images");
   const setDefaultImage = (image: File) => {
     if (thumbnail) {
@@ -221,11 +220,7 @@ const DescriptionBox = styled.div`
   border-radius: 6px;
   font-size: 0.9rem;
 `;
-const ErrorMessage = styled.p`
-  font-size: 0.7rem;
-  padding-top: 0.25rem;
-  color: ${(props) => props.theme.dangerRed};
-`;
+
 const Box = styled.div(
   ({ theme: { breakpoints, mainColor, shadow } }) => `
   padding:1rem;

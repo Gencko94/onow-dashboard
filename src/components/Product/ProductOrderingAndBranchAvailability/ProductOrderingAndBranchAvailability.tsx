@@ -1,7 +1,11 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import styled from "styled-components";
+import { MdSave } from "react-icons/md";
+import { useMutation } from "react-query";
+import useToast from "../../../hooks/useToast";
 import { PRODUCT } from "../../../interfaces/products/products";
-import SaveButton from "../../reusable/SaveButton";
+import extractError from "../../../utils/extractError";
+import { editProductOrderingAndAvailability } from "../../../utils/queries/productQueries";
+import Button from "../../reusable/Button";
 import Flex from "../../StyledComponents/Flex";
 import Hr from "../../StyledComponents/Hr";
 import ProductBranches from "./ProductBranches";
@@ -21,23 +25,83 @@ export interface FORM_PROPS {
   };
 }
 const ProductOrderingAndBranchAvailability = ({ data }: IProps) => {
+  console.log(data);
+  const { setToastStatus, handleCloseToast } = useToast();
+  const { mutateAsync, isLoading, reset } = useMutation(
+    editProductOrderingAndAvailability
+  );
   const methods = useForm<FORM_PROPS>({
     defaultValues: {
       allow_attachments: data.allow_attachments,
       allow_side_notes: data.allow_side_notes,
-      branch_availability: data.branch_availability,
+      branch_availability: {
+        all: data.branch_availability.all,
+        branches: data.branch_availability?.branches ?? [],
+      },
       max_qty_per_user: data.max_qty_per_user,
       prep_time: data.prep_time,
     },
   });
-  const onSubmit: SubmitHandler<FORM_PROPS> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FORM_PROPS> = async (formData) => {
+    console.log(formData);
+    try {
+      await mutateAsync({
+        prep_time: formData.prep_time,
+        allow_side_notes: formData.allow_side_notes,
+        allow_attachments: formData.allow_attachments,
+        branch_availability: {
+          all: formData.branch_availability.all,
+          branches: formData.branch_availability.all
+            ? []
+            : formData.branch_availability.branches,
+        },
+        id: data.id,
+      });
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Product Saved Successfully",
+        type: "success",
+      });
+    } catch (error) {
+      const { responseError } = extractError(error);
+      if (responseError) {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something Went Wrong",
+          type: "error",
+        });
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
   };
   return (
-    <Container>
+    <div>
       <Flex justify="flex-end">
-        <SaveButton
-          title="Save Changes"
+        <Button
+          text="Save Changes"
+          textSize="0.9rem"
+          iconSize={25}
+          Icon={MdSave}
+          bg="green"
+          padding="0.5rem"
+          isLoading={isLoading}
+          disabled={isLoading}
           onClick={methods.handleSubmit(onSubmit)}
         />
       </Flex>
@@ -46,11 +110,8 @@ const ProductOrderingAndBranchAvailability = ({ data }: IProps) => {
         <Hr />
         <ProductBranches />
       </FormProvider>
-    </Container>
+    </div>
   );
 };
 
 export default ProductOrderingAndBranchAvailability;
-const Container = styled.div`
-  background-color: #fff;
-`;

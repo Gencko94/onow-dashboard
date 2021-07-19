@@ -18,6 +18,7 @@ import { updateUserAccount } from "../../utils/queries";
 import extractError from "../../utils/extractError";
 import useToast from "../../hooks/useToast";
 import Heading from "../../components/StyledComponents/Heading";
+import Hr from "../../components/StyledComponents/Hr";
 
 const AccountSettings = () => {
   const { user } = useContext(AuthProvider);
@@ -35,21 +36,25 @@ const AccountSettings = () => {
     reset,
     isLoading,
   } = useMutation(updateUserAccount, {
-    // onSuccess: (data) => {
-    //   queryClient.setQueryData<USER | undefined>("auth", (prev) => {
-    //     if (prev) {
-    //       return {
-    //         ...prev,
-    //         ...data,
-    //       };
-    //     }
-    //   });
-    // },
+    onSuccess: (data) => {
+      queryClient.setQueryData<USER | undefined>("auth", (prev) => {
+        if (prev) {
+          return {
+            ...prev,
+            first_name: data.first_name,
+            last_name: data.last_name,
+          };
+        }
+      });
+    },
   });
   const onSubmit: SubmitHandler<USER> = async (data) => {
     console.log(data);
     try {
-      await updateUser(data);
+      await updateUser({
+        first_name: data.first_name,
+        last_name: data.last_name,
+      });
       setToastStatus?.({
         fn: () => handleCloseToast?.(),
         open: true,
@@ -87,7 +92,7 @@ const AccountSettings = () => {
         />
       </HeaderContainer>
       <form style={{ margin: "2rem 0 " }} onSubmit={handleSubmit(onSubmit)}>
-        <Heading tag="h5" mb="1rem" color="primary">
+        <Heading tag="h5" mb="1rem" color="primary" weight="semibold">
           Account Information
         </Heading>
         <div onSubmit={handleSubmit(onSubmit)} className="container">
@@ -115,6 +120,7 @@ const AccountSettings = () => {
             render={({ field: { onChange, value } }) => {
               return (
                 <PhoneInput
+                  disabled
                   label="Phone Number"
                   value={value}
                   errors={errors?.phone}
@@ -128,6 +134,7 @@ const AccountSettings = () => {
             errors={errors?.email}
             register={register}
             required
+            disabled
             requiredMessage="Required"
             label="Email"
             name="email"
@@ -148,7 +155,7 @@ const AccountSettings = () => {
           />
         </Flex>
       </form>
-
+      <Hr />
       <AccountPassword />
     </Container>
   );

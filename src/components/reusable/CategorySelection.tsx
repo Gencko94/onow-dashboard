@@ -65,34 +65,37 @@ const CategorySelection = ({
   }
 
   return (
-    <Container>
-      <div className="table">
-        {status === "loading" && <LoadingTable />}
-        {data?.pages[0].data.length === 0 && (
-          <EmptyTable text="No Categories Found" height="100%" />
-        )}
-        {data?.pages.map((group, i) => {
-          return (
-            <React.Fragment key={i}>
-              {group.data.map((category: CATEGORY) => {
-                if (category.id === currentId) return null;
-                return (
-                  <div key={category.id}>
-                    <CategorySelectionItem
-                      category={category}
-                      formCategoryId={formCategoryId}
-                      handleToggleCategories={handleToggleCategories}
-                      onChange={onChange}
-                      currentId={currentId}
-                    />
-                  </div>
-                );
-              })}
-            </React.Fragment>
-          );
-        })}
-      </div>
-    </Container>
+    <>
+      {data?.pages[0].data.length === 0 && (
+        <EmptyTable text="No Categories Found" height="100%" />
+      )}
+      <Container>
+        <div className="table">
+          {status === "loading" && <LoadingTable />}
+
+          {data?.pages.map((group, i) => {
+            return (
+              <React.Fragment key={i}>
+                {group.data.map((category: CATEGORY) => {
+                  if (category.id === currentId) return null;
+                  return (
+                    <div key={category.id}>
+                      <CategorySelectionItem
+                        category={category}
+                        formCategoryId={formCategoryId}
+                        handleToggleCategories={handleToggleCategories}
+                        onChange={onChange}
+                        currentId={currentId}
+                      />
+                    </div>
+                  );
+                })}
+              </React.Fragment>
+            );
+          })}
+        </div>
+      </Container>
+    </>
   );
 };
 

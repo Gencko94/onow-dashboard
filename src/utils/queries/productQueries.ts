@@ -29,3 +29,31 @@ export const editProductPriceAndOptions = async (data: any) => {
   );
   return res.data.results;
 };
+export const editProductOrderingAndAvailability = async (data: any) => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/edit-ordering-options-branch-availability-product/${data.id}`,
+    data,
+    config
+  );
+  return res.data.results;
+};
+export const removeProductImage = async (data: any) => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/edit-price-options-product/${data.id}`,
+    data,
+    config
+  );
+  return res.data.results;
+};

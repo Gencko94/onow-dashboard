@@ -7,6 +7,7 @@ import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
 
 import CategorySelection from "../../reusable/CategorySelection";
+import GithubInput from "../../reusable/Inputs/GithubInput";
 
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
@@ -68,17 +69,6 @@ const CategoryInfo = ({
               name="name.ar"
             />
 
-            <PrefixedInput
-              prefixText="https://your-store/categories/"
-              errors={errors?.slug}
-              register={register}
-              required
-              requiredMessage="Required"
-              label="Category Slug"
-              name="slug"
-              desc="How your category will look in the url"
-            />
-
             <Textarea
               errors={errors?.description?.en}
               register={register}
@@ -94,6 +84,35 @@ const CategoryInfo = ({
               requiredMessage="Required"
               label="Description Arabic"
               name="description.ar"
+            />
+            <PrefixedInput
+              prefixText="https://your-store/categories/"
+              errors={errors?.slug}
+              register={register}
+              required
+              requiredMessage="Required"
+              label="Category Slug"
+              name="slug"
+              desc="How your category will look in the url"
+            />
+            <Controller
+              control={control}
+              name="active"
+              render={({ field: { onChange, value } }) => {
+                return (
+                  <GithubInput
+                    label="Show Category"
+                    checked={value}
+                    onChange={(e) => {
+                      if (value === true) {
+                        onChange(false);
+                      } else {
+                        onChange(true);
+                      }
+                    }}
+                  />
+                );
+              }}
             />
           </div>
         </div>

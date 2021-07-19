@@ -43,6 +43,7 @@ const CreateNewCoupon = () => {
     handleSubmit,
     control,
     watch,
+    setError,
     setValue,
   } = useForm<NEW_COUPON_FORM>({
     defaultValues: {
@@ -87,7 +88,11 @@ const CreateNewCoupon = () => {
     } catch (error) {
       const { responseError, unknownError } = extractError(error);
       if (responseError) {
-        console.log(responseError);
+        if (responseError?.code?.includes("The code has already been taken.")) {
+          setError("code", {
+            message: "Coupon Code has been Taken, Please Select Another one",
+          });
+        }
       } else {
         console.log(unknownError);
         setToastStatus?.({

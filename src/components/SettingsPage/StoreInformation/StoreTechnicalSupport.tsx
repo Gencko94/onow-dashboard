@@ -1,11 +1,10 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
   AiOutlineMail,
   AiOutlinePhone,
   AiOutlineWhatsApp,
 } from "react-icons/ai";
-import { MdSmartphone } from "react-icons/md";
 import { useMutation } from "react-query";
 import styled from "styled-components";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
@@ -15,6 +14,7 @@ import extractError from "../../../utils/extractError";
 import { editStoreTechnicalSupport } from "../../../utils/queries/settingsQueries";
 import Button from "../../reusable/Button";
 import IconedInput from "../../reusable/Inputs/IconedInput";
+import PhoneInput from "../../reusable/Inputs/PhoneInput";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
@@ -27,6 +27,7 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<STORE_TECHNICAL_SUPPORT>({ defaultValues: { ...data } });
   const {
@@ -69,18 +70,25 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Heading tag="h5" color="primary" margin="2rem 0">
+      <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
         Technical support
       </Heading>
       <Box>
         <div className="section">
           <Grid cols="repeat(auto-fill,minmax(300px,1fr))" gap="1rem">
-            <IconedInput
-              Icon={MdSmartphone}
-              errors={errors?.phone}
-              register={register}
+            <Controller
               name="phone"
-              label="Phone Number"
+              control={control}
+              render={({ field: { onChange, value } }) => {
+                return (
+                  <PhoneInput
+                    label="Phone Number"
+                    value={value}
+                    errors={errors?.phone}
+                    onChange={(data) => onChange(`+${data}`)}
+                  />
+                );
+              }}
             />
 
             <IconedInput

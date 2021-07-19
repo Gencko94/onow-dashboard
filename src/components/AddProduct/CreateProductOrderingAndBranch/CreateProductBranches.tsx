@@ -105,23 +105,6 @@ const CreateProductBranches = () => {
                     </React.Fragment>
                   );
                 })}
-                {/* {branches.map((branch) => {
-                  return (
-                    <div className="branch-item">
-                      <CheckToggle
-                        key={branch.id}
-                        label={branch.name}
-                        checked={Boolean(
-                          addedBranches?.find((i: any) => i === branch.id)
-                        )}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          handleToggleBranches(branch, onChange);
-                        }}
-                      />
-                    </div>
-                  );
-                })} */}
               </div>
             );
           }}
@@ -137,11 +120,9 @@ const Container = styled.div`
     margin-top: 1rem;
     border: ${(props) => props.theme.border};
     background-color: ${(props) => props.theme.overlayColor};
-
     border-radius: 6px;
   }
   .branch-item {
-    /* cursor: pointer; */
     padding: 1rem;
     display: flex;
     align-items: center;

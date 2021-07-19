@@ -1,5 +1,5 @@
 import { SubmitHandler } from "react-hook-form";
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router";
@@ -28,7 +28,7 @@ const CustomerProfile = () => {
   const { handleCloseConfirmationModal, setConfirmationModalStatus } =
     useConfirmationModal();
   const { handleCloseToast, setToastStatus } = useToast();
-  const { data, isLoading } = useQuery<CUSTOMER>(
+  const { data } = useQuery<CUSTOMER>(
     ["customer", id],
     () => getSingleCustomer(id),
     {
@@ -38,11 +38,32 @@ const CustomerProfile = () => {
   const { mutateAsync: editMutation, isLoading: editLoading } = useMutation(
     editCustomer,
     {
-      onSuccess: (data) => {
-        queryClient.setQueryData(["coupon", id], (prev) => {
-          return data;
-        });
-        replace("/coupons");
+      onSuccess: () => {
+        queryClient.invalidateQueries("customers");
+      },
+      onError: (error) => {
+        const { responseError } = extractError(error);
+        if (responseError) {
+          setToastStatus?.({
+            fn: () => {
+              reset();
+              handleCloseToast?.();
+            },
+            open: true,
+            text: responseError,
+            type: "error",
+          });
+        } else {
+          setToastStatus?.({
+            fn: () => {
+              reset();
+              handleCloseToast?.();
+            },
+            open: true,
+            text: "Something went wrong",
+            type: "error",
+          });
+        }
       },
     }
   );
@@ -52,31 +73,11 @@ const CustomerProfile = () => {
     reset,
     isLoading: deleteLoading,
   } = useMutation(deleteCustomer, {
-    onSuccess: (data, productId) => {
-      queryClient.invalidateQueries("products");
+    onSuccess: () => {
+      queryClient.invalidateQueries("customers");
+      replace("/customers");
     },
-  });
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<CUSTOMER>({ defaultValues: data });
-  const handleDeleteCustomer = async () => {
-    try {
-      await deleteCustomerMutation(data!.id);
-      handleCloseConfirmationModal?.();
-      setToastStatus?.({
-        fn: () => {
-          handleCloseToast?.();
-        },
-        open: true,
-        text: "Customer Deleted Successfully",
-        type: "success",
-      });
-    } catch (error) {
-      handleCloseConfirmationModal?.();
-
+    onError: (error) => {
       const { responseError } = extractError(error);
       if (responseError) {
         setToastStatus?.({
@@ -99,20 +100,79 @@ const CustomerProfile = () => {
           type: "error",
         });
       }
-    }
+    },
+  });
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<CUSTOMER>({ defaultValues: data });
+  const handleDeleteCustomer = async () => {
+    handleCloseConfirmationModal?.();
+    await deleteCustomerMutation(data!.id);
+    setToastStatus?.({
+      fn: () => {
+        handleCloseToast?.();
+      },
+      open: true,
+      text: "Customer Deleted Successfully",
+      type: "success",
+    });
   };
-  const onSubmit: SubmitHandler<CUSTOMER> = (data) => {
+  const onSubmit: SubmitHandler<CUSTOMER> = async (data) => {
     console.log(data);
+    await editMutation(data);
+    setToastStatus?.({
+      fn: () => {
+        handleCloseToast?.();
+      },
+      open: true,
+      text: "Customer Updated Successfully",
+      type: "success",
+    });
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <HeaderContainer>
-        <Breadcrumbs
-          childLabel="Customer Profile"
-          parentLabel="Customers"
-          parentTarget="/customers"
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <HeaderContainer>
+          <Breadcrumbs
+            childLabel="Customer Profile"
+            parentLabel="Customers"
+            parentTarget="/customers"
+          />
+          <Flex justify="flex-end">
+            <Button
+              withTransition
+              textSize="0.9rem"
+              text="Delete Customer"
+              padding="0.5rem"
+              bg="danger"
+              withRipple
+              Icon={RiDeleteBinLine}
+              iconSize={20}
+              isLoading={deleteLoading}
+              disabled={deleteLoading}
+              onClick={() =>
+                setConfirmationModalStatus?.({
+                  closeCb: handleCloseConfirmationModal!,
+                  desc: "Are you sure you want to delete this customer ?",
+                  open: true,
+                  successCb: () => handleDeleteCustomer(),
+                  title: "Delete Customer",
+                })
+              }
+            />
+          </Flex>
+        </HeaderContainer>
+
+        <CustomerProfileInfo
+          register={register}
+          errors={errors}
+          control={control}
+          joinDate={data!.join_date}
         />
-        <Flex justify="flex-end">
+        <Flex justify="center">
           <Button
             withTransition
             text="Save Changes"
@@ -125,37 +185,11 @@ const CustomerProfile = () => {
             isLoading={editLoading}
             disabled={editLoading}
           />
-          <Button
-            withTransition
-            textSize="0.9rem"
-            text="Delete Customer"
-            padding="0.5rem"
-            bg="danger"
-            withRipple
-            Icon={RiDeleteBinLine}
-            iconSize={20}
-            onClick={() =>
-              setConfirmationModalStatus?.({
-                closeCb: handleCloseConfirmationModal!,
-                desc: "Are you sure you want to delete this customer ?",
-                open: true,
-                successCb: () => handleDeleteCustomer(),
-                title: "Delete Customer",
-              })
-            }
-          />
         </Flex>
-      </HeaderContainer>
-
-      <CustomerProfileInfo
-        register={register}
-        errors={errors}
-        control={control}
-        joinDate={data!.join_date}
-      />
+      </form>
       <Hr />
       <CustomerOrders customerId={data!.id} />
-    </form>
+    </>
   );
 };
 

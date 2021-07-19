@@ -1,5 +1,3 @@
-import { ORDER } from "../orders/orders";
-
 export interface NEW_CUSTOMER {
   first_name: string;
   last_name: string;
@@ -14,15 +12,4 @@ export interface CUSTOMER {
   phone: string;
   email?: string;
   join_date: string;
-  country: {
-    id: number;
-    country_code: string;
-    name: {
-      [key: string]: string;
-    };
-    currency: {
-      [key: string]: string;
-    };
-  };
-  orders: ORDER[];
 }

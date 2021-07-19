@@ -1,16 +1,24 @@
+import axios, { AxiosRequestConfig } from "axios";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useMutation } from "react-query";
 import styled from "styled-components";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useToast from "../../../hooks/useToast";
 import { PRODUCT } from "../../../interfaces/products/products";
 import { ADD_PRODUCT_IMAGE } from "../../../interfaces/products/update-product";
+import extractError from "../../../utils/extractError";
 import FileUploader from "../../../utils/FileUploader";
 import MiniFileUploader from "../../../utils/MiniFileUploader";
+import { customerUri } from "../../../utils/queries";
+import { removeProductImage } from "../../../utils/queries/productQueries";
 import Button from "../../reusable/Button";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
+import Hr from "../../StyledComponents/Hr";
 
 interface IProps {
   data: PRODUCT;
@@ -19,6 +27,8 @@ interface IProps {
 const ProductImage = ({ data }: IProps) => {
   const { handleCloseConfirmationModal, setConfirmationModalStatus } =
     useConfirmationModal();
+  const { handleCloseToast, setToastStatus } = useToast();
+  const [progress, setProgress] = useState<number | null>(null);
   const {
     formState: { errors },
     control,
@@ -27,8 +37,114 @@ const ProductImage = ({ data }: IProps) => {
   } = useForm<ADD_PRODUCT_IMAGE>({
     defaultValues: { images: [], image: data.image },
   });
+  const { mutateAsync: deleteMutation, reset } =
+    useMutation(removeProductImage);
   const image = watch("image");
   const images = watch("images");
+
+  // Update Logic
+  const updateImage = async (
+    image: File,
+    progressFn: (progress: number) => void
+  ) => {
+    try {
+      const t = localStorage.getItem("dshtid");
+      const config: AxiosRequestConfig = {
+        headers: {
+          Authorization: t ? `Bearer ${t}` : "",
+          "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress: (progressEvent) => {
+          let percentCompleted = Math.floor(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+
+          progressFn(percentCompleted);
+        },
+      };
+      const formData = new FormData();
+      formData.append("image", image);
+      // await axios.post(
+      //   `${customerUri}/product-categories-add-image/${id}`,
+      //   formData,
+      //   config
+      // );
+      setProgress(null);
+      // setValue("image", image);
+      handleCloseConfirmationModal?.();
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Image Updated Successfully",
+        type: "success",
+      });
+    } catch (error) {
+      handleCloseConfirmationModal?.();
+
+      const { responseError } = extractError(error);
+      if (responseError) {
+        setToastStatus?.({
+          fn: () => {
+            handleCloseToast?.();
+          },
+          open: true,
+          text: responseError,
+          type: "error",
+        });
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
+  };
+  const removeImage = async () => {
+    try {
+      handleCloseConfirmationModal?.();
+      // await deleteMutation(id!);
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Image Removed Successfully",
+        type: "success",
+      });
+      // setValue("image", null);
+    } catch (error) {
+      handleCloseConfirmationModal?.();
+
+      const { responseError } = extractError(error);
+      if (responseError) {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: responseError,
+          type: "error",
+        });
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            reset();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
+  };
   return (
     <Container>
       <Heading tag="h5" margin="1rem 0" weight="semibold" color="primary">
@@ -41,31 +157,47 @@ const ProductImage = ({ data }: IProps) => {
         </p>
       </DescriptionBox>
 
-      <Grid cols="1fr" gap="1rem">
-        <PreviewContainer>
+      <Box>
+        <Heading
+          tag="h5"
+          textAlign="center"
+          margin="1rem 0"
+          weight="semibold"
+          color="heading"
+        >
+          Product Default Image
+        </Heading>
+        <Controller
+          control={control}
+          name="image"
+          render={({ field: { value } }) => {
+            return (
+              <MiniFileUploader
+                accept=".png, .jpg, .jpeg"
+                image={value}
+                onChange={async (image) => {
+                  await updateImage(image, setProgress);
+                }}
+                onRemove={() => {
+                  setConfirmationModalStatus?.({
+                    open: true,
+                    desc: "Are you sure you want to delete this category image ?",
+                    title: "Delete Category Image",
+                    closeCb: handleCloseConfirmationModal!,
+                    successCb: () => {
+                      removeImage();
+                    },
+                  });
+                }}
+                progress={progress}
+              />
+            );
+          }}
+        />
+      </Box>
+      <Hr />
+      {/* <PreviewContainer>
           <Grid cols="repeat(auto-fill,minmax(200px,1fr))" gap="1rem">
-            {image && (
-              <div className="img-preview">
-                <img src={image} alt={`main`} />
-                <div className="default-container">
-                  <Flex items="center" justify="center" padding="0.25rem">
-                    <p>Default Image</p>
-                    <span>
-                      <AiOutlineCheckCircle size={20} />
-                    </span>
-                  </Flex>
-                </div>
-                <button
-                  className="remove"
-                  type="button"
-                  onClick={() => {
-                    // removeThumbnailImage();
-                  }}
-                >
-                  <IoMdCloseCircle size={35} />
-                </button>
-              </div>
-            )}
             {images.map((image, index) => {
               return (
                 <div className="img-preview">
@@ -95,29 +227,38 @@ const ProductImage = ({ data }: IProps) => {
               );
             })}
           </Grid>
-        </PreviewContainer>
+        </PreviewContainer> */}
 
-        <Box>
-          <Controller
-            control={control}
-            name="images"
-            render={({ field: { onChange, value, ref } }) => (
-              <FileUploader
-                accept=".png, .jpg, .jpeg"
-                onChange={(file: File | File[]) => {
-                  // if (!Array.isArray(file)) {
-                  //   if (images.length === 0 && !image) {
-                  //     setValue("thumbnail", file);
-                  //   } else {
-                  //     onChange([...images, file]);
-                  //   }
-                  // }
-                }}
-              />
-            )}
-          />
-        </Box>
-      </Grid>
+      <Box>
+        <Heading
+          tag="h5"
+          textAlign="center"
+          margin="1rem 0"
+          weight="semibold"
+          color="heading"
+        >
+          Product Image Gallery
+        </Heading>
+        <Controller
+          control={control}
+          name="images"
+          render={({ field: { onChange, value, ref } }) => (
+            <FileUploader
+              accept=".png, .jpg, .jpeg"
+              onChange={(file: File | File[]) => {
+                // if (!Array.isArray(file)) {
+                //   if (images.length === 0 && !image) {
+                //     setValue("thumbnail", file);
+                //   } else {
+                //     onChange([...images, file]);
+                //   }
+                // }
+              }}
+            />
+          )}
+        />
+      </Box>
+
       <ErrorMessage>{errors?.images && "Required"}</ErrorMessage>
     </Container>
   );

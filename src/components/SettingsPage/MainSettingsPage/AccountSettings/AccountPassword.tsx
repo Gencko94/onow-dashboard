@@ -63,7 +63,7 @@ const AccountPassword = () => {
   };
   return (
     <Container onSubmit={handleSubmit(onSubmit)}>
-      <Heading tag="h5" mb="1rem" color="primary">
+      <Heading tag="h5" mb="1rem" color="primary" weight="semibold">
         Change Account password
       </Heading>
       <div className="container">

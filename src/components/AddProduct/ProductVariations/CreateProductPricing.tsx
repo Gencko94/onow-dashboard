@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { secondTabProps } from "./CreateProductPricingAndOptions";
 
 import GithubInput from "../../reusable/Inputs/GithubInput";
-import PrefixedIconedInput from "../../reusable/Inputs/PrefixedIconedInput";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import { useContext } from "react";
 import Heading from "../../StyledComponents/Heading";
+import PrefixedIconedNumberInput from "../../reusable/Inputs/PrefixedIconedNumberInput";
 
 const CreateProductPricing = () => {
   const {
@@ -28,7 +28,7 @@ const CreateProductPricing = () => {
       </Heading>
 
       <div className="inputs-container">
-        <PrefixedIconedInput
+        <PrefixedIconedNumberInput
           errors={errors.price}
           Icon={IoPricetagsOutline}
           name="price"
@@ -39,6 +39,7 @@ const CreateProductPricing = () => {
           required={!priceByOptions}
           requiredMessage="Required"
           defaultValue={formValues?.price}
+          min={0}
         />
         <Controller
           name="price_by_options"

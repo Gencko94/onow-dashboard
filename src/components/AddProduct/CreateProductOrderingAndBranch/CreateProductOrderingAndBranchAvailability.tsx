@@ -28,8 +28,12 @@ export interface thirdTabProps {
 }
 interface IProps {
   submitForm: (product: any) => void;
+  formLoading: boolean;
 }
-const CreateProductOrderingAndBranchAvailability = ({ submitForm }: IProps) => {
+const CreateProductOrderingAndBranchAvailability = ({
+  submitForm,
+  formLoading,
+}: IProps) => {
   const { updateData, setActiveTab, formValues } =
     useContext(NewProductContext);
   const methods = useForm<thirdTabProps>({
@@ -77,6 +81,8 @@ const CreateProductOrderingAndBranchAvailability = ({ submitForm }: IProps) => {
           <Button
             withRipple
             withTransition
+            isLoading={formLoading}
+            disabled={formLoading}
             type="submit"
             bg="green"
             padding=" 0.5rem"

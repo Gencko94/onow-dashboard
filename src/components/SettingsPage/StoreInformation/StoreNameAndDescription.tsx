@@ -2,10 +2,11 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { MdSubtitles } from "react-icons/md";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
+import { USER } from "../../../interfaces/auth/auth";
 import { STORE_NAME_AND_DESCRIPTION } from "../../../interfaces/settings/store-properties/store-properties";
 import extractError from "../../../utils/extractError";
 import { editStoreNameAndDescription } from "../../../utils/queries/settingsQueries";
@@ -29,8 +30,25 @@ const StoreNameAndDescription = ({ data }: StoreNameAndDescriptionProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm<STORE_NAME_AND_DESCRIPTION>({ defaultValues: { ...data } });
+  const queryClient = useQueryClient();
+
   const { mutateAsync, isLoading, reset } = useMutation(
-    editStoreNameAndDescription
+    editStoreNameAndDescription,
+    {
+      onSuccess: (data) => {
+        queryClient.setQueryData<USER | undefined>("auth", (prev) => {
+          if (prev) {
+            return {
+              ...prev,
+              store: {
+                ...prev.store,
+                ...data,
+              },
+            };
+          }
+        });
+      },
+    }
   );
   const {
     i18n: { language },
@@ -69,7 +87,7 @@ const StoreNameAndDescription = ({ data }: StoreNameAndDescriptionProps) => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Heading tag="h5" color="primary" margin="2rem 0">
+      <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
         Store Information
       </Heading>
       <Box>

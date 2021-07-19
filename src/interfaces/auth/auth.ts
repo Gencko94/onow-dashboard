@@ -20,10 +20,12 @@ export type STORE = {
   id: number;
   domain: string;
   duration: string;
-  logoUrl: string;
-  storeName: {
+  logo: string;
+  favicon: string;
+  name: {
     [key: string]: string;
   };
+  maintenance: boolean;
 };
 
 export type LOGIN_RESPONSE = {

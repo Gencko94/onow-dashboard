@@ -17,10 +17,6 @@ export type MINI_PRODUCT = {
   price: string;
 };
 
-interface PRODUCT_IMAGE {
-  url: string;
-  is_default: boolean;
-}
 export type PRODUCT = {
   id: number;
   active: boolean;
@@ -38,7 +34,7 @@ export type PRODUCT = {
     id: number;
   };
   image: string;
-  images: PRODUCT_IMAGE[];
+  images: string[];
   description: {
     [key: string]: string;
   };

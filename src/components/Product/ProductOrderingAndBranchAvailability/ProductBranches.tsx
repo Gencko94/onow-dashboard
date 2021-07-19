@@ -1,24 +1,54 @@
+import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useInfiniteQuery } from "react-query";
 import styled from "styled-components";
-import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
+import { BRANCH } from "../../../interfaces/settings/branches/branches";
+import { getBranches } from "../../../utils/queries";
 
 import CheckToggle from "../../reusable/CheckToggle";
+import Heading from "../../StyledComponents/Heading";
 import { FORM_PROPS } from "./ProductOrderingAndBranchAvailability";
-
+type GET_BRANCHES_RES = {
+  data: BRANCH[];
+  currentPage: number;
+  lastPage: number;
+};
 const ProductBranches = () => {
   const {
     control,
     watch,
     formState: { errors },
   } = useFormContext<FORM_PROPS>();
+  const {
+    i18n: { language },
+  } = useTranslation();
+  const {
+    data,
+    status,
+    isFetching,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery<GET_BRANCHES_RES>(
+    "branches",
+    ({ pageParam = 1 }) => getBranches(pageParam),
+    {
+      getNextPageParam: (lastPage) => {
+        if (lastPage.currentPage < lastPage.lastPage) {
+          return lastPage.currentPage + 1;
+        } else {
+          return undefined;
+        }
+      },
+    }
+  );
   const allBranchesChecked = watch("branch_availability.all");
   const addedBranches = watch("branch_availability.branches");
-  const branches = [
-    { id: 1, name: "Main Branch" },
-    { id: 2, name: "Salmiyah Branch" },
-  ];
+  console.log(addedBranches);
+
   const handleToggleBranches = (
-    branch: { name: string; id: number },
+    branch: BRANCH,
     onChange: (...event: any[]) => void
   ) => {
     const found = addedBranches.find((i: any) => i === branch.id);
@@ -32,9 +62,9 @@ const ProductBranches = () => {
   };
   return (
     <Container>
-      <div className="title-container">
-        <h5>Product Branch Availability</h5>
-      </div>
+      <Heading tag="h5" mb="1rem" color="primary" weight="semibold">
+        Product Branch Availability
+      </Heading>
       <Controller
         control={control}
         name="branch_availability.all"
@@ -56,21 +86,25 @@ const ProductBranches = () => {
           render={({ field: { value, onChange } }) => {
             return (
               <div className="branches-container">
-                {branches.map((branch) => {
+                {data?.pages.map((group, i) => {
                   return (
-                    <div className="branch-item">
-                      <CheckToggle
-                        key={branch.id}
-                        label={branch.name}
-                        checked={Boolean(
-                          addedBranches.find((i: any) => i === branch.id)
-                        )}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          handleToggleBranches(branch, onChange);
-                        }}
-                      />
-                    </div>
+                    <React.Fragment key={i}>
+                      {group.data.map((branch) => (
+                        <div className="branch-item">
+                          <CheckToggle
+                            key={branch.id}
+                            label={branch.name[language]}
+                            checked={Boolean(
+                              addedBranches?.find((i: any) => i === branch.id)
+                            )}
+                            onChange={(e) => {
+                              e.stopPropagation();
+                              handleToggleBranches(branch, onChange);
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </React.Fragment>
                   );
                 })}
               </div>
@@ -84,10 +118,6 @@ const ProductBranches = () => {
 
 export default ProductBranches;
 const Container = styled.div`
-  .title-container {
-    margin-bottom: 1rem;
-    color: ${(props) => props.theme.mainColor};
-  }
   .branches-container {
     margin-top: 1rem;
     border: ${(props) => props.theme.border};
@@ -96,7 +126,6 @@ const Container = styled.div`
     border-radius: 6px;
   }
   .branch-item {
-    cursor: pointer;
     padding: 1rem;
     display: flex;
     align-items: center;

@@ -33,6 +33,8 @@ interface IProps {
   /**
    * onChange handler
    */
+
+  disabled?: boolean;
   onChange: (
     value: string,
     data: {} | CountryData,
@@ -52,6 +54,7 @@ const PhoneInput = ({
   label,
   onChange,
   value,
+  disabled,
   desc,
 }: IProps) => {
   const {
@@ -67,6 +70,7 @@ const PhoneInput = ({
         country={defaultCountry}
         inputStyle={{ width: "100%" }}
         autoFormat
+        disabled={disabled}
         autocompleteSearch
         onChange={onChange}
       />

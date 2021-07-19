@@ -1,40 +1,34 @@
 import styled from "styled-components";
-import { HiOutlineSwitchVertical, HiSwitchHorizontal } from "react-icons/hi";
-import { CSSTransition } from "react-transition-group";
-import ClickAwayListener from "react-click-away-listener";
-import { useContext, useState } from "react";
-import { useQuery } from "react-query";
-import { getUserStores } from "../../../utils/queries";
+
+import { useContext } from "react";
+
 import { useTranslation } from "react-i18next";
-import ProjectItem from "./ProjectItem";
+
 import { AuthProvider } from "../../../contexts/AuthContext";
 import { BiLinkExternal } from "react-icons/bi";
 const ProjectSwitcher = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
   const { user } = useContext(AuthProvider);
-  // const { data } = useQuery("stores", getUserStores);
   const {
     i18n: { language },
   } = useTranslation();
 
-  // if (user?.store.length === 0) return null;
   return (
     <Container>
-      {/* <Project>
+      <Project>
         <img
           className="logo"
-          src={user?.store.logoUrl}
-          alt={user?.store.storeName[language]}
+          src={user?.store.logo}
+          alt={user?.store.name[language]}
         />
         <div className="name-container">
-          <p className="name">{user?.store.storeName[language]}</p>
+          <p className="name">{user?.store.name[language]}</p>
 
           <a className="link" href={`http://${user?.store.domain}`} target="#">
             <p>{user?.store.domain}</p>
             <BiLinkExternal size={10} />
           </a>
         </div>
-      </Project> */}
+      </Project>
     </Container>
   );
 };

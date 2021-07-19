@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { IoMdCloseCircle } from "react-icons/io";
 import styled from "styled-components";
 import convertUrlToFile from "./convertUrlToFile";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
@@ -23,6 +22,7 @@ const MiniFileUploader = ({
   image,
   progress,
 }: IProps) => {
+  console.log(progress);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
 
@@ -72,24 +72,10 @@ const MiniFileUploader = ({
               <DragDropText>Drag and drop here</DragDropText>
             </>
           )}
-          {file && (
+          {file && progress === null && (
             <FilePreviewContainer>
               <PreviewContainer>
                 <ImagePreview src={URL.createObjectURL(file)} />
-                <ImageMetaData>
-                  {onRemove && (
-                    <div className="flex">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          removeImage();
-                        }}
-                      >
-                        <IoMdCloseCircle size={35} />
-                      </button>
-                    </div>
-                  )}
-                </ImageMetaData>
               </PreviewContainer>
             </FilePreviewContainer>
           )}
@@ -136,6 +122,31 @@ const MiniFileUploader = ({
               inputRef?.current?.click();
             }}
           />
+        </Flex>
+      )}
+      {image && (
+        <Flex justify="center" margin="1rem 0">
+          <Button
+            text="Change"
+            bg="green"
+            padding="0.5rem"
+            withTransition
+            onClick={() => {
+              inputRef?.current?.click();
+            }}
+          />
+          {onRemove && (
+            <Button
+              text="Remove"
+              bg="danger"
+              margin="0 0.5rem"
+              padding="0.5rem"
+              withTransition
+              onClick={() => {
+                removeImage();
+              }}
+            />
+          )}
         </Flex>
       )}
     </div>
@@ -210,35 +221,4 @@ const ImagePreview = styled.img`
   width: 100%;
   height: 100%;
   object-fit: contain;
-`;
-const ImageMetaData = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0.5rem;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  font-weight: ${(props) => props.theme.font.bold};
-  /* background-color: rgba(5, 5, 5, 0.35); */
-  font-size: 0.8rem;
-  p {
-    flex: 1;
-  }
-  button {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: ${(props) => props.theme.dangerRed};
-  }
-  .flex {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
 `;

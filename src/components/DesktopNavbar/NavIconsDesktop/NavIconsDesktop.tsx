@@ -1,13 +1,17 @@
-import styled from 'styled-components';
-import { IoMdNotificationsOutline } from 'react-icons/io';
-import { AiFillSetting } from 'react-icons/ai';
-import { useTranslation } from 'react-i18next';
-import { CgMenu } from 'react-icons/cg';
-import useResponsive from '../../../hooks/useResponsive';
+import styled from "styled-components";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { AiFillSetting } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
+import { CgMenu } from "react-icons/cg";
+import useResponsive from "../../../hooks/useResponsive";
+import { useContext } from "react";
+import { AuthProvider } from "../../../contexts/AuthContext";
+import Heading from "../../StyledComponents/Heading";
 interface IProps {
   handleToggleDrawer: () => void;
 }
 const NavIconsDesktop = ({ handleToggleDrawer }: IProps) => {
+  const { user } = useContext(AuthProvider);
   const { i18n } = useTranslation();
   const { isDesktop } = useResponsive();
   const changeLanguage = (lng: string) => {
@@ -15,6 +19,11 @@ const NavIconsDesktop = ({ handleToggleDrawer }: IProps) => {
   };
   return (
     <Container>
+      {user?.store?.maintenance && (
+        <Heading tag="h6" color="primary">
+          Maintenance Mode On
+        </Heading>
+      )}
       {/* {!isDesktop && ( */}
       <button onClick={() => handleToggleDrawer()} className="icon">
         <CgMenu size={22} />
@@ -26,20 +35,20 @@ const NavIconsDesktop = ({ handleToggleDrawer }: IProps) => {
       <button className="icon">
         <AiFillSetting size={22} />
       </button>
-      {i18n.language === 'en' && (
+      {i18n.language === "en" && (
         <button
           className="icon"
           onClick={() => {
-            changeLanguage('ar');
+            changeLanguage("ar");
           }}
         >
           عربي
         </button>
       )}
-      {i18n.language === 'ar' && (
+      {i18n.language === "ar" && (
         <button
           onClick={() => {
-            changeLanguage('en');
+            changeLanguage("en");
           }}
         >
           En
