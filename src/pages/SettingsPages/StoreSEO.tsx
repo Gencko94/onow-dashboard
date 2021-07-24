@@ -5,6 +5,8 @@ import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { MdTitle } from "react-icons/md";
 import IconedInput from "../../components/reusable/Inputs/IconedInput";
 import Textarea from "../../components/reusable/Textarea";
+import HeaderContainer from "../../components/reusable/HeaderContainer";
+import Heading from "../../components/StyledComponents/Heading";
 
 const StoreSEO = () => {
   const {
@@ -20,15 +22,17 @@ const StoreSEO = () => {
   const values = watch();
   return (
     <div>
-      <Breadcrumbs
-        childLabel="SEO Improvments"
-        parentLabel="Settings"
-        parentTarget="/settings"
-      />
+      <HeaderContainer>
+        <Breadcrumbs
+          childLabel="SEO Improvements"
+          parentLabel="Settings"
+          parentTarget="/settings"
+        />
+      </HeaderContainer>
       <Container>
-        <div className="title-container">
-          <h5>Store SEO</h5>
-        </div>
+        <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
+          Store Search Engine Optimization
+        </Heading>
         <Box>
           <Grid>
             <div>
@@ -66,12 +70,7 @@ const StoreSEO = () => {
 };
 
 export default StoreSEO;
-const Container = styled.div`
-  .title-container {
-    padding: 2rem 0;
-    color: ${(props) => props.theme.mainColor};
-  }
-`;
+const Container = styled.div``;
 const Box = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
   border-radius: 6px;

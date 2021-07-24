@@ -28,14 +28,14 @@ export default SideNavItem;
 const Container = styled.li(
   ({ theme: { breakpoints, font } }) => `
     display:block;
-    background-color:#fff;
+    // background-color:#fff;
     
     position:relative;
     overflow:hidden;
     p {
       margin: 0 0.5rem;
       font-size: 0.9rem;
-      font-weight: ${font.semibold};
+      font-weight: ${font.regular};
     };1
     @media ${breakpoints.md} {
       p {
@@ -47,34 +47,24 @@ const Container = styled.li(
 );
 const SideNavLink = styled(Link)<{ isCurrent: boolean }>`
   padding: 0.5rem;
-  /* border-radius: 10px; */
   display: flex;
   align-items: center;
   transition: background 150ms ease;
+  color: ${(props) => props.theme.textPrimaryContrast};
 
   .icon {
-    /* box-shadow: ${(props) => props.theme.shadow}; */
-    border-radius: 50%;
     padding: 0.25rem;
     display: flex;
     align-items: center;
   }
   &:hover {
-    background-color: ${(props) => props.theme.accentColor};
+    background-color: #333;
   }
   ${(props) =>
     props.isCurrent &&
     css`
-      p {
-        font-weight: ${(props) => props.theme.font.bold};
-      }
+      background-color: #444;
       color: ${(props) => props.theme.mainColor};
-      /* color: #fff; */
-      .icon {
-        background-color: #fff;
-        color: ${(props) => props.theme.mainColor};
-        box-shadow: none;
-      }
     `};
   @media (min-width: 768px) {
     padding: 0.75rem 1rem;

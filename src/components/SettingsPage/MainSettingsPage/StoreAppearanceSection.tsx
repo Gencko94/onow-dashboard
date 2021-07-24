@@ -1,41 +1,41 @@
-import { FcSettings, FcPositiveDynamic } from "react-icons/fc";
+import { FcPanorama, FcSelfie } from "react-icons/fc";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import SettingsCard from "../../reusable/SettingsCard";
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
 
-const AccountSection = () => {
+const StoreAppearanceSection = () => {
   const history = useHistory();
   return (
     <Container>
       <Heading tag="h4" color="primary" mb="2rem" weight="semibold">
-        Account Settings
+        Store Appearance
       </Heading>
+
       <Grid
         cols="repeat(auto-fill,minmax(250px,1fr))"
         gap="2rem"
         margin="1rem 0"
       >
         <SettingsCard
-          title="Account Settings"
-          cb={() => history.push("settings/account-settings")}
-          Icon={FcSettings}
-          desc="Preview & Edit Account Information"
+          title="Home Page Appearance"
+          cb={() => history.push("/settings/home-appearance")}
+          Icon={FcSelfie}
+          desc="Edit your Store Homepage"
         />
-
         <SettingsCard
-          title="Subscription"
-          cb={() => history.push("/settings/subscription")}
-          Icon={FcPositiveDynamic}
-          desc="Manage your subscription at O-Now "
+          title="Logo & Favicon"
+          cb={() => history.push("/settings/store-logo-favicon")}
+          Icon={FcPanorama}
+          desc="Edit Store Logo and Favicon"
         />
       </Grid>
     </Container>
   );
 };
 
-export default AccountSection;
+export default StoreAppearanceSection;
 const Container = styled.div`
   margin: 2rem 0;
 `;

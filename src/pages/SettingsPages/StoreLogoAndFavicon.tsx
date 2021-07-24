@@ -16,7 +16,7 @@ import extractError from "../../utils/extractError";
 import MiniFileUploader from "../../utils/MiniFileUploader";
 import { uploadFile } from "../../utils/uploadFile";
 
-const StoreIdentity = () => {
+const StoreLogoAndFavicon = () => {
   const { user } = useContext(AuthProvider);
 
   const queryClient = useQueryClient();
@@ -200,7 +200,7 @@ const StoreIdentity = () => {
   );
 };
 
-export default StoreIdentity;
+export default StoreLogoAndFavicon;
 const Container = styled.div``;
 const Box = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
@@ -214,23 +214,3 @@ const Box = styled.div`
     }
   }
 `;
-// const Grid = styled.div(
-//   ({ theme: { breakpoints } }) => `
-//   display: grid;
-//   grid-template-columns: 0.5fr 0.5fr;
-//   gap: 1rem;
-//   .demo-container {
-//     grid-column:1/3;
-//   }
-//   .specs {
-//     font-size: 0.8rem;
-//   }
-//   @media ${breakpoints.md}{
-//     grid-template-columns: 0.5fr 275px 1fr;
-//     .demo-container {
-//       grid-column:unset;
-//     }
-
-//   }
-//   `
-// );

@@ -35,9 +35,9 @@ const ProjectSwitcher = () => {
 
 export default ProjectSwitcher;
 const Container = styled.div`
-  background: linear-gradient(90deg, #fe0488, #f78f21);
+  /* background: linear-gradient(90deg, #fe0488, #f78f21); */
   color: #fff;
-  box-shadow: ${(props) => props.theme.shadow};
+  /* box-shadow: ${(props) => props.theme.shadow}; */
   padding: 0.5rem;
 
   position: relative;

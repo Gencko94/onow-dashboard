@@ -6,13 +6,14 @@ import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { BRANCH } from "../../../interfaces/settings/branches/branches";
 import extractError from "../../../utils/extractError";
-import { deleteBranch, getBranches } from "../../../utils/queries";
+import { getBranches } from "../../../utils/queries";
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
 import TableHead from "../../reusable/TableHead";
 import Flex from "../../StyledComponents/Flex";
 import BranchItem from "./BranchItem";
 import Spinner from "react-loader-spinner";
+import { deleteBranch } from "../../../utils/queries/branchesQueries";
 
 type GET_BRANCHES_RES = {
   data: BRANCH[];
@@ -118,10 +119,10 @@ const BranchesList = () => {
               // activeOrder={sortBy.order}
               cols={cols}
               gap="0.5rem"
-              gridCols="minmax(70px, 1fr) repeat(
+              gridCols="minmax(70px, 100px) repeat(
                 3,
                 minmax(100px, 1fr)
-              ) minmax(210px, 1fr)"
+              ) minmax(210px, 1.5fr)"
             />
           )}
           {isFetching && (

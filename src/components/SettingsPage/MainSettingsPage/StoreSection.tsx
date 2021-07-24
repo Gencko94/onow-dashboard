@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  FcPanorama,
   FcGlobe,
   FcInTransit,
   FcMoneyTransfer,
@@ -23,11 +22,10 @@ const StoreSection = () => {
   const [maintenanceModalOpen, setMaintenanceModalOpen] = useState(false);
   return (
     <Container>
-      <div className="title">
-        <Heading tag="h4" color="primary" mb="2rem">
-          Store Settings
-        </Heading>
-      </div>
+      <Heading tag="h4" color="primary" mb="2rem" weight="semibold">
+        Store Settings
+      </Heading>
+
       <Grid
         cols="repeat(auto-fill,minmax(250px,1fr))"
         gap="2rem"
@@ -39,12 +37,7 @@ const StoreSection = () => {
           Icon={FcSupport}
           desc="Manage your store information"
         />
-        <SettingsCard
-          title="Store Identity"
-          cb={() => history.push("/settings/store-identity")}
-          Icon={FcPanorama}
-          desc="Manage your store identity"
-        />
+
         <SettingsCard
           title="Store Branches"
           cb={() => history.push("/settings/branches")}
@@ -80,7 +73,7 @@ const StoreSection = () => {
           title="SEO"
           cb={() => history.push("/settings/seo")}
           Icon={FcSearch}
-          desc="Search Engine optimization improvments"
+          desc="Search Engine optimization improvements"
         />
         <SettingsCard
           title="Maintenance Mode"

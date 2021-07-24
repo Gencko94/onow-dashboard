@@ -131,9 +131,9 @@ export default BranchItem;
 const Container = styled.div`
   display: grid;
 
-  grid-template-columns: minmax(70px, 1fr) repeat(3, minmax(100px, 1fr)) minmax(
+  grid-template-columns: minmax(70px, 100px) repeat(3, minmax(100px, 1fr)) minmax(
       210px,
-      1fr
+      1.5fr
     );
   background-color: #fff;
   gap: 0.5rem;

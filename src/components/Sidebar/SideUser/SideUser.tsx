@@ -5,6 +5,8 @@ import { AuthProvider } from "../../../contexts/AuthContext";
 import { CSSTransition } from "react-transition-group";
 import ClickAwayListener from "react-click-away-listener";
 import { FiPower } from "react-icons/fi";
+import Popover from "../../reusable/Popover";
+import Button from "../../reusable/Button";
 const SideUser = () => {
   const { user, logOut } = useContext(AuthProvider);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -24,12 +26,25 @@ const SideUser = () => {
           unmountOnExit
         >
           <ClickAwayListener onClickAway={() => setMenuOpen(false)}>
-            <ul className="menu">
+            <Popover closeFunction={() => setMenuOpen(false)}>
+              <Button
+                text="Logout"
+                padding="0.5rem"
+                bg="transparent"
+                textSize="0.8rem"
+                Icon={FiPower}
+                iconSize={15}
+                onClick={(e) => {
+                  logOut?.();
+                }}
+              />
+            </Popover>
+            {/* <ul className="menu">
               <button onClick={() => logOut?.()} className="menu-item">
                 <FiPower />
                 <p>Logout</p>
               </button>
-            </ul>
+            </ul> */}
           </ClickAwayListener>
         </CSSTransition>
       </button>
@@ -39,13 +54,14 @@ const SideUser = () => {
 
 export default SideUser;
 const Container = styled.div`
-  box-shadow: ${(props) => props.theme.shadow};
+  /* box-shadow: ${(props) => props.theme.shadow}; */
   padding: 0.5rem;
   margin: 0.5rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fff;
+  background: #333;
+  color: ${(props) => props.theme.textPrimaryContrast};
 
   border-radius: 8px;
   .user {
@@ -68,8 +84,9 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
+    color: ${(props) => props.theme.textPrimaryContrast};
   }
-  .menu {
+  /* .menu {
     position: absolute;
     top: -10px;
     right: 10px;
@@ -79,10 +96,9 @@ const Container = styled.div`
     transform-origin: right;
     box-shadow: ${(props) => props.theme.shadow};
     border-radius: 5px;
-
-    color: ${(props) => props.theme.headingColor};
   }
   .menu-item {
+    color: ${(props) => props.theme.textPrimaryContrast};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -98,5 +114,5 @@ const Container = styled.div`
     p {
       margin: 0 0.25rem;
     }
-  }
+  } */
 `;

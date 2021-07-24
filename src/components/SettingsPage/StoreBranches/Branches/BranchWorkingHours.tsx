@@ -6,6 +6,7 @@ import { WiTime8, WiTime12 } from "react-icons/wi";
 
 import styled from "styled-components";
 import CheckToggle from "../../../reusable/CheckToggle";
+import GithubInput from "../../../reusable/Inputs/GithubInput";
 
 import TableHead from "../../../reusable/TableHead";
 import TimeIconedInput from "../../../reusable/TimeIconedInput";
@@ -55,7 +56,7 @@ const BranchWorkingHours = () => {
 
   return (
     <Container>
-      <Heading tag="h5" color="primary" margin="2rem 0">
+      <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
         Branch Working Hours
       </Heading>
       {/* <TableHead gap="2rem" cols={cols} gridCols="1fr 0.5fr 0.5fr" /> */}
@@ -74,7 +75,7 @@ const BranchWorkingHours = () => {
                 name={`working_hours.${day}.enabled` as any}
                 render={({ field: { value, onChange } }) => {
                   return (
-                    <CheckToggle
+                    <GithubInput
                       checked={value}
                       onChange={onChange}
                       label={t(day)}

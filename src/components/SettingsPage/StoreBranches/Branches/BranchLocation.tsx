@@ -23,7 +23,7 @@ const BranchLocation = () => {
   } = useTranslation();
   return (
     <Container>
-      <Heading tag="h5" color="primary" margin="2rem 0">
+      <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
         Branch Location
       </Heading>
       <div className="box">

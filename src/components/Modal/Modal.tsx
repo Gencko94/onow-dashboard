@@ -1,6 +1,5 @@
 import { Suspense } from "react";
-import { BsCheck } from "react-icons/bs";
-import { MdCancel } from "react-icons/md";
+
 import ReactModal from "react-modal";
 import styled from "styled-components";
 import Loading from "../../utils/Loading";

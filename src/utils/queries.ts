@@ -914,15 +914,3 @@ export const editBranch = async (branch: BRANCH) => {
   );
   return res.data.results;
 };
-export const deleteBranch = async (
-  id: string
-): Promise<{ results: "Deleted" }> => {
-  const t = localStorage.getItem("dshtid");
-  const config: AxiosRequestConfig = {
-    headers: {
-      Authorization: t ? `Bearer ${t}` : "",
-    },
-  };
-  const res = await axios.delete(`${customerUri}/pickups/${id}`, config);
-  return res.data.results;
-};

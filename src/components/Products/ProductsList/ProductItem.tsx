@@ -116,6 +116,7 @@ const ProductItem = ({
                 padding="0.5rem"
                 bg="transparent"
                 textSize="0.8rem"
+                hoverBg="#B72b2b"
                 Icon={RiDeleteBinLine}
                 iconSize={15}
                 onClick={(e) => {

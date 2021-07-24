@@ -19,7 +19,7 @@ const SettingsCard = ({ desc, title, Icon, cb }: IProps) => {
       <span className="icon">
         <Icon size={isDesktop ? 45 : 35} />
       </span>
-      <Heading tag="h6" color="primary" mb="0.25rem">
+      <Heading tag="h6" color="primary" mb="0.25rem" weight="semibold">
         {title}
       </Heading>
 

@@ -11,9 +11,19 @@ import BranchWorkingHours from "../../../components/SettingsPage/StoreBranches/B
 import Flex from "../../../components/StyledComponents/Flex";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
-import { BRANCH } from "../../../interfaces/settings/branches/branches";
+import {
+  BRANCH_ADDRESS,
+  BRANCH_INFO,
+  WORKING_HOURS,
+} from "../../../interfaces/settings/branches/branches";
 import extractError from "../../../utils/extractError";
-import { deleteBranch, editBranch, getBranch } from "../../../utils/queries";
+import { editBranch, getBranch } from "../../../utils/queries";
+import {
+  deleteBranch,
+  updateBranchInfo,
+  updateBranchLocation,
+  updateBranchWorkingHours,
+} from "../../../utils/queries/branchesQueries";
 
 const Branch = () => {
   const queryClient = useQueryClient();
@@ -25,55 +35,87 @@ const Branch = () => {
   const { data } = useQuery(["branch", id], () => getBranch(id), {
     suspense: true,
   });
-  const { mutateAsync: editMutation, isLoading: editLoading } = useMutation(
-    editBranch,
-    {
-      onSuccess: (data) => {
-        queryClient.setQueryData(["coupon", id], (prev) => {
-          return data;
-        });
-        replace("/coupons");
-      },
-    }
-  );
-  const methods = useForm<BRANCH>({
-    defaultValues: data,
+
+  // Info section
+  const infoMethods = useForm<BRANCH_INFO>({
+    defaultValues: {
+      active: data?.active,
+      busy: data?.busy,
+      cod_cost: data?.cod_cost,
+      cod_enabled: data?.cod_enabled,
+      contact_info: data?.contact_info,
+      delivery_enabled: data?.delivery_enabled,
+      id: data?.id,
+      name: data?.name,
+      pickup_enabled: data?.pickup_enabled,
+    },
   });
-
-  // Delete Mutation
-
-  const {
-    mutateAsync: deleteMutation,
-    reset: resetDeleteMutation,
-    isLoading: deleteLoading,
-  } = useMutation(deleteBranch);
-  const onSubmit = async (data: BRANCH) => {
-    console.log({
-      ...data,
+  const { mutateAsync: editBranchInfoMutation, isLoading: editInfoLoading } =
+    useMutation(updateBranchInfo, {
+      onSuccess: (data) => {
+        // queryClient.setQueryData(["branch", id], (prev) => {
+        //   return data;
+        // });
+        replace("/settings/branches");
+      },
+      onError: (error) => {
+        const { responseError } = extractError(error);
+        if (responseError) {
+          console.log(responseError);
+          setToastStatus?.({
+            open: true,
+            fn: handleCloseToast!,
+            text: "Something went wrong",
+            type: "error",
+          });
+        } else {
+          setToastStatus?.({
+            open: true,
+            fn: handleCloseToast!,
+            text: "Something went wrong",
+            type: "error",
+          });
+        }
+      },
     });
-    try {
-      // await editMutation({
-      //   ...data,
-      //   name: data.name,
-      //   code: data.code,
-      //   special_products: data.special_products.map((i: any) => i.id),
-      //   special_categories: data.special_categories,
-      //   couponCoverage: data.couponCoverage,
-      //   max_discount: data.max_discount,
-      //   min_total_order: data.min_total_order,
-      //   id: data.id,
+  // Edit Branch Info
+  const handleEditBranchInfo = async (formData: BRANCH_INFO) => {
+    console.log(formData);
+    await editBranchInfoMutation(formData);
+    setToastStatus?.({
+      open: true,
+      fn: handleCloseToast!,
+      text: "Branch Changes saved Successfully",
+      type: "success",
+    });
+    replace("/settings/branches");
+  };
+
+  //Location Section
+
+  const locationMethods = useForm<BRANCH_ADDRESS>({
+    defaultValues: data!.address,
+  });
+  const {
+    mutateAsync: editBranchLocationMutation,
+    isLoading: locationLoading,
+  } = useMutation(updateBranchLocation, {
+    onSuccess: (data) => {
+      // queryClient.setQueryData(["branch", id], (prev) => {
+      //   return data;
       // });
-      setToastStatus?.({
-        open: true,
-        fn: handleCloseToast!,
-        text: "Branch Changes saved Successfully",
-        type: "success",
-      });
       replace("/settings/branches");
-    } catch (error) {
+    },
+    onError: (error) => {
       const { responseError } = extractError(error);
       if (responseError) {
         console.log(responseError);
+        setToastStatus?.({
+          open: true,
+          fn: handleCloseToast!,
+          text: "Something went wrong",
+          type: "error",
+        });
       } else {
         setToastStatus?.({
           open: true,
@@ -82,10 +124,85 @@ const Branch = () => {
           type: "error",
         });
       }
-    }
+    },
+  });
+
+  // Edit Branch Location
+  const handleEditBranchLocation = async (formData: BRANCH_ADDRESS) => {
+    console.log(formData);
+    await editBranchLocationMutation({
+      id: data!.id,
+      address: { ...formData },
+    });
+    setToastStatus?.({
+      open: true,
+      fn: handleCloseToast!,
+      text: "Branch Changes saved Successfully",
+      type: "success",
+    });
+    replace("/settings/branches");
   };
+  //Location Section
+
+  const hoursMethods = useForm<WORKING_HOURS>({
+    defaultValues: data!.working_hours,
+  });
+  const { mutateAsync: editBranchHoursMutation, isLoading: hoursLoading } =
+    useMutation(updateBranchWorkingHours, {
+      onSuccess: (data) => {
+        // queryClient.setQueryData(["branch", id], (prev) => {
+        //   return data;
+        // });
+        replace("/settings/branches");
+      },
+      onError: (error) => {
+        const { responseError } = extractError(error);
+        if (responseError) {
+          console.log(responseError);
+          setToastStatus?.({
+            open: true,
+            fn: handleCloseToast!,
+            text: "Something went wrong",
+            type: "error",
+          });
+        } else {
+          setToastStatus?.({
+            open: true,
+            fn: handleCloseToast!,
+            text: "Something went wrong",
+            type: "error",
+          });
+        }
+      },
+    });
+
+  // Edit Branch Location
+  const handleEditBranchWorkingHours = async (formData: WORKING_HOURS) => {
+    console.log(formData);
+    await editBranchHoursMutation({
+      id: data!.id,
+      days: formData,
+    });
+    setToastStatus?.({
+      open: true,
+      fn: handleCloseToast!,
+      text: "Branch Changes saved Successfully",
+      type: "success",
+    });
+    replace("/settings/branches");
+  };
+
+  // Delete Logic
+
+  const {
+    mutateAsync: deleteMutation,
+    reset: resetDeleteMutation,
+    isLoading: deleteLoading,
+  } = useMutation(deleteBranch);
+
   const handleDeleteBranch = async () => {
     try {
+      handleCloseConfirmationModal?.();
       await deleteMutation(id);
       setToastStatus?.({
         open: true,
@@ -93,8 +210,9 @@ const Branch = () => {
         text: "Branch Deleted Successfully",
         type: "success",
       });
-      replace("/coupons");
+      replace("/settings/branches");
     } catch (error) {
+      handleCloseConfirmationModal?.();
       const { responseError, unknownError } = extractError(error);
       if (responseError) {
         console.log(responseError);
@@ -113,7 +231,7 @@ const Branch = () => {
     }
   };
   return (
-    <form onSubmit={methods.handleSubmit(onSubmit)}>
+    <div>
       <HeaderContainer>
         <Breadcrumbs
           childLabel="Branch"
@@ -121,18 +239,6 @@ const Branch = () => {
           parentTarget="/settings/branches"
         />
         <Flex justify="flex-end">
-          <Button
-            withTransition
-            text="Save Changes"
-            type="submit"
-            padding="0.5rem"
-            bg="green"
-            withRipple
-            margin="0 1rem"
-            textSize="0.9rem"
-            isLoading={editLoading}
-            disabled={editLoading}
-          />
           <Button
             withTransition
             textSize="0.9rem"
@@ -154,12 +260,64 @@ const Branch = () => {
           />
         </Flex>
       </HeaderContainer>
-      <FormProvider {...methods}>
-        <BranchInformation />
-        <BranchLocation />
-        <BranchWorkingHours />
-      </FormProvider>
-    </form>
+      <form onSubmit={infoMethods.handleSubmit(handleEditBranchInfo)}>
+        <FormProvider {...infoMethods}>
+          <BranchInformation />
+          <Flex justify="center" margin="1rem 0 ">
+            <Button
+              withTransition
+              text="Save Changes"
+              type="submit"
+              padding="0.5rem"
+              bg="green"
+              withRipple
+              margin="0 1rem"
+              textSize="0.9rem"
+              isLoading={editInfoLoading}
+              disabled={editInfoLoading}
+            />
+          </Flex>
+        </FormProvider>
+      </form>
+      <form onSubmit={infoMethods.handleSubmit(handleEditBranchLocation)}>
+        <FormProvider {...locationMethods}>
+          <BranchLocation />
+          <Flex justify="center" margin="1rem 0 ">
+            <Button
+              withTransition
+              text="Save Changes"
+              type="submit"
+              padding="0.5rem"
+              bg="green"
+              withRipple
+              margin="0 1rem"
+              textSize="0.9rem"
+              isLoading={locationLoading}
+              disabled={locationLoading}
+            />
+          </Flex>
+        </FormProvider>
+      </form>
+      <form onSubmit={infoMethods.handleSubmit(handleEditBranchWorkingHours)}>
+        <FormProvider {...hoursMethods}>
+          <BranchWorkingHours />
+          <Flex justify="center" margin="1rem 0 ">
+            <Button
+              withTransition
+              text="Save Changes"
+              type="submit"
+              padding="0.5rem"
+              bg="green"
+              withRipple
+              margin="0 1rem"
+              textSize="0.9rem"
+              isLoading={hoursLoading}
+              disabled={hoursLoading}
+            />
+          </Flex>
+        </FormProvider>
+      </form>
+    </div>
   );
 };
 

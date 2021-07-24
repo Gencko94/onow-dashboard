@@ -51,10 +51,15 @@ const AccountSettings = lazy(
   () => import("./pages/SettingsPages/AccountSettings")
 );
 const Branches = lazy(() => import("./pages/SettingsPages/Branches"));
-const StoreIdentity = lazy(() => import("./pages/SettingsPages/StoreIdentity"));
+const StoreLogoAndFavicon = lazy(
+  () => import("./pages/SettingsPages/StoreLogoAndFavicon")
+);
 
 const StoreInformation = lazy(
   () => import("./pages/SettingsPages/StoreInformation")
+);
+const HomePageAppearance = lazy(
+  () => import("./pages/SettingsPages/HomePageAppearance")
 );
 const StoreSEO = lazy(() => import("./pages/SettingsPages/StoreSEO"));
 const ProductListGridCustomizer = lazy(
@@ -216,8 +221,12 @@ function App() {
                             Component={CreatePaymentGatewayAccount}
                           />
                           <ProtectedRoute
-                            path="/settings/store-identity"
-                            Component={StoreIdentity}
+                            path="/settings/store-logo-favicon"
+                            Component={StoreLogoAndFavicon}
+                          />
+                          <ProtectedRoute
+                            path="/settings/home-appearance"
+                            Component={HomePageAppearance}
                           />
                           <ProtectedRoute
                             path="/settings/seo"

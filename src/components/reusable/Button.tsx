@@ -115,7 +115,7 @@ const Button = ({
 }: IProps) => {
   const { isDesktop } = useResponsive();
   const { currentTheme } = useContext(ThemeContext);
-
+  console.log(Color("#dd7302").isDark());
   const background = useMemo(() => {
     switch (bg) {
       case "blue":
@@ -126,6 +126,8 @@ const Button = ({
         return currentTheme.primary;
       case "green":
         return currentTheme.green;
+      default:
+        return "rgba(255,255,255,0)";
     }
   }, [
     bg,
@@ -137,6 +139,28 @@ const Button = ({
   const hover = useMemo(() => {
     return Color(background).darken(0.2).hex();
   }, [background]);
+  const textColor = useMemo(() => {
+    if (background === currentTheme.primary) {
+      return currentTheme.textPrimaryContrast;
+    }
+    if (Color(background).isDark()) {
+      return currentTheme.textPrimaryContrast;
+    } else {
+      return currentTheme.textPrimary;
+    }
+  }, [
+    background,
+    currentTheme.primary,
+    currentTheme.textPrimary,
+    currentTheme.textPrimaryContrast,
+  ]);
+  const hoverTextColor = useMemo(() => {
+    if (Color(hoverBg).isDark()) {
+      return currentTheme.textPrimaryContrast;
+    } else {
+      return currentTheme.textPrimary;
+    }
+  }, [currentTheme.textPrimary, currentTheme.textPrimaryContrast, hoverBg]);
   return (
     <ButtonWrapper
       textSize={textSize}
@@ -144,11 +168,11 @@ const Button = ({
       withTransition={withTransition}
       bg={background}
       padding={padding}
-      color={color}
+      color={textColor}
       onClick={onClick}
       type={type}
       hoverBg={hoverBg ?? hover}
-      hoverColor={hoverColor}
+      hoverColor={hoverColor ?? hoverTextColor}
       shadow={shadow}
       border={border}
       disabled={disabled}
@@ -258,8 +282,8 @@ export const ButtonWrapper = styled.button<{
       ${
         disabled &&
         css`
-          background: #a7a2a2;
-          color: #fff;
+          background: #a7a2a2 !important;
+          color: #fff !important;
         `
       };
     @media ${breakpoints.md}{

@@ -51,7 +51,7 @@ export interface BRANCH {
   };
   active: boolean;
   cod_enabled: boolean;
-  cod_cost: string;
+  cod_cost: number;
   busy: boolean;
   pickup_enabled: boolean;
   delivery_enabled: boolean;
@@ -63,6 +63,23 @@ export interface BRANCH {
     whatsapp: string;
   };
 }
+export type BRANCH_INFO = {
+  id: number;
+  name: {
+    [key: string]: string;
+  };
+  active: boolean;
+  cod_enabled: boolean;
+  cod_cost: number;
+  busy: boolean;
+  pickup_enabled: boolean;
+  delivery_enabled: boolean;
+  contact_info: {
+    landline: string;
+    mobile: string;
+    whatsapp: string;
+  };
+};
 export interface NEW_BRANCH {
   name: {
     [key: string]: string;
