@@ -115,7 +115,6 @@ const Button = ({
 }: IProps) => {
   const { isDesktop } = useResponsive();
   const { currentTheme } = useContext(ThemeContext);
-  console.log(Color("#dd7302").isDark());
   const background = useMemo(() => {
     switch (bg) {
       case "blue":

@@ -20,7 +20,7 @@ interface IProps<T> {
   options: T[];
   defaultValue?: any;
   errors: any;
-
+  isLoading?: boolean;
   placeholder?: string;
   getOptionLabel: getOptionLabel<T>;
   getOptionValue: getOptionValue<T>;
@@ -43,7 +43,7 @@ export default function Select<T>({
   options,
   errors,
   defaultValue,
-
+  isLoading,
   placeholder,
   getOptionLabel,
   getOptionValue,
@@ -88,6 +88,7 @@ export default function Select<T>({
 
       <S
         ref={ref}
+        isLoading={isLoading}
         isMulti={isMulti}
         value={value}
         defaultValue={options.find((i: any) => i.value === defaultValue)}

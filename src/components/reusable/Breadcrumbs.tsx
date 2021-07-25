@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import useResponsive from "../../hooks/useResponsive";
 import Heading from "../StyledComponents/Heading";
+import Paragraph from "../StyledComponents/Paragraph";
 
 interface IProps {
   children: { target: string; name: { [key: string]: string } }[];
@@ -34,7 +35,13 @@ const Breadcrumbs = ({ children }: IProps) => {
           return (
             <React.Fragment key={i}>
               {i === children.length - 1 ? (
-                <p>{child.name[language]}</p>
+                <Paragraph
+                  color="themeColor"
+                  fontSize="0.9rem"
+                  weight="semibold"
+                >
+                  {child.name[language]}
+                </Paragraph>
               ) : (
                 <StyledLink to={child.target}>
                   {child.name[language]}
@@ -79,10 +86,7 @@ const Container = styled.nav(
   
   
   .links-container {
-      p {
-          color:${headingColor};
-          font-weight:${font.semibold};
-      };
+     
     font-size: 0.9rem;
     white-space:nowrap;
     display: flex;

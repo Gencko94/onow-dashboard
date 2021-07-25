@@ -9,7 +9,8 @@ interface IProps {
     | "textPrimaryContrast"
     | "textSecondary"
     | "textSecondaryContrast"
-    | "green";
+    | "green"
+    | "themeColor";
   padding?: string;
   margin?: string;
   weight?: "light" | "regular" | "semibold" | "bold" | "xbold";
@@ -50,7 +51,8 @@ export const Wrapper = styled.p<{
     | "textPrimaryContrast"
     | "textSecondary"
     | "textSecondaryContrast"
-    | "green";
+    | "green"
+    | "themeColor";
   margin?: string;
   mb?: string;
   weight: "light" | "regular" | "semibold" | "bold" | "xbold";
@@ -65,6 +67,7 @@ export const Wrapper = styled.p<{
       textSecondaryContrast,
       green,
       font,
+      mainColor,
     },
     color,
     margin,
@@ -83,6 +86,8 @@ export const Wrapper = styled.p<{
       ? textSecondaryContrast
       : color === "green"
       ? green
+      : color === "themeColor"
+      ? mainColor
       : "inherit"
   };
   margin:${margin};

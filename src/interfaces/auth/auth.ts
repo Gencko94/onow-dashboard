@@ -1,4 +1,4 @@
-import { STAFF_PERMISSIONS } from "../staff/staff";
+import { PERMISSIONS } from "../staff/staff";
 
 export type USER = {
   id: number;
@@ -8,7 +8,7 @@ export type USER = {
   reset_token: string;
   email: string;
   store: STORE;
-  permissions: STAFF_PERMISSIONS;
+  permissions: PERMISSIONS;
   roles: "SUPER_USER" | "STAFF" | "ADMIN";
 };
 

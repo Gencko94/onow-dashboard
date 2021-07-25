@@ -66,22 +66,22 @@ const SideNav = () => {
   return (
     <Container>
       {items.map((item) => {
-        if (
-          canVisitPage({
-            permissions: user?.permissions,
-            path: "/customers",
-            role: user?.roles,
-          })
-        )
-          return (
-            <SideNavItem
-              key={item.target}
-              Icon={item.icon}
-              active={pathname.includes(item.target)}
-              target={item.target}
-              title={item.title}
-            />
-          );
+        // if (
+        //   canVisitPage({
+        //     permissions: user?.permissions,
+        //     path: "/customers",
+        //     role: user?.roles,
+        //   })
+        // )
+        return (
+          <SideNavItem
+            key={item.target}
+            Icon={item.icon}
+            active={pathname.includes(item.target)}
+            target={item.target}
+            title={item.title}
+          />
+        );
       })}
     </Container>
   );

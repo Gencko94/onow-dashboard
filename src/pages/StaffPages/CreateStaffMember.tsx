@@ -1,5 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
+import { BiPlus } from "react-icons/bi";
 import { useMutation } from "react-query";
+import { useHistory } from "react-router-dom";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
@@ -12,7 +14,12 @@ import { NEW_STAFF_MEMBER } from "../../interfaces/staff/staff";
 import { createStaffMember } from "../../utils/queries";
 
 const CreateStaffMember = () => {
-  const { mutateAsync: createStaff, reset } = useMutation(createStaffMember);
+  const {
+    mutateAsync: createStaff,
+    reset,
+    isLoading,
+  } = useMutation(createStaffMember);
+  const history = useHistory();
   const { handleCloseToast, setToastStatus } = useToast();
   const {
     register,
@@ -30,15 +37,17 @@ const CreateStaffMember = () => {
         "editCustomer",
         "visitCustomers",
         "createProduct",
-        "deleteProduct",
+        // "deleteProduct",
         "editProduct",
         "hideProduct",
-        "visitProducts",
+        "visitProduct",
         "createOrder",
         "deleteOrder",
         "editOrder",
         "visitOrders",
       ],
+      roles: "ADMIN",
+      branches: [],
     },
   });
   const roles = watch("roles");
@@ -47,14 +56,41 @@ const CreateStaffMember = () => {
     try {
       await createStaff({
         ...data,
-        branch_id: data.branch_id,
+        branches: data.branches.map((branch: any) => branch.id),
+        permissions: data.roles === "ADMIN" ? [] : data.permissions,
       });
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "User Created Successfully",
+        type: "success",
+      });
+      history.replace("/settings/staff");
     } catch (error) {
       if (error.response) {
         const errors = JSON.parse(error.response.data.error);
-        if (errors.email.includes("The email has already been taken.")) {
+        if (errors.email?.includes("The email has already been taken.")) {
           setError("email", {
             message: "The email has already been taken.",
+          });
+        } else if (errors.phone?.includes("phone belongs to another account")) {
+          setError(
+            "phone",
+            {
+              message: "The Phone Number has already been taken.",
+            },
+            { shouldFocus: true }
+          );
+          setToastStatus?.({
+            fn: () => {
+              reset();
+              handleCloseToast?.();
+            },
+            open: true,
+            text: "Phone Number has been taken",
+            type: "error",
           });
         }
       } else {
@@ -95,10 +131,12 @@ const CreateStaffMember = () => {
           <Flex justify="flex-end">
             <Button
               type="submit"
-              text="Save Changes"
+              text="Create New Member"
               padding="0.5rem"
               bg="green"
               withTransition
+              Icon={BiPlus}
+              isLoading={isLoading}
             />
           </Flex>
         </HeaderContainer>

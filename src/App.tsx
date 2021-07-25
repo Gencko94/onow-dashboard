@@ -159,10 +159,7 @@ function App() {
                             path="/orders/:id"
                             Component={Order}
                           />
-                          <ProtectedRoute
-                            path="/customers"
-                            Component={Customers}
-                          />
+                          <Route path="/customers" component={Customers} />
                           <ProtectedRoute path="/coupons" Component={Coupons} />
                           <ProtectedRoute
                             path="/coupons/coupon/:id"

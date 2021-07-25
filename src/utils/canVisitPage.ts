@@ -1,7 +1,7 @@
-import { STAFF_PERMISSIONS } from "../interfaces/staff/staff";
+import { PERMISSIONS } from "../interfaces/staff/staff";
 
 interface IProps {
-  permissions?: STAFF_PERMISSIONS;
+  permissions?: PERMISSIONS;
   path: string;
   role?: "ADMIN" | "STAFF" | "SUPER_USER";
 }
@@ -10,7 +10,7 @@ interface IProps {
 const generalPaths = ["/dashboard"];
 
 // Checks if the path is one of the general pages
-const isGeneralPage = (path: string, permissions: STAFF_PERMISSIONS) => {
+const isGeneralPage = (path: string, permissions: PERMISSIONS) => {
   if (path === "/settings") return true;
   if (path.includes("/settings")) {
     const page = path.slice(10);

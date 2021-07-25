@@ -1,6 +1,7 @@
 import {
   CUSTOMERS_PERMISSIONS,
   ORDERS_PERMISSIONS,
+  PERMISSIONS,
   PRODUCTS_PERMISSIONS,
   STAFF_PERMISSIONS,
 } from "../interfaces/staff/staff";
@@ -19,12 +20,22 @@ export const customerPermissions: CUSTOMERS_PERMISSIONS = [
 ];
 export const productPermissions: PRODUCTS_PERMISSIONS = [
   "createProduct",
-  "deleteProduct",
+  // "deleteProduct",
   "editProduct",
+  "visitProduct",
   "hideProduct",
-  "visitProducts",
 ];
-export const userPermissions: STAFF_PERMISSIONS = [
+export const staffPermissions: STAFF_PERMISSIONS = [
+  "assignRole",
+  "unassignRole",
+  "viewAllPermissions",
+  "viewAllRoles",
+  "createUser",
+  "deleteUser",
+  "editUser",
+  "visitUser",
+];
+export const userPermissions: PERMISSIONS = [
   ...ordersPermissions,
   ...customerPermissions,
   ...productPermissions,

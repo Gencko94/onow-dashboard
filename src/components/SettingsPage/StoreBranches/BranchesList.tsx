@@ -15,7 +15,7 @@ import BranchItem from "./BranchItem";
 import Spinner from "react-loader-spinner";
 import { deleteBranch } from "../../../utils/queries/branchesQueries";
 
-type GET_BRANCHES_RES = {
+export type GET_BRANCHES_RES = {
   data: BRANCH[];
   currentPage: number;
   lastPage: number;
