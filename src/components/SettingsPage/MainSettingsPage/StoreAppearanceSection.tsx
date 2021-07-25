@@ -19,10 +19,10 @@ const StoreAppearanceSection = () => {
         margin="1rem 0"
       >
         <SettingsCard
-          title="Home Page Appearance"
-          cb={() => history.push("/settings/home-appearance")}
+          title="Website Page Appearance"
+          cb={() => history.push("/settings/website-appearance")}
           Icon={FcSelfie}
-          desc="Edit your Store Homepage"
+          desc="Edit your Website Homepage"
         />
         <SettingsCard
           title="Logo & Favicon"

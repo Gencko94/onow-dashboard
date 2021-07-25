@@ -5,9 +5,16 @@ const StoreCurrencies = () => {
   return (
     <Container>
       <Breadcrumbs
-        childLabel="Store Currencies"
-        parentLabel="Settings"
-        parentTarget="/settings"
+        children={[
+          {
+            name: { ar: "الإعدادات", en: "Settings" },
+            target: "/settings",
+          },
+          {
+            name: { ar: "عملات المتجر", en: "Store Currencies" },
+            target: "",
+          },
+        ]}
       />
       <div className="title-container">
         <h5>Store Currencies</h5>

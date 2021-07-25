@@ -52,12 +52,21 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
       <div className="box">
         <IconedInput
           Icon={MdSubtitles}
-          errors={errors?.name}
+          errors={errors?.first_name}
           register={register}
           required
           requiredMessage="Required"
-          label="Full Name"
-          name="name"
+          label="First Name"
+          name="first_name"
+        />
+        <IconedInput
+          Icon={MdSubtitles}
+          errors={errors?.last_name}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Last Name"
+          name="last_name"
         />
 
         <Controller

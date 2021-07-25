@@ -15,9 +15,16 @@ const StoreInformation = () => {
     <div>
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="Store Properties"
-          parentLabel="Settings"
-          parentTarget="/settings"
+          children={[
+            {
+              name: { ar: "الإعدادات", en: "Settings" },
+              target: "/settings",
+            },
+            {
+              name: { ar: "معلومات المتجر", en: "Store Information" },
+              target: "",
+            },
+          ]}
         />
       </HeaderContainer>
       <StoreNameAndDescription

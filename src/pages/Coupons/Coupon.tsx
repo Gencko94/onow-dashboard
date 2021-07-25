@@ -155,9 +155,16 @@ const Coupon = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <HeaderContainer>
                 <Breadcrumbs
-                  childLabel="Coupon"
-                  parentLabel="Coupons"
-                  parentTarget="/coupons"
+                  children={[
+                    {
+                      name: { ar: "الكوبونات", en: "Coupons" },
+                      target: "/coupons",
+                    },
+                    {
+                      name: { ar: "كوبون", en: "Coupon" },
+                      target: "",
+                    },
+                  ]}
                 />
                 <Flex justify="flex-end">
                   <Button

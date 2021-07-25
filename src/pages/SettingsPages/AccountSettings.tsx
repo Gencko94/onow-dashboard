@@ -86,9 +86,16 @@ const AccountSettings = () => {
     <Container>
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="Account"
-          parentLabel="Settings"
-          parentTarget="/settings"
+          children={[
+            {
+              name: { ar: "الإعدادات", en: "Settings" },
+              target: "/settings",
+            },
+            {
+              name: { ar: "بيانات الحساب", en: "Account Settings" },
+              target: "",
+            },
+          ]}
         />
       </HeaderContainer>
       <form style={{ margin: "2rem 0 " }} onSubmit={handleSubmit(onSubmit)}>

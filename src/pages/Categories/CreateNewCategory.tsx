@@ -86,9 +86,16 @@ const CreateNewCategory = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="Create New Category"
-          parentLabel="Categories"
-          parentTarget="/categories"
+          children={[
+            {
+              name: { ar: "الفئات", en: "Categories" },
+              target: "/categories",
+            },
+            {
+              name: { ar: "اضافة فئة جديدة", en: "Create New Category" },
+              target: "",
+            },
+          ]}
         />
         <Flex justify="flex-end">
           <Button

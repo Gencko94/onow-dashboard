@@ -38,9 +38,7 @@ const Order = lazy(() => import("./pages/Order"));
 const Coupons = lazy(() => import("./pages/Coupons"));
 const Coupon = lazy(() => import("./pages/Coupons/Coupon"));
 const CreateNewCoupon = lazy(() => import("./pages/Coupons/CreateNewCoupon"));
-const WebsiteLayout = lazy(() => import("./pages/WebsiteLayout"));
-const HeaderCustomizer = lazy(() => import("./pages/HeaderCustomizer"));
-const FooterCustomizer = lazy(() => import("./pages/FooterCustomizer"));
+
 const Settings = lazy(() => import("./pages/SettingsPages/Settings"));
 const Staff = lazy(() => import("./pages/StaffPages/Staff"));
 const StaffMember = lazy(() => import("./pages/StaffPages/StaffMember"));
@@ -58,13 +56,17 @@ const StoreLogoAndFavicon = lazy(
 const StoreInformation = lazy(
   () => import("./pages/SettingsPages/StoreInformation")
 );
-const HomePageAppearance = lazy(
-  () => import("./pages/SettingsPages/HomePageAppearance")
+const WebsiteAppearance = lazy(
+  () => import("./pages/SettingsPages/WebsiteAppearance")
+);
+const StoreCarousel = lazy(
+  () => import("./pages/SettingsPages/WebsiteAppearance/StoreCarousel")
+);
+const ProductsView = lazy(
+  () => import("./pages/SettingsPages/WebsiteAppearance/ProductsView")
 );
 const StoreSEO = lazy(() => import("./pages/SettingsPages/StoreSEO"));
-const ProductListGridCustomizer = lazy(
-  () => import("./pages/ProductListGridCustomizer")
-);
+
 const Branch = lazy(() => import("./pages/SettingsPages/Branches/Branch"));
 
 const CreateNewBranch = lazy(
@@ -82,7 +84,6 @@ const CreatePaymentGatewayAccount = lazy(
     import("./pages/SettingsPages/PaymentMethods/CreatePaymentGatewayAccount")
 );
 
-const DesignSelectionPage = lazy(() => import("./pages/DesignSelectionPage"));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -171,26 +172,7 @@ function App() {
                             path="/coupons/create"
                             Component={CreateNewCoupon}
                           />
-                          <ProtectedRoute
-                            path="/website-layout"
-                            Component={WebsiteLayout}
-                          />
-                          <ProtectedRoute
-                            path="/website-layout/design-select/:type"
-                            Component={DesignSelectionPage}
-                          />
-                          <ProtectedRoute
-                            path="/website-layout/block-customize/header/:id"
-                            Component={HeaderCustomizer}
-                          />
-                          <ProtectedRoute
-                            path="/website-layout/block-customize/footer/:id"
-                            Component={FooterCustomizer}
-                          />
-                          <ProtectedRoute
-                            path="/website-layout/block-customize/product-grid/:id"
-                            Component={ProductListGridCustomizer}
-                          />
+
                           <ProtectedRoute
                             path="/customers/:id"
                             Component={CustomerProfile}
@@ -225,8 +207,16 @@ function App() {
                             Component={StoreLogoAndFavicon}
                           />
                           <ProtectedRoute
-                            path="/settings/home-appearance"
-                            Component={HomePageAppearance}
+                            path="/settings/website-appearance"
+                            Component={WebsiteAppearance}
+                          />
+                          <ProtectedRoute
+                            path="/settings/website-appearance/store-carousel"
+                            Component={StoreCarousel}
+                          />
+                          <ProtectedRoute
+                            path="/settings/website-appearance/products-view"
+                            Component={ProductsView}
                           />
                           <ProtectedRoute
                             path="/settings/seo"

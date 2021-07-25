@@ -58,9 +58,23 @@ const CreatePaymentGatewayAccount = () => {
   return (
     <div id="parent">
       <Breadcrumbs
-        childLabel="Create Payment Gateway Account"
-        parentLabel="Payment Methods"
-        parentTarget="/settings/payment-methods"
+        children={[
+          {
+            name: { ar: "الإعدادات", en: "Settings" },
+            target: "/settings",
+          },
+          {
+            name: { ar: "طرق الدفع", en: "Payment gateways" },
+            target: "/settings/payment-gateways",
+          },
+          {
+            name: {
+              ar: "إنشاء حساب جديد",
+              en: "Create New Payment gateway account",
+            },
+            target: "",
+          },
+        ]}
       />
       <Container>
         <div className="title-container">

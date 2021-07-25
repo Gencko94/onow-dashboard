@@ -58,9 +58,16 @@ const Staff = () => {
     <Container>
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="Staff Members"
-          parentLabel="Settings"
-          parentTarget="/settings"
+          children={[
+            {
+              name: { ar: "الإعدادات", en: "Settings" },
+              target: "/settings",
+            },
+            {
+              name: { ar: "أعضاء المتجر", en: "Store Staff" },
+              target: "",
+            },
+          ]}
         />
         <Flex justify="flex-end" padding="0.5rem">
           <AddButton

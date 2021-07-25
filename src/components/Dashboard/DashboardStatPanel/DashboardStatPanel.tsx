@@ -108,20 +108,21 @@ const Container = styled.div`
   }
 `;
 const ContentContainer = styled.div(
-  ({ theme: { breakpoints, boxColor, shadow, font, subHeading } }) => `
+  ({ theme: { breakpoints, boxColor, accent1, font, subHeading } }) => `
 
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   
   .stat-item {
-    background-color: rgba(255,255,255,0.5);
+    background-color: ${accent1};
+    
    
     box-shadow:  0px -5px 25px -10px #e098447e;
     border-radius: 8px;
     flex: auto;
     padding: 1rem;
-    border-radius: 10px;
+    position: relative;
     display: flex;
     flex-direction:column;
     justify-content:center;
@@ -154,6 +155,7 @@ const ContentContainer = styled.div(
   @media ${breakpoints.lg}{
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
+  
 `
 );
 const Icon = styled.span`

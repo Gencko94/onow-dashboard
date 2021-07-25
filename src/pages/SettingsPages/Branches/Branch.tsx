@@ -234,9 +234,20 @@ const Branch = () => {
     <div>
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="Branch"
-          parentLabel="Branches"
-          parentTarget="/settings/branches"
+          children={[
+            {
+              name: { ar: "الإعدادات", en: "Settings" },
+              target: "/settings",
+            },
+            {
+              name: { ar: "فروع المتجر", en: "Store Branches" },
+              target: "/settings/branches",
+            },
+            {
+              name: { ar: "بيانات الفرع", en: "Branch Details" },
+              target: "",
+            },
+          ]}
         />
         <Flex justify="flex-end">
           <Button

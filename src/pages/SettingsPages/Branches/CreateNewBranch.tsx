@@ -71,9 +71,20 @@ const CreateNewBranch = () => {
     <form onSubmit={methods.handleSubmit(onSubmit)}>
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="Create New Branch"
-          parentLabel="Branches"
-          parentTarget="/settings/branches"
+          children={[
+            {
+              name: { ar: "الإعدادات", en: "Settings" },
+              target: "/settings",
+            },
+            {
+              name: { ar: "فروع المتجر", en: "Store Branches" },
+              target: "/settings/branches",
+            },
+            {
+              name: { ar: "إضافة فرع جديد", en: "Create New Branch" },
+              target: "",
+            },
+          ]}
         />
         <Flex justify="flex-end">
           <Button

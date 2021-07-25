@@ -24,9 +24,16 @@ const StoreSEO = () => {
     <div>
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="SEO Improvements"
-          parentLabel="Settings"
-          parentTarget="/settings"
+          children={[
+            {
+              name: { ar: "الإعدادات", en: "Settings" },
+              target: "/settings",
+            },
+            {
+              name: { ar: "تحسينات محرك البحث", en: "SEO Improvements" },
+              target: "",
+            },
+          ]}
         />
       </HeaderContainer>
       <Container>

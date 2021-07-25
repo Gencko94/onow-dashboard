@@ -172,6 +172,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor:pointer;
     }
     .desc {
       font-size: 0.7rem;

@@ -9,9 +9,16 @@ const StorePaymentMethods = () => {
   return (
     <div>
       <Breadcrumbs
-        childLabel="Payment Methods"
-        parentLabel="Settings"
-        parentTarget="/settings"
+        children={[
+          {
+            name: { ar: "الإعدادات", en: "Settings" },
+            target: "/settings",
+          },
+          {
+            name: { ar: "طرق الدفع", en: "Payment gateways" },
+            target: "",
+          },
+        ]}
       />
       <PaymentMethodsTabs activeTab={activeTab} />
       <Wrapper>{activeTab === 0 && <OnlinePayments />}</Wrapper>

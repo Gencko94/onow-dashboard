@@ -13,11 +13,9 @@ const Brand = () => {
   } = useForm<CATEGORY>();
   return (
     <div>
-      <Breadcrumbs
-        childLabel="Brand"
-        parentLabel="Brands"
-        parentTarget="/brands"
-      />
+      {/* <Breadcrumbs
+       children={[{}]}
+      /> */}
       <BrandInfo
         setValue={setValue}
         control={control}

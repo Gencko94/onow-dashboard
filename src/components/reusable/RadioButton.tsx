@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 interface IProps {
-  label: string;
+  label?: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   checked: boolean;
 }
@@ -13,7 +13,7 @@ const RadioButton = ({ label, checked, onChange }: IProps) => {
   return (
     <Container>
       <input onChange={onChange} type="radio" checked={checked} />
-      <label>{t(label)}</label>
+      {<label>{label ? t(label) : " "}</label>}
     </Container>
   );
 };

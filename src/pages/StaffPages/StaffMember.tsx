@@ -126,9 +126,20 @@ const StaffMember = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="Staff Member"
-          parentLabel="Staff"
-          parentTarget="/settings/staff"
+          children={[
+            {
+              name: { ar: "الإعدادات", en: "Settings" },
+              target: "/settings",
+            },
+            {
+              name: { ar: "أعضاء المتجر", en: "Store Staff" },
+              target: "/settings/staff",
+            },
+            {
+              name: { ar: "بيانات العضو", en: "Staff Member Details" },
+              target: "",
+            },
+          ]}
         />
         <Flex margin="1rem" justify="flex-end">
           <Button

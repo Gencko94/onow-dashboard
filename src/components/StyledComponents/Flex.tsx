@@ -12,6 +12,7 @@ interface IProps {
   margin?: string;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   wrap?: boolean;
+  column?: boolean;
 }
 const Flex: FC<IProps> = ({
   children,
@@ -20,11 +21,13 @@ const Flex: FC<IProps> = ({
   padding,
   margin,
   onClick,
+  column,
   wrap,
 }) => {
   return (
     <FlexWrapper
       onClick={onClick}
+      column={column}
       style={
         {
           "--justify": justify,
@@ -41,11 +44,12 @@ const Flex: FC<IProps> = ({
 };
 
 export default Flex;
-export const FlexWrapper = styled.div`
+export const FlexWrapper = styled.div<{ column?: boolean }>`
   display: flex;
   justify-content: var(--justify, normal);
   align-items: var(--items, center);
   padding: var(--padding, 0);
   margin: var(--margin, 0);
   flex-wrap: var(--wrap, nowrap);
+  flex-direction: ${(props) => (props.column ? "column" : "row")};
 `;

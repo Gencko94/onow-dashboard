@@ -137,9 +137,16 @@ const CustomerProfile = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <HeaderContainer>
           <Breadcrumbs
-            childLabel="Customer Profile"
-            parentLabel="Customers"
-            parentTarget="/customers"
+            children={[
+              {
+                name: { ar: "المستخدمين", en: "Customers" },
+                target: "/customers",
+              },
+              {
+                name: { ar: "ملف المستخدم", en: "Customer" },
+                target: "",
+              },
+            ]}
           />
           <Flex justify="flex-end">
             <Button

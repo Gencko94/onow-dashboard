@@ -128,9 +128,16 @@ const Category = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="Category"
-          parentLabel="Categories"
-          parentTarget="/categories"
+          children={[
+            {
+              name: { ar: "الفئات", en: "Categories" },
+              target: "/categories",
+            },
+            {
+              name: { ar: "الفئة", en: "Category" },
+              target: "",
+            },
+          ]}
         />
 
         <Grid cols="auto auto" gap="0.5rem">

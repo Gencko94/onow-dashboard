@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 
 import {
   FcAdvertising,
@@ -8,7 +8,6 @@ import {
   FcGenealogy,
   FcHome,
   FcRules,
-  FcSelfie,
   FcSupport,
   FcViewDetails,
 } from "react-icons/fc";
@@ -61,11 +60,6 @@ const SideNav = () => {
         title: "Reports",
         icon: FcBullish,
         target: "/reports",
-      },
-      {
-        title: "Website Layout",
-        icon: FcSelfie,
-        target: "/website-layout",
       },
     ];
   }, []);

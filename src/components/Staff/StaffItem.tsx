@@ -56,7 +56,7 @@ const StaffItem = ({ member }: IProps) => {
             >
               <Popover closeFunction={() => setActionsMenuOpen(false)}>
                 <Button
-                  text="Delete Product"
+                  text="Delete Member"
                   padding="0.5rem"
                   bg="transparent"
                   textSize="0.8rem"

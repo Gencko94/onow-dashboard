@@ -24,9 +24,16 @@ const Product = () => {
     <div>
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="Product"
-          parentLabel="Products"
-          parentTarget="/products"
+          children={[
+            {
+              name: { ar: "المنتجات", en: "Products" },
+              target: "/products",
+            },
+            {
+              name: { ar: "بيانات المنتج", en: "Product Details" },
+              target: "",
+            },
+          ]}
         />
       </HeaderContainer>
 

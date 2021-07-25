@@ -17,9 +17,16 @@ const Order = () => {
     <>
       <HeaderContainer>
         <Breadcrumbs
-          parentLabel="Orders"
-          childLabel="Order"
-          parentTarget="/orders"
+          children={[
+            {
+              name: { ar: "الطلبات", en: "Orders" },
+              target: "/orders",
+            },
+            {
+              name: { ar: "الطلب", en: "Order" },
+              target: "",
+            },
+          ]}
         />
         <OrderPanel />
       </HeaderContainer>

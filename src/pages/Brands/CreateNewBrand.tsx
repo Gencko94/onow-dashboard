@@ -14,11 +14,11 @@ const CreateNewBrand = () => {
   } = useForm<NEW_CATEGORY>();
   return (
     <div>
-      <Breadcrumbs
+      {/* <Breadcrumbs
         childLabel="Create New Brand"
         parentLabel="Brands"
         parentTarget="/brands"
-      />
+      /> */}
       <BrandInfo
         setValue={setValue}
         control={control}

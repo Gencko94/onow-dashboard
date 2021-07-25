@@ -185,3 +185,35 @@
   opacity: 0;
   transition: all 100ms;
 }
+
+/* testing animations */
+
+.stat-item:before,
+.stat-item:after {
+  content: "";
+  position: absolute;
+  /* top: -2px; */
+  /* left: -2px; */
+  border-radius: 8px;
+  background: linear-gradient(45deg, orange, yellow, green, cyan, blue, violet);
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  background-size: 400%;
+  z-index: -1;
+  animation: shadow 30s linear infinite;
+}
+
+.stat-item:after {
+  filter: blur(10px);
+}
+@keyframes shadow {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}

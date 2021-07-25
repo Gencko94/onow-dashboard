@@ -18,6 +18,7 @@ import IconedNumberInput from "../../reusable/IconedNumberInput";
 import Select from "../../reusable/Select";
 import { AiOutlineTag } from "react-icons/ai";
 import Heading from "../../StyledComponents/Heading";
+import GithubInput from "../../reusable/Inputs/GithubInput";
 interface IProps {
   register: UseFormRegister<any>;
   errors: DeepMap<any, FieldError>;
@@ -211,6 +212,25 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           requiredMessage="Required"
           label="Coupon End Date"
           name="end_date"
+        />
+        <Controller
+          control={control}
+          name="enabled"
+          render={({ field: { value, onChange } }) => {
+            return (
+              <GithubInput
+                checked={value}
+                onChange={(e) => {
+                  if (value === true) {
+                    onChange(false);
+                  } else {
+                    onChange(true);
+                  }
+                }}
+                label="Enable Coupon"
+              />
+            );
+          }}
         />
       </div>
     </Container>

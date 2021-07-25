@@ -116,9 +116,16 @@ const CreateNewProduct = () => {
     >
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="Create New Product"
-          parentLabel="Products"
-          parentTarget="/products"
+          children={[
+            {
+              name: { ar: "المنتجات", en: "Products" },
+              target: "/products",
+            },
+            {
+              name: { ar: "إضافة منتج جديد", en: "Create New Product" },
+              target: "",
+            },
+          ]}
         />
       </HeaderContainer>
       <CreateProductTabs />

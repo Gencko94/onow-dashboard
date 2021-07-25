@@ -124,9 +124,16 @@ const StoreLogoAndFavicon = () => {
     <div>
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="Store Identity"
-          parentLabel="Settings"
-          parentTarget="/settings"
+          children={[
+            {
+              name: { ar: "الإعدادات", en: "Settings" },
+              target: "/settings",
+            },
+            {
+              name: { ar: "شعار المتجر", en: "Store Logo & Favicon" },
+              target: "",
+            },
+          ]}
         />
       </HeaderContainer>
       <Container>

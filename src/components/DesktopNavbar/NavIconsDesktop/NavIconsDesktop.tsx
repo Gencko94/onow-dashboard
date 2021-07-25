@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { IoMdNotificationsOutline } from "react-icons/io";
-import { AiFillSetting } from "react-icons/ai";
+
 import { useTranslation } from "react-i18next";
 import { CgMenu } from "react-icons/cg";
 import useResponsive from "../../../hooks/useResponsive";
@@ -29,12 +28,10 @@ const NavIconsDesktop = ({ handleToggleDrawer }: IProps) => {
         <CgMenu size={22} />
       </button>
       {/* )} */}
-      <button className="icon">
+      {/* <button className="icon">
         <IoMdNotificationsOutline size={22} />
-      </button>
-      <button className="icon">
-        <AiFillSetting size={22} />
-      </button>
+      </button> */}
+
       {i18n.language === "en" && (
         <button
           className="icon"
@@ -54,7 +51,6 @@ const NavIconsDesktop = ({ handleToggleDrawer }: IProps) => {
           En
         </button>
       )}
-      <NewProjectButton>New Project</NewProjectButton>
     </Container>
   );
 };
@@ -82,10 +78,3 @@ const Container = styled.div(
   }
   `
 );
-
-const NewProjectButton = styled.button`
-  background: linear-gradient(90deg, #fe0488, #f78f21);
-  border-radius: 7px;
-  padding: 0.5rem;
-  color: #fff;
-`;

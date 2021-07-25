@@ -13,7 +13,10 @@ import extractError from "../../../utils/extractError";
 import FileUploader from "../../../utils/FileUploader";
 import MiniFileUploader from "../../../utils/MiniFileUploader";
 import { customerUri } from "../../../utils/queries";
-import { removeProductImage } from "../../../utils/queries/productQueries";
+import {
+  addProductImage,
+  removeProductImage,
+} from "../../../utils/queries/productQueries";
 import Button from "../../reusable/Button";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
@@ -39,6 +42,8 @@ const ProductImage = ({ data }: IProps) => {
   });
   const { mutateAsync: deleteMutation, reset } =
     useMutation(removeProductImage);
+  const { mutateAsync: addImageMutation, reset: resetAdd } =
+    useMutation(addProductImage);
   const image = watch("image");
   const images = watch("images");
 
@@ -145,6 +150,46 @@ const ProductImage = ({ data }: IProps) => {
       }
     }
   };
+  const handleAddImage = async (file: File) => {
+    try {
+      handleCloseConfirmationModal?.();
+      await addImageMutation({ productId: data.id, image: file });
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Image Added Successfully",
+        type: "success",
+      });
+      // setValue("image", null);
+    } catch (error) {
+      handleCloseConfirmationModal?.();
+
+      const { responseError } = extractError(error);
+      if (responseError) {
+        setToastStatus?.({
+          fn: () => {
+            resetAdd();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: responseError,
+          type: "error",
+        });
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            resetAdd();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    }
+  };
   return (
     <Container>
       <Heading tag="h5" margin="1rem 0" weight="semibold" color="primary">
@@ -196,38 +241,27 @@ const ProductImage = ({ data }: IProps) => {
         />
       </Box>
       <Hr />
-      {/* <PreviewContainer>
-          <Grid cols="repeat(auto-fill,minmax(200px,1fr))" gap="1rem">
-            {images.map((image, index) => {
-              return (
-                <div className="img-preview">
-                  <img src={image} alt={`i-${index}`} />
-                  <div className="default-container">
-                    <Flex items="center" justify="center" padding="0.25rem">
-                      <Button
-                        // onClick={() => setDefaultImage(image)}
-                        text="Set as Default Image"
-                        textSize="0.8rem"
-                        bg="green"
-                        padding="0.25rem"
-                        withRipple
-                      />
-                    </Flex>
-                  </div>
-                  <button
-                    className="remove"
-                    type="button"
-                    onClick={() => {
-                      // removeImage(image);
-                    }}
-                  >
-                    <IoMdCloseCircle size={35} />
-                  </button>
-                </div>
-              );
-            })}
-          </Grid>
-        </PreviewContainer> */}
+      <PreviewContainer>
+        <Grid cols="repeat(auto-fill,minmax(200px,1fr))" gap="1rem">
+          {data.images.map((image, index) => {
+            return (
+              <div className="img-preview">
+                <img src={image} alt={`i-${index}`} />
+
+                <button
+                  className="remove"
+                  type="button"
+                  onClick={() => {
+                    // removeImage(image);
+                  }}
+                >
+                  <IoMdCloseCircle size={35} />
+                </button>
+              </div>
+            );
+          })}
+        </Grid>
+      </PreviewContainer>
 
       <Box>
         <Heading
@@ -246,13 +280,9 @@ const ProductImage = ({ data }: IProps) => {
             <FileUploader
               accept=".png, .jpg, .jpeg"
               onChange={(file: File | File[]) => {
-                // if (!Array.isArray(file)) {
-                //   if (images.length === 0 && !image) {
-                //     setValue("thumbnail", file);
-                //   } else {
-                //     onChange([...images, file]);
-                //   }
-                // }
+                if (!Array.isArray(file)) {
+                  handleAddImage(file);
+                }
               }}
             />
           )}

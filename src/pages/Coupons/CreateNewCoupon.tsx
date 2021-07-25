@@ -56,6 +56,7 @@ const CreateNewCoupon = () => {
       min_total_order: "0",
       total_uses: "10",
       uses_per_user: "1",
+      enabled: true,
     },
   });
   console.log(watch());
@@ -108,9 +109,16 @@ const CreateNewCoupon = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <HeaderContainer>
         <Breadcrumbs
-          childLabel="Create New Coupon"
-          parentLabel="Coupons"
-          parentTarget="/coupons"
+          children={[
+            {
+              name: { ar: "الكوبونات", en: "Coupons" },
+              target: "/coupons",
+            },
+            {
+              name: { ar: "اضافة كوبون جديد", en: "Create New Coupon" },
+              target: "",
+            },
+          ]}
         />
         <Flex justify="flex-end">
           <Button
