@@ -30,7 +30,6 @@ const Paragraph: FC<IProps> = ({
       style={
         {
           "--margin-b": `${mb}`,
-          "--padding": padding,
         } as CSSProperties
       }
       color={color}
@@ -38,6 +37,7 @@ const Paragraph: FC<IProps> = ({
       weight={weight}
       fontSize={fontSize}
       margin={margin}
+      padding={padding}
     >
       {children}
     </Wrapper>
@@ -57,6 +57,7 @@ export const Wrapper = styled.p<{
   mb?: string;
   weight: "light" | "regular" | "semibold" | "bold" | "xbold";
   fontSize: string;
+  padding?: string;
 }>(
   ({
     theme: {
@@ -74,6 +75,7 @@ export const Wrapper = styled.p<{
     mb,
     weight,
     fontSize,
+    padding,
   }) => `
   color: ${
     color === "textPrimary"
@@ -93,7 +95,7 @@ export const Wrapper = styled.p<{
   margin:${margin};
   font-weight:${font[weight]};
   margin-bottom: ${mb ? mb : ""};
-  padding:var(--padding,0);
+  padding:${padding};
   font-size: calc(${fontSize} - 0.1rem);
   @media ${breakpoints.md}{
       font-size:${fontSize}

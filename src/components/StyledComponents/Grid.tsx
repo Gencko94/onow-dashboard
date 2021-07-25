@@ -28,16 +28,12 @@ interface IProps {
 const Grid: FC<IProps> = ({ children, rows, cols, gap, items, p, margin }) => {
   return (
     <GridWrapper
-      style={
-        {
-          "--cols": cols,
-          "--gap": gap,
-          "--items": items,
-          "--rows": rows,
-          "--padding": `${p! * 0.25}rem`,
-          "--margin": margin,
-        } as CSSProperties
-      }
+      margin={margin}
+      p={p}
+      cols={cols}
+      gap={gap}
+      items={items}
+      rows={rows}
     >
       {children}
     </GridWrapper>
@@ -45,16 +41,23 @@ const Grid: FC<IProps> = ({ children, rows, cols, gap, items, p, margin }) => {
 };
 
 export default Grid;
-export const GridWrapper = styled.div(
-  ({ theme: { breakpoints, font } }) => `
+export const GridWrapper = styled.div<{
+  margin?: string;
+  p?: number;
+  cols: string;
+  rows?: string;
+  gap: string;
+  items?: string;
+}>(
+  ({ theme: { breakpoints, font }, p, margin, cols, gap, items, rows }) => `
 
   display: grid;
-  grid-template-columns: var(--cols);
-  grid-template-rows: var(--rows);
-  gap: var(--gap);
-  align-items: var(--items, normal);
-  padding: var(--padding, 0);
-  margin: var(--margin, 0);
+  grid-template-columns: ${cols};
+  grid-template-rows: ${rows};
+  gap: ${gap};
+  align-items: ${items};
+  padding: ${`${p! * 0.25}rem`};
+  margin: ${margin};
   @media ${breakpoints.md}{
     
   }

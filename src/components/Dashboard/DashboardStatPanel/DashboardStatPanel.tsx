@@ -4,6 +4,10 @@ import { RiFileList3Line } from "react-icons/ri";
 import { MdAttachMoney } from "react-icons/md";
 import Select from "react-select";
 import { useMemo, useState } from "react";
+import Heading from "../../StyledComponents/Heading";
+import Grid from "../../StyledComponents/Grid";
+import Flex from "../../StyledComponents/Flex";
+import Paragraph from "../../StyledComponents/Paragraph";
 const options = [
   {
     title: "Today",
@@ -59,44 +63,53 @@ const DashboardStatPanel = () => {
           styles={selectStyles}
         />
       </div>
-      <ContentContainer>
-        <div className="stat-item">
-          <Icon color="#da312c">
-            <AiOutlineUser size={40} />
-          </Icon>
-          <div className="details">
-            <p className="text">Users Online</p>
-            <p className="value">2012</p>
-          </div>
-        </div>
-        <div className="stat-item">
-          <Icon color="#2cda66">
-            <RiFileList3Line size={40} />
-          </Icon>
-          <div className="details">
-            <p className="text">Total Orders</p>
-            <p className="value">238</p>
-          </div>
-        </div>
-        <div className="stat-item">
-          <Icon color="#da312c">
-            <MdAttachMoney size={40} />
-          </Icon>
-          <div className="details">
-            <p className="text">Revenue</p>
-            <p className="value">$3598</p>
-          </div>
-        </div>
-        <div className="stat-item">
-          <Icon color="#2c86da">
-            <MdAttachMoney size={40} />
-          </Icon>
-          <div className="details">
-            <p className="text">Revenue</p>
-            <p className="value">$3598</p>
-          </div>
-        </div>
-      </ContentContainer>
+      <Grid cols="repeat(auto-fit,minmax(250px,1fr))" gap="1rem">
+        <Card>
+          <Grid p={2} cols="1fr 0.8fr" items="center" gap="1rem">
+            <Flex items="center" justify="flex-start" padding="0.5rem">
+              <Icon color="#2cda66">
+                <RiFileList3Line size={30} />
+              </Icon>
+              <Paragraph fontSize="0.9rem" margin="0 0.5rem" weight="semibold">
+                Total Orders
+              </Paragraph>
+            </Flex>
+            <Heading textAlign="center" weight="bold" tag="h3">
+              238
+            </Heading>
+          </Grid>
+        </Card>
+        <Card>
+          <Grid p={2} cols="1fr 0.8fr" items="center" gap="1rem">
+            <Flex items="center" justify="flex-start" padding="0.5rem">
+              <Icon color="#2cda66">
+                <RiFileList3Line size={30} />
+              </Icon>
+              <Paragraph fontSize="0.9rem" margin="0 0.5rem" weight="semibold">
+                Average Order Cost
+              </Paragraph>
+            </Flex>
+            <Heading textAlign="center" weight="bold" tag="h3">
+              10.39 KD
+            </Heading>
+          </Grid>
+        </Card>
+        <Card>
+          <Grid p={2} cols="1fr 0.8fr" items="center" gap="1rem">
+            <Flex items="center" justify="flex-start" padding="0.5rem">
+              <Icon color="#2cda66">
+                <RiFileList3Line size={30} />
+              </Icon>
+              <Paragraph fontSize="0.9rem" margin="0 0.5rem" weight="semibold">
+                Revenue
+              </Paragraph>
+            </Flex>
+            <Heading textAlign="center" weight="bold" tag="h3">
+              2682.2 KD
+            </Heading>
+          </Grid>
+        </Card>
+      </Grid>
     </Container>
   );
 };
@@ -107,57 +120,7 @@ const Container = styled.div`
     padding: 1rem 0;
   }
 `;
-const ContentContainer = styled.div(
-  ({ theme: { breakpoints, boxColor, accent1, font, subHeading } }) => `
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  
-  .stat-item {
-    background-color: ${accent1};
-    
-   
-    box-shadow:  0px -5px 25px -10px #e098447e;
-    border-radius: 8px;
-    flex: auto;
-    padding: 1rem;
-    position: relative;
-    display: flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items: center;
-  }
-  .details {
-    margin: 0 0.75rem;
-    .text {
-      text-align:center;
-      font-size:0.9rem;
-      white-space:nowrap;
-      color: ${subHeading};
-    }
-    .value {
-      text-align:center;
-      font-size: 1.1rem;
-      font-weight: ${font.xbold};
-    }
-  }
-  @media ${breakpoints.md}{
-    .details {
-      .text {
-        font-size:1.1rem;
-      }
-      .value {
-        font-size:1.3rem;
-      }
-    }
-  }
-  @media ${breakpoints.lg}{
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-  
-`
-);
 const Icon = styled.span`
   box-shadow: ${(props) => props.theme.shadow};
   border-radius: 7px;
@@ -166,5 +129,10 @@ const Icon = styled.span`
   align-items: center;
   background-color: ${(props) => props.color};
   color: #fff;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
+`;
+const Card = styled.div`
+  background-color: ${(props) => props.theme.accent1};
+  box-shadow: 0px -5px 25px -10px #e098447e;
+  border-radius: 10px;
 `;
