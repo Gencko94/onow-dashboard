@@ -68,7 +68,6 @@ const CreateNewCoupon = () => {
       const regex = /^0+(?!$)/;
       await mutateAsync({
         ...data,
-        amount: parseInt(data.amount),
         total_uses: data.total_uses?.replace(regex, "") || null,
         uses_per_user: data.uses_per_user?.replace(regex, "") || null,
         max_discount: data.max_discount.replace(regex, ""),

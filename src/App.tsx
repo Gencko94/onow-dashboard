@@ -83,7 +83,6 @@ const CreatePaymentGatewayAccount = lazy(
   () =>
     import("./pages/SettingsPages/PaymentMethods/CreatePaymentGatewayAccount")
 );
-const Reports = lazy(() => import("./pages/Reports"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -161,7 +160,6 @@ function App() {
                             Component={Order}
                           />
                           <Route path="/customers" component={Customers} />
-                          <Route path="/reports" component={Reports} />
                           <ProtectedRoute path="/coupons" Component={Coupons} />
                           <ProtectedRoute
                             path="/coupons/coupon/:id"

@@ -188,11 +188,12 @@
 
 /* testing animations */
 
-/* .stat-item:before,
+.stat-item:before,
 .stat-item:after {
   content: "";
   position: absolute;
-
+  /* top: -2px; */
+  /* left: -2px; */
   border-radius: 8px;
   background: linear-gradient(45deg, orange, yellow, green, cyan, blue, violet);
   width: calc(100% + 2px);
@@ -215,4 +216,4 @@
   100% {
     background-position: 0 0;
   }
-} */
+}
