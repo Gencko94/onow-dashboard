@@ -43,16 +43,16 @@ export const editProductOrderingAndAvailability = async (data: any) => {
   );
   return res.data.results;
 };
-export const removeProductImage = async (data: any) => {
+export const removeProductImage = async (imageId: number) => {
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.put(
-    `${customerUri}/edit-price-options-product/${data.id}`,
-    data,
+  const res = await axios.delete(
+    `${customerUri}/product-images/${imageId}`,
+
     config
   );
   return res.data.results;

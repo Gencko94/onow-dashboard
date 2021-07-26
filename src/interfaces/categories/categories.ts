@@ -56,7 +56,7 @@ export type NEW_CATEGORY = {
 };
 export interface EDIT_CATEGORY {
   id: number;
-  active: 0 | 1;
+  active: true;
   name: {
     [key: string]: string;
   };

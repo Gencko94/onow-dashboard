@@ -30,7 +30,7 @@ const StaffMember = () => {
   const history = useHistory();
   const { data } = useQuery<STAFF_MEMBER>(
     ["staff-member", id],
-    () => getStaffMember(id),
+    () => getStaffMember(parseInt(id)),
     { suspense: true }
   );
 
@@ -105,11 +105,19 @@ const StaffMember = () => {
 
   const handleDeleteStaffMember = async () => {
     try {
-      await deleteStaff(id);
+      await deleteStaff(data!.id);
     } catch (error) {
       const { responseError, unknownError } = extractError(error);
       if (responseError) {
         console.log(responseError);
+        setToastStatus?.({
+          open: true,
+          text: "Something Went Wrong",
+          fn: () => {
+            resetDelete();
+          },
+          type: "error",
+        });
       } else if (unknownError) {
         setToastStatus?.({
           open: true,

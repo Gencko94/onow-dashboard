@@ -4,15 +4,20 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { useHistory } from "react-router";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
+import useConfirmationModal from "../../hooks/useConfirmationModal";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
 import Button from "../reusable/Button";
 import Popover from "../reusable/Popover";
+import Heading from "../StyledComponents/Heading";
 
 interface IProps {
   member: STAFF_MEMBER;
+  handleDeleteStaffMember: (id: number) => void;
 }
 
-const StaffItem = ({ member }: IProps) => {
+const StaffItem = ({ member, handleDeleteStaffMember }: IProps) => {
+  const { setConfirmationModalStatus, handleCloseConfirmationModal } =
+    useConfirmationModal();
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   return (
@@ -23,18 +28,18 @@ const StaffItem = ({ member }: IProps) => {
           </CheckboxContainer>
         </div> */}
       <div className="field">
-        <h6>
+        <Heading tag="h6">
           {member.first_name} {member.last_name}
-        </h6>
+        </Heading>
       </div>
       <div className="field">
-        <h6>{member.phone}</h6>
+        <Heading tag="h6">{member.phone}</Heading>
       </div>
       <div className="field">
-        <h6>{member.email}</h6>
+        <Heading tag="h6">{member.email}</Heading>
       </div>
       <div className="field">
-        <h6>{member.role}</h6>
+        <Heading tag="h6">{member.role}</Heading>
       </div>
 
       <div className="field">
@@ -59,6 +64,7 @@ const StaffItem = ({ member }: IProps) => {
                   text="Delete Member"
                   padding="0.5rem"
                   bg="transparent"
+                  hoverBg="#b72b2b"
                   textSize="0.8rem"
                   Icon={RiDeleteBinLine}
                   iconSize={15}
@@ -66,7 +72,13 @@ const StaffItem = ({ member }: IProps) => {
                     e.stopPropagation();
 
                     setActionsMenuOpen(false);
-                    // setModalStatus({ open: true, id: product.id });
+                    setConfirmationModalStatus?.({
+                      open: true,
+                      desc: "Are you sure you want to delete this Staff member ? He will no longer have access to this Dashboard",
+                      title: "Delete Staff Member",
+                      closeCb: handleCloseConfirmationModal!,
+                      successCb: () => handleDeleteStaffMember(member.id),
+                    });
                   }}
                 />
               </Popover>

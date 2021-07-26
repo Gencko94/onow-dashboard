@@ -34,7 +34,7 @@ export type PRODUCT = {
     id: number;
   };
   image: string;
-  images: string[];
+  images: { id: number; image: string; link: string }[];
   description: {
     [key: string]: string;
   };

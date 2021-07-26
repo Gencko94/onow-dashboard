@@ -10,9 +10,12 @@ import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { deleteStaffMember, getStaffMembers } from "../../utils/queries";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Flex from "../../components/StyledComponents/Flex";
+import Heading from "../../components/StyledComponents/Heading";
+import useConfirmationModal from "../../hooks/useConfirmationModal";
 
 const Staff = () => {
   const queryClient = useQueryClient();
+  const { handleCloseConfirmationModal } = useConfirmationModal();
   const { data } = useQuery<STAFF_MEMBER[]>("staff-members", getStaffMembers, {
     suspense: true,
   });
@@ -23,12 +26,16 @@ const Staff = () => {
         queryClient.setQueryData<STAFF_MEMBER[] | undefined>(
           "staff-members",
           (prev) => {
-            return prev?.filter((i) => i.id !== parseInt(staffId));
+            return prev?.filter((i) => i.id !== staffId);
           }
         );
       },
     }
   );
+  const handleDeleteStaffMember = async (staffId: number) => {
+    await deleteStaff(staffId);
+    handleCloseConfirmationModal?.();
+  };
   const cols = useMemo(
     () => [
       {
@@ -77,7 +84,7 @@ const Staff = () => {
         </Flex>
       </HeaderContainer>
       <div className="title-container">
-        <h5>Staff Members</h5>
+        <Heading tag="h6">Staff Members</Heading>
         <ExportAs />
       </div>
       <div className="table">
@@ -85,7 +92,11 @@ const Staff = () => {
 
         <div>
           {data?.map((member) => (
-            <StaffItem member={member} key={member.id} />
+            <StaffItem
+              member={member}
+              key={member.id}
+              handleDeleteStaffMember={handleDeleteStaffMember}
+            />
           ))}
         </div>
       </div>

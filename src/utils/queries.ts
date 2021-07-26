@@ -652,7 +652,7 @@ export const getStaffMembers = async () => {
   const res = await axios.get(`${customerUri}/staff-users`, config);
   return res.data.results;
 };
-export const getStaffMember = async (id: string) => {
+export const getStaffMember = async (id: number) => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
     headers: {
@@ -694,7 +694,7 @@ export const editStaffMember = async (staff: STAFF_MEMBER) => {
   return res.data.results;
 };
 export const deleteStaffMember = async (
-  id: string
+  id: number
 ): Promise<{ results: "Deleted" }> => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
@@ -800,9 +800,17 @@ export const editCategory = async (category: EDIT_CATEGORY) => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
+  const payLoad = {
+    seo_description: null,
+    active: category.active,
+    name: category.name,
+    parent_id: category.parent_id,
+    description: category.description,
+    slug: category.slug,
+  };
   const res = await axios.put(
     `${customerUri}/product-categories/${category.id}`,
-    { ...category, seo_description: "1" },
+    payLoad,
     config
   );
   return res.data.results;

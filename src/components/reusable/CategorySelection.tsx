@@ -72,7 +72,7 @@ const CategorySelection = ({
       <Container>
         <div className="table">
           {status === "loading" && <LoadingTable />}
-
+          {}
           {data?.pages.map((group, i) => {
             return (
               <React.Fragment key={i}>

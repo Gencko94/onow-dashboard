@@ -17,7 +17,9 @@ export const product1: PRODUCT = {
     en: "fdsa",
   },
   id: 1,
-  images: ["/images/product.webp"],
+  images: [
+    { id: 1, image: "/images/product.webp", link: "/images/product.webp" },
+  ],
   image: "/",
   name: {
     ar: "fds",

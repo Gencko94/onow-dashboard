@@ -110,10 +110,10 @@ const ProductImage = ({ data }: IProps) => {
       }
     }
   };
-  const removeImage = async () => {
+  const removeImage = async (imageId: number) => {
     try {
       handleCloseConfirmationModal?.();
-      // await deleteMutation(id!);
+      await deleteMutation(imageId);
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -122,7 +122,6 @@ const ProductImage = ({ data }: IProps) => {
         text: "Image Removed Successfully",
         type: "success",
       });
-      // setValue("image", null);
     } catch (error) {
       handleCloseConfirmationModal?.();
 
@@ -153,7 +152,7 @@ const ProductImage = ({ data }: IProps) => {
   const handleAddImage = async (file: File) => {
     try {
       handleCloseConfirmationModal?.();
-      await addImageMutation({ productId: data.id, image: file });
+      const res = await addImageMutation({ productId: data.id, image: file });
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -162,7 +161,8 @@ const ProductImage = ({ data }: IProps) => {
         text: "Image Added Successfully",
         type: "success",
       });
-      // setValue("image", null);
+      console.log(res);
+      setValue("images", [...images, res]);
     } catch (error) {
       handleCloseConfirmationModal?.();
 
@@ -223,17 +223,6 @@ const ProductImage = ({ data }: IProps) => {
                 onChange={async (image) => {
                   await updateImage(image, setProgress);
                 }}
-                onRemove={() => {
-                  setConfirmationModalStatus?.({
-                    open: true,
-                    desc: "Are you sure you want to delete this category image ?",
-                    title: "Delete Category Image",
-                    closeCb: handleCloseConfirmationModal!,
-                    successCb: () => {
-                      removeImage();
-                    },
-                  });
-                }}
                 progress={progress}
               />
             );
@@ -246,13 +235,21 @@ const ProductImage = ({ data }: IProps) => {
           {data.images.map((image, index) => {
             return (
               <div className="img-preview">
-                <img src={image} alt={`i-${index}`} />
+                <img src={image.link} alt={`i-${index}`} />
 
                 <button
                   className="remove"
                   type="button"
                   onClick={() => {
-                    // removeImage(image);
+                    setConfirmationModalStatus?.({
+                      open: true,
+                      desc: "Are you sure you want to delete this Image ?",
+                      title: "Delete Image",
+                      closeCb: handleCloseConfirmationModal!,
+                      successCb: () => {
+                        removeImage(image.id);
+                      },
+                    });
                   }}
                 >
                   <IoMdCloseCircle size={35} />

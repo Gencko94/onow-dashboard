@@ -8,7 +8,10 @@ import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Grid from "../../components/StyledComponents/Grid";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
 import useToast from "../../hooks/useToast";
-import { CATEGORY } from "../../interfaces/categories/categories";
+import {
+  CATEGORY,
+  EDIT_CATEGORY,
+} from "../../interfaces/categories/categories";
 import extractError from "../../utils/extractError";
 import { deleteCategory, editCategory, getCategory } from "../../utils/queries";
 import CategoryImage from "./CategoryImage";
@@ -88,13 +91,13 @@ const Category = () => {
     }
   };
   // Edit Mutation execution
-  const onSubmit: SubmitHandler<CATEGORY> = async (data) => {
+  const onSubmit: SubmitHandler<EDIT_CATEGORY> = async (data) => {
     try {
       await editMutation({
         id: data.id,
-        active: data.active ? 1 : 0,
+        active: data.active,
         name: data.name,
-        parent_id: data.parent_id,
+        parent_id: data.parent_id!,
         slug: data.slug,
         description: data.description,
       });
