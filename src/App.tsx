@@ -160,8 +160,12 @@ function App() {
                             path="/orders/:id"
                             Component={Order}
                           />
-                          <Route path="/customers" component={Customers} />
-                          <Route path="/reports" component={Reports} />
+                          <Route
+                            exact
+                            path="/customers"
+                            component={Customers}
+                          />
+                          <Route exact path="/reports" component={Reports} />
                           <ProtectedRoute path="/coupons" Component={Coupons} />
                           <ProtectedRoute
                             path="/coupons/coupon/:id"

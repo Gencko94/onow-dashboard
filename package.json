@@ -18,7 +18,6 @@
     "query-string": "^7.0.1",
     "react": "^17.0.1",
     "react-calendar": "^3.3.1",
-    "react-chartjs-2": "^3.0.4",
     "react-circular-progressbar": "^2.0.4",
     "react-click-away-listener": "^2.0.2",
     "react-color-palette": "^6.1.0",

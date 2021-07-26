@@ -28,7 +28,7 @@ export interface NEW_COUPON {
 
   discount_type: "fixed" | "percent";
   free_delivery: "0" | "1";
-  amount: string;
+  amount: number;
   max_discount: string;
   min_total_order: string;
   total_uses: string | null;
