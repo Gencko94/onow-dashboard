@@ -15,6 +15,7 @@ import canVisitPage from "../../../utils/canVisitPage";
 import { useContext, useMemo } from "react";
 import { AuthProvider } from "../../../contexts/AuthContext";
 import SideNavItem from "./SideNavItem";
+import { up } from "../../../utils/themes";
 // import { useState } from "react";
 const SideNav = () => {
   const { pathname } = useLocation();
@@ -92,7 +93,7 @@ const Container = styled.ul(
   ({ theme: { breakpoints } }) => `
   height: calc(100vh - 298px);
   overflow-y: auto;
-  @media ${breakpoints.md} {
+  ${up(breakpoints.md)}{
     height: calc(100vh - 288px);
   }
   

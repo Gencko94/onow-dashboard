@@ -6,6 +6,7 @@ import useResponsive from "../../../hooks/useResponsive";
 import { useContext } from "react";
 import { AuthProvider } from "../../../contexts/AuthContext";
 import Heading from "../../StyledComponents/Heading";
+import { up } from "../../../utils/themes";
 interface IProps {
   handleToggleDrawer: () => void;
 }
@@ -70,7 +71,7 @@ const Container = styled.div(
   .icon {
     color: ${iconColor};
   }
-  @media ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     button {
       margin: 0 0.5rem;
 

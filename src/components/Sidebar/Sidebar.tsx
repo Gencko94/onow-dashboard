@@ -6,6 +6,7 @@ import SideUser from "./SideUser/SideUser";
 import Hr from "../StyledComponents/Hr";
 import ClickAwayListener from "react-click-away-listener";
 import { Dispatch, SetStateAction } from "react";
+import { up } from "../../utils/themes";
 
 interface IProps {
   setDrawerOpen: Dispatch<SetStateAction<boolean>>;
@@ -67,7 +68,7 @@ const Container = styled.aside(
       // background-size: cover;
     
   }
-  @media ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     z-index:1;
   }
   `

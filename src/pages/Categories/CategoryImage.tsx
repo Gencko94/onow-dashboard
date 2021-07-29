@@ -9,6 +9,7 @@ import useToast from "../../hooks/useToast";
 import extractError from "../../utils/extractError";
 import MiniFileUploader from "../../utils/MiniFileUploader";
 import { customerUri, removeCategoryImage } from "../../utils/queries";
+import { up } from "../../utils/themes";
 
 interface IProps {
   errors: any;
@@ -183,7 +184,7 @@ const Container = styled.div(
     grid-template-columns: 1fr;
     // gap: 1rem;
   }
-  @media ${breakpoints.md} {
+  ${up(breakpoints.md)}{
     .box {
       grid-template-columns: 1fr ;
 

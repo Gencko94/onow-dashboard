@@ -1,14 +1,23 @@
 import { Dispatch, SetStateAction } from "react";
+import { BsPlus } from "react-icons/bs";
 
 import styled from "styled-components";
-import AddButton from "../../reusable/AddButton";
+import Button from "../../reusable/Button";
 interface IProps {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 const CustomersPanel = ({ setModalOpen }: IProps) => {
   return (
     <Container>
-      <AddButton title="Add New Customer" cb={() => setModalOpen(true)} />
+      <Button
+        Icon={BsPlus}
+        bg="green"
+        padding="0.5rem"
+        text="Add New Customer"
+        onClick={() => setModalOpen(true)}
+        withRipple
+        withTransition
+      />
     </Container>
   );
 };

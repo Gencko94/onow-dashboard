@@ -4,6 +4,7 @@ import { RiFileList3Line } from "react-icons/ri";
 import { MdAttachMoney } from "react-icons/md";
 import Select from "react-select";
 import { useMemo, useState } from "react";
+import { down, up } from "../../../utils/themes";
 const options = [
   {
     title: "Today",
@@ -142,7 +143,7 @@ const ContentContainer = styled.div(
       font-weight: ${font.xbold};
     }
   }
-  @media ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     .details {
       .text {
         font-size:1.1rem;
@@ -152,7 +153,7 @@ const ContentContainer = styled.div(
       }
     }
   }
-  @media ${breakpoints.lg}{
+  ${up(breakpoints.lg)}{
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
   

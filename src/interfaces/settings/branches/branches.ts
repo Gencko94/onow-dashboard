@@ -1,7 +1,7 @@
 export type BRANCH_ADDRESS = {
   coords: {
-    lat: number;
-    lng: number;
+    lat: string;
+    lng: string;
   };
   address: {
     [key: string]: string;
@@ -44,6 +44,13 @@ export type WORKING_HOURS = {
     to: string;
   };
 };
+export type WORKING_HOURS_ARRAY = {
+  [key: string]: {
+    enabled: boolean;
+    from: string;
+    to: string;
+  };
+}[];
 export interface BRANCH {
   id: number;
   name: {
@@ -53,10 +60,10 @@ export interface BRANCH {
   cod_enabled: boolean;
   cod_cost: number;
   busy: boolean;
-  pickup_enabled: boolean;
+  enable_pickup: boolean;
   delivery_enabled: boolean;
   address: BRANCH_ADDRESS;
-  working_hours: WORKING_HOURS;
+  working_hours: WORKING_HOURS_ARRAY;
   contact_info: {
     landline: string;
     mobile: string;
@@ -64,7 +71,6 @@ export interface BRANCH {
   };
 }
 export type BRANCH_INFO = {
-  id: number;
   name: {
     [key: string]: string;
   };
@@ -72,7 +78,7 @@ export type BRANCH_INFO = {
   cod_enabled: boolean;
   cod_cost: number;
   busy: boolean;
-  pickup_enabled: boolean;
+  enable_pickup: boolean;
   delivery_enabled: boolean;
   contact_info: {
     landline: string;
@@ -84,10 +90,11 @@ export interface NEW_BRANCH {
   name: {
     [key: string]: string;
   };
+  country_id: number;
   busy: boolean;
   active: 1 | 0;
   cod_enabled: boolean;
-  pickup_enabled: boolean;
+  enable_pickup: boolean;
   delivery_enabled: boolean;
   cod_cost: string;
   address: BRANCH_ADDRESS;

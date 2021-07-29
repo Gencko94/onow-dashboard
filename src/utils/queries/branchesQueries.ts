@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import {
+  BRANCH,
   BRANCH_ADDRESS,
   BRANCH_INFO,
   WORKING_HOURS,
@@ -18,7 +19,13 @@ export const deleteBranch = async (
   const res = await axios.delete(`${customerUri}/branches/${id}`, config);
   return res.data.results;
 };
-export const updateBranchInfo = async (info: BRANCH_INFO) => {
+export const updateBranchInfo = async ({
+  info,
+  id,
+}: {
+  info: BRANCH_INFO;
+  id: number;
+}): Promise<BRANCH> => {
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {
@@ -26,8 +33,7 @@ export const updateBranchInfo = async (info: BRANCH_INFO) => {
     },
   };
   const res = await axios.put(
-    // `${customerUri}/branches/${info.id}/update-branch-information`,
-    `${customerUri}/branches/${info.id}`,
+    `${customerUri}/branches/${id}/update-branch-information`,
     info,
     config
   );
@@ -39,7 +45,7 @@ export const updateBranchLocation = async ({
 }: {
   id: number;
   address: BRANCH_ADDRESS;
-}) => {
+}): Promise<BRANCH> => {
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {

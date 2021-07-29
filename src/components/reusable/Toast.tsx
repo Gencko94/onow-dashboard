@@ -2,6 +2,7 @@ import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { RiErrorWarningLine } from "react-icons/ri";
 import styled from "styled-components";
 import useResponsive from "../../hooks/useResponsive";
+import { up } from "../../utils/themes";
 import Flex from "../StyledComponents/Flex";
 import Heading from "../StyledComponents/Heading";
 import Button from "./Button";
@@ -33,6 +34,7 @@ const Toast = ({ text, btnText, closeFunction, type }: IProps) => {
               e.stopPropagation();
               closeFunction();
             }}
+            color="#fff"
             bg="transparent"
             hoverBg="#f8f8f83b"
             padding="0.25rem"
@@ -67,8 +69,8 @@ const Container = styled.div<{ type: "error" | "success" }>(
       color:#fff;
       font-size: 0.8rem;
       font-weight: ${font.regular};
-    }
-    @media ${breakpoints.md}{
+    };
+    ${up(breakpoints.md)}{
       h6 {
         font-weight: ${font.semibold};
       }

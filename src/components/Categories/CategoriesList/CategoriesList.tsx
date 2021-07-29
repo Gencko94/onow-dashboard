@@ -112,7 +112,7 @@ const CategoriesList = () => {
           handleCloseToast?.();
         },
         open: true,
-        text: "Product Status Changed",
+        text: "Category Status Changed",
         type: "success",
       });
     } catch (error) {

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { up } from "./utils/themes";
 
 const GlobalStyle = createGlobalStyle(
   ({
@@ -171,8 +172,8 @@ input:focus, textarea:focus {
 }
 .ReactModal__Content--before-close {
   transform: translateY(100%);
-}
-@media ${breakpoints.md}{
+};
+${up(breakpoints.md)}{
   h1 {
     font-size:2.25rem;
     line-height:2.5rem; 

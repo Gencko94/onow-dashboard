@@ -1,16 +1,15 @@
-import React, { useMemo } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { WiTime8, WiTime12 } from "react-icons/wi";
 
 import styled from "styled-components";
-import CheckToggle from "../../../reusable/CheckToggle";
+import { up } from "../../../../utils/themes";
+
 import GithubInput from "../../../reusable/Inputs/GithubInput";
 
-import TableHead from "../../../reusable/TableHead";
 import TimeIconedInput from "../../../reusable/TimeIconedInput";
-import Flex from "../../../StyledComponents/Flex";
+
 import Grid from "../../../StyledComponents/Grid";
 import Heading from "../../../StyledComponents/Heading";
 
@@ -41,19 +40,12 @@ const BranchWorkingHours = () => {
     i18n: { language },
     t,
   } = useTranslation();
-  const cols = useMemo(
-    () => [
-      { title: "days", sortable: false },
-      { title: "from", sortable: false },
-      { title: "to", sortable: false },
-    ],
-    []
-  );
+
   const working_hours = useWatch({
     control,
     name: "working_hours",
   });
-
+  console.log(working_hours);
   return (
     <Container>
       <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
@@ -85,22 +77,38 @@ const BranchWorkingHours = () => {
               />
               <Grid gap="0.5rem" cols="0.2fr 1fr" items="center">
                 <p>From</p>
-                <TimeIconedInput
-                  enabled={working_hours?.[day]?.enabled}
+                <Controller
                   control={control}
-                  errors={errors}
-                  Icon={WiTime8}
-                  name={`working_hours.${day}.from`}
+                  name={`working_hours.${day}.from` as any}
+                  render={({ field: { value, onChange } }) => {
+                    return (
+                      <TimeIconedInput
+                        enabled={working_hours?.[day]?.enabled}
+                        onChange={onChange}
+                        errors={errors}
+                        Icon={WiTime8}
+                        value={value}
+                      />
+                    );
+                  }}
                 />
               </Grid>
               <Grid gap="0.5rem" cols="0.2fr 1fr" items="center">
                 <p>To</p>
-                <TimeIconedInput
-                  enabled={working_hours?.saturday?.enabled}
+                <Controller
                   control={control}
-                  errors={errors}
-                  Icon={WiTime12}
-                  name="working_hours.saturday.to"
+                  name={`working_hours.${day}.to` as any}
+                  render={({ field: { value, onChange } }) => {
+                    return (
+                      <TimeIconedInput
+                        value={value}
+                        enabled={working_hours?.saturday?.enabled}
+                        onChange={onChange}
+                        errors={errors}
+                        Icon={WiTime12}
+                      />
+                    );
+                  }}
                 />
               </Grid>
             </Grid>
@@ -130,7 +138,7 @@ const Container = styled.div(
     gap: 2rem;
     align-items:center;
   }
-  @media ${breakpoints.md} {
+  ${up(breakpoints.md)}{
     .table {
 
         grid-template-columns: 1fr 0.5fr 0.5fr;

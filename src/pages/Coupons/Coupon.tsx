@@ -53,9 +53,6 @@ const Coupon = () => {
   } = useForm<COUPON>({
     defaultValues: {
       ...data,
-      special_categories: data?.special_categories.map(
-        (category: any) => category.id
-      ),
     },
   });
 

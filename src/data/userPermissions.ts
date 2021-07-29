@@ -22,7 +22,7 @@ export const productPermissions: PRODUCTS_PERMISSIONS = [
   "createProduct",
   // "deleteProduct",
   "editProduct",
-  "visitProduct",
+  "visitProducts",
   "hideProduct",
 ];
 export const staffPermissions: STAFF_PERMISSIONS = [

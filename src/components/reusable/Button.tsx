@@ -6,6 +6,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import useResponsive from "../../hooks/useResponsive";
 import Ripple from "./Ripple";
 import Color from "color";
+import { up } from "../../utils/themes";
 
 interface IProps {
   /**
@@ -167,7 +168,7 @@ const Button = ({
       withTransition={withTransition}
       bg={background}
       padding={padding}
-      color={textColor}
+      color={color ?? textColor}
       onClick={onClick}
       type={type}
       hoverBg={hoverBg ?? hover}
@@ -285,10 +286,10 @@ export const ButtonWrapper = styled.button<{
           color: #fff !important;
         `
       };
-    @media ${breakpoints.md}{
-    p {
+    ${up(breakpoints.md)}{
+     p {
       font-size:${textSize};
-    }
+     }
   }
     `
 );

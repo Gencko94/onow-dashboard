@@ -149,17 +149,34 @@ const ProductPromotions = () => {
           label="Sale Price"
           prefix="KD"
         />
-        <DateIconedInput
-          errors={errors.promotions?.sale_start_date}
-          name="sale_start_date"
+        <Controller
+          name="promotions.sale_start_date"
           control={control}
-          label="Sale Start Date"
+          render={({ field: { onChange, value, ref } }) => {
+            return (
+              <DateIconedInput
+                errors={errors.promotions?.sale_start_date}
+                onChange={onChange}
+                value={value}
+                label="Sale Start Date"
+              />
+            );
+          }}
         />
-        <DateIconedInput
-          errors={errors.promotions?.sale_end_date}
-          name="sale_end_date"
+        <Controller
+          name="promotions.sale_end_date"
           control={control}
-          label="Sale End Date"
+          render={({ field: { onChange, value, ref } }) => {
+            return (
+              <DateIconedInput
+                errors={errors.promotions?.sale_end_date}
+                onChange={onChange}
+                value={value}
+                label="Sale End Date"
+                ref={ref}
+              />
+            );
+          }}
         />
       </Grid>
     </Container>

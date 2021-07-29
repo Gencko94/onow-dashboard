@@ -4,6 +4,7 @@ import { IconType } from "react-icons/lib";
 
 import styled, { css } from "styled-components";
 import useResponsive from "../../hooks/useResponsive";
+import { up } from "../../utils/themes";
 interface BaseInput {
   /**
    * 	An object with field errors. Obtainable from ```formState.errors```
@@ -120,7 +121,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       subHeading,
       headingColor,
       border,
-      inputColorLight,
+      accent1,
       mainColor,
       borderHovered,
       dangerRed,
@@ -152,16 +153,8 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${subHeading};
-      background-color: ${inputColorLight};
-      border-right: ${border};
-      ${
-        rtl &&
-        css`
-          border-right: none;
-          border-left: ${(props) => props.theme.border};
-        `
-      }
+      color: ${mainColor};
+      
     };
 
     input {
@@ -173,7 +166,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     &:hover,
     &:focus-within {
       border-color: ${borderHovered};
-      background-color: ${inputColorLight};
+      background:${accent1};
     };
     ${
       error &&
@@ -195,7 +188,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     /* color: #7c7c7c; */
     color: ${mainColor};
   };
-  @media  ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     label {
       font-size: 0.9rem;
       margin-bottom: 0.75rem;

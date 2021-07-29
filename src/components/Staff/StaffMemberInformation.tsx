@@ -6,6 +6,7 @@ import styled from "styled-components";
 import IconedInput from "../reusable/Inputs/IconedInput";
 import PhoneInput from "../reusable/Inputs/PhoneInput";
 import Select from "../reusable/Select";
+import Heading from "../StyledComponents/Heading";
 
 interface IProps {
   register: any;
@@ -46,9 +47,9 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
   } = useTranslation();
   return (
     <Container>
-      <div className="title-container">
-        <h5>Staff Member Information</h5>
-      </div>
+      <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
+        Staff Member Information
+      </Heading>
       <div className="box">
         <IconedInput
           Icon={MdSubtitles}
@@ -148,13 +149,10 @@ export default StaffMemberInformation;
 
 const Container = styled.div`
   margin: 1rem 0;
-  .title-container {
-    padding: 1rem 0;
-    color: ${(props) => props.theme.mainColor};
-  }
+
   .box {
     background-color: #fff;
-    box-shadow: ${(props) => props.theme.shadow};
+    border: ${(props) => props.theme.border};
     border-radius: 6px;
     padding: 1rem;
     display: grid;

@@ -22,17 +22,12 @@ import Button from "./Button";
 import useToast from "../../hooks/useToast";
 
 interface IProps {
-  mapCenter?: MapCoordinates;
+  mapCenter: MapCoordinates;
   setValue: any;
+  name: string;
 }
-
-const InlineMap = ({
-  mapCenter = {
-    lat: 29.3759,
-    lng: 47.9774,
-  },
-  setValue,
-}: IProps) => {
+const InlineMap = ({ mapCenter, setValue, name }: IProps) => {
+  console.log(mapCenter, "center");
   const [marker, setMarker] = useState<MapCoordinates>(mapCenter);
   const {
     i18n: { language },
@@ -50,7 +45,7 @@ const InlineMap = ({
       }),
     {
       onSuccess: (data) => {
-        setValue("address.coords", { ...marker });
+        setValue(name, { ...marker });
       },
     }
   );

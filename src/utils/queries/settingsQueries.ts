@@ -78,3 +78,17 @@ export const toggleMaintenanceMode = async (status: boolean) => {
   );
   return res.data.results;
 };
+export const editStoreThemeColor = async (color: string) => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/update-store-theme`,
+    { color },
+    config
+  );
+  return res.data.results;
+};

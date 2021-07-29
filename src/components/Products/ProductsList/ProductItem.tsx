@@ -182,7 +182,7 @@ const Container = styled.div<{ selected: boolean }>`
     text-align: center;
     h6 {
       font-size: 0.8rem;
-      font-weight: ${(props) => props.theme.font.bold};
+      font-weight: ${(props) => props.theme.font.semibold};
     }
   }
 `;

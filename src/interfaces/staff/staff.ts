@@ -35,7 +35,7 @@ export type PRODUCTS_PERMISSIONS = [
   // "deleteProduct",
   "editProduct", //
 
-  "visitProduct", //
+  "visitProducts", //
   "hideProduct" //
 ];
 

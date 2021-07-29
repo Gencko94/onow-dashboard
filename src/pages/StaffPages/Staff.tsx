@@ -12,10 +12,13 @@ import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Flex from "../../components/StyledComponents/Flex";
 import Heading from "../../components/StyledComponents/Heading";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
+import useToast from "../../hooks/useToast";
+import extractError from "../../utils/extractError";
 
 const Staff = () => {
   const queryClient = useQueryClient();
   const { handleCloseConfirmationModal } = useConfirmationModal();
+  const { handleCloseToast, setToastStatus } = useToast();
   const { data } = useQuery<STAFF_MEMBER[]>("staff-members", getStaffMembers, {
     suspense: true,
   });
@@ -30,11 +33,43 @@ const Staff = () => {
           }
         );
       },
+      onError: (error) => {
+        const { responseError } = extractError(error);
+        if (responseError) {
+          setToastStatus?.({
+            fn: () => {
+              resetDelete();
+              handleCloseToast?.();
+            },
+            open: true,
+            text: responseError,
+            type: "error",
+          });
+        } else {
+          setToastStatus?.({
+            fn: () => {
+              resetDelete();
+              handleCloseToast?.();
+            },
+            open: true,
+            text: "Something went wrong",
+            type: "error",
+          });
+        }
+      },
     }
   );
   const handleDeleteStaffMember = async (staffId: number) => {
     await deleteStaff(staffId);
     handleCloseConfirmationModal?.();
+    setToastStatus?.({
+      fn: () => {
+        handleCloseToast?.();
+      },
+      open: true,
+      text: "Staff Member Deleted Successfully",
+      type: "success",
+    });
   };
   const cols = useMemo(
     () => [

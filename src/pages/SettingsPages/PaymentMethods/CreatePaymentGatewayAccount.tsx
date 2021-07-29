@@ -16,6 +16,7 @@ import Select from "../../../components/reusable/Select";
 import Flex, { FlexWrapper } from "../../../components/StyledComponents/Flex";
 import { countrylistWithDialCodes } from "../../../data/countryList";
 import { CREATE_PAYMENT_GATEWAY } from "../../../interfaces/settings/payment-methods/payment-methods";
+import { up } from "../../../utils/themes";
 
 const accountTypeOptions: { label: { [key: string]: string }; value: any }[] = [
   {
@@ -334,7 +335,7 @@ const Container = styled.div(
  ${FlexWrapper}{
    margin: 1rem 0 ;
  }
-  @media ${breakpoints.md} {
+ ${up(breakpoints.md)}{
     .box {
       grid-template-columns: 1fr 1fr;
 

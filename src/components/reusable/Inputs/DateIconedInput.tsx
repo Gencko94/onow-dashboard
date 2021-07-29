@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Calendar from "react-calendar";
 import ClickAwayListener from "react-click-away-listener";
-import { Control, Controller, FieldError } from "react-hook-form";
+import { Control, Controller, FieldError, RefCallBack } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import "react-calendar/dist/Calendar.css";
 import { formatISO, parseISO } from "date-fns";
@@ -17,24 +17,17 @@ import styled, { css } from "styled-components";
 import { format } from "date-fns";
 import { FiCalendar } from "react-icons/fi";
 
-interface BaseInput {
+interface IProps {
   /**
    * 	An object with field errors. Obtainable from ```formState.errors```
    */
   errors: FieldError | undefined;
-  /**
-   * 	Input's name being registered.
-   */
-  name: string;
 
   /**
    * 	The label of the input.
    */
   label: string;
-  /**
-   * 	```control``` object provided by ```useForm```.
-   */
-  control: Control<any>;
+
   /**
    * Whether the input is disabled
    */
@@ -43,106 +36,80 @@ interface BaseInput {
    * 	Optional description shown in a smaller size text below the input.
    */
   desc?: string;
+  ref?: RefCallBack;
+  onChange: (...event: any[]) => void;
+  value: any;
 }
 
-interface RequiredInput extends BaseInput {
-  /**
-   * 	Optional. Marks the input as ```required```.
-   */
-  required: boolean;
-  /**
-   * The Message text to show when the field is ```required```.
-   *
-   * Required when ```required``` is provided.
-   */
-  requiredMessage: string;
-}
-interface NotRequiredInput extends BaseInput {
-  /**
-   * 	Optional. Marks the input as ```required```.
-   */
-  required?: never;
-  /**
-   * The Message text to show when the field is ```required```.
-   *
-   * Required when ```required``` is provided.
-   */
-  requiredMessage?: never;
-}
-type IProps = RequiredInput | NotRequiredInput;
 const DateIconedInput = ({
   errors,
   disabled,
-  name,
-  required,
+  onChange,
+  value,
   label,
-  requiredMessage,
-  control,
+
   desc,
+  ref,
 }: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
   const [calendarOpen, setCalendarOpen] = useState(false);
   return (
-    <Controller
-      name={name}
-      control={control}
-      defaultValue={formatISO(new Date())}
-      render={({ field: { onChange, value } }) => (
-        <Container
-          onClick={() => {
-            if (!disabled) setCalendarOpen(true);
-          }}
-          rtl={language === "ar"}
-          error={Boolean(errors)}
-        >
-          <label>{label}</label>
-          <div className="input-container">
-            <span className="icon">
-              <FiCalendar size={21} />
-            </span>
-            <input
-              readOnly
-              defaultValue={format(
-                parseISO(new Date().toISOString()),
-                "dd-MM-yyyy"
-              )}
-              value={format(parseISO(value), "dd-MM-yyyy")}
-              disabled={disabled}
-            />
-          </div>
-          {desc && <p className="desc">{desc}</p>}
-          <CSSTransition
-            in={calendarOpen}
-            timeout={150}
-            classNames="calendar"
-            unmountOnExit
-          >
-            <ClickAwayListener onClickAway={() => setCalendarOpen(false)}>
-              <CalendarContainer>
-                <Calendar
-                  value={parseISO(value)}
-                  onChange={(date: any) => {
-                    setCalendarOpen(false);
+    <Container
+      onClick={() => {
+        if (!disabled) setCalendarOpen(true);
+      }}
+      rtl={language === "ar"}
+      error={Boolean(errors)}
+    >
+      <label>{label}</label>
+      <div className="input-container">
+        <span className="icon">
+          <FiCalendar size={21} />
+        </span>
+        <input
+          ref={ref}
+          readOnly
+          defaultValue={format(
+            parseISO(new Date().toISOString()),
+            "dd-MM-yyyy"
+          )}
+          value={format(parseISO(value), "dd-MM-yyyy")}
+          disabled={disabled}
+        />
+      </div>
+      {desc && <p className="desc">{desc}</p>}
+      <CSSTransition
+        in={calendarOpen}
+        timeout={150}
+        classNames="calendar"
+        unmountOnExit
+      >
+        <ClickAwayListener onClickAway={() => setCalendarOpen(false)}>
+          <CalendarContainer>
+            <Calendar
+              value={parseISO(value)}
+              onChange={(date: any) => {
+                console.log(value, "value");
+                console.log(date.toISOString());
+                setCalendarOpen(false);
 
-                    onChange(date.toISOString());
-                  }}
-                  tileClassName="tile"
-                  minDate={new Date()}
-                  prev2Label={<FaAngleDoubleLeft size={20} />}
-                  next2Label={<FaAngleDoubleRight size={20} />}
-                  prevLabel={<FaAngleLeft size={20} />}
-                  nextLabel={<FaAngleRight size={20} />}
-                  showNeighboringMonth={false}
-                />
-              </CalendarContainer>
-            </ClickAwayListener>
-          </CSSTransition>
-          <p className="error">{errors?.message}</p>
-        </Container>
-      )}
-    />
+                onChange(date.toISOString());
+              }}
+              tileClassName="tile"
+              minDate={new Date()}
+              prev2Label={<FaAngleDoubleLeft size={20} />}
+              next2Label={<FaAngleDoubleRight size={20} />}
+              prevLabel={<FaAngleLeft size={20} />}
+              nextLabel={<FaAngleRight size={20} />}
+              showNeighboringMonth={false}
+            />
+          </CalendarContainer>
+        </ClickAwayListener>
+      </CSSTransition>
+      <p className="error">{errors?.message}</p>
+    </Container>
   );
 };
 
@@ -173,15 +140,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${(props) => props.theme.subHeading};
-      background-color: ${(props) => props.theme.inputColorLight};
-      border-right: ${(props) => props.theme.border};
-      ${(props) =>
-        props.rtl &&
-        css`
-          border-right: none;
-          border-left: ${(props) => props.theme.border};
-        `}
+      color: ${(props) => props.theme.mainColor};
     }
 
     input {
@@ -190,13 +149,13 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
       font-size: 0.9rem;
       width: 50px;
       &:disabled {
-        background-color: ${(props) => props.theme.inputColorLight};
+        background-color: ${(props) => props.theme.accent2};
       }
     }
     &:hover,
     &:focus-within {
       border-color: ${(props) => props.theme.borderHovered};
-      background-color: ${(props) => props.theme.inputColorLight};
+      background-color: ${(props) => props.theme.accent1};
     }
     ${(props) =>
       props.error &&

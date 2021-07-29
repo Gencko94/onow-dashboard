@@ -28,12 +28,12 @@ const Flex: FC<IProps> = ({
     <FlexWrapper
       onClick={onClick}
       column={column}
+      padding={padding}
+      margin={margin}
+      justify={justify}
+      items={items}
       style={
         {
-          "--justify": justify,
-          "--items": items,
-          "--padding": padding,
-          "--margin": margin,
           "--wrap": wrap ? "wrap" : "nowrap",
         } as CSSProperties
       }
@@ -44,12 +44,23 @@ const Flex: FC<IProps> = ({
 };
 
 export default Flex;
-export const FlexWrapper = styled.div<{ column?: boolean }>`
+export const FlexWrapper = styled.div<{
+  column?: boolean;
+  margin?: string;
+  padding?: string;
+  justify?:
+    | "flex-start"
+    | "center"
+    | "flex-end"
+    | "space-between"
+    | "space-evenly";
+  items?: string;
+}>`
   display: flex;
-  justify-content: var(--justify, normal);
-  align-items: var(--items, center);
-  padding: var(--padding, 0);
-  margin: var(--margin, 0);
+  justify-content: ${(props) => props.justify};
+  align-items: ${(props) => props.items};
+  padding: ${(props) => props.padding};
+  margin: ${(props) => props.margin};
   flex-wrap: var(--wrap, nowrap);
   flex-direction: ${(props) => (props.column ? "column" : "row")};
 `;

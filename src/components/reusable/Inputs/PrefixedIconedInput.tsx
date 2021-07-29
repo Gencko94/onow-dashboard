@@ -4,6 +4,7 @@ import { IconType } from "react-icons/lib";
 
 import styled, { css } from "styled-components";
 import useResponsive from "../../../hooks/useResponsive";
+import { up } from "../../../utils/themes";
 interface BaseInput {
   /**
    * 	An object with field errors. Obtainable from ```formState.errors```
@@ -199,7 +200,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     
    
   }
-  @media  ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     label {
       font-size: 0.9rem;
       margin-bottom: 0.75rem;

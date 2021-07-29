@@ -6,6 +6,7 @@ import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
+import { up } from "../../utils/themes";
 import Button from "../reusable/Button";
 import Popover from "../reusable/Popover";
 import Heading from "../StyledComponents/Heading";
@@ -114,11 +115,7 @@ const Container = styled.div(
       font-size: 0.8rem;
       font-weight: ${font.semibold};
     }
-    @media ${breakpoints.xl}{
-      h6 {
-        font-weight: ${font.regular};
-        font-size: 1rem;
-      }
+    
   
     }
     `

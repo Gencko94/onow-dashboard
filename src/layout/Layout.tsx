@@ -11,6 +11,7 @@ import useResponsive from "../hooks/useResponsive";
 import useToast from "../hooks/useToast";
 import Loading from "../utils/Loading";
 import ScrollToTop from "../utils/ScrollToTop";
+import { up } from "../utils/themes";
 
 const Layout: React.FC = ({ children }) => {
   const { isDesktop } = useResponsive();
@@ -156,7 +157,7 @@ const Content = styled.div<{ drawerOpen: boolean }>(
   .body {
     padding:0.5rem;
   }
-  @media ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     
    
     

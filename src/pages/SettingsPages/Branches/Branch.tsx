@@ -15,6 +15,7 @@ import {
   BRANCH_ADDRESS,
   BRANCH_INFO,
   WORKING_HOURS,
+  WORKING_HOURS_ARRAY,
 } from "../../../interfaces/settings/branches/branches";
 import extractError from "../../../utils/extractError";
 import { editBranch, getBranch } from "../../../utils/queries";
@@ -45,17 +46,17 @@ const Branch = () => {
       cod_enabled: data?.cod_enabled,
       contact_info: data?.contact_info,
       delivery_enabled: data?.delivery_enabled,
-      id: data?.id,
+
       name: data?.name,
-      pickup_enabled: data?.pickup_enabled,
+      enable_pickup: data?.enable_pickup,
     },
   });
   const { mutateAsync: editBranchInfoMutation, isLoading: editInfoLoading } =
     useMutation(updateBranchInfo, {
       onSuccess: (data) => {
-        // queryClient.setQueryData(["branch", id], (prev) => {
-        //   return data;
-        // });
+        queryClient.setQueryData(["branch", id], (prev) => {
+          return data;
+        });
         replace("/settings/branches");
       },
       onError: (error) => {
@@ -81,7 +82,7 @@ const Branch = () => {
   // Edit Branch Info
   const handleEditBranchInfo = async (formData: BRANCH_INFO) => {
     console.log(formData);
-    await editBranchInfoMutation(formData);
+    await editBranchInfoMutation({ info: formData, id: data!.id });
     setToastStatus?.({
       open: true,
       fn: handleCloseToast!,
@@ -94,16 +95,24 @@ const Branch = () => {
   //Location Section
 
   const locationMethods = useForm<BRANCH_ADDRESS>({
-    defaultValues: data!.address,
+    defaultValues: {
+      address: {
+        address: data!.address.address,
+        coords: {
+          lat: parseFloat(data!.address.coords.lat),
+          lng: parseFloat(data!.address.coords.lng),
+        },
+      } as any,
+    },
   });
   const {
     mutateAsync: editBranchLocationMutation,
     isLoading: locationLoading,
   } = useMutation(updateBranchLocation, {
     onSuccess: (data) => {
-      // queryClient.setQueryData(["branch", id], (prev) => {
-      //   return data;
-      // });
+      queryClient.setQueryData(["branch", id], (prev) => {
+        return data;
+      });
       replace("/settings/branches");
     },
     onError: (error) => {
@@ -129,10 +138,9 @@ const Branch = () => {
 
   // Edit Branch Location
   const handleEditBranchLocation = async (formData: BRANCH_ADDRESS) => {
-    console.log(formData);
     await editBranchLocationMutation({
       id: data!.id,
-      address: { ...formData },
+      address: formData,
     });
     setToastStatus?.({
       open: true,
@@ -142,17 +150,25 @@ const Branch = () => {
     });
     replace("/settings/branches");
   };
-  //Location Section
+  //Hours Section
+  const convertArrayToObject = (hours: WORKING_HOURS_ARRAY): WORKING_HOURS => {
+    let newHours: { [key: string]: any } = {};
+    hours.forEach((day) => {
+      newHours[Object.keys(day)[0]] = day[Object.keys(day)[0]];
+    });
+    console.log(newHours);
+    return newHours as WORKING_HOURS;
+  };
 
-  const hoursMethods = useForm<WORKING_HOURS>({
-    defaultValues: data!.working_hours,
+  const hoursMethods = useForm({
+    defaultValues: { working_hours: convertArrayToObject(data!.working_hours) },
   });
   const { mutateAsync: editBranchHoursMutation, isLoading: hoursLoading } =
     useMutation(updateBranchWorkingHours, {
       onSuccess: (data) => {
-        // queryClient.setQueryData(["branch", id], (prev) => {
-        //   return data;
-        // });
+        queryClient.setQueryData(["branch", id], (prev) => {
+          return data;
+        });
         replace("/settings/branches");
       },
       onError: (error) => {
@@ -290,7 +306,7 @@ const Branch = () => {
           </Flex>
         </FormProvider>
       </form>
-      <form onSubmit={infoMethods.handleSubmit(handleEditBranchLocation)}>
+      <form onSubmit={locationMethods.handleSubmit(handleEditBranchLocation)}>
         <FormProvider {...locationMethods}>
           <BranchLocation />
           <Flex justify="center" margin="1rem 0 ">
@@ -309,7 +325,7 @@ const Branch = () => {
           </Flex>
         </FormProvider>
       </form>
-      <form onSubmit={infoMethods.handleSubmit(handleEditBranchWorkingHours)}>
+      <form onSubmit={hoursMethods.handleSubmit(handleEditBranchWorkingHours)}>
         <FormProvider {...hoursMethods}>
           <BranchWorkingHours />
           <Flex justify="center" margin="1rem 0 ">

@@ -15,12 +15,14 @@ const BranchLocation = () => {
   const {
     formState: { errors },
     register,
-
+    watch,
     setValue,
   } = useFormContext();
   const {
     i18n: { language },
   } = useTranslation();
+  const coords = watch("address.coords");
+  console.log(coords, "coods");
   return (
     <Container>
       <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
@@ -73,10 +75,11 @@ const BranchLocation = () => {
           <div className="map">
             <InlineMap
               mapCenter={{
-                lat: 29.3759,
-                lng: 47.9774,
+                lat: coords?.lat ?? 29.3759984126687,
+                lng: coords?.lng ?? 47.9774523495,
               }}
               setValue={setValue}
+              name="address.coords"
             />
           </div>
           <p className="desc">

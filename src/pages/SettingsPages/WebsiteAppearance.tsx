@@ -10,11 +10,27 @@ import "react-color-palette/lib/css/styles.css";
 import { CSSTransition } from "react-transition-group";
 import { useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
+import { useMutation } from "react-query";
+import { editStoreThemeColor } from "../../utils/queries/settingsQueries";
+import useToast from "../../hooks/useToast";
+import Flex from "../../components/StyledComponents/Flex";
+import Button from "../../components/reusable/Button";
 
 const HomePageAppearance = () => {
+  const { handleCloseToast, setToastStatus } = useToast();
   const history = useHistory();
   const [color, setColor] = useColor("hex", "#ce2d2d");
   const [colorOpen, setColorOpen] = useState(false);
+  const { mutateAsync: updateMutation } = useMutation(editStoreThemeColor);
+  const handleChangeColor = async (color: string) => {
+    await editStoreThemeColor(color);
+    setToastStatus?.({
+      fn: handleCloseToast!,
+      type: "success",
+      open: true,
+      text: "Theme Color Changed Successfully",
+    });
+  };
   return (
     <div>
       <HeaderContainer>
@@ -82,6 +98,14 @@ const HomePageAppearance = () => {
             </CSSTransition>
           </div>
         </Grid>
+        <Flex>
+          <Button
+            text="Save Changes"
+            bg="green"
+            padding="0.5rem"
+            onClick={() => handleChangeColor(color.hex)}
+          />
+        </Flex>
       </Box>
       <Heading tag="h5" color="heading" margin="2rem 0" weight="semibold">
         Website Sections customization

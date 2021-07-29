@@ -1,6 +1,7 @@
 import { IconType } from "react-icons/lib";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { up } from "../../../utils/themes";
 import Ripple from "../../reusable/Ripple";
 
 interface IProps {
@@ -34,10 +35,10 @@ const Container = styled.li(
     overflow:hidden;
     p {
       margin: 0 0.5rem;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       font-weight: ${font.regular};
-    };1
-    @media ${breakpoints.md} {
+    };
+    ${up(breakpoints.md)}{
       p {
         font-size: 0.9rem;
       }

@@ -5,6 +5,7 @@ import { FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import useResponsive from "../../hooks/useResponsive";
+import { up } from "../../utils/themes";
 import Heading from "../StyledComponents/Heading";
 import Paragraph from "../StyledComponents/Paragraph";
 
@@ -99,7 +100,7 @@ const Container = styled.nav(
       margin: 0 0.75rem;
     }
   };
-  @media ${breakpoints.md} {
+  ${up(breakpoints.md)}{
     .links-container {
       font-size:0.9rem;
       

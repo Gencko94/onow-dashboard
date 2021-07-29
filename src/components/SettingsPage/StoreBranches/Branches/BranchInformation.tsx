@@ -127,7 +127,7 @@ const BranchInformation = () => {
           />
           <Controller
             control={control}
-            name="pickup_enabled"
+            name="enable_pickup"
             render={({ field: { value, onChange } }) => {
               return (
                 <GithubInput
@@ -171,8 +171,6 @@ const Container = styled.div(
     border-radius: 6px;
     padding: 1rem;
   }
-  @media ${breakpoints.md} {
-   
-  }
+ 
   `
 );

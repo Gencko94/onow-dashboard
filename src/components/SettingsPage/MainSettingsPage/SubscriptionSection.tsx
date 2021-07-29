@@ -4,6 +4,7 @@ import "react-circular-progressbar/dist/styles.css";
 import Button from "../../reusable/Button";
 import Heading from "../../StyledComponents/Heading";
 import Flex from "../../StyledComponents/Flex";
+import { up } from "../../../utils/themes";
 const SubscriptionSection = () => {
   return (
     <Container>
@@ -115,7 +116,7 @@ const Container = styled.div(
       }
     }
   }
-  @media ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     grid-template-columns: 1fr 0.5fr;
   }
   `

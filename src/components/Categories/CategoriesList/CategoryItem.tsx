@@ -16,6 +16,7 @@ import { FlexWrapper } from "../../StyledComponents/Flex";
 import DefaultImage from "../../reusable/DefaultImage";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import CheckToggle from "../../reusable/CheckToggle";
+import Heading from "../../StyledComponents/Heading";
 interface IProps {
   category: CATEGORY;
   handleDeleteCategory: (id: number) => void;
@@ -67,7 +68,7 @@ const CategoryItem = ({
           />
         </div>
         <div className="field">
-          <h6>{category.id}</h6>
+          <Heading tag="h6">{category.id}</Heading>
         </div>
         <div className="field">
           {category.image ? (
@@ -190,7 +191,7 @@ const Container = styled.div`
     text-align: center;
     h6 {
       font-size: 0.8rem;
-      font-weight: ${(props) => props.theme.font.bold};
+      font-weight: ${(props) => props.theme.font.semibold};
     }
     .img {
       height: 50px;

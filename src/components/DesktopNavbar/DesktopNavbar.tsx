@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
+import { up } from "../../utils/themes";
 import NavIconsDesktop from "./NavIconsDesktop/NavIconsDesktop";
 import Searchbar from "./Searchbar/Searchbar";
 
@@ -40,7 +41,7 @@ const Container = styled.div<{ sticky: boolean }>(
   padding: 0.75rem;
   transition:box-shadow .25s ease-in,background-color .25s ease-in;
   border-radius: 12px;
-  @media ${breakpoints.md} {
+  ${up(breakpoints.md)}{
     grid-template-columns: 1fr auto;
     gap:0.5rem;
     

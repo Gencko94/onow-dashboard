@@ -1,5 +1,6 @@
 import { CSSProperties, FC } from "react";
 import styled from "styled-components";
+import { up } from "../../utils/themes";
 
 interface IProps {
   mb?: string;
@@ -95,7 +96,7 @@ export const Wrapper = styled.p<{
   margin-bottom: ${mb ? mb : ""};
   padding:var(--padding,0);
   font-size: calc(${fontSize} - 0.1rem);
-  @media ${breakpoints.md}{
+  ${up(breakpoints.md)}{
       font-size:${fontSize}
 
   }

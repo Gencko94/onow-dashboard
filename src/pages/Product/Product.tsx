@@ -11,6 +11,7 @@ import ProductTabs from "../../components/Product/ProductTabs/ProductTabs";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
 import { getProduct } from "../../utils/queries";
+import { up } from "../../utils/themes";
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
@@ -62,7 +63,7 @@ const Wrapper = styled.div(
   border-radius: 0 6px 6px 6px;
   padding: 0.5rem;
   background-color: #fff;
-  @media ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     padding: 1rem;
   }
   `

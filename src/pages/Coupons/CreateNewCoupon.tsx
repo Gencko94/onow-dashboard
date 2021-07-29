@@ -56,6 +56,8 @@ const CreateNewCoupon = () => {
       min_total_order: "0",
       total_uses: "10",
       uses_per_user: "1",
+      start_date: new Date().toISOString(),
+      end_date: new Date().toISOString(),
       enabled: true,
     },
   });

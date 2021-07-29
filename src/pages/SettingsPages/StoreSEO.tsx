@@ -7,6 +7,7 @@ import IconedInput from "../../components/reusable/Inputs/IconedInput";
 import Textarea from "../../components/reusable/Textarea";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Heading from "../../components/StyledComponents/Heading";
+import { up } from "../../utils/themes";
 
 const StoreSEO = () => {
   const {
@@ -103,7 +104,7 @@ const Grid = styled.div(
   gap: 1rem;
   
 
-  @media ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     grid-template-columns: 1fr 1fr;
    
 

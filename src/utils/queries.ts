@@ -277,14 +277,18 @@ export const getCoupon = async (id: string): Promise<COUPON> => {
   const res = await axios.get(`${customerUri}/coupons/${id}`, config);
   return res.data.results;
 };
-export const getCoupons = async (sortBy: any, pageParam: number) => {
+export const getCoupons = async (
+  sortBy: any,
+  pageParam: number,
+  limit?: number
+) => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
     headers: {
       Authorization: t ? `Bearer ${t}` : "",
     },
     params: {
-      limit: 20,
+      limit: limit ?? 10,
       page: pageParam,
     },
   };
@@ -905,7 +909,7 @@ export const createBranch = async (data: NEW_BRANCH): Promise<BRANCH> => {
       Authorization: t ? `Bearer ${t}` : "",
     },
   };
-  const res = await axios.post(`${customerUri}/pickups`, data, config);
+  const res = await axios.post(`${customerUri}/branches`, data, config);
   return res.data.results;
 };
 export const editBranch = async (branch: BRANCH) => {

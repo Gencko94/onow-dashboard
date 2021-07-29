@@ -14,6 +14,7 @@ import HeaderContainer from "../../components/reusable/HeaderContainer";
 import useToast from "../../hooks/useToast";
 import extractError from "../../utils/extractError";
 import { createProduct } from "../../utils/queries";
+import { up } from "../../utils/themes";
 
 type ContextProps = {
   activeTab: 0 | 1 | 2 | 3;
@@ -154,7 +155,7 @@ const Wrapper = styled.div(
   border-radius: 0 6px 6px 6px;
   padding: 0.5rem;
   background-color: #fff;
-  ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     
     padding: 1rem;
   }

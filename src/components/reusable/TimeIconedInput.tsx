@@ -59,24 +59,24 @@ const minutes = [
 ];
 interface IProps {
   errors: any;
-  name: string;
+  onChange: (...event: any[]) => void;
   Icon: IconType;
   required?: boolean;
   requiredMessage?: string;
   label?: string;
-  control: Control<any>;
+  value: any;
   enabled: boolean | undefined;
 }
 
 const TimeIconedInput = ({
   errors,
-
+  value,
   Icon,
-  name,
+  onChange,
   required,
   label,
   requiredMessage,
-  control,
+
   enabled,
 }: IProps) => {
   const {
@@ -86,86 +86,78 @@ const TimeIconedInput = ({
   const [minutesPickerOpen, setMinutesPickerOpen] = useState(false);
   const [hour, setHour] = useState<string | null>(null);
   return (
-    <Controller
-      name={name}
-      control={control}
-      defaultValue={format(new Date(), "dd-MM-yyyy")}
-      render={({ field: { onChange, value, ref } }) => (
-        <Container
-          onClick={() => {
-            if (enabled) setTimePickerOpen(true);
-          }}
-          rtl={language === "ar"}
-          error={Boolean(errors?.message)}
-        >
-          {label && <label>{label}</label>}
-          <div className="input-container">
-            <span className="icon">
-              <Icon size={21} />
-            </span>
-            <input
-              ref={ref}
-              disabled={!enabled}
-              readOnly
-              // defaultValue={format(new Date(), "dd-MM-yyyy")}
-              value={value}
-            />
-          </div>
-          <CSSTransition
-            in={timePickerOpen}
-            timeout={150}
-            classNames="calendar"
-            unmountOnExit
-          >
-            <ClickAwayListener onClickAway={() => setTimePickerOpen(false)}>
-              <HoursContainer>
-                {hours.map((h) => (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setTimePickerOpen(false);
-                      setMinutesPickerOpen(true);
-                      setHour(h);
-                    }}
-                    key={h}
-                    className="hour"
-                  >
-                    {h}
-                  </button>
-                ))}
-              </HoursContainer>
-            </ClickAwayListener>
-          </CSSTransition>
-          <CSSTransition
-            in={minutesPickerOpen}
-            timeout={150}
-            classNames="calendar"
-            unmountOnExit
-          >
-            <ClickAwayListener onClickAway={() => setMinutesPickerOpen(false)}>
-              <MinutesContainer>
-                {minutes.map((m) => (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setMinutesPickerOpen(false);
-                      onChange(`${hour?.slice(0, 2)}:${m}`);
-                    }}
-                    key={m}
-                    className="minute"
-                  >
-                    {`${hour?.slice(0, 2)}:${m}`}
-                  </button>
-                ))}
-              </MinutesContainer>
-            </ClickAwayListener>
-          </CSSTransition>
-          {errors?.message && <p className="error">{errors?.message}</p>}
-        </Container>
-      )}
-    />
+    <Container
+      onClick={() => {
+        if (enabled) setTimePickerOpen(true);
+      }}
+      rtl={language === "ar"}
+      error={Boolean(errors?.message)}
+    >
+      {label && <label>{label}</label>}
+      <div className="input-container">
+        <span className="icon">
+          <Icon size={21} />
+        </span>
+        <input
+          disabled={!enabled}
+          readOnly
+          // defaultValue={format(new Date(), "dd-MM-yyyy")}
+          value={value}
+        />
+      </div>
+      <CSSTransition
+        in={timePickerOpen}
+        timeout={150}
+        classNames="calendar"
+        unmountOnExit
+      >
+        <ClickAwayListener onClickAway={() => setTimePickerOpen(false)}>
+          <HoursContainer>
+            {hours.map((h) => (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setTimePickerOpen(false);
+                  setMinutesPickerOpen(true);
+                  setHour(h);
+                }}
+                key={h}
+                className="hour"
+              >
+                {h}
+              </button>
+            ))}
+          </HoursContainer>
+        </ClickAwayListener>
+      </CSSTransition>
+      <CSSTransition
+        in={minutesPickerOpen}
+        timeout={150}
+        classNames="calendar"
+        unmountOnExit
+      >
+        <ClickAwayListener onClickAway={() => setMinutesPickerOpen(false)}>
+          <MinutesContainer>
+            {minutes.map((m) => (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMinutesPickerOpen(false);
+                  onChange(`${hour?.slice(0, 2)}:${m}`);
+                }}
+                key={m}
+                className="minute"
+              >
+                {`${hour?.slice(0, 2)}:${m}`}
+              </button>
+            ))}
+          </MinutesContainer>
+        </ClickAwayListener>
+      </CSSTransition>
+      {errors?.message && <p className="error">{errors?.message}</p>}
+    </Container>
   );
 };
 

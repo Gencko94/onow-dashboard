@@ -27,7 +27,8 @@ const CreateNewBranch = () => {
       cod_enabled: true,
       active: 1,
       delivery_enabled: true,
-      pickup_enabled: true,
+      enable_pickup: true,
+      address: { coords: {} },
       working_hours: {
         saturday: { enabled: true, from: "09:00", to: "21:00" },
         sunday: { enabled: true, from: "09:00", to: "21:00" },
@@ -44,14 +45,14 @@ const CreateNewBranch = () => {
     console.log(data);
     try {
       const regex = /^0+(?!$)/;
-      // await mutateAsync(data);
-      // setToastStatus?.({
-      //   open: true,
-      //   fn: handleCloseToast!,
-      //   text: "Branch Created Successfully",
-      //   type: "success",
-      // });
-      // history.replace("/settings/branches");
+      await mutateAsync({ ...data, country_id: 1 });
+      setToastStatus?.({
+        open: true,
+        fn: handleCloseToast!,
+        text: "Branch Created Successfully",
+        type: "success",
+      });
+      history.replace("/settings/branches");
     } catch (error) {
       const { responseError, unknownError } = extractError(error);
       if (responseError) {

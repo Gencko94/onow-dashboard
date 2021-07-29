@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { up } from "../../../utils/themes";
 
 const SidebarOnowLogo = () => {
   return (
@@ -19,7 +20,7 @@ const Container = styled.div(
     min-height:40px;
     height:40px;
   }
-  @media ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     z-index:1;
     .logo {
       min-height:50px;

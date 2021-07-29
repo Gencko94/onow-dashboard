@@ -24,6 +24,7 @@ import TableHead from "../../reusable/TableHead";
 import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
 import CustomerItem from "./CustomerItem/CustomerItem";
 import Spinner from "react-loader-spinner";
+import LoadingTable from "../../reusable/LoadingTable";
 type GET_CUSTOMER_RES = {
   data: CUSTOMER[];
   currentPage: number;
@@ -177,9 +178,10 @@ const CustomerList = ({
       setSelectedRows((prev) => [...prev, rowId]);
     }
   };
+  if (status === "loading") return <LoadingTable />;
   return (
     <>
-      {data?.pages[0].data.length !== 0 && (
+      {status === "success" && data?.pages[0].data.length !== 0 && (
         <Flex margin="1rem 0" justify="flex-end">
           <p>Selected Rows ({selectedRows.length}) : </p>
           <Flex margin="0 0.5rem">
