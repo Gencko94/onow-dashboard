@@ -8,14 +8,14 @@ import Heading from "../../StyledComponents/Heading";
 const ProductsPanel = () => {
   const history = useHistory();
   return (
-    <Flex justify="space-between" items="center" padding="0.75rem">
-      <Heading color="primary" tag="h3" weight="bold">
+    <Flex justify="space-between" items="center" margin="1rem 0">
+      <Heading tag="h2" weight="bold">
         Products
       </Heading>
       <Button
         onClick={() => history.push("/products/product/create")}
         bg="green"
-        padding="0.25rem"
+        padding="0.5rem"
         textSize="0.9rem"
         text="Create New Product"
         withRipple

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
+import { up } from "../../../utils/themes";
 
 const CreateProductTabs = () => {
   const { activeTab } = useContext(NewProductContext);
@@ -47,7 +48,7 @@ const TabItem = styled.button<{ active?: boolean }>(
     
   font-weight: ${active && font.bold};
   
-  @media ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     font-size: 0.9rem;
     padding: 0.75rem;
 

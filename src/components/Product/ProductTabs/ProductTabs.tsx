@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
+import { up } from "../../../utils/themes";
 
 interface IProps {
   setActiveTab: Dispatch<SetStateAction<0 | 1 | 2 | 3 | 4>>;
@@ -87,7 +88,7 @@ const TabItem = styled.button<{ active?: boolean }>(
   &:hover {
     color: ${mainColor};
   }
-  @media ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     font-size: 1rem;
     padding: 0.75rem;
 

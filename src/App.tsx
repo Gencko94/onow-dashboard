@@ -83,6 +83,7 @@ const CreatePaymentGatewayAccount = lazy(
   () =>
     import("./pages/SettingsPages/PaymentMethods/CreatePaymentGatewayAccount")
 );
+const Reports = lazy(() => import("./pages/Reports"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -244,6 +245,7 @@ function App() {
                             path="/settings/store-currencies"
                             Component={StoreCurrencies}
                           />
+                          <Route path="/reports" component={Reports} />
                         </Layout>
                       </Switch>
                     </ApplicationContext>

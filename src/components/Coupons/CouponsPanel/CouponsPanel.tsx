@@ -3,11 +3,15 @@ import { useHistory } from "react-router-dom";
 
 import Button from "../../reusable/Button";
 import Flex from "../../StyledComponents/Flex";
+import Heading from "../../StyledComponents/Heading";
 
 const CouponsPanel = () => {
   const history = useHistory();
   return (
-    <Flex margin="1rem 0" justify="flex-end">
+    <Flex margin="1rem 0" justify="space-between" items="center">
+      <Heading tag="h2" weight="bold">
+        Coupons
+      </Heading>
       <Button
         bg="green"
         text="Create new Coupon"

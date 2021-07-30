@@ -27,7 +27,11 @@ const ThemeProvider: React.FC = ({ children }) => {
 
   const fontFamily = useMemo(
     // () => (i18n.language === "ar" ? "Cairo" : "Noto Sans JP"),
-    () => (i18n.language === "ar" ? "Cairo" : "apple-System"),
+    // () => (i18n.language === "ar" ? "Cairo" : "apple-System"),
+    () =>
+      i18n.language === "ar"
+        ? "Cairo"
+        : "Inter,-apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif",
     [i18n.language]
   );
 
@@ -79,6 +83,6 @@ const ThemeProvider: React.FC = ({ children }) => {
 
 export default ThemeProvider;
 const Container = styled.div<{ lang: string }>`
-  /* font-family: ${(props) => props.theme.fontFamily}; */
+  font-family: ${(props) => props.theme.fontFamily};
   direction: ${(props) => (props.lang === "ar" ? "rtl" : "ltr")};
 `;
