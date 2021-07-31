@@ -166,7 +166,6 @@ const Coupon = () => {
                 <Flex justify="flex-end">
                   <Button
                     withTransition
-                    text="Save Changes"
                     type="submit"
                     padding="0.5rem"
                     bg="green"
@@ -175,11 +174,12 @@ const Coupon = () => {
                     textSize="0.9rem"
                     isLoading={editLoading}
                     disabled={editLoading}
-                  />
+                  >
+                    Save changes
+                  </Button>
                   <Button
                     withTransition
                     textSize="0.9rem"
-                    text="Delete Coupon"
                     padding="0.5rem"
                     bg="danger"
                     withRipple
@@ -194,7 +194,9 @@ const Coupon = () => {
                         successCb: handleDeleteCoupon,
                       })
                     }
-                  />
+                  >
+                    Delete Coupon
+                  </Button>
                 </Flex>
               </HeaderContainer>
               <CouponInfo

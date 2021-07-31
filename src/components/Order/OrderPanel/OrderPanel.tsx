@@ -8,7 +8,6 @@ const OrderPanel = () => {
   return (
     <Flex items="center" padding="0.75rem" justify="flex-end">
       <Button
-        text="Edit Order"
         bg="transparent"
         color="#252525"
         padding="0.5rem 0.5rem"
@@ -21,10 +20,11 @@ const OrderPanel = () => {
         margin="0 0.5rem"
         hoverBg="green"
         hoverColor="#fff"
-      />
+      >
+        Edit Order
+      </Button>
 
       <Button
-        text="Delete Order"
         bg="danger"
         padding="0.5rem 0.5rem"
         withRipple
@@ -32,7 +32,9 @@ const OrderPanel = () => {
         textSize="0.9rem"
         Icon={RiDeleteBinLine}
         iconSize={20}
-      />
+      >
+        Delete Order
+      </Button>
     </Flex>
   );
 };

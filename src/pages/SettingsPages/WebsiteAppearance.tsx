@@ -100,11 +100,12 @@ const HomePageAppearance = () => {
         </Grid>
         <Flex>
           <Button
-            text="Save Changes"
             bg="green"
             padding="0.5rem"
             onClick={() => handleChangeColor(color.hex)}
-          />
+          >
+            Save Changes
+          </Button>
         </Flex>
       </Box>
       <Heading tag="h5" color="heading" margin="2rem 0" weight="semibold">

@@ -112,7 +112,7 @@ const ProductItem = ({
           >
             <Popover closeFunction={() => setActionsMenuOpen(false)}>
               <Button
-                text="Delete Product"
+                // text="Delete Product"
                 padding="0.5rem"
                 bg="transparent"
                 textSize="0.8rem"
@@ -130,14 +130,15 @@ const ProductItem = ({
                     successCb: () => handleDeleteProduct(product.id),
                   });
                 }}
-              />
+              >
+                Delete Product
+              </Button>
             </Popover>
           </CSSTransition>
 
           <Button
             bg="primary"
             padding="0.5rem"
-            text="Edit"
             textSize="0.7rem"
             margin="0 0.5rem"
             withRipple
@@ -145,7 +146,9 @@ const ProductItem = ({
             onClick={() => {
               history.push(`/products/${product.id}`);
             }}
-          />
+          >
+            Edit
+          </Button>
         </ActionButtonContainer>
       </div>
     </Container>

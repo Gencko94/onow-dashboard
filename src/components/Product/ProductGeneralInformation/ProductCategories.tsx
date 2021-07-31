@@ -7,6 +7,7 @@ import { EDIT_PRODUCT_GENERAL_INFO } from "../../../interfaces/products/update-p
 import ProductCategoryList from "./ProductCategoryList";
 import { FORM_PROPS } from "./ProductGeneralInformation";
 import Heading from "../../StyledComponents/Heading";
+import { up } from "../../../utils/themes";
 
 const ProductCategories = () => {
   const {
@@ -18,12 +19,14 @@ const ProductCategories = () => {
   } = useTranslation();
 
   return (
-    <Container>
-      <Heading color="primary" tag="h5" weight="semibold" mb="1rem ">
-        Product Category
-      </Heading>
+    <Container error={Boolean(errors?.category)}>
+      <div className="head">
+        <Heading color="heading" tag="h5" weight="bold">
+          Product Category
+        </Heading>
+      </div>
 
-      <CategoriesList error={Boolean(errors?.category)}>
+      <CategoriesList>
         <ProductCategoryList control={control} errors={errors.category} />
       </CategoriesList>
     </Container>
@@ -31,25 +34,29 @@ const ProductCategories = () => {
 };
 
 export default ProductCategories;
-const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
+const Container = styled.div<{ error: boolean }>(
+  ({ theme: { breakpoints, accent1, border, dangerRed }, error }) => `
   display:flex;
   flex-direction:column;
- 
-  @media ${breakpoints.md} {
-    
+  border: ${error ? `1px solid ${dangerRed}` : border};
+  border-radius: 6px;
+  background-color:${accent1} ;
+  .head {
+    border-bottom: ${border};
+    padding:0.5rem ;
+  
+  }
+  ${up(breakpoints.md)}{
+    .head {
+      padding: 1rem;
+    }
   }
   `
 );
-const CategoriesList = styled.div<{ error: boolean }>`
+const CategoriesList = styled.div`
   overflow-y: auto;
   position: relative;
-  background-color: #fff;
-  border: ${(props) =>
-    props.error ? `1px solid ${props.theme.dangerRed}` : props.theme.border};
-  /* box-shadow: ${(props) =>
-    props.error ? props.theme.errorShadow : props.theme.shadow}; */
-  border-radius: 6px;
+
   flex: 1;
 
   .empty {

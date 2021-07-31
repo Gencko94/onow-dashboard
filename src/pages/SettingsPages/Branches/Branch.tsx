@@ -269,7 +269,6 @@ const Branch = () => {
           <Button
             withTransition
             textSize="0.9rem"
-            text="Delete Branch"
             padding="0.5rem"
             bg="danger"
             withRipple
@@ -284,7 +283,9 @@ const Branch = () => {
                 successCb: handleDeleteBranch,
               })
             }
-          />
+          >
+            Delete Branch
+          </Button>
         </Flex>
       </HeaderContainer>
       <form onSubmit={infoMethods.handleSubmit(handleEditBranchInfo)}>
@@ -293,7 +294,6 @@ const Branch = () => {
           <Flex justify="center" margin="1rem 0 ">
             <Button
               withTransition
-              text="Save Changes"
               type="submit"
               padding="0.5rem"
               bg="green"
@@ -302,7 +302,9 @@ const Branch = () => {
               textSize="0.9rem"
               isLoading={editInfoLoading}
               disabled={editInfoLoading}
-            />
+            >
+              Save Changes
+            </Button>
           </Flex>
         </FormProvider>
       </form>
@@ -312,7 +314,6 @@ const Branch = () => {
           <Flex justify="center" margin="1rem 0 ">
             <Button
               withTransition
-              text="Save Changes"
               type="submit"
               padding="0.5rem"
               bg="green"
@@ -321,7 +322,9 @@ const Branch = () => {
               textSize="0.9rem"
               isLoading={locationLoading}
               disabled={locationLoading}
-            />
+            >
+              Save Changes
+            </Button>
           </Flex>
         </FormProvider>
       </form>
@@ -331,7 +334,6 @@ const Branch = () => {
           <Flex justify="center" margin="1rem 0 ">
             <Button
               withTransition
-              text="Save Changes"
               type="submit"
               padding="0.5rem"
               bg="green"
@@ -340,7 +342,9 @@ const Branch = () => {
               textSize="0.9rem"
               isLoading={hoursLoading}
               disabled={hoursLoading}
-            />
+            >
+              Save Changes
+            </Button>
           </Flex>
         </FormProvider>
       </form>

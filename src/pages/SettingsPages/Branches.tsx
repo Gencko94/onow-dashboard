@@ -34,9 +34,10 @@ const Branches = () => {
             onClick={() => history.push("/settings/branches/create/branch")}
             withRipple
             withTransition
-            text="Create New Branch"
             type="submit"
-          />
+          >
+            Create new Branch
+          </Button>
         </Flex>
       </HeaderContainer>
 

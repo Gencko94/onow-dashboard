@@ -59,13 +59,15 @@ const CreateProductGeneralInfo = () => {
         <Flex justify="flex-end">
           <Button
             type="submit"
-            text="Next"
+            // text="Next"
             bg="blue"
             padding="0.5rem"
             textSize="0.9rem"
             withRipple
             withTransition
-          />
+          >
+            Next
+          </Button>
         </Flex>
         <Grid cols="repeat(auto-fit,minmax(350px,1fr))" gap="1rem">
           <CreateProductNameAndDescription />

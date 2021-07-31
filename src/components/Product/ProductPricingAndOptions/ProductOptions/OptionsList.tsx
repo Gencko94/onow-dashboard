@@ -59,8 +59,8 @@ const OptionsList = ({ productOptions }: OptionsListProps) => {
   }, []);
   return (
     <div>
-      <Heading color="primary" tag="h5" mb="0.5rem" weight="semibold">
-        Options :
+      <Heading color="heading" tag="h6" margin="1rem 0" weight="bold">
+        Options
       </Heading>
       {/* If No Options Show this */}
       {options.length === 0 && (
@@ -108,7 +108,6 @@ const OptionsList = ({ productOptions }: OptionsListProps) => {
               <Button
                 withRipple
                 withTransition
-                text="Add Another Option"
                 bg="green"
                 padding="0.5rem"
                 onClick={() => {
@@ -116,7 +115,9 @@ const OptionsList = ({ productOptions }: OptionsListProps) => {
                 }}
                 textSize="0.9rem"
                 Icon={BiPlus}
-              />
+              >
+                Add Another Option
+              </Button>
             </Flex>
           </div>
         </>

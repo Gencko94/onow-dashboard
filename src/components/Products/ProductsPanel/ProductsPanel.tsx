@@ -1,4 +1,4 @@
-import ProductsPanelActions from "./ProductsPanelActions/ProductPanelActions";
+import ProductsPanelActions from "./ProductsPanelActions/ProductsPanelActions";
 import { useHistory } from "react-router";
 
 import Flex from "../../StyledComponents/Flex";
@@ -17,11 +17,13 @@ const ProductsPanel = () => {
         bg="green"
         padding="0.5rem"
         textSize="0.9rem"
-        text="Create New Product"
+        // text="Create New Product"
         withRipple
         withTransition
         Icon={BiPlus}
-      />
+      >
+        Create New Product
+      </Button>
       {/* <ProductsPanelActions /> */}
     </Flex>
   );

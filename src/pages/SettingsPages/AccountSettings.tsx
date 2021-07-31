@@ -154,12 +154,13 @@ const AccountSettings = () => {
             type="submit"
             withRipple
             withTransition
-            text="Save Changes"
             textSize="0.9rem"
             bg="green"
             padding="0.5rem"
             onClick={handleSubmit(onSubmit)}
-          />
+          >
+            Save changes
+          </Button>
         </Flex>
       </form>
       <Hr />

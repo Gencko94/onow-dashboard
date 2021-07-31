@@ -142,13 +142,14 @@ const Login = () => {
               width="100%"
               bg="primary"
               padding="0.5rem"
-              text="Login"
               type="submit"
               isLoading={isSubmitting}
               disabled={isSubmitting}
               withRipple
               withTransition
-            />
+            >
+              Login
+            </Button>
           </Form>
         </FormContainer>
         <Footer>

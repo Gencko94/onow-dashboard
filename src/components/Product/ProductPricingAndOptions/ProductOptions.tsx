@@ -16,7 +16,7 @@ const ProductOptions = ({ options }: ProductOptionsProps) => {
   const optionsEnabled = watch("options_enabled");
   return (
     <div>
-      <Heading color="primary" tag="h5" mb="1.5rem" weight="semibold">
+      <Heading color="heading" tag="h5" weight="bold" margin="1rem 0">
         Product Options
       </Heading>
       <Controller

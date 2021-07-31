@@ -72,7 +72,6 @@ const CreateProductPricingAndOptions = () => {
       <Container onSubmit={methods.handleSubmit(onSubmit, onError)}>
         <Flex justify="flex-end">
           <Button
-            text="Back"
             bg="blue"
             onClick={() => {
               updateData?.(methods.watch());
@@ -83,16 +82,19 @@ const CreateProductPricingAndOptions = () => {
             margin="0 0.5rem"
             withRipple
             withTransition
-          />
+          >
+            Back
+          </Button>
           <Button
             withRipple
             withTransition
-            text="Next"
             bg="blue"
             type="submit"
             padding="0.5rem"
             textSize="0.9rem"
-          />
+          >
+            Next
+          </Button>
         </Flex>
         <CreateProductPricing />
         <Hr />

@@ -105,9 +105,10 @@ const OptionValue = ({ index, parentIndex, removeValue, value }: IProps) => {
         </div>
       </Grid>
       <Flex margin="1rem 0 0 0 " justify="center">
-        <Button text="Edit" padding="0.25rem" bg="blue" withTransition />
+        <Button padding="0.25rem" bg="blue" withTransition>
+          Edit
+        </Button>
         <Button
-          text="Remove"
           margin="0 0.5rem"
           padding="0.25rem"
           bg="danger"
@@ -123,7 +124,9 @@ const OptionValue = ({ index, parentIndex, removeValue, value }: IProps) => {
               title: "Delete Product Option",
             });
           }}
-        />
+        >
+          Remove
+        </Button>
       </Flex>
     </Container>
   );

@@ -18,6 +18,10 @@ interface IProps {
    */
   items?: string;
   /**
+   * Sets the ```justify-items``` property
+   */
+  justify?: string;
+  /**
    * Sets the ```padding``` property.
    *
    * example : ```p={2}``` === ```2 * 0.25rem```
@@ -25,9 +29,19 @@ interface IProps {
   p?: number;
   margin?: string;
 }
-const Grid: FC<IProps> = ({ children, rows, cols, gap, items, p, margin }) => {
+const Grid: FC<IProps> = ({
+  children,
+  rows,
+  cols,
+  gap,
+  items,
+  p,
+  margin,
+  justify,
+}) => {
   return (
     <GridWrapper
+      justify={justify}
       style={
         {
           "--cols": cols,
@@ -45,8 +59,8 @@ const Grid: FC<IProps> = ({ children, rows, cols, gap, items, p, margin }) => {
 };
 
 export default Grid;
-export const GridWrapper = styled.div(
-  ({ theme: { breakpoints, font } }) => `
+export const GridWrapper = styled.div<{ justify?: string }>(
+  ({ theme: { breakpoints, font }, justify }) => `
 
   display: grid;
   grid-template-columns: var(--cols);
@@ -55,8 +69,7 @@ export const GridWrapper = styled.div(
   align-items: var(--items, normal);
   padding: var(--padding, 0);
   margin: var(--margin, 0);
-  @media ${breakpoints.md}{
-    
-  }
+  justify-content:${justify};
+  
   `
 );

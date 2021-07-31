@@ -91,11 +91,12 @@ const AccountPassword = () => {
           type="submit"
           withRipple
           withTransition
-          text="Change Password"
           textSize="0.9rem"
           bg="green"
           padding="0.5rem"
-        />
+        >
+          Change Password
+        </Button>
       </Flex>
     </Container>
   );

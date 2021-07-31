@@ -152,7 +152,6 @@ const CustomerProfile = () => {
             <Button
               withTransition
               textSize="0.9rem"
-              text="Delete Customer"
               padding="0.5rem"
               bg="danger"
               withRipple
@@ -169,7 +168,9 @@ const CustomerProfile = () => {
                   title: "Delete Customer",
                 })
               }
-            />
+            >
+              Delete Customer
+            </Button>
           </Flex>
         </HeaderContainer>
 
@@ -182,7 +183,6 @@ const CustomerProfile = () => {
         <Flex justify="center">
           <Button
             withTransition
-            text="Save Changes"
             type="submit"
             padding="0.5rem"
             bg="green"
@@ -191,7 +191,9 @@ const CustomerProfile = () => {
             textSize="0.9rem"
             isLoading={editLoading}
             disabled={editLoading}
-          />
+          >
+            Save Changes
+          </Button>
         </Flex>
       </form>
       <Hr />

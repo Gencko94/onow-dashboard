@@ -17,12 +17,13 @@ const CustomersPanel = ({ setModalOpen }: IProps) => {
         Icon={BsPlus}
         bg="green"
         padding="0.5rem"
-        text="Add New Customer"
         onClick={() => setModalOpen(true)}
         withRipple
         textSize="0.9rem"
         withTransition
-      />
+      >
+        Add New Customer
+      </Button>
     </Flex>
   );
 };

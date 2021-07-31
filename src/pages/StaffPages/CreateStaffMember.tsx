@@ -131,13 +131,14 @@ const CreateStaffMember = () => {
           <Flex justify="flex-end">
             <Button
               type="submit"
-              text="Create New Member"
               padding="0.5rem"
               bg="green"
               withTransition
               Icon={BiPlus}
               isLoading={isLoading}
-            />
+            >
+              Create new Member
+            </Button>
           </Flex>
         </HeaderContainer>
         <NewStaffMemberInformation

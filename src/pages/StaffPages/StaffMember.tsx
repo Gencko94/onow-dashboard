@@ -152,16 +152,16 @@ const StaffMember = () => {
         <Flex margin="1rem" justify="flex-end">
           <Button
             type="submit"
-            text="Save Changes"
             padding="0.5rem"
             bg="green"
             withTransition
             margin="0 1rem"
             withRipple
             textSize="0.9rem"
-          />
+          >
+            Save Changes
+          </Button>
           <Button
-            text="Delete Staff Member"
             padding="0.5rem"
             Icon={RiDeleteBinLine}
             bg="danger"
@@ -171,7 +171,9 @@ const StaffMember = () => {
             onClick={() => {
               setModalOpen(true);
             }}
-          />
+          >
+            Delete Staff Member
+          </Button>
         </Flex>
       </HeaderContainer>
 

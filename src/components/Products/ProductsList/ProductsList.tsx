@@ -279,16 +279,16 @@ const ProductsList = () => {
               bg="danger"
               padding="0.25rem"
               textSize="0.8rem"
-              text={`Delete ${
-                selectedRows.length > 0 ? selectedRows.length : ""
-              } Products`}
               withRipple
               withTransition
               isLoading={multipleDeleteLoading}
               onClick={() => {
                 handleDeleteMultipleProducts(selectedRows);
               }}
-            />
+            >
+              Delete {selectedRows.length > 0 ? selectedRows.length : ""}{" "}
+              Products
+            </Button>
           </Flex>
         </Flex>
       )}
@@ -309,7 +309,6 @@ const ProductsList = () => {
               margin="0 2rem"
               padding="0.25rem"
               textSize="0.7rem"
-              text="Clear search"
               withRipple
               withTransition
               isLoading={multipleDeleteLoading}
@@ -317,7 +316,9 @@ const ProductsList = () => {
                 handleChangeGlobalSearchBar?.("");
                 history.replace("/products");
               }}
-            />
+            >
+              Clear search
+            </Button>
           </Flex>
         </SearchContainer>
       )}
@@ -374,14 +375,15 @@ const ProductsList = () => {
             isLoading={isFetchingNextPage}
             disabled={isFetchingNextPage}
             withRipple
-            text="Load More"
             bg="green"
             padding="0.25rem 0.5rem"
             textSize="0.8rem"
             onClick={() => {
               fetchNextPage();
             }}
-          />
+          >
+            Load more
+          </Button>
         </Flex>
       )}
     </>

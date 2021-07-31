@@ -37,7 +37,6 @@ const ModalTail = ({
   return (
     <Flex padding="0.5rem 0.5rem" justify="flex-end">
       <Button
-        text={btnText}
         bg="green"
         withRipple
         withTransition
@@ -52,9 +51,10 @@ const ModalTail = ({
         iconSize={22}
         isLoading={isLoading}
         disabled={isLoading}
-      />
+      >
+        {btnText}
+      </Button>
       <Button
-        text="Cancel"
         iconSize={22}
         bg="danger"
         withRipple
@@ -63,7 +63,9 @@ const ModalTail = ({
         padding="0.5rem 0.25rem"
         Icon={MdClose}
         onClick={() => closeFunction()}
-      />
+      >
+        Cancel
+      </Button>
     </Flex>
   );
 };

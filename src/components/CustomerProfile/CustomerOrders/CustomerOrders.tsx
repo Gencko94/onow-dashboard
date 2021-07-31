@@ -160,14 +160,15 @@ const CustomerOrders = ({ customerId }: IProps) => {
             isLoading={isFetchingNextPage}
             disabled={isFetchingNextPage}
             withRipple
-            text="Load More"
             bg="green"
             padding="0.25rem 0.5rem"
             textSize="0.8rem"
             onClick={() => {
               fetchNextPage();
             }}
-          />
+          >
+            Load more
+          </Button>
         </Flex>
       )}
     </>

@@ -104,12 +104,13 @@ const StoreSocialNetwork = ({ data }: StoreSocialNetworkProps) => {
             isLoading={isLoading}
             disabled={isLoading}
             type="submit"
-            text="Save"
             bg="green"
             padding="0.5rem"
             withRipple
             withTransition
-          />
+          >
+            Save changes
+          </Button>
         </Flex>
       </Box>
     </form>

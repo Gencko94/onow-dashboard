@@ -39,7 +39,7 @@ export default function ProtectedRoute({ Component, path }: IProps) {
                     FallbackComponent={ErrorBoundaryComponent}
                     onReset={reset}
                   >
-                    <Component />{" "}
+                    <Component />
                   </ErrorBoundary>
                 )}
               </QueryErrorResetBoundary>

@@ -191,9 +191,6 @@ const CustomerList = ({
               bg="danger"
               padding="0.25rem"
               textSize="0.8rem"
-              text={`Delete ${
-                selectedRows.length > 0 ? selectedRows.length : ""
-              } Customers`}
               withRipple
               withTransition
               isLoading={multipleDeleteLoading}
@@ -208,7 +205,10 @@ const CustomerList = ({
                   title: "Delete Customers",
                 });
               }}
-            />
+            >
+              Delete {selectedRows.length > 0 ? selectedRows.length : ""}{" "}
+              Customers
+            </Button>
           </Flex>
         </Flex>
       )}
@@ -229,14 +229,15 @@ const CustomerList = ({
               margin="0 2rem"
               padding="0.25rem"
               textSize="0.7rem"
-              text="Clear search"
               withRipple
               withTransition
               isLoading={multipleDeleteLoading}
               onClick={() => {
                 history.replace("/customers");
               }}
-            />
+            >
+              Clear search
+            </Button>
           </Flex>
         </SearchContainer>
       )}
@@ -293,14 +294,15 @@ const CustomerList = ({
             isLoading={isFetchingNextPage}
             disabled={isFetchingNextPage}
             withRipple
-            text="Load More"
             bg="green"
             padding="0.25rem 0.5rem"
             textSize="0.8rem"
             onClick={() => {
               fetchNextPage();
             }}
-          />
+          >
+            Load more
+          </Button>
         </Flex>
       )}
     </>

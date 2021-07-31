@@ -118,13 +118,14 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
           <Button
             isLoading={isLoading}
             disabled={isLoading}
-            text="Save"
             bg="green"
             type="submit"
             padding="0.5rem"
             withRipple
             withTransition
-          />
+          >
+            Save Changes
+          </Button>
         </Flex>
       </Box>
     </form>

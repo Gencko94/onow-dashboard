@@ -59,7 +59,6 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
         <Button
           bg="primary"
           padding="0.5rem"
-          text="Edit"
           textSize="0.7rem"
           margin="0 0.5rem"
           withRipple
@@ -67,11 +66,12 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
           onClick={() => {
             history.push(`/settings/branches/branch/${branch.id}`);
           }}
-        />
+        >
+          Edit
+        </Button>
         <Button
           bg="blue"
           padding="0.5rem"
-          text="Delivery Locations"
           textSize="0.7rem"
           margin="0 0.5rem"
           withRipple
@@ -79,7 +79,9 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
           onClick={() => {
             history.push(`/settings/branches/branch/${branch.id}`);
           }}
-        />
+        >
+          Delivery locations
+        </Button>
         <ActionButtonContainer
           onClick={(e) => {
             e.stopPropagation();
@@ -101,7 +103,6 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
           >
             <Popover closeFunction={() => setActionsMenuOpen(false)}>
               <Button
-                text="Delete Branch"
                 padding="0.5rem"
                 bg="transparent"
                 textSize="0.8rem"
@@ -118,7 +119,9 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
                     successCb: () => handleDeleteBranch(branch.id),
                   });
                 }}
-              />
+              >
+                Delete branch
+              </Button>
             </Popover>
           </CSSTransition>
         </ActionButtonContainer>

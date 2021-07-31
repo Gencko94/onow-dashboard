@@ -2,6 +2,7 @@ import { UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import styled, { css } from "styled-components";
+import { up } from "../../../utils/themes";
 
 interface IProps {
   register: UseFormRegister<any>;
@@ -130,7 +131,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       &:hover,
       &:focus-within {
         border-color: ${borderHovered};
-        background-color: ${inputColorLight};
+        
       }
       }
       .error {
@@ -145,7 +146,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
         height: 22px;
         color: ${mainColor};
       }
-      @media  ${breakpoints.md}{
+      ${up(breakpoints.md)}{
         label {
           font-size: 0.9rem;
           margin-bottom: 0.75rem;

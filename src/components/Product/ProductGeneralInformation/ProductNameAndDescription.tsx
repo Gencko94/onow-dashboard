@@ -2,6 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { BiDetail } from "react-icons/bi";
 import { MdSubtitles } from "react-icons/md";
 import styled from "styled-components";
+import { up } from "../../../utils/themes";
 
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
@@ -21,9 +22,11 @@ const ProductNameAndDescription = () => {
 
   return (
     <Container>
-      <Heading color="primary" tag="h5" weight="semibold" mb="1rem">
-        Product Naming & Description
-      </Heading>
+      <div className="head">
+        <Heading color="heading" tag="h5" weight="bold">
+          Product Naming & Description
+        </Heading>
+      </div>
       <div className="box">
         <Grid cols="repeat(auto-fill,minmax(275px,1fr)" gap="1rem">
           <IconedInput
@@ -101,19 +104,26 @@ const ProductNameAndDescription = () => {
 
 export default ProductNameAndDescription;
 const Container = styled.div(
-  ({ theme: { breakpoints, border, bodyColor } }) => `
+  ({ theme: { breakpoints, border, accent1 } }) => `
   
   display:flex;
   flex-direction:column;
+  border: ${border};
+  border-radius: 6px;
+  background-color:${accent1} ;
+  .head {
+    border-bottom: ${border};
+    padding:0.5rem ;
+  
+  }
   .box {
     flex:1;
-    background-color:${bodyColor} ;
-    border: ${border};
-    border-radius: 6px;
+   
     padding: 0.5rem;
   }
-  @media ${breakpoints.md} {
-    .box {
+ ${up(breakpoints.md)}{
+  
+    .box , .head  {
       padding: 1rem;
     }
   }

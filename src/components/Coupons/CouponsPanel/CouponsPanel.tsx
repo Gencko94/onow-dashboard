@@ -14,7 +14,6 @@ const CouponsPanel = () => {
       </Heading>
       <Button
         bg="green"
-        text="Create new Coupon"
         onClick={() => history.push("/coupons/create")}
         padding="0.5rem"
         withRipple
@@ -22,7 +21,9 @@ const CouponsPanel = () => {
         iconSize={25}
         withTransition
         textSize="0.9rem"
-      />
+      >
+        Create new Coupon
+      </Button>
     </Flex>
   );
 };

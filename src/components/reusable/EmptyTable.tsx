@@ -45,14 +45,15 @@ const EmptyTable = ({
       </Heading>
       {withButton && btnText && (
         <Button
-          text={btnText}
           bg="green"
           padding="0.5rem"
           textSize="0.9rem"
           withRipple
           withTransition
           onClick={() => cb?.()}
-        />
+        >
+          {btnText}
+        </Button>
       )}
     </Container>
   );

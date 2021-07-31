@@ -68,7 +68,6 @@ const CustomerItem = ({
             <ClickAwayListener onClickAway={() => setActionsMenuOpen(false)}>
               <Popover closeFunction={() => setActionsMenuOpen(false)}>
                 <Button
-                  text="Delete Customer"
                   padding="0.5rem"
                   bg="transparent"
                   textSize="0.8rem"
@@ -84,14 +83,15 @@ const CustomerItem = ({
                       successCb: () => handleDeleteCustomer(customer.id),
                     });
                   }}
-                />
+                >
+                  Delete Customer
+                </Button>
               </Popover>
             </ClickAwayListener>
           </CSSTransition>
           <Button
             bg="primary"
             padding="0.5rem"
-            text="Edit"
             textSize="0.7rem"
             margin="0 0.5rem"
             withRipple
@@ -99,7 +99,9 @@ const CustomerItem = ({
             onClick={() => {
               history.push(`/customers/${customer.id}`);
             }}
-          />
+          >
+            Edit
+          </Button>
         </ActionButtonContainer>
       </div>
     </Container>

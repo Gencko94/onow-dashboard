@@ -145,7 +145,6 @@ const Category = () => {
 
         <Grid cols="auto auto" gap="0.5rem">
           <Button
-            text="Save Changes"
             bg="green"
             padding="0.5rem"
             withRipple
@@ -153,9 +152,10 @@ const Category = () => {
             type="submit"
             isLoading={editLoading}
             disabled={editLoading}
-          />
+          >
+            Save changes
+          </Button>
           <Button
-            text="Delete"
             bg="danger"
             padding="0.5rem"
             withRipple
@@ -173,7 +173,9 @@ const Category = () => {
                 closeCb: handleCloseConfirmationModal!,
               });
             }}
-          />
+          >
+            Delete Category
+          </Button>
         </Grid>
       </HeaderContainer>
       <CategoryInfo

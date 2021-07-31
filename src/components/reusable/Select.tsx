@@ -19,7 +19,7 @@ interface IProps<T> {
   value: T;
   options: T[];
   defaultValue?: any;
-  errors: any;
+  errors?: any;
   isLoading?: boolean;
   placeholder?: string;
   getOptionLabel: getOptionLabel<T>;
@@ -102,7 +102,7 @@ export default function Select<T>({
         formatOptionLabel={formatOptionLabel}
         formatGroupLabel={formatGroupLabel}
       />
-      <InputErrorMessage msg={errors?.message} />
+      {errors && <InputErrorMessage msg={errors?.message} />}
     </Container>
   );
 }

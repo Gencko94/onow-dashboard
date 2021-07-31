@@ -116,7 +116,6 @@ const CategoryItem = ({
               >
                 <Popover closeFunction={() => setActionsMenuOpen(false)}>
                   <Button
-                    text="Delete Category"
                     padding="0.5rem"
                     bg="transparent"
                     textSize="0.8rem"
@@ -133,13 +132,14 @@ const CategoryItem = ({
                         closeCb: handleCloseConfirmationModal!,
                       });
                     }}
-                  />
+                  >
+                    Delete Category
+                  </Button>
                 </Popover>
               </CSSTransition>
               <Button
                 bg="primary"
                 padding="0.5rem"
-                text="Edit"
                 textSize="0.7rem"
                 withRipple
                 withTransition
@@ -147,7 +147,9 @@ const CategoryItem = ({
                 onClick={() => {
                   history.push(`/categories/${category.id}`);
                 }}
-              />
+              >
+                Edit
+              </Button>
             </ActionButtonContainer>
           </ButtonsContainer>
         </div>

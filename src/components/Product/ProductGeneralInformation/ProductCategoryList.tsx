@@ -1,4 +1,3 @@
-import { MdSubdirectoryArrowRight } from "react-icons/md";
 import styled from "styled-components";
 
 import { Control, Controller, useWatch } from "react-hook-form";
@@ -11,9 +10,7 @@ import {
   CATEGORY,
   MINI_CATEGORY,
 } from "../../../interfaces/categories/categories";
-import Checkbox from "../../reusable/Inputs/Checkbox";
 import { getCategories } from "../../../utils/queries";
-import DefaultImage from "../../reusable/DefaultImage";
 import LoadingTable from "../../reusable/LoadingTable";
 import React from "react";
 import ProductCategoryItem from "./ProductCategoryItem";
@@ -99,82 +96,6 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
                   </React.Fragment>
                 );
               })}
-              {/* {data?.pages.map((group, i) => {
-                return (
-                  <React.Fragment key={i}>
-                    {group.data.map((category: CATEGORY) => {
-                      return (
-                        <div key={category.id}>
-                          <CategoryItem
-                            active={formValues.category?.id === category.id}
-                          >
-                            <div
-                              className="field"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleToggleCategories(category, onChange);
-                              }}
-                            >
-                              {category.image ? (
-                                <img
-                                  className="img"
-                                  src={category.image}
-                                  alt={category.name[language]}
-                                />
-                              ) : (
-                                <DefaultImage
-                                  circular
-                                  border
-                                  height="50px"
-                                  width="50px"
-                                />
-                              )}
-                              <h6>{category.name[language]}</h6>
-                            </div>
-                            <Checkbox
-                              checked={formValues.category?.id === category.id}
-                              onChange={(e) => {
-                                e.stopPropagation();
-                                handleToggleCategories(category, onChange);
-                              }}
-                            />
-                          </CategoryItem>
-                          {category?.children?.map((child: CATEGORY) => {
-                            return (
-                              <SubCategoryItem key={child.id}>
-                                <div
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleToggleCategories(child, onChange);
-                                  }}
-                                  className="field"
-                                >
-                                  <div className="title">
-                                    <MdSubdirectoryArrowRight />
-                                    <img
-                                      src={child.image}
-                                      alt={child.name[language]}
-                                      className="img"
-                                    />
-                                    <h6>{child.name[language]}</h6>
-                                  </div>
-                                </div>
-                                <Checkbox
-                                  checked={formValues.category?.id === child.id}
-                                  onChange={(e) => {
-                                    e.stopPropagation();
-                                    handleToggleCategories(child, onChange);
-                                  }}
-                                />
-                              </SubCategoryItem>
-                            );
-                          })}
-                        </div>
-                      );
-                    })}
-                  </React.Fragment>
-                );
-              })} */}
             </div>
           </Container>
         );
@@ -222,71 +143,6 @@ const Container = styled.div`
       border-radius: 50%;
       border: ${(props) => props.theme.border};
       margin: 0 0.5rem;
-    }
-  }
-`;
-
-const CategoryItem = styled.div<{ active: boolean }>`
-  display: block;
-  width: 100%;
-  background-color: ${(props) =>
-    props.active ? props.theme.accentColor : "#fff"};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  border-bottom: ${(props) => props.theme.border};
-  &:hover {
-    /* background-color: ${(props) => props.theme.highlightColor}; */
-  }
-  .img {
-    border-radius: 50%;
-    width: 25px;
-    object-fit: cover;
-    height: 25px;
-  }
-
-  .field {
-    padding: 0.5rem;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    h6 {
-      font-size: 0.9rem;
-      margin: 0 0.5rem;
-      font-weight: ${(props) => props.theme.font.bold};
-    }
-  }
-`;
-const SubCategoryItem = styled.div`
-  background-color: #fff;
-  display: block;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  border-bottom: ${(props) => props.theme.border};
-  background-color: ${(props) => props.theme.highlightColor};
-  &:hover {
-    background-color: ${(props) => props.theme.highlightColor};
-  }
-
-  .field {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem;
-    padding-left: 2rem;
-    flex: 1;
-
-    .title {
-      display: flex;
-      align-items: center;
-    }
-    h6 {
-      font-size: 0.9rem;
-      font-weight: ${(props) => props.theme.font.semibold};
     }
   }
 `;

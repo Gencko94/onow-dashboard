@@ -91,7 +91,6 @@ const CouponItem = ({
           >
             <Popover closeFunction={() => setActionsMenuOpen(false)}>
               <Button
-                text="Delete Coupon"
                 padding="0.5rem"
                 bg="transparent"
                 textSize="0.8rem"
@@ -108,13 +107,14 @@ const CouponItem = ({
                     successCb: () => handleDeleteCoupon(coupon.id),
                   });
                 }}
-              />
+              >
+                Delete Coupon
+              </Button>
             </Popover>
           </CSSTransition>
           <Button
             bg="primary"
             padding="0.5rem"
-            text="Edit"
             textSize="0.7rem"
             margin="0 0.5rem"
             withRipple
@@ -122,7 +122,9 @@ const CouponItem = ({
             onClick={() => {
               history.push(`/coupons/coupon/${coupon.id}`);
             }}
-          />
+          >
+            Edit
+          </Button>
         </ActionButtonContainer>
       </div>
     </Container>

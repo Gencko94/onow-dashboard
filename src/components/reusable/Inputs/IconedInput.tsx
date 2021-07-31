@@ -169,7 +169,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     &:hover,
     &:focus-within {
       border-color: ${borderHovered};
-      background:${accent1}
+    
     }
     
   }

@@ -70,14 +70,15 @@ const CreateProductOrderingAndBranchAvailability = ({
             bg="blue"
             padding=" 0.5rem"
             textSize="0.9rem"
-            text="Back"
             onClick={() => {
               updateData?.(methods.watch());
               setActiveTab?.(2);
             }}
             withRipple
             withTransition
-          />
+          >
+            Back
+          </Button>
           <Button
             withRipple
             withTransition
@@ -87,11 +88,12 @@ const CreateProductOrderingAndBranchAvailability = ({
             bg="green"
             padding=" 0.5rem"
             textSize="0.9rem"
-            text="Create New Product"
             onClick={() => {
               methods.handleSubmit(onSubmit, onError);
             }}
-          />
+          >
+            Create New Product
+          </Button>
         </Flex>
 
         <CreateProductOrdering />

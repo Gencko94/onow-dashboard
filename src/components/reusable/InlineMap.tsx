@@ -210,7 +210,6 @@ const InlineMap = ({ mapCenter, setValue, name }: IProps) => {
           bg="primary"
           withRipple
           padding="0.25rem"
-          text="Get my location"
           textSize="0.8rem"
           Icon={BiCurrentLocation}
           iconSize={20}
@@ -235,7 +234,9 @@ const InlineMap = ({ mapCenter, setValue, name }: IProps) => {
               }
             )
           }
-        />
+        >
+          Get my location
+        </Button>
       </MapIcon>
     </GoogleMap>
   );

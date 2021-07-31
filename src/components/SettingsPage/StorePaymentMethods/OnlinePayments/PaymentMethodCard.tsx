@@ -19,7 +19,6 @@ const PaymentMethodCard = ({ gateway }: IProps) => {
         <img src={gateway.logo} alt={gateway.name.en} />
         <div className="buttons">
           <Button
-            text="Create Bookeey Account"
             bg="green"
             padding="0.5rem 0.5rem"
             withTransition
@@ -28,12 +27,12 @@ const PaymentMethodCard = ({ gateway }: IProps) => {
                 "/settings/payment-methods/create-payment-gateway-account"
               )
             }
-          />
-          <Button
-            text="Link Existing Bookeey Account"
-            bg="primary"
-            padding="0.5rem 0.5rem"
-          />
+          >
+            Create Bookeey Account
+          </Button>
+          <Button bg="primary" padding="0.5rem 0.5rem">
+            Link Existing Bookeey Account
+          </Button>
         </div>
       </div>
       <div className="info">

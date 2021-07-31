@@ -1,7 +1,6 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { MdSave } from "react-icons/md";
 import { useMutation } from "react-query";
-import styled from "styled-components";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { PRODUCT } from "../../../interfaces/products/products";
@@ -94,7 +93,7 @@ const ProductGeneralInformation = ({ data }: IProps) => {
     }
   };
   return (
-    <Container>
+    <div>
       <Grid cols="repeat(auto-fit,minmax(350px,1fr))" gap="1rem">
         <FormProvider {...methods}>
           <ProductNameAndDescription />
@@ -104,7 +103,6 @@ const ProductGeneralInformation = ({ data }: IProps) => {
       </Grid>
       <Flex justify="center" margin="1rem 0 0 0">
         <Button
-          text="Save Changes"
           textSize="0.9rem"
           iconSize={25}
           Icon={MdSave}
@@ -112,18 +110,15 @@ const ProductGeneralInformation = ({ data }: IProps) => {
           padding="0.5rem"
           isLoading={isLoading}
           disabled={isLoading}
+          withRipple
+          withTransition
           onClick={methods.handleSubmit(onSubmit)}
-        />
+        >
+          Save Changes
+        </Button>
       </Flex>
-    </Container>
+    </div>
   );
 };
 
 export default ProductGeneralInformation;
-const Container = styled.div`
-  /* background-color: #fff;
-  box-shadow: ${(props) => props.theme.shadow};
-  padding: 0.75rem;
-  border-radius: 5px;
-  align-self: flex-start; */
-`;

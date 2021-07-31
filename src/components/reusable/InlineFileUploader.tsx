@@ -65,13 +65,14 @@ const InlineFileUploader = ({
         </div>
         <Button
           withTransition
-          text="Browse Files"
           onClick={() => {
             inputRef?.current?.click();
           }}
           bg="green"
           padding="0.5rem"
-        />
+        >
+          Browse files
+        </Button>
       </InputContainer>
 
       {image && (

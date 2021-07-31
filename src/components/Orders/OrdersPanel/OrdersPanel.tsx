@@ -29,24 +29,26 @@ const OrdersPanel = ({ setFilters, filters }: IProps) => {
             Icon={BsPlus}
             bg="green"
             padding="0.5rem"
-            text="Create New Order"
             onClick={() => history.push("/orders/create")}
             withRipple
             textSize="0.9rem"
             withTransition
-          />
+          >
+            Create new Order
+          </Button>
           <Button
             Icon={VscFilter}
             bg="green"
             padding="0.5rem"
-            text="Filter"
             iconSize={30}
             onClick={() => setOpen(!open)}
             withRipple
             textSize="0.9rem"
             margin="0 0.5rem"
             withTransition
-          />
+          >
+            Filter orders
+          </Button>
         </Flex>
       </Flex>
       <CSSTransition

@@ -11,9 +11,10 @@ import Paragraph from "../StyledComponents/Paragraph";
 
 interface IProps {
   children: { target: string; name: { [key: string]: string } }[];
+  withoutTitle?: boolean;
 }
 
-const Breadcrumbs = ({ children }: IProps) => {
+const Breadcrumbs = ({ children, withoutTitle }: IProps) => {
   const {
     t,
     i18n: { language },
@@ -21,9 +22,11 @@ const Breadcrumbs = ({ children }: IProps) => {
   const { isDesktop } = useResponsive();
   return (
     <Container>
-      <Heading tag="h5" color="primary" mb="0.5rem" weight="semibold">
-        {children[children.length - 1].name[language]}
-      </Heading>
+      {!withoutTitle && (
+        <Heading tag="h5" color="primary" mb="0.5rem" weight="semibold">
+          {children[children.length - 1].name[language]}
+        </Heading>
+      )}
       <div className="links-container">
         <HomeLink to="/">
           <BiHomeAlt size={16} />

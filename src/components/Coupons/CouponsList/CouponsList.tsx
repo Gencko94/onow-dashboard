@@ -169,9 +169,6 @@ const CouponsList = () => {
               bg="danger"
               padding="0.25rem"
               textSize="0.8rem"
-              text={`Delete ${
-                selectedRows.length > 0 ? selectedRows.length : ""
-              } Coupons`}
               withRipple
               withTransition
               isLoading={multipleDeleteLoading}
@@ -186,7 +183,10 @@ const CouponsList = () => {
                   title: "Delete Coupons",
                 });
               }}
-            />
+            >
+              Delete {selectedRows.length > 0 ? selectedRows.length : ""}{" "}
+              Coupons
+            </Button>
           </Flex>
         </Flex>
       )}
@@ -241,14 +241,15 @@ const CouponsList = () => {
                 isLoading={isFetchingNextPage}
                 disabled={isFetchingNextPage}
                 withRipple
-                text="Load More"
                 bg="green"
                 padding="0.25rem 0.5rem"
                 textSize="0.8rem"
                 onClick={() => {
                   fetchNextPage();
                 }}
-              />
+              >
+                Load more
+              </Button>
             </Flex>
           )}
         </div>

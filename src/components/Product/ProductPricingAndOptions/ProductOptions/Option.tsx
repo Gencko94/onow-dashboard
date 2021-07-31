@@ -161,7 +161,6 @@ const Option = ({ option, index, removeOption }: IProps) => {
             <Button
               withRipple
               withTransition
-              text="Add New Value"
               bg="primary"
               padding="0.5rem"
               onClick={() =>
@@ -173,7 +172,9 @@ const Option = ({ option, index, removeOption }: IProps) => {
               }
               textSize="0.9rem"
               Icon={BiPlus}
-            />
+            >
+              Add new Value
+            </Button>
           </Flex>
         </div>
       )}

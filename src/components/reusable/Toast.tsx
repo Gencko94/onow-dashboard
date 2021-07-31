@@ -25,11 +25,10 @@ const Toast = ({ text, btnText, closeFunction, type }: IProps) => {
       )}
       <div className="content">
         <Heading tag="h6">{text}</Heading>
-        {/* <h6>{text}</h6> */}
+
         <Flex justify="flex-end">
           <Button
             withRipple
-            text={btnText}
             onClick={(e) => {
               e.stopPropagation();
               closeFunction();
@@ -39,7 +38,9 @@ const Toast = ({ text, btnText, closeFunction, type }: IProps) => {
             hoverBg="#f8f8f83b"
             padding="0.25rem"
             textSize="0.8rem"
-          />
+          >
+            {btnText}
+          </Button>
         </Flex>
       </div>
     </Container>

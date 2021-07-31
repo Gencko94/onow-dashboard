@@ -20,16 +20,16 @@ const SubscriptionSection = () => {
           </p>
           <Flex items="center" margin="60px 0 0 0">
             <Button
-              text="Upgrade Plan"
               bg="primary"
               padding="0.5rem"
               color="#fff"
               withRipple
               withTransition
               textSize="0.9rem"
-            />
+            >
+              Upgrade plan
+            </Button>
             <Button
-              text="Discover Plans"
               bg="transparent"
               padding="0.5rem"
               color="primary"
@@ -37,7 +37,9 @@ const SubscriptionSection = () => {
               border
               withTransition
               textSize="0.9rem"
-            />
+            >
+              Discover plans
+            </Button>
           </Flex>
         </div>
         <div className="img" />
@@ -60,14 +62,15 @@ const SubscriptionSection = () => {
         </div>
         <Flex items="center" justify="center" margin="40px 0 0 0">
           <Button
-            text="Upgrade Plan"
             bg="primary"
             padding="0.5rem"
             color="#fff"
             withRipple
             textSize="0.9rem"
             withTransition
-          />
+          >
+            Upgrade plan
+          </Button>
         </Flex>
       </div>
     </Container>

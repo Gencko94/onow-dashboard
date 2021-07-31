@@ -25,7 +25,7 @@ const ProductCategorySubItem = ({
   } = useTranslation();
   return (
     <>
-      <Container>
+      <Container active={formCategoryId === child.id}>
         <div
           onClick={(e) => {
             e.stopPropagation();
@@ -66,7 +66,7 @@ const ProductCategorySubItem = ({
 };
 
 export default ProductCategorySubItem;
-const Container = styled.div`
+const Container = styled.div<{ active: boolean }>`
   background-color: #fff;
   display: block;
 
@@ -75,7 +75,8 @@ const Container = styled.div`
   justify-content: space-between;
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
-  background-color: ${(props) => props.theme.accent1};
+  background-color: ${(props) =>
+    props.active ? props.theme.accent3 : props.theme.accent2};
   &:hover {
     background-color: ${(props) => props.theme.accent2};
   }

@@ -21,10 +21,7 @@ interface IProps {
    * ```onClick``` handler
    */
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  /**
-   * Button Text
-   */
-  text: string;
+
   /**
    * Button Text Size . default is 1rem
    */
@@ -92,14 +89,14 @@ interface IProps {
   uppercase?: boolean;
 }
 
-const Button = ({
+const Button: React.FC<IProps> = ({
   onClick,
   bg,
   padding,
   type = "button",
-  text,
+
   Icon,
-  color = "#fff",
+  color,
   iconSize = 30,
   withTransition,
   margin = "none",
@@ -113,7 +110,8 @@ const Button = ({
   disabled,
   width,
   uppercase,
-}: IProps) => {
+  children,
+}) => {
   const { isDesktop } = useResponsive();
   const { currentTheme } = useContext(ThemeContext);
   const background = useMemo(() => {
@@ -136,10 +134,15 @@ const Button = ({
     currentTheme.primary,
     currentTheme.green,
   ]);
+
   const hover = useMemo(() => {
+    if (bg === "transparent") return currentTheme.accent2;
     return Color(background).darken(0.2).hex();
   }, [background]);
+
   const textColor = useMemo(() => {
+    if (color) return color;
+    if (bg === "transparent") return currentTheme.textPrimary;
     if (background === currentTheme.primary) {
       return currentTheme.textPrimaryContrast;
     }
@@ -150,17 +153,21 @@ const Button = ({
     }
   }, [
     background,
+    bg,
+    color,
     currentTheme.primary,
     currentTheme.textPrimary,
     currentTheme.textPrimaryContrast,
   ]);
   const hoverTextColor = useMemo(() => {
-    if (Color(hoverBg).isDark()) {
+    const lightenedColor = Color(hover).darken(0.2).hex();
+
+    if (Color(lightenedColor).isDark()) {
       return currentTheme.textPrimaryContrast;
     } else {
       return currentTheme.textPrimary;
     }
-  }, [currentTheme.textPrimary, currentTheme.textPrimaryContrast, hoverBg]);
+  }, [currentTheme.textPrimary, currentTheme.textPrimaryContrast, hover]);
   return (
     <ButtonWrapper
       textSize={textSize}
@@ -178,18 +185,29 @@ const Button = ({
       disabled={disabled}
       width={width}
     >
-      {!isLoading && Icon && (
-        <span className="icon">
+      <span className="icon">
+        {Icon && !isLoading && (
           <Icon size={isDesktop ? iconSize - 3 : iconSize - 5} />
-        </span>
+        )}
+        {isLoading && (
+          <span className="loading">
+            <ImSpinner2
+              size={isDesktop ? iconSize - 7 : iconSize - 9}
+              className="loading"
+            />
+          </span>
+        )}
+      </span>
+
+      <p className="text" style={{ display: isLoading ? "hidden" : "block" }}>
+        {children}
+      </p>
+
+      {withRipple && (
+        <div className="ripple-wrapper">
+          <Ripple />
+        </div>
       )}
-      {isLoading && (
-        <span className="loading">
-          <ImSpinner2 className="loading" />
-        </span>
-      )}
-      {!isLoading && <p className="text">{text}</p>}
-      {withRipple && <Ripple />}
     </ButtonWrapper>
   );
 };
@@ -244,13 +262,18 @@ export const ButtonWrapper = styled.button<{
       padding: ${padding};
       text-transform:${uppercase && "uppercase"};
       position: relative;
-      overflow:hidden;
+      
       color: ${color};
       border:${border && themeBorder};
       transition: all 100ms ease;
     .loading {
     animation: spinner 2s infinite linear forwards;
     };
+    .ripple-wrapper {
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+    }
   @keyframes spinner {
     
     100% {

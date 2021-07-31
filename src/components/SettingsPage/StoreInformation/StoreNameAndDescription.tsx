@@ -183,13 +183,14 @@ const StoreNameAndDescription = ({ data }: StoreNameAndDescriptionProps) => {
             isLoading={isLoading}
             disabled={isLoading}
             onClick={handleSubmit(onSubmit)}
-            text="Save"
             type="submit"
             bg="green"
             padding="0.5rem"
             withRipple
             withTransition
-          />
+          >
+            Save changes
+          </Button>
         </Flex>
       </Box>
     </form>

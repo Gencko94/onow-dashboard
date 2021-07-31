@@ -8,6 +8,7 @@ import extractError from "../../../utils/extractError";
 import { editProductPriceAndOptions } from "../../../utils/queries/productQueries";
 import Button from "../../reusable/Button";
 import Flex from "../../StyledComponents/Flex";
+import Heading from "../../StyledComponents/Heading";
 import Hr from "../../StyledComponents/Hr";
 import ProductOptions from "./ProductOptions";
 import ProductPricing from "./ProductPricing";
@@ -78,9 +79,8 @@ const ProductPricingAndOptions = ({ data }: IProps) => {
   };
   return (
     <Container>
-      <Flex justify="flex-end">
+      <Flex margin="1rem 0" justify="flex-end" items="center">
         <Button
-          text="Save Changes"
           textSize="0.9rem"
           iconSize={25}
           Icon={MdSave}
@@ -89,7 +89,9 @@ const ProductPricingAndOptions = ({ data }: IProps) => {
           isLoading={isLoading}
           disabled={isLoading}
           onClick={methods.handleSubmit(onSubmit)}
-        />
+        >
+          Save Changes
+        </Button>
       </Flex>
       <FormProvider {...methods}>
         <ProductPricing />
@@ -103,5 +105,5 @@ const ProductPricingAndOptions = ({ data }: IProps) => {
 export default ProductPricingAndOptions;
 
 const Container = styled.div`
-  background-color: #fff;
+  /* background-color: #fff; */
 `;

@@ -14,13 +14,14 @@ const CategoriesPanel = () => {
       <Button
         onClick={() => history.push("/categories/category/create")}
         bg="green"
-        padding="0.25rem"
+        padding="0.5rem"
         textSize="0.9rem"
-        text="Create New Category"
         withRipple
         withTransition
         Icon={BiPlus}
-      />
+      >
+        Create New Category
+      </Button>
       {/* <ProductsPanelActions /> */}
     </Flex>
   );

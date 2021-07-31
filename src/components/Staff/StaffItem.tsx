@@ -62,7 +62,6 @@ const StaffItem = ({ member, handleDeleteStaffMember }: IProps) => {
             >
               <Popover closeFunction={() => setActionsMenuOpen(false)}>
                 <Button
-                  text="Delete Member"
                   padding="0.5rem"
                   bg="transparent"
                   hoverBg="#b72b2b"
@@ -81,7 +80,9 @@ const StaffItem = ({ member, handleDeleteStaffMember }: IProps) => {
                       successCb: () => handleDeleteStaffMember(member.id),
                     });
                   }}
-                />
+                >
+                  Delete Member
+                </Button>
               </Popover>
             </CSSTransition>
           </ActionButtonContainer>

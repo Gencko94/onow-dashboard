@@ -22,7 +22,6 @@ const ErrorBoundaryComponent = ({ resetErrorBoundary, error }: IProps) => {
       <Heading tag="h4">Something went wrong , please try again</Heading>
       <Button
         margin="1rem 0"
-        text="Try Again"
         bg="green"
         padding="0.5rem"
         iconSize={20}
@@ -31,7 +30,9 @@ const ErrorBoundaryComponent = ({ resetErrorBoundary, error }: IProps) => {
         onClick={resetErrorBoundary}
         withRipple
         withTransition
-      />
+      >
+        Try again
+      </Button>
 
       <pre style={{ whiteSpace: "normal" }}>{error.message}</pre>
     </Container>

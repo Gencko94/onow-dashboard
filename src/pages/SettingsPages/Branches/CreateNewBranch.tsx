@@ -98,9 +98,10 @@ const CreateNewBranch = () => {
             withTransition
             isLoading={isLoading}
             disabled={isLoading}
-            text="Submit Data"
             type="submit"
-          />
+          >
+            Submit
+          </Button>
         </Flex>
       </HeaderContainer>
 

@@ -94,7 +94,6 @@ const ProductOrderingAndBranchAvailability = ({ data }: IProps) => {
     <div>
       <Flex justify="flex-end">
         <Button
-          text="Save Changes"
           textSize="0.9rem"
           iconSize={25}
           Icon={MdSave}
@@ -102,8 +101,12 @@ const ProductOrderingAndBranchAvailability = ({ data }: IProps) => {
           padding="0.5rem"
           isLoading={isLoading}
           disabled={isLoading}
+          withRipple
+          withTransition
           onClick={methods.handleSubmit(onSubmit)}
-        />
+        >
+          Save Changes
+        </Button>
       </Flex>
       <FormProvider {...methods}>
         <ProductOrdering />

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { RiHandCoinLine } from "react-icons/ri";
 
 import styled, { css } from "styled-components";
+import { up } from "../../../utils/themes";
 import Flex from "../../StyledComponents/Flex";
 import Checkbox from "./Checkbox";
 interface BaseInput {
@@ -204,7 +205,7 @@ const Container = styled.div<{
       &:hover,
       &:focus-within {
         border-color: ${borderHovered};
-        background-color: ${accent1};
+       
       }
       ${
         error &&
@@ -230,7 +231,7 @@ const Container = styled.div<{
        
         color: ${mainColor};
       }
-      @media  ${breakpoints.md}{
+      ${up(breakpoints.md)}{
         label {
           font-size: 0.9rem;
           margin-bottom: 0.75rem;

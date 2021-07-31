@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { up } from "../../../utils/themes";
+import Paragraph from "../../StyledComponents/Paragraph";
 
 interface IProps {
   setActiveTab: Dispatch<SetStateAction<0 | 1 | 2 | 3 | 4>>;
@@ -21,14 +22,14 @@ const ProductTabs = ({ setActiveTab, activeTab }: IProps) => {
         onClick={() => setActiveTab(0)}
         active={activeTab === 0}
       >
-        General Product Info
+        <Paragraph> Product Name & Description</Paragraph>
       </TabItem>
       <TabItem
         type="button"
         onClick={() => setActiveTab(1)}
         active={activeTab === 1}
       >
-        Product Imaging
+        <Paragraph> Product Imaging</Paragraph>
       </TabItem>
 
       <TabItem
@@ -36,21 +37,21 @@ const ProductTabs = ({ setActiveTab, activeTab }: IProps) => {
         onClick={() => setActiveTab(2)}
         active={activeTab === 2}
       >
-        Pricing & Variations
+        <Paragraph> Pricing & Options</Paragraph>
       </TabItem>
       <TabItem
         type="button"
         onClick={() => setActiveTab(3)}
         active={activeTab === 3}
       >
-        Ordering Options & Branch Availability
+        <Paragraph>Ordering Options & Branch Availability</Paragraph>
       </TabItem>
       <TabItem
         type="button"
         onClick={() => setActiveTab(4)}
         active={activeTab === 4}
       >
-        Product Promotions
+        <Paragraph>Product Promotions</Paragraph>
       </TabItem>
     </Container>
   );
@@ -58,39 +59,29 @@ const ProductTabs = ({ setActiveTab, activeTab }: IProps) => {
 
 export default ProductTabs;
 const Container = styled.div`
-  padding-top: 0.5rem;
-  border-radius: 5px;
-  overflow-x: auto;
-
+  border-bottom: ${(props) => props.theme.border};
   display: flex;
-  /* gap: 0.5rem; */
+  margin: 1rem 0;
+  overflow-x: auto;
+  gap: 1.5rem;
 `;
 
 const TabItem = styled.button<{ active?: boolean }>(
   ({
-    theme: { breakpoints, mainColor, subHeading, font, headingColor, border },
+    theme: { breakpoints, mainColor, textPrimary, font, headingColor, border },
     active,
   }) => `
-  padding: 0.75rem 0.5rem;
+  padding: 0.75rem 0;
   transition: color 100ms ease;
-  font-size: 0.8rem;
   white-space: nowrap;
   text-align: center;
-  // border-radius: 6px 0 0 0;
-  background-color: #fff;
-  border-bottom:${border};
-  border-color:${active ? mainColor : border};
-  border-width:2px;
-  // background-color: ${active && mainColor};
-  color: ${active ? mainColor : subHeading};
-    
-  font-weight: ${active && font.semibold};
+  border-bottom:${active ? `2px solid ${mainColor}` : "none"};
   &:hover {
     color: ${mainColor};
   }
   ${up(breakpoints.md)}{
     font-size: 1rem;
-    padding: 0.75rem;
+    padding: 0.75rem 0;
 
   }
   `

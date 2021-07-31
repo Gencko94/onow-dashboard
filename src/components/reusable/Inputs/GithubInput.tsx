@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import Heading from "../../StyledComponents/Heading";
+import { up } from "../../../utils/themes";
 interface IProps {
   /**
    * Primary Label.
@@ -74,7 +75,7 @@ const Container = styled.div(
       font-weight: ${font.regular};
     }
   }
-  @media ${breakpoints.md}{
+  ${up(breakpoints.md)}{
     .text-container {
 
      

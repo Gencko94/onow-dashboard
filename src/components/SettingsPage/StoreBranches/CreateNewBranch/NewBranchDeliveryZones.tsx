@@ -55,9 +55,10 @@ const NewBranchDeliveryZones = () => {
           bg="blue"
           withRipple
           withTransition
-          text="Next"
           type="submit"
-        />
+        >
+          Next
+        </Button>
       </Flex>
       <div className="title-container">
         <h5>Branch Delivery Zones</h5>

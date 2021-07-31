@@ -28,7 +28,6 @@ const SideUser = () => {
           <ClickAwayListener onClickAway={() => setMenuOpen(false)}>
             <Popover closeFunction={() => setMenuOpen(false)}>
               <Button
-                text="Logout"
                 padding="0.5rem"
                 bg="transparent"
                 textSize="0.8rem"
@@ -37,7 +36,9 @@ const SideUser = () => {
                 onClick={(e) => {
                   logOut?.();
                 }}
-              />
+              >
+                Logout
+              </Button>
             </Popover>
             {/* <ul className="menu">
               <button onClick={() => logOut?.()} className="menu-item">

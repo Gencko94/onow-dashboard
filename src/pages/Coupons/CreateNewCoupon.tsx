@@ -10,7 +10,7 @@ import Button from "../../components/reusable/Button";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Flex from "../../components/StyledComponents/Flex";
 import useToast from "../../hooks/useToast";
-import { NEW_COUPON } from "../../interfaces/coupons/coupons";
+
 import { PRODUCT } from "../../interfaces/products/products";
 import extractError from "../../utils/extractError";
 import { createCoupon } from "../../utils/queries";
@@ -126,7 +126,6 @@ const CreateNewCoupon = () => {
           <Button
             isLoading={isLoading}
             disabled={isLoading}
-            text="Submit Data"
             bg="green"
             padding="0.5rem"
             shadow
@@ -136,7 +135,9 @@ const CreateNewCoupon = () => {
             iconSize={25}
             withRipple
             withTransition
-          />
+          >
+            Submit
+          </Button>
         </Flex>
       </HeaderContainer>
 
