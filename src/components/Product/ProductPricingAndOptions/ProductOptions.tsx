@@ -10,9 +10,10 @@ import { FORM_PROPS } from "./ProductPricingAndOptions";
 
 interface ProductOptionsProps {
   options: PRODUCT_OPTION[];
+  productId: number;
 }
 
-const ProductOptions = ({ options }: ProductOptionsProps) => {
+const ProductOptions = ({ options, productId }: ProductOptionsProps) => {
   const { control, watch } = useFormContext<FORM_PROPS>();
   const priceFromVariationsEnabled = watch("price_by_options");
   const optionsEnabled = watch("options_enabled");
@@ -40,7 +41,9 @@ const ProductOptions = ({ options }: ProductOptionsProps) => {
           />
         </div>
       </Container>
-      {optionsEnabled && <OptionsList productOptions={options} />}
+      {optionsEnabled && (
+        <OptionsList productId={productId} productOptions={options} />
+      )}
     </>
   );
 };

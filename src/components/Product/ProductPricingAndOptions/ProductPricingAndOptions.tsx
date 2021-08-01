@@ -96,7 +96,7 @@ const ProductPricingAndOptions = ({ data }: IProps) => {
       <FormProvider {...methods}>
         <ProductPricing />
         <Hr />
-        <ProductOptions options={data.options} />
+        <ProductOptions productId={data!.id} options={data.options} />
       </FormProvider>
     </Container>
   );

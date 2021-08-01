@@ -17,7 +17,7 @@ import { ORDER_SORT } from "../pages/Orders";
 import { BRANCH, NEW_BRANCH } from "../interfaces/settings/branches/branches";
 
 // export const customerUri = "https://new-version.o-now.net/customer-api";
-export const customerUri = "http://o-now.herokuapp.com/customer-api";
+export const customerUri = "https://o-now.herokuapp.com/customer-api";
 
 export const getUser = async (): Promise<USER | undefined> => {
   const t = localStorage.getItem("dshtid");
@@ -440,27 +440,6 @@ export const createProduct = async (product: NEW_PRODUCT) => {
   return res.data.results;
 };
 
-// Add Product Option
-export const addProductOption = async ({
-  productId,
-  option,
-}: {
-  productId: number;
-  option: any;
-}) => {
-  const t = localStorage.getItem("dshtid");
-  const config: AxiosRequestConfig = {
-    headers: {
-      Authorization: t ? `Bearer ${t}` : "",
-    },
-  };
-  const res = await axios.post(
-    `${customerUri}/products/${productId}/option`,
-    option,
-    config
-  );
-  return res.data.results;
-};
 // Add Product Option Value
 export const addProductOptionValue = async ({
   productId,
@@ -532,27 +511,7 @@ export const editProductOptionValue = async ({
   );
   return res.data.results;
 };
-// Delete Product Option
-export const deleteProductOption = async ({
-  productId,
-  optionId,
-}: {
-  productId: number;
-  optionId: number;
-}) => {
-  const t = localStorage.getItem("dshtid");
-  const config: AxiosRequestConfig = {
-    headers: {
-      Authorization: t ? `Bearer ${t}` : "",
-    },
-  };
-  const res = await axios.delete(
-    `${customerUri}/products/${productId}/option/${optionId}`,
 
-    config
-  );
-  return res.data.results;
-};
 // Delete Product Option Value
 export const deleteProductOptionValue = async ({
   productId,

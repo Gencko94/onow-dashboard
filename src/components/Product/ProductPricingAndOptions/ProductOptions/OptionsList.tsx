@@ -1,35 +1,53 @@
-import { useCallback } from "react";
 import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { useMutation } from "react-query";
+import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import useConfirmationModal from "../../../../hooks/useConfirmationModal";
 import useToast from "../../../../hooks/useToast";
 import { PRODUCT_OPTION } from "../../../../interfaces/products/products";
 import extractError from "../../../../utils/extractError";
-import { addProductOption } from "../../../../utils/queries";
+import {
+  addProductOption,
+  editProductOption,
+} from "../../../../utils/queries/productQueries";
+
 import { up } from "../../../../utils/themes";
 
 import Button from "../../../reusable/Button";
 import EmptyTable from "../../../reusable/EmptyTable";
 import Flex from "../../../StyledComponents/Flex";
 import Heading from "../../../StyledComponents/Heading";
-import NewOptionModal from "./NewOptionModal";
+import Hr from "../../../StyledComponents/Hr";
+import NewOptionModal, { NEW_OPTION } from "./NewOptionModal";
 import Option from "./Option";
 
 interface OptionsListProps {
   productOptions: PRODUCT_OPTION[];
+  productId: number;
 }
 
-const OptionsList = ({ productOptions }: OptionsListProps) => {
+const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
   const [options, setOptions] = useState(productOptions);
   const { handleCloseConfirmationModal, setConfirmationModalStatus } =
     useConfirmationModal();
   const { setToastStatus, handleCloseToast } = useToast();
 
-  const [newOptionModalOpen, setNewOptionModalOpen] = useState(false);
-  const { mutateAsync: addMutation, reset } = useMutation(addProductOption, {
-    onSuccess: () => {
+  const [optionModalStatus, setOptionModalStatus] = useState<{
+    open: boolean;
+    type: "new" | "edit";
+    editIndex?: number;
+  }>({
+    open: false,
+    type: "edit",
+  });
+  const {
+    mutateAsync: addMutation,
+    reset: resetAdd,
+    isLoading: addLoading,
+  } = useMutation(addProductOption, {
+    onSuccess: (data) => {
+      // Show Success message
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -38,6 +56,8 @@ const OptionsList = ({ productOptions }: OptionsListProps) => {
         text: "Option Added Successfully",
         type: "success",
       });
+      // Add it to Options Array
+      setOptions((prev) => [data, ...prev]);
     },
     onError: (error) => {
       const { responseError } = extractError(error);
@@ -45,7 +65,7 @@ const OptionsList = ({ productOptions }: OptionsListProps) => {
       } else {
         setToastStatus?.({
           fn: () => {
-            reset();
+            resetAdd();
             handleCloseToast?.();
           },
           open: true,
@@ -55,10 +75,50 @@ const OptionsList = ({ productOptions }: OptionsListProps) => {
       }
     },
   });
-  const append = useCallback(async (option: PRODUCT_OPTION) => {
-    // await addMutation(option);
-    setOptions((prev) => [...prev, option]);
-  }, []);
+  // Edit Mutation
+  const {
+    mutateAsync: editMutation,
+    reset: resetEdit,
+    isLoading: editLoading,
+  } = useMutation(editProductOption, {
+    onSuccess: (data) => {
+      // Show Success message
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Option Added Successfully",
+        type: "success",
+      });
+      // edit it from Options Array
+      setOptions((prev) => [data, ...prev]);
+    },
+    onError: (error) => {
+      const { responseError } = extractError(error);
+      if (responseError) {
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            resetAdd();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    },
+  });
+  const handleAddOption = async (option: NEW_OPTION) => {
+    await addMutation({ option, productId });
+    setOptionModalStatus((prev) => ({ ...prev, open: false }));
+  };
+  const handleEditOption = async (option: PRODUCT_OPTION) => {
+    await editMutation({ option, productId });
+    setOptionModalStatus((prev) => ({ ...prev, open: false }));
+  };
+
   return (
     <Container>
       <div className="head">
@@ -72,7 +132,7 @@ const OptionsList = ({ productOptions }: OptionsListProps) => {
             bg="green"
             padding="0.25rem 0.5rem"
             onClick={() => {
-              setNewOptionModalOpen(true);
+              setOptionModalStatus({ open: true, type: "new" });
             }}
             textSize="0.9rem"
             Icon={BiPlus}
@@ -89,24 +149,7 @@ const OptionsList = ({ productOptions }: OptionsListProps) => {
           withButton
           btnText="Add new Option"
           cb={() => {
-            // append({
-            //   max_picks: 0,
-            //   required: priceByOptions ? true : false,
-            //   name: { ar: "", en: "" },
-            //   select_type: "single",
-            //   values: [
-            //     {
-            //       name: {
-            //         ar: "",
-            //         en: "",
-            //       },
-            //       price: "",
-            //       qty: 0,
-            //       sku: "",
-            //     },
-            //   ],
-            // });
-            setNewOptionModalOpen(true);
+            setOptionModalStatus({ open: true, type: "new" });
           }}
         />
       )}
@@ -115,51 +158,57 @@ const OptionsList = ({ productOptions }: OptionsListProps) => {
           <div className="list">
             {options.map((option, index) => {
               return (
-                <Option
-                  key={option.id}
-                  option={option}
-                  index={index}
-                  removeOption={() => {}} // Watch this
-                />
+                <>
+                  <Option
+                    productId={productId}
+                    key={option.id}
+                    option={option}
+                    index={index}
+                    setOptionModalStatus={setOptionModalStatus}
+                    removeOption={(id) => {
+                      setOptions((prev) => {
+                        return prev.filter((i) => i.id !== id);
+                      });
+                    }}
+                  />
+                  {index !== options.length - 1 && <Hr m="2.5" />}
+                </>
               );
             })}
-            <Flex items="center" justify="center" margin="1rem 0">
-              <Button
-                withRipple
-                withTransition
-                bg="green"
-                padding="0.5rem"
-                onClick={() => {
-                  setNewOptionModalOpen(true);
-                }}
-                textSize="0.9rem"
-                Icon={BiPlus}
-              >
-                Add Another Option
-              </Button>
-            </Flex>
           </div>
         </>
       )}
-      <NewOptionModal
-        isOpen={newOptionModalOpen}
-        closeFunction={() => {
-          setNewOptionModalOpen(false);
-        }}
-        successFunction={(vals) => {
-          console.log(vals);
-          append({
-            id: 432,
-            required: vals.required,
-            select_type: vals.select_type,
-            name: vals.name,
-            max_picks: undefined,
-            values: [],
-          });
-
-          setNewOptionModalOpen(false);
-        }}
-      />
+      <CSSTransition
+        in={optionModalStatus.open}
+        classNames="menu"
+        timeout={200}
+        unmountOnExit
+      >
+        <NewOptionModal
+          title={
+            optionModalStatus.type === "edit" ? "Edit Option" : "New Option"
+          }
+          isOpen={optionModalStatus.open}
+          isLoading={
+            optionModalStatus.type === "edit" ? editLoading : addLoading
+          }
+          closeFunction={() => {
+            setOptionModalStatus((prev) => ({ ...prev, open: false }));
+          }}
+          defaultValues={
+            optionModalStatus.type === "edit"
+              ? options[optionModalStatus.editIndex!]
+              : undefined
+          }
+          successFunction={(vals) => {
+            if (optionModalStatus.type === "edit") {
+              handleEditOption(vals as PRODUCT_OPTION);
+            } else if (optionModalStatus.type === "new") {
+              handleAddOption(vals as NEW_OPTION);
+            }
+          }}
+        />
+      </CSSTransition>
     </Container>
   );
 };

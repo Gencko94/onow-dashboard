@@ -11,6 +11,7 @@ import { MdSubtitles } from "react-icons/md";
 import Select from "../../../reusable/Select";
 import IconedNumberInput from "../../../reusable/IconedNumberInput";
 import { SubmitHandler } from "react-hook-form";
+import { PRODUCT_OPTION } from "../../../../interfaces/products/products";
 const selectTypes = [
   { value: "single", label: "Single Select" },
   { value: "multiple", label: "Multiple Select" },
@@ -34,7 +35,7 @@ interface ModalProps {
   /**
    * The Close Function
    */
-  successFunction: (data: NEW_OPTION) => void;
+  successFunction: (data: NEW_OPTION | PRODUCT_OPTION) => void;
 
   /**
    * Boolean controlling the modal state
@@ -45,9 +46,11 @@ interface ModalProps {
    * Success button loading state
    */
   isLoading?: boolean;
+  defaultValues?: PRODUCT_OPTION;
+  title: string;
 }
 
-type NEW_OPTION = {
+export type NEW_OPTION = {
   select_type: "single" | "multiple";
   max_picks: number | undefined;
   name: {
@@ -60,7 +63,8 @@ const NewOptionModal = ({
   isOpen,
 
   successFunction,
-
+  defaultValues,
+  title,
   isLoading,
 }: ModalProps) => {
   const {
@@ -69,12 +73,22 @@ const NewOptionModal = ({
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<NEW_OPTION>({ shouldUnregister: true });
+  } = useForm<PRODUCT_OPTION>({
+    defaultValues: {
+      id: defaultValues?.id,
+      max_picks: defaultValues?.max_picks,
+      name: defaultValues?.name,
+      required: defaultValues?.required,
+      select_type: defaultValues?.select_type,
+    },
+    shouldUnregister: true,
+  });
   const selectType = watch("select_type");
   const required = watch("required");
-  const onSubmit: SubmitHandler<NEW_OPTION> = (data) => {
+  const onSubmit: SubmitHandler<NEW_OPTION | PRODUCT_OPTION> = (data) => {
     successFunction(data);
   };
+  console.log(defaultValues);
   return (
     <ReactModal
       isOpen={isOpen}
@@ -84,13 +98,13 @@ const NewOptionModal = ({
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Body>
-          <ModalHead closeFunction={closeFunction} title="New Option" />
+          <ModalHead closeFunction={closeFunction} title={title} />
 
           <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem" p={4}>
             <IconedInput
               Icon={MdSubtitles}
               errors={errors?.name?.en}
-              name={`name.en`}
+              name="name.en"
               register={register}
               label="Option Name English"
               required
@@ -99,7 +113,7 @@ const NewOptionModal = ({
             <IconedInput
               Icon={MdSubtitles}
               errors={errors?.name?.ar}
-              name={`name.ar`}
+              name="name.ar"
               register={register}
               label="Option Name Arabic"
               required
@@ -107,7 +121,7 @@ const NewOptionModal = ({
             />
             <Controller
               control={control}
-              name={`select_type`}
+              name="select_type"
               render={({ field: { value, onChange, ref } }) => {
                 return (
                   <Select
@@ -134,7 +148,7 @@ const NewOptionModal = ({
               <IconedNumberInput
                 Icon={MdSubtitles}
                 errors={errors?.max_picks}
-                name={`max_picks`}
+                name="max_picks"
                 register={register}
                 label="Maximum choice selections"
                 min={0}
@@ -143,7 +157,7 @@ const NewOptionModal = ({
             )}
             <Controller
               control={control}
-              name={`required`}
+              name="required"
               render={({ field: { value, onChange, ref } }) => {
                 return (
                   <Select

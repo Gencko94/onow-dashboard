@@ -1,6 +1,8 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
+import { PRODUCT_OPTION } from "../../interfaces/products/products";
+import { customerUri } from "../queries";
 
-export const customerUri = "https://new-version.o-now.net/customer-api";
+// export const customerUri = "https://new-version.o-now.net/customer-api";
 export const editProductGeneralInfo = async (data: any) => {
   const t = localStorage.getItem("dshtid");
   const config = {
@@ -85,8 +87,8 @@ export const editProductOption = async ({
   option,
 }: {
   productId: number;
-  option: any;
-}) => {
+  option: PRODUCT_OPTION;
+}): Promise<PRODUCT_OPTION> => {
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {
@@ -95,7 +97,53 @@ export const editProductOption = async ({
   };
   const res = await axios.put(
     `${customerUri}/products/${productId}/option/${option.id}`,
+    {
+      name: option.name,
+      select_type: option.select_type,
+      max_picks: option.max_picks,
+      required: option.required,
+    },
+    config
+  );
+  return res.data.results;
+};
+// Add Product Option
+export const addProductOption = async ({
+  productId,
+  option,
+}: {
+  productId: number;
+  option: any;
+}): Promise<PRODUCT_OPTION> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.post(
+    `${customerUri}/products/${productId}/option`,
     option,
+    config
+  );
+  return res.data.results;
+};
+// Delete Product Option
+export const deleteProductOption = async ({
+  productId,
+  optionId,
+}: {
+  productId: number;
+  optionId: any;
+}) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.delete(
+    `${customerUri}/products/${productId}/option/${optionId}`,
     config
   );
   return res.data.results;
