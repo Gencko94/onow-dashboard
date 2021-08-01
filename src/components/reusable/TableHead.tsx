@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import styled, { css } from "styled-components";
+import { up } from "../../utils/themes";
 
 interface IProps {
   cols: {
@@ -57,16 +58,16 @@ const Container = styled.div<{ cols: number | string; gap: string }>(
       typeof cols === "string" ? cols : `repeat(${cols},minmax(100px,1fr))`
     };
     gap:${gap};
-    border-bottom:${border};
-
+    
     `
 );
 const Field = styled.button<{ active: boolean; sortable: boolean }>(
   ({
-    theme: { breakpoints, subHeading, headingColor, font },
+    theme: { breakpoints, border, subHeading, headingColor, font },
     active,
     sortable,
   }) => `
+      border-bottom:${border};
   cursor:default;
   display:flex;
   align-items:center;
@@ -104,7 +105,7 @@ const Field = styled.button<{ active: boolean; sortable: boolean }>(
       }
     `
   };
-  @media ${breakpoints.xl} {
+  ${up(breakpoints.md)}{
     h6 {
        font-size:0.8rem;
     };

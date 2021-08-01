@@ -178,14 +178,13 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 85px) repeat(4, minmax(100px, 1fr));
   background-color: #fff;
-  gap: 0.5rem;
 
-  border-bottom: ${(props) => props.theme.border};
   &:hover {
     background-color: ${(props) => props.theme.accent1};
   }
 
   .field {
+    border-bottom: ${(props) => props.theme.border};
     display: flex;
     align-items: center;
     justify-content: center;

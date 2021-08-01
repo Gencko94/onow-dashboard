@@ -1,7 +1,6 @@
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Grid from "../../components/StyledComponents/Grid";
 import Heading from "../../components/StyledComponents/Heading";
 import Paragraph from "../../components/StyledComponents/Paragraph";
@@ -15,15 +14,17 @@ import { editStoreThemeColor } from "../../utils/queries/settingsQueries";
 import useToast from "../../hooks/useToast";
 import Flex from "../../components/StyledComponents/Flex";
 import Button from "../../components/reusable/Button";
+import { up } from "../../utils/themes";
 
 const HomePageAppearance = () => {
   const { handleCloseToast, setToastStatus } = useToast();
   const history = useHistory();
   const [color, setColor] = useColor("hex", "#ce2d2d");
   const [colorOpen, setColorOpen] = useState(false);
-  const { mutateAsync: updateMutation } = useMutation(editStoreThemeColor);
+  const { mutateAsync: updateMutation, isLoading } =
+    useMutation(editStoreThemeColor);
   const handleChangeColor = async (color: string) => {
-    await editStoreThemeColor(color);
+    await updateMutation(color);
     setToastStatus?.({
       fn: handleCloseToast!,
       type: "success",
@@ -33,29 +34,33 @@ const HomePageAppearance = () => {
   };
   return (
     <div>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الإعدادات", en: "Settings" },
-              target: "/settings",
-            },
-            {
-              name: { ar: "مظهر الموقع", en: "Website Appearance" },
-              target: "",
-            },
-          ]}
-        />
-      </HeaderContainer>
-      <Heading tag="h5" color="heading" margin="2rem 0" weight="semibold">
-        Website Main Color
-      </Heading>
+      <Flex margin="1rem 0">
+        <div>
+          <Heading tag="h3" color="heading" mb="0.5rem" weight="bold">
+            Website Appearance
+          </Heading>
+          <Breadcrumbs
+            withoutTitle
+            children={[
+              {
+                name: { ar: "الإعدادات", en: "Settings" },
+                target: "/settings",
+              },
+              {
+                name: { ar: "مظهر الموقع", en: "Website Appearance" },
+                target: "",
+              },
+            ]}
+          />
+        </div>
+      </Flex>
       <Box color={color.hex}>
-        <Grid
-          items="center"
-          cols="repeat(auto-fit,minmax(300px,1fr))"
-          gap="1rem"
-        >
+        <div className="head">
+          <Heading tag="h5" color="heading" weight="bold">
+            Website Main Color
+          </Heading>
+        </div>
+        <div className="content">
           <div>
             <Heading tag="h6" color="primary" weight="semibold">
               Select Your Store Primary Color:
@@ -97,66 +102,84 @@ const HomePageAppearance = () => {
               </ClickAwayListener>
             </CSSTransition>
           </div>
-        </Grid>
-        <Flex>
-          <Button
-            bg="green"
-            padding="0.5rem"
-            onClick={() => handleChangeColor(color.hex)}
-          >
-            Save Changes
-          </Button>
-        </Flex>
+        </div>
       </Box>
-      <Heading tag="h5" color="heading" margin="2rem 0" weight="semibold">
-        Website Sections customization
-      </Heading>
-      <Grid
-        cols="repeat(auto-fill,minmax(300px,1fr))"
-        gap="2rem"
-        margin="1rem 0"
-      >
-        <Card
-          onClick={() => {
-            history.push("/settings/website-appearance/store-carousel");
-          }}
+      <Flex margin="1rem 0" justify="center">
+        <Button
+          bg="green"
+          padding="0.5rem"
+          onClick={() => handleChangeColor(color.hex)}
+          isLoading={isLoading}
         >
-          <div className="img-wrapper">
-            <img src="/images/carousel-demo.png" alt="carousel-demo" />
-          </div>
-          <Heading tag="h5" color="primary" mb="0.25rem" weight="semibold">
-            Store Carousel
+          Save Changes
+        </Button>
+      </Flex>
+      <Box>
+        <div className="head">
+          <Heading tag="h5" color="heading" weight="bold">
+            Website Sections customization
           </Heading>
-          <p className="desc">Edit Images in Store Carousel</p>
-        </Card>
-        <Card
-          onClick={() => {
-            history.push("/settings/website-appearance/products-view");
-          }}
+        </div>
+        <Grid
+          cols="repeat(auto-fill,minmax(300px,1fr))"
+          gap="2rem"
+          margin="1rem 0"
+          p={4}
         >
-          <div className="img-wrapper">
-            <img src="/images/bar-demo.jpg" alt="bar-demo" />
-          </div>
-          <Heading tag="h5" color="primary" mb="0.25rem" weight="semibold">
-            Products View
-          </Heading>
-          <p className="desc">Manage how your products look</p>
-        </Card>
-      </Grid>
+          <Card
+            onClick={() => {
+              history.push("/settings/website-appearance/store-carousel");
+            }}
+          >
+            <div className="img-wrapper">
+              <img src="/images/carousel-demo.png" alt="carousel-demo" />
+            </div>
+            <Heading tag="h5" color="primary" mb="0.25rem" weight="semibold">
+              Store Carousel
+            </Heading>
+            <p className="desc">Edit Images in Store Carousel</p>
+          </Card>
+          <Card
+            onClick={() => {
+              history.push("/settings/website-appearance/products-view");
+            }}
+          >
+            <div className="img-wrapper">
+              <img src="/images/bar-demo.jpg" alt="bar-demo" />
+            </div>
+            <Heading tag="h5" color="primary" mb="0.25rem" weight="semibold">
+              Products View
+            </Heading>
+            <p className="desc">Manage how your products look</p>
+          </Card>
+        </Grid>
+      </Box>
     </div>
   );
 };
 
 export default HomePageAppearance;
-const Box = styled.div<{ color: string }>`
-  border: ${(props) => props.theme.border};
-  padding: 0.5rem;
-  background-color: ${(props) => props.theme.accent1};
+const Box = styled.div<{ color?: string }>(
+  ({ theme: { breakpoints, border, accent1 }, color }) => `
+  border: ${border};
+  background-color: ${accent1};
   border-radius: 6px;
+  .head {
+    border-bottom: ${border};
+    padding: 0.5rem ;
+  }
+  .content {
+    padding: 0.5rem;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:1rem;
+    align-items:center;
+
+  }
   .color {
     width: 100%;
-    border: ${(props) => props.theme.border};
-    background-color: ${(props) => props.color};
+    border: ${border};
+    background-color: ${color};
     height: 30px;
     border-radius: 6px;
     cursor: pointer;
@@ -169,7 +192,14 @@ const Box = styled.div<{ color: string }>`
     position: absolute;
     transform: translateX(-50%);
   }
-`;
+  ${up(breakpoints.md)}{
+    .head , .content {
+
+      padding:1rem;
+    }
+  }
+`
+);
 const Card = styled.div`
   border: ${(props) => props.theme.border};
   border-radius: 6px;

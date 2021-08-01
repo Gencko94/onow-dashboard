@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BiPlus } from "react-icons/bi";
 import { TiDelete } from "react-icons/ti";
 import { useMutation } from "react-query";
@@ -9,6 +10,7 @@ import useToast from "../../../../hooks/useToast";
 import { PRODUCT_OPTION } from "../../../../interfaces/products/products";
 import extractError from "../../../../utils/extractError";
 import { deleteProductOption } from "../../../../utils/queries";
+import { up } from "../../../../utils/themes";
 
 import Button from "../../../reusable/Button";
 import EmptyTable from "../../../reusable/EmptyTable";
@@ -16,6 +18,7 @@ import EmptyTable from "../../../reusable/EmptyTable";
 import Flex from "../../../StyledComponents/Flex";
 import Grid from "../../../StyledComponents/Grid";
 import Heading from "../../../StyledComponents/Heading";
+import Hr from "../../../StyledComponents/Hr";
 import NewOptionValueModal from "./NewOptionValueModal";
 import OptionValue from "./OptionValue";
 
@@ -67,102 +70,87 @@ const Option = ({ option, index, removeOption }: IProps) => {
     // await deleteOptionMutation()
   };
   return (
-    <Container>
-      <Flex items="center" justify="space-between" margin="0 0 1rem 0">
-        <Heading tag="h5" color="primary">
-          Option {index + 1}
-        </Heading>
-        <button
-          type="button"
-          onClick={() => {
-            setConfirmationModalStatus?.({
-              open: true,
-              closeCb: handleCloseConfirmationModal!,
-              desc: "Are you sure you want to delete this option",
-              successCb: () => {
-                handleDeleteOption();
-              },
-              title: "Delete Product Option",
-            });
-          }}
-          className="delete"
-        >
-          <TiDelete size={30} />
-        </button>
-      </Flex>
-      <Grid
-        cols="repeat(auto-fit,minmax(200px,1fr))"
-        gap="0.5rem"
-        margin="1rem 0 "
-      >
-        <div>
-          <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
-            Name En
-          </Heading>
-          <Heading tag="h6" color="subheading">
-            {option.name?.en}
-          </Heading>
+    <>
+      <Container>
+        <div className="head">
+          <Flex items="center" justify="space-between">
+            <Heading tag="h5" weight="bold">
+              Option {index + 1}
+            </Heading>
+            <Flex justify="center" items="center">
+              <Button
+                iconSize={25}
+                Icon={AiFillEdit}
+                padding="0.5rem"
+                bg="blue"
+                withTransition
+              ></Button>
+              <Button
+                iconSize={25}
+                margin="0 0.5rem"
+                padding="0.5rem"
+                bg="danger"
+                Icon={AiFillDelete}
+                withTransition
+                onClick={() => {
+                  setConfirmationModalStatus?.({
+                    open: true,
+                    closeCb: handleCloseConfirmationModal!,
+                    desc: "Are you sure you want to delete this option ?",
+                    successCb: () => {
+                      handleDeleteOption();
+                    },
+                    title: "Delete Product Option",
+                  });
+                }}
+              ></Button>
+            </Flex>
+          </Flex>
         </div>
-        <div>
-          <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
-            Name Ar
-          </Heading>
-          <Heading tag="h6" color="subheading">
-            {option.name?.ar}
-          </Heading>
-        </div>
-        <div>
-          <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
-            Select Type
-          </Heading>
-          <Heading tag="h6" color="subheading">
-            {option.select_type}
-          </Heading>
-        </div>
-        <div>
-          <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
-            Required
-          </Heading>
-          <Heading tag="h6" color="subheading">
-            {option.required ? "Yes" : "No"}
-          </Heading>
-        </div>
-      </Grid>
-      <Heading tag="h5" color="primary" margin="2rem 0 ">
-        Options Values
-      </Heading>
-      {option.values.length === 0 && (
-        <div className="empty">
-          <EmptyTable
-            text={`Add Values for ${option.name?.[language]}`}
-            height="150px"
-            withButton
-            btnText="Add New Option Value"
-            cb={() => {
-              setNewOptionValueModalOpen(true);
-            }}
-          />
-        </div>
-      )}
-      {option.values?.length > 0 && (
-        <div className="values">
-          {option.values?.map((value, childIndex: number) => {
-            return (
-              <OptionValue
-                value={value}
-                key={value.id}
-                index={childIndex}
-                parentIndex={index}
-                removeValue={() => {}} // setRemove Function
-              />
-            );
-          })}
-          <Flex items="center" justify="center">
+        <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0" margin="0 ">
+          <div className="field">
+            <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
+              Name En
+            </Heading>
+            <Heading tag="h6" color="subheading">
+              {option.name?.en}
+            </Heading>
+          </div>
+          <div className="field">
+            <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
+              Name Ar
+            </Heading>
+            <Heading tag="h6" color="subheading">
+              {option.name?.ar}
+            </Heading>
+          </div>
+          <div className="field">
+            <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
+              Select Type
+            </Heading>
+            <Heading tag="h6" color="subheading">
+              {option.select_type}
+            </Heading>
+          </div>
+          <div className="field">
+            <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
+              Required
+            </Heading>
+            <Heading tag="h6" color="subheading">
+              {option.required ? "Yes" : "No"}
+            </Heading>
+          </div>
+        </Grid>
+        <div className="head">
+          <Flex justify="space-between" items="center">
+            <Heading tag="h5" weight="bold" color="primary">
+              Option {index + 1} Values
+            </Heading>
             <Button
               withRipple
               withTransition
               bg="primary"
-              padding="0.5rem"
+              padding="0.25rem"
               onClick={() =>
                 // append(
                 //   { name: { ar: "", en: "" }, price: "", qty: 0, sku: "" },
@@ -177,47 +165,83 @@ const Option = ({ option, index, removeOption }: IProps) => {
             </Button>
           </Flex>
         </div>
-      )}
-      <NewOptionValueModal
-        isOpen={newOptionValueOpen}
-        closeFunction={() => {
-          setNewOptionValueModalOpen(false);
-        }}
-        successFunction={(data) => {
-          // append({
-          //   ...data,
-          // });
-          setNewOptionValueModalOpen(false);
-        }}
-      />
-    </Container>
+        {option.values.length === 0 && (
+          <div className="empty">
+            <EmptyTable
+              text={`Add Values for ${option.name?.[language]}`}
+              height="150px"
+              withButton
+              btnText="Add New Option Value"
+              cb={() => {
+                setNewOptionValueModalOpen(true);
+              }}
+            />
+          </div>
+        )}
+        {option.values?.length > 0 && (
+          <div className="values">
+            {option.values?.map((value, childIndex: number) => {
+              return (
+                <OptionValue
+                  value={value}
+                  key={value.id}
+                  index={childIndex}
+                  parentIndex={index}
+                  removeValue={() => {}} // setRemove Function
+                />
+              );
+            })}
+          </div>
+        )}
+        <NewOptionValueModal
+          isOpen={newOptionValueOpen}
+          closeFunction={() => {
+            setNewOptionValueModalOpen(false);
+          }}
+          successFunction={(data) => {
+            // append({
+            //   ...data,
+            // });
+            setNewOptionValueModalOpen(false);
+          }}
+        />
+      </Container>
+      <Hr m="2.5" />
+    </>
   );
 };
 
 export default Option;
 const Container = styled.div(
-  ({ theme: { breakpoints, border, dangerRed, accent1 } }) => `
+  ({ theme: { breakpoints, border, dangerRed, accent1, accent2 } }) => `
   border: ${border};
   border-radius: 6px;
-  padding: 0.5rem 1rem 1rem 1rem;
-  margin: 1rem 0;
-  text-align:center;
-  .delete {
-    color: ${dangerRed};
-  }
-  
+  margin-bottom: 1rem ;
+  background-color:${accent1};
   .values {
-    padding: 0;
-  }
-  .empty {
-    border:${border};
-    border-radius:6px;
+    padding: 0.5rem;
     background-color:${accent1};
-    padding: 1rem 0;
   }
-  @media ${breakpoints.md}{
+  .head {
+    border-bottom: ${border};
+    padding:0.75rem;
+    background-color:${accent2};
+  }
+  .field {
+    text-align:center;
+    padding:0.75rem;
+    border-right: ${border};
+    border-bottom: ${border};
+  }
+  .empty {    
+    background-color:${accent1};
+  }
+  ${up(breakpoints.md)}{
     .values {
-      padding: 0 1rem;
+      padding: 1rem;
+    }
+    .head , .field {
+      padding:1rem;
     }
   }
   `

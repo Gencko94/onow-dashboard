@@ -21,6 +21,7 @@ import Heading from "../../StyledComponents/Heading";
 import GithubInput from "../../reusable/Inputs/GithubInput";
 import Grid from "../../StyledComponents/Grid";
 import { parseISO } from "date-fns";
+import { up } from "../../../utils/themes";
 interface IProps {
   register: UseFormRegister<any>;
   errors: DeepMap<any, FieldError>;
@@ -65,9 +66,11 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
   } = useTranslation();
   return (
     <Container>
-      <Heading tag="h5" color="primary" margin="2rem 0" weight="bold">
-        Coupon Information
-      </Heading>
+      <div className="head">
+        <Heading tag="h5" weight="bold">
+          Coupon Information
+        </Heading>
+      </div>
 
       <div className="box">
         <Grid p={4} gap="1rem" cols="repeat(auto-fit,minmax(300px,1fr))">
@@ -89,6 +92,8 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
             label="Coupon Name Arabic"
             name="name.ar"
           />
+        </Grid>
+        <Grid p={4} gap="1rem" cols="repeat(auto-fit,minmax(300px,1fr))">
           <IconedInput
             Icon={BiBarcode}
             errors={errors?.code}
@@ -264,15 +269,23 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
 }
 
 const Container = styled.div(
-  ({ theme: { breakpoints, border } }) => `
+  ({ theme: { breakpoints, border, accent1 } }) => `
   margin: 1rem 0;
-  
-  .box {
-    background-color: #fff;
-    border:${border};
-    border-radius: 6px;
-   
+  background-color:${accent1};
+  border:${border};
+  border-radius: 6px;
+  .head {
+    padding:0.5rem;
+    border-bottom:${border};
+    
   }
- 
+  .box {
+    padding:0.5rem;   
+  }
+ ${up(breakpoints.md)}{
+   .head , .box {
+     padding:1rem;
+   }
+ }
   `
 );

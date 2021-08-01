@@ -141,21 +141,19 @@ const ContentContainer = styled.div(
   ({ theme: { breakpoints } }) => `
   display:block
   min-height: 100vh;
-  @media ${breakpoints.md}{
-  }
+  
   `
 );
 const Content = styled.div<{ drawerOpen: boolean }>(
-  ({ theme: { breakpoints }, drawerOpen }) => `
-  padding: 0 0.5rem;
+  ({ theme: { breakpoints, bodyColor }, drawerOpen }) => `
   z-index:2;
   min-height:100vh;
   position:relative;
-  background-color:#f3f3f3;
+  background-color:${bodyColor};
   transition: all 250ms ease-out;
   margin-left:0;
   .body {
-    padding:0.5rem;
+    padding:1rem;
   }
   ${up(breakpoints.md)}{
     

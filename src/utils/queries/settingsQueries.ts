@@ -92,3 +92,17 @@ export const editStoreThemeColor = async (color: string) => {
   );
   return res.data.results;
 };
+export const editStoreProductsView = async (type: "list" | "grid" | "bar") => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/store-products-view`,
+    { product_view: type },
+    config
+  );
+  return res.data.results;
+};

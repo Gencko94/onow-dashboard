@@ -5,6 +5,7 @@ import Loading from "../../utils/Loading";
 import ModalHead from "./ModalHead";
 import ModalTail from "./ModalTail";
 import { FlexWrapper } from "../StyledComponents/Flex";
+import Paragraph from "../StyledComponents/Paragraph";
 const modalStyles = {
   content: {
     inset: "240px",
@@ -65,9 +66,8 @@ const ConfirmationModal = ({
     >
       <Body>
         <ModalHead closeFunction={closeFunction} title={title} />
-
         <div className="description">
-          <p>{desc}</p>
+          <Paragraph>{desc}</Paragraph>
         </div>
         <ModalTail
           btnText={successButtonText}
@@ -91,8 +91,6 @@ const Body = styled.div`
   grid-template-rows: auto 1fr auto;
   .description {
     padding: 1.5rem 1rem;
-    font-size: 0.9rem;
-    color: ${(props) => props.theme.subHeading};
   }
   ${FlexWrapper} {
     border-top: ${(props) => props.theme.border};

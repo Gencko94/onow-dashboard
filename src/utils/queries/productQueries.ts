@@ -80,3 +80,23 @@ export const addProductImage = async ({
   );
   return res.data.results;
 };
+export const editProductOption = async ({
+  productId,
+  option,
+}: {
+  productId: number;
+  option: any;
+}) => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/products/${productId}/option/${option.id}`,
+    option,
+    config
+  );
+  return res.data.results;
+};

@@ -244,7 +244,7 @@ const CategoriesList = () => {
           {data?.pages[0].data.length !== 0 && (
             <TableHead
               cols={cols}
-              gap="0.5rem"
+              gap="0"
               gridCols="repeat(2, 85px) repeat(4, minmax(100px, 1fr))"
             />
           )}
@@ -307,6 +307,7 @@ const Container = styled.div`
   position: relative;
   border-radius: 6px;
   border: ${(props) => props.theme.border};
+  border-bottom: none;
   .table {
     overflow-x: auto;
     background-color: #fff;

@@ -16,6 +16,7 @@ import { FlexWrapper } from "../../StyledComponents/Flex";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import DefaultImage from "../../reusable/DefaultImage";
 import CheckToggle from "../../reusable/CheckToggle";
+import Heading from "../../StyledComponents/Heading";
 
 interface IProps {
   product: PRODUCT;
@@ -66,16 +67,24 @@ const ProductItem = ({
         )}
       </div>
       <div className="field">
-        <h6>{product.name[language]}</h6>
+        <Heading tag="h6" weight="semibold">
+          {product.name[language]}
+        </Heading>
       </div>
       <div className="field">
-        <h6>{product.quantity === "unlimited" ? "-" : product.quantity}</h6>
+        <Heading tag="h6" weight="semibold">
+          {product.quantity === "unlimited" ? "-" : product.quantity}
+        </Heading>
       </div>
       <div className="field">
-        <h6>{product.price}</h6>
+        <Heading tag="h6" weight="semibold">
+          {product.price}
+        </Heading>
       </div>
       <div className="field">
-        <h6>{product.category ? product.category?.name[language] : "-"}</h6>
+        <Heading tag="h6" weight="semibold">
+          {product.category ? product.category?.name[language] : "-"}
+        </Heading>
       </div>
 
       <div className="field">
@@ -161,13 +170,12 @@ const Container = styled.div<{ selected: boolean }>`
 
   grid-template-columns: repeat(2, minmax(35px, 50px)) repeat(
       7,
-      minmax(100px, 1fr)
+      minmax(140px, 1fr)
     );
   background-color: ${(props) =>
     props.selected ? props.theme.accentColor : "#fff"};
-  gap: 0.5rem;
+  /* gap: 0.5rem; */
   width: 100%;
-  border-bottom: ${(props) => props.theme.border};
   &:hover {
     background-color: ${(props) => props.theme.accent1};
   }
@@ -175,9 +183,11 @@ const Container = styled.div<{ selected: boolean }>`
     height: 50px;
     width: 50px;
     border-radius: 50px;
+    font-size: 0.6rem;
     object-fit: cover;
   }
   .field {
+    border-bottom: ${(props) => props.theme.border};
     display: flex;
     align-items: center;
     justify-content: center;

@@ -155,7 +155,6 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     &:hover,
     &:focus-within {
       border-color: ${(props) => props.theme.borderHovered};
-      background-color: ${(props) => props.theme.accent1};
     }
     ${(props) =>
       props.error &&

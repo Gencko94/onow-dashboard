@@ -16,7 +16,8 @@ import {
 import { ORDER_SORT } from "../pages/Orders";
 import { BRANCH, NEW_BRANCH } from "../interfaces/settings/branches/branches";
 
-export const customerUri = "https://new-version.o-now.net/customer-api";
+// export const customerUri = "https://new-version.o-now.net/customer-api";
+export const customerUri = "http://o-now.herokuapp.com/customer-api";
 
 export const getUser = async (): Promise<USER | undefined> => {
   const t = localStorage.getItem("dshtid");

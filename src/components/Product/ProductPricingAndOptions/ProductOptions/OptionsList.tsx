@@ -2,11 +2,13 @@ import { useCallback } from "react";
 import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { useMutation } from "react-query";
+import styled from "styled-components";
 import useConfirmationModal from "../../../../hooks/useConfirmationModal";
 import useToast from "../../../../hooks/useToast";
 import { PRODUCT_OPTION } from "../../../../interfaces/products/products";
 import extractError from "../../../../utils/extractError";
 import { addProductOption } from "../../../../utils/queries";
+import { up } from "../../../../utils/themes";
 
 import Button from "../../../reusable/Button";
 import EmptyTable from "../../../reusable/EmptyTable";
@@ -58,10 +60,27 @@ const OptionsList = ({ productOptions }: OptionsListProps) => {
     setOptions((prev) => [...prev, option]);
   }, []);
   return (
-    <div>
-      <Heading color="heading" tag="h6" margin="1rem 0" weight="bold">
-        Options
-      </Heading>
+    <Container>
+      <div className="head">
+        <Flex justify="space-between" items="center">
+          <Heading color="heading" tag="h5" weight="bold">
+            Options
+          </Heading>
+          <Button
+            withRipple
+            withTransition
+            bg="green"
+            padding="0.25rem 0.5rem"
+            onClick={() => {
+              setNewOptionModalOpen(true);
+            }}
+            textSize="0.9rem"
+            Icon={BiPlus}
+          >
+            Add Another Option
+          </Button>
+        </Flex>
+      </div>
       {/* If No Options Show this */}
       {options.length === 0 && (
         <EmptyTable
@@ -141,8 +160,28 @@ const OptionsList = ({ productOptions }: OptionsListProps) => {
           setNewOptionModalOpen(false);
         }}
       />
-    </div>
+    </Container>
   );
 };
 
 export default OptionsList;
+const Container = styled.div(
+  ({ theme: { border, breakpoints, accent1 } }) => `
+  margin-top:1rem;
+  border: ${border};
+  .head {
+    background-color:${accent1};
+    border-bottom: ${border};
+    padding: 0.75rem;
+  }
+  .list {
+    padding: 0.75rem;
+  };
+  ${up(breakpoints.md)} {
+    .head ,.list {
+      padding:1rem;
+    }
+  }
+
+`
+);

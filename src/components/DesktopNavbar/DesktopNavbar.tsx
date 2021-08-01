@@ -34,13 +34,14 @@ const DesktopNavbar = ({ handleToggleDrawer }: IProps) => {
 
 export default DesktopNavbar;
 const Container = styled.div<{ sticky: boolean }>(
-  ({ theme: { breakpoints }, sticky }) => `
+  ({ theme: { breakpoints, bodyColor }, sticky }) => `
   display: grid;
   grid-template-columns:1fr;
   gap:1rem;
   padding: 0.75rem;
   transition:box-shadow .25s ease-in,background-color .25s ease-in;
   border-radius: 12px;
+  background-color:#fff;
   ${up(breakpoints.md)}{
     grid-template-columns: 1fr auto;
     gap:0.5rem;

@@ -17,10 +17,10 @@ const Products = () => {
     setView(view);
   };
   return (
-    <div>
+    <>
       <ProductsPanel />
       <ProductsList />
-    </div>
+    </>
   );
 };
 

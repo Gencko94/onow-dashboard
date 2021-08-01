@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useMutation } from "react-query";
 
 import styled from "styled-components";
@@ -7,6 +8,7 @@ import useToast from "../../../../hooks/useToast";
 import { OPTION_VALUE } from "../../../../interfaces/products/products";
 import extractError from "../../../../utils/extractError";
 import { deleteProductOptionValue } from "../../../../utils/queries";
+import { up } from "../../../../utils/themes";
 import Button from "../../../reusable/Button";
 
 import Flex from "../../../StyledComponents/Flex";
@@ -62,13 +64,43 @@ const OptionValue = ({ index, parentIndex, removeValue, value }: IProps) => {
   };
   return (
     <Container>
-      <Flex items="center" justify="space-between" margin="0 0 1rem 0">
-        <Heading tag="h6" color="subheading">
-          Value {index + 1}
-        </Heading>
-      </Flex>
-      <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
-        <div>
+      <div className="head">
+        <Flex items="center" justify="space-between">
+          <Heading tag="h6" color="primary">
+            Value {index + 1}
+          </Heading>
+          <Flex justify="center" items="center">
+            <Button
+              iconSize={25}
+              Icon={AiFillEdit}
+              padding="0.5rem"
+              bg="blue"
+              withTransition
+            ></Button>
+            <Button
+              iconSize={25}
+              margin="0 0.5rem"
+              padding="0.5rem"
+              bg="danger"
+              Icon={AiFillDelete}
+              withTransition
+              onClick={() => {
+                setConfirmationModalStatus?.({
+                  open: true,
+                  closeCb: handleCloseConfirmationModal!,
+                  desc: "Are you sure you want to delete this option",
+                  successCb: () => {
+                    handleDeleteOption();
+                  },
+                  title: "Delete Product Option",
+                });
+              }}
+            ></Button>
+          </Flex>
+        </Flex>
+      </div>
+      <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0">
+        <div className="field">
           <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
             Name En
           </Heading>
@@ -77,7 +109,7 @@ const OptionValue = ({ index, parentIndex, removeValue, value }: IProps) => {
           </Heading>
         </div>
 
-        <div>
+        <div className="field">
           <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
             Name Ar
           </Heading>
@@ -86,7 +118,7 @@ const OptionValue = ({ index, parentIndex, removeValue, value }: IProps) => {
           </Heading>
         </div>
 
-        <div>
+        <div className="field">
           <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
             Price
           </Heading>
@@ -95,7 +127,7 @@ const OptionValue = ({ index, parentIndex, removeValue, value }: IProps) => {
           </Heading>
         </div>
 
-        <div>
+        <div className="field">
           <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
             Qty
           </Heading>
@@ -104,44 +136,35 @@ const OptionValue = ({ index, parentIndex, removeValue, value }: IProps) => {
           </Heading>
         </div>
       </Grid>
-      <Flex margin="1rem 0 0 0 " justify="center">
-        <Button padding="0.25rem" bg="blue" withTransition>
-          Edit
-        </Button>
-        <Button
-          margin="0 0.5rem"
-          padding="0.25rem"
-          bg="danger"
-          withTransition
-          onClick={() => {
-            setConfirmationModalStatus?.({
-              open: true,
-              closeCb: handleCloseConfirmationModal!,
-              desc: "Are you sure you want to delete this option",
-              successCb: () => {
-                handleDeleteOption();
-              },
-              title: "Delete Product Option",
-            });
-          }}
-        >
-          Remove
-        </Button>
-      </Flex>
     </Container>
   );
 };
 
 export default OptionValue;
 const Container = styled.div(
-  ({ theme: { breakpoints, border, dangerRed, accent2 } }) => `
-  background-color: ${accent2};
-  padding: 0.75rem;
+  ({ theme: { breakpoints, border, dangerRed, accent2, accent1 } }) => `
+  background-color: ${accent1};
   border: ${border};
   border-radius: 6px;
   margin-bottom: 1rem;
   .delete {
     color: ${dangerRed};
+  }
+  .head {
+    border-bottom: ${border};
+    padding:0.75rem;
+    background-color:${accent2};
+  }
+  .field {
+    padding:0.75rem;
+    border-right: ${border};
+    border-bottom: ${border};
+  }
+  ${up(breakpoints.md)}{
+   
+    .head , .field {
+      padding:1rem;
+    }
   }
   `
 );

@@ -194,10 +194,11 @@ const CouponsList = () => {
         <div className="table">
           {data?.pages[0].data.length !== 0 && (
             <TableHead
+              gap="0"
               cols={cols}
               gridCols="repeat(1, minmax(35px, 50px)) repeat(
             4,
-            minmax(100px, 1fr)
+            minmax(140px, 1fr)
           );"
             />
           )}
@@ -262,7 +263,7 @@ export default CouponsList;
 const Container = styled.div`
   border-radius: 6px;
   border: ${(props) => props.theme.border};
-
+  border-bottom: none;
   position: relative;
   .table {
     overflow-x: auto;

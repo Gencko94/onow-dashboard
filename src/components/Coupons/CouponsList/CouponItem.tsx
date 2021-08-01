@@ -12,6 +12,7 @@ import Popover from "../../reusable/Popover";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import Checkbox from "../../reusable/Inputs/Checkbox";
 import { FlexWrapper } from "../../StyledComponents/Flex";
+import Heading from "../../StyledComponents/Heading";
 
 interface IProps {
   coupon: COUPON;
@@ -68,9 +69,15 @@ const CouponItem = ({
         />
       </div>
       <div className="field">
-        <h6>{coupon.name[language]}</h6>
+        <Heading tag="h6" weight="semibold">
+          {coupon.name[language]}
+        </Heading>
       </div>
-      <div className="field">{coupon.code}</div>
+      <div className="field">
+        <Heading tag="h6" weight="semibold">
+          {coupon.code}
+        </Heading>
+      </div>
       <div className="field">{renderStatus(coupon.enabled)}</div>
       <div className="field">
         <ActionButtonContainer
@@ -136,27 +143,23 @@ const Container = styled.div<{ selected: boolean }>`
   display: grid;
   grid-template-columns: repeat(1, minmax(35px, 50px)) repeat(
       4,
-      minmax(100px, 1fr)
+      minmax(140px, 1fr)
     );
   background-color: ${(props) =>
     props.selected ? props.theme.accentColor : "#fff"};
-  gap: 1rem;
-  border-bottom: ${(props) => props.theme.border};
+
   &:hover {
     background-color: ${(props) => props.theme.accentColor};
   }
 
   .field {
+    border-bottom: ${(props) => props.theme.border};
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
     text-align: center;
     position: relative;
-    h6 {
-      font-size: 0.8rem;
-      font-weight: ${(props) => props.theme.font.semibold};
-    }
   }
 `;
 

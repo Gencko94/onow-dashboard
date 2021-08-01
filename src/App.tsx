@@ -18,6 +18,7 @@ import Layout from "./layout/Layout";
 import AuthContext from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import ApplicationContext from "./contexts/ApplicationContext";
+import ErrorBoundaryComponent from "./components/reusable/ErrorBoundaryComponent";
 
 const CreateNewProduct = lazy(() => import("./pages/Product/CreateNewProduct"));
 const Product = lazy(() => import("./pages/Product/Product"));
@@ -99,11 +100,10 @@ function App() {
       {({ reset }) => (
         <ErrorBoundary
           fallbackRender={({ error, resetErrorBoundary }) => (
-            <div>
-              There was an error!{" "}
-              <button onClick={() => resetErrorBoundary()}>Try again</button>
-              <pre style={{ whiteSpace: "normal" }}>{error.message}</pre>
-            </div>
+            <ErrorBoundaryComponent
+              resetErrorBoundary={resetErrorBoundary}
+              error={error}
+            />
           )}
           onReset={reset}
         >

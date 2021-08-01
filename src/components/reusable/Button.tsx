@@ -182,7 +182,7 @@ const Button: React.FC<IProps> = ({
       hoverColor={hoverColor ?? hoverTextColor}
       shadow={shadow}
       border={border}
-      disabled={disabled}
+      disabled={isLoading || disabled}
       width={width}
     >
       <span className="icon">
@@ -191,17 +191,16 @@ const Button: React.FC<IProps> = ({
         )}
         {isLoading && (
           <span className="loading">
-            <ImSpinner2
-              size={isDesktop ? iconSize - 7 : iconSize - 9}
-              className="loading"
-            />
+            <ImSpinner2 size={isDesktop ? 15 : 18} className="loading" />
           </span>
         )}
       </span>
 
-      <p className="text" style={{ display: isLoading ? "hidden" : "block" }}>
-        {children}
-      </p>
+      {children && (
+        <p className="text" style={{ display: isLoading ? "hidden" : "block" }}>
+          {children}
+        </p>
+      )}
 
       {withRipple && (
         <div className="ripple-wrapper">

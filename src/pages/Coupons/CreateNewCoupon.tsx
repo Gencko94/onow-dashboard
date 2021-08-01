@@ -9,6 +9,7 @@ import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Flex from "../../components/StyledComponents/Flex";
+import Heading from "../../components/StyledComponents/Heading";
 import useToast from "../../hooks/useToast";
 
 import { PRODUCT } from "../../interfaces/products/products";
@@ -109,37 +110,42 @@ const CreateNewCoupon = () => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الكوبونات", en: "Coupons" },
-              target: "/coupons",
-            },
-            {
-              name: { ar: "اضافة كوبون جديد", en: "Create New Coupon" },
-              target: "",
-            },
-          ]}
-        />
-        <Flex justify="flex-end">
-          <Button
-            isLoading={isLoading}
-            disabled={isLoading}
-            bg="green"
-            padding="0.5rem"
-            shadow
-            type="submit"
-            textSize="0.9rem"
-            Icon={BiPlus}
-            iconSize={25}
-            withRipple
-            withTransition
-          >
-            Submit
-          </Button>
-        </Flex>
-      </HeaderContainer>
+      <Flex justify="space-between" items="center" margin="1rem 0">
+        <div>
+          <Heading tag="h3" weight="bold" mb="1rem">
+            Create New Coupon
+          </Heading>
+          <Breadcrumbs
+            withoutTitle
+            children={[
+              {
+                name: { ar: "الكوبونات", en: "Coupons" },
+                target: "/coupons",
+              },
+              {
+                name: { ar: "اضافة كوبون جديد", en: "Create New Coupon" },
+                target: "",
+              },
+            ]}
+          />
+        </div>
+
+        <Button
+          isLoading={isLoading}
+          disabled={isLoading}
+          bg="green"
+          padding="0.5rem"
+          shadow
+          type="submit"
+          textSize="0.9rem"
+          Icon={BiPlus}
+          iconSize={25}
+          withRipple
+          withTransition
+        >
+          Submit
+        </Button>
+      </Flex>
 
       <CouponInfo errors={errors} register={register} control={control} />
       <CouponProducts

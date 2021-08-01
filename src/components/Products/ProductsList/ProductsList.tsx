@@ -329,10 +329,10 @@ const ProductsList = () => {
               activeSortBy={sortBy.field}
               activeOrder={sortBy.order}
               cols={cols}
-              gap="0.5rem"
+              gap="0"
               gridCols="repeat(2, minmax(35px, 50px)) repeat(
                 7,
-                minmax(100px, 1fr)
+                minmax(140px, 1fr)
               );"
             />
           )}
@@ -394,10 +394,12 @@ export default ProductsList;
 const Container = styled.div`
   border-radius: 6px;
   border: ${(props) => props.theme.border};
+  border-bottom: none;
 
   position: relative;
   .table {
     overflow-x: auto;
+    overflow-y: hidden;
     background-color: #fff;
   }
   .loading {
