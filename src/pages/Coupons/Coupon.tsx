@@ -76,7 +76,7 @@ const Coupon = () => {
         code: data.code,
         special_products:
           data.coupon_coverage === 3 || data.coupon_coverage === 4
-            ? data.special_products?.map((i: any) => i.id)
+            ? data.special_products?.map((i) => i)
             : [],
         special_categories:
           data.coupon_coverage === 2 ? data.special_categories : [],

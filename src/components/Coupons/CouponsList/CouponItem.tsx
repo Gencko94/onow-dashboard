@@ -13,6 +13,7 @@ import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import Checkbox from "../../reusable/Inputs/Checkbox";
 import { FlexWrapper } from "../../StyledComponents/Flex";
 import Heading from "../../StyledComponents/Heading";
+import Paragraph from "../../StyledComponents/Paragraph";
 
 interface IProps {
   coupon: COUPON;
@@ -69,14 +70,14 @@ const CouponItem = ({
         />
       </div>
       <div className="field">
-        <Heading tag="h6" weight="semibold">
+        <Paragraph fontSize="0.9rem" weight="semibold">
           {coupon.name[language]}
-        </Heading>
+        </Paragraph>
       </div>
       <div className="field">
-        <Heading tag="h6" weight="semibold">
+        <Paragraph fontSize="0.9rem" weight="semibold">
           {coupon.code}
-        </Heading>
+        </Paragraph>
       </div>
       <div className="field">{renderStatus(coupon.enabled)}</div>
       <div className="field">

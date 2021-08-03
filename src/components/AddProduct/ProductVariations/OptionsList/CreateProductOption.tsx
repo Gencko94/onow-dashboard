@@ -178,7 +178,7 @@ const CreateProductOption = ({ option, index, removeOption }: IProps) => {
               padding="0.5rem"
               onClick={() =>
                 append(
-                  { name: { ar: "", en: "" }, price: "", qty: 0, sku: "" },
+                  { name: { ar: "", en: "" }, price: "", quantity: 0, sku: "" },
                   { shouldFocus: false }
                 )
               }

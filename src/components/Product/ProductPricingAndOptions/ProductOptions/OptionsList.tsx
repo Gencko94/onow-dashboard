@@ -9,6 +9,7 @@ import { PRODUCT_OPTION } from "../../../../interfaces/products/products";
 import extractError from "../../../../utils/extractError";
 import {
   addProductOption,
+  deleteProductOption,
   editProductOption,
 } from "../../../../utils/queries/productQueries";
 
@@ -57,7 +58,7 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
         type: "success",
       });
       // Add it to Options Array
-      setOptions((prev) => [data, ...prev]);
+      setOptions((prev) => [...prev, data]);
     },
     onError: (error) => {
       const { responseError } = extractError(error);
@@ -81,7 +82,7 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
     reset: resetEdit,
     isLoading: editLoading,
   } = useMutation(editProductOption, {
-    onSuccess: (data) => {
+    onSuccess: (newOption, { option: oldOption }) => {
       // Show Success message
       setToastStatus?.({
         fn: () => {
@@ -91,8 +92,16 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
         text: "Option Added Successfully",
         type: "success",
       });
-      // edit it from Options Array
-      setOptions((prev) => [data, ...prev]);
+      // Edit it from Options Array
+      // Find the position of the old option in the options array.
+      const oldIndex = options.findIndex((i) => i.id === oldOption.id);
+      if (typeof oldIndex !== "undefined") {
+        setOptions((prev) => {
+          const optionsCopy = [...prev];
+          optionsCopy[oldIndex] = newOption;
+          return optionsCopy;
+        });
+      }
     },
     onError: (error) => {
       const { responseError } = extractError(error);
@@ -100,7 +109,7 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
       } else {
         setToastStatus?.({
           fn: () => {
-            resetAdd();
+            resetEdit();
             handleCloseToast?.();
           },
           open: true,
@@ -110,6 +119,50 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
       }
     },
   });
+  const { mutateAsync: deleteOptionMutation, reset } = useMutation(
+    deleteProductOption,
+    {
+      onSuccess: (_, { optionId }) => {
+        // Show Success Message
+        setToastStatus?.({
+          fn: () => {
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Option Deleted Successfully",
+          type: "success",
+        });
+        // Remove it from Options Array
+        setOptions((prev) => {
+          return prev.filter((i) => i.id !== optionId);
+        });
+      },
+      onError: (error) => {
+        const { responseError } = extractError(error);
+        if (responseError) {
+          setToastStatus?.({
+            fn: () => {
+              reset();
+              handleCloseToast?.();
+            },
+            open: true,
+            text: "Something went wrong",
+            type: "error",
+          });
+        } else {
+          setToastStatus?.({
+            fn: () => {
+              reset();
+              handleCloseToast?.();
+            },
+            open: true,
+            text: "Something went wrong",
+            type: "error",
+          });
+        }
+      },
+    }
+  );
   const handleAddOption = async (option: NEW_OPTION) => {
     await addMutation({ option, productId });
     setOptionModalStatus((prev) => ({ ...prev, open: false }));
@@ -117,6 +170,10 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
   const handleEditOption = async (option: PRODUCT_OPTION) => {
     await editMutation({ option, productId });
     setOptionModalStatus((prev) => ({ ...prev, open: false }));
+  };
+  const handleDeleteOption = async (optionId: number) => {
+    handleCloseConfirmationModal?.();
+    await deleteOptionMutation({ optionId, productId });
   };
 
   return (
@@ -165,11 +222,7 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
                     option={option}
                     index={index}
                     setOptionModalStatus={setOptionModalStatus}
-                    removeOption={(id) => {
-                      setOptions((prev) => {
-                        return prev.filter((i) => i.id !== id);
-                      });
-                    }}
+                    handleDeleteOption={handleDeleteOption}
                   />
                   {index !== options.length - 1 && <Hr m="2.5" />}
                 </>

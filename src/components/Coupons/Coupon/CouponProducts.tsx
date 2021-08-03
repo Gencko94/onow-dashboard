@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Control, Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { PRODUCT } from "../../../interfaces/products/products";
 import { up } from "../../../utils/themes";
 import Select from "../../reusable/Select";
 import Grid from "../../StyledComponents/Grid";
@@ -60,12 +62,27 @@ const options = [
   },
 ];
 const CouponProducts = ({ control, errors, watch, setValue }: IProps) => {
-  const coverage = watch("coupon_coverage");
-  const data = useWatch({
+  const special_products = useWatch({
     control,
     name: "special_products",
   });
-  console.log(data);
+  const [products, setProducts] = useState<PRODUCT[]>([]);
+  const coverage = watch("coupon_coverage");
+  const handleRemoveProduct = (id: number) => {
+    setProducts((prev) => prev.filter((product) => product.id !== id));
+    setValue(
+      "special_products",
+      special_products.filter((i: number) => i !== id)
+    );
+  };
+  const handleAddProduct = (product: any) => {
+    const found = products.find((i: PRODUCT) => i.id === product.id);
+    if (!found) {
+      setProducts((prev) => [...prev, product]);
+      setValue("special_products", [...special_products, product.id]);
+    }
+  };
+
   const {
     i18n: { language },
   } = useTranslation();
@@ -109,7 +126,7 @@ const CouponProducts = ({ control, errors, watch, setValue }: IProps) => {
 
           {(coverage === 3 || coverage === 4) && (
             <CouponProductsSearch
-              setValue={setValue}
+              handleAddProduct={handleAddProduct}
               control={control}
               title={
                 coverage === 3
@@ -120,6 +137,8 @@ const CouponProducts = ({ control, errors, watch, setValue }: IProps) => {
           )}
           {(coverage === 3 || coverage === 4) && (
             <CouponProductsList
+              products={products}
+              handleRemoveProduct={handleRemoveProduct}
               control={control}
               title={coverage === 3 ? "Covered Products" : "Execluded Products"}
             />

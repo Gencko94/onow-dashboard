@@ -23,7 +23,7 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
   const formValues = useWatch({
     control,
   });
-  console.log(formValues);
+
   const {
     data,
     status,

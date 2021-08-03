@@ -3,7 +3,14 @@ import { up } from "./utils/themes";
 
 const GlobalStyle = createGlobalStyle(
   ({
-    theme: { breakpoints, shadow, bodyColor, textPrimary, borderHovered },
+    theme: {
+      breakpoints,
+      shadow,
+      bodyColor,
+      textPrimary,
+      borderHovered,
+      mainColor,
+    },
   }) => `
 
 
@@ -20,24 +27,24 @@ const GlobalStyle = createGlobalStyle(
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
   box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	border-radius: 10px;
-	background-color: #F5F5F5;
+	background-color:#777;
 
 }
 *::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
-	background-color: #F5F5F5;
+  width: 6px;
+  height: 6px;
+	background-color: ${mainColor};
 }
 *::-webkit-scrollbar-thumb{
   border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #777;
+  background-color: ${mainColor};
   transition: background 150ms ease;
 }
 *::-webkit-scrollbar-thumb:hover{
  
-	background-color: #999;
+	background-color: ${mainColor};
 }
 html {
   height: 100%;

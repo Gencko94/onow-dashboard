@@ -17,6 +17,7 @@ import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import DefaultImage from "../../reusable/DefaultImage";
 import CheckToggle from "../../reusable/CheckToggle";
 import Heading from "../../StyledComponents/Heading";
+import Paragraph from "../../StyledComponents/Paragraph";
 
 interface IProps {
   product: PRODUCT;
@@ -67,24 +68,24 @@ const ProductItem = ({
         )}
       </div>
       <div className="field">
-        <Heading tag="h6" weight="semibold">
+        <Paragraph fontSize="0.9rem" weight="semibold">
           {product.name[language]}
-        </Heading>
+        </Paragraph>
       </div>
       <div className="field">
-        <Heading tag="h6" weight="semibold">
+        <Paragraph fontSize="0.9rem" weight="semibold">
           {product.quantity === "unlimited" ? "-" : product.quantity}
-        </Heading>
+        </Paragraph>
       </div>
       <div className="field">
-        <Heading tag="h6" weight="semibold">
+        <Paragraph fontSize="0.9rem" weight="semibold">
           {product.price}
-        </Heading>
+        </Paragraph>
       </div>
       <div className="field">
-        <Heading tag="h6" weight="semibold">
+        <Paragraph fontSize="0.9rem" weight="semibold">
           {product.category ? product.category?.name[language] : "-"}
-        </Heading>
+        </Paragraph>
       </div>
 
       <div className="field">
@@ -193,10 +194,6 @@ const Container = styled.div<{ selected: boolean }>`
     justify-content: center;
     padding: 0.5rem;
     text-align: center;
-    h6 {
-      font-size: 0.8rem;
-      font-weight: ${(props) => props.theme.font.semibold};
-    }
   }
 `;
 

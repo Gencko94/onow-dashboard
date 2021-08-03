@@ -32,7 +32,7 @@ type NEW_COUPON_FORM = {
   uses_per_user: string | null;
   enabled: boolean;
   coupon_coverage: number;
-  special_products: PRODUCT[];
+  special_products: number[];
   special_categories: number[];
 };
 const CreateNewCoupon = () => {
@@ -77,7 +77,7 @@ const CreateNewCoupon = () => {
         min_total_order: data.min_total_order.replace(regex, ""),
         special_products:
           data.coupon_coverage === 3 || data.coupon_coverage === 4
-            ? data.special_products?.map((i) => i.id)
+            ? data.special_products
             : [],
         special_categories:
           data.coupon_coverage === 2 ? data.special_categories : [],
@@ -92,7 +92,10 @@ const CreateNewCoupon = () => {
     } catch (error) {
       const { responseError, unknownError } = extractError(error);
       if (responseError) {
-        if (responseError?.code?.includes("The code has already been taken.")) {
+        if (
+          responseError?.code?.includes("The code has already been taken.") ||
+          responseError?.code?.includes("code Already exist")
+        ) {
           setError("code", {
             message: "Coupon Code has been Taken, Please Select Another one",
           });

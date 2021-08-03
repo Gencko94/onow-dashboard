@@ -49,7 +49,7 @@ export type NEW_OPTION_VALUE = {
     [key: string]: string;
   };
   price: string;
-  qty: number;
+  quantity: number;
   sku: string;
 };
 export interface NEW_PRODUCT_FORM_PROPS {

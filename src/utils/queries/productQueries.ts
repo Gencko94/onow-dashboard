@@ -1,5 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { PRODUCT_OPTION } from "../../interfaces/products/products";
+import { NEW_OPTION_VALUE } from "../../interfaces/products/create-new-product";
+import {
+  OPTION_VALUE,
+  PRODUCT_OPTION,
+} from "../../interfaces/products/products";
 import { customerUri } from "../queries";
 
 // export const customerUri = "https://new-version.o-now.net/customer-api";
@@ -82,6 +86,8 @@ export const addProductImage = async ({
   );
   return res.data.results;
 };
+
+// Edit Product Option
 export const editProductOption = async ({
   productId,
   option,
@@ -89,6 +95,7 @@ export const editProductOption = async ({
   productId: number;
   option: PRODUCT_OPTION;
 }): Promise<PRODUCT_OPTION> => {
+  console.log(option);
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {
@@ -134,7 +141,7 @@ export const deleteProductOption = async ({
   optionId,
 }: {
   productId: number;
-  optionId: any;
+  optionId: number;
 }) => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
@@ -144,6 +151,80 @@ export const deleteProductOption = async ({
   };
   const res = await axios.delete(
     `${customerUri}/products/${productId}/option/${optionId}`,
+    config
+  );
+  return res.data.results;
+};
+// Add Product Option Value
+export const addProductOptionValue = async ({
+  productId,
+  value,
+  optionId,
+}: {
+  productId: number;
+  value: NEW_OPTION_VALUE;
+  optionId: number;
+}): Promise<OPTION_VALUE> => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.post(
+    `${customerUri}/products/${productId}/option/${optionId}`,
+    value,
+    config
+  );
+  return res.data.results;
+};
+
+// Edit Product Option Value
+export const editProductOptionValue = async ({
+  productId,
+  value,
+  optionId,
+}: {
+  productId: number;
+  value: OPTION_VALUE;
+  optionId: number;
+}): Promise<OPTION_VALUE> => {
+  const t = localStorage.getItem("dshtid");
+  const config = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.put(
+    `${customerUri}/products/${productId}/option/${optionId}/${value.id}`,
+    {
+      name: value.name,
+      price: value.price,
+      quantity: value.quantity,
+      sku: value.sku,
+    },
+    config
+  );
+  return res.data.results;
+};
+// Delete Product Option Value
+export const deleteProductOptionValue = async ({
+  productId,
+  optionId,
+  valueId,
+}: {
+  productId: number;
+  optionId: number;
+  valueId: number;
+}) => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+  };
+  const res = await axios.delete(
+    `${customerUri}/products/${productId}/option/${optionId}/${valueId}`,
     config
   );
   return res.data.results;

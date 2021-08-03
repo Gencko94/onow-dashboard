@@ -40,7 +40,7 @@ const CreateProductOptionsList = ({
                 en: "",
               },
               price: "",
-              qty: 0,
+              quantity: 0,
               sku: "",
             },
           ],
@@ -109,7 +109,7 @@ const CreateProductOptionsList = ({
                         {
                           name: { ar: "", en: "" },
                           price: "",
-                          qty: 0,
+                          quantity: 0,
                           sku: "",
                         },
                       ],

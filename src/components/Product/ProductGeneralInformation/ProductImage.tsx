@@ -68,12 +68,12 @@ const ProductImage = ({ data }: IProps) => {
         },
       };
       const formData = new FormData();
-      formData.append("image", image);
-      // await axios.post(
-      //   `${customerUri}/product-categories-add-image/${id}`,
-      //   formData,
-      //   config
-      // );
+      formData.append("thumbnail", image);
+      await axios.put(
+        `${customerUri}/products/${data.id}/update-product-image`,
+        formData,
+        config
+      );
       setProgress(null);
       // setValue("image", image);
       handleCloseConfirmationModal?.();
@@ -87,7 +87,7 @@ const ProductImage = ({ data }: IProps) => {
       });
     } catch (error) {
       handleCloseConfirmationModal?.();
-
+      setProgress(null);
       const { responseError } = extractError(error);
       if (responseError) {
         setToastStatus?.({
@@ -95,7 +95,7 @@ const ProductImage = ({ data }: IProps) => {
             handleCloseToast?.();
           },
           open: true,
-          text: responseError,
+          text: "Something went wrong",
           type: "error",
         });
       } else {
@@ -235,7 +235,7 @@ const ProductImage = ({ data }: IProps) => {
           {data.images.map((image, index) => {
             return (
               <div className="img-preview">
-                <img src={image.link} alt={`i-${index}`} />
+                <img src={image?.link} alt={`i-${index}`} />
 
                 <button
                   className="remove"
@@ -247,7 +247,7 @@ const ProductImage = ({ data }: IProps) => {
                       title: "Delete Image",
                       closeCb: handleCloseConfirmationModal!,
                       successCb: () => {
-                        removeImage(image.id);
+                        removeImage(image?.id);
                       },
                     });
                   }}

@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useMutation } from "react-query";
@@ -7,7 +8,7 @@ import useConfirmationModal from "../../../../hooks/useConfirmationModal";
 import useToast from "../../../../hooks/useToast";
 import { OPTION_VALUE } from "../../../../interfaces/products/products";
 import extractError from "../../../../utils/extractError";
-import { deleteProductOptionValue } from "../../../../utils/queries";
+import { deleteProductOptionValue } from "../../../../utils/queries/productQueries";
 import { up } from "../../../../utils/themes";
 import Button from "../../../reusable/Button";
 
@@ -19,49 +20,25 @@ interface IProps {
   index: number;
   parentIndex: number;
   value: OPTION_VALUE;
-  removeValue: (index?: number | number[] | undefined) => void;
+  handleDeleteValue: (id: number) => void;
+  setOptionValueModalStatus: Dispatch<
+    SetStateAction<{ open: boolean; type: "new" | "edit"; editIndex?: number }>
+  >;
 }
 
-const OptionValue = ({ index, parentIndex, removeValue, value }: IProps) => {
+const OptionValue = ({
+  index,
+  parentIndex,
+  handleDeleteValue,
+  setOptionValueModalStatus,
+  value,
+}: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
   const { handleCloseConfirmationModal, setConfirmationModalStatus } =
     useConfirmationModal();
-  const { setToastStatus, handleCloseToast } = useToast();
-  const { mutateAsync: deleteOptionValueMutation, reset } = useMutation(
-    deleteProductOptionValue,
-    {
-      onSuccess: () => {
-        setToastStatus?.({
-          fn: () => {
-            handleCloseToast?.();
-          },
-          open: true,
-          text: "Option Value Deleted Successfully",
-          type: "success",
-        });
-      },
-      onError: (error) => {
-        const { responseError } = extractError(error);
-        if (responseError) {
-        } else {
-          setToastStatus?.({
-            fn: () => {
-              reset();
-              handleCloseToast?.();
-            },
-            open: true,
-            text: "Something went wrong",
-            type: "error",
-          });
-        }
-      },
-    }
-  );
-  const handleDeleteOption = async () => {
-    // await deleteOptionValueMutation()
-  };
+
   return (
     <Container>
       <div className="head">
@@ -76,6 +53,13 @@ const OptionValue = ({ index, parentIndex, removeValue, value }: IProps) => {
               padding="0.5rem"
               bg="blue"
               withTransition
+              onClick={() => {
+                setOptionValueModalStatus({
+                  open: true,
+                  type: "edit",
+                  editIndex: index,
+                });
+              }}
             ></Button>
             <Button
               iconSize={25}
@@ -88,11 +72,11 @@ const OptionValue = ({ index, parentIndex, removeValue, value }: IProps) => {
                 setConfirmationModalStatus?.({
                   open: true,
                   closeCb: handleCloseConfirmationModal!,
-                  desc: "Are you sure you want to delete this option",
+                  desc: "Are you sure you want to delete this Value ?",
                   successCb: () => {
-                    handleDeleteOption();
+                    handleDeleteValue(value.id);
                   },
-                  title: "Delete Product Option",
+                  title: "Delete Option Value",
                 });
               }}
             ></Button>

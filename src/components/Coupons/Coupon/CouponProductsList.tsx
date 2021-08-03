@@ -1,29 +1,35 @@
-import { Control, Controller, useWatch } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { MdCancel } from "react-icons/md";
 import styled from "styled-components";
+import { PRODUCT } from "../../../interfaces/products/products";
+import Button from "../../reusable/Button";
 import DefaultImage from "../../reusable/DefaultImage";
 import EmptyTable from "../../reusable/EmptyTable";
 import Grid from "../../StyledComponents/Grid";
+import Heading from "../../StyledComponents/Heading";
 
 interface IProps {
   title: string;
   control: Control<any>;
+  products: PRODUCT[];
+  handleRemoveProduct: (id: number) => void;
 }
 
-const CouponProductsList = ({ title, control }: IProps) => {
+const CouponProductsList = ({
+  title,
+  control,
+  products,
+  handleRemoveProduct,
+}: IProps) => {
   const { i18n } = useTranslation();
-  const special_products = useWatch({
-    control,
-    name: "special_products",
-  });
-  const handleRemoveProduct = (id: number, onChange: any) => {
-    onChange(special_products.filter((i: any) => i.id !== id));
-  };
+
   return (
     <Container>
-      <div className="title">
-        <h6>{title}</h6>
+      <div className="head">
+        <Heading tag="h5" weight="bold">
+          {title}
+        </Heading>
       </div>
       <Controller
         control={control}
@@ -31,10 +37,10 @@ const CouponProductsList = ({ title, control }: IProps) => {
         render={({ field: { onChange } }) => {
           return (
             <div className="list">
-              {special_products.length === 0 && (
+              {products.length === 0 && (
                 <EmptyTable height="100%" text="No Products Added" />
               )}
-              {special_products.map((product: any) => (
+              {products.map((product: any) => (
                 <div className="search-result">
                   <Grid cols="50px 1fr 50px" gap="0.25rem">
                     {product.image ? (
@@ -55,13 +61,12 @@ const CouponProductsList = ({ title, control }: IProps) => {
                       <p className="name">{product.name[i18n.language]}</p>
                       <p className="price">{product.price}</p>
                     </div>
-                    <button
-                      type="button"
-                      className="icon"
-                      onClick={() => handleRemoveProduct(product.id, onChange)}
-                    >
-                      <MdCancel size={25} />
-                    </button>
+                    <Button
+                      bg="transparent"
+                      padding="0.25rem"
+                      Icon={MdCancel}
+                      onClick={() => handleRemoveProduct(product.id)}
+                    ></Button>
                   </Grid>
                 </div>
               ))}
@@ -75,18 +80,12 @@ const CouponProductsList = ({ title, control }: IProps) => {
 
 export default CouponProductsList;
 const Container = styled.div`
-  .title {
-    border-bottom: ${(props) => props.theme.border};
-    padding: 0.75rem;
-  }
+  border: ${(props) => props.theme.border};
+  border-radius: 6px;
+  background-color: ${(props) => props.theme.accent2};
   .list {
     height: 300px;
     overflow-y: auto;
-    background-color: ${(props) => props.theme.overlayColor};
-    border: ${(props) => props.theme.border};
-    border-radius: 6px;
-    /* padding: 1rem; */
-    margin-top: 1rem;
   }
   .search-result {
     padding: 0.5rem;

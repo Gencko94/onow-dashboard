@@ -87,9 +87,9 @@ const CreateProductOptionValue = ({
           min={0}
         />
         <IconedInput
-          errors={errors?.options?.[parentIndex]?.values?.[index]?.qty}
+          errors={errors?.options?.[parentIndex]?.values?.[index]?.quantity}
           Icon={RiHandCoinLine}
-          name={`options.${parentIndex}.values.${index}.qty`}
+          name={`options.${parentIndex}.values.${index}.quantity`}
           register={register}
           label="Stock Quantity"
           desc="Leave empty for unlimited"

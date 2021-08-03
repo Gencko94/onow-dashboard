@@ -1,8 +1,9 @@
 import { IconType } from "react-icons/lib";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { up } from "../../../utils/themes";
+import useResponsive from "../../../hooks/useResponsive";
 import Ripple from "../../reusable/Ripple";
+import Paragraph from "../../StyledComponents/Paragraph";
 
 interface IProps {
   Icon: IconType;
@@ -12,13 +13,18 @@ interface IProps {
 }
 
 const SideNavItem = ({ Icon, active, title, target }: IProps) => {
+  const { isDesktop } = useResponsive();
+  const history = useHistory();
   return (
     <Container>
       <SideNavLink isCurrent={active} to={target}>
         <span className="icon">
           <Icon size={20} />
         </span>
-        <p>{title}</p>
+        <Paragraph fontSize="0.9rem" margin="0 0.5rem">
+          {title}
+        </Paragraph>
+
         <Ripple />
       </SideNavLink>
     </Container>
@@ -29,21 +35,8 @@ export default SideNavItem;
 const Container = styled.li(
   ({ theme: { breakpoints, font } }) => `
     display:block;
-    // background-color:#fff;
-    
     position:relative;
-    overflow:hidden;
-    p {
-      margin: 0 0.5rem;
-      font-size: 0.8rem;
-      font-weight: ${font.regular};
-    };
-    ${up(breakpoints.md)}{
-      p {
-        font-size: 0.9rem;
-      }
-    }
-    
+    overflow:hidden; 
     `
 );
 const SideNavLink = styled(Link)<{ isCurrent: boolean }>`

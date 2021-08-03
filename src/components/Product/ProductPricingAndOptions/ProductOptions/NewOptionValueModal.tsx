@@ -3,16 +3,17 @@ import ReactModal from "react-modal";
 import ModalHead from "../../../reusable/ModalHead";
 import ModalTail from "../../../reusable/ModalTail";
 import { FlexWrapper } from "../../../StyledComponents/Flex";
-import { Controller, SubmitHandler } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form";
 import IconedInput from "../../../reusable/Inputs/IconedInput";
 import Grid from "../../../StyledComponents/Grid";
 import { useForm } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
-import Select from "../../../reusable/Select";
-import IconedNumberInput from "../../../reusable/IconedNumberInput";
+
 import { RiHandCoinLine } from "react-icons/ri";
 import PrefixedIconedInput from "../../../reusable/Inputs/PrefixedIconedInput";
 import { IoPricetagsOutline } from "react-icons/io5";
+import { OPTION_VALUE } from "../../../../interfaces/products/products";
+import { NEW_OPTION_VALUE } from "../../../../interfaces/products/create-new-product";
 const selectTypes = [
   { value: "single", label: "Single Select" },
   { value: "multiple", label: "Multiple Select" },
@@ -36,7 +37,7 @@ interface ModalProps {
   /**
    * The Close Function
    */
-  successFunction: (data: NEW_OPTION_VALUE) => void;
+  successFunction: (data: NEW_OPTION_VALUE | OPTION_VALUE) => void;
 
   /**
    * Boolean controlling the modal state
@@ -50,33 +51,40 @@ interface ModalProps {
    * Success button loading state
    */
   isLoading?: boolean;
+  defaultValues?: OPTION_VALUE;
+  title: string;
 }
 
-type NEW_OPTION_VALUE = {
-  name: {
-    [key: string]: string;
-  };
-  price: string;
-  qty: number;
-  sku: string;
-};
 const NewOptionValueModal = ({
   closeFunction,
   isOpen,
-
+  title,
   styles,
   successFunction,
-
+  defaultValues,
   isLoading,
 }: ModalProps) => {
+  console.log(defaultValues);
   const {
     register,
-    watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<NEW_OPTION_VALUE>({ shouldUnregister: true });
-  const onSubmit: SubmitHandler<NEW_OPTION_VALUE> = (data) => {
-    successFunction(data);
+  } = useForm<NEW_OPTION_VALUE | OPTION_VALUE>({
+    shouldUnregister: true,
+    defaultValues: {
+      id: defaultValues?.id,
+      name: defaultValues?.name,
+      sku: defaultValues?.sku,
+      price: defaultValues?.price,
+      quantity: defaultValues?.quantity,
+    },
+  });
+  const onSubmit: SubmitHandler<NEW_OPTION_VALUE | OPTION_VALUE> = (data) => {
+    if (defaultValues?.id) {
+      successFunction({ id: defaultValues?.id, ...data });
+    } else {
+      successFunction(data);
+    }
   };
   return (
     <ReactModal
@@ -85,9 +93,9 @@ const NewOptionValueModal = ({
       closeTimeoutMS={200}
       className="new-option-value-modal modal"
     >
-      <form id="1" onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Body>
-          <ModalHead closeFunction={closeFunction} title="New Option Value" />
+          <ModalHead closeFunction={closeFunction} title={title} />
           <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem" p={4}>
             <IconedInput
               Icon={MdSubtitles}
@@ -117,9 +125,9 @@ const NewOptionValueModal = ({
               desc="Leave empty to disable"
             />
             <IconedInput
-              errors={errors?.qty}
+              errors={errors?.quantity}
               Icon={RiHandCoinLine}
-              name={`qty`}
+              name={`quantity`}
               register={register}
               label="Stock Quantity"
               desc="Leave empty for unlimited"
@@ -128,7 +136,6 @@ const NewOptionValueModal = ({
           <ModalTail
             btnType="submit"
             btnText={"Save"}
-            // successCb={() => successFunction(watch())}
             successCb={() => {}}
             closeFunction={closeFunction}
             isLoading={isLoading}

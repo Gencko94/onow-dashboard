@@ -3,31 +3,35 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { BiPlus } from "react-icons/bi";
-
 import { useMutation } from "react-query";
+import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import useConfirmationModal from "../../../../hooks/useConfirmationModal";
 import useToast from "../../../../hooks/useToast";
-import { PRODUCT_OPTION } from "../../../../interfaces/products/products";
+import { NEW_OPTION_VALUE } from "../../../../interfaces/products/create-new-product";
+import {
+  OPTION_VALUE,
+  PRODUCT_OPTION,
+} from "../../../../interfaces/products/products";
 import extractError from "../../../../utils/extractError";
-import { deleteProductOption } from "../../../../utils/queries/productQueries";
-
+import {
+  addProductOptionValue,
+  deleteProductOptionValue,
+  editProductOptionValue,
+} from "../../../../utils/queries/productQueries";
 import { up } from "../../../../utils/themes";
-
 import Button from "../../../reusable/Button";
 import EmptyTable from "../../../reusable/EmptyTable";
-
 import Flex from "../../../StyledComponents/Flex";
 import Grid from "../../../StyledComponents/Grid";
 import Heading from "../../../StyledComponents/Heading";
-
 import NewOptionValueModal from "./NewOptionValueModal";
 import OptionValue from "./OptionValue";
 
 interface IProps {
   option: PRODUCT_OPTION;
   index: number;
-  removeOption: (id: number) => void;
+  handleDeleteOption: (id: number) => void;
   productId: number;
   setOptionModalStatus: Dispatch<
     SetStateAction<{ open: boolean; type: "new" | "edit"; editIndex?: number }>
@@ -37,20 +41,117 @@ interface IProps {
 const Option = ({
   option,
   index,
-  removeOption,
   productId,
   setOptionModalStatus,
+  handleDeleteOption,
 }: IProps) => {
-  const [newOptionValueOpen, setNewOptionValueModalOpen] = useState(false);
+  const [optionValueModalStatus, setOptionValueModalStatus] = useState<{
+    open: boolean;
+    type: "new" | "edit";
+    editIndex?: number;
+  }>({
+    open: false,
+    type: "edit",
+  });
+  const [values, setValues] = useState<OPTION_VALUE[]>(option.values);
 
   const { handleCloseConfirmationModal, setConfirmationModalStatus } =
     useConfirmationModal();
   const { setToastStatus, handleCloseToast } = useToast();
 
+  const {
+    i18n: { language },
+  } = useTranslation();
+  const {
+    mutateAsync: addMutation,
+    reset: resetAdd,
+    isLoading: addLoading,
+  } = useMutation(addProductOptionValue, {
+    onSuccess: (data) => {
+      // Show Success message
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Option Added Successfully",
+        type: "success",
+      });
+      // Add it to Options Array
+      setValues((prev) => [...prev, data]);
+    },
+    onError: (error) => {
+      const { responseError } = extractError(error);
+      if (responseError) {
+        setToastStatus?.({
+          fn: () => {
+            resetAdd();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            resetAdd();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    },
+  });
+  // Edit Mutation
+  const {
+    mutateAsync: editMutation,
+    reset: resetEdit,
+    isLoading: editLoading,
+  } = useMutation(editProductOptionValue, {
+    onSuccess: (newValue, { value: oldValue }) => {
+      // Show Success message
+      setToastStatus?.({
+        fn: () => {
+          handleCloseToast?.();
+        },
+        open: true,
+        text: "Option Added Successfully",
+        type: "success",
+      });
+      // Edit it from Options Array
+      // Find the position of the old option in the options array.
+      const oldIndex = values.findIndex((i) => i.id === oldValue.id);
+      if (typeof oldIndex !== "undefined") {
+        setValues((prev) => {
+          const valuesCopy = [...prev];
+          valuesCopy[oldIndex] = newValue;
+          return valuesCopy;
+        });
+      }
+    },
+    onError: (error) => {
+      const { responseError } = extractError(error);
+      if (responseError) {
+      } else {
+        setToastStatus?.({
+          fn: () => {
+            resetEdit();
+            handleCloseToast?.();
+          },
+          open: true,
+          text: "Something went wrong",
+          type: "error",
+        });
+      }
+    },
+  });
   const { mutateAsync: deleteOptionMutation, reset } = useMutation(
-    deleteProductOption,
+    deleteProductOptionValue,
     {
-      onSuccess: (data, { optionId }) => {
+      onSuccess: (_, { valueId }) => {
         // Show Success Message
         setToastStatus?.({
           fn: () => {
@@ -61,7 +162,9 @@ const Option = ({
           type: "success",
         });
         // Remove it from Options Array
-        removeOption(optionId);
+        setValues((prev) => {
+          return prev.filter((i) => i.id !== valueId);
+        });
       },
       onError: (error) => {
         const { responseError } = extractError(error);
@@ -89,12 +192,17 @@ const Option = ({
       },
     }
   );
-  const {
-    i18n: { language },
-  } = useTranslation();
-  const handleDeleteOption = async (optionId: number) => {
+  const handleAddValue = async (value: NEW_OPTION_VALUE) => {
+    await addMutation({ productId, optionId: option.id, value });
+    setOptionValueModalStatus((prev) => ({ ...prev, open: false }));
+  };
+  const handleEditValue = async (value: OPTION_VALUE) => {
+    await editMutation({ productId, optionId: option.id, value });
+    setOptionValueModalStatus((prev) => ({ ...prev, open: false }));
+  };
+  const handleDeleteValue = async (valueId: number) => {
     handleCloseConfirmationModal?.();
-    await deleteOptionMutation({ optionId, productId });
+    await deleteOptionMutation({ valueId, productId, optionId: option.id });
   };
   return (
     <Container>
@@ -142,36 +250,52 @@ const Option = ({
       </div>
       <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0" margin="0 ">
         <div className="field">
-          <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
-            Name En
-          </Heading>
-          <Heading tag="h6" color="subheading">
-            {option.name?.en}
-          </Heading>
+          <div className="field-head">
+            <Heading tag="h6" color="heading" weight="bold">
+              Name En
+            </Heading>
+          </div>
+          <div className="field-body">
+            <Heading tag="h6" color="subheading">
+              {option.name?.en}
+            </Heading>
+          </div>
         </div>
         <div className="field">
-          <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
-            Name Ar
-          </Heading>
-          <Heading tag="h6" color="subheading">
-            {option.name?.ar}
-          </Heading>
+          <div className="field-head">
+            <Heading tag="h6" color="heading" weight="bold">
+              Name Ar
+            </Heading>
+          </div>
+          <div className="field-body">
+            <Heading tag="h6" color="subheading">
+              {option.name?.ar}
+            </Heading>
+          </div>
         </div>
         <div className="field">
-          <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
-            Select Type
-          </Heading>
-          <Heading tag="h6" color="subheading">
-            {option.select_type}
-          </Heading>
+          <div className="field-head">
+            <Heading tag="h6" color="heading" weight="bold">
+              Select Type
+            </Heading>
+          </div>
+          <div className="field-body">
+            <Heading tag="h6" color="subheading">
+              {option.select_type}
+            </Heading>
+          </div>
         </div>
         <div className="field">
-          <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
-            Required
-          </Heading>
-          <Heading tag="h6" color="subheading">
-            {option.required ? "Yes" : "No"}
-          </Heading>
+          <div className="field-head">
+            <Heading tag="h6" color="heading" weight="bold">
+              Required
+            </Heading>
+          </div>
+          <div className="field-body">
+            <Heading tag="h6" color="subheading">
+              {option.required ? "Yes" : "No"}
+            </Heading>
+          </div>
         </div>
       </Grid>
       <div className="head">
@@ -185,11 +309,7 @@ const Option = ({
             bg="primary"
             padding="0.25rem"
             onClick={() =>
-              // append(
-              //   { name: { ar: "", en: "" }, price: "", qty: 0, sku: "" },
-              //   { shouldFocus: false }
-              // )
-              setNewOptionValueModalOpen(true)
+              setOptionValueModalStatus({ open: true, type: "new" })
             }
             textSize="0.9rem"
             Icon={BiPlus}
@@ -198,7 +318,7 @@ const Option = ({
           </Button>
         </Flex>
       </div>
-      {option.values.length === 0 && (
+      {values.length === 0 && (
         <div className="empty">
           <EmptyTable
             text={`Add Values for ${option.name?.[language]}`}
@@ -206,39 +326,58 @@ const Option = ({
             withButton
             btnText="Add New Option Value"
             cb={() => {
-              setNewOptionValueModalOpen(true);
+              setOptionValueModalStatus({ open: true, type: "new" });
             }}
           />
         </div>
       )}
-      {option.values?.length > 0 && (
+      {values?.length > 0 && (
         <div className="values">
-          {option.values?.map((value, childIndex: number) => {
+          {values?.map((value, childIndex: number) => {
             return (
               <OptionValue
                 value={value}
+                setOptionValueModalStatus={setOptionValueModalStatus}
                 key={value.id}
                 index={childIndex}
                 parentIndex={index}
-                removeValue={() => {}} // setRemove Function
+                handleDeleteValue={handleDeleteValue}
               />
             );
           })}
         </div>
       )}
-
-      <NewOptionValueModal
-        isOpen={newOptionValueOpen}
-        closeFunction={() => {
-          setNewOptionValueModalOpen(false);
-        }}
-        successFunction={(data) => {
-          // append({
-          //   ...data,
-          // });
-          setNewOptionValueModalOpen(false);
-        }}
-      />
+      <CSSTransition
+        in={optionValueModalStatus.open}
+        classNames="menu"
+        timeout={200}
+        unmountOnExit
+      >
+        <NewOptionValueModal
+          title={
+            optionValueModalStatus.type === "edit" ? "Edit Value" : "New Value"
+          }
+          isLoading={
+            optionValueModalStatus.type === "edit" ? editLoading : addLoading
+          }
+          isOpen={optionValueModalStatus.open}
+          defaultValues={
+            optionValueModalStatus.type === "edit"
+              ? values[optionValueModalStatus.editIndex!]
+              : undefined
+          }
+          closeFunction={() => {
+            setOptionValueModalStatus((prev) => ({ ...prev, open: false }));
+          }}
+          successFunction={(vals) => {
+            if (optionValueModalStatus.type === "edit") {
+              handleEditValue(vals as OPTION_VALUE);
+            } else if (optionValueModalStatus.type === "new") {
+              handleAddValue(vals as NEW_OPTION_VALUE);
+            }
+          }}
+        />
+      </CSSTransition>
     </Container>
   );
 };
@@ -261,9 +400,16 @@ const Container = styled.div(
   }
   .field {
     text-align:center;
-    padding:0.75rem;
     border-right: ${border};
     border-bottom: ${border};
+  }
+  .field-head {
+    border-bottom: ${border};
+    padding:0.5rem;
+  }
+  .field-body {
+    padding:0.5rem;
+
   }
   .empty {    
     background-color:${accent1};
@@ -272,8 +418,11 @@ const Container = styled.div(
     .values {
       padding: 1rem;
     }
-    .head , .field {
+    .head{
       padding:1rem;
+    }
+    .field-head,field-body {
+      padding:0.75rem 
     }
   }
   `

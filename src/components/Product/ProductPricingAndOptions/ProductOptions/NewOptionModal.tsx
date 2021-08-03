@@ -86,9 +86,13 @@ const NewOptionModal = ({
   const selectType = watch("select_type");
   const required = watch("required");
   const onSubmit: SubmitHandler<NEW_OPTION | PRODUCT_OPTION> = (data) => {
-    successFunction(data);
+    if (defaultValues?.id) {
+      successFunction({ id: defaultValues?.id, ...data });
+    } else {
+      successFunction(data);
+    }
   };
-  console.log(defaultValues);
+
   return (
     <ReactModal
       isOpen={isOpen}
