@@ -1,8 +1,6 @@
 import styled from "styled-components";
-import ReactModal from "react-modal";
-import ModalHead from "../../../reusable/ModalHead";
+import ModalHead from "../../../Modal/ModalHead";
 import ModalTail from "../../../reusable/ModalTail";
-import { FlexWrapper } from "../../../StyledComponents/Flex";
 import { SubmitHandler } from "react-hook-form";
 import IconedInput from "../../../reusable/Inputs/IconedInput";
 import Grid from "../../../StyledComponents/Grid";
@@ -14,6 +12,8 @@ import PrefixedIconedInput from "../../../reusable/Inputs/PrefixedIconedInput";
 import { IoPricetagsOutline } from "react-icons/io5";
 import { OPTION_VALUE } from "../../../../interfaces/products/products";
 import { NEW_OPTION_VALUE } from "../../../../interfaces/products/create-new-product";
+import { up } from "../../../../utils/themes";
+import { ModalWrapper } from "../../../Modal/ModalWrapper";
 const selectTypes = [
   { value: "single", label: "Single Select" },
   { value: "multiple", label: "Multiple Select" },
@@ -43,10 +43,7 @@ interface ModalProps {
    * Boolean controlling the modal state
    */
   isOpen: boolean;
-  /**
-   * Custom styles for the modal
-   */
-  styles?: ReactModal.Styles;
+
   /**
    * Success button loading state
    */
@@ -59,12 +56,10 @@ const NewOptionValueModal = ({
   closeFunction,
   isOpen,
   title,
-  styles,
   successFunction,
   defaultValues,
   isLoading,
 }: ModalProps) => {
-  console.log(defaultValues);
   const {
     register,
     handleSubmit,
@@ -87,16 +82,11 @@ const NewOptionValueModal = ({
     }
   };
   return (
-    <ReactModal
-      isOpen={isOpen}
-      onRequestClose={closeFunction}
-      closeTimeoutMS={200}
-      className="new-option-value-modal modal"
-    >
+    <Modal>
+      <ModalHead closeFunction={closeFunction} title={title} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Body>
-          <ModalHead closeFunction={closeFunction} title={title} />
-          <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem" p={4}>
+          <Grid cols="minmax(200px,1fr)" gap="0.5rem">
             <IconedInput
               Icon={MdSubtitles}
               errors={errors?.name?.en}
@@ -142,21 +132,45 @@ const NewOptionValueModal = ({
           />
         </Body>
       </form>
-    </ReactModal>
+    </Modal>
   );
 };
 
 export default NewOptionValueModal;
+const Modal = styled(ModalWrapper)(
+  ({ theme: { breakpoints, shadow, accent1 } }) => `
+  position: fixed;
+  z-index: 20;
+  inset:200px 20px;
+  position:fixed;
+  min-width:300px;
+  border:none;
+  outline:none;
+  z-index:20;
+  background-color:${accent1};
+  ${up(breakpoints.md)}{
+    inset:180px 250px;
+  }
+  ${up(breakpoints.lg)}{
+    inset:180px 350px;
+  }
+  ${up(breakpoints.xl)}{
+    inset:180px 600px;
+  }
+  `
+);
+const Body = styled.div(
+  ({ theme: { breakpoints, border } }) => `
 
-const Body = styled.div`
-  font-family: ${(props) => props.theme.fontFamily};
   width: 100%;
   height: 100%;
   display: grid;
+  padding: 0.75rem;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
-
-  ${FlexWrapper} {
-    border-top: ${(props) => props.theme.border};
+  ${up(breakpoints.md)}{
+   padding:1rem;
   }
-`;
+  
+  `
+);

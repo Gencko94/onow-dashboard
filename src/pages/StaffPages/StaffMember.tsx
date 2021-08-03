@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -7,12 +6,13 @@ import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
-import ConfirmationModal from "../../components/reusable/ConfirmationModal";
+
 import HeaderContainer from "../../components/reusable/HeaderContainer";
 import StaffMemberInformation from "../../components/Staff/StaffMemberInformation";
 import StaffMemberPermissions from "../../components/Staff/StaffMemberPermissions";
 import Flex from "../../components/StyledComponents/Flex";
 import { userPermissions } from "../../data/userPermissions";
+import useConfirmationModal from "../../hooks/useConfirmationModal";
 import useToast from "../../hooks/useToast";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
 import extractError from "../../utils/extractError";
@@ -26,7 +26,8 @@ const StaffMember = () => {
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
   const { setToastStatus, handleCloseToast } = useToast();
-  const [modalOpen, setModalOpen] = useState(false);
+  const { setConfirmationModalStatus, handleCloseConfirmationModal } =
+    useConfirmationModal();
   const history = useHistory();
   const { data } = useQuery<STAFF_MEMBER>(
     ["staff-member", id],
@@ -169,7 +170,13 @@ const StaffMember = () => {
             textSize="0.9rem"
             withRipple
             onClick={() => {
-              setModalOpen(true);
+              setConfirmationModalStatus?.({
+                open: true,
+                desc: "Are you sure you want to delete this Staff Member ?",
+                title: "Delete Product",
+                closeCb: handleCloseConfirmationModal!,
+                successCb: () => handleDeleteStaffMember(),
+              });
             }}
           >
             Delete Staff Member
@@ -189,25 +196,6 @@ const StaffMember = () => {
           permissions={userPermissions}
         />
       )}
-
-      <ConfirmationModal
-        isOpen={modalOpen}
-        closeFunction={() => setModalOpen(false)}
-        desc="Are you sure you want to delete this Staff Member ?"
-        successButtonText="Delete"
-        successFunction={() => handleDeleteStaffMember()}
-        title="Delete Staff Member"
-        styles={{
-          content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-          },
-        }}
-      />
     </form>
   );
 };

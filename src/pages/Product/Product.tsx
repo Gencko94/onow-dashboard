@@ -17,7 +17,7 @@ import { up } from "../../utils/themes";
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
-  const { data } = useQuery(["product", id], () => getProduct(id), {
+  const { data } = useQuery(["product", parseInt(id)], () => getProduct(id), {
     suspense: true,
     // useErrorBoundary: false,
     // onError: (err: any) => console.log(err.response),

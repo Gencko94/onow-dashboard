@@ -11,10 +11,12 @@ import PhoneInput from "../reusable/Inputs/PhoneInput";
 import ModalTail from "../reusable/ModalTail";
 import extractError from "../../utils/extractError";
 import useToast from "../../hooks/useToast";
-import ReactModal from "react-modal";
-import ModalHead from "../reusable/ModalHead";
-import { FlexWrapper } from "../StyledComponents/Flex";
+
+import ModalHead from "./ModalHead";
+
 import Grid from "../StyledComponents/Grid";
+import { ModalWrapper } from "./ModalWrapper";
+import { up } from "../../utils/themes";
 
 interface IProps {
   closeFunction: () => void;
@@ -74,16 +76,11 @@ const AddCustomerModal = ({ closeFunction, isOpen }: IProps) => {
   };
 
   return (
-    <ReactModal
-      isOpen={isOpen}
-      onRequestClose={closeFunction}
-      closeTimeoutMS={200}
-      className="customer-modal modal"
-    >
+    <Modal>
+      <ModalHead closeFunction={closeFunction} title="New Customer" />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Body>
-          <ModalHead closeFunction={closeFunction} title="New Customer" />
-          <Grid cols="1fr" gap="0.5rem" p={4}>
+          <Grid cols="1fr" gap="0.5rem">
             <IconedInput
               Icon={MdSubtitles}
               errors={errors?.first_name}
@@ -137,20 +134,45 @@ const AddCustomerModal = ({ closeFunction, isOpen }: IProps) => {
           />
         </Body>
       </form>
-    </ReactModal>
+    </Modal>
   );
 };
 
 export default AddCustomerModal;
-const Body = styled.div`
-  font-family: ${(props) => props.theme.fontFamily};
+const Modal = styled(ModalWrapper)(
+  ({ theme: { breakpoints, accent1 } }) => `
+  position: fixed;
+  z-index: 20;
+  inset:215px 20px;
+  position:fixed;
+  min-width:300px;
+  border:none;
+  outline:none;
+  z-index:20;
+  background-color:${accent1};
+  ${up(breakpoints.md)}{
+    inset:200px 250px;
+  }
+  ${up(breakpoints.lg)}{
+    inset:200px 350px;
+  }
+  ${up(breakpoints.xl)}{
+    inset:200px 600px;
+  }
+  `
+);
+const Body = styled.div(
+  ({ theme: { breakpoints, border } }) => `
+
   width: 100%;
   height: 100%;
   display: grid;
+  padding: 0.75rem;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
-
-  ${FlexWrapper} {
-    border-top: ${(props) => props.theme.border};
+  ${up(breakpoints.md)}{
+   padding:1rem;
   }
-`;
+  
+  `
+);

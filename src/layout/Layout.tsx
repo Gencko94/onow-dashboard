@@ -3,6 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { CSSTransition } from "react-transition-group";
 import styled, { css } from "styled-components";
 import DesktopNavbar from "../components/DesktopNavbar/DesktopNavbar";
+import Modal from "../components/Modal/Modal";
 import ConfirmationModal from "../components/reusable/ConfirmationModal";
 import Toast from "../components/reusable/Toast";
 import Sidebar from "../components/Sidebar/Sidebar";
@@ -105,24 +106,26 @@ const Layout: React.FC = ({ children }) => {
         >
           <ScrollToTop />
         </CSSTransition>
-        <ConfirmationModal
+        <Modal
           isOpen={confirmationModalStatus!.open}
           closeFunction={confirmationModalStatus!.closeCb}
-          desc={confirmationModalStatus!.desc}
-          successButtonText="Delete"
-          successFunction={confirmationModalStatus!.successCb}
-          title={confirmationModalStatus!.title}
-          styles={{
-            content: {
-              top: "50%",
-              left: "50%",
-              right: "auto",
-              bottom: "auto",
-              marginRight: "-50%",
-              transform: "translate(-50%, -50%)",
-            },
-          }}
-        />
+        >
+          <CSSTransition
+            classNames="product-option-modal"
+            timeout={200}
+            unmountOnExit
+            in={confirmationModalStatus!.open}
+          >
+            <ConfirmationModal
+              isOpen={confirmationModalStatus!.open}
+              closeFunction={confirmationModalStatus!.closeCb}
+              desc={confirmationModalStatus!.desc}
+              successButtonText="Delete"
+              successFunction={confirmationModalStatus!.successCb}
+              title={confirmationModalStatus!.title}
+            />
+          </CSSTransition>
+        </Modal>
 
         <Content drawerOpen={drawerOpen}>
           <DesktopNavbar handleToggleDrawer={handleToggleDrawer} />
@@ -141,7 +144,6 @@ const ContentContainer = styled.div(
   ({ theme: { breakpoints } }) => `
   display:block
   min-height: 100vh;
-  
   `
 );
 const Content = styled.div<{ drawerOpen: boolean }>(
@@ -156,9 +158,6 @@ const Content = styled.div<{ drawerOpen: boolean }>(
     padding:1rem;
   }
   ${up(breakpoints.md)}{
-    
-   
-    
     ${
       drawerOpen &&
       css`

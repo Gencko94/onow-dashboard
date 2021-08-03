@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { AiOutlineCheckCircle } from "react-icons/ai";
+
 import { IoMdCloseCircle } from "react-icons/io";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
@@ -13,12 +13,8 @@ import extractError from "../../../utils/extractError";
 import FileUploader from "../../../utils/FileUploader";
 import MiniFileUploader from "../../../utils/MiniFileUploader";
 import { customerUri } from "../../../utils/queries";
-import {
-  addProductImage,
-  removeProductImage,
-} from "../../../utils/queries/productQueries";
-import Button from "../../reusable/Button";
-import Flex from "../../StyledComponents/Flex";
+import { removeProductImage } from "../../../utils/queries/productQueries";
+
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
 import Hr from "../../StyledComponents/Hr";
@@ -28,10 +24,13 @@ interface IProps {
 }
 
 const ProductImage = ({ data }: IProps) => {
+  const queryClient = useQueryClient();
   const { handleCloseConfirmationModal, setConfirmationModalStatus } =
     useConfirmationModal();
+  const [loadingImage, setLoadingImage] = useState<File | null>(null);
   const { handleCloseToast, setToastStatus } = useToast();
   const [progress, setProgress] = useState<number | null>(null);
+  const [galleryProgress, setGalleryProgress] = useState<number | null>(null);
   const {
     formState: { errors },
     control,
@@ -42,9 +41,7 @@ const ProductImage = ({ data }: IProps) => {
   });
   const { mutateAsync: deleteMutation, reset } =
     useMutation(removeProductImage);
-  const { mutateAsync: addImageMutation, reset: resetAdd } =
-    useMutation(addProductImage);
-  const image = watch("image");
+
   const images = watch("images");
 
   // Update Logic
@@ -69,6 +66,7 @@ const ProductImage = ({ data }: IProps) => {
       };
       const formData = new FormData();
       formData.append("thumbnail", image);
+      formData.append("method", "PUT");
       await axios.put(
         `${customerUri}/products/${data.id}/update-product-image`,
         formData,
@@ -149,10 +147,35 @@ const ProductImage = ({ data }: IProps) => {
       }
     }
   };
+
   const handleAddImage = async (file: File) => {
     try {
       handleCloseConfirmationModal?.();
-      const res = await addImageMutation({ productId: data.id, image: file });
+      const t = localStorage.getItem("dshtid");
+      const config: AxiosRequestConfig = {
+        headers: {
+          Authorization: t ? `Bearer ${t}` : "",
+          "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress: (progressEvent) => {
+          let percentCompleted = Math.floor(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+
+          setGalleryProgress(percentCompleted);
+        },
+      };
+      const formData = new FormData();
+      formData.append("product_id", data.id as any);
+      formData.append("image", file);
+      const res = await axios.post(
+        `${customerUri}/product-images`,
+        formData,
+        config
+      );
+      // queryClient.invalidateQueries(["product", data.id]);
+      setGalleryProgress(null);
+
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -161,8 +184,22 @@ const ProductImage = ({ data }: IProps) => {
         text: "Image Added Successfully",
         type: "success",
       });
-      console.log(res);
-      setValue("images", [...images, res]);
+      console.log(res.data);
+      setValue("images", [...images, res.data.results]);
+      // Update the product cache
+      queryClient.setQueryData<PRODUCT | undefined>(
+        ["product", data.id],
+        (prev) => {
+          console.log(prev);
+          console.log(data.id);
+          if (prev) {
+            return {
+              ...prev,
+              images: [...prev.images, { ...res.data.results }],
+            };
+          }
+        }
+      );
     } catch (error) {
       handleCloseConfirmationModal?.();
 
@@ -170,17 +207,15 @@ const ProductImage = ({ data }: IProps) => {
       if (responseError) {
         setToastStatus?.({
           fn: () => {
-            resetAdd();
             handleCloseToast?.();
           },
           open: true,
-          text: responseError,
+          text: "Something went wrong",
           type: "error",
         });
       } else {
         setToastStatus?.({
           fn: () => {
-            resetAdd();
             handleCloseToast?.();
           },
           open: true,
@@ -257,6 +292,15 @@ const ProductImage = ({ data }: IProps) => {
               </div>
             );
           })}
+          {galleryProgress !== null && (
+            <div className="img-preview">
+              <img
+                className="loading-image"
+                src={URL.createObjectURL(loadingImage)}
+                alt={`Uploading...`}
+              />
+            </div>
+          )}
         </Grid>
       </PreviewContainer>
 
@@ -278,6 +322,7 @@ const ProductImage = ({ data }: IProps) => {
               accept=".png, .jpg, .jpeg"
               onChange={(file: File | File[]) => {
                 if (!Array.isArray(file)) {
+                  setLoadingImage(file);
                   handleAddImage(file);
                 }
               }}
@@ -341,6 +386,9 @@ const Box = styled.div(
 const PreviewContainer = styled.div(
   ({ theme: { breakpoints, accentColor, green, dangerRed, border } }) => `
   padding:1rem;
+  .loading-image {
+    filter:blur(5px);
+  }
   .img-preview {
     position:relative;
     border-radius:6px;

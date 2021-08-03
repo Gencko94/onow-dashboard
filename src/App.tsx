@@ -1,4 +1,5 @@
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import { ReactQueryDevtools } from "react-query/devtools";
 import {
   QueryClient,
   QueryClientProvider,
@@ -250,6 +251,7 @@ function App() {
                       </Switch>
                     </ApplicationContext>
                   </ThemeProvider>
+                  <ReactQueryDevtools initialIsOpen={false} />
                 </AuthContext>
               </QueryClientProvider>
             </Suspense>

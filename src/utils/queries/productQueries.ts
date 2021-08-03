@@ -63,29 +63,6 @@ export const removeProductImage = async (imageId: number) => {
   );
   return res.data.results;
 };
-export const addProductImage = async ({
-  productId,
-  image,
-}: {
-  productId: number;
-  image: File;
-}) => {
-  const t = localStorage.getItem("dshtid");
-  const config = {
-    headers: {
-      Authorization: t ? `Bearer ${t}` : "",
-    },
-  };
-  const formData = new FormData();
-  formData.append("product_id", productId as any);
-  formData.append("image", image);
-  const res = await axios.post(
-    `${customerUri}/product-images`,
-    formData,
-    config
-  );
-  return res.data.results;
-};
 
 // Edit Product Option
 export const editProductOption = async ({

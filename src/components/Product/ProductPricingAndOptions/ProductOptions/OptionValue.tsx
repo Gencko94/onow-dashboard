@@ -1,17 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
 import { useTranslation } from "react-i18next";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { useMutation } from "react-query";
 
 import styled from "styled-components";
 import useConfirmationModal from "../../../../hooks/useConfirmationModal";
-import useToast from "../../../../hooks/useToast";
 import { OPTION_VALUE } from "../../../../interfaces/products/products";
-import extractError from "../../../../utils/extractError";
-import { deleteProductOptionValue } from "../../../../utils/queries/productQueries";
 import { up } from "../../../../utils/themes";
 import Button from "../../../reusable/Button";
-
 import Flex from "../../../StyledComponents/Flex";
 import Grid from "../../../StyledComponents/Grid";
 import Heading from "../../../StyledComponents/Heading";
@@ -85,39 +80,55 @@ const OptionValue = ({
       </div>
       <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0">
         <div className="field">
-          <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
-            Name En
-          </Heading>
-          <Heading tag="h6" color="subheading">
-            {value.name.en}
-          </Heading>
+          <div className="field-head">
+            <Heading tag="h6" color="heading" weight="bold">
+              Name En
+            </Heading>
+          </div>
+          <div className="field-body">
+            <Heading tag="h6" color="subheading">
+              {value.name.en}
+            </Heading>
+          </div>
         </div>
 
         <div className="field">
-          <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
-            Name Ar
-          </Heading>
-          <Heading tag="h6" color="subheading">
-            {value.name.ar}
-          </Heading>
+          <div className="field-head">
+            <Heading tag="h6" color="heading" weight="bold">
+              Name Ar
+            </Heading>
+          </div>
+          <div className="field-body">
+            <Heading tag="h6" color="subheading">
+              {value.name.ar}
+            </Heading>
+          </div>
         </div>
 
         <div className="field">
-          <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
-            Price
-          </Heading>
-          <Heading tag="h6" color="subheading">
-            {value.price}
-          </Heading>
+          <div className="field-head">
+            <Heading tag="h6" color="heading" weight="bold">
+              Price
+            </Heading>
+          </div>
+          <div className="field-body">
+            <Heading tag="h6" color="subheading">
+              {value.price}
+            </Heading>
+          </div>
         </div>
 
         <div className="field">
-          <Heading tag="h6" color="heading" weight="semibold" mb="0.25rem">
-            Qty
-          </Heading>
-          <Heading tag="h6" color="subheading">
-            {value.quantity ?? "-"}
-          </Heading>
+          <div className="field-head">
+            <Heading tag="h6" color="heading" weight="bold">
+              Qty
+            </Heading>
+          </div>
+          <div className="field-body">
+            <Heading tag="h6" color="subheading">
+              {value.quantity ?? "-"}
+            </Heading>
+          </div>
         </div>
       </Grid>
     </Container>
@@ -140,13 +151,13 @@ const Container = styled.div(
     background-color:${accent2};
   }
   .field {
-    padding:0.75rem;
+   
     border-right: ${border};
     border-bottom: ${border};
   }
   ${up(breakpoints.md)}{
    
-    .head , .field {
+    .head  {
       padding:1rem;
     }
   }

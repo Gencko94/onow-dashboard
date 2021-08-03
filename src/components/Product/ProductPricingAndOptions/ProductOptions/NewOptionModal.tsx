@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import ReactModal from "react-modal";
-import ModalHead from "../../../reusable/ModalHead";
+
+import ModalHead from "../../../Modal/ModalHead";
 import ModalTail from "../../../reusable/ModalTail";
-import { FlexWrapper } from "../../../StyledComponents/Flex";
+
 import { Controller } from "react-hook-form";
 import IconedInput from "../../../reusable/Inputs/IconedInput";
 import Grid from "../../../StyledComponents/Grid";
@@ -12,6 +12,9 @@ import Select from "../../../reusable/Select";
 import IconedNumberInput from "../../../reusable/IconedNumberInput";
 import { SubmitHandler } from "react-hook-form";
 import { PRODUCT_OPTION } from "../../../../interfaces/products/products";
+
+import { ModalWrapper } from "../../../Modal/ModalWrapper";
+import { up } from "../../../../utils/themes";
 const selectTypes = [
   { value: "single", label: "Single Select" },
   { value: "multiple", label: "Multiple Select" },
@@ -20,13 +23,7 @@ const requiredOptions = [
   { value: false, label: "No" },
   { value: true, label: "Yes" },
 ];
-// const modalStyles = {
-//   content: {
-//     inset: "240px",
-//     border: "none",
-//     boxShadow: "0px 4px 7px 2px rgb(213,213,213)",
-//   },
-// };
+
 interface ModalProps {
   /**
    * Function to execute when the confirm button is clicked
@@ -94,17 +91,11 @@ const NewOptionModal = ({
   };
 
   return (
-    <ReactModal
-      isOpen={isOpen}
-      onRequestClose={closeFunction}
-      closeTimeoutMS={200}
-      className="new-option-modal modal"
-    >
+    <Modal>
+      <ModalHead closeFunction={closeFunction} title={title} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Body>
-          <ModalHead closeFunction={closeFunction} title={title} />
-
-          <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem" p={4}>
+          <Grid cols="minmax(200px,1fr)" gap="0.5rem">
             <IconedInput
               Icon={MdSubtitles}
               errors={errors?.name?.en}
@@ -123,6 +114,8 @@ const NewOptionModal = ({
               required
               requiredMessage="Required"
             />
+          </Grid>
+          <Grid cols="minmax(200px,1fr)" gap="1.2rem">
             <Controller
               control={control}
               name="select_type"
@@ -195,21 +188,45 @@ const NewOptionModal = ({
           />
         </Body>
       </form>
-    </ReactModal>
+    </Modal>
   );
 };
 
 export default NewOptionModal;
+const Modal = styled(ModalWrapper)(
+  ({ theme: { breakpoints, shadow, accent1 } }) => `
+  position: fixed;
+  z-index: 20;
+  inset:240px 20px;
+  position:fixed;
+  min-width:300px;
+  border:none;
+  outline:none;
+  z-index:20;
+  background-color:${accent1};
+  ${up(breakpoints.md)}{
+    inset:220px 250px;
+  }
+  ${up(breakpoints.lg)}{
+    inset:220px 350px;
+  }
+  ${up(breakpoints.xl)}{
+    inset:220px 600px;
+  }
+  `
+);
+const Body = styled.div(
+  ({ theme: { breakpoints, border } }) => `
 
-const Body = styled.div`
-  font-family: ${(props) => props.theme.fontFamily};
   width: 100%;
   height: 100%;
   display: grid;
+  padding: 0.75rem;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
-
-  ${FlexWrapper} {
-    border-top: ${(props) => props.theme.border};
+  ${up(breakpoints.md)}{
+   padding:1rem;
   }
-`;
+  
+  `
+);

@@ -1,18 +1,12 @@
 import styled from "styled-components";
-import ReactModal from "react-modal";
-import { Suspense } from "react";
-import Loading from "../../utils/Loading";
-import ModalHead from "./ModalHead";
+
+import ModalHead from "../Modal/ModalHead";
 import ModalTail from "./ModalTail";
-import { FlexWrapper } from "../StyledComponents/Flex";
+
 import Paragraph from "../StyledComponents/Paragraph";
-const modalStyles = {
-  content: {
-    inset: "240px",
-    border: "none",
-    boxShadow: "0px 4px 7px 2px rgb(213,213,213)",
-  },
-};
+import { up } from "../../utils/themes";
+import { ModalWrapper } from "../Modal/ModalWrapper";
+
 interface ModalProps {
   /**
    * Function to execute when the confirm button is clicked
@@ -38,10 +32,7 @@ interface ModalProps {
    * Boolean controlling the modal state
    */
   isOpen: boolean;
-  /**
-   * Custom styles for the modal
-   */
-  styles?: ReactModal.Styles;
+
   /**
    * Success button loading state
    */
@@ -51,21 +42,15 @@ const ConfirmationModal = ({
   closeFunction,
   isOpen,
   title,
-  styles,
   successFunction,
   successButtonText,
   desc,
   isLoading,
 }: ModalProps) => {
   return (
-    <ReactModal
-      isOpen={isOpen}
-      onRequestClose={closeFunction}
-      style={styles}
-      closeTimeoutMS={200}
-    >
+    <Modal>
+      <ModalHead closeFunction={closeFunction} title={title} />
       <Body>
-        <ModalHead closeFunction={closeFunction} title={title} />
         <div className="description">
           <Paragraph>{desc}</Paragraph>
         </div>
@@ -76,23 +61,45 @@ const ConfirmationModal = ({
           isLoading={isLoading}
         />
       </Body>
-    </ReactModal>
+    </Modal>
   );
 };
 
 export default ConfirmationModal;
+const Modal = styled(ModalWrapper)(
+  ({ theme: { breakpoints, shadow, accent1 } }) => `
+  position: fixed;
+  z-index: 20;
+  inset:370px 20px;
+  position:fixed;
+  min-width:300px;
+  border:none;
+  outline:none;
+  z-index:20;
+  background-color:${accent1};
+  ${up(breakpoints.md)}{
+    inset:360px 190px;
+  }
+  ${up(breakpoints.lg)}{
+    inset:360px 325px;
+  }
+  ${up(breakpoints.xl)}{
+    inset:360px 490px;
+  }
+  `
+);
+const Body = styled.div(
+  ({ theme: { breakpoints, border } }) => `
 
-const Body = styled.div`
-  font-family: ${(props) => props.theme.fontFamily};
   width: 100%;
   height: 100%;
   display: grid;
+  padding: 0.75rem;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
-  .description {
-    padding: 1.5rem 1rem;
+  ${up(breakpoints.md)}{
+   padding:1rem;
   }
-  ${FlexWrapper} {
-    border-top: ${(props) => props.theme.border};
-  }
-`;
+  
+  `
+);

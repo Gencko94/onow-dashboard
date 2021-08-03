@@ -11,7 +11,9 @@ import {
   FcDocument,
 } from "react-icons/fc";
 import { useHistory } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
+import Modal from "../../Modal/Modal";
 import SettingsCard from "../../reusable/SettingsCard";
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
@@ -90,12 +92,26 @@ const StoreSection = () => {
           desc="Manage your staff roles"
         />
       </Grid>
-      <StoreMaintenanceModal
+      <Modal
         isOpen={maintenanceModalOpen}
         closeFunction={() => {
           setMaintenanceModalOpen(false);
         }}
-      />
+      >
+        <CSSTransition
+          classNames="product-option-modal"
+          timeout={200}
+          unmountOnExit
+          in={maintenanceModalOpen}
+        >
+          <StoreMaintenanceModal
+            isOpen={maintenanceModalOpen}
+            closeFunction={() => {
+              setMaintenanceModalOpen(false);
+            }}
+          />
+        </CSSTransition>
+      </Modal>
     </Container>
   );
 };

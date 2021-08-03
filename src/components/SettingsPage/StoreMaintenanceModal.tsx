@@ -1,14 +1,15 @@
 import styled from "styled-components";
-import ReactModal from "react-modal";
 
-import ModalHead from "../reusable/ModalHead";
-import { FlexWrapper } from "../StyledComponents/Flex";
+import ModalHead from "../Modal/ModalHead";
+
 import { useMutation, useQueryClient } from "react-query";
 import { toggleMaintenanceMode } from "../../utils/queries/settingsQueries";
 import GithubInput from "../reusable/Inputs/GithubInput";
 import { useContext } from "react";
 import { AuthProvider } from "../../contexts/AuthContext";
 import { USER } from "../../interfaces/auth/auth";
+import { ModalWrapper } from "../Modal/ModalWrapper";
+import { up } from "../../utils/themes";
 
 interface ModalProps {
   /**
@@ -44,14 +45,9 @@ const StoreMaintenanceModal = ({ closeFunction, isOpen }: ModalProps) => {
     await mutateAsync(status);
   };
   return (
-    <ReactModal
-      isOpen={isOpen}
-      onRequestClose={closeFunction}
-      closeTimeoutMS={200}
-      className="modal maintenance-modal"
-    >
+    <Modal>
+      <ModalHead closeFunction={closeFunction} title="Store Maintenance" />
       <Body>
-        <ModalHead closeFunction={closeFunction} title="Store Maintenance" />
         <div className="content">
           <GithubInput
             checked={user!.store.maintenance}
@@ -67,24 +63,49 @@ const StoreMaintenanceModal = ({ closeFunction, isOpen }: ModalProps) => {
           />
         </div>
       </Body>
-    </ReactModal>
+    </Modal>
   );
 };
 
 export default StoreMaintenanceModal;
 
-const Body = styled.div`
-  font-family: ${(props) => props.theme.fontFamily};
+const Modal = styled(ModalWrapper)(
+  ({ theme: { breakpoints, accent1 } }) => `
+  position: fixed;
+  z-index: 20;
+  inset:380px 20px;
+  position:fixed;
+  min-width:300px;
+  border:none;
+  outline:none;
+  z-index:20;
+  background-color:${accent1};
+  ${up(breakpoints.md)}{
+    inset:380px 250px;
+    min-width:400px;
+  }
+  ${up(breakpoints.lg)}{
+    inset:380px 350px;
+  }
+  ${up(breakpoints.xl)}{
+    inset:380px 450px;
+  
+  `
+);
+const Body = styled.div(
+  ({ theme: { breakpoints, border } }) => `
+
   width: 100%;
   height: 100%;
   display: grid;
+  padding: 0.75rem;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr;
-  .content {
-    padding: 1rem;
-  }
 
-  ${FlexWrapper} {
-    border-top: ${(props) => props.theme.border};
+  grid-template-rows: auto 1fr auto;
+  ${up(breakpoints.md)}{
+   
+   padding:1rem;
   }
-`;
+  
+  `
+);

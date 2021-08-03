@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { useMutation } from "react-query";
 import { CSSTransition } from "react-transition-group";
@@ -14,14 +14,16 @@ import {
 } from "../../../../utils/queries/productQueries";
 
 import { up } from "../../../../utils/themes";
+import Modal from "../../../Modal/Modal";
 
 import Button from "../../../reusable/Button";
 import EmptyTable from "../../../reusable/EmptyTable";
 import Flex from "../../../StyledComponents/Flex";
 import Heading from "../../../StyledComponents/Heading";
 import Hr from "../../../StyledComponents/Hr";
-import NewOptionModal, { NEW_OPTION } from "./NewOptionModal";
+import { NEW_OPTION } from "./NewOptionModal";
 import Option from "./Option";
+const NewOptionModal = lazy(() => import("./NewOptionModal"));
 
 interface OptionsListProps {
   productOptions: PRODUCT_OPTION[];
@@ -231,37 +233,44 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
           </div>
         </>
       )}
-      <CSSTransition
-        in={optionModalStatus.open}
-        classNames="menu"
-        timeout={200}
-        unmountOnExit
+      <Modal
+        isOpen={optionModalStatus.open}
+        closeFunction={() => {
+          setOptionModalStatus((prev) => ({ ...prev, open: false }));
+        }}
       >
-        <NewOptionModal
-          title={
-            optionModalStatus.type === "edit" ? "Edit Option" : "New Option"
-          }
-          isOpen={optionModalStatus.open}
-          isLoading={
-            optionModalStatus.type === "edit" ? editLoading : addLoading
-          }
-          closeFunction={() => {
-            setOptionModalStatus((prev) => ({ ...prev, open: false }));
-          }}
-          defaultValues={
-            optionModalStatus.type === "edit"
-              ? options[optionModalStatus.editIndex!]
-              : undefined
-          }
-          successFunction={(vals) => {
-            if (optionModalStatus.type === "edit") {
-              handleEditOption(vals as PRODUCT_OPTION);
-            } else if (optionModalStatus.type === "new") {
-              handleAddOption(vals as NEW_OPTION);
+        <CSSTransition
+          classNames="product-option-modal"
+          timeout={200}
+          unmountOnExit
+          in={optionModalStatus.open}
+        >
+          <NewOptionModal
+            title={
+              optionModalStatus.type === "edit" ? "Edit Option" : "New Option"
             }
-          }}
-        />
-      </CSSTransition>
+            isOpen={optionModalStatus.open}
+            isLoading={
+              optionModalStatus.type === "edit" ? editLoading : addLoading
+            }
+            closeFunction={() => {
+              setOptionModalStatus((prev) => ({ ...prev, open: false }));
+            }}
+            defaultValues={
+              optionModalStatus.type === "edit"
+                ? options[optionModalStatus.editIndex!]
+                : undefined
+            }
+            successFunction={(vals) => {
+              if (optionModalStatus.type === "edit") {
+                handleEditOption(vals as PRODUCT_OPTION);
+              } else if (optionModalStatus.type === "new") {
+                handleAddOption(vals as NEW_OPTION);
+              }
+            }}
+          />
+        </CSSTransition>
+      </Modal>
     </Container>
   );
 };

@@ -20,6 +20,7 @@ import {
   editProductOptionValue,
 } from "../../../../utils/queries/productQueries";
 import { up } from "../../../../utils/themes";
+import Modal from "../../../Modal/Modal";
 import Button from "../../../reusable/Button";
 import EmptyTable from "../../../reusable/EmptyTable";
 import Flex from "../../../StyledComponents/Flex";
@@ -347,37 +348,46 @@ const Option = ({
           })}
         </div>
       )}
-      <CSSTransition
-        in={optionValueModalStatus.open}
-        classNames="menu"
-        timeout={200}
-        unmountOnExit
+      <Modal
+        isOpen={optionValueModalStatus.open}
+        closeFunction={() => {
+          setOptionValueModalStatus((prev) => ({ ...prev, open: false }));
+        }}
       >
-        <NewOptionValueModal
-          title={
-            optionValueModalStatus.type === "edit" ? "Edit Value" : "New Value"
-          }
-          isLoading={
-            optionValueModalStatus.type === "edit" ? editLoading : addLoading
-          }
-          isOpen={optionValueModalStatus.open}
-          defaultValues={
-            optionValueModalStatus.type === "edit"
-              ? values[optionValueModalStatus.editIndex!]
-              : undefined
-          }
-          closeFunction={() => {
-            setOptionValueModalStatus((prev) => ({ ...prev, open: false }));
-          }}
-          successFunction={(vals) => {
-            if (optionValueModalStatus.type === "edit") {
-              handleEditValue(vals as OPTION_VALUE);
-            } else if (optionValueModalStatus.type === "new") {
-              handleAddValue(vals as NEW_OPTION_VALUE);
+        <CSSTransition
+          classNames="product-option-modal"
+          timeout={200}
+          unmountOnExit
+          in={optionValueModalStatus.open}
+        >
+          <NewOptionValueModal
+            title={
+              optionValueModalStatus.type === "edit"
+                ? "Edit Value"
+                : "New Value"
             }
-          }}
-        />
-      </CSSTransition>
+            isLoading={
+              optionValueModalStatus.type === "edit" ? editLoading : addLoading
+            }
+            isOpen={optionValueModalStatus.open}
+            defaultValues={
+              optionValueModalStatus.type === "edit"
+                ? values[optionValueModalStatus.editIndex!]
+                : undefined
+            }
+            closeFunction={() => {
+              setOptionValueModalStatus((prev) => ({ ...prev, open: false }));
+            }}
+            successFunction={(vals) => {
+              if (optionValueModalStatus.type === "edit") {
+                handleEditValue(vals as OPTION_VALUE);
+              } else if (optionValueModalStatus.type === "new") {
+                handleAddValue(vals as NEW_OPTION_VALUE);
+              }
+            }}
+          />
+        </CSSTransition>
+      </Modal>
     </Container>
   );
 };
@@ -421,7 +431,7 @@ const Container = styled.div(
     .head{
       padding:1rem;
     }
-    .field-head,field-body {
+    .field-head, .field-body {
       padding:0.75rem 
     }
   }

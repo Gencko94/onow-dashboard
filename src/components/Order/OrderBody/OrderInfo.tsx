@@ -104,13 +104,13 @@ const OrderInfo = ({ date, orderId, orderStatus }: IProps) => {
           </div>
         </Flex>
       </Grid>
-      <Modal
+      {/* <Modal
         isOpen={modalOpen}
         title="Change order Status"
         closeFunction={() => setModalOpen(false)}
       >
         <ChangeOrderStatusModalBody portal={ref} />
-      </Modal>
+      </Modal> */}
     </Container>
   );
 };
