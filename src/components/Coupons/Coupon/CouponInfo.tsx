@@ -279,11 +279,9 @@ const Container = styled.div(
     border-bottom:${border};
     
   }
-  .box {
-    padding:0.5rem;   
-  }
+  
  ${up(breakpoints.md)}{
-   .head , .box {
+   .head  {
      padding:1rem;
    }
  }

@@ -9,17 +9,23 @@ import "react-color-palette/lib/css/styles.css";
 import { CSSTransition } from "react-transition-group";
 import { useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
-import { useMutation } from "react-query";
-import { editStoreThemeColor } from "../../utils/queries/settingsQueries";
+import { useMutation, useQuery } from "react-query";
+import {
+  editStoreThemeColor,
+  getStoreLayoutSettings,
+} from "../../utils/queries/settingsQueries";
 import useToast from "../../hooks/useToast";
 import Flex from "../../components/StyledComponents/Flex";
 import Button from "../../components/reusable/Button";
 import { up } from "../../utils/themes";
 
 const HomePageAppearance = () => {
+  const { data } = useQuery("store-layout", getStoreLayoutSettings, {
+    suspense: true,
+  });
   const { handleCloseToast, setToastStatus } = useToast();
   const history = useHistory();
-  const [color, setColor] = useColor("hex", "#ce2d2d");
+  const [color, setColor] = useColor("hex", data!.store_theme_color);
   const [colorOpen, setColorOpen] = useState(false);
   const { mutateAsync: updateMutation, isLoading } =
     useMutation(editStoreThemeColor);
@@ -36,7 +42,7 @@ const HomePageAppearance = () => {
     <div>
       <Flex margin="1rem 0">
         <div>
-          <Heading tag="h3" color="heading" mb="0.5rem" weight="bold">
+          <Heading tag="h2" color="heading" mb="0.5rem" weight="bold">
             Website Appearance
           </Heading>
           <Breadcrumbs
@@ -128,16 +134,16 @@ const HomePageAppearance = () => {
         >
           <Card
             onClick={() => {
-              history.push("/settings/website-appearance/store-carousel");
+              history.push("/settings/website-appearance/header-type");
             }}
           >
             <div className="img-wrapper">
               <img src="/images/carousel-demo.png" alt="carousel-demo" />
             </div>
             <Heading tag="h5" color="primary" mb="0.25rem" weight="semibold">
-              Store Carousel
+              Header Type
             </Heading>
-            <p className="desc">Edit Images in Store Carousel</p>
+            <p className="desc">Select your preffered header type</p>
           </Card>
           <Card
             onClick={() => {

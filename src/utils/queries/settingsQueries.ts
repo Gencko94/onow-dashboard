@@ -5,6 +5,7 @@ import {
   STORE_SOCIAL_NETWORK,
   STORE_TECHNICAL_SUPPORT,
 } from "../../interfaces/settings/store-properties/store-properties";
+import { STORE_LAYOUT_SETTINGS } from "../../interfaces/settings/website-appearance/website-appearance";
 
 export const customerUri = "https://new-version.o-now.net/customer-api";
 
@@ -78,6 +79,21 @@ export const toggleMaintenanceMode = async (status: boolean) => {
   );
   return res.data.results;
 };
+export const getStoreLayoutSettings =
+  async (): Promise<STORE_LAYOUT_SETTINGS> => {
+    const t = localStorage.getItem("dshtid");
+    const config = {
+      headers: {
+        Authorization: t ? `Bearer ${t}` : "",
+      },
+    };
+    const res = await axios.get(
+      `${customerUri}/store-theme-info`,
+
+      config
+    );
+    return res.data.results;
+  };
 export const editStoreThemeColor = async (color: string) => {
   const t = localStorage.getItem("dshtid");
   const config = {

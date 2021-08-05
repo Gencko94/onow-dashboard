@@ -5,8 +5,8 @@ import {
   BRANCH_INFO,
   WORKING_HOURS,
 } from "../../interfaces/settings/branches/branches";
+import { customerUri } from "../queries";
 
-export const customerUri = "https://new-version.o-now.net/customer-api";
 export const deleteBranch = async (
   id: string
 ): Promise<{ results: "Deleted" }> => {

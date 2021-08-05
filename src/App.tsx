@@ -61,8 +61,8 @@ const StoreInformation = lazy(
 const WebsiteAppearance = lazy(
   () => import("./pages/SettingsPages/WebsiteAppearance")
 );
-const StoreCarousel = lazy(
-  () => import("./pages/SettingsPages/WebsiteAppearance/StoreCarousel")
+const HeaderType = lazy(
+  () => import("./pages/SettingsPages/WebsiteAppearance/HeaderType")
 );
 const ProductsView = lazy(
   () => import("./pages/SettingsPages/WebsiteAppearance/ProductsView")
@@ -210,8 +210,8 @@ function App() {
                             Component={WebsiteAppearance}
                           />
                           <ProtectedRoute
-                            path="/settings/website-appearance/store-carousel"
-                            Component={StoreCarousel}
+                            path="/settings/website-appearance/header-type"
+                            Component={HeaderType}
                           />
                           <ProtectedRoute
                             path="/settings/website-appearance/products-view"

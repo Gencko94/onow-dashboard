@@ -118,7 +118,7 @@ const BranchesList = () => {
               // activeSortBy={sortBy.field}
               // activeOrder={sortBy.order}
               cols={cols}
-              gap="0.5rem"
+              gap="0"
               gridCols="minmax(70px, 100px) repeat(
                 3,
                 minmax(100px, 1fr)

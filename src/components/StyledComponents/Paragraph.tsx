@@ -15,6 +15,7 @@ interface IProps {
   padding?: string;
   margin?: string;
   weight?: "light" | "regular" | "semibold" | "bold" | "xbold";
+  align?: "center" | "right" | "left";
 }
 
 const Paragraph: FC<IProps> = ({
@@ -25,6 +26,7 @@ const Paragraph: FC<IProps> = ({
   color,
   margin,
   weight = "regular",
+  align,
 }) => {
   return (
     <Wrapper
@@ -39,6 +41,7 @@ const Paragraph: FC<IProps> = ({
       weight={weight}
       fontSize={fontSize}
       margin={margin}
+      align={align}
     >
       {children}
     </Wrapper>
@@ -58,6 +61,7 @@ export const Wrapper = styled.p<{
   mb?: string;
   weight: "light" | "regular" | "semibold" | "bold" | "xbold";
   fontSize: string;
+  align?: "center" | "right" | "left";
 }>(
   ({
     theme: {
@@ -75,6 +79,7 @@ export const Wrapper = styled.p<{
     mb,
     weight,
     fontSize,
+    align,
   }) => `
   color: ${
     color === "textPrimary"
@@ -92,6 +97,7 @@ export const Wrapper = styled.p<{
       : "inherit"
   };
   margin:${margin};
+  text-align:${align};
   font-weight:${font[weight]};
   margin-bottom: ${mb ? mb : ""};
   padding:var(--padding,0);

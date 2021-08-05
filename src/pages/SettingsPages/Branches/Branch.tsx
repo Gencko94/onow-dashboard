@@ -9,6 +9,7 @@ import BranchInformation from "../../../components/SettingsPage/StoreBranches/Br
 import BranchLocation from "../../../components/SettingsPage/StoreBranches/Branches/BranchLocation";
 import BranchWorkingHours from "../../../components/SettingsPage/StoreBranches/Branches/BranchWorkingHours";
 import Flex from "../../../components/StyledComponents/Flex";
+import Heading from "../../../components/StyledComponents/Heading";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import {
@@ -248,23 +249,30 @@ const Branch = () => {
   };
   return (
     <div>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الإعدادات", en: "Settings" },
-              target: "/settings",
-            },
-            {
-              name: { ar: "فروع المتجر", en: "Store Branches" },
-              target: "/settings/branches",
-            },
-            {
-              name: { ar: "بيانات الفرع", en: "Branch Details" },
-              target: "",
-            },
-          ]}
-        />
+      <Flex items="center" justify="space-between">
+        <div>
+          <Heading margin="1rem 0" tag="h2" weight="bold">
+            Branch
+          </Heading>
+          <Breadcrumbs
+            withoutTitle
+            children={[
+              {
+                name: { ar: "الإعدادات", en: "Settings" },
+                target: "/settings",
+              },
+              {
+                name: { ar: "فروع المتجر", en: "Store Branches" },
+                target: "/settings/branches",
+              },
+              {
+                name: { ar: "بيانات الفرع", en: "Branch Details" },
+                target: "",
+              },
+            ]}
+          />
+        </div>
+
         <Flex justify="flex-end">
           <Button
             withTransition
@@ -287,7 +295,7 @@ const Branch = () => {
             Delete Branch
           </Button>
         </Flex>
-      </HeaderContainer>
+      </Flex>
       <form onSubmit={infoMethods.handleSubmit(handleEditBranchInfo)}>
         <FormProvider {...infoMethods}>
           <BranchInformation />

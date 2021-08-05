@@ -1,29 +1,35 @@
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 
 import BranchesList from "../../components/SettingsPage/StoreBranches/BranchesList";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
 import { useHistory } from "react-router-dom";
 import Flex from "../../components/StyledComponents/Flex";
 import { BiPlus } from "react-icons/bi";
 import Button from "../../components/reusable/Button";
+import Heading from "../../components/StyledComponents/Heading";
 
 const Branches = () => {
   const history = useHistory();
   return (
     <div>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الإعدادات", en: "Settings" },
-              target: "/settings",
-            },
-            {
-              name: { ar: "فروع المتجر", en: "Store Branches" },
-              target: "",
-            },
-          ]}
-        />
+      <Flex items="center" justify="space-between">
+        <div>
+          <Heading tag="h2" weight="bold" margin="1rem 0">
+            Branches
+          </Heading>
+          <Breadcrumbs
+            withoutTitle
+            children={[
+              {
+                name: { ar: "الإعدادات", en: "Settings" },
+                target: "/settings",
+              },
+              {
+                name: { ar: "فروع المتجر", en: "Store Branches" },
+                target: "",
+              },
+            ]}
+          />
+        </div>
         <Flex justify="flex-end">
           <Button
             padding="0.5rem"
@@ -39,7 +45,7 @@ const Branches = () => {
             Create new Branch
           </Button>
         </Flex>
-      </HeaderContainer>
+      </Flex>
 
       <BranchesList />
     </div>

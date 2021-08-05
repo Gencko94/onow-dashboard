@@ -1,29 +1,32 @@
-import { Controller, useForm } from "react-hook-form";
-
 import styled from "styled-components";
 import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
-import HeaderContainer from "../../../components/reusable/HeaderContainer";
-import Checkbox from "../../../components/reusable/Inputs/Checkbox";
 
 import Flex from "../../../components/StyledComponents/Flex";
 import Zoom from "react-medium-image-zoom";
 import Grid from "../../../components/StyledComponents/Grid";
 import Heading from "../../../components/StyledComponents/Heading";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+
 import "react-medium-image-zoom/dist/styles.css";
-import RadioButton from "../../../components/reusable/RadioButton";
+
 import { FcOk } from "react-icons/fc";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import useToast from "../../../hooks/useToast";
-import { editStoreProductsView } from "../../../utils/queries/settingsQueries";
+import {
+  editStoreProductsView,
+  getStoreLayoutSettings,
+} from "../../../utils/queries/settingsQueries";
 import Button from "../../../components/reusable/Button";
 import { useState } from "react";
 
 const ProductsView = () => {
-  const { control } = useForm();
   const { handleCloseToast, setToastStatus } = useToast();
-  const [view, setView] = useState<"grid" | "list" | "bar">("grid");
+  const { data } = useQuery("store-layout", getStoreLayoutSettings, {
+    suspense: true,
+  });
+  const [view, setView] = useState<"grid" | "list" | "bar">(() => {
+    return data!.products_view;
+  });
   const { mutateAsync: updateMutation, isLoading } = useMutation(
     editStoreProductsView
   );
@@ -40,7 +43,7 @@ const ProductsView = () => {
     <Container>
       <Flex margin="1rem 0">
         <div>
-          <Heading tag="h3" color="heading" mb="0.5rem" weight="bold">
+          <Heading tag="h2" color="heading" mb="0.5rem" weight="bold">
             Products View
           </Heading>
           <Breadcrumbs

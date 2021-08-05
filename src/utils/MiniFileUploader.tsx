@@ -82,7 +82,6 @@ const MiniFileUploader = ({
           {progress && progress !== 0 && (
             <FilePreviewContainer>
               <ProgressContainer>
-                {/* <Flex items="center" justify="center"> */}
                 <CircularProgressbar
                   strokeWidth={2}
                   value={progress}
@@ -94,7 +93,6 @@ const MiniFileUploader = ({
                   })}
                   text={`${progress}% Uploaded`}
                 />
-                {/* </Flex> */}
               </ProgressContainer>
             </FilePreviewContainer>
           )}

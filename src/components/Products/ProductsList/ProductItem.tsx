@@ -174,11 +174,11 @@ const Container = styled.div<{ selected: boolean }>`
       minmax(140px, 1fr)
     );
   background-color: ${(props) =>
-    props.selected ? props.theme.accentColor : "#fff"};
-  /* gap: 0.5rem; */
+    props.selected ? props.theme.accent2 : props.theme.accent1};
+
   width: 100%;
   &:hover {
-    background-color: ${(props) => props.theme.accent1};
+    background-color: ${(props) => props.theme.accent2};
   }
   .img {
     height: 50px;

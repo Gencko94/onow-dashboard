@@ -1,4 +1,4 @@
-import { lazy, useState } from "react";
+import React, { lazy, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { useMutation } from "react-query";
 import { CSSTransition } from "react-transition-group";
@@ -217,17 +217,16 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
           <div className="list">
             {options.map((option, index) => {
               return (
-                <>
+                <React.Fragment key={option.id}>
                   <Option
                     productId={productId}
-                    key={option.id}
                     option={option}
                     index={index}
                     setOptionModalStatus={setOptionModalStatus}
                     handleDeleteOption={handleDeleteOption}
                   />
                   {index !== options.length - 1 && <Hr m="2.5" />}
-                </>
+                </React.Fragment>
               );
             })}
           </div>

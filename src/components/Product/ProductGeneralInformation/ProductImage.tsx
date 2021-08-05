@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
+import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import { Controller, useForm } from "react-hook-form";
 
 import { IoMdCloseCircle } from "react-icons/io";
@@ -73,7 +74,7 @@ const ProductImage = ({ data }: IProps) => {
         config
       );
       setProgress(null);
-      // setValue("image", image);
+
       handleCloseConfirmationModal?.();
       setToastStatus?.({
         fn: () => {
@@ -299,6 +300,19 @@ const ProductImage = ({ data }: IProps) => {
                 src={URL.createObjectURL(loadingImage)}
                 alt={`Uploading...`}
               />
+              <div className="progress-container">
+                <CircularProgressbar
+                  strokeWidth={2}
+                  value={galleryProgress}
+                  maxValue={100}
+                  styles={buildStyles({
+                    pathColor: "#f78f21",
+                    textSize: "0.7rem",
+                    textColor: "#f78f21",
+                  })}
+                  text={`${progress}% Uploaded`}
+                />
+              </div>
             </div>
           )}
         </Grid>
@@ -387,7 +401,16 @@ const PreviewContainer = styled.div(
   ({ theme: { breakpoints, accentColor, green, dangerRed, border } }) => `
   padding:1rem;
   .loading-image {
-    filter:blur(5px);
+    filter:blur(4px) brightness(0.9);
+    
+  }
+  .progress-container {
+   position:absolute;
+   inset:0;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  padding:4rem;
   }
   .img-preview {
     position:relative;

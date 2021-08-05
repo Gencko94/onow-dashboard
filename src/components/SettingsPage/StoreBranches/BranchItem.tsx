@@ -11,6 +11,7 @@ import Popover from "../../reusable/Popover";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import { FlexWrapper } from "../../StyledComponents/Flex";
 import { useTranslation } from "react-i18next";
+import Paragraph from "../../StyledComponents/Paragraph";
 
 interface IProps {
   branch: BRANCH;
@@ -47,13 +48,21 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
   return (
     <Container>
       <div className="field">
-        <h6>{branch.id}</h6>
+        <Paragraph fontSize="0.9rem" weight="semibold">
+          {branch.id}
+        </Paragraph>
       </div>
       <div className="field">
-        <h6>{branch.name[language]}</h6>
+        <Paragraph fontSize="0.9rem" weight="semibold">
+          {branch.name[language]}
+        </Paragraph>
       </div>
 
-      <div className="field">{branch.contact_info.mobile}</div>
+      <div className="field">
+        <Paragraph fontSize="0.9rem" weight="semibold">
+          {branch.contact_info.mobile}
+        </Paragraph>
+      </div>
       <div className="field">{renderStatus(branch.active)}</div>
       <div className="field">
         <Button
@@ -138,10 +147,10 @@ const Container = styled.div`
       210px,
       1.5fr
     );
-  background-color: #fff;
-  gap: 0.5rem;
+
+  gap: 0;
   width: 100%;
-  border-bottom: ${(props) => props.theme.border};
+
   &:hover {
     background-color: ${(props) => props.theme.accentColor};
   }
@@ -152,6 +161,7 @@ const Container = styled.div`
     object-fit: cover;
   }
   .field {
+    border-bottom: ${(props) => props.theme.border};
     display: flex;
     align-items: center;
     justify-content: center;
