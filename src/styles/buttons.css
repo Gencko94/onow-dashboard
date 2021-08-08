@@ -1,0 +1,91 @@
+.btn {
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  padding: 8px 12px;
+  transition: all 100ms ease;
+}
+.btn-lg-default {
+  padding: 10px 16px;
+  font-size: 16px;
+}
+.btn-md-default {
+  padding: 8px 12px;
+  font-size: 15px;
+}
+.btn-sm-default {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+.btn-xs-default {
+  font-size: 12px;
+  padding: 2px 8px;
+}
+.btn-lg-ghost {
+  padding: 9px 15px;
+  font-size: 15px;
+}
+.btn-md-ghost {
+  padding: 7px 11px;
+  font-size: 14px;
+}
+.btn-sm-ghost {
+  padding: 4px 9px;
+  font-size: 13px;
+}
+.btn-xs-ghost {
+  padding: 1px 7px;
+  font-size: 11px;
+}
+.btn-ghost {
+  border-style: solid;
+  border-width: 1px;
+}
+.ripple-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  content: "";
+  display: block;
+  /* pointer-events: none; */
+}
+/* Icon Button */
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 100ms ease;
+}
+.icon-btn-lg-default {
+  padding: 8px;
+}
+.icon-btn-md-default {
+  padding: 6px;
+}
+.icon-btn-sm-default {
+  padding: 4px;
+}
+.icon-btn-xs-default {
+  padding: 2px;
+}
+.icon-btn-lg-ghost {
+  padding: 8px;
+}
+.icon-btn-md-ghost {
+  padding: 6px;
+}
+.icon-btn-sm-ghost {
+  padding: 4px;
+}
+.icon-btn-xs-ghost {
+  padding: 2px;
+}
+
+@keyframes spinner {
+  100% {
+    transform: rotate(360deg);
+  }
+}
