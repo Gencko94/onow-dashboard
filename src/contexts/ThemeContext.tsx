@@ -31,7 +31,7 @@ const ThemeProvider: React.FC = ({ children }) => {
     () =>
       i18n.language === "ar"
         ? "Cairo"
-        : "Inter,-apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif",
+        : "-apple-system, system-ui, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif",
     [i18n.language]
   );
 
