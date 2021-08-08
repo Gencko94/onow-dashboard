@@ -135,15 +135,8 @@ const CreateNewCoupon = () => {
 
         <Button
           isLoading={isLoading}
-          disabled={isLoading}
-          bg="green"
-          padding="0.5rem"
-          shadow
+          color="green"
           type="submit"
-          textSize="0.9rem"
-          Icon={BiPlus}
-          iconSize={25}
-          withRipple
           withTransition
         >
           Submit

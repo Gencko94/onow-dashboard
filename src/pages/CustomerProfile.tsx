@@ -151,12 +151,7 @@ const CustomerProfile = () => {
           <Flex justify="flex-end">
             <Button
               withTransition
-              textSize="0.9rem"
-              padding="0.5rem"
-              bg="danger"
-              withRipple
-              Icon={RiDeleteBinLine}
-              iconSize={20}
+              color="danger"
               isLoading={deleteLoading}
               disabled={deleteLoading}
               onClick={() =>
@@ -184,11 +179,8 @@ const CustomerProfile = () => {
           <Button
             withTransition
             type="submit"
-            padding="0.5rem"
-            bg="green"
-            withRipple
+            color="green"
             margin="0 1rem"
-            textSize="0.9rem"
             isLoading={editLoading}
             disabled={editLoading}
           >

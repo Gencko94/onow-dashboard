@@ -75,7 +75,7 @@ button,
 textarea,
 select {
   font: inherit;
-   background: none;
+  background: none;
   -webkit-font-smoothing: inherit;
   -moz-osx-font-smoothing: inherit;
 }

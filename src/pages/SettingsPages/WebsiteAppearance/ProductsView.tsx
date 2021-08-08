@@ -174,8 +174,7 @@ const ProductsView = () => {
       </Grid>
       <Flex margin="1rem 0" justify="center">
         <Button
-          bg="green"
-          padding="0.5rem"
+          color="green"
           onClick={() => handleChangeView(view)}
           isLoading={isLoading}
         >

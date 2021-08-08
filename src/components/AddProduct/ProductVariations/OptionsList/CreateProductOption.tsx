@@ -172,18 +172,14 @@ const CreateProductOption = ({ option, index, removeOption }: IProps) => {
           })}
           <Flex items="center" justify="center">
             <Button
-              withRipple
               withTransition
-              bg="primary"
-              padding="0.5rem"
+              color="primary"
               onClick={() =>
                 append(
                   { name: { ar: "", en: "" }, price: "", quantity: 0, sku: "" },
                   { shouldFocus: false }
                 )
               }
-              textSize="0.9rem"
-              Icon={BiPlus}
             >
               Add New Value
             </Button>

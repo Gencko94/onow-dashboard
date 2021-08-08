@@ -68,8 +68,7 @@ const InlineFileUploader = ({
           onClick={() => {
             inputRef?.current?.click();
           }}
-          bg="green"
-          padding="0.5rem"
+          color="green"
         >
           Browse files
         </Button>

@@ -24,13 +24,8 @@ const ErrorBoundaryComponent = ({ resetErrorBoundary, error }: IProps) => {
       </Heading>
       <Button
         margin="1rem 0"
-        bg="green"
-        padding="0.5rem"
-        iconSize={20}
-        Icon={AiOutlineReload}
-        textSize="0.9rem"
+        color="green"
         onClick={resetErrorBoundary}
-        withRipple
         withTransition
       >
         Try again

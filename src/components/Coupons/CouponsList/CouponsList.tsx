@@ -164,12 +164,8 @@ const CouponsList = () => {
           <p>Selected Rows ({selectedRows.length}) : </p>
           <Flex margin="0 0.5rem">
             <Button
-              width="100%"
               disabled={selectedRows.length === 0 || multipleDeleteLoading}
-              bg="danger"
-              padding="0.25rem"
-              textSize="0.8rem"
-              withRipple
+              color="danger"
               withTransition
               isLoading={multipleDeleteLoading}
               onClick={() => {
@@ -241,10 +237,7 @@ const CouponsList = () => {
               <Button
                 isLoading={isFetchingNextPage}
                 disabled={isFetchingNextPage}
-                withRipple
-                bg="green"
-                padding="0.25rem 0.5rem"
-                textSize="0.8rem"
+                color="green"
                 onClick={() => {
                   fetchNextPage();
                 }}

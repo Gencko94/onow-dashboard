@@ -28,16 +28,12 @@ const Toast = ({ text, btnText, closeFunction, type }: IProps) => {
 
         <Flex justify="flex-end">
           <Button
-            withRipple
+            size="sm"
             onClick={(e) => {
               e.stopPropagation();
               closeFunction();
             }}
-            color="#fff"
-            bg="transparent"
             hoverBg="#f8f8f83b"
-            padding="0.25rem"
-            textSize="0.8rem"
           >
             {btnText}
           </Button>

@@ -68,11 +68,6 @@ const CustomerItem = ({
             <ClickAwayListener onClickAway={() => setActionsMenuOpen(false)}>
               <Popover closeFunction={() => setActionsMenuOpen(false)}>
                 <Button
-                  padding="0.5rem"
-                  bg="transparent"
-                  textSize="0.8rem"
-                  Icon={RiDeleteBinLine}
-                  iconSize={15}
                   onClick={(e) => {
                     e.stopPropagation();
                     setConfirmationModalStatus?.({
@@ -90,11 +85,8 @@ const CustomerItem = ({
             </ClickAwayListener>
           </CSSTransition>
           <Button
-            bg="primary"
-            padding="0.5rem"
-            textSize="0.7rem"
+            color="primary"
             margin="0 0.5rem"
-            withRipple
             withTransition
             onClick={() => {
               history.push(`/customers/${customer.id}`);

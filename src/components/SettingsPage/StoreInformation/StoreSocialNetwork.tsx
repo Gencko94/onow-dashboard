@@ -104,9 +104,7 @@ const StoreSocialNetwork = ({ data }: StoreSocialNetworkProps) => {
             isLoading={isLoading}
             disabled={isLoading}
             type="submit"
-            bg="green"
-            padding="0.5rem"
-            withRipple
+            color="green"
             withTransition
           >
             Save changes

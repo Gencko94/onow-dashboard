@@ -13,14 +13,9 @@ const CouponsPanel = () => {
         Coupons
       </Heading>
       <Button
-        bg="green"
+        color="green"
         onClick={() => history.push("/coupons/create")}
-        padding="0.5rem"
-        withRipple
-        Icon={IoAddOutline}
-        iconSize={25}
         withTransition
-        textSize="0.9rem"
       >
         Create new Coupon
       </Button>

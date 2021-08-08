@@ -139,13 +139,10 @@ const Login = () => {
               <ErrorMessage>{errors.password?.message}</ErrorMessage>
             </InputContainer> */}
             <Button
-              width="100%"
-              bg="primary"
-              padding="0.5rem"
+              color="primary"
               type="submit"
               isLoading={isSubmitting}
               disabled={isSubmitting}
-              withRipple
               withTransition
             >
               Login

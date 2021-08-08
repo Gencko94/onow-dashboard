@@ -89,12 +89,7 @@ const CreateNewBranch = () => {
         />
         <Flex justify="flex-end">
           <Button
-            padding="0.5rem"
-            textSize="0.9rem"
-            bg="green"
-            Icon={BiPlus}
-            iconSize={25}
-            withRipple
+            color="green"
             withTransition
             isLoading={isLoading}
             disabled={isLoading}

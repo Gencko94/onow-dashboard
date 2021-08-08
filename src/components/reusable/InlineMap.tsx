@@ -207,12 +207,7 @@ const InlineMap = ({ mapCenter, setValue, name }: IProps) => {
       )}
       <MapIcon>
         <Button
-          bg="primary"
-          withRipple
-          padding="0.25rem"
-          textSize="0.8rem"
-          Icon={BiCurrentLocation}
-          iconSize={20}
+          color="primary"
           onClick={() =>
             getCurrentLocation(
               ({ lat, lng }) => {

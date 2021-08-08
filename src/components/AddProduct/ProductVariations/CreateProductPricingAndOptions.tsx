@@ -72,27 +72,17 @@ const CreateProductPricingAndOptions = () => {
       <Container onSubmit={methods.handleSubmit(onSubmit, onError)}>
         <Flex justify="flex-end">
           <Button
-            bg="blue"
+            color="blue"
             onClick={() => {
               updateData?.(methods.watch());
               setActiveTab?.(1);
             }}
-            padding="0.5rem"
-            textSize="0.9rem"
             margin="0 0.5rem"
-            withRipple
             withTransition
           >
             Back
           </Button>
-          <Button
-            withRipple
-            withTransition
-            bg="blue"
-            type="submit"
-            padding="0.5rem"
-            textSize="0.9rem"
-          >
+          <Button withTransition color="blue" type="submit">
             Next
           </Button>
         </Flex>

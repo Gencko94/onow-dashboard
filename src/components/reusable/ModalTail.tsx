@@ -39,33 +39,19 @@ const ModalTail = ({
   return (
     <Container>
       <Button
-        bg="green"
-        withRipple
+        color="green"
         withTransition
-        padding="0.5rem 0.25rem"
-        Icon={BsCheck}
         margin="0 0.5rem"
         type={btnType}
         onClick={() => {
           successCb();
         }}
-        textSize="0.9rem"
-        iconSize={22}
         isLoading={isLoading}
         disabled={isLoading}
       >
         {btnText}
       </Button>
-      <Button
-        iconSize={22}
-        bg="danger"
-        withRipple
-        textSize="0.9rem"
-        withTransition
-        padding="0.5rem 0.25rem"
-        Icon={MdClose}
-        onClick={() => closeFunction()}
-      >
+      <Button color="danger" withTransition onClick={() => closeFunction()}>
         Cancel
       </Button>
     </Container>

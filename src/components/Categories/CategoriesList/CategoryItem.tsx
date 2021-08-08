@@ -17,6 +17,7 @@ import DefaultImage from "../../reusable/DefaultImage";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import CheckToggle from "../../reusable/CheckToggle";
 import Heading from "../../StyledComponents/Heading";
+import IconButton from "../../reusable/IconButton";
 interface IProps {
   category: CATEGORY;
   handleDeleteCategory: (id: number) => void;
@@ -43,7 +44,7 @@ const CategoryItem = ({
   return (
     <>
       <Container>
-        <div className="btns-container">
+        <div className="btns-container field">
           {category.children.length > 0 && (
             <button
               onClick={(e) => {
@@ -105,9 +106,10 @@ const CategoryItem = ({
                 setActionsMenuOpen(true);
               }}
             >
-              <button className="icon">
-                <BsThreeDotsVertical size={18} />
-              </button>
+              <IconButton
+                Icon={BsThreeDotsVertical}
+                textColor="primary"
+              ></IconButton>
               <CSSTransition
                 in={actionsMenuOpen}
                 classNames="menu"
@@ -116,11 +118,6 @@ const CategoryItem = ({
               >
                 <Popover closeFunction={() => setActionsMenuOpen(false)}>
                   <Button
-                    padding="0.5rem"
-                    bg="transparent"
-                    textSize="0.8rem"
-                    Icon={RiDeleteBinLine}
-                    iconSize={15}
                     onClick={(e) => {
                       e.stopPropagation();
                       setActionsMenuOpen(false);
@@ -138,11 +135,9 @@ const CategoryItem = ({
                 </Popover>
               </CSSTransition>
               <Button
-                bg="primary"
-                padding="0.5rem"
-                textSize="0.7rem"
-                withRipple
+                color="primary"
                 withTransition
+                size="sm"
                 margin="0 0.25rem"
                 onClick={() => {
                   history.push(`/categories/${category.id}`);
@@ -218,20 +213,7 @@ const Container = styled.div`
   }
 `;
 
-const ButtonsContainer = styled.div`
-  button.icon {
-    display: inline-block;
-    cursor: pointer;
-    padding: 0.25rem;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    transition: all 75ms ease;
-    &:hover {
-      background-color: #e6e6e6;
-    }
-  }
-`;
+const ButtonsContainer = styled.div``;
 const ActionButtonContainer = styled(FlexWrapper)`
   position: relative;
   align-items: center;

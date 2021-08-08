@@ -186,15 +186,11 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
             Options
           </Heading>
           <Button
-            withRipple
             withTransition
-            bg="green"
-            padding="0.25rem 0.5rem"
+            color="green"
             onClick={() => {
               setOptionModalStatus({ open: true, type: "new" });
             }}
-            textSize="0.9rem"
-            Icon={BiPlus}
           >
             Add Another Option
           </Button>

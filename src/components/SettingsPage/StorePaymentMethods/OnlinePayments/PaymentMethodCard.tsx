@@ -19,8 +19,7 @@ const PaymentMethodCard = ({ gateway }: IProps) => {
         <img src={gateway.logo} alt={gateway.name.en} />
         <div className="buttons">
           <Button
-            bg="green"
-            padding="0.5rem 0.5rem"
+            color="green"
             withTransition
             onClick={() =>
               history.push(
@@ -30,9 +29,7 @@ const PaymentMethodCard = ({ gateway }: IProps) => {
           >
             Create Bookeey Account
           </Button>
-          <Button bg="primary" padding="0.5rem 0.5rem">
-            Link Existing Bookeey Account
-          </Button>
+          <Button color="primary">Link Existing Bookeey Account</Button>
         </div>
       </div>
       <div className="info">

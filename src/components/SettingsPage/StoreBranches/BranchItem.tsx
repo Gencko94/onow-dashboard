@@ -66,11 +66,8 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
       <div className="field">{renderStatus(branch.active)}</div>
       <div className="field">
         <Button
-          bg="primary"
-          padding="0.5rem"
-          textSize="0.7rem"
+          color="primary"
           margin="0 0.5rem"
-          withRipple
           withTransition
           onClick={() => {
             history.push(`/settings/branches/branch/${branch.id}`);
@@ -79,11 +76,8 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
           Edit
         </Button>
         <Button
-          bg="blue"
-          padding="0.5rem"
-          textSize="0.7rem"
+          color="blue"
           margin="0 0.5rem"
-          withRipple
           withTransition
           onClick={() => {
             history.push(`/settings/branches/branch/${branch.id}`);
@@ -112,11 +106,6 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
           >
             <Popover closeFunction={() => setActionsMenuOpen(false)}>
               <Button
-                padding="0.5rem"
-                bg="transparent"
-                textSize="0.8rem"
-                Icon={RiDeleteBinLine}
-                iconSize={15}
                 onClick={(e) => {
                   setActionsMenuOpen(false);
                   e.stopPropagation();

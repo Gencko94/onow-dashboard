@@ -7,6 +7,7 @@ import ClickAwayListener from "react-click-away-listener";
 import { FiPower } from "react-icons/fi";
 import Popover from "../../reusable/Popover";
 import Button from "../../reusable/Button";
+import IconButton from "../../reusable/IconButton";
 const SideUser = () => {
   const { user, logOut } = useContext(AuthProvider);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,8 +18,14 @@ const SideUser = () => {
         <img className="img" src="/images/user.jpg" alt="user" />
         <p className="name">{`${user?.first_name} ${user?.last_name}`}</p>
       </div>
-      <button onClick={() => setMenuOpen(true)} className="menu-toggle">
-        <BiDotsVerticalRounded size={22} />
+      <div className="menu">
+        <IconButton
+          textColor="primaryContrast"
+          circle
+          noRipple
+          onClick={() => setMenuOpen(true)}
+          Icon={BiDotsVerticalRounded}
+        ></IconButton>
         <CSSTransition
           in={menuOpen}
           classNames="menu"
@@ -28,11 +35,6 @@ const SideUser = () => {
           <ClickAwayListener onClickAway={() => setMenuOpen(false)}>
             <Popover closeFunction={() => setMenuOpen(false)}>
               <Button
-                padding="0.5rem"
-                bg="transparent"
-                textSize="0.8rem"
-                Icon={FiPower}
-                iconSize={15}
                 onClick={(e) => {
                   logOut?.();
                 }}
@@ -42,13 +44,13 @@ const SideUser = () => {
             </Popover>
             {/* <ul className="menu">
               <button onClick={() => logOut?.()} className="menu-item">
-                <FiPower />
-                <p>Logout</p>
+              <FiPower />
+              <p>Logout</p>
               </button>
             </ul> */}
           </ClickAwayListener>
         </CSSTransition>
-      </button>
+      </div>
     </Container>
   );
 };
@@ -86,6 +88,9 @@ const Container = styled.div`
     justify-content: center;
     position: relative;
     color: ${(props) => props.theme.textPrimaryContrast};
+  }
+  .menu {
+    position: relative;
   }
   /* .menu {
     position: absolute;

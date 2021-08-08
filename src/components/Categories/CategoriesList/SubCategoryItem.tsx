@@ -120,11 +120,6 @@ const SubCategoryItem = ({
               >
                 <Popover closeFunction={() => setActionsMenuOpen(false)}>
                   <Button
-                    padding="0.5rem"
-                    bg="transparent"
-                    textSize="0.8rem"
-                    Icon={RiDeleteBinLine}
-                    iconSize={15}
                     onClick={(e) => {
                       e.stopPropagation();
                       setActionsMenuOpen(false);
@@ -142,10 +137,7 @@ const SubCategoryItem = ({
                 </Popover>
               </CSSTransition>
               <Button
-                bg="primary"
-                padding="0.5rem"
-                textSize="0.7rem"
-                withRipple
+                color="primary"
                 withTransition
                 margin="0 0.25rem"
                 onClick={() => {

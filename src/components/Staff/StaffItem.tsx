@@ -62,12 +62,7 @@ const StaffItem = ({ member, handleDeleteStaffMember }: IProps) => {
             >
               <Popover closeFunction={() => setActionsMenuOpen(false)}>
                 <Button
-                  padding="0.5rem"
-                  bg="transparent"
                   hoverBg="#b72b2b"
-                  textSize="0.8rem"
-                  Icon={RiDeleteBinLine}
-                  iconSize={15}
                   onClick={(e) => {
                     e.stopPropagation();
 

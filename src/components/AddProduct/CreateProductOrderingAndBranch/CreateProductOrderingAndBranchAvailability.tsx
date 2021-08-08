@@ -67,27 +67,21 @@ const CreateProductOrderingAndBranchAvailability = ({
         <Flex justify="flex-end">
           <Button
             margin="0 0.5rem"
-            bg="blue"
-            padding=" 0.5rem"
-            textSize="0.9rem"
+            color="blue"
             onClick={() => {
               updateData?.(methods.watch());
               setActiveTab?.(2);
             }}
-            withRipple
             withTransition
           >
             Back
           </Button>
           <Button
-            withRipple
             withTransition
             isLoading={formLoading}
             disabled={formLoading}
             type="submit"
-            bg="green"
-            padding=" 0.5rem"
-            textSize="0.9rem"
+            color="green"
             onClick={() => {
               methods.handleSubmit(onSubmit, onError);
             }}

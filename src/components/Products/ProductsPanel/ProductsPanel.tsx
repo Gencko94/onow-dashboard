@@ -5,6 +5,8 @@ import Flex from "../../StyledComponents/Flex";
 import Button from "../../reusable/Button";
 import { BiPlus } from "react-icons/bi";
 import Heading from "../../StyledComponents/Heading";
+import { IoMdAdd } from "react-icons/io";
+import IconWrapper from "../../reusable/Icon";
 const ProductsPanel = () => {
   const history = useHistory();
   return (
@@ -14,14 +16,11 @@ const ProductsPanel = () => {
       </Heading>
       <Button
         onClick={() => history.push("/products/product/create")}
-        bg="green"
-        padding="0.5rem"
-        textSize="0.9rem"
-        // text="Create New Product"
-        withRipple
+        color="green"
         withTransition
-        Icon={BiPlus}
+        size="lg"
       >
+        <IconWrapper Icon={IoMdAdd} />
         Create New Product
       </Button>
       {/* <ProductsPanelActions /> */}

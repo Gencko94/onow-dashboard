@@ -13,15 +13,7 @@ const CustomersPanel = ({ setModalOpen }: IProps) => {
       <Heading tag="h2" weight="bold">
         Customers
       </Heading>
-      <Button
-        Icon={BsPlus}
-        bg="green"
-        padding="0.5rem"
-        onClick={() => setModalOpen(true)}
-        withRipple
-        textSize="0.9rem"
-        withTransition
-      >
+      <Button color="green" onClick={() => setModalOpen(true)} withTransition>
         Add New Customer
       </Button>
     </Flex>

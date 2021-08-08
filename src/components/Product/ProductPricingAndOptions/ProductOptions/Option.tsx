@@ -23,6 +23,7 @@ import { up } from "../../../../utils/themes";
 import Modal from "../../../Modal/Modal";
 import Button from "../../../reusable/Button";
 import EmptyTable from "../../../reusable/EmptyTable";
+import IconWrapper from "../../../reusable/Icon";
 import Flex from "../../../StyledComponents/Flex";
 import Grid from "../../../StyledComponents/Grid";
 import Heading from "../../../StyledComponents/Heading";
@@ -214,10 +215,7 @@ const Option = ({
           </Heading>
           <Flex justify="center" items="center">
             <Button
-              iconSize={25}
-              Icon={AiFillEdit}
-              padding="0.5rem"
-              bg="blue"
+              color="blue"
               onClick={() => {
                 setOptionModalStatus({
                   open: true,
@@ -226,13 +224,12 @@ const Option = ({
                 });
               }}
               withTransition
-            ></Button>
+            >
+              <IconWrapper Icon={AiFillEdit} />
+            </Button>
             <Button
-              iconSize={25}
               margin="0 0.5rem"
-              padding="0.5rem"
-              bg="danger"
-              Icon={AiFillDelete}
+              color="danger"
               withTransition
               onClick={() => {
                 setConfirmationModalStatus?.({
@@ -245,7 +242,9 @@ const Option = ({
                   title: "Delete Product Option",
                 });
               }}
-            ></Button>
+            >
+              <IconWrapper Icon={AiFillDelete} />
+            </Button>
           </Flex>
         </Flex>
       </div>
@@ -305,15 +304,11 @@ const Option = ({
             Option {index + 1} Values
           </Heading>
           <Button
-            withRipple
             withTransition
-            bg="primary"
-            padding="0.25rem"
+            color="primary"
             onClick={() =>
               setOptionValueModalStatus({ open: true, type: "new" })
             }
-            textSize="0.9rem"
-            Icon={BiPlus}
           >
             Add new Value
           </Button>

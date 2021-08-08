@@ -103,14 +103,9 @@ const ProductGeneralInformation = ({ data }: IProps) => {
       </Grid>
       <Flex justify="center" margin="1rem 0 0 0">
         <Button
-          textSize="0.9rem"
-          iconSize={25}
-          Icon={MdSave}
-          bg="green"
-          padding="0.5rem"
+          color="green"
           isLoading={isLoading}
           disabled={isLoading}
-          withRipple
           withTransition
           onClick={methods.handleSubmit(onSubmit)}
         >

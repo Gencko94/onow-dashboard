@@ -81,11 +81,7 @@ const ProductPricingAndOptions = ({ data }: IProps) => {
     <Container>
       <Flex margin="1rem 0" justify="flex-end" items="center">
         <Button
-          textSize="0.9rem"
-          iconSize={25}
-          Icon={MdSave}
-          bg="green"
-          padding="0.5rem"
+          color="green"
           isLoading={isLoading}
           disabled={isLoading}
           onClick={methods.handleSubmit(onSubmit)}

@@ -57,15 +57,7 @@ const CreateProductGeneralInfo = () => {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
         <Flex justify="flex-end">
-          <Button
-            type="submit"
-            // text="Next"
-            bg="blue"
-            padding="0.5rem"
-            textSize="0.9rem"
-            withRipple
-            withTransition
-          >
+          <Button type="submit" color="blue" withTransition>
             Next
           </Button>
         </Flex>

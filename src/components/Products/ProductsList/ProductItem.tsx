@@ -16,8 +16,9 @@ import { FlexWrapper } from "../../StyledComponents/Flex";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import DefaultImage from "../../reusable/DefaultImage";
 import CheckToggle from "../../reusable/CheckToggle";
-import Heading from "../../StyledComponents/Heading";
+
 import Paragraph from "../../StyledComponents/Paragraph";
+import IconButton from "../../reusable/IconButton";
 
 interface IProps {
   product: PRODUCT;
@@ -54,7 +55,9 @@ const ProductItem = ({
         />
       </div>
       <div className="field">
-        <h6>{product.id}</h6>
+        <Paragraph fontSize="0.9rem" weight="semibold">
+          {product.id}
+        </Paragraph>
       </div>
       <div className="field">
         {product.image ? (
@@ -106,14 +109,13 @@ const ProductItem = ({
             e.stopPropagation();
           }}
         >
-          <button
+          <IconButton
+            Icon={BsThreeDotsVertical}
+            textColor="primary"
             onClick={() => {
               setActionsMenuOpen(!actionsMenuOpen);
             }}
-            className="icon"
-          >
-            <BsThreeDotsVertical size={18} />
-          </button>
+          ></IconButton>
           <CSSTransition
             in={actionsMenuOpen}
             classNames="menu"
@@ -122,13 +124,8 @@ const ProductItem = ({
           >
             <Popover closeFunction={() => setActionsMenuOpen(false)}>
               <Button
-                // text="Delete Product"
-                padding="0.5rem"
-                bg="transparent"
-                textSize="0.8rem"
-                hoverBg="#B72b2b"
-                Icon={RiDeleteBinLine}
-                iconSize={15}
+                size="md"
+                // hoverBg="#B72b2b"
                 onClick={(e) => {
                   setActionsMenuOpen(false);
                   e.stopPropagation();
@@ -147,11 +144,9 @@ const ProductItem = ({
           </CSSTransition>
 
           <Button
-            bg="primary"
-            padding="0.5rem"
-            textSize="0.7rem"
+            color="primary"
             margin="0 0.5rem"
-            withRipple
+            size="sm"
             withTransition
             onClick={() => {
               history.push(`/products/${product.id}`);

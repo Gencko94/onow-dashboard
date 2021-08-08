@@ -145,9 +145,7 @@ const Category = () => {
 
         <Grid cols="auto auto" gap="0.5rem">
           <Button
-            bg="green"
-            padding="0.5rem"
-            withRipple
+            color="green"
             withTransition
             type="submit"
             isLoading={editLoading}
@@ -156,9 +154,7 @@ const Category = () => {
             Save changes
           </Button>
           <Button
-            bg="danger"
-            padding="0.5rem"
-            withRipple
+            color="danger"
             isLoading={deleteLoading}
             disabled={deleteLoading}
             withTransition

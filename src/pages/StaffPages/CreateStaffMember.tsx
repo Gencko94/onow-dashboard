@@ -131,10 +131,8 @@ const CreateStaffMember = () => {
           <Flex justify="flex-end">
             <Button
               type="submit"
-              padding="0.5rem"
-              bg="green"
+              color="green"
               withTransition
-              Icon={BiPlus}
               isLoading={isLoading}
             >
               Create new Member

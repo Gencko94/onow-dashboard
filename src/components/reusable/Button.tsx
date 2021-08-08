@@ -1,7 +1,7 @@
-import { useContext, useMemo } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { ImSpinner2 } from "react-icons/im";
-import { IconType } from "react-icons/lib";
-import styled, { css } from "styled-components";
+import cx from "classnames";
+import styled from "styled-components";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import useResponsive from "../../hooks/useResponsive";
 import Ripple from "./Ripple";
@@ -21,31 +21,15 @@ interface IProps {
    * ```onClick``` handler
    */
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-
   /**
-   * Button Text Size . default is 1rem
+   * Button Background color , There are presets but you can pass custom hex value
    */
-  textSize?: string;
-  /**
-   * Icon
-   */
-  Icon?: IconType;
-  /**
-   * Icon size, defaults to 30
-   */
-  iconSize?: number;
-  /**
-   * Button ```padding```
-   */
-  padding: string;
-  /**
-   * Button Background color , There are presets but you can pass customer hex value
-   */
-  bg: "primary" | "danger" | "blue" | "green" | "transparent";
+  color?: "default" | "primary" | "danger" | "blue" | "green";
   /**
    * Button Text color , defaults to White.
    */
-  color?: "primary" | string;
+
+  textColor?: "auto" | "primary" | "primaryContrast";
   /**
    * if ```true``` button will be transitioned up
    */
@@ -62,7 +46,7 @@ interface IProps {
   /**
    * Button With Ripple Effect.
    */
-  withRipple?: boolean;
+  noRipple?: boolean;
   /**
    * On Hover background color
    */
@@ -71,51 +55,49 @@ interface IProps {
    * On Hover text color
    */
   hoverColor?: string;
-  /**
-   * button shadow
-   */
-  shadow?: boolean;
-  /**
-   * With Border
-   */
-  border?: boolean;
-  /**
-   * button Width
-   */
-  width?: string;
+
   /**
    * Text Transform uppercase
    */
   uppercase?: boolean;
+  /**
+   * Button Size
+   */
+  size?: "lg" | "md" | "sm" | "xs";
+  /**
+   * Button Size
+   */
+  appearance?: "default" | "ghost";
 }
 
 const Button: React.FC<IProps> = ({
   onClick,
-  bg,
-  padding,
   type = "button",
-
-  Icon,
-  color,
-  iconSize = 30,
+  size = "md",
+  color = "default",
   withTransition,
-  margin = "none",
-  withRipple,
-  textSize = "0.9rem",
+  margin = "0",
+  textColor: buttonTextColor = "auto",
+  noRipple = false,
   hoverBg,
   hoverColor,
-  shadow,
-  border,
   isLoading,
   disabled,
-  width,
   uppercase,
+  appearance = "default",
   children,
 }) => {
+  /* Capture the dimensions of the button before the loading happens
+  so it doesn’t change size when showing the loader */
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+  const ref = useRef<HTMLButtonElement | null>(null);
   const { isDesktop } = useResponsive();
   const { currentTheme } = useContext(ThemeContext);
-  const background = useMemo(() => {
-    switch (bg) {
+  const buttonColor = useMemo(() => {
+    switch (color) {
+      case "default":
+        return "#f1f1f1";
       case "blue":
         return currentTheme.blue;
       case "danger":
@@ -128,7 +110,7 @@ const Button: React.FC<IProps> = ({
         return "rgba(255,255,255,0)";
     }
   }, [
-    bg,
+    color,
     currentTheme.blue,
     currentTheme.dangerRed,
     currentTheme.primary,
@@ -136,76 +118,98 @@ const Button: React.FC<IProps> = ({
   ]);
 
   const hover = useMemo(() => {
-    if (bg === "transparent") return currentTheme.accent2;
-    return Color(background).darken(0.2).hex();
-  }, [background]);
+    return Color(buttonColor).darken(0.1).hex();
+  }, [buttonColor]);
 
   const textColor = useMemo(() => {
-    if (color) return color;
-    if (bg === "transparent") return currentTheme.textPrimary;
-    if (background === currentTheme.primary) {
+    if (appearance === "ghost") return buttonColor;
+    if (buttonTextColor === "auto") {
+      const darkenedColor = Color(buttonColor).darken(0.3).hex();
+      if (Color(darkenedColor).isDark()) {
+        return currentTheme.textPrimaryContrast;
+      } else {
+        return currentTheme.textPrimary;
+      }
+    } else if (buttonTextColor === "primary") {
+      return currentTheme.textPrimary;
+    } else if (buttonTextColor === "primaryContrast") {
       return currentTheme.textPrimaryContrast;
     }
-    if (Color(background).isDark()) {
+  }, [
+    appearance,
+    buttonColor,
+    buttonTextColor,
+    currentTheme.textPrimary,
+    currentTheme.textPrimaryContrast,
+  ]);
+  const hoverTextColor = useMemo(() => {
+    if (appearance === "ghost") return buttonColor;
+    const darkenedColor = Color(hover).darken(0.2).hex();
+
+    if (Color(darkenedColor).isDark()) {
       return currentTheme.textPrimaryContrast;
     } else {
       return currentTheme.textPrimary;
     }
   }, [
-    background,
-    bg,
-    color,
-    currentTheme.primary,
+    appearance,
+    buttonColor,
     currentTheme.textPrimary,
     currentTheme.textPrimaryContrast,
+    hover,
   ]);
-  const hoverTextColor = useMemo(() => {
-    const lightenedColor = Color(hover).darken(0.2).hex();
 
-    if (Color(lightenedColor).isDark()) {
-      return currentTheme.textPrimaryContrast;
-    } else {
-      return currentTheme.textPrimary;
-    }
-  }, [currentTheme.textPrimary, currentTheme.textPrimaryContrast, hover]);
+  useEffect(
+    () => {
+      if (ref.current && ref.current.getBoundingClientRect().width) {
+        setWidth(ref.current.getBoundingClientRect().width);
+      }
+      if (ref.current && ref.current.getBoundingClientRect().height) {
+        setHeight(ref.current.getBoundingClientRect().height);
+      }
+    },
+    // children are a dep so dimensions are updated if initial contents change
+    [children]
+  );
   return (
     <ButtonWrapper
-      textSize={textSize}
+      appearance={appearance}
+      ref={ref}
       margin={margin}
       withTransition={withTransition}
-      bg={background}
-      padding={padding}
-      color={color ?? textColor}
+      buttonColor={buttonColor}
+      color={textColor}
       onClick={onClick}
       type={type}
       hoverBg={hoverBg ?? hover}
       hoverColor={hoverColor ?? hoverTextColor}
-      shadow={shadow}
-      border={border}
       disabled={isLoading || disabled}
-      width={width}
+      className={cx(
+        "btn",
+        { [`btn-${size}-${appearance}`]: true },
+        { "btn-ghost": appearance === "ghost" }
+      )}
+      style={
+        width && height
+          ? {
+              width: `${width}px`,
+              height: `${height}px`,
+            }
+          : {}
+      }
     >
-      <span className="icon">
-        {Icon && !isLoading && (
-          <Icon size={isDesktop ? iconSize - 3 : iconSize - 5} />
-        )}
-        {isLoading && (
-          <span className="loading">
-            <ImSpinner2 size={isDesktop ? 15 : 18} className="loading" />
-          </span>
-        )}
-      </span>
-
-      {children && (
-        <p className="text" style={{ display: isLoading ? "hidden" : "block" }}>
-          {children}
-        </p>
+      {isLoading ? (
+        <span className="loading">
+          <ImSpinner2 size={isDesktop ? 15 : 18} className="loading" />
+        </span>
+      ) : (
+        children
       )}
 
-      {withRipple && (
-        <div className="ripple-wrapper">
+      {!noRipple && (
+        <span className="ripple-wrapper">
           <Ripple />
-        </div>
+        </span>
       )}
     </ButtonWrapper>
   );
@@ -213,105 +217,45 @@ const Button: React.FC<IProps> = ({
 
 export default Button;
 export const ButtonWrapper = styled.button<{
-  padding: string;
   color: string;
-  bg: "primary" | "danger" | "blue" | "green" | "transparent";
+  buttonColor: string;
   withTransition?: boolean;
-  margin: string;
-  textSize: string;
+  margin?: string;
   hoverBg?: string;
   hoverColor?: string;
-  shadow?: boolean;
-  border?: boolean;
-  width?: string;
   uppercase?: boolean;
+  appearance: "default" | "ghost";
 }>(
   ({
-    theme: {
-      breakpoints,
-      green,
-      shadow,
-      mainColor,
-      dangerRed,
-      border: themeBorder,
-      font,
-    },
-    padding,
+    theme: { breakpoints },
     color,
-    bg,
+    buttonColor,
     withTransition,
     margin,
-    textSize,
     hoverBg,
     hoverColor,
-    border,
-    shadow: boxShadow,
+    appearance,
+
     disabled,
     uppercase,
-    width,
   }) => `
-  background: ${bg};
-      width:${width};
-      box-shadow: ${boxShadow && shadow};
-      display: flex;
-      margin:${margin};
-      justify-content:center;
-      align-items: center;
-      border-radius: 6px;
-      padding: ${padding};
-      text-transform:${uppercase && "uppercase"};
-      position: relative;
-      
-      color: ${color};
-      border:${border && themeBorder};
-      transition: all 100ms ease;
-    .loading {
+  background: ${appearance === "ghost" ? "transparent" : buttonColor};
+  margin:${margin};
+  text-transform:${uppercase && "uppercase"};
+  position: relative;
+  border-color:${buttonColor};
+  color: ${color};
+  &:hover {
+    background:${appearance === "ghost" ? "transparent" : hoverBg};
+    color: ${hoverColor};
+  };
+  .loading {
     animation: spinner 2s infinite linear forwards;
-    };
-    .ripple-wrapper {
-      position:absolute;
-      inset:0;
-      overflow:hidden;
-    }
-  @keyframes spinner {
-    
-    100% {
-      transform : rotate(360deg);
-    }
   }
-    .icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      p {
-        font-size:${`calc(${textSize} - 0.1rem)`}; 
-          margin: 0 0.25rem;
-      }
-      &:hover {
-        background:${hoverBg};
-        color: ${hoverColor};
-      }
-      
-      ${
-        withTransition &&
-        css`
-          &:hover {
-            transform: translateY(-2px);
-          }
-        `
-      }
-      ${
-        disabled &&
-        css`
-          background: #a7a2a2 !important;
-          color: #fff !important;
-        `
-      };
-    ${up(breakpoints.md)}{
-     p {
-      font-size:${textSize};
-     }
-  }
+  ${withTransition && "&:hover {transform: translateY(-2px);}"};
+  ${disabled && "background: #a7a2a2 !important; color: #fff !important;"};
+  // ${up(breakpoints.md)}{
+
+  // }
     `
 );

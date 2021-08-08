@@ -151,24 +151,11 @@ const StaffMember = () => {
           ]}
         />
         <Flex margin="1rem" justify="flex-end">
-          <Button
-            type="submit"
-            padding="0.5rem"
-            bg="green"
-            withTransition
-            margin="0 1rem"
-            withRipple
-            textSize="0.9rem"
-          >
+          <Button type="submit" color="green" withTransition margin="0 1rem">
             Save Changes
           </Button>
           <Button
-            padding="0.5rem"
-            Icon={RiDeleteBinLine}
-            bg="danger"
-            iconSize={20}
-            textSize="0.9rem"
-            withRipple
+            color="danger"
             onClick={() => {
               setConfirmationModalStatus?.({
                 open: true,

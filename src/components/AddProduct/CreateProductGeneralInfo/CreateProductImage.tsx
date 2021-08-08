@@ -72,7 +72,7 @@ const CreateProductImage = () => {
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <Flex justify="flex-end">
           <Button
-            bg="blue"
+            color="blue"
             onClick={() => {
               console.log(thumbnail);
               updateData?.({
@@ -81,15 +81,12 @@ const CreateProductImage = () => {
               });
               setActiveTab?.(0);
             }}
-            padding="0.5rem"
-            textSize="0.9rem"
             margin="0 0.5rem"
-            withRipple
             withTransition
           >
             Back
           </Button>
-          <Button type="submit" bg="blue" padding="0.5rem" textSize="0.9rem">
+          <Button type="submit" color="blue">
             Next
           </Button>
         </Flex>
@@ -137,10 +134,7 @@ const CreateProductImage = () => {
                       <Flex items="center" justify="center" padding="0.25rem">
                         <Button
                           onClick={() => setDefaultImage(image)}
-                          textSize="0.8rem"
-                          bg="green"
-                          padding="0.25rem"
-                          withRipple
+                          color="green"
                         >
                           Set as Default Image
                         </Button>

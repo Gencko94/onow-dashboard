@@ -7,6 +7,7 @@ import useConfirmationModal from "../../../../hooks/useConfirmationModal";
 import { OPTION_VALUE } from "../../../../interfaces/products/products";
 import { up } from "../../../../utils/themes";
 import Button from "../../../reusable/Button";
+import IconWrapper from "../../../reusable/Icon";
 import Flex from "../../../StyledComponents/Flex";
 import Grid from "../../../StyledComponents/Grid";
 import Heading from "../../../StyledComponents/Heading";
@@ -43,10 +44,7 @@ const OptionValue = ({
           </Heading>
           <Flex justify="center" items="center">
             <Button
-              iconSize={25}
-              Icon={AiFillEdit}
-              padding="0.5rem"
-              bg="blue"
+              color="blue"
               withTransition
               onClick={() => {
                 setOptionValueModalStatus({
@@ -55,13 +53,12 @@ const OptionValue = ({
                   editIndex: index,
                 });
               }}
-            ></Button>
+            >
+              <IconWrapper Icon={AiFillEdit} />
+            </Button>
             <Button
-              iconSize={25}
               margin="0 0.5rem"
-              padding="0.5rem"
-              bg="danger"
-              Icon={AiFillDelete}
+              color="danger"
               withTransition
               onClick={() => {
                 setConfirmationModalStatus?.({
@@ -74,7 +71,9 @@ const OptionValue = ({
                   title: "Delete Option Value",
                 });
               }}
-            ></Button>
+            >
+              <IconWrapper Icon={AiFillDelete} />
+            </Button>
           </Flex>
         </Flex>
       </div>

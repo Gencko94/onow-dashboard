@@ -184,9 +184,7 @@ const StoreNameAndDescription = ({ data }: StoreNameAndDescriptionProps) => {
             disabled={isLoading}
             onClick={handleSubmit(onSubmit)}
             type="submit"
-            bg="green"
-            padding="0.5rem"
-            withRipple
+            color="green"
             withTransition
           >
             Save changes

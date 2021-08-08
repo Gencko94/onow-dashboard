@@ -80,7 +80,7 @@ const Ripple = ({ duration = 800, color = "#fff" }: RippleProps) => {
 };
 
 export default Ripple;
-const RippleContainer = styled.div<{ duration: number }>`
+const RippleContainer = styled.span<{ duration: number }>`
   position: absolute;
   top: 0;
   right: 0;

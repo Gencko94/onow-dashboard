@@ -1,6 +1,8 @@
 import { BiPlus } from "react-icons/bi";
+import { IoMdAdd } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 import Button from "../reusable/Button";
+import IconWrapper from "../reusable/Icon";
 import Flex from "../StyledComponents/Flex";
 import Heading from "../StyledComponents/Heading";
 
@@ -13,13 +15,10 @@ const CategoriesPanel = () => {
       </Heading>
       <Button
         onClick={() => history.push("/categories/category/create")}
-        bg="green"
-        padding="0.5rem"
-        textSize="0.9rem"
-        withRipple
+        color="green"
         withTransition
-        Icon={BiPlus}
       >
+        <IconWrapper Icon={IoMdAdd} />
         Create New Category
       </Button>
       {/* <ProductsPanelActions /> */}

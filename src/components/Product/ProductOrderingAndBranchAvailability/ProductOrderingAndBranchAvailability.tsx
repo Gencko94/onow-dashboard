@@ -94,14 +94,9 @@ const ProductOrderingAndBranchAvailability = ({ data }: IProps) => {
     <div>
       <Flex justify="flex-end">
         <Button
-          textSize="0.9rem"
-          iconSize={25}
-          Icon={MdSave}
-          bg="green"
-          padding="0.5rem"
+          color="green"
           isLoading={isLoading}
           disabled={isLoading}
-          withRipple
           withTransition
           onClick={methods.handleSubmit(onSubmit)}
         >

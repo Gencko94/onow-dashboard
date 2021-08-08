@@ -211,15 +211,12 @@ const CategoriesList = () => {
   return (
     <>
       {data?.pages[0].data.length !== 0 && (
-        <Flex justify="flex-start" margin="1rem 0 ">
+        <Flex justify="flex-start" margin="1rem 0 " items="center">
           <p>Selected Rows ({selectedRows.length}) : </p>
           <Flex margin="0 0.5rem">
             <Button
               disabled={selectedRows.length === 0 || multipleLoading}
-              bg="danger"
-              padding="0.25rem"
-              textSize="0.8rem"
-              withRipple
+              color="danger"
               isLoading={multipleLoading}
               withTransition
               onClick={() => {
@@ -286,10 +283,7 @@ const CategoriesList = () => {
           <Button
             isLoading={isFetchingNextPage}
             disabled={isFetchingNextPage}
-            withRipple
-            bg="green"
-            padding="0.25rem 0.5rem"
-            textSize="0.8rem"
+            color="green"
             onClick={() => {
               fetchNextPage();
             }}

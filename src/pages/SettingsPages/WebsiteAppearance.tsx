@@ -112,8 +112,7 @@ const HomePageAppearance = () => {
       </Box>
       <Flex margin="1rem 0" justify="center">
         <Button
-          bg="green"
-          padding="0.5rem"
+          color="green"
           onClick={() => handleChangeColor(color.hex)}
           isLoading={isLoading}
         >

@@ -112,8 +112,7 @@ const MiniFileUploader = ({
       {!image && (
         <Flex justify="center" margin="1rem 0">
           <Button
-            bg="green"
-            padding="0.5rem"
+            color="green"
             withTransition
             onClick={() => {
               inputRef?.current?.click();
@@ -126,8 +125,7 @@ const MiniFileUploader = ({
       {image && (
         <Flex justify="center" margin="1rem 0">
           <Button
-            bg="green"
-            padding="0.5rem"
+            color="green"
             withTransition
             onClick={() => {
               inputRef?.current?.click();
@@ -137,9 +135,8 @@ const MiniFileUploader = ({
           </Button>
           {onRemove && (
             <Button
-              bg="danger"
+              color="danger"
               margin="0 0.5rem"
-              padding="0.5rem"
               withTransition
               onClick={() => {
                 removeImage();

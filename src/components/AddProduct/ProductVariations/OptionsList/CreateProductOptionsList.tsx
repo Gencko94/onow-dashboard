@@ -96,10 +96,8 @@ const CreateProductOptionsList = ({
             })}
             <Flex items="center" justify="center" margin="1rem 0">
               <Button
-                withRipple
                 withTransition
-                bg="green"
-                padding="0.5rem"
+                color="green"
                 onClick={() =>
                   append(
                     {
@@ -117,8 +115,6 @@ const CreateProductOptionsList = ({
                     { shouldFocus: false }
                   )
                 }
-                textSize="0.9rem"
-                Icon={BiPlus}
               >
                 Add Another Option
               </Button>

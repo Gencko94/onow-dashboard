@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom";
 import "./index.css";
 import "./transitions.css";
+import "./styles/buttons.css";
 import "./styles/modal-transitions.css";
 import App from "./App";
 import "./i18n";

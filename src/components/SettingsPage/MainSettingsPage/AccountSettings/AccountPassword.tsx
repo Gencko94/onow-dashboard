@@ -89,11 +89,8 @@ const AccountPassword = () => {
           isLoading={isLoading}
           disabled={isLoading}
           type="submit"
-          withRipple
           withTransition
-          textSize="0.9rem"
-          bg="green"
-          padding="0.5rem"
+          color="green"
         >
           Change Password
         </Button>

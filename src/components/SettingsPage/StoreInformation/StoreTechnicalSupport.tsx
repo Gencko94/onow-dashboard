@@ -118,10 +118,8 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
           <Button
             isLoading={isLoading}
             disabled={isLoading}
-            bg="green"
+            color="green"
             type="submit"
-            padding="0.5rem"
-            withRipple
             withTransition
           >
             Save Changes

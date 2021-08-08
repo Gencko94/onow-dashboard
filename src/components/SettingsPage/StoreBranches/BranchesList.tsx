@@ -160,10 +160,7 @@ const BranchesList = () => {
           <Button
             isLoading={isFetchingNextPage}
             disabled={isFetchingNextPage}
-            withRipple
-            bg="green"
-            padding="0.25rem 0.5rem"
-            textSize="0.8rem"
+            color="green"
             onClick={() => {
               fetchNextPage();
             }}

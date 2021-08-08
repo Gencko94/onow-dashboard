@@ -14,6 +14,7 @@ import Checkbox from "../../reusable/Inputs/Checkbox";
 import { FlexWrapper } from "../../StyledComponents/Flex";
 import Heading from "../../StyledComponents/Heading";
 import Paragraph from "../../StyledComponents/Paragraph";
+import IconButton from "../../reusable/IconButton";
 
 interface IProps {
   coupon: COUPON;
@@ -88,9 +89,10 @@ const CouponItem = ({
             setActionsMenuOpen(true);
           }}
         >
-          <button className="icon">
-            <BsThreeDotsVertical size={18} />
-          </button>
+          <IconButton
+            Icon={BsThreeDotsVertical}
+            textColor="primary"
+          ></IconButton>
           <CSSTransition
             in={actionsMenuOpen}
             classNames="menu"
@@ -99,11 +101,6 @@ const CouponItem = ({
           >
             <Popover closeFunction={() => setActionsMenuOpen(false)}>
               <Button
-                padding="0.5rem"
-                bg="transparent"
-                textSize="0.8rem"
-                Icon={RiDeleteBinLine}
-                iconSize={15}
                 onClick={(e) => {
                   e.stopPropagation();
                   setActionsMenuOpen(false);
@@ -121,11 +118,9 @@ const CouponItem = ({
             </Popover>
           </CSSTransition>
           <Button
-            bg="primary"
-            padding="0.5rem"
-            textSize="0.7rem"
+            size="sm"
+            color="primary"
             margin="0 0.5rem"
-            withRipple
             withTransition
             onClick={() => {
               history.push(`/coupons/coupon/${coupon.id}`);
@@ -166,18 +161,6 @@ const Container = styled.div<{ selected: boolean }>`
 
 const ActionButtonContainer = styled(FlexWrapper)`
   position: relative;
-  button.icon {
-    display: inline-block;
-    cursor: pointer;
-    padding: 0.25rem;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    transition: all 75ms ease;
-    &:hover {
-      background-color: #e6e6e6;
-    }
-  }
 `;
 const Status = styled.div`
   display: flex;

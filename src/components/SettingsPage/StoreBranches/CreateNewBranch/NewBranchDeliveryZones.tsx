@@ -49,14 +49,7 @@ const NewBranchDeliveryZones = () => {
   return (
     <Container onSubmit={handleSubmit(onSubmit, onError)}>
       <Flex justify="flex-end">
-        <Button
-          padding="0.5rem"
-          textSize="0.9rem"
-          bg="blue"
-          withRipple
-          withTransition
-          type="submit"
-        >
+        <Button color="blue" withTransition type="submit">
           Next
         </Button>
       </Flex>

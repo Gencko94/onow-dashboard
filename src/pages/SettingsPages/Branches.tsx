@@ -32,13 +32,8 @@ const Branches = () => {
         </div>
         <Flex justify="flex-end">
           <Button
-            padding="0.5rem"
-            textSize="0.9rem"
-            bg="green"
-            Icon={BiPlus}
-            iconSize={25}
+            color="green"
             onClick={() => history.push("/settings/branches/create/branch")}
-            withRipple
             withTransition
             type="submit"
           >

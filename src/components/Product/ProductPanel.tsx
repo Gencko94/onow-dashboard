@@ -114,13 +114,7 @@ const ProductPanel = ({ id }: { id: number }) => {
             value={statuses[0]}
           />
           {/* </Flex> */}
-          <Button
-            //   text="Actions"
-            bg="primary"
-            padding="0.25rem 0.5rem"
-            Icon={CgChevronDown}
-            onClick={() => setActionsMenuOpen(true)}
-          >
+          <Button color="primary" onClick={() => setActionsMenuOpen(true)}>
             Actions
             <CSSTransition
               in={actionsMenuOpen}
@@ -130,11 +124,6 @@ const ProductPanel = ({ id }: { id: number }) => {
             >
               <Popover closeFunction={() => setActionsMenuOpen(false)}>
                 <Button
-                  padding="0.5rem"
-                  bg="transparent"
-                  textSize="0.9rem"
-                  Icon={RiDeleteBinLine}
-                  iconSize={20}
                   onClick={(e) => {
                     setActionsMenuOpen(false);
                     e.stopPropagation();

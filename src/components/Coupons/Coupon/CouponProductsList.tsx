@@ -62,9 +62,6 @@ const CouponProductsList = ({
                       <p className="price">{product.price}</p>
                     </div>
                     <Button
-                      bg="transparent"
-                      padding="0.25rem"
-                      Icon={MdCancel}
                       onClick={() => handleRemoveProduct(product.id)}
                     ></Button>
                   </Grid>

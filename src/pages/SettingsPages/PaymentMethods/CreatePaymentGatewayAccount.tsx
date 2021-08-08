@@ -290,7 +290,7 @@ const CreatePaymentGatewayAccount = () => {
           />
           <div style={{ gridColumn: "1/3" }}>
             <Flex justify="center" items="center">
-              <Button withTransition type="submit" bg="green" padding="0.5rem">
+              <Button withTransition type="submit" color="green">
                 Send Data
               </Button>
             </Flex>

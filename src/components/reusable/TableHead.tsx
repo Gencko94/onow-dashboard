@@ -75,8 +75,8 @@ const Field = styled.button<{ active: boolean; sortable: boolean }>(
   padding: 1rem 0;
   color: ${subHeading};
  
-  transition: transform 75ms ease;
   h6 {
+    transition: transform 75ms ease;
     font-weight: ${font.semibold};
     font-size: 0.8rem;
     
@@ -87,11 +87,8 @@ const Field = styled.button<{ active: boolean; sortable: boolean }>(
     css`
       h6 {
         cursor: pointer;
-      }
-      &:hover {
-        transform: translateY(-2px);
-        h6 {
-          font-weight: ${font.bold};
+        &:hover {
+          transform: translateY(-2px);
         }
       }
     `
