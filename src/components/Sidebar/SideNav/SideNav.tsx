@@ -12,10 +12,11 @@ import {
   FcViewDetails,
 } from "react-icons/fc";
 import canVisitPage from "../../../utils/canVisitPage";
-import { useContext, useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import { AuthProvider } from "../../../contexts/AuthContext";
 import SideNavItem from "./SideNavItem";
 import { up } from "../../../utils/themes";
+import Spacer from "../../reusable/Spacer";
 // import { useState } from "react";
 const SideNav = () => {
   const { pathname } = useLocation();
@@ -66,7 +67,7 @@ const SideNav = () => {
   }, []);
   return (
     <Container>
-      {items.map((item) => {
+      {items.map((item, i) => {
         // if (
         //   canVisitPage({
         //     permissions: user?.permissions,
@@ -75,13 +76,16 @@ const SideNav = () => {
         //   })
         // )
         return (
-          <SideNavItem
-            key={item.target}
-            Icon={item.icon}
-            active={pathname.includes(item.target)}
-            target={item.target}
-            title={item.title}
-          />
+          <React.Fragment key={item.target}>
+            <SideNavItem
+              key={item.target}
+              Icon={item.icon}
+              active={pathname.includes(item.target)}
+              target={item.target}
+              title={item.title}
+            />
+            {i !== items.length - 1 && <Spacer size={6} />}
+          </React.Fragment>
         );
       })}
     </Container>

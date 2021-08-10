@@ -228,7 +228,7 @@ const ProductImage = ({ data }: IProps) => {
   };
   return (
     <Container>
-      <Heading tag="h5" margin="1rem 0" weight="semibold" color="primary">
+      <Heading tag="h5" color="primary">
         Product Imaging
       </Heading>
       <DescriptionBox>
@@ -239,13 +239,7 @@ const ProductImage = ({ data }: IProps) => {
       </DescriptionBox>
 
       <Box>
-        <Heading
-          tag="h5"
-          textAlign="center"
-          margin="1rem 0"
-          weight="semibold"
-          color="heading"
-        >
+        <Heading tag="h5" color="heading">
           Product Default Image
         </Heading>
         <Controller
@@ -319,13 +313,7 @@ const ProductImage = ({ data }: IProps) => {
       </PreviewContainer>
 
       <Box>
-        <Heading
-          tag="h5"
-          textAlign="center"
-          margin="1rem 0"
-          weight="semibold"
-          color="heading"
-        >
+        <Heading tag="h5" color="heading">
           Product Image Gallery
         </Heading>
         <Controller
@@ -352,7 +340,7 @@ const ProductImage = ({ data }: IProps) => {
 
 export default ProductImage;
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  ({ theme: { breakpoints, shadow } }) => `
  
   display:flex;
   flex-direction:column;
@@ -389,7 +377,7 @@ const ErrorMessage = styled.p`
   color: ${(props) => props.theme.dangerRed};
 `;
 const Box = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  ({ theme: { breakpoints, shadow } }) => `
   padding:1rem;
   .title {
     margin-bottom:1rem;
@@ -398,7 +386,7 @@ const Box = styled.div(
   `
 );
 const PreviewContainer = styled.div(
-  ({ theme: { breakpoints, accentColor, green, dangerRed, border } }) => `
+  ({ theme: { breakpoints, green, dangerRed, border } }) => `
   padding:1rem;
   .loading-image {
     filter:blur(4px) brightness(0.9);

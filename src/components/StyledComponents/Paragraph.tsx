@@ -6,12 +6,13 @@ interface IProps {
   mb?: string;
   fontSize?: string;
   color?:
-    | "textPrimary"
-    | "textPrimaryContrast"
-    | "textSecondary"
-    | "textSecondaryContrast"
-    | "green"
-    | "themeColor";
+    | "primary"
+    | "secondary"
+    | "text"
+    | "textContrast"
+    | "textAlt"
+    | "textAltContrast";
+
   padding?: string;
   margin?: string;
   weight?: "light" | "regular" | "semibold" | "bold" | "xbold";
@@ -29,7 +30,7 @@ const Paragraph: FC<IProps> = ({
   align,
 }) => {
   return (
-    <Wrapper
+    <P
       style={
         {
           "--margin-b": `${mb}`,
@@ -44,19 +45,19 @@ const Paragraph: FC<IProps> = ({
       align={align}
     >
       {children}
-    </Wrapper>
+    </P>
   );
 };
 
 export default Paragraph;
-export const Wrapper = styled.p<{
+const P = styled.p<{
   color?:
-    | "textPrimary"
-    | "textPrimaryContrast"
-    | "textSecondary"
-    | "textSecondaryContrast"
-    | "green"
-    | "themeColor";
+    | "primary"
+    | "secondary"
+    | "text"
+    | "textContrast"
+    | "textAlt"
+    | "textAltContrast";
   margin?: string;
   mb?: string;
   weight: "light" | "regular" | "semibold" | "bold" | "xbold";
@@ -66,13 +67,13 @@ export const Wrapper = styled.p<{
   ({
     theme: {
       breakpoints,
-      textPrimary,
-      textPrimaryContrast,
-      textSecondary,
-      textSecondaryContrast,
-      green,
+      text,
+      textAlt,
+      textAltContrast,
+      textContrast,
+      primary,
+      secondary,
       font,
-      mainColor,
     },
     color,
     margin,
@@ -81,21 +82,7 @@ export const Wrapper = styled.p<{
     fontSize,
     align,
   }) => `
-  color: ${
-    color === "textPrimary"
-      ? textPrimary
-      : color === "textPrimaryContrast"
-      ? textPrimaryContrast
-      : color === "textSecondary"
-      ? textSecondary
-      : color === "textSecondaryContrast"
-      ? textSecondaryContrast
-      : color === "green"
-      ? green
-      : color === "themeColor"
-      ? mainColor
-      : "inherit"
-  };
+  color: ${[color]};
   margin:${margin};
   text-align:${align};
   font-weight:${font[weight]};

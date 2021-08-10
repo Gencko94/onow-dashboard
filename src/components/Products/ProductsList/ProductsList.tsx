@@ -379,7 +379,7 @@ const ProductsList = () => {
 
 export default ProductsList;
 const Container = styled.div`
-  border-radius: 6px;
+  border-radius: 20px;
   border: ${(props) => props.theme.border};
   border-bottom: none;
 
@@ -387,7 +387,6 @@ const Container = styled.div`
   .table {
     overflow-x: auto;
     overflow-y: hidden;
-    background-color: #fff;
   }
   .loading {
     position: absolute;

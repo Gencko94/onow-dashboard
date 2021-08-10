@@ -21,7 +21,7 @@ const ProductCategories = () => {
   return (
     <Container error={Boolean(errors?.category)}>
       <div className="head">
-        <Heading color="heading" tag="h5" weight="bold">
+        <Heading type="section-title" tag="h5">
           Product Category
         </Heading>
       </div>
@@ -35,12 +35,12 @@ const ProductCategories = () => {
 
 export default ProductCategories;
 const Container = styled.div<{ error: boolean }>(
-  ({ theme: { breakpoints, accent1, border, dangerRed }, error }) => `
+  ({ theme: { breakpoints, subtleFloating, border, dangerRed }, error }) => `
   display:flex;
   flex-direction:column;
   border: ${error ? `1px solid ${dangerRed}` : border};
   border-radius: 6px;
-  background-color:${accent1} ;
+  background-color:${subtleFloating} ;
   .head {
     border-bottom: ${border};
     padding:0.5rem ;

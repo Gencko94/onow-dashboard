@@ -19,7 +19,7 @@ const CreateProductOptions = () => {
   }, [optionsEnabled]);
   return (
     <div>
-      <Heading color="primary" tag="h5" mb="1.5rem" weight="semibold">
+      <Heading color="primary" tag="h5" mb="1.5rem">
         Product Options
       </Heading>
 

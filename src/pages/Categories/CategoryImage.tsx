@@ -170,7 +170,7 @@ const CategoryImage = ({ control, errors, setValue, id }: IProps) => {
 
 export default CategoryImage;
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow, border } }) => `
+  ({ theme: { breakpoints, shadow, border } }) => `
   display:flex;
   flex-direction:column;
   .box {

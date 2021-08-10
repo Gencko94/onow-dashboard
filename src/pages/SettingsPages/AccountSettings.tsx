@@ -99,7 +99,7 @@ const AccountSettings = () => {
         />
       </HeaderContainer>
       <form style={{ margin: "2rem 0 " }} onSubmit={handleSubmit(onSubmit)}>
-        <Heading tag="h5" mb="1rem" color="primary" weight="semibold">
+        <Heading tag="h5" mb="1rem" color="primary">
           Account Information
         </Heading>
         <div onSubmit={handleSubmit(onSubmit)} className="container">

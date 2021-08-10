@@ -12,11 +12,7 @@ interface IconProps {
 const IconWrapper = ({ Icon, iconSize = 22 }: IconProps) => {
   const { isDesktop } = useResponsive();
 
-  return (
-    // <span>
-    // </span>
-    <Icon size={isDesktop ? iconSize : iconSize - 5} />
-  );
+  return <Icon size={isDesktop ? iconSize : iconSize - 5} />;
 };
 
 export default IconWrapper;

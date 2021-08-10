@@ -80,53 +80,37 @@ const OptionValue = ({
       <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0">
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6" color="heading" weight="bold">
-              Name En
-            </Heading>
+            <Heading tag="h6">Name En</Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6" color="subheading">
-              {value.name.en}
-            </Heading>
+            <Heading tag="h6">{value.name.en}</Heading>
           </div>
         </div>
 
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6" color="heading" weight="bold">
-              Name Ar
-            </Heading>
+            <Heading tag="h6">Name Ar</Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6" color="subheading">
-              {value.name.ar}
-            </Heading>
+            <Heading tag="h6">{value.name.ar}</Heading>
           </div>
         </div>
 
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6" color="heading" weight="bold">
-              Price
-            </Heading>
+            <Heading tag="h6">Price</Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6" color="subheading">
-              {value.price}
-            </Heading>
+            <Heading tag="h6">{value.price}</Heading>
           </div>
         </div>
 
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6" color="heading" weight="bold">
-              Qty
-            </Heading>
+            <Heading tag="h6">Qty</Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6" color="subheading">
-              {value.quantity ?? "-"}
-            </Heading>
+            <Heading tag="h6">{value.quantity ?? "-"}</Heading>
           </div>
         </div>
       </Grid>

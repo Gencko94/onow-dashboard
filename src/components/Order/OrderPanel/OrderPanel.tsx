@@ -7,12 +7,7 @@ import Flex from "../../StyledComponents/Flex";
 const OrderPanel = () => {
   return (
     <Flex items="center" padding="0.75rem" justify="flex-end">
-      <Button
-        withTransition
-        margin="0 0.5rem"
-        hoverBg="green"
-        hoverColor="#fff"
-      >
+      <Button withTransition margin="0 0.5rem">
         Edit Order
       </Button>
 

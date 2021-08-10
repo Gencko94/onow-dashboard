@@ -138,7 +138,7 @@ const Container = styled.div`
     justify-content: space-between;
     padding: 1rem 0;
     h5 {
-      color: ${(props) => props.theme.mainColor};
+      color: ${(props) => props.theme.primary};
     }
   }
 `;

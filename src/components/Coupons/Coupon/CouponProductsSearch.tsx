@@ -70,16 +70,12 @@ const CouponProductsSearch = ({ title, control, handleAddProduct }: IProps) => {
       <ProductsContainer>
         {searchValue === "" && (
           <div className="no-products">
-            <Heading tag="h6" textAlign="center">
-              {title}
-            </Heading>
+            <Heading tag="h6">{title}</Heading>
           </div>
         )}
         {data?.pages[0].data.length === 0 && searchValue !== "" && (
           <div className="no-products">
-            <Heading tag="h6" textAlign="center">
-              No Products were found
-            </Heading>
+            <Heading tag="h6">No Products were found</Heading>
           </div>
         )}
         {isLoading && (
@@ -121,7 +117,7 @@ const CouponProductsSearch = ({ title, control, handleAddProduct }: IProps) => {
                               <p className="name">
                                 {product.name[i18n.language]}
                               </p>
-                              <Paragraph color="green" weight="semibold">
+                              <Paragraph weight="semibold">
                                 {product.price}
                               </Paragraph>
                             </div>
@@ -171,7 +167,6 @@ const Container = styled.div`
     cursor: pointer;
     border-bottom: ${(props) => props.theme.border};
     &:hover {
-      background-color: ${(props) => props.theme.highlightColor};
     }
     .img {
       height: 50px;

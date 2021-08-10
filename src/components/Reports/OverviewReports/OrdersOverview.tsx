@@ -40,9 +40,7 @@ const OrdersOverview = () => {
   return (
     <Container>
       <div className="head">
-        <Heading tag="h6" weight="semibold">
-          Orders Overview
-        </Heading>
+        <Heading tag="h6">Orders Overview</Heading>
       </div>
       {/* <div style={{ width: "100%", height: "100%", display: "block" }}> */}
       <ResponsiveContainer width="100%" height="90%" maxHeight={600}>

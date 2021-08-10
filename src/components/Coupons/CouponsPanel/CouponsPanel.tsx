@@ -9,7 +9,7 @@ const CouponsPanel = () => {
   const history = useHistory();
   return (
     <Flex margin="1rem 0" justify="space-between" items="center">
-      <Heading tag="h2" weight="bold">
+      <Heading tag="h2" type="large-title">
         Coupons
       </Heading>
       <Button

@@ -7,6 +7,7 @@ import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Flex from "../../components/StyledComponents/Flex";
+import Heading from "../../components/StyledComponents/Heading";
 import useToast from "../../hooks/useToast";
 import { CATEGORY } from "../../interfaces/categories/categories";
 import extractError from "../../utils/extractError";
@@ -84,31 +85,34 @@ const CreateNewCategory = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الفئات", en: "Categories" },
-              target: "/categories",
-            },
-            {
-              name: { ar: "اضافة فئة جديدة", en: "Create New Category" },
-              target: "",
-            },
-          ]}
-        />
-        <Flex justify="flex-end">
-          <Button
-            isLoading={isLoading}
-            disabled={isLoading}
-            type="submit"
-            color="green"
-            withTransition
-          >
-            Submit
-          </Button>
-        </Flex>
-      </HeaderContainer>
+      <Heading tag="h2" type="large-title">
+        Create New Category
+      </Heading>
+      <Breadcrumbs
+        withoutTitle
+        children={[
+          {
+            name: { ar: "الفئات", en: "Categories" },
+            target: "/categories",
+          },
+          {
+            name: { ar: "اضافة فئة جديدة", en: "Create New Category" },
+            target: "",
+          },
+        ]}
+      />
+      <Flex justify="flex-end">
+        <Button
+          isLoading={isLoading}
+          disabled={isLoading}
+          type="submit"
+          color="green"
+          withTransition
+        >
+          Submit
+        </Button>
+      </Flex>
+
       <CategoryInfo
         setValue={setValue}
         watch={watch}

@@ -178,7 +178,7 @@ const Container = styled.div`
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
   &:hover {
-    background-color: ${(props) => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.accent1};
   }
   .img {
     height: 50px;

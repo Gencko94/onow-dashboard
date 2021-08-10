@@ -73,20 +73,23 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     theme: {
       breakpoints,
       font,
-      headingColor,
+
       border,
-      inputColorLight,
-      mainColor,
+
       borderHovered,
       dangerRed,
-      subHeading,
+      text,
       borderDanger,
+      textAlt,
+      subtleBackground,
+      background,
+      primary,
     },
     error,
     rtl,
   }) => `
   label {
-    color: ${headingColor};
+    color: ${text};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
     font-weight: ${font.regular};
@@ -98,8 +101,8 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     
     justify-content: center;
     
-    background-color: #fff;
-    color: ${headingColor};
+    background-color: ${subtleBackground};
+    color: ${text};
     border: ${error ? borderDanger : border};
     overflow: hidden;
     border-radius: 6px;
@@ -110,8 +113,8 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       font-size: 0.7rem;
       align-items: center;
       justify-content: center;
-      color: ${subHeading};
-      background-color: ${inputColorLight};
+      color: ${textAlt};
+      background-color: ${background};
       border-right: ${border};
       ${
         rtl &&
@@ -127,6 +130,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
         padding: 0.4rem;
         font-size: 0.8rem;
         width: 50px;
+        color: ${text};
       }
       &:hover,
       &:focus-within {
@@ -144,7 +148,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
         font-size: 0.7rem;
         padding-top: 0.25rem;
         height: 22px;
-        color: ${mainColor};
+        color: ${primary};
       }
       ${up(breakpoints.md)}{
         label {

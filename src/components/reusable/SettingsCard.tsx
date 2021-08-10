@@ -17,9 +17,9 @@ const SettingsCard = ({ desc, title, Icon, cb }: IProps) => {
   return (
     <Container onClick={() => cb()}>
       <span className="icon">
-        <Icon size={isDesktop ? 45 : 35} />
+        <Icon size={isDesktop ? 40 : 30} />
       </span>
-      <Heading tag="h6" color="primary" mb="0.25rem" weight="semibold">
+      <Heading tag="h3" type="small-title" style={{ textAlign: "center" }}>
         {title}
       </Heading>
 
@@ -32,7 +32,7 @@ export default SettingsCard;
 const Container = styled.div`
   border: ${(props) => props.theme.border};
   border-radius: 6px;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.subtleFloating};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,16 +41,15 @@ const Container = styled.div`
   padding: 1rem;
   transition: all 150ms ease;
   .icon {
-    margin-bottom: 0.9rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: ${(props) => props.theme.subHeading};
+    color: ${(props) => props.theme.textAlt};
   }
 
   p.desc {
     font-size: 0.8rem;
-    color: ${(props) => props.theme.subHeading};
+    color: ${(props) => props.theme.textAlt};
     font-weight: ${(props) => props.theme.font.regular};
     text-align: center;
   }

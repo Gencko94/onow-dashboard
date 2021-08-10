@@ -21,9 +21,7 @@ const ProductPricing = () => {
   return (
     <Container>
       <div className="head">
-        <Heading color="heading" tag="h5" weight="bold">
-          Product pricing & Options
-        </Heading>
+        <Heading tag="h5">Product pricing & Options</Heading>
       </div>
       <div className="inputs-container">
         <PrefixedIconedInput

@@ -41,7 +41,7 @@ const Map = () => {
   const [outOfBorder, setOutOfBorder] = useState<boolean>(false);
   const { getCurrentLocation } = useCurrentLocation();
 
-  const { mode } = useContext(ThemeContext);
+  const { colorMode } = useContext(ThemeContext);
   const libraries = useMemo<Libraries>(() => ["places"], []);
   const history = useHistory();
 
@@ -64,7 +64,7 @@ const Map = () => {
       gestureHandling: "greedy",
 
       styles:
-        mode === "light"
+        colorMode === "light"
           ? []
           : [
               { elementType: "geometry", stylers: [{ color: "#242f3e" }] },

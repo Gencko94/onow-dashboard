@@ -25,7 +25,7 @@ const BranchLocation = () => {
   console.log(coords, "coods");
   return (
     <Container>
-      <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
+      <Heading tag="h5" color="primary">
         Branch Location
       </Heading>
       <div className="box">
@@ -95,21 +95,15 @@ const BranchLocation = () => {
 export default BranchLocation;
 
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, border, bodyColor } }) => `
+  ({ theme: { breakpoints, border } }) => `
  
   .box {
-    background-color: ${bodyColor};
+   
     border: ${border};
     border-radius: 6px;
     padding: 1rem;
 }
-// .box {
-//     display: grid;
-//     grid-template-columns: 1fr;
-//     gap: 1rem;
-//     align-items:flex-start;
 
-// }
 .map-container {
   .map {
     height:300px;

@@ -27,9 +27,7 @@ const CouponProductsList = ({
   return (
     <Container>
       <div className="head">
-        <Heading tag="h5" weight="bold">
-          {title}
-        </Heading>
+        <Heading tag="h5">{title}</Heading>
       </div>
       <Controller
         control={control}
@@ -90,7 +88,6 @@ const Container = styled.div`
     cursor: pointer;
     border-bottom: ${(props) => props.theme.border};
     &:hover {
-      background-color: ${(props) => props.theme.highlightColor};
     }
     .img {
       height: 50px;

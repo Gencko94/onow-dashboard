@@ -21,7 +21,7 @@ const ProductOptions = ({ options, productId }: ProductOptionsProps) => {
     <>
       <Container>
         <div className="head">
-          <Heading color="heading" tag="h5" weight="bold">
+          <Heading color="heading" tag="h5">
             Product Options
           </Heading>
         </div>

@@ -13,9 +13,7 @@ const Branches = () => {
     <div>
       <Flex items="center" justify="space-between">
         <div>
-          <Heading tag="h2" weight="bold" margin="1rem 0">
-            Branches
-          </Heading>
+          <Heading tag="h2">Branches</Heading>
           <Breadcrumbs
             withoutTitle
             children={[

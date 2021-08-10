@@ -15,7 +15,7 @@ const OverviewReportCard = () => {
           <RiFileList3Line size={25} />
         </div>
         <div className="content">
-          <Paragraph fontSize="0.9rem" weight="semibold" color="textSecondary">
+          <Paragraph fontSize="0.9rem" weight="semibold">
             ORDERS
           </Paragraph>
           <Paragraph fontSize="1.1rem" weight="bold">
@@ -25,7 +25,7 @@ const OverviewReportCard = () => {
       </div>
       <div className="actions">
         <button className="action-btn">
-          <Paragraph fontSize="0.9rem" weight="semibold" color="textSecondary">
+          <Paragraph fontSize="0.9rem" weight="semibold">
             Go to Orders
           </Paragraph>
           <BsArrowRightShort size={25} />
@@ -54,7 +54,7 @@ const Card = styled.div`
       align-items: center;
       justify-content: center;
       color: #fff;
-      background-color: ${(props) => props.theme.mainColor};
+      background-color: ${(props) => props.theme.primary};
     }
     .content {
       margin: 0 1rem;
@@ -69,7 +69,7 @@ const Card = styled.div`
       display: flex;
       align-items: center;
       border-radius: 6px;
-      color: ${(props) => props.theme.mainColor};
+      color: ${(props) => props.theme.primary};
       padding: 0.25rem;
       &:hover {
         background-color: ${(props) => props.theme.accent3};

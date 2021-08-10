@@ -70,7 +70,7 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
+      <Heading tag="h5" color="primary">
         Technical support
       </Heading>
       <Box>

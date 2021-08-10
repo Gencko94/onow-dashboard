@@ -150,21 +150,21 @@ const Container = styled.div<{
       font,
 
       border,
-      inputColorLight,
-      mainColor,
+
       borderHovered,
       dangerRed,
       accent1,
       accent2,
-
-      textPrimary,
+      text,
+      subtleBackground,
+      primary,
     },
     error,
     unlimited,
     rtl,
   }) => `
   label {
-    color: ${textPrimary};
+    color: ${text};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
     font-weight: ${font.regular};
@@ -176,8 +176,8 @@ const Container = styled.div<{
     
     justify-content: center;
     
-    background-color: #fff;
-    color: ${textPrimary};
+    background-color:${subtleBackground};
+    color: ${text};
     border: ${border};
     overflow: hidden;
     border-radius: 6px;
@@ -187,7 +187,7 @@ const Container = styled.div<{
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${mainColor};
+      color: ${primary};
     }
     
     input {
@@ -195,6 +195,7 @@ const Container = styled.div<{
       padding: 0.4rem;
       font-size: 0.8rem;
       width: 50px;
+      color: ${text};
       ${
         unlimited &&
         css`
@@ -229,7 +230,7 @@ const Container = styled.div<{
         padding-top: 0.25rem;
         height: 22px;
        
-        color: ${mainColor};
+        color: ${primary};
       }
       ${up(breakpoints.md)}{
         label {

@@ -9,7 +9,7 @@ const AccountSection = () => {
   const history = useHistory();
   return (
     <Container>
-      <Heading tag="h4" color="primary" mb="2rem" weight="semibold">
+      <Heading tag="h4" type="normal-heading">
         Account Settings
       </Heading>
       <Grid

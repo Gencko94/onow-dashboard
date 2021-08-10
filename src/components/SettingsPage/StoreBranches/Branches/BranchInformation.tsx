@@ -28,7 +28,7 @@ const BranchInformation = () => {
   const codEnabled = watch("cod_enabled");
   return (
     <Container>
-      <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
+      <Heading tag="h5" color="primary">
         Branch Information
       </Heading>
 
@@ -162,11 +162,10 @@ const BranchInformation = () => {
 export default BranchInformation;
 
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, border, bodyColor } }) => `
+  ({ theme: { breakpoints, border } }) => `
  
   
   .box {
-    background-color: ${bodyColor};
     border: ${border};
     border-radius: 6px;
     padding: 1rem;

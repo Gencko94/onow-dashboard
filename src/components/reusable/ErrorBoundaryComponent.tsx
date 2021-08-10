@@ -19,9 +19,7 @@ const ErrorBoundaryComponent = ({ resetErrorBoundary, error }: IProps) => {
   return (
     <Container>
       <img className="img" alt="something-went-wrong" src="/images/500.svg" />
-      <Heading tag="h4" textAlign="center">
-        Something went wrong , please try again
-      </Heading>
+      <Heading tag="h4">Something went wrong , please try again</Heading>
       <Button
         margin="1rem 0"
         color="green"

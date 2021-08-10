@@ -21,9 +21,7 @@ const OrdersPanel = ({ setFilters, filters }: IProps) => {
   return (
     <>
       <Flex margin="1rem 0" items="center" justify="space-between">
-        <Heading tag="h2" weight="bold">
-          Orders
-        </Heading>
+        <Heading tag="h2">Orders</Heading>
         <Flex items="center">
           <Button
             color="green"

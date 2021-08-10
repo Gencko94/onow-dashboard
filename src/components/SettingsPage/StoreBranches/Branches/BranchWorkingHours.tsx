@@ -48,7 +48,7 @@ const BranchWorkingHours = () => {
   console.log(working_hours);
   return (
     <Container>
-      <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
+      <Heading tag="h5" color="primary">
         Branch Working Hours
       </Heading>
       {/* <TableHead gap="2rem" cols={cols} gridCols="1fr 0.5fr 0.5fr" /> */}
@@ -122,10 +122,10 @@ const BranchWorkingHours = () => {
 export default BranchWorkingHours;
 
 const Container = styled.div(
-  ({ theme: { breakpoints, shadow, bodyColor } }) => `
+  ({ theme: { breakpoints, shadow } }) => `
  
   .box {
-    background-color: ${bodyColor};
+   
     
     border-radius: 6px;
     margin: 1rem 0 ;

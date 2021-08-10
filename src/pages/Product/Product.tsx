@@ -28,7 +28,6 @@ const Product = () => {
       <ProductPanel id={data!.id} />
 
       <ProductTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-
       <div>
         {activeTab === 0 && <ProductGeneralInformation data={data!} />}
         {activeTab === 1 && <ProductImaging data={data!} />}

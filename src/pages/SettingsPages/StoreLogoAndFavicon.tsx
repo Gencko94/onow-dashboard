@@ -138,7 +138,7 @@ const StoreLogoAndFavicon = () => {
       </HeaderContainer>
       <Container>
         <div className="section">
-          <Heading tag="h5" color="primary" margin="1rem 0" weight="semibold">
+          <Heading tag="h5" color="primary">
             Store Logo
           </Heading>
           <Box>
@@ -172,7 +172,7 @@ const StoreLogoAndFavicon = () => {
         </div>
         <Hr />
         <div className="section">
-          <Heading tag="h5" weight="semibold" color="primary" margin="1rem 0">
+          <Heading tag="h5" color="primary">
             Store Favicon
           </Heading>
           <Box>

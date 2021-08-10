@@ -89,9 +89,7 @@ const CouponProducts = ({ control, errors, watch, setValue }: IProps) => {
   return (
     <Container>
       <div className="head">
-        <Heading tag="h5" weight="bold">
-          Coupon Coverage
-        </Heading>
+        <Heading tag="h5">Coupon Coverage</Heading>
       </div>
       <div className="box">
         <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">

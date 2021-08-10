@@ -62,7 +62,7 @@ const ProductBranches = () => {
   };
   return (
     <Container>
-      <Heading tag="h5" mb="1rem" color="primary" weight="semibold">
+      <Heading tag="h5" color="primary">
         Product Branch Availability
       </Heading>
       <Controller
@@ -121,7 +121,6 @@ const Container = styled.div`
   .branches-container {
     margin-top: 1rem;
     border: ${(props) => props.theme.border};
-    background-color: ${(props) => props.theme.overlayColor};
 
     border-radius: 6px;
   }

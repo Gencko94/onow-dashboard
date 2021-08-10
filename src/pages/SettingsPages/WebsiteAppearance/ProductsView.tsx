@@ -43,9 +43,7 @@ const ProductsView = () => {
     <Container>
       <Flex margin="1rem 0">
         <div>
-          <Heading tag="h2" color="heading" mb="0.5rem" weight="bold">
-            Products View
-          </Heading>
+          <Heading tag="h2">Products View</Heading>
           <Breadcrumbs
             withoutTitle
             children={[
@@ -66,9 +64,7 @@ const ProductsView = () => {
         </div>
       </Flex>
 
-      <Heading tag="h5" margin="2rem 0 1rem 0" weight="bold" color="heading">
-        Products View in Home Page
-      </Heading>
+      <Heading tag="h5">Products View in Home Page</Heading>
       <div className="desc">
         <Heading tag="h6" color="subheading">
           You can Control how your products look in your website's Home Page
@@ -83,14 +79,7 @@ const ProductsView = () => {
             </Zoom>
           </div>
           <Flex justify="center" padding=" 0.5rem" items="center">
-            <Heading
-              tag="h6"
-              color="heading"
-              weight="semibold"
-              margin="0 0.5rem"
-            >
-              Grid View
-            </Heading>
+            <Heading tag="h6">Grid View</Heading>
             {/* <Checkbox checked={true} onChange={() => {}} /> */}
             {view === "grid" ? (
               <FcOk
@@ -115,14 +104,7 @@ const ProductsView = () => {
             </Zoom>
           </div>
           <Flex justify="center" padding=" 0.5rem" items="center">
-            <Heading
-              tag="h6"
-              margin="0 0.5rem"
-              weight="semibold"
-              color="subheading"
-            >
-              List View
-            </Heading>
+            <Heading tag="h6">List View</Heading>
 
             {view === "list" ? (
               <FcOk
@@ -147,14 +129,7 @@ const ProductsView = () => {
             </Zoom>
           </div>
           <Flex justify="center" padding=" 0.5rem" items="center">
-            <Heading
-              tag="h6"
-              margin="0 0.5rem"
-              weight="semibold"
-              color="subheading"
-            >
-              Bar View
-            </Heading>
+            <Heading tag="h6">Bar View</Heading>
             {view === "bar" ? (
               <FcOk
                 size={30}

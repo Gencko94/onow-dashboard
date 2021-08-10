@@ -113,25 +113,25 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     theme: {
       breakpoints,
       font,
-      textPrimary,
-      textSecondary,
-      border,
+      primary,
+      secondary,
       accent2,
-
-      mainColor,
+      border,
       borderHovered,
       dangerRed,
-      accent1,
+      subtleBackground,
+      text,
       borderDanger,
     },
     error,
     rtl,
   }) => `
   label {
-    color: ${textPrimary};
+    color: ${text};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
-    font-weight: ${font.regular};
+    // color:${secondary};
+    // font-weight: ${font.semibold};
     display: block;
   }
   .input-container {
@@ -140,8 +140,8 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
 
     justify-content: center;
 
-    background-color: #fff;
-    color: ${textPrimary};
+    background-color: ${subtleBackground};
+    color: ${text};
     border: ${error ? borderDanger : border};
     overflow: hidden;
     border-radius: 6px;
@@ -156,7 +156,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${mainColor};
+      color: ${primary};
       
     }
 
@@ -165,6 +165,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       padding: 0.4rem;
       font-size: 0.8rem;
       width: 50px;
+      color: ${text};
     }
     &:hover,
     &:focus-within {
@@ -179,7 +180,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     padding-top: 0.25rem;
     height: 22px;
 
-    color: ${mainColor};
+    color: ${primary};
   }
   ${up(breakpoints.md)}{
     label {

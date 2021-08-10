@@ -184,7 +184,7 @@ const CreateProductImage = () => {
 
 export default CreateProductImage;
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  ({ theme: { breakpoints, shadow } }) => `
  
   
   .box {
@@ -214,7 +214,7 @@ const DescriptionBox = styled.div`
 `;
 
 const Box = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  ({ theme: { breakpoints, shadow } }) => `
   padding:1rem;
   .title {
     margin-bottom:1rem;
@@ -223,7 +223,7 @@ const Box = styled.div(
   `
 );
 const PreviewContainer = styled.div(
-  ({ theme: { breakpoints, accentColor, green, dangerRed, border } }) => `
+  ({ theme: { breakpoints, green, dangerRed, border } }) => `
   padding:1rem;
   .img-preview {
     position:relative;

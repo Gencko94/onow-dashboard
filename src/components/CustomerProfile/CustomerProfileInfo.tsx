@@ -83,7 +83,7 @@ const CustomerProfileInfo = ({
 export default CustomerProfileInfo;
 
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow, green } }) => `
+  ({ theme: { breakpoints, primary, shadow, green } }) => `
   margin: 2rem 0;
   .title-container {
     padding: 1rem 0;
@@ -91,7 +91,7 @@ const Container = styled.div(
     align-items:center;
     justify-content:space-between;
     .title {
-      color: ${mainColor};
+      color: ${primary};
     }
   }
   .box {

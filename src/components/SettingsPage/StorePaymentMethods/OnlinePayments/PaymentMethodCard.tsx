@@ -71,7 +71,7 @@ const PaymentMethodCard = ({ gateway }: IProps) => {
 export default PaymentMethodCard;
 const Container = styled.div`
   border: ${(props) => props.theme.border};
-  background-color: ${(props) => props.theme.overlayColor};
+  background-color: ${(props) => props.theme.subtleBackground};
   padding: 1rem;
   border-radius: 6px;
   display: grid;
@@ -98,7 +98,7 @@ const Container = styled.div`
     padding: 0 0.5rem;
 
     h6 {
-      color: ${(props) => props.theme.mainColor};
+      color: ${(props) => props.theme.primary};
     }
     section {
       margin-top: 1rem;
@@ -116,7 +116,7 @@ const Container = styled.div`
       padding: 0.75rem;
     }
     th {
-      color: ${(props) => props.theme.mainColor};
+      color: ${(props) => props.theme.primary};
     }
     td {
       font-size: 0.9rem;

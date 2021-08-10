@@ -141,6 +141,7 @@ const Login = () => {
             <Button
               color="primary"
               type="submit"
+              style={{ width: "100%" }}
               isLoading={isSubmitting}
               disabled={isSubmitting}
               withTransition
@@ -186,8 +187,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: ${(props) => props.theme.fontFamily};
-  background: ${(props) => props.theme.bodyColor};
+  /* font-family: ${(props) => props.theme.fontFamily}; */
 `;
 
 const ContentWrapper = styled.div`
@@ -212,13 +212,12 @@ const LogoContainer = styled(Link)`
 `;
 const FormContainer = styled.div`
   padding: 0.75rem 0.75rem;
-  border: ${(props) => props.theme.btnBorder};
+  border: ${(props) => props.theme.border};
   box-shadow: ${(props) => props.theme.shadow};
-  background-color: #fff;
+  background-color: ${(props) => props.theme.subtleFloating};
   border-radius: 12px;
   min-width: 300px;
   margin-bottom: 0.5rem;
-  /* background: ${(props) => props.theme.overlayColor}; */
 `;
 const Form = styled.form`
   padding: 0rem 0.25rem;
@@ -240,7 +239,7 @@ const LanguageContainer = styled.div`
 `;
 
 const Icon = styled.button`
-  color: ${(props) => props.theme.headingColor};
+  color: ${(props) => props.theme.text};
 `;
 
 const InlineLink = styled(Link)`

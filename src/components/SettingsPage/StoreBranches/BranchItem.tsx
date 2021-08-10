@@ -141,7 +141,7 @@ const Container = styled.div`
   width: 100%;
 
   &:hover {
-    background-color: ${(props) => props.theme.accentColor};
+    background-color: ${(props) => props.theme.accent1};
   }
   .img {
     height: 50px;

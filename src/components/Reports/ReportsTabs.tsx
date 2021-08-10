@@ -31,15 +31,15 @@ const Container = styled.div(
 `
 );
 const Tab = styled.div<{ active: boolean }>(
-  ({ theme: { breakpoints, mainColor, textSecondary }, active }) => `
+  ({ theme: { breakpoints, textAlt, primary }, active }) => `
     padding:0.75rem 0;
     text-align:center;
     cursor:pointer;
-    border-bottom:${active ? `2px solid ${mainColor}` : "none"};
+    border-bottom:${active ? `2px solid ${primary}` : "none"};
    
 
    &:hover {
-    color:${!active && textSecondary};
+    color:${!active && textAlt};
    }
 
 `

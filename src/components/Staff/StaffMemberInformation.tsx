@@ -47,7 +47,7 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
   } = useTranslation();
   return (
     <Container>
-      <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
+      <Heading tag="h5" color="primary">
         Staff Member Information
       </Heading>
       <div className="box">

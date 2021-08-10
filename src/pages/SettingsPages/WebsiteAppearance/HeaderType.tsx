@@ -36,9 +36,7 @@ const HeaderType = () => {
     <Container>
       <Flex margin="1rem 0">
         <div>
-          <Heading tag="h2" color="heading" mb="0.5rem" weight="bold">
-            Header Type
-          </Heading>
+          <Heading tag="h2">Header Type</Heading>
           <Breadcrumbs
             withoutTitle
             children={[
@@ -58,14 +56,7 @@ const HeaderType = () => {
           />
         </div>
       </Flex>
-      <Heading
-        tag="h5"
-        margin="2rem 0 1rem 0"
-        weight="semibold"
-        color="heading"
-      >
-        Select your preffered Header type
-      </Heading>
+      <Heading tag="h5">Select your preffered Header type</Heading>
       {/* <div className="desc">
         <Heading tag="h6" color="subheading" mb="0.5rem">
           Carousel Images are images that are shown in your website home page.
@@ -83,14 +74,7 @@ const HeaderType = () => {
           }}
         >
           <Flex justify="center" padding=" 0" items="center">
-            <Heading
-              tag="h6"
-              color="heading"
-              weight="semibold"
-              margin="0 0.5rem"
-            >
-              Single Photo
-            </Heading>
+            <Heading tag="h6">Single Photo</Heading>
             {/* <Checkbox checked={true} onChange={() => {}} /> */}
             {headerType === "photo" ? (
               <FcOk
@@ -118,14 +102,7 @@ const HeaderType = () => {
           }}
         >
           <Flex justify="center" items="center">
-            <Heading
-              tag="h6"
-              color="heading"
-              weight="semibold"
-              margin="0 0.5rem"
-            >
-              Slideshow
-            </Heading>
+            <Heading tag="h6">Slideshow</Heading>
             {/* <Checkbox checked={true} onChange={() => {}} /> */}
             {headerType === "slider" ? (
               <FcOk size={25} />
@@ -150,14 +127,7 @@ const HeaderType = () => {
           }}
         >
           <Flex justify="center" items="center">
-            <Heading
-              tag="h6"
-              color="heading"
-              weight="semibold"
-              margin="0 0.5rem"
-            >
-              Video
-            </Heading>
+            <Heading tag="h6">Video</Heading>
 
             {headerType === "video" ? (
               <FcOk size={25} />
@@ -241,11 +211,10 @@ const Container = styled.div`
   }
 `;
 const Box = styled.div`
-  background-color: ${(props) => props.theme.bodyColor};
   border-radius: 6px;
 `;
 const PreviewContainer = styled.div(
-  ({ theme: { breakpoints, accentColor, green, dangerRed, border } }) => `
+  ({ theme: { breakpoints, green, dangerRed, border } }) => `
     padding:1rem;
     .img-preview {
       position:relative;

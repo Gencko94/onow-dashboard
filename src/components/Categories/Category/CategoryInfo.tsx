@@ -45,7 +45,7 @@ const CategoryInfo = ({
     <Container>
       <Grid cols="repeat(auto-fit,minmax(310px,1fr))" gap="1rem">
         <div>
-          <Heading tag="h5" color="primary" margin="1rem 0" weight="semibold">
+          <Heading tag="h5" color="primary">
             Category Information
           </Heading>
 
@@ -118,7 +118,7 @@ const CategoryInfo = ({
         </div>
         <div className="categories-section">
           <div className="title-container">
-            <Heading tag="h5" color="primary" weight="semibold">
+            <Heading tag="h5" color="primary">
               Category Parent
             </Heading>
           </div>
@@ -150,7 +150,7 @@ const CategoryInfo = ({
 export default CategoryInfo;
 
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, border, shadow, errorShadow } }) => `
+  ({ theme: { breakpoints, border, shadow, errorShadow } }) => `
   margin: 1rem 0;
   .title-container {
     padding: 1rem 0;

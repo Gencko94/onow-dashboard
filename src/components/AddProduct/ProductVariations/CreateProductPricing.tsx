@@ -23,7 +23,7 @@ const CreateProductPricing = () => {
   const priceByOptions = watch("price_by_options");
   return (
     <Container>
-      <Heading color="primary" tag="h5" mb="1.5rem" weight="semibold">
+      <Heading color="primary" tag="h5">
         Product Pricing
       </Heading>
 
@@ -69,7 +69,7 @@ const CreateProductPricing = () => {
 
 export default CreateProductPricing;
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor } }) => `
+  ({ theme: { breakpoints } }) => `
   .inputs-container {
     display: grid;
     grid-template-columns: 1fr;

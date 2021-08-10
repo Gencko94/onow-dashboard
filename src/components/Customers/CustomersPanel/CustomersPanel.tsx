@@ -10,7 +10,7 @@ interface IProps {
 const CustomersPanel = ({ setModalOpen }: IProps) => {
   return (
     <Flex margin="1rem 0" justify="space-between" items="center">
-      <Heading tag="h2" weight="bold">
+      <Heading tag="h2" type="large-title">
         Customers
       </Heading>
       <Button color="green" onClick={() => setModalOpen(true)} withTransition>

@@ -182,9 +182,7 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
     <Container>
       <div className="head">
         <Flex justify="space-between" items="center">
-          <Heading color="heading" tag="h5" weight="bold">
-            Options
-          </Heading>
+          <Heading tag="h5">Options</Heading>
           <Button
             withTransition
             color="green"

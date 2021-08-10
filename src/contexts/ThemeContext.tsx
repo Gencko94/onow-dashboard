@@ -1,28 +1,23 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { createContext, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled, { ThemeProvider as StyledThemes } from "styled-components";
 import { devices } from "../utils/breakpoints";
-import { darkTheme, lightTheme } from "../utils/themes";
+
 import Color from "color";
-export type ThemeMode = "light" | "dark" | string;
+import { getInitialColorMode } from "../helpers/getInitialColorMode";
+import { darkTheme, lightTheme } from "../constants";
+export type ThemeMode = "light" | "dark";
 
 type ContextProps = {
   toggleTheme: () => void;
-  mode: ThemeMode;
+  colorMode: ThemeMode;
   currentTheme: any;
 };
 
 export const ThemeContext = createContext<Partial<ContextProps>>({});
 
 const ThemeProvider: React.FC = ({ children }) => {
-  const [mode, setMode] = useState<ThemeMode>("light");
+  const [colorMode, setColorMode] = useState<ThemeMode>(getInitialColorMode());
   const { i18n } = useTranslation();
 
   const fontFamily = useMemo(
@@ -36,7 +31,18 @@ const ThemeProvider: React.FC = ({ children }) => {
   );
 
   const currentTheme = useMemo(() => {
-    const theme = mode === "light" ? { ...lightTheme } : darkTheme;
+    const theme =
+      colorMode === "light"
+        ? {
+            ...lightTheme,
+            primary: "hsl(31, 93%, 55%)",
+            secondary: "hsl(248, 54%, 49%)",
+          }
+        : {
+            ...darkTheme,
+            primary: "hsl(31, 93%, 55%)",
+            secondary: "hsla(222, 100%, 58%, 1)",
+          };
     return {
       fontFamily,
       breakpoints: devices,
@@ -44,9 +50,8 @@ const ThemeProvider: React.FC = ({ children }) => {
       maxWidthLg: "1100px",
       yellow: "#f5a623",
       borderDanger: "1px solid #e23e3eac",
-      primary: Color(theme.mainColor).hex(),
-      primaryLighter: Color(theme.mainColor).lighten(0.2).hex(),
-      primaryDarker: Color(theme.mainColor).darken(0.2).hex(),
+      primaryLighter: Color(theme.primary).lighten(0.2).hex(),
+      primaryDarker: Color(theme.primary).darken(0.2).hex(),
       font: {
         light: "300",
         regular: "400",
@@ -56,24 +61,20 @@ const ThemeProvider: React.FC = ({ children }) => {
       },
       ...theme,
     };
-  }, [mode, fontFamily]);
+  }, [colorMode, fontFamily]);
 
   const toggleTheme = useCallback(() => {
-    if (mode === "light") {
-      setMode("dark");
-      localStorage.setItem("theme", "dark");
+    if (colorMode === "light") {
+      setColorMode("dark");
+      localStorage.setItem("onow-color-mode", "dark");
     } else {
-      setMode("light");
-      localStorage.setItem("theme", "light");
+      setColorMode("light");
+      localStorage.setItem("onow-color-mode", "light");
     }
-  }, [mode]);
+  }, [colorMode]);
 
-  useEffect(() => {
-    const localTheme = localStorage.getItem("theme");
-    localTheme && setMode(localTheme);
-  }, []);
   return (
-    <ThemeContext.Provider value={{ toggleTheme, mode, currentTheme }}>
+    <ThemeContext.Provider value={{ toggleTheme, colorMode, currentTheme }}>
       <StyledThemes theme={currentTheme}>
         <Container lang={i18n.language}>{children}</Container>
       </StyledThemes>

@@ -5,24 +5,49 @@ const GlobalStyle = createGlobalStyle(
   ({
     theme: {
       breakpoints,
-      shadow,
-      bodyColor,
-      textPrimary,
+      text,
+      background,
+      font,
       borderHovered,
-      mainColor,
+      subtleBackground,
+      primary,
     },
   }) => `
 
+  /* CSS RESET */
+  html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+  }
+  /* HTML5 display-role reset for older browsers */
+  article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+  }
 
-* ,*::before,*::after{
-	vertical-align: baseline;
-	font-size: 100%;
-	border: 0 none;
-  box-sizing:border-box;
-	outline: 0;
-	padding: 0;
-	margin: 0;
+  blockquote, q {
+    quotes: none;
+  }
+  blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+/* GLOBAL STYLES */
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  
 }
+
 *::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
   box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -33,18 +58,18 @@ const GlobalStyle = createGlobalStyle(
 *::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-	background-color: ${mainColor};
+	background-color: ${primary};
 }
 *::-webkit-scrollbar-thumb{
   border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-  background-color: ${mainColor};
+  background-color: ${primary};
   transition: background 150ms ease;
 }
 *::-webkit-scrollbar-thumb:hover{
  
-	background-color: ${mainColor};
+	background-color: ${primary};
 }
 html {
   height: 100%;
@@ -55,8 +80,8 @@ body {
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
-  background-color:${bodyColor};
-  color:${textPrimary};
+  background-color:${subtleBackground};
+  color:${text};
   transition:background-color 200ms ease;
   
 }
@@ -78,32 +103,37 @@ select {
   background: none;
   -webkit-font-smoothing: inherit;
   -moz-osx-font-smoothing: inherit;
+              
+  border:none;
 }
-h1 {
-  font-size:2rem;
-  line-height:2.5rem; 
+h1, h2, h3, h4, h5, h6, strong {
+  font-weight: ${font.bold};
 }
-h2 {
-  font-size:1.75rem;
-  line-height:2.25rem; 
-}
-h3 {
-  font-size:1.5rem;
-  line-height:2rem; 
-}
+// h1 {
+//   font-size:2rem;
+//   line-height:2.5rem; 
+// }
+// h2 {
+//   font-size:1.75rem;
+//   line-height:2.25rem; 
+// }
+// h3 {
+//   font-size:1.5rem;
+//   line-height:2rem; 
+// }
 
-h4 {
-  font-size:1.25rem;
-  line-height:1.75rem;  
-}
-h5 {
-  font-size:1rem;
-  line-height:1.5rem;  
-}
-h6 {
-  font-size:0.85rem;
-  line-height:1.25rem; 
-}
+// h4 {
+//   font-size:1.25rem;
+//   line-height:1.75rem;  
+// }
+// h5 {
+//   font-size:1rem;
+//   line-height:1.5rem;  
+// }
+// h6 {
+//   font-size:0.85rem;
+//   line-height:1.25rem; 
+// }
 
 p {
   /* line-height:1 */
@@ -127,97 +157,34 @@ input , textarea {
 input:focus, textarea:focus {
   border-color:${borderHovered} !important;
 }
-.ReactModal__Overlay {
-  opacity: 0;
-  transition: opacity 200ms ease-in-out;
-  z-index: 2;
-}
 
-.ReactModal__Overlay--after-open {
-  opacity: 1;
-}
-
-.ReactModal__Overlay--before-close {
-  opacity: 0;
-}
-.ReactModal__Content {
-  transition: transform 200ms ease-in-out;
-  border-radius: 6px !important;
-  transform: translateY(100%);
-  padding: 0 !important;
-
-}
-
-.ReactModal__Content--after-open {
-  transform: translateY(0);
-}
-.modal {
-  position:absolute;
-  border:none;
-  outline:none;
-  background-color:#fff;
-  box-shadow:${shadow};
-
-}
-.new-option-modal {
-  inset:130px 40px;
-}
-.new-option-value-modal {
-  position:absolute;
-  inset:110px 40px;
-  border:none;
-  outline:none;
-  background-color:#fff;
-  box-shadow:${shadow};
-}
-.maintenance-modal {
-  inset:240px;
-}
-.customer-modal {
-  
-  inset:215px 140px;
-}
-.ReactModal__Content--before-close {
-  transform: translateY(100%);
-};
 ${up(breakpoints.md)}{
-  h1 {
-    font-size:2.25rem;
-    line-height:2.5rem; 
-  }
-  h2 {
-    font-size:2rem;
-    line-height:2.25rem; 
-  }
-  h3 {
-    font-size:1.75rem;
-    line-height:2rem; 
-  }
+  // h1 {
+  //   font-size:2.25rem;
+  //   line-height:2.5rem; 
+  // }
+  // h2 {
+  //   font-size:2rem;
+  //   line-height:2.25rem; 
+  // }
+  // h3 {
+  //   font-size:1.75rem;
+  //   line-height:2rem; 
+  // }
   
-  h4 {
-    font-size:1.5rem;
-    line-height:1.75rem;  
-  }
-  h5 {
-    font-size:1.25rem;
-    line-height:1.5rem;  
-  }
-  h6 {
-    font-size:1rem;
-    line-height:1.25rem; 
-  }
-  .new-option-modal {
-    inset:340px;
-  }
-  .new-option-value-modal {
-    inset:340px;
-  }
-  .customer-modal {
-    inset:200px 240px;
-  }
-  .maintenance-modal {
-    inset:390px 340px;
-  }
+  // h4 {
+  //   font-size:1.5rem;
+  //   line-height:1.75rem;  
+  // }
+  // h5 {
+  //   font-size:1.25rem;
+  //   line-height:1.5rem;  
+  // }
+  // h6 {
+  //   font-size:1rem;
+  //   line-height:1.25rem; 
+  // }
+ 
 }
 
 `

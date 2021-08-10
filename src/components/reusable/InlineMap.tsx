@@ -53,7 +53,7 @@ const InlineMap = ({ mapCenter, setValue, name }: IProps) => {
   const [outOfBorder, setOutOfBorder] = useState<boolean>(false);
   const { getCurrentLocation } = useCurrentLocation();
   const { handleCloseToast, setToastStatus } = useToast();
-  const { mode } = useContext(ThemeContext);
+  const { colorMode } = useContext(ThemeContext);
   const libraries = useMemo<Libraries>(() => ["places"], []);
   const history = useHistory();
 
@@ -70,7 +70,7 @@ const InlineMap = ({ mapCenter, setValue, name }: IProps) => {
       gestureHandling: "greedy",
 
       styles:
-        mode === "light"
+        colorMode === "light"
           ? []
           : [
               { elementType: "geometry", stylers: [{ color: "#242f3e" }] },

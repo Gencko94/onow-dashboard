@@ -50,10 +50,15 @@ const TableHead = ({
 
 export default TableHead;
 const Container = styled.div<{ cols: number | string; gap: string }>(
-  ({ theme: { breakpoints, border }, cols, gap }) => `
-    background-color:#fff;
+  ({
+    theme: { breakpoints, border, subtleFloating, subtleBackground },
+    cols,
+    gap,
+  }) => `
+    background-color:${subtleFloating};
     display:grid;
-    // overflow-x:auto;
+    border-radius: 20px 20px 0 0 ;
+   
     grid-template-columns: ${
       typeof cols === "string" ? cols : `repeat(${cols},minmax(100px,1fr))`
     };
@@ -63,17 +68,19 @@ const Container = styled.div<{ cols: number | string; gap: string }>(
 );
 const Field = styled.button<{ active: boolean; sortable: boolean }>(
   ({
-    theme: { breakpoints, border, subHeading, headingColor, font },
+    theme: { breakpoints, border, text, textAlt, font },
     active,
     sortable,
   }) => `
+      
       border-bottom:${border};
   cursor:default;
   display:flex;
   align-items:center;
   justify-content:center;
   padding: 1rem 0;
-  color: ${subHeading};
+ 
+  color: ${textAlt};
  
   h6 {
     transition: transform 75ms ease;
@@ -96,7 +103,7 @@ const Field = styled.button<{ active: boolean; sortable: boolean }>(
   ${
     active &&
     css`
-      color: ${headingColor};
+      color: ${text};
       h6 {
         font-weight: 700;
       }

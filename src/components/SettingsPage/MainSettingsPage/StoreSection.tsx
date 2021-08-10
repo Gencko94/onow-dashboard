@@ -24,7 +24,7 @@ const StoreSection = () => {
   const [maintenanceModalOpen, setMaintenanceModalOpen] = useState(false);
   return (
     <Container>
-      <Heading tag="h4" color="primary" mb="2rem" weight="semibold">
+      <Heading type="normal-heading" tag="h4">
         Store Settings
       </Heading>
 

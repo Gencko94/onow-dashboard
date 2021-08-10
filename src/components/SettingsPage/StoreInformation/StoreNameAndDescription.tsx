@@ -87,7 +87,7 @@ const StoreNameAndDescription = ({ data }: StoreNameAndDescriptionProps) => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Heading tag="h5" color="primary" margin="2rem 0" weight="semibold">
+      <Heading tag="h5" color="primary">
         Store Information
       </Heading>
       <Box>

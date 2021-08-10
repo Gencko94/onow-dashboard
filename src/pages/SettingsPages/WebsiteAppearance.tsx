@@ -42,9 +42,7 @@ const HomePageAppearance = () => {
     <div>
       <Flex margin="1rem 0">
         <div>
-          <Heading tag="h2" color="heading" mb="0.5rem" weight="bold">
-            Website Appearance
-          </Heading>
+          <Heading tag="h2">Website Appearance</Heading>
           <Breadcrumbs
             withoutTitle
             children={[
@@ -62,16 +60,16 @@ const HomePageAppearance = () => {
       </Flex>
       <Box color={color.hex}>
         <div className="head">
-          <Heading tag="h5" color="heading" weight="bold">
+          <Heading tag="h5" color="heading">
             Website Main Color
           </Heading>
         </div>
         <div className="content">
           <div>
-            <Heading tag="h6" color="primary" weight="semibold">
+            <Heading tag="h6" color="primary">
               Select Your Store Primary Color:
             </Heading>
-            <Paragraph color="textSecondary" fontSize="0.9rem">
+            <Paragraph color="textAlt" fontSize="0.9rem">
               We Recommend picking dark colors.
             </Paragraph>
           </div>
@@ -121,9 +119,7 @@ const HomePageAppearance = () => {
       </Flex>
       <Box>
         <div className="head">
-          <Heading tag="h5" color="heading" weight="bold">
-            Website Sections customization
-          </Heading>
+          <Heading tag="h5">Website Sections customization</Heading>
         </div>
         <Grid
           cols="repeat(auto-fill,minmax(300px,1fr))"
@@ -139,7 +135,7 @@ const HomePageAppearance = () => {
             <div className="img-wrapper">
               <img src="/images/carousel-demo.png" alt="carousel-demo" />
             </div>
-            <Heading tag="h5" color="primary" mb="0.25rem" weight="semibold">
+            <Heading tag="h5" color="primary">
               Header Type
             </Heading>
             <p className="desc">Select your preffered header type</p>
@@ -152,7 +148,7 @@ const HomePageAppearance = () => {
             <div className="img-wrapper">
               <img src="/images/bar-demo.jpg" alt="bar-demo" />
             </div>
-            <Heading tag="h5" color="primary" mb="0.25rem" weight="semibold">
+            <Heading tag="h5" color="primary">
               Products View
             </Heading>
             <p className="desc">Manage how your products look</p>
@@ -232,7 +228,7 @@ const Card = styled.div`
   }
   p.desc {
     font-size: 0.8rem;
-    color: ${(props) => props.theme.textSecondary};
+    color: ${(props) => props.theme.textAlt};
     font-weight: ${(props) => props.theme.font.regular};
     text-align: center;
   }

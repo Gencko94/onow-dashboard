@@ -20,7 +20,7 @@ const CreateProductOrdering = () => {
   const allowSideNotes = watch("allow_side_notes");
   return (
     <div>
-      <Heading tag="h5" margin="1rem 0" weight="semibold" color="primary">
+      <Heading tag="h5" color="primary">
         Product Ordering Options
       </Heading>
 

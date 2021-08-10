@@ -23,7 +23,7 @@ const ProductNameAndDescription = () => {
   return (
     <Container>
       <div className="head">
-        <Heading color="heading" tag="h5" weight="bold">
+        <Heading type="section-title" tag="h5">
           Product Naming & Description
         </Heading>
       </div>
@@ -104,13 +104,13 @@ const ProductNameAndDescription = () => {
 
 export default ProductNameAndDescription;
 const Container = styled.div(
-  ({ theme: { breakpoints, border, accent1 } }) => `
+  ({ theme: { breakpoints, border, subtleFloating } }) => `
   
   display:flex;
   flex-direction:column;
   border: ${border};
   border-radius: 6px;
-  background-color:${accent1} ;
+  background-color:${subtleFloating} ;
   .head {
     border-bottom: ${border};
     padding:0.5rem ;
@@ -118,7 +118,6 @@ const Container = styled.div(
   }
   .box {
     flex:1;
-   
     padding: 0.5rem;
   }
  ${up(breakpoints.md)}{

@@ -75,9 +75,7 @@ const DashboardStatPanel = () => {
                 Total Orders
               </Paragraph>
             </Flex>
-            <Heading textAlign="center" weight="bold" tag="h3">
-              238
-            </Heading>
+            <Heading tag="h3">238</Heading>
           </Grid>
         </Card>
         <Card>
@@ -90,9 +88,7 @@ const DashboardStatPanel = () => {
                 Average Order Cost
               </Paragraph>
             </Flex>
-            <Heading textAlign="center" weight="bold" tag="h3">
-              10.39 KD
-            </Heading>
+            <Heading tag="h3">10.39 KD</Heading>
           </Grid>
         </Card>
         <Card>
@@ -105,9 +101,7 @@ const DashboardStatPanel = () => {
                 Revenue
               </Paragraph>
             </Flex>
-            <Heading textAlign="center" weight="bold" tag="h3">
-              2682.2 KD
-            </Heading>
+            <Heading tag="h3">2682.2 KD</Heading>
           </Grid>
         </Card>
       </Grid>

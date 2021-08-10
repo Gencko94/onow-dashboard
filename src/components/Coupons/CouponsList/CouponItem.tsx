@@ -141,11 +141,9 @@ const Container = styled.div<{ selected: boolean }>`
       4,
       minmax(140px, 1fr)
     );
-  background-color: ${(props) =>
-    props.selected ? props.theme.accentColor : "#fff"};
+  background-color: #fff;
 
   &:hover {
-    background-color: ${(props) => props.theme.accentColor};
   }
 
   .field {

@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { AuthProvider } from "../../../contexts/AuthContext";
 import Heading from "../../StyledComponents/Heading";
 import { up } from "../../../utils/themes";
+import DarkModeToggleContainer from "../../DarkModeToggle/DarkModeToggle";
 interface IProps {
   handleToggleDrawer: () => void;
 }
@@ -32,7 +33,7 @@ const NavIconsDesktop = ({ handleToggleDrawer }: IProps) => {
       {/* <button className="icon">
         <IoMdNotificationsOutline size={22} />
       </button> */}
-
+      <DarkModeToggleContainer />
       {i18n.language === "en" && (
         <button
           className="icon"
@@ -58,7 +59,7 @@ const NavIconsDesktop = ({ handleToggleDrawer }: IProps) => {
 
 export default NavIconsDesktop;
 const Container = styled.div(
-  ({ theme: { breakpoints, iconColor } }) => `
+  ({ theme: { breakpoints } }) => `
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -69,7 +70,7 @@ const Container = styled.div(
     color: #fff;
   }
   .icon {
-    color: ${iconColor};
+   
   }
   ${up(breakpoints.md)}{
     button {

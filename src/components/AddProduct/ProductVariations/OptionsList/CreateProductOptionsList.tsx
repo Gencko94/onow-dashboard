@@ -52,7 +52,7 @@ const CreateProductOptionsList = ({
   }, []);
   return (
     <div>
-      <Heading color="primary" tag="h5" mb="0.5rem" weight="semibold">
+      <Heading color="primary" tag="h5">
         Options :
       </Heading>
       {/* If No Options Show this */}

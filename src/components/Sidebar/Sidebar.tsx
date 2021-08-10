@@ -36,8 +36,8 @@ const Sidebar = ({ setDrawerOpen, isDesktop }: IProps) => {
 
 export default Sidebar;
 const Container = styled.aside(
-  ({ theme: { breakpoints, shadow } }) => `
-  background-color: #222;
+  ({ theme: { breakpoints, shadow, sidebarBackground } }) => `
+  background-color:${sidebarBackground};
   
   
   
@@ -62,10 +62,6 @@ const Container = styled.aside(
       width: 100%;
       height: 100%;
       opacity: 0.3;
-      // background-image:url(/images/t.gif);
-      // background-repeat: no-repeat;
-      // background-position: 50% 0;
-      // background-size: cover;
     
   }
   ${up(breakpoints.md)}{

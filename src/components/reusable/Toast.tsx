@@ -33,7 +33,6 @@ const Toast = ({ text, btnText, closeFunction, type }: IProps) => {
               e.stopPropagation();
               closeFunction();
             }}
-            hoverBg="#f8f8f83b"
           >
             {btnText}
           </Button>

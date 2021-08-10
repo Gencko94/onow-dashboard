@@ -10,7 +10,7 @@ const CategoriesPanel = () => {
   const history = useHistory();
   return (
     <Flex justify="space-between" items="center" margin="1rem 0">
-      <Heading tag="h2" weight="bold">
+      <Heading tag="h2" type="large-title">
         Categories
       </Heading>
       <Button

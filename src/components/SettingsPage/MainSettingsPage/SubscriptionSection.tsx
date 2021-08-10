@@ -5,12 +5,14 @@ import Button from "../../reusable/Button";
 import Heading from "../../StyledComponents/Heading";
 import Flex from "../../StyledComponents/Flex";
 import { up } from "../../../utils/themes";
+import MagicRainbowButton from "../../reusable/FancyStuff/MagicRainbowButton";
+import Spacer from "../../reusable/Spacer";
 const SubscriptionSection = () => {
   return (
     <Container>
       <div className="current-sub">
         <div>
-          <Heading tag="h4" color="primary" mb="0.75rem">
+          <Heading tag="h4" color="primary" type="large-title">
             Onow Basic
           </Heading>
 
@@ -19,10 +21,12 @@ const SubscriptionSection = () => {
             of our pages
           </p>
           <Flex items="center" margin="60px 0 0 0">
-            <Button color="primary" withTransition>
+            <MagicRainbowButton>Upgrade Plan</MagicRainbowButton>
+            {/* <Button color="primary" withTransition>
               Upgrade plan
-            </Button>
-            <Button margin="0 0.5rem" withTransition>
+            </Button> */}
+            <Spacer size={10} />
+            <Button color="primary" withTransition appearance="ghost">
               Discover plans
             </Button>
           </Flex>
@@ -46,7 +50,7 @@ const SubscriptionSection = () => {
           </div>
         </div>
         <Flex items="center" justify="center" margin="40px 0 0 0">
-          <Button color="primary" withTransition>
+          <Button color="primary" withTransition appearance="ghost">
             Upgrade plan
           </Button>
         </Flex>
@@ -57,7 +61,7 @@ const SubscriptionSection = () => {
 
 export default SubscriptionSection;
 const Container = styled.div(
-  ({ theme: { breakpoints, font, shadow } }) => `
+  ({ theme: { breakpoints, font, shadow, subtleFloating } }) => `
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr;
@@ -67,7 +71,7 @@ const Container = styled.div(
     grid-template-columns: minmax(175px,2fr) minmax(125px, 1fr);
     box-shadow: ${shadow};
     border-radius: 6px;
-    background-color: #fff;
+    background-color: ${subtleFloating};
     
     .desc {
       font-weight: ${font.regular};
@@ -86,7 +90,7 @@ const Container = styled.div(
     padding: 1rem;
     box-shadow: ${shadow};
     border-radius: 6px;
-    background-color: #fff;
+    background-color: ${subtleFloating};
     .circle-container {
       display: flex;
       align-items: center;

@@ -23,7 +23,7 @@ const Breadcrumbs = ({ children, withoutTitle }: IProps) => {
   return (
     <Container>
       {!withoutTitle && (
-        <Heading tag="h5" color="primary" mb="0.5rem" weight="semibold">
+        <Heading tag="h5" type="large-title">
           {children[children.length - 1].name[language]}
         </Heading>
       )}
@@ -40,7 +40,7 @@ const Breadcrumbs = ({ children, withoutTitle }: IProps) => {
             <React.Fragment key={i}>
               {i === children.length - 1 ? (
                 <Paragraph
-                  color="themeColor"
+                  color="secondary"
                   fontSize="0.9rem"
                   weight="semibold"
                 >
@@ -86,7 +86,7 @@ const Breadcrumbs = ({ children, withoutTitle }: IProps) => {
 export default Breadcrumbs;
 
 const Container = styled.nav(
-  ({ theme: { breakpoints, font, headingColor, border } }) => `
+  ({ theme: { breakpoints, font, border } }) => `
   
   
   .links-container {
@@ -113,10 +113,9 @@ const Container = styled.nav(
 );
 const StyledLink = styled(Link)`
   display: block;
-  color: ${(props) => props.theme.textSecondary};
   transition: color 75ms ease;
   &:hover {
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
   }
 `;
 const HomeLink = styled(StyledLink)`

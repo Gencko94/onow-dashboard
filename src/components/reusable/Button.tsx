@@ -6,38 +6,26 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import useResponsive from "../../hooks/useResponsive";
 import Ripple from "./Ripple";
 import Color from "color";
-import { up } from "../../utils/themes";
 
-interface IProps {
+import React from "react";
+import UnstyledButton from "./Buttons/UnstyledButton";
+type DefaultButtonProps = Omit<JSX.IntrinsicElements["button"], "ref">;
+
+interface IProps extends DefaultButtonProps {
   /**
    * isLoading boolean , Renders a loading state.
    */
   isLoading?: boolean;
-  /**
-   * Button Disabled
-   */
-  disabled?: boolean;
-  /**
-   * ```onClick``` handler
-   */
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+
   /**
    * Button Background color , There are presets but you can pass custom hex value
    */
   color?: "default" | "primary" | "danger" | "blue" | "green";
-  /**
-   * Button Text color , defaults to White.
-   */
 
-  textColor?: "auto" | "primary" | "primaryContrast";
   /**
    * if ```true``` button will be transitioned up
    */
   withTransition?: boolean;
-  /**
-   * button ```type```
-   */
-  type?: "submit" | "button";
   /**
    * button ```margin```
    */
@@ -47,14 +35,6 @@ interface IProps {
    * Button With Ripple Effect.
    */
   noRipple?: boolean;
-  /**
-   * On Hover background color
-   */
-  hoverBg?: string;
-  /**
-   * On Hover text color
-   */
-  hoverColor?: string;
 
   /**
    * Text Transform uppercase
@@ -65,27 +45,23 @@ interface IProps {
    */
   size?: "lg" | "md" | "sm" | "xs";
   /**
-   * Button Size
+   * Button Appearance
    */
   appearance?: "default" | "ghost";
 }
 
 const Button: React.FC<IProps> = ({
-  onClick,
   type = "button",
   size = "md",
   color = "default",
   withTransition,
   margin = "0",
-  textColor: buttonTextColor = "auto",
   noRipple = false,
-  hoverBg,
-  hoverColor,
   isLoading,
-  disabled,
   uppercase,
   appearance = "default",
   children,
+  ...props
 }) => {
   /* Capture the dimensions of the button before the loading happens
   so it doesn’t change size when showing the loader */
@@ -122,42 +98,30 @@ const Button: React.FC<IProps> = ({
   }, [buttonColor]);
 
   const textColor = useMemo(() => {
-    if (appearance === "ghost") return buttonColor;
-    if (buttonTextColor === "auto") {
-      const darkenedColor = Color(buttonColor).darken(0.3).hex();
-      if (Color(darkenedColor).isDark()) {
-        return currentTheme.textPrimaryContrast;
-      } else {
-        return currentTheme.textPrimary;
-      }
-    } else if (buttonTextColor === "primary") {
-      return currentTheme.textPrimary;
-    } else if (buttonTextColor === "primaryContrast") {
-      return currentTheme.textPrimaryContrast;
-    }
-  }, [
-    appearance,
-    buttonColor,
-    buttonTextColor,
-    currentTheme.textPrimary,
-    currentTheme.textPrimaryContrast,
-  ]);
-  const hoverTextColor = useMemo(() => {
-    if (appearance === "ghost") return buttonColor;
-    const darkenedColor = Color(hover).darken(0.2).hex();
-
+    const darkenedColor = Color(buttonColor).darken(0.25).hex();
+    console.log(Color(darkenedColor).isDark());
     if (Color(darkenedColor).isDark()) {
-      return currentTheme.textPrimaryContrast;
+      return "#fff";
     } else {
-      return currentTheme.textPrimary;
+      return "#252525";
     }
-  }, [
-    appearance,
-    buttonColor,
-    currentTheme.textPrimary,
-    currentTheme.textPrimaryContrast,
-    hover,
-  ]);
+  }, [buttonColor]);
+  // const hoverTextColor = useMemo(() => {
+  //   if (appearance === "ghost") return buttonColor;
+  //   const darkenedColor = Color(hover).darken(0.2).hex();
+
+  //   if (Color(darkenedColor).isDark()) {
+  //     return currentTheme.textPrimaryContrast;
+  //   } else {
+  //     return currentTheme.textPrimary;
+  //   }
+  // }, [
+  //   appearance,
+  //   buttonColor,
+  //   currentTheme.textPrimary,
+  //   currentTheme.textPrimaryContrast,
+  //   hover,
+  // ]);
 
   useEffect(
     () => {
@@ -171,24 +135,23 @@ const Button: React.FC<IProps> = ({
     // children are a dep so dimensions are updated if initial contents change
     [children]
   );
+  let Component: any;
+  if (appearance === "ghost") {
+    if (size === "xs") Component = GhostButtonXs;
+    else if (size === "sm") Component = GhostButtonSm;
+    else if (size === "md") Component = GhostButtonMd;
+    else if (size === "lg") Component = GhostButtonLg;
+  } else if (appearance === "default") {
+    if (size === "xs") Component = DefaultButtonXs;
+    else if (size === "sm") Component = DefaultButtonSm;
+    else if (size === "md") Component = DefaultButtonMd;
+    else if (size === "lg") Component = DefaultButtonLg;
+  }
   return (
-    <ButtonWrapper
-      appearance={appearance}
-      ref={ref}
-      margin={margin}
+    <Component
+      background={buttonColor}
+      textColor={textColor}
       withTransition={withTransition}
-      buttonColor={buttonColor}
-      color={textColor}
-      onClick={onClick}
-      type={type}
-      hoverBg={hoverBg ?? hover}
-      hoverColor={hoverColor ?? hoverTextColor}
-      disabled={isLoading || disabled}
-      className={cx(
-        "btn",
-        { [`btn-${size}-${appearance}`]: true },
-        { "btn-ghost": appearance === "ghost" }
-      )}
       style={
         width && height
           ? {
@@ -197,6 +160,8 @@ const Button: React.FC<IProps> = ({
             }
           : {}
       }
+      ref={ref}
+      {...props}
     >
       {isLoading ? (
         <span className="loading">
@@ -205,17 +170,17 @@ const Button: React.FC<IProps> = ({
       ) : (
         children
       )}
-
-      {!noRipple && (
+      {!noRipple && !props.disabled && (
         <span className="ripple-wrapper">
           <Ripple />
         </span>
       )}
-    </ButtonWrapper>
+    </Component>
   );
 };
 
 export default Button;
+
 export const ButtonWrapper = styled.button<{
   color: string;
   buttonColor: string;
@@ -245,17 +210,89 @@ export const ButtonWrapper = styled.button<{
   position: relative;
   border-color:${buttonColor};
   color: ${color};
-  &:hover {
-    background:${appearance === "ghost" ? "transparent" : hoverBg};
-    color: ${hoverColor};
-  };
+  
+  &:not(:disabled):hover {
+    filter: hue-rotate(4deg) saturate(120%) brightness(120%);
+  }
   .loading {
     animation: spinner 2s infinite linear forwards;
   }
   ${withTransition && "&:hover {transform: translateY(-2px);}"};
   ${disabled && "background: #a7a2a2 !important; color: #fff !important;"};
-  // ${up(breakpoints.md)}{
-
-  // }
     `
 );
+const BaseButton = styled(UnstyledButton)`
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 250ms;
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  &:not(:disabled):hover {
+    filter: hue-rotate(4deg) saturate(120%) brightness(120%);
+  }
+  &:not(:disabled):active {
+    transform: scale(0.95);
+    transition: transform 32ms;
+  }
+`;
+
+// Default Button
+const DefaultButton = styled(BaseButton)<{
+  background: string;
+  textColor: string;
+  withTransition: boolean;
+}>`
+  background: ${(props) => props.background};
+  color: ${(props) => props.textColor};
+  &:not(:disabled) {
+    ${(props) =>
+      props.withTransition && "&:hover {transform: translateY(-2px);}"};
+  }
+`;
+
+// Ghost Button
+const GhostButton = styled(BaseButton)<{
+  background: string;
+}>`
+  border: 1px solid ${(props) => props.background};
+  background: transparent;
+  color: ${(props) => props.background};
+`;
+
+const GhostButtonXs = styled(GhostButton)`
+  padding: 1px 7px;
+  font-size: 11px;
+`;
+const GhostButtonSm = styled(GhostButton)`
+  padding: 4px 9px;
+  font-size: 13px;
+`;
+const GhostButtonMd = styled(GhostButton)`
+  padding: 7px 11px;
+  font-size: 14px;
+`;
+const GhostButtonLg = styled(GhostButton)`
+  padding: 9px 15px;
+  font-size: 15px;
+`;
+const DefaultButtonXs = styled(DefaultButton)`
+  padding: 2px 8px;
+  font-size: 12px;
+`;
+const DefaultButtonSm = styled(DefaultButton)`
+  padding: 5px 10px;
+  font-size: 14px;
+`;
+const DefaultButtonMd = styled(DefaultButton)`
+  padding: 8px 12px;
+  font-size: 15px;
+`;
+const DefaultButtonLg = styled(DefaultButton)`
+  padding: 10px 16px;
+  font-size: 16px;
+`;

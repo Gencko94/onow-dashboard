@@ -67,9 +67,7 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
   return (
     <Container>
       <div className="head">
-        <Heading tag="h5" weight="bold">
-          Coupon Information
-        </Heading>
+        <Heading tag="h5">Coupon Information</Heading>
       </div>
 
       <div className="box">

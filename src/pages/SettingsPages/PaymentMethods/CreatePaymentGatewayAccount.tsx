@@ -304,13 +304,11 @@ const CreatePaymentGatewayAccount = () => {
 export default CreatePaymentGatewayAccount;
 
 const Container = styled.div(
-  ({
-    theme: { breakpoints, mainColor, shadow, headingColor, font, dangerRed },
-  }) => `
+  ({ theme: { breakpoints, primary, shadow, font, dangerRed } }) => `
   margin: 2rem 0;
   .title-container {
     padding: 1rem 0;
-    color: ${mainColor};
+    color: ${primary};
   }
   .box {
     background-color: #fff;

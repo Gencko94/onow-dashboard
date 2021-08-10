@@ -115,9 +115,7 @@ const CreateNewCoupon = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex justify="space-between" items="center" margin="1rem 0">
         <div>
-          <Heading tag="h3" weight="bold" mb="1rem">
-            Create New Coupon
-          </Heading>
+          <Heading tag="h3">Create New Coupon</Heading>
           <Breadcrumbs
             withoutTitle
             children={[

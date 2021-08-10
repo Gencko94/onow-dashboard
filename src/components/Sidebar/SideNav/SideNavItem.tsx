@@ -44,7 +44,8 @@ const SideNavLink = styled(Link)<{ isCurrent: boolean }>`
   display: flex;
   align-items: center;
   transition: background 150ms ease;
-  color: ${(props) => props.theme.textPrimaryContrast};
+  color: #fff;
+  border-radius: 6px;
 
   .icon {
     padding: 0.25rem;
@@ -52,13 +53,13 @@ const SideNavLink = styled(Link)<{ isCurrent: boolean }>`
     align-items: center;
   }
   &:hover {
-    background-color: #333;
+    background-color: ${(props) => props.theme.sidebarSubtleBackground};
   }
   ${(props) =>
     props.isCurrent &&
     css`
-      background-color: #444;
-      color: ${(props) => props.theme.mainColor};
+      background-color: ${(props) => props.theme.sidebarSubtleBackground};
+      color: ${(props) => props.theme.primary};
     `};
   @media (min-width: 768px) {
     padding: 0.75rem 1rem;

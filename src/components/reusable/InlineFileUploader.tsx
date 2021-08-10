@@ -103,7 +103,7 @@ const InlineFileUploader = ({
 export default InlineFileUploader;
 const Container = styled.div`
   label {
-    color: ${({ theme }) => theme.headingColor};
+    color: ${({ theme }) => theme.text};
     margin-bottom: 0.75rem;
     font-size: 0.9rem;
     font-weight: ${(props) => props.theme.font.regular};
@@ -143,7 +143,7 @@ const Input = styled.input`
 const FilePreviewContainer = styled.div`
   margin-top: 1rem;
   .file {
-    background-color: ${(props) => props.theme.overlayColor};
+    background-color: ${(props) => props.theme.subtleBackground};
 
     display: grid;
     grid-template-columns: 40px 1fr;

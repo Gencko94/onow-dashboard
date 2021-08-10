@@ -80,7 +80,7 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
   }, []);
   return (
     <Container>
-      <Heading tag="h5" margin="2rem 0" weight="semibold" color="primary">
+      <Heading tag="h5" color="primary">
         Staff Member Information
       </Heading>
       <div className="box">
@@ -205,7 +205,7 @@ const Container = styled.div`
     gap: 1rem;
 
     label {
-      color: ${(props) => props.theme.headingColor};
+      color: ${(props) => props.theme.text};
       margin-bottom: 0.5rem;
       font-size: 0.8rem;
       font-weight: ${(props) => props.theme.font.regular};

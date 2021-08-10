@@ -65,13 +65,13 @@ const NewBranchDeliveryZones = () => {
 
 export default NewBranchDeliveryZones;
 const Container = styled.form(
-  ({ theme: { breakpoints, mainColor, shadow, border, bodyColor } }) => `
+  ({ theme: { breakpoints, primary, shadow, border } }) => `
 .title-container {
   padding: 1rem 0;
-  color: ${mainColor};
+  color: ${primary};
 }
 .box {
-  background-color: ${bodyColor};
+ 
   border: ${border};
   border-radius: 6px;
   }

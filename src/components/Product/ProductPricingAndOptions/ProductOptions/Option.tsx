@@ -210,9 +210,7 @@ const Option = ({
     <Container>
       <div className="head">
         <Flex items="center" justify="space-between">
-          <Heading tag="h5" weight="bold">
-            Option {index + 1}
-          </Heading>
+          <Heading tag="h5">Option {index + 1}</Heading>
           <Flex justify="center" items="center">
             <Button
               color="blue"
@@ -251,56 +249,42 @@ const Option = ({
       <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0" margin="0 ">
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6" color="heading" weight="bold">
+            <Heading tag="h6" color="heading">
               Name En
             </Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6" color="subheading">
-              {option.name?.en}
-            </Heading>
+            <Heading tag="h6">{option.name?.en}</Heading>
           </div>
         </div>
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6" color="heading" weight="bold">
-              Name Ar
-            </Heading>
+            <Heading tag="h6">Name Ar</Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6" color="subheading">
-              {option.name?.ar}
-            </Heading>
+            <Heading tag="h6">{option.name?.ar}</Heading>
           </div>
         </div>
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6" color="heading" weight="bold">
-              Select Type
-            </Heading>
+            <Heading tag="h6">Select Type</Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6" color="subheading">
-              {option.select_type}
-            </Heading>
+            <Heading tag="h6">{option.select_type}</Heading>
           </div>
         </div>
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6" color="heading" weight="bold">
-              Required
-            </Heading>
+            <Heading tag="h6">Required</Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6" color="subheading">
-              {option.required ? "Yes" : "No"}
-            </Heading>
+            <Heading tag="h6">{option.required ? "Yes" : "No"}</Heading>
           </div>
         </div>
       </Grid>
       <div className="head">
         <Flex justify="space-between" items="center">
-          <Heading tag="h5" weight="bold" color="primary">
+          <Heading tag="h5" color="primary">
             Option {index + 1} Values
           </Heading>
           <Button

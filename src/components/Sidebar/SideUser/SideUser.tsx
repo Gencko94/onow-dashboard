@@ -57,14 +57,13 @@ const SideUser = () => {
 
 export default SideUser;
 const Container = styled.div`
-  /* box-shadow: ${(props) => props.theme.shadow}; */
   padding: 0.5rem;
   margin: 0.5rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #333;
-  color: ${(props) => props.theme.textPrimaryContrast};
+  background: ${(props) => props.theme.sidebarSubtleBackground};
+  color: #fff;
 
   border-radius: 8px;
   .user {
@@ -87,38 +86,9 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
-    color: ${(props) => props.theme.textPrimaryContrast};
+    color: ${(props) => props.theme.textContrast};
   }
   .menu {
     position: relative;
   }
-  /* .menu {
-    position: absolute;
-    top: -10px;
-    right: 10px;
-    z-index: 10;
-
-    background-color: #fff;
-    transform-origin: right;
-    box-shadow: ${(props) => props.theme.shadow};
-    border-radius: 5px;
-  }
-  .menu-item {
-    color: ${(props) => props.theme.textPrimaryContrast};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem;
-    &:hover {
-      background-color: ${(props) => props.theme.accentColor};
-    }
-    .icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    p {
-      margin: 0 0.25rem;
-    }
-  } */
 `;

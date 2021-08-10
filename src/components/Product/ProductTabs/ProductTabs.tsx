@@ -67,17 +67,15 @@ const Container = styled.div`
 `;
 
 const TabItem = styled.button<{ active?: boolean }>(
-  ({
-    theme: { breakpoints, mainColor, textPrimary, font, headingColor, border },
-    active,
-  }) => `
+  ({ theme: { breakpoints, font, primary, border, text }, active }) => `
   padding: 0.75rem 0;
   transition: color 100ms ease;
+  color:${text};
   white-space: nowrap;
   text-align: center;
-  border-bottom:${active ? `2px solid ${mainColor}` : "none"};
+  border-bottom:${active ? `2px solid ${primary}` : "none"};
   &:hover {
-    color: ${mainColor};
+    color: ${primary};
   }
   ${up(breakpoints.md)}{
     font-size: 1rem;

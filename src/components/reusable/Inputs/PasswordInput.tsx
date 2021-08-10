@@ -5,6 +5,7 @@ import { CgPassword } from "react-icons/cg";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 import styled, { css } from "styled-components";
+import { up } from "../../../constants";
 import InputErrorMessage from "../InputErrorMessage";
 interface BaseInput {
   /**
@@ -117,19 +118,19 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     theme: {
       breakpoints,
       font,
-      headingColor,
+      primary,
       border,
-      inputColorLight,
-      mainColor,
+      text,
       borderHovered,
       dangerRed,
       accent1,
+      background,
     },
     error,
     rtl,
   }) => `
   label {
-    color: ${headingColor};
+    color: ${text};
     margin-bottom: 0.75rem;
     font-size: 0.8rem;
     font-weight: ${font.regular};
@@ -141,8 +142,8 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     
     justify-content: center;
     
-    background-color: #fff;
-    color: ${headingColor};
+    background-color: ${background};
+    color: ${text};
     border: ${border};
     overflow: hidden;
     border-radius: 6px;
@@ -152,7 +153,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${mainColor};
+      color: ${primary};
     }
     
     &:hover,
@@ -179,9 +180,9 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       padding-top: 0.25rem;
       height: 22px;
       
-      color: ${mainColor};
+      color: ${primary};
     }
-    @media  ${breakpoints.md}{
+    ${up(breakpoints.md)}{
       label {
         font-size: 0.9rem;
         margin-bottom: 0.75rem;
@@ -191,17 +192,19 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     `
 );
 const Input = styled.input(
-  ({ theme: { breakpoints } }) => `
+  ({ theme: { breakpoints, text } }) => `
   flex: 1;
   padding: 0.4rem;
   font-size: 0.8rem;
   width: 50px;
-  @media  ${breakpoints.md}{
   
-      
-      input {
+    color:${text};
+ 
+  ${up(breakpoints.md)}{
+
+    
         font-size: 0.9rem;
-      }
+     
     
 
   };

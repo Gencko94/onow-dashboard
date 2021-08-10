@@ -62,7 +62,6 @@ const StaffItem = ({ member, handleDeleteStaffMember }: IProps) => {
             >
               <Popover closeFunction={() => setActionsMenuOpen(false)}>
                 <Button
-                  hoverBg="#b72b2b"
                   onClick={(e) => {
                     e.stopPropagation();
 
@@ -89,7 +88,7 @@ const StaffItem = ({ member, handleDeleteStaffMember }: IProps) => {
 
 export default StaffItem;
 const Container = styled.div(
-  ({ theme: { breakpoints, border, font, highlightColor } }) => `
+  ({ theme: { breakpoints, border, font, accent1 } }) => `
     background-color:#fff;
     cursor: pointer;
     display: grid;
@@ -97,7 +96,7 @@ const Container = styled.div(
     gap: 1rem;
     border-bottom: ${border};
     &:hover {
-      background-color: ${highlightColor};
+      background-color: ${accent1};
     }
     
     .field {

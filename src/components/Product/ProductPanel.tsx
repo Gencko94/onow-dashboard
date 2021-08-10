@@ -16,7 +16,7 @@ import Flex from "../StyledComponents/Flex";
 import Grid from "../StyledComponents/Grid";
 import Heading from "../StyledComponents/Heading";
 import Paragraph from "../StyledComponents/Paragraph";
-
+import Sparkles from "../reusable/FancyStuff/Sparkles";
 const statuses = [
   { label: "Active", value: 1 },
   { label: "Hidden", value: "hidden" },
@@ -86,9 +86,11 @@ const ProductPanel = ({ id }: { id: number }) => {
         items="center"
       >
         <div>
-          <Heading tag="h2" margin="1rem 0" weight="bold">
-            Product
-          </Heading>
+          <Sparkles>
+            <Heading tag="h2" type="large-title">
+              Product
+            </Heading>
+          </Sparkles>
           <Breadcrumbs
             withoutTitle
             children={[
@@ -149,5 +151,5 @@ const ProductPanel = ({ id }: { id: number }) => {
 
 export default ProductPanel;
 const Container = styled.div`
-  background-color: #fff;
+  /* background-color: #fff; */
 `;

@@ -30,7 +30,7 @@ const CreateProductNameAndDescription = () => {
   }, [nameEn]);
   return (
     <Container>
-      <Heading color="primary" weight="semibold" tag="h5" margin="1rem 0">
+      <Heading color="primary" tag="h5">
         Product Naming & Description
       </Heading>
 
@@ -117,12 +117,11 @@ const CreateProductNameAndDescription = () => {
 
 export default CreateProductNameAndDescription;
 const Container = styled.div(
-  ({ theme: { breakpoints, border, bodyColor } }) => `
+  ({ theme: { breakpoints, border } }) => `
   display:flex;
   flex-direction:column;
   .box {
     flex:1;
-    background-color:${bodyColor} ;
     border: ${border};
     border-radius: 6px;
     padding: 0.5rem;

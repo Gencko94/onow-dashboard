@@ -10,7 +10,7 @@ const Reports = () => {
   return (
     <div>
       <Flex margin="1rem 0">
-        <Heading tag="h2" weight="bold">
+        <Heading tag="h2" type="large-title">
           Reports
         </Heading>
       </Flex>

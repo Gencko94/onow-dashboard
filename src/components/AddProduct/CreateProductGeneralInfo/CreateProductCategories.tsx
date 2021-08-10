@@ -19,7 +19,7 @@ const CreateProductCategories = () => {
 
   return (
     <Container>
-      <Heading tag="h5" weight="semibold" color="primary" margin="1rem 0">
+      <Heading tag="h5" color="primary">
         Product Category
       </Heading>
 
@@ -35,22 +35,12 @@ const CreateProductCategories = () => {
 
 export default CreateProductCategories;
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  ({ theme: { breakpoints, shadow } }) => `
  
   display:flex;
   flex-direction:column;
   
-  .title-container {
-    padding: 1rem 0;
-    color: ${mainColor};
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-  }
- 
-  @media ${breakpoints.md} {
-    
-  }
+
   `
 );
 const CategoriesList = styled.div<{ error: boolean }>`

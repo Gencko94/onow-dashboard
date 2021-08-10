@@ -39,7 +39,7 @@ const GithubInput = ({
   return (
     <Container>
       <div className="text-container">
-        <Heading mb="0.25rem" weight="semibold" tag="h6">
+        <Heading tag="h6" type="small-title">
           {label}
         </Heading>
         {desc && <p className="first-subtitle">{desc}</p>}
@@ -57,7 +57,7 @@ const GithubInput = ({
 
 export default GithubInput;
 const Container = styled.div(
-  ({ theme: { breakpoints, textPrimary, textSecondary, font } }) => `
+  ({ theme: { breakpoints, secondary, text, textAlt, font } }) => `
   display: flex;
   align-items: center;
   gap:1rem;
@@ -65,12 +65,12 @@ const Container = styled.div(
     flex: auto;
    
     .first-subtitle {
-      color: ${textPrimary};
+      color: ${text};
       font-size: 0.7rem;
       margin-bottom: 0.25rem;
     }
     .second-subtitle {
-      color: ${textSecondary};
+      color: ${textAlt};
       font-size: 0.7rem;
       font-weight: ${font.regular};
     }
@@ -80,12 +80,12 @@ const Container = styled.div(
 
      
       .first-subtitle {
-        color: ${textPrimary};
+       
         font-size: 0.8rem;
-        margin-bottom: 0.25rem;
+       
       }
       .second-subtitle {
-        color: ${textSecondary};
+        color: ${secondary};
         font-size: 0.79rem;
         font-weight: ${font.regular};
       }
