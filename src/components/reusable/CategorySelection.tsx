@@ -103,7 +103,7 @@ export default CategorySelection;
 const Container = styled.div`
   .table-title {
     padding: 1rem;
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
     border-bottom: ${(props) => props.theme.border};
   }
   .error-message {

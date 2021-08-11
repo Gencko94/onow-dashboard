@@ -109,7 +109,7 @@ const Container = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
   .title {
     padding: 0.75rem 0.5rem;
-    background-color: ${(props) => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.sidebarBackground};
     border-bottom: ${(props) => props.theme.border};
     display: flex;
     align-items: center;

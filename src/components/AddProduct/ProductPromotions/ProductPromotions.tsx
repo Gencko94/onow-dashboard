@@ -186,10 +186,10 @@ const ProductPromotions = () => {
 export default ProductPromotions;
 
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, subHeading } }) => `
+  ({ theme: { breakpoints, primary } }) => `
   background-color:#fff;
     .title-container {
-        color: ${mainColor};
+        color: ${primary};
         margin-bottom:1rem;
     }
     .description-box {

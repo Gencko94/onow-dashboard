@@ -126,7 +126,7 @@ const SearchButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => props.theme.btnText};
+  color: ${(props) => props.theme.text};
   background-color: ${(props) => props.theme.green};
 `;
 const OptionsContainer = styled.div`
@@ -143,10 +143,10 @@ const Option = styled.div`
   padding: 0.5rem;
   font-size: 0.8rem;
   background-color: #fff;
-  color: ${(props) => props.theme.subHeading};
+  color: ${(props) => props.theme.textAlt};
   transition: all 75ms ease;
   &:hover {
-    color: ${(props) => props.theme.headingColor};
+    color: ${(props) => props.theme.text};
     font-weight: ${(props) => props.theme.font.semibold};
   }
 `;

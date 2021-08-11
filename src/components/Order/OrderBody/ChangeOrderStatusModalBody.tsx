@@ -83,7 +83,7 @@ const ButtonsContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   border-top: ${(props) => props.theme.border};
-  background-color: ${(props) => props.theme.overlayColor};
+  background-color: ${(props) => props.theme.subtleBackground};
 `;
 const Button = styled.button<{ red?: boolean }>`
   background-color: ${(props) =>

@@ -35,7 +35,7 @@ const Container = styled.div`
 `;
 
 const TabItem = styled.button<{ active?: boolean }>(
-  ({ theme: { breakpoints, mainColor, textSecondary, font }, active }) => `
+  ({ theme: { breakpoints, primary, secondary, font }, active }) => `
   padding: 0.75rem 0.5rem;
   transition: color 150ms ease;
   font-size: 0.8rem;
@@ -44,7 +44,7 @@ const TabItem = styled.button<{ active?: boolean }>(
   border-radius: 6px 6px 0 0;
   background-color: #fff;
   
-  color: ${active ? mainColor : textSecondary};
+  color: ${active ? primary : secondary};
     
   font-weight: ${active && font.bold};
   

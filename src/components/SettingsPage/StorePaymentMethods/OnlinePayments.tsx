@@ -22,7 +22,7 @@ export default OnlinePayments;
 
 const Container = styled.div`
   .title-container {
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
     padding: 1rem 0;
   }
   ${GridWrapper} {

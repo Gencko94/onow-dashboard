@@ -70,7 +70,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 1rem 0;
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
   }
 `;
 const TableContainer = styled.div`

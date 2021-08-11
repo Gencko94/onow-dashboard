@@ -104,11 +104,11 @@ const BrandInfo = ({ control, errors, register, setValue }: IProps) => {
 export default BrandInfo;
 
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  ({ theme: { breakpoints, primary, shadow } }) => `
   margin: 2rem 0;
   .title-container {
     padding: 1rem 0;
-    color: ${mainColor};
+    color: ${primary};
   }
   .box {
     background-color: #fff;

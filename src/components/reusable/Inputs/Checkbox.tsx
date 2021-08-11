@@ -39,7 +39,7 @@ export default Checkbox;
 const Container = styled.span<{ checked: boolean; small?: boolean }>`
   display: inline-block;
   position: relative;
-  color: ${(props) => props.theme.mainColor};
+  color: ${(props) => props.theme.primary};
   padding: 7px;
 
   cursor: pointer;

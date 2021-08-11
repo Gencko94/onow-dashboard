@@ -108,7 +108,7 @@ export default ProductCategoryList;
 const Container = styled.div`
   .table-title {
     padding: 1rem;
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
     border-bottom: ${(props) => props.theme.border};
   }
   .error-message {
@@ -121,8 +121,8 @@ const Container = styled.div`
     gap: 0.5rem;
     .text {
       padding: 0.75rem 0.5rem;
-      background-color: ${(props) => props.theme.accentColor};
-      color: ${(props) => props.theme.subHeading};
+      background-color: ${(props) => props.theme.accent1};
+      color: ${(props) => props.theme.textAlt};
       font-size: 0.9rem;
     }
     .chips-wrapper {

@@ -75,7 +75,7 @@ const Container = styled.div`
   padding: 0.75rem;
 
   p.label {
-    color: ${(props) => props.theme.subHeading};
+    color: ${(props) => props.theme.textAlt};
     font-size: 0.9rem;
     font-weight: ${(props) => props.theme.font.regular};
     margin-bottom: 0.25rem;

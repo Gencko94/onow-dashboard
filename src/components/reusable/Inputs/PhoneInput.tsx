@@ -84,7 +84,7 @@ const PhoneInput = ({
 export default PhoneInput;
 const Container = styled.div<{ rtl: boolean; error: boolean }>`
   label {
-    color: ${({ theme }) => theme.headingColor};
+    color: ${({ theme }) => theme.text};
     margin-bottom: 0.75rem;
     font-size: 0.9rem;
     font-weight: ${(props) => props.theme.font.regular};
@@ -96,6 +96,6 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     padding-top: 0.25rem;
     height: 22px;
 
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
   }
 `;

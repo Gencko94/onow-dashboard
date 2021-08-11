@@ -50,7 +50,7 @@ const Container = styled.div`
       border-bottom: ${(props) => props.theme.border};
     }
     .last {
-      color: ${(props) => props.theme.mainColor};
+      color: ${(props) => props.theme.primary};
       font-weight: ${(props) => props.theme.font.bold};
       border-bottom: none;
     }

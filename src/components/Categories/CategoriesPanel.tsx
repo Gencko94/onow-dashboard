@@ -17,6 +17,7 @@ const CategoriesPanel = () => {
         onClick={() => history.push("/categories/category/create")}
         color="green"
         withTransition
+        size="md"
       >
         <IconWrapper Icon={IoMdAdd} />
         Create New Category

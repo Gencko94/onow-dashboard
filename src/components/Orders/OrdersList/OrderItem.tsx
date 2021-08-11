@@ -88,7 +88,7 @@ const OrderItem = ({ order }: IProps) => {
 
 export default OrderItem;
 const Container = styled.div(
-  ({ theme: { breakpoints, border, font, highlightColor } }) => `
+  ({ theme: { breakpoints, border, font, subtleBackground } }) => `
   background-color:#fff;
   cursor: pointer;
   display: grid;
@@ -96,7 +96,7 @@ const Container = styled.div(
   gap: 1rem;
   border-bottom: ${border};
   &:hover {
-    background-color: ${highlightColor};
+    background-color: ${subtleBackground};
   }
   
   .field {
@@ -161,8 +161,8 @@ const ActionButtonContainer = styled.div`
     color: ${(props) => props.color};
     transition: all 75ms ease;
     &:hover {
-      color: ${(props) => props.theme.headingColor};
-      background-color: ${(props) => props.theme.highlightColor};
+      color: ${(props) => props.theme.text};
+      background-color: ${(props) => props.theme.subtleBackground};
     }
     p {
       margin: 0 0.5rem;

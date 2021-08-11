@@ -23,7 +23,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   label {
-    color: ${({ theme }) => theme.headingColor};
+    color: ${({ theme }) => theme.text};
     font-size: 0.9rem;
     font-weight: ${(props) => props.theme.font.regular};
     display: inline-block;
@@ -60,7 +60,7 @@ const Container = styled.div`
     content: "";
     width: 12px;
     height: 12px;
-    background: ${(props) => props.theme.mainColor};
+    background: ${(props) => props.theme.primary};
     position: absolute;
     top: 3px;
     left: 3px;

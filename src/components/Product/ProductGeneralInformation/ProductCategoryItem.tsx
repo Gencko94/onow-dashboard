@@ -76,14 +76,14 @@ const Container = styled.div<{ active: boolean }>`
   display: block;
   width: 100%;
   background-color: ${(props) =>
-    props.active ? props.theme.accent2 : "inherit"};
+    props.active ? props.theme.subtleBackground : "inherit"};
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
   &:hover {
-    background-color: ${(props) => props.theme.accent3};
+    background-color: ${(props) => props.theme.subtleBackground};
   }
 
   .field {

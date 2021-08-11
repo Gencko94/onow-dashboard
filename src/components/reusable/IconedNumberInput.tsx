@@ -118,11 +118,11 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     theme: {
       breakpoints,
       font,
-      subHeading,
-      headingColor,
+
       border,
       accent1,
-      mainColor,
+      primary,
+      text,
       borderHovered,
       dangerRed,
     },
@@ -130,7 +130,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     rtl,
   }) => `
   label {
-    color: ${headingColor};
+    color: ${text};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
     font-weight: ${font.regular};
@@ -143,7 +143,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     justify-content: center;
 
     background-color: #fff;
-    color: ${headingColor};
+    color: ${text};
     border: ${border};
     overflow: hidden;
     border-radius: 6px;
@@ -153,7 +153,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${mainColor};
+      color: ${primary};
       
     };
 
@@ -185,8 +185,8 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    /* color: #7c7c7c; */
-    color: ${mainColor};
+   
+    color: ${primary};
   };
   ${up(breakpoints.md)}{
     label {

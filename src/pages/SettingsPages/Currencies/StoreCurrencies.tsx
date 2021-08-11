@@ -27,6 +27,6 @@ export default StoreCurrencies;
 const Container = styled.div`
   .title-container {
     margin: 1rem 0;
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
   }
 `;

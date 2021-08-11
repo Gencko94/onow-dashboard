@@ -22,7 +22,7 @@ const Container = styled.div`
     }
   }
   .field {
-    background-color: ${(props) => props.theme.accentColor};
+    background-color: ${(props) => props.theme.subtleBackground};
     padding: 0.5rem;
     font-size: 0.9rem;
     border: ${(props) => props.theme.border};

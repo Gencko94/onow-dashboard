@@ -50,7 +50,6 @@ const DarkModeToggleContainer = () => {
         <animated.circle
           cx="9"
           cy="9"
-          fill="var(--color-text)"
           mask={`url(#moon-mask-main-nav)`}
           {...sunMoonSpring}
         />
@@ -74,7 +73,6 @@ const DarkModeToggleContainer = () => {
                 cx={a}
                 cy={b}
                 r={1.5}
-                fill="var(--color-text)"
                 style={{
                   ...props,
                   transform: transform.interpolate((t) => `scale(${t})`),
@@ -99,7 +97,7 @@ const IconWrapper = styled.button(
   display: flex;
   align-items: center;
   justify-content: center;
- 
+  transition: opacity 250ms;
   
  ${up(breakpoints.md)}{
     &:hover {

@@ -43,7 +43,7 @@ const CategoryItem = ({
 
   return (
     <>
-      <Container>
+      <Container selected={selectedRows.includes(category.id)}>
         <div className="btns-container field">
           {category.children.length > 0 && (
             <button
@@ -106,10 +106,9 @@ const CategoryItem = ({
                 setActionsMenuOpen(true);
               }}
             >
-              <IconButton
-                Icon={BsThreeDotsVertical}
-                textColor="primary"
-              ></IconButton>
+              <IconButton>
+                <BsThreeDotsVertical size={20} />
+              </IconButton>
               <CSSTransition
                 in={actionsMenuOpen}
                 classNames="menu"
@@ -169,17 +168,18 @@ const CategoryItem = ({
 };
 
 export default CategoryItem;
-const Container = styled.div`
+const Container = styled.div<{ selected: boolean }>`
   display: grid;
   grid-template-columns: repeat(2, 85px) repeat(4, minmax(100px, 1fr));
-  background-color: #fff;
+  background-color: ${(props) =>
+    props.selected ? props.theme.subtleFloating : props.theme.subtleBackground};
 
   &:hover {
-    background-color: ${(props) => props.theme.accent1};
+    background-color: ${(props) => props.theme.subtleFloating};
   }
 
   .field {
-    border-bottom: ${(props) => props.theme.border};
+    /* border-bottom: ${(props) => props.theme.border}; */
     display: flex;
     align-items: center;
     justify-content: center;

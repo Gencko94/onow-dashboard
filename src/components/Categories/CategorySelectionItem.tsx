@@ -78,7 +78,7 @@ const Container = styled.div<{ active: boolean }>`
   display: block;
   width: 100%;
   background-color: ${(props) =>
-    props.active ? props.theme.accentColor : "#fff"};
+    props.active ? props.theme.subtleBackground : "inherit"};
   display: flex;
   justify-content: space-between;
   align-items: center;

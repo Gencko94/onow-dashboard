@@ -55,7 +55,7 @@ const Container = styled.div<{ cols: number | string; gap: string }>(
     cols,
     gap,
   }) => `
-    background-color:${subtleFloating};
+    background-color:${subtleBackground};
     display:grid;
     border-radius: 20px 20px 0 0 ;
    

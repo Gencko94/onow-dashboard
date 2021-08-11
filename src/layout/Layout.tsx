@@ -147,11 +147,11 @@ const ContentContainer = styled.div(
   `
 );
 const Content = styled.div<{ drawerOpen: boolean }>(
-  ({ theme: { breakpoints, bodyColor }, drawerOpen }) => `
+  ({ theme: { breakpoints }, drawerOpen }) => `
   z-index:2;
   min-height:100vh;
   position:relative;
-  background-color:${bodyColor};
+
   transition: all 250ms ease-out;
   margin-left:0;
   .body {

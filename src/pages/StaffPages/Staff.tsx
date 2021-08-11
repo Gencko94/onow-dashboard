@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import styled from "styled-components";
-import AddButton from "../../components/reusable/AddButton";
+
 import ExportAs from "../../components/reusable/ExportAs";
 import StaffItem from "../../components/Staff/StaffItem";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
@@ -14,9 +14,14 @@ import Heading from "../../components/StyledComponents/Heading";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
 import useToast from "../../hooks/useToast";
 import extractError from "../../utils/extractError";
+import IconWrapper from "../../components/reusable/Icon";
+import { IoMdAdd } from "react-icons/io";
+import Button from "../../components/reusable/Button";
+import { useHistory } from "react-router-dom";
 
 const Staff = () => {
   const queryClient = useQueryClient();
+  const history = useHistory();
   const { handleCloseConfirmationModal } = useConfirmationModal();
   const { handleCloseToast, setToastStatus } = useToast();
   const { data } = useQuery<STAFF_MEMBER[]>("staff-members", getStaffMembers, {
@@ -112,10 +117,15 @@ const Staff = () => {
           ]}
         />
         <Flex justify="flex-end" padding="0.5rem">
-          <AddButton
-            title="Create New Member"
-            target="/settings/staff/member/create"
-          />
+          <Button
+            onClick={() => history.push("/settings/staff/member/create")}
+            color="primary"
+            withTransition
+            size="md"
+          >
+            <IconWrapper Icon={IoMdAdd} />
+            Create New Member
+          </Button>
         </Flex>
       </HeaderContainer>
       <div className="title-container">

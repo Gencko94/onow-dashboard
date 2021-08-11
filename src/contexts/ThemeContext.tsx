@@ -35,12 +35,12 @@ const ThemeProvider: React.FC = ({ children }) => {
       colorMode === "light"
         ? {
             ...lightTheme,
-            primary: "hsl(31, 93%, 55%)",
+            primary: "hsl(31, 100%, 60%)",
             secondary: "hsl(248, 54%, 49%)",
           }
         : {
             ...darkTheme,
-            primary: "hsl(31, 93%, 55%)",
+            primary: "hsl(23, 100%, 67%)",
             secondary: "hsla(222, 100%, 58%, 1)",
           };
     return {

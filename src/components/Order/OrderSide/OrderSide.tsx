@@ -21,7 +21,7 @@ const OrderSide = ({ data }: IProps) => {
 
 export default OrderSide;
 const Container = styled.div`
-  background-color: ${(props) => props.theme.highlightColor};
+  background-color: ${(props) => props.theme.subtleBackground};
   box-shadow: ${(props) => props.theme.shadow};
   border: ${(props) => props.theme.border};
 

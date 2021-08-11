@@ -20,6 +20,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import useCurrentLocation from "../../hooks/useCurrentLocation";
 import { Libraries } from "@react-google-maps/api/dist/utils/make-load-script-url";
 import { GoogleMapsResult } from "../../interfaces/maps/maps";
+import { textChangeRangeIsUnchanged } from "typescript";
 export interface MapCoordinates {
   lat: number | null;
   lng: number | null;
@@ -350,17 +351,14 @@ const ConfirmationContainer = styled.div`
 `;
 
 const ConfirmButton = styled.button<{ outOfBorder: boolean }>(
-  ({
-    theme: { breakpoints, btnPrimaryLight, btnText, font, btnBorder },
-    outOfBorder,
-  }) => `
+  ({ theme: { breakpoints, font, border, text }, outOfBorder }) => `
   border-radius: 12px;
   font-size: 1rem;
-  background-color: ${outOfBorder ? "gray" : btnPrimaryLight};
-  color: ${btnText};
+  background-color: ${outOfBorder ? "gray" : text};
+  color: ${textChangeRangeIsUnchanged};
   padding: 0.5rem 0.5rem;
   font-weight: ${font.bold};
-  border: 1px solid ${btnBorder};
+  border: ${border};
   margin: 0 1rem;
   @media ${breakpoints.md}{
   font-size:1.1rem;
@@ -374,7 +372,7 @@ const MapIcon = styled.button`
   background-color: ${(props) => props.theme.dangerRed};
   padding: 0.25rem;
   border-radius: 50%;
-  color: ${(props) => props.theme.btnText};
+  color: ${(props) => props.theme.text};
 `;
 
 const OutOfBorderContainer = styled.div`

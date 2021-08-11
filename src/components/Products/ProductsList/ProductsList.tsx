@@ -277,6 +277,7 @@ const ProductsList = () => {
               disabled={selectedRows.length === 0 || multipleDeleteLoading}
               color="danger"
               withTransition
+              size="sm"
               isLoading={multipleDeleteLoading}
               onClick={() => {
                 handleDeleteMultipleProducts(selectedRows);
@@ -379,14 +380,16 @@ const ProductsList = () => {
 
 export default ProductsList;
 const Container = styled.div`
-  border-radius: 20px;
-  border: ${(props) => props.theme.border};
   border-bottom: none;
 
   position: relative;
   .table {
+    border-radius: 20px;
+    border: ${(props) => props.theme.border};
     overflow-x: auto;
     overflow-y: hidden;
+    border-radius: 20px;
+    background-color: ${(props) => props.theme.subtleBackground};
   }
   .loading {
     position: absolute;

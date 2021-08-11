@@ -82,6 +82,6 @@ export default ProductOrdering;
 const Container = styled.div`
   .title-container {
     margin-bottom: 1rem;
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
   }
 `;

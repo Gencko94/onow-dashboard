@@ -1,10 +1,19 @@
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import AddButton from "../reusable/AddButton";
+
+import Button from "../reusable/Button";
 
 const BrandsPanel = () => {
+  const history = useHistory();
   return (
     <Container>
-      <AddButton target="/brands/create" title="Create new Brand" />
+      <Button
+        onClick={() => history.push("/brands/create")}
+        withTransition
+        size="md"
+      >
+        Create New Brand
+      </Button>
     </Container>
   );
 };

@@ -56,7 +56,7 @@ const Container = styled.span<{ checked: boolean }>`
   display: flex;
   align-items: center;
   position: relative;
-  color: ${(props) => props.theme.mainColor};
+  color: ${(props) => props.theme.primary};
   padding: 5px;
 
   cursor: pointer;
@@ -100,6 +100,6 @@ const Container = styled.span<{ checked: boolean }>`
   }
   .label {
     margin: 0 0.25rem;
-    color: ${(props) => props.theme.subHeading};
+    color: ${(props) => props.theme.textAlt};
   }
 `;

@@ -8,6 +8,7 @@ import { FiPower } from "react-icons/fi";
 import Popover from "../../reusable/Popover";
 import Button from "../../reusable/Button";
 import IconButton from "../../reusable/IconButton";
+import Paragraph from "../../StyledComponents/Paragraph";
 const SideUser = () => {
   const { user, logOut } = useContext(AuthProvider);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,41 +17,33 @@ const SideUser = () => {
     <Container>
       <div className="user">
         <img className="img" src="/images/user.jpg" alt="user" />
-        <p className="name">{`${user?.first_name} ${user?.last_name}`}</p>
+        <Paragraph fontSize="0.9rem" margin="0 0.5rem">
+          {user?.first_name} {user?.last_name}
+        </Paragraph>
       </div>
-      <div className="menu">
-        <IconButton
-          textColor="primaryContrast"
-          circle
-          noRipple
-          onClick={() => setMenuOpen(true)}
-          Icon={BiDotsVerticalRounded}
-        ></IconButton>
-        <CSSTransition
-          in={menuOpen}
-          classNames="menu"
-          timeout={250}
-          unmountOnExit
-        >
-          <ClickAwayListener onClickAway={() => setMenuOpen(false)}>
-            <Popover closeFunction={() => setMenuOpen(false)}>
-              <Button
-                onClick={(e) => {
-                  logOut?.();
-                }}
-              >
-                Logout
-              </Button>
-            </Popover>
-            {/* <ul className="menu">
-              <button onClick={() => logOut?.()} className="menu-item">
-              <FiPower />
-              <p>Logout</p>
-              </button>
-            </ul> */}
-          </ClickAwayListener>
-        </CSSTransition>
-      </div>
+      {/* <div className="menu"> */}
+      <IconButton onClick={() => setMenuOpen(true)}>
+        <BiDotsVerticalRounded size={22} color="#fff" />
+      </IconButton>
+      <CSSTransition
+        in={menuOpen}
+        classNames="menu"
+        timeout={250}
+        unmountOnExit
+      >
+        <ClickAwayListener onClickAway={() => setMenuOpen(false)}>
+          <Popover closeFunction={() => setMenuOpen(false)}>
+            <Button
+              onClick={(e) => {
+                logOut?.();
+              }}
+            >
+              Logout
+            </Button>
+          </Popover>
+        </ClickAwayListener>
+      </CSSTransition>
+      {/* </div> */}
     </Container>
   );
 };

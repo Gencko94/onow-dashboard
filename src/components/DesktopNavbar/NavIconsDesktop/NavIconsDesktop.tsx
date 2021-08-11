@@ -8,6 +8,7 @@ import { AuthProvider } from "../../../contexts/AuthContext";
 import Heading from "../../StyledComponents/Heading";
 import { up } from "../../../utils/themes";
 import DarkModeToggleContainer from "../../DarkModeToggle/DarkModeToggle";
+import IconButton from "../../reusable/IconButton";
 interface IProps {
   handleToggleDrawer: () => void;
 }
@@ -21,18 +22,15 @@ const NavIconsDesktop = ({ handleToggleDrawer }: IProps) => {
   return (
     <Container>
       {user?.store?.maintenance && (
-        <Heading tag="h6" color="primary">
+        <Heading type="small-title" tag="h6">
           Maintenance Mode On
         </Heading>
       )}
-      {/* {!isDesktop && ( */}
-      <button onClick={() => handleToggleDrawer()} className="icon">
+
+      <IconButton onClick={() => handleToggleDrawer()}>
         <CgMenu size={22} />
-      </button>
-      {/* )} */}
-      {/* <button className="icon">
-        <IoMdNotificationsOutline size={22} />
-      </button> */}
+      </IconButton>
+
       <DarkModeToggleContainer />
       {i18n.language === "en" && (
         <button
@@ -63,20 +61,7 @@ const Container = styled.div(
   display: flex;
   align-items: center;
   justify-content: space-between;
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-  }
-  .icon {
-   
-  }
-  ${up(breakpoints.md)}{
-    button {
-      margin: 0 0.5rem;
-
-    }
-  }
+ 
+  
   `
 );

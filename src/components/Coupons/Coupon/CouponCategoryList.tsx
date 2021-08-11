@@ -186,14 +186,14 @@ const CouponCategoryList = ({ control, errors }: IProps) => {
 
 export default CouponCategoryList;
 const Container = styled.div(
-  ({ theme: { breakpoints, mainColor, shadow } }) => `
+  ({ theme: { breakpoints, primary, shadow } }) => `
   
   display:flex;
   flex-direction:column;
   
   .title-container {
     padding: 1rem 0;
-    color: ${mainColor};
+    color: ${primary};
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -229,7 +229,7 @@ const CategoriesList = styled.div<{ error: boolean }>`
   }
   .table-title {
     padding: 1rem;
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
     border-bottom: ${(props) => props.theme.border};
   }
   .error-message {
@@ -242,8 +242,8 @@ const CategoriesList = styled.div<{ error: boolean }>`
     gap: 0.5rem;
     .text {
       padding: 0.75rem 0.5rem;
-      background-color: ${(props) => props.theme.accentColor};
-      color: ${(props) => props.theme.subHeading};
+      background-color: ${(props) => props.theme.subtleBackground};
+      color: ${(props) => props.theme.textAlt};
       font-size: 0.9rem;
     }
     .chips-wrapper {
@@ -271,15 +271,13 @@ const CategoryItem = styled.div<{ active: boolean }>`
   display: block;
   width: 100%;
   background-color: ${(props) =>
-    props.active ? props.theme.accentColor : "#fff"};
+    props.active ? props.theme.subtleBackground : "inherit"};
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
-  &:hover {
-    /* background-color: ${(props) => props.theme.highlightColor}; */
-  }
+
   .img {
     border-radius: 50%;
     width: 25px;
@@ -308,9 +306,9 @@ const SubCategoryItem = styled.div`
   justify-content: space-between;
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
-  background-color: ${(props) => props.theme.highlightColor};
+  background-color: ${(props) => props.theme.subtleBackground};
   &:hover {
-    background-color: ${(props) => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.subtleBackground};
   }
 
   .field {

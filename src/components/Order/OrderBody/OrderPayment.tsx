@@ -51,7 +51,7 @@ export default OrderPayment;
 const Container = styled.div`
   padding: 1rem;
   .title-container {
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
     display: flex;
     margin-bottom: 1rem;
     align-items: center;
@@ -63,7 +63,7 @@ const Container = styled.div`
     border-radius: 6px;
     overflow: hidden;
     p.label {
-      color: ${(props) => props.theme.subHeading};
+      color: ${(props) => props.theme.textAlt};
       font-size: 0.9rem;
     }
     p.value {

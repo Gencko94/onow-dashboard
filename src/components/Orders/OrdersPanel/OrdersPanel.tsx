@@ -1,12 +1,10 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { BiPlus } from "react-icons/bi";
-import { BsPlus } from "react-icons/bs";
-import { VscFilter } from "react-icons/vsc";
+
 import { useHistory } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import { ORDERS_FILTERS } from "../../../interfaces/orders/orders";
-import AddButton from "../../reusable/AddButton";
+
 import Button from "../../reusable/Button";
 import Flex from "../../StyledComponents/Flex";
 import Heading from "../../StyledComponents/Heading";

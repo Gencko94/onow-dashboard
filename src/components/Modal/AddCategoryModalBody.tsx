@@ -177,31 +177,14 @@ export default AddCategoryModalBody;
 const Container = styled.div`
   .table-title {
     padding: 1rem;
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
     border-bottom: ${(props) => props.theme.border};
   }
   .error-message {
     color: ${(props) => props.theme.dangerRed};
     font-size: 0.9rem;
   }
-  .chips {
-    display: flex;
 
-    gap: 0.5rem;
-    .text {
-      padding: 0.75rem 0.5rem;
-      background-color: ${(props) => props.theme.accentColor};
-      color: ${(props) => props.theme.subHeading};
-      font-size: 0.9rem;
-    }
-    .chips-wrapper {
-      padding: 0.5rem 0.25rem;
-
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-  }
   .table {
     margin: 0 auto;
     /* height: 340px; */
@@ -221,15 +204,13 @@ const CategoryItem = styled.div<{ active: boolean }>`
   display: block;
   width: 100%;
   background-color: ${(props) =>
-    props.active ? props.theme.accentColor : "#fff"};
+    props.active ? props.theme.subtleBackground : "inherit"};
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
-  &:hover {
-    /* background-color: ${(props) => props.theme.highlightColor}; */
-  }
+
   .img {
     border-radius: 50%;
     width: 25px;
@@ -257,9 +238,9 @@ const SubCategoryItem = styled.div`
   justify-content: space-between;
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
-  background-color: ${(props) => props.theme.highlightColor};
+  background-color: ${(props) => props.theme.subtleBackground};
   &:hover {
-    background-color: ${(props) => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.subtleBackground};
   }
 
   .field {

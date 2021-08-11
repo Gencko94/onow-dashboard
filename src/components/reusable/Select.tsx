@@ -108,9 +108,9 @@ export default function Select<T>({
 }
 
 const Container = styled.div(
-  ({ theme: { breakpoints, headingColor, font, dangerRed } }) => `
+  ({ theme: { breakpoints, text, font, dangerRed } }) => `
   label {
-    color: ${headingColor};
+    color: ${text};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
     font-weight: ${font.regular};

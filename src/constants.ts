@@ -1,7 +1,7 @@
 import { DefaultTheme } from "styled-components";
 
 export const lightTheme: any = {
-  background: "hsl(0, 0%, 100%)",
+  background: "hsl(255,25%,95%)",
   shadow: "0px 4px 7px 2px rgb(213,213,213)",
   errorShadow: "0px 0px 10px 0px #b72b2b",
   green: "#0B9B23",
@@ -21,8 +21,9 @@ export const lightTheme: any = {
   accent3: "#eaeaea",
   blue: "#2e87fc",
 };
-lightTheme.subtleBackground = "hsl(255,25%,95%)";
-lightTheme.subtleFloating = lightTheme.background;
+lightTheme.subtleFloating = "hsl(0, 0%, 100%)";
+lightTheme.subtleBackground = "hsl(0, 4%, 99%)";
+
 lightTheme.sidebarBackground = "hsl(210deg, 22%, 15%)";
 lightTheme.sidebarSubtleBackground = "hsl(210,30%,8%)";
 export const darkTheme: any = {
@@ -46,9 +47,12 @@ export const darkTheme: any = {
   accent3: "#333",
   blue: "#2e87fc",
 };
-darkTheme.subtleBackground = darkTheme.background;
-darkTheme.subtleFloating = "hsl(210deg, 22%, 15%)";
-darkTheme.sidebarBackground = "hsl(210deg, 22%, 15%)";
+// darkTheme.subtleBackground = darkTheme.background;
+darkTheme.subtleBackground = "hsl(210, 22%, 25%)";
+// darkTheme.subtleBackground = "hsl(210,30%,8%)";
+darkTheme.subtleFloating = "hsl(210, 22%, 15%)";
+
+darkTheme.sidebarBackground = "hsl(210, 22%, 15%)";
 darkTheme.sidebarSubtleBackground = darkTheme.subtleBackground;
 // darkTheme.sidebarBackground = darkTheme.subtleBackground;
 export const up = (breakpoint: string) => `@media (min-width: ${breakpoint})`;

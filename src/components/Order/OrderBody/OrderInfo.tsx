@@ -123,11 +123,11 @@ const Container = styled.div`
     font-size: 0.9rem;
   }
   p.label {
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
     font-weight: ${(props) => props.theme.font.semibold};
   }
   .value {
-    color: ${(props) => props.theme.subHeading};
+    color: ${(props) => props.theme.textAlt};
     margin: 0 0.5rem;
   }
 `;

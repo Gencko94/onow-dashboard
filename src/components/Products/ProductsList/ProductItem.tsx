@@ -110,12 +110,12 @@ const ProductItem = ({
           }}
         >
           <IconButton
-            Icon={BsThreeDotsVertical}
-            textColor="primary"
             onClick={() => {
               setActionsMenuOpen(!actionsMenuOpen);
             }}
-          ></IconButton>
+          >
+            <BsThreeDotsVertical size={20} />
+          </IconButton>
           <CSSTransition
             in={actionsMenuOpen}
             classNames="menu"
@@ -169,11 +169,11 @@ const Container = styled.div<{ selected: boolean }>`
       minmax(140px, 1fr)
     );
   background-color: ${(props) =>
-    props.selected ? props.theme.subtleBackground : props.theme.subtleFloating};
+    props.selected ? props.theme.subtleFloating : props.theme.subtleBackground};
 
   width: 100%;
   &:hover {
-    background-color: ${(props) => props.theme.subtleBackground};
+    background-color: ${(props) => props.theme.subtleFloating};
   }
   .img {
     height: 50px;

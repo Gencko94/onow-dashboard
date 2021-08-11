@@ -50,7 +50,7 @@ const Textarea = ({
 export default Textarea;
 const Container = styled.div<{ rtl: boolean; error: boolean }>`
   label {
-    color: ${({ theme }) => theme.headingColor};
+    color: ${({ theme }) => theme.text};
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
     font-weight: ${(props) => props.theme.font.regular};
@@ -61,7 +61,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     padding: 0.4rem;
     font-size: 0.8rem;
     background-color: #fff;
-    color: ${(props) => props.theme.headingColor};
+    color: ${(props) => props.theme.text};
     border: ${(props) => props.theme.border};
     overflow: hidden;
     border-radius: 6px;
@@ -70,7 +70,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     &:hover,
     &:focus-within {
       border-color: ${(props) => props.theme.borderHovered};
-      background-color: ${(props) => props.theme.inputColorLight};
+      background-color: ${(props) => props.theme.subtleBackground};
     }
     ${(props) =>
       props.error &&
@@ -89,6 +89,6 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     padding-top: 0.25rem;
     height: 22px;
 
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
   }
 `;

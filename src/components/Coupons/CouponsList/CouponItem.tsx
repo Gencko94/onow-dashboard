@@ -89,10 +89,9 @@ const CouponItem = ({
             setActionsMenuOpen(true);
           }}
         >
-          <IconButton
-            Icon={BsThreeDotsVertical}
-            textColor="primary"
-          ></IconButton>
+          <IconButton>
+            <BsThreeDotsVertical />
+          </IconButton>
           <CSSTransition
             in={actionsMenuOpen}
             classNames="menu"

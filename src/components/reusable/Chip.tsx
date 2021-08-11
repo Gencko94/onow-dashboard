@@ -15,7 +15,7 @@ const Chip = ({ text, onClick }: IProps) => {
 
 export default Chip;
 const Container = styled.button`
-  background-color: ${(props) => props.theme.mainColor};
+  background-color: ${(props) => props.theme.primary};
   color: #fff;
   display: flex;
   align-items: center;

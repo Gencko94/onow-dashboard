@@ -117,7 +117,7 @@ export default DateIconedInput;
 const Container = styled.div<{ rtl: boolean; error: boolean }>`
   position: relative;
   label {
-    color: ${({ theme }) => theme.headingColor};
+    color: ${({ theme }) => theme.text};
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
     font-weight: ${(props) => props.theme.font.regular};
@@ -130,7 +130,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     justify-content: center;
 
     background-color: #fff;
-    color: ${(props) => props.theme.headingColor};
+    color: ${(props) => props.theme.text};
     border: ${(props) => props.theme.border};
     overflow: hidden;
     border-radius: 6px;
@@ -140,7 +140,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${(props) => props.theme.mainColor};
+      color: ${(props) => props.theme.primary};
     }
 
     input {
@@ -172,7 +172,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
   }
 `;
 const CalendarContainer = styled.div`

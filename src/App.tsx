@@ -111,8 +111,8 @@ function App() {
           <Router>
             <Suspense fallback={<Loading />}>
               <QueryClientProvider client={queryClient}>
-                <AuthContext>
-                  <ThemeProvider>
+                <ThemeProvider>
+                  <AuthContext>
                     <ApplicationContext>
                       <GlobalStyle />
                       <ScrollToTopOnMount />
@@ -250,9 +250,9 @@ function App() {
                         </Layout>
                       </Switch>
                     </ApplicationContext>
-                  </ThemeProvider>
-                  <ReactQueryDevtools initialIsOpen={false} />
-                </AuthContext>
+                    <ReactQueryDevtools initialIsOpen={false} />
+                  </AuthContext>
+                </ThemeProvider>
               </QueryClientProvider>
             </Suspense>
           </Router>

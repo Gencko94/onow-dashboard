@@ -96,7 +96,7 @@ const Container = styled.div`
   cursor: pointer;
   border-bottom: ${(props) => props.theme.border};
   &:hover {
-    background-color: ${(props) => props.theme.highlightColor};
+    background-color: ${(props) => props.theme.subtleFloating};
   }
 
   .field {
@@ -155,8 +155,8 @@ const ActionButtonContainer = styled.div`
     color: ${(props) => props.color};
     transition: all 75ms ease;
     &:hover {
-      color: ${(props) => props.theme.headingColor};
-      background-color: ${(props) => props.theme.highlightColor};
+      color: ${(props) => props.theme.text};
+      background-color: ${(props) => props.theme.subtleFloating};
     }
     p {
       margin: 0 0.5rem;
@@ -194,7 +194,7 @@ const EnabledButton = styled.button<{ enabled: boolean }>`
   padding: 0.25rem 0.5rem;
   background-color: ${(props) =>
     props.enabled ? props.theme.dangerRed : props.theme.green};
-  color: ${(props) => props.theme.btnText};
+  color: ${(props) => props.theme.text};
   border: ${(props) => props.theme.border};
   border-radius: 5px;
 `;
@@ -241,7 +241,7 @@ const Checkbox = styled.label`
     }
   }
   input:checked ~ .check {
-    background-color: ${(props) => props.theme.mainColor};
+    background-color: ${(props) => props.theme.primary};
   }
   input:checked ~ .check:after {
     display: block;

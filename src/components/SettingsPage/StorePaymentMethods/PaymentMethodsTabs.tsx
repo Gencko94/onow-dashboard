@@ -40,10 +40,10 @@ const TabItem = styled.button<{ active?: boolean }>`
   background-color: #fff;
 
   color: ${(props) =>
-    props.active ? props.theme.mainColor : props.theme.subHeading};
+    props.active ? props.theme.primary : props.theme.textAlt};
 
   font-weight: ${(props) => props.active && props.theme.font.bold};
   &:hover {
-    color: ${(props) => !props.active && props.theme.headingColor};
+    color: ${(props) => !props.active && props.theme.text};
   }
 `;

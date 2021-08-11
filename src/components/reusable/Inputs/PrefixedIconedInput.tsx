@@ -114,24 +114,23 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     theme: {
       breakpoints,
       font,
-      headingColor,
+      subtleBackground,
       border,
-      inputColorLight,
-      mainColor,
+
       borderHovered,
       dangerRed,
-      subHeading,
+      text,
+      primary,
       accent1,
       accent2,
-      textPrimary,
-      textSecondary,
+
       borderDanger,
     },
     error,
     rtl,
   }) => `
   label {
-    color: ${headingColor};
+    color: ${text};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
     font-weight: ${font.regular};
@@ -144,7 +143,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     justify-content: center;
 
     background-color: #fff;
-    color: ${headingColor};
+    color: ${text};
     border: ${error ? borderDanger : border};
     overflow: hidden;
     border-radius: 6px;
@@ -154,7 +153,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${mainColor};
+      color: ${primary};
       
      
     }
@@ -186,7 +185,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     padding-top: 0.25rem;
     height: 22px;
 
-    color: ${mainColor};
+    color: ${primary};
   }
   .prefix {
     padding: 0.4rem;
@@ -194,7 +193,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     font-size: 0.7rem;
     align-items: center;
     justify-content: center;
-    color: ${textSecondary};
+    color: ${subtleBackground};
     font-weight:${font.semibold};
     background-color: ${accent2};
     

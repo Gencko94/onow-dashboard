@@ -215,6 +215,7 @@ const CategoriesList = () => {
           <p>Selected Rows ({selectedRows.length}) : </p>
           <Flex margin="0 0.5rem">
             <Button
+              size="sm"
               disabled={selectedRows.length === 0 || multipleLoading}
               color="danger"
               isLoading={multipleLoading}
@@ -299,12 +300,14 @@ const CategoriesList = () => {
 export default CategoriesList;
 const Container = styled.div`
   position: relative;
-  border-radius: 6px;
-  border: ${(props) => props.theme.border};
+
   border-bottom: none;
   .table {
+    border: ${(props) => props.theme.border};
+    box-shadow: ${(props) => props.theme.shadow};
+    border-radius: 20px;
     overflow-x: auto;
-    background-color: #fff;
+    background-color: ${(props) => props.theme.subtleBackground};
   }
   .loading {
     position: absolute;

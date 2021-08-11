@@ -130,8 +130,6 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     color: ${text};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
-    // color:${secondary};
-    // font-weight: ${font.semibold};
     display: block;
   }
   .input-container {

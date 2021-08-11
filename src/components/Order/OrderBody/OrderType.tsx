@@ -23,7 +23,7 @@ export default OrderType;
 const Container = styled.div`
   .title-container {
     padding: 1rem 0;
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -39,7 +39,7 @@ const Container = styled.div`
     border-radius: 6px;
     background-color: #fff;
     p.label {
-      color: ${(props) => props.theme.subHeading};
+      color: ${(props) => props.theme.textAlt};
       font-size: 0.9rem;
     }
     p.value {

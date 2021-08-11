@@ -63,8 +63,8 @@ const SectionTitle = styled.h1`
   font-size: 16px;
   color: ${(props) => props.theme.secondary};
   font-weight: ${(props) => props.theme.font.semibold};
-  text-transform: uppercase;
-  letter-spacing: 0.9px;
+  /* text-transform: uppercase; */
+  /* letter-spacing: 0.9px; */
 `;
 
 const SmallTitle = styled.h1`

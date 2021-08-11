@@ -431,8 +431,8 @@ const Container = styled.div<{ open: boolean }>`
       position: relative;
       align-items: center;
       justify-content: center;
-      background-color: ${(props) => props.theme.inputColorLight};
-      color: ${(props) => props.theme.headingColor};
+      background-color: ${(props) => props.theme.subtleBackground};
+      color: ${(props) => props.theme.text};
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 6px;
       .icon {
@@ -440,7 +440,7 @@ const Container = styled.div<{ open: boolean }>`
         display: flex;
         align-items: center;
         justify-content: center;
-        color: ${(props) => props.theme.subHeading};
+        color: ${(props) => props.theme.textAlt};
       }
       input {
         display: block;

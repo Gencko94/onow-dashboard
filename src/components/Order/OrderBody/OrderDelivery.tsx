@@ -23,7 +23,7 @@ const Container = styled.div`
   }
 
   p.label {
-    color: ${(props) => props.theme.subHeading};
+    color: ${(props) => props.theme.textAlt};
     font-size: 0.9rem;
   }
   p.value {

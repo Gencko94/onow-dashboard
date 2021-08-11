@@ -44,7 +44,7 @@ const Container = styled.div`
   }
   p.desc {
     font-size: 0.8rem;
-    color: ${(props) => props.theme.subHeading};
+    color: ${(props) => props.theme.textAlt};
     font-weight: ${(props) => props.theme.font.light};
     text-align: center;
     margin-bottom: 1rem;
@@ -59,7 +59,7 @@ const Container = styled.div`
     font-size: 0.9rem;
     box-shadow: ${(props) => props.theme.shadow};
     transition: background 200ms ease;
-    background: ${(props) => props.theme.mainGradient};
+
     color: #fff;
   }
 `;

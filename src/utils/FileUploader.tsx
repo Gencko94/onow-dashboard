@@ -88,7 +88,7 @@ const DragFileInputContainer = styled.div`
   border-style: dashed;
   border-width: 2px;
   border-radius: 5px;
-  background-color: ${(props) => props.theme.overlayColor};
+  background-color: ${(props) => props.theme.subtleBackground};
   padding: 2rem;
   display: flex;
   align-items: center;

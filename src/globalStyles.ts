@@ -80,7 +80,7 @@ body {
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
-  background-color:${subtleBackground};
+  background-color:${background};
   color:${text};
   transition:background-color 200ms ease;
   

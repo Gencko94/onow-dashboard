@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { ImSpinner2 } from "react-icons/im";
-import cx from "classnames";
+
 import styled from "styled-components";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import useResponsive from "../../hooks/useResponsive";
@@ -93,12 +93,8 @@ const Button: React.FC<IProps> = ({
     currentTheme.green,
   ]);
 
-  const hover = useMemo(() => {
-    return Color(buttonColor).darken(0.1).hex();
-  }, [buttonColor]);
-
   const textColor = useMemo(() => {
-    const darkenedColor = Color(buttonColor).darken(0.25).hex();
+    const darkenedColor = Color(buttonColor).darken(0.35).hex();
     console.log(Color(darkenedColor).isDark());
     if (Color(darkenedColor).isDark()) {
       return "#fff";
@@ -106,22 +102,6 @@ const Button: React.FC<IProps> = ({
       return "#252525";
     }
   }, [buttonColor]);
-  // const hoverTextColor = useMemo(() => {
-  //   if (appearance === "ghost") return buttonColor;
-  //   const darkenedColor = Color(hover).darken(0.2).hex();
-
-  //   if (Color(darkenedColor).isDark()) {
-  //     return currentTheme.textPrimaryContrast;
-  //   } else {
-  //     return currentTheme.textPrimary;
-  //   }
-  // }, [
-  //   appearance,
-  //   buttonColor,
-  //   currentTheme.textPrimary,
-  //   currentTheme.textPrimaryContrast,
-  //   hover,
-  // ]);
 
   useEffect(
     () => {
@@ -181,52 +161,10 @@ const Button: React.FC<IProps> = ({
 
 export default Button;
 
-export const ButtonWrapper = styled.button<{
-  color: string;
-  buttonColor: string;
-  withTransition?: boolean;
-  margin?: string;
-  hoverBg?: string;
-  hoverColor?: string;
-  uppercase?: boolean;
-  appearance: "default" | "ghost";
-}>(
-  ({
-    theme: { breakpoints },
-    color,
-    buttonColor,
-    withTransition,
-    margin,
-    hoverBg,
-    hoverColor,
-    appearance,
-
-    disabled,
-    uppercase,
-  }) => `
-  background: ${appearance === "ghost" ? "transparent" : buttonColor};
-  margin:${margin};
-  text-transform:${uppercase && "uppercase"};
-  position: relative;
-  border-color:${buttonColor};
-  color: ${color};
-  
-  &:not(:disabled):hover {
-    filter: hue-rotate(4deg) saturate(120%) brightness(120%);
-  }
-  .loading {
-    animation: spinner 2s infinite linear forwards;
-  }
-  ${withTransition && "&:hover {transform: translateY(-2px);}"};
-  ${disabled && "background: #a7a2a2 !important; color: #fff !important;"};
-    `
-);
 const BaseButton = styled(UnstyledButton)`
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  /* text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15); */
   border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-weight: ${(props) => props.theme.font.semibold};
   transition: transform 250ms;
   &:disabled {
     opacity: 0.5;

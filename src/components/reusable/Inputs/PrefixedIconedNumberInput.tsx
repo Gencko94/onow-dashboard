@@ -2,7 +2,8 @@ import { FieldError, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IconType } from "react-icons/lib";
 
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { textSpanContainsTextSpan } from "typescript";
 import useResponsive from "../../../hooks/useResponsive";
 import { up } from "../../../utils/themes";
 interface BaseInput {
@@ -131,24 +132,25 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     theme: {
       breakpoints,
       font,
-      headingColor,
+      primary,
+      text,
+      secondary,
+      subtleBackground,
       border,
-      inputColorLight,
-      mainColor,
+
       borderHovered,
       dangerRed,
-      subHeading,
+
       accent1,
       accent2,
-      textPrimary,
-      textSecondary,
+
       borderDanger,
     },
     error,
     rtl,
   }) => `
   label {
-    color: ${headingColor};
+    color: ${textSpanContainsTextSpan};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
     font-weight: ${font.regular};
@@ -161,7 +163,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     justify-content: center;
 
     background-color: #fff;
-    color: ${headingColor};
+    color: ${textSpanContainsTextSpan};
     border: ${error ? borderDanger : border};
     overflow: hidden;
     border-radius: 6px;
@@ -171,7 +173,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${mainColor};
+      color: ${primary};
       
      
     }
@@ -203,7 +205,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     padding-top: 0.25rem;
     height: 22px;
 
-    color: ${mainColor};
+    color: ${primary};
   }
   .prefix {
     padding: 0.4rem;
@@ -211,7 +213,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     font-size: 0.7rem;
     align-items: center;
     justify-content: center;
-    color: ${textSecondary};
+    color: ${secondary};
     font-weight:${font.semibold};
     background-color: ${accent2};
     

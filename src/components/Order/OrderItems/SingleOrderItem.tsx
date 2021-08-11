@@ -63,7 +63,7 @@ const Container = styled.div`
     gap: 0.5rem;
     span.qty {
       padding: 0.25rem 0.5rem;
-      background-color: ${(props) => props.theme.accentColor};
+      background-color: ${(props) => props.theme.subtleBackground};
       border-radius: 6px;
     }
   }

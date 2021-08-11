@@ -40,7 +40,7 @@ const Container = styled.div`
     margin-bottom: 1rem;
     align-items: center;
     justify-content: space-between;
-    color: ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.primary};
   }
 
   .content {
@@ -50,7 +50,7 @@ const Container = styled.div`
     border: ${(props) => props.theme.border};
     overflow: hidden;
     p.label {
-      color: ${(props) => props.theme.subHeading};
+      color: ${(props) => props.theme.textAlt};
       font-size: 0.9rem;
     }
     p.value {

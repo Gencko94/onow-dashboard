@@ -165,7 +165,7 @@ export default TimeIconedInput;
 const Container = styled.div<{ rtl: boolean; error: boolean }>`
   position: relative;
   label {
-    color: ${({ theme }) => theme.headingColor};
+    color: ${({ theme }) => theme.text};
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
     font-weight: ${(props) => props.theme.font.regular};
@@ -178,7 +178,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     justify-content: center;
 
     background-color: #fff;
-    color: ${(props) => props.theme.headingColor};
+    color: ${(props) => props.theme.text};
     border: ${(props) => props.theme.border};
     overflow: hidden;
     border-radius: 6px;
@@ -188,8 +188,8 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${(props) => props.theme.subHeading};
-      background-color: ${(props) => props.theme.inputColorLight};
+      color: ${(props) => props.theme.textAlt};
+      background-color: ${(props) => props.theme.subtleBackground};
       border-right: ${(props) => props.theme.border};
       ${(props) =>
         props.rtl &&
@@ -208,7 +208,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     &:hover,
     &:focus-within {
       border-color: ${(props) => props.theme.borderHovered};
-      background-color: ${(props) => props.theme.inputColorLight};
+      background-color: ${(props) => props.theme.subtleBackground};
     }
     ${(props) =>
       props.error &&
@@ -244,7 +244,7 @@ const HoursContainer = styled.div`
     transition: 75ms all ease;
     transition: 75ms all ease;
     &:hover {
-      background-color: ${(props) => props.theme.mainColor};
+      background-color: ${(props) => props.theme.primary};
       color: #fff;
     }
   }
@@ -267,7 +267,7 @@ const MinutesContainer = styled.div`
 
     transition: 75ms all ease;
     &:hover {
-      background-color: ${(props) => props.theme.mainColor};
+      background-color: ${(props) => props.theme.primary};
       color: #fff;
     }
   }

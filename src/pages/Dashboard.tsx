@@ -19,7 +19,7 @@ const Dashboard = () => {
 
 export default Dashboard;
 const Container = styled.div(
-  ({ theme: { breakpoints, headingColor, font } }) => `
+  ({ theme: { breakpoints, font } }) => `
   
   ${up(breakpoints.md)}{
     gap: 1rem;
