@@ -62,7 +62,7 @@ const OrderThumbnail = ({ status }: IProps) => {
 
 export default OrderThumbnail;
 const Container = styled.div`
-  background-color: #fff;
+  background-color: ${(props) => props.theme.subtleBackground};
   box-shadow: ${(props) => props.theme.shadow};
   border-radius: 5px;
   cursor: pointer;

@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import { up } from "./utils/themes";
 
 const GlobalStyle = createGlobalStyle(
   ({
@@ -158,34 +157,6 @@ input:focus, textarea:focus {
   border-color:${borderHovered} !important;
 }
 
-${up(breakpoints.md)}{
-  // h1 {
-  //   font-size:2.25rem;
-  //   line-height:2.5rem; 
-  // }
-  // h2 {
-  //   font-size:2rem;
-  //   line-height:2.25rem; 
-  // }
-  // h3 {
-  //   font-size:1.75rem;
-  //   line-height:2rem; 
-  // }
-  
-  // h4 {
-  //   font-size:1.5rem;
-  //   line-height:1.75rem;  
-  // }
-  // h5 {
-  //   font-size:1.25rem;
-  //   line-height:1.5rem;  
-  // }
-  // h6 {
-  //   font-size:1rem;
-  //   line-height:1.25rem; 
-  // }
- 
-}
 
 `
 );

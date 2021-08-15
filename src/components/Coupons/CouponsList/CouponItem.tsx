@@ -140,7 +140,7 @@ const Container = styled.div<{ selected: boolean }>`
       4,
       minmax(140px, 1fr)
     );
-  background-color: #fff;
+  background-color: ${(props) => props.theme.subtleBackground};
 
   &:hover {
   }

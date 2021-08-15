@@ -13,6 +13,7 @@ import Flex from "../../StyledComponents/Flex";
 import { useContext } from "react";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import Button from "../../reusable/Button";
+import Spacer from "../../reusable/Spacer";
 export interface secondTabProps {
   price: number;
   price_by_options: boolean;
@@ -69,7 +70,7 @@ const CreateProductPricingAndOptions = () => {
 
   return (
     <FormProvider {...methods}>
-      <Container onSubmit={methods.handleSubmit(onSubmit, onError)}>
+      <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
         <Flex justify="flex-end">
           <Button
             color="blue"
@@ -82,20 +83,18 @@ const CreateProductPricingAndOptions = () => {
           >
             Back
           </Button>
+          <Spacer size={10} />
           <Button withTransition color="blue" type="submit">
             Next
           </Button>
         </Flex>
+        <Spacer size={40} />
         <CreateProductPricing />
         <Hr />
         <CreateProductOptions />
-      </Container>
+      </form>
     </FormProvider>
   );
 };
 
 export default CreateProductPricingAndOptions;
-
-const Container = styled.form`
-  background-color: #fff;
-`;

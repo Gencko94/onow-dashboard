@@ -388,7 +388,7 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
 
 export default OrdersFilters;
 const Container = styled.div<{ open: boolean }>`
-  background-color: #fff;
+  background-color: ${(props) => props.theme.subtleFloating};
 
   border-radius: 6px;
 

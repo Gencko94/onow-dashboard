@@ -32,7 +32,7 @@ export default SettingsCard;
 const Container = styled.div`
   border: ${(props) => props.theme.border};
   border-radius: 6px;
-  background-color: ${(props) => props.theme.subtleFloating};
+  background-color: ${(props) => props.theme.subtleBackground};
   display: flex;
   align-items: center;
   justify-content: center;

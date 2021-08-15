@@ -116,8 +116,8 @@ const Container = styled.div`
   }
 `;
 const Card = styled.div`
-  background-color: ${(props) => props.theme.accent1};
-  box-shadow: 0px -5px 25px -10px #e098447e;
+  background-color: ${(props) => props.theme.subtleBackground};
+  /* box-shadow: 0px -5px 25px -10px #e098447e; */
   border-radius: 10px;
 `;
 

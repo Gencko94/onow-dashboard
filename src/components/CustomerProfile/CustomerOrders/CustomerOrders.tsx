@@ -5,6 +5,7 @@ import { GET_ORDERS_BY_CUSTOMER_RESPONSE } from "../../../interfaces/orders/orde
 import { ORDER_SORT } from "../../../pages/Orders";
 import { getOrdersByCustomer } from "../../../utils/queries";
 import OrderItem from "../../Orders/OrdersList/OrderItem";
+import Box from "../../reusable/Box/Box";
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
 import LoadingTable from "../../reusable/LoadingTable";
@@ -128,32 +129,26 @@ const CustomerOrders = ({ customerId }: IProps) => {
   if (status === "loading") return <LoadingTable />;
   return (
     <>
-      <Container>
-        <div className="title-container">
-          <h5>Customer Orders</h5>
-        </div>
-
-        <div className="box">
-          {data!.pages[0].orders.length !== 0 && (
-            <TableHead
-              gridCols="100px 1fr 1fr 1fr 1fr 1fr 1fr 1fr"
-              cols={cols}
-              activeSortBy={sortBy.by}
-              activeOrder={sortBy.order}
-            />
-          )}
-          {data!.pages.map((group, i) => (
-            <React.Fragment key={i}>
-              {group.orders.map((order) => (
-                <OrderItem order={order} key={order.order_id} />
-              ))}
-            </React.Fragment>
-          ))}
-          {data!.pages[0].orders.length === 0 && (
-            <EmptyTable height="100%" text="This customer has no orders yet" />
-          )}
-        </div>
-      </Container>
+      <Box type="titled" boxTitle="Customer Orders">
+        {data!.pages[0].orders.length !== 0 && (
+          <TableHead
+            gridCols="100px 1fr 1fr 1fr 1fr 1fr 1fr 1fr"
+            cols={cols}
+            activeSortBy={sortBy.by}
+            activeOrder={sortBy.order}
+          />
+        )}
+        {data!.pages.map((group, i) => (
+          <React.Fragment key={i}>
+            {group.orders.map((order) => (
+              <OrderItem order={order} key={order.order_id} />
+            ))}
+          </React.Fragment>
+        ))}
+        {data!.pages[0].orders.length === 0 && (
+          <EmptyTable height="100%" text="This customer has no orders yet" />
+        )}
+      </Box>
       {hasNextPage && (
         <Flex margin="2rem 0" justify="center">
           <Button

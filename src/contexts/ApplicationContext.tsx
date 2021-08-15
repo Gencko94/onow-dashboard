@@ -51,18 +51,6 @@ const ApplicationContext: React.FC = ({ children }) => {
     fn: () => {},
     type: "success",
   });
-  // const handleCloseConfirmationModal = () => {
-  //   setConfirmationModalStatus((prev) => ({
-  //     ...prev,
-  //     open: false,
-  //   }));
-  // };
-  // const handleCloseToast = () => {
-  //   setToastStatus((prev) => ({
-  //     ...prev,
-  //     open: false,
-  //   }));
-  // };
 
   const handleCloseConfirmationModal = useCallback(() => {
     setConfirmationModalStatus((prev) => ({

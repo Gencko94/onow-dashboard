@@ -120,7 +120,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       font,
 
       border,
-      accent1,
+      subtleBackground,
       primary,
       text,
       borderHovered,
@@ -142,7 +142,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
 
     justify-content: center;
 
-    background-color: #fff;
+    background-color: ${subtleBackground};
     color: ${text};
     border: ${border};
     overflow: hidden;

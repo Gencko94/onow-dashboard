@@ -125,6 +125,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       dangerRed,
       accent1,
       background,
+      subtleBackground,
     },
     error,
     rtl,
@@ -142,7 +143,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     
     justify-content: center;
     
-    background-color: ${background};
+    background-color: ${subtleBackground};
     color: ${text};
     border: ${border};
     overflow: hidden;
@@ -159,7 +160,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     &:hover,
     &:focus-within {
       border-color: ${borderHovered};
-      background-color: ${accent1};
+      
     }
     ${
       error &&

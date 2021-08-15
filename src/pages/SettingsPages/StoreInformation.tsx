@@ -1,9 +1,11 @@
 import { useQuery } from "react-query";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
+import Spacer from "../../components/reusable/Spacer";
 import StoreNameAndDescription from "../../components/SettingsPage/StoreInformation/StoreNameAndDescription";
 import StoreSocialNetwork from "../../components/SettingsPage/StoreInformation/StoreSocialNetwork";
 import StoreTechnicalSupport from "../../components/SettingsPage/StoreInformation/StoreTechnicalSupport";
+import Heading from "../../components/StyledComponents/Heading";
 import { getStoreInformation } from "../../utils/queries/settingsQueries";
 
 const StoreInformation = () => {
@@ -13,23 +15,27 @@ const StoreInformation = () => {
   console.log(data);
   return (
     <div>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الإعدادات", en: "Settings" },
-              target: "/settings",
-            },
-            {
-              name: { ar: "معلومات المتجر", en: "Store Information" },
-              target: "",
-            },
-          ]}
-        />
-      </HeaderContainer>
+      <Heading tag="h5" type="large-title">
+        Store Information
+      </Heading>
+      <Breadcrumbs
+        withoutTitle
+        children={[
+          {
+            name: { ar: "الإعدادات", en: "Settings" },
+            target: "/settings",
+          },
+          {
+            name: { ar: "معلومات المتجر", en: "Store Information" },
+            target: "",
+          },
+        ]}
+      />
+      <Spacer size={40} />
       <StoreNameAndDescription
         data={{ description: data!.description, name: data!.name }}
       />
+      <Spacer size={30} />
       <StoreTechnicalSupport
         data={{
           email: data!.email,
@@ -38,6 +44,7 @@ const StoreInformation = () => {
           whatsapp: data!.whatsapp,
         }}
       />
+      <Spacer size={30} />
       <StoreSocialNetwork
         data={{
           facebook: data!.facebook,

@@ -2,6 +2,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { GrServices } from "react-icons/gr";
 import { RiHandCoinLine } from "react-icons/ri";
 import styled from "styled-components";
+import Box from "../../reusable/Box/Box";
 
 import CheckToggle from "../../reusable/CheckToggle";
 import IconedNumberInput from "../../reusable/IconedNumberInput";
@@ -17,13 +18,9 @@ const ProductOrdering = () => {
   } = useFormContext<FORM_PROPS>();
   const allowSideNotes = watch("allow_side_notes");
   const allowattach = watch("allow_attachments");
-  console.log(allowattach);
-  return (
-    <Container>
-      <div className="title-container">
-        <h5>Product Ordering Options</h5>
-      </div>
 
+  return (
+    <Box type="titled" boxTitle="Product Ordering options">
       <Grid cols="1fr  1fr 0.2fr" gap="0.5rem">
         <IconedNumberInput
           label="Maximum ordering quantity per customer"
@@ -74,14 +71,8 @@ const ProductOrdering = () => {
           />
         )}
       </Grid>
-    </Container>
+    </Box>
   );
 };
 
 export default ProductOrdering;
-const Container = styled.div`
-  .title-container {
-    margin-bottom: 1rem;
-    color: ${(props) => props.theme.primary};
-  }
-`;

@@ -89,7 +89,7 @@ const OrderItem = ({ order }: IProps) => {
 export default OrderItem;
 const Container = styled.div(
   ({ theme: { breakpoints, border, font, subtleBackground } }) => `
-  background-color:#fff;
+  background-color: ${subtleBackground};
   cursor: pointer;
   display: grid;
   grid-template-columns: 0.25fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr;

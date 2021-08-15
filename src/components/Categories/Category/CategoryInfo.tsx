@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { MdSubtitles } from "react-icons/md";
 
 import styled from "styled-components";
+import Box from "../../reusable/Box/Box";
 
 import CategorySelection from "../../reusable/CategorySelection";
 import GithubInput from "../../reusable/Inputs/GithubInput";
@@ -42,151 +43,96 @@ const CategoryInfo = ({
     }
   }, [nameEn]);
   return (
-    <Container>
-      <Grid cols="repeat(auto-fit,minmax(310px,1fr))" gap="1rem">
-        <div>
-          <Heading tag="h5" color="primary">
-            Category Information
-          </Heading>
+    <Grid cols="repeat(auto-fit,minmax(310px,1fr))" gap="1rem">
+      <Box type="titled" boxTitle="Category Information">
+        <IconedInput
+          Icon={MdSubtitles}
+          errors={errors?.name?.en}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Category Name English"
+          name="name.en"
+        />
+        <IconedInput
+          Icon={MdSubtitles}
+          errors={errors?.name?.ar}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Category Name Arabic"
+          name="name.ar"
+        />
 
-          <div className="box">
-            <IconedInput
-              Icon={MdSubtitles}
-              errors={errors?.name?.en}
-              register={register}
-              required
-              requiredMessage="Required"
-              label="Category Name English"
-              name="name.en"
-            />
-            <IconedInput
-              Icon={MdSubtitles}
-              errors={errors?.name?.ar}
-              register={register}
-              required
-              requiredMessage="Required"
-              label="Category Name Arabic"
-              name="name.ar"
-            />
-
-            <Textarea
-              errors={errors?.description?.en}
-              register={register}
-              required
-              requiredMessage="Required"
-              label="Description English"
-              name="description.en"
-            />
-            <Textarea
-              errors={errors?.description?.ar}
-              register={register}
-              required
-              requiredMessage="Required"
-              label="Description Arabic"
-              name="description.ar"
-            />
-            <PrefixedInput
-              prefixText="https://your-store/categories/"
-              errors={errors?.slug}
-              register={register}
-              required
-              requiredMessage="Required"
-              label="Category Slug"
-              name="slug"
-              desc="How your category will look in the url"
-            />
-            <Controller
-              control={control}
-              name="active"
-              render={({ field: { onChange, value } }) => {
-                return (
-                  <GithubInput
-                    label="Show Category"
-                    checked={value}
-                    onChange={(e) => {
-                      if (value === true) {
-                        onChange(false);
-                      } else {
-                        onChange(true);
-                      }
-                    }}
-                  />
-                );
-              }}
-            />
-          </div>
-        </div>
-        <div className="categories-section">
-          <div className="title-container">
-            <Heading tag="h5" color="primary">
-              Category Parent
-            </Heading>
-          </div>
-          <Controller
-            control={control}
-            name="parent_id"
-            // rules={{
-            //   required: "Required",
-            // }}
-            render={({ field: { onChange } }) => {
-              return (
-                <div className="category-list">
-                  <CategorySelection
-                    errors={errors?.parent_id}
-                    formCategoryId={formCategoryId}
-                    onChange={onChange}
-                    currentId={currentId}
-                  />
-                </div>
-              );
-            }}
-          />
-        </div>
-      </Grid>
-    </Container>
+        <Textarea
+          errors={errors?.description?.en}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Description English"
+          name="description.en"
+        />
+        <Textarea
+          errors={errors?.description?.ar}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Description Arabic"
+          name="description.ar"
+        />
+        <PrefixedInput
+          prefixText="https://your-store/categories/"
+          errors={errors?.slug}
+          register={register}
+          required
+          requiredMessage="Required"
+          label="Category Slug"
+          name="slug"
+          desc="How your category will look in the url"
+        />
+        <Controller
+          control={control}
+          name="active"
+          render={({ field: { onChange, value } }) => {
+            return (
+              <GithubInput
+                label="Show Category"
+                checked={value}
+                onChange={(e) => {
+                  if (value === true) {
+                    onChange(false);
+                  } else {
+                    onChange(true);
+                  }
+                }}
+              />
+            );
+          }}
+        />
+      </Box>
+      <Box type="titled" boxTitle="Category Parent">
+        <Controller
+          control={control}
+          name="parent_id"
+          // rules={{
+          //   required: "Required",
+          // }}
+          render={({ field: { onChange } }) => {
+            return (
+              <div className="category-list">
+                <CategorySelection
+                  errors={errors?.parent_id}
+                  formCategoryId={formCategoryId}
+                  onChange={onChange}
+                  currentId={currentId}
+                />
+              </div>
+            );
+          }}
+        />
+      </Box>
+    </Grid>
   );
 };
 
 export default CategoryInfo;
-
-const Container = styled.div(
-  ({ theme: { breakpoints, border, shadow, errorShadow } }) => `
-  margin: 1rem 0;
-  .title-container {
-    padding: 1rem 0;
-  }
-  
-    .box {
-      background-color: #fff;
-      // box-shadow: ${shadow};
-      border: ${border};
-      border-radius: 6px;
-      padding: 1rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
-      gap: 1rem;
-    }
-    .categories-section {
-      display:flex;
-     
-      flex-direction:column;
-      .category-list {
-        flex:1;
-        max-height:447px;
-        overflow-y: auto;
-        position: relative;
-        background-color: #fff;
-        border: ${border};
-        border-radius: 6px;
-        
-      }
-    }
-  
-  
-  
-  @media ${breakpoints.md} {
-    
-    
-  }
-  `
-);

@@ -60,7 +60,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     width: 100%;
     padding: 0.4rem;
     font-size: 0.8rem;
-    background-color: #fff;
+    background-color: ${(props) => props.theme.subtleBackground};
     color: ${(props) => props.theme.text};
     border: ${(props) => props.theme.border};
     overflow: hidden;
@@ -70,7 +70,6 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>`
     &:hover,
     &:focus-within {
       border-color: ${(props) => props.theme.borderHovered};
-      background-color: ${(props) => props.theme.subtleBackground};
     }
     ${(props) =>
       props.error &&

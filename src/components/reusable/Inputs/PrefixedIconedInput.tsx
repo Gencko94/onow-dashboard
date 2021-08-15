@@ -142,7 +142,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
 
     justify-content: center;
 
-    background-color: #fff;
+    background-color: ${subtleBackground};
     color: ${text};
     border: ${error ? borderDanger : border};
     overflow: hidden;

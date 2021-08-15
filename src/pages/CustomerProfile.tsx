@@ -20,6 +20,8 @@ import {
   editCustomer,
   getSingleCustomer,
 } from "../utils/queries";
+import Heading from "../components/StyledComponents/Heading";
+import Spacer from "../components/reusable/Spacer";
 
 const CustomerProfile = () => {
   const queryClient = useQueryClient();
@@ -135,46 +137,49 @@ const CustomerProfile = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <HeaderContainer>
-          <Breadcrumbs
-            children={[
-              {
-                name: { ar: "المستخدمين", en: "Customers" },
-                target: "/customers",
-              },
-              {
-                name: { ar: "ملف المستخدم", en: "Customer" },
-                target: "",
-              },
-            ]}
-          />
-          <Flex justify="flex-end">
-            <Button
-              withTransition
-              color="danger"
-              isLoading={deleteLoading}
-              disabled={deleteLoading}
-              onClick={() =>
-                setConfirmationModalStatus?.({
-                  closeCb: handleCloseConfirmationModal!,
-                  desc: "Are you sure you want to delete this customer ?",
-                  open: true,
-                  successCb: () => handleDeleteCustomer(),
-                  title: "Delete Customer",
-                })
-              }
-            >
-              Delete Customer
-            </Button>
-          </Flex>
-        </HeaderContainer>
-
+        <Heading tag="h5" type="large-title">
+          Customer
+        </Heading>
+        <Breadcrumbs
+          withoutTitle
+          children={[
+            {
+              name: { ar: "المستخدمين", en: "Customers" },
+              target: "/customers",
+            },
+            {
+              name: { ar: "ملف المستخدم", en: "Customer" },
+              target: "",
+            },
+          ]}
+        />
+        <Flex justify="flex-end">
+          <Button
+            withTransition
+            color="danger"
+            isLoading={deleteLoading}
+            disabled={deleteLoading}
+            onClick={() =>
+              setConfirmationModalStatus?.({
+                closeCb: handleCloseConfirmationModal!,
+                desc: "Are you sure you want to delete this customer ?",
+                open: true,
+                successCb: () => handleDeleteCustomer(),
+                title: "Delete Customer",
+              })
+            }
+          >
+            Delete Customer
+          </Button>
+        </Flex>
+        <Spacer size={20} />
         <CustomerProfileInfo
           register={register}
           errors={errors}
           control={control}
           joinDate={data!.join_date}
         />
+        <Spacer size={20} />
         <Flex justify="center">
           <Button
             withTransition

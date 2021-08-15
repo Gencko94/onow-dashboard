@@ -11,10 +11,13 @@ import { IoMdCloseCircle } from "react-icons/io";
 import styled from "styled-components";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import FileUploader from "../../../utils/FileUploader";
+import Box from "../../reusable/Box/Box";
 import Button from "../../reusable/Button";
+import Spacer from "../../reusable/Spacer";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
+import Paragraph from "../../StyledComponents/Paragraph";
 
 interface ImageProps {
   thumbnail: File;
@@ -68,39 +71,29 @@ const CreateProductImage = () => {
     );
   };
   return (
-    <Container>
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <Flex justify="flex-end">
-          <Button
-            color="blue"
-            onClick={() => {
-              console.log(thumbnail);
-              updateData?.({
-                thumbnail,
-                images,
-              });
-              setActiveTab?.(0);
-            }}
-            margin="0 0.5rem"
-            withTransition
-          >
-            Back
-          </Button>
-          <Button type="submit" color="blue">
-            Next
-          </Button>
-        </Flex>
-        <Heading tag="h5" color="primary" mb="1rem">
-          Product Imaging
-        </Heading>
+    <form onSubmit={handleSubmit(onSubmit, onError)}>
+      <Flex justify="flex-end">
+        <Button
+          onClick={() => {
+            updateData?.({
+              thumbnail,
+              images,
+            });
+            setActiveTab?.(0);
+          }}
+        >
+          Back
+        </Button>
+        <Spacer size={10} />
+        <Button type="submit">Next</Button>
+      </Flex>
+      <Spacer size={40} />
+      <Box type="titled" boxTitle="Product Imaging">
+        <Paragraph>
+          High Quality product images are very important when you're offering
+          food, Truly delectable images will help your products sell themselfs.
+        </Paragraph>
 
-        <DescriptionBox>
-          <p>
-            High Quality product images are very important when you're offering
-            food, Truly delectable images will help your products sell
-            themselfs.
-          </p>
-        </DescriptionBox>
         <Grid cols="1fr" gap="1rem">
           <PreviewContainer>
             <Grid cols="repeat(auto-fill,minmax(200px,1fr))" gap="1rem">
@@ -155,73 +148,33 @@ const CreateProductImage = () => {
             </Grid>
           </PreviewContainer>
 
-          <Box>
-            <Controller
-              control={control}
-              name="images"
-              render={({ field: { onChange, value, ref } }) => (
-                <FileUploader
-                  accept=".png, .jpg, .jpeg"
-                  onChange={(file: File | File[]) => {
-                    if (!Array.isArray(file)) {
-                      if (images.length === 0 && !thumbnail) {
-                        setValue("thumbnail", file);
-                      } else {
-                        onChange([...images, file]);
-                      }
+          <Controller
+            control={control}
+            name="images"
+            render={({ field: { onChange, value, ref } }) => (
+              <FileUploader
+                accept=".png, .jpg, .jpeg"
+                onChange={(file: File | File[]) => {
+                  if (!Array.isArray(file)) {
+                    if (images.length === 0 && !thumbnail) {
+                      setValue("thumbnail", file);
+                    } else {
+                      onChange([...images, file]);
                     }
-                  }}
-                />
-              )}
-            />
-          </Box>
+                  }
+                }}
+              />
+            )}
+          />
         </Grid>
-        {/* <ErrorMessage>{errors?.images && "Required"}</ErrorMessage> */}
-      </form>
-    </Container>
+      </Box>
+      {/* <ErrorMessage>{errors?.images && "Required"}</ErrorMessage> */}
+    </form>
   );
 };
 
 export default CreateProductImage;
-const Container = styled.div(
-  ({ theme: { breakpoints, shadow } }) => `
- 
-  
-  .box {
-    flex:1;
-    background-color: #fff;
-    box-shadow: ${shadow};
-    border-radius: 6px;
-    padding: 1rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  @media ${breakpoints.md} {
-    .box {
-      grid-template-columns: 1fr 1fr ;
 
-    }
-  }
-  `
-);
-const DescriptionBox = styled.div`
-  margin-bottom: 0.5rem;
-  background-color: #ffe3d6;
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-`;
-
-const Box = styled.div(
-  ({ theme: { breakpoints, shadow } }) => `
-  padding:1rem;
-  .title {
-    margin-bottom:1rem;
-    text-align:center;
-  }
-  `
-);
 const PreviewContainer = styled.div(
   ({ theme: { breakpoints, green, dangerRed, border } }) => `
   padding:1rem;

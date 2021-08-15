@@ -40,7 +40,7 @@ const EmptyTable = ({
   return (
     <Container height={height}>
       {iconImage && <img src={iconImage} alt="" />}
-      <Heading tag="h5" color="heading" mb="1rem">
+      <Heading tag="h5" type="medium-title">
         {text}
       </Heading>
       {withButton && btnText && (

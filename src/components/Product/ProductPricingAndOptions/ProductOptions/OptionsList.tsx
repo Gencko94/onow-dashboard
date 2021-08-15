@@ -182,7 +182,9 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
     <Container>
       <div className="head">
         <Flex justify="space-between" items="center">
-          <Heading tag="h5">Options</Heading>
+          <Heading tag="h5" type="small-title">
+            Options
+          </Heading>
           <Button
             withTransition
             color="green"
@@ -270,16 +272,17 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
 
 export default OptionsList;
 const Container = styled.div(
-  ({ theme: { border, breakpoints, accent1 } }) => `
+  ({ theme: { border, breakpoints, subtleFloating } }) => `
   margin-top:1rem;
   border: ${border};
   .head {
-    background-color:${accent1};
+    background-color:${subtleFloating};
     border-bottom: ${border};
-    padding: 0.75rem;
+    padding: 1rem;
   }
   .list {
-    padding: 0.75rem;
+    padding: 1rem;
+    background-color:${subtleFloating}
   };
   ${up(breakpoints.md)} {
     .head ,.list {

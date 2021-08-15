@@ -5,6 +5,7 @@ import { useInfiniteQuery } from "react-query";
 import styled from "styled-components";
 import { BRANCH } from "../../../interfaces/settings/branches/branches";
 import { getBranches } from "../../../utils/queries";
+import Box from "../../reusable/Box/Box";
 
 import CheckToggle from "../../reusable/CheckToggle";
 import Heading from "../../StyledComponents/Heading";
@@ -61,10 +62,7 @@ const ProductBranches = () => {
     }
   };
   return (
-    <Container>
-      <Heading tag="h5" color="primary">
-        Product Branch Availability
-      </Heading>
+    <Box type="titled" boxTitle="Product Branch availability">
       <Controller
         control={control}
         name="branch_availability.all"
@@ -112,21 +110,8 @@ const ProductBranches = () => {
           }}
         />
       )}
-    </Container>
+    </Box>
   );
 };
 
 export default ProductBranches;
-const Container = styled.div`
-  .branches-container {
-    margin-top: 1rem;
-    border: ${(props) => props.theme.border};
-
-    border-radius: 6px;
-  }
-  .branch-item {
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-  }
-`;

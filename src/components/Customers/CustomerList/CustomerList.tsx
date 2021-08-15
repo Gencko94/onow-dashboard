@@ -239,7 +239,7 @@ const CustomerList = ({
               // activeSortBy={sortBy.field}
               // activeOrder={sortBy.order}
               cols={cols}
-              gap="0.5rem"
+              gap="0"
               gridCols="repeat(1, minmax(35px, 50px)) repeat(
                 4,
                 minmax(100px, 1fr)
@@ -300,13 +300,15 @@ const CustomerList = ({
 export default CustomerList;
 
 const Container = styled.div`
-  border-radius: 6px;
-  border: ${(props) => props.theme.border};
-
   position: relative;
+  border-bottom: none;
   .table {
+    border-radius: 20px;
+    border: ${(props) => props.theme.border};
     overflow-x: auto;
-    background-color: #fff;
+    overflow-y: hidden;
+    border-radius: 20px;
+    background-color: ${(props) => props.theme.subtleBackground};
   }
   .loading {
     position: absolute;

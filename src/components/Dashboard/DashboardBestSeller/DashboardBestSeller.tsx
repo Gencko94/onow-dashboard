@@ -18,7 +18,7 @@ export default DashboardBestSeller;
 const Container = styled.div`
   box-shadow: ${(props) => props.theme.shadow};
   border-radius: 8px;
-  background-color: ${(props) => props.theme.boxColor};
+  background-color: ${(props) => props.theme.subtleBackground};
   padding: 0.75rem;
   align-self: start;
   h5 {

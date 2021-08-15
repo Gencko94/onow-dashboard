@@ -96,7 +96,7 @@ export default Searchbar;
 const Container = styled.form`
   display: grid;
   flex: auto;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.subtleFloating};
   grid-template-columns: minmax(100px, 1fr) 100px 40px;
   box-shadow: ${(props) => props.theme.shadow};
   border-radius: 6px;
@@ -121,13 +121,17 @@ const Options = styled.button`
 `;
 const SelectedOption = styled.p`
   font-size: 0.8rem;
+  color: ${(props) => props.theme.text};
 `;
 const SearchButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 6px;
   color: ${(props) => props.theme.text};
-  background-color: ${(props) => props.theme.green};
+  &:hover {
+    background-color: ${(props) => props.theme.green};
+  }
 `;
 const OptionsContainer = styled.div`
   position: absolute;
@@ -142,7 +146,7 @@ const OptionsContainer = styled.div`
 const Option = styled.div`
   padding: 0.5rem;
   font-size: 0.8rem;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.subtleFloating};
   color: ${(props) => props.theme.textAlt};
   transition: all 75ms ease;
   &:hover {

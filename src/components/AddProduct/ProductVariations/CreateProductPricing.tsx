@@ -8,6 +8,7 @@ import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import { useContext } from "react";
 import Heading from "../../StyledComponents/Heading";
 import PrefixedIconedNumberInput from "../../reusable/Inputs/PrefixedIconedNumberInput";
+import Box from "../../reusable/Box/Box";
 
 const CreateProductPricing = () => {
   const {
@@ -22,11 +23,7 @@ const CreateProductPricing = () => {
   const { formValues } = useContext(NewProductContext);
   const priceByOptions = watch("price_by_options");
   return (
-    <Container>
-      <Heading color="primary" tag="h5">
-        Product Pricing
-      </Heading>
-
+    <Box type="titled" boxTitle="Product Pricing">
       <div className="inputs-container">
         <PrefixedIconedNumberInput
           errors={errors.price}
@@ -63,22 +60,8 @@ const CreateProductPricing = () => {
           )}
         />
       </div>
-    </Container>
+    </Box>
   );
 };
 
 export default CreateProductPricing;
-const Container = styled.div(
-  ({ theme: { breakpoints } }) => `
-  .inputs-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap:1rem;
-  }
-  @media ${breakpoints.md}{
-    .inputs-container {
-      grid-template-columns: 1fr 1fr 1fr;
-  }
- }
-`
-);

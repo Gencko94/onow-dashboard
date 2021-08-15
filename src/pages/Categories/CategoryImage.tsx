@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Control, Controller, SetFieldValue } from "react-hook-form";
 import { useMutation } from "react-query";
 import styled from "styled-components";
+import Box from "../../components/reusable/Box/Box";
 import Heading from "../../components/StyledComponents/Heading";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
 import useToast from "../../hooks/useToast";
@@ -129,69 +130,40 @@ const CategoryImage = ({ control, errors, setValue, id }: IProps) => {
     }
   };
   return (
-    <Container>
-      <Heading tag="h5" color="primary" mb="1rem">
-        Category Image
-      </Heading>
-
-      <div className="box">
-        <Controller
-          control={control}
-          name="image"
-          render={({ field: { value } }) => {
-            return (
-              <MiniFileUploader
-                accept=".png, .jpg, .jpeg"
-                image={value}
-                onChange={async (image) => {
-                  await updateImage(image, setProgress);
-                }}
-                onRemove={() => {
-                  setConfirmationModalStatus?.({
-                    open: true,
-                    desc: "Are you sure you want to delete this category image ?",
-                    title: "Delete Category Image",
-                    closeCb: handleCloseConfirmationModal!,
-                    successCb: () => {
-                      removeImage();
-                    },
-                  });
-                }}
-                progress={progress}
-              />
-            );
-          }}
-        />
-        <ErrorMessage>{errors?.image && "Required"}</ErrorMessage>
-      </div>
-    </Container>
+    <Box type="titled" boxTitle="Category Image">
+      <Controller
+        control={control}
+        name="image"
+        render={({ field: { value } }) => {
+          return (
+            <MiniFileUploader
+              accept=".png, .jpg, .jpeg"
+              image={value}
+              onChange={async (image) => {
+                await updateImage(image, setProgress);
+              }}
+              onRemove={() => {
+                setConfirmationModalStatus?.({
+                  open: true,
+                  desc: "Are you sure you want to delete this category image ?",
+                  title: "Delete Category Image",
+                  closeCb: handleCloseConfirmationModal!,
+                  successCb: () => {
+                    removeImage();
+                  },
+                });
+              }}
+              progress={progress}
+            />
+          );
+        }}
+      />
+      <ErrorMessage>{errors?.image && "Required"}</ErrorMessage>
+    </Box>
   );
 };
 
 export default CategoryImage;
-const Container = styled.div(
-  ({ theme: { breakpoints, shadow, border } }) => `
-  display:flex;
-  flex-direction:column;
-  .box {
-    flex:1;
-    background-color: #fff;
-    // box-shadow: ${shadow};
-    border: ${border};
-    border-radius: 6px;
-    padding: 1rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    // gap: 1rem;
-  }
-  ${up(breakpoints.md)}{
-    .box {
-      grid-template-columns: 1fr ;
-
-    }
-  }
-  `
-);
 
 const ErrorMessage = styled.p`
   font-size: 0.7rem;

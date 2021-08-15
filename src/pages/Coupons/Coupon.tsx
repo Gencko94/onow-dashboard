@@ -14,7 +14,9 @@ import CouponProducts from "../../components/Coupons/Coupon/CouponProducts";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
+import Spacer from "../../components/reusable/Spacer";
 import Flex from "../../components/StyledComponents/Flex";
+import Grid from "../../components/StyledComponents/Grid";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
 import useToast from "../../hooks/useToast";
 import { COUPON } from "../../interfaces/coupons/coupons";
@@ -150,7 +152,11 @@ const Coupon = () => {
         >
           <Suspense fallback={<Loading />}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <HeaderContainer>
+              <Grid
+                gap="0.5rem"
+                cols="repeat(auto-fit,minmax(300px,auto))"
+                items="center"
+              >
                 <Breadcrumbs
                   children={[
                     {
@@ -174,6 +180,7 @@ const Coupon = () => {
                   >
                     Save changes
                   </Button>
+                  <Spacer size={10} />
                   <Button
                     withTransition
                     color="danger"
@@ -190,12 +197,14 @@ const Coupon = () => {
                     Delete Coupon
                   </Button>
                 </Flex>
-              </HeaderContainer>
+              </Grid>
+              <Spacer size={40} />
               <CouponInfo
                 errors={errors}
                 register={register}
                 control={control}
               />
+              <Spacer size={30} />
               <CouponProducts
                 errors={errors}
                 control={control}

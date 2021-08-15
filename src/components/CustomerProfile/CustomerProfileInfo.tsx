@@ -11,6 +11,7 @@ import PhoneInput from "../reusable/Inputs/PhoneInput";
 import { format, parseISO } from "date-fns";
 import Flex from "../StyledComponents/Flex";
 import Button from "../reusable/Button";
+import Box from "../reusable/Box/Box";
 interface IProps {
   errors: DeepMap<CUSTOMER, FieldError>;
   register: UseFormRegister<CUSTOMER>;
@@ -25,58 +26,57 @@ const CustomerProfileInfo = ({
   joinDate,
 }: IProps) => {
   return (
-    <Container>
-      <div className="title-container">
+    <Box type="titled" boxTitle="Customer Personal Info">
+      {/* <div className="title-container">
         <h5 className="title">Customer Personal Info</h5>
         <p className="join-date">
           Join Date : {format(parseISO(joinDate), "dd/MM/yyyy")}{" "}
         </p>
-      </div>
-      <div className="box">
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.first_name}
-          register={register}
-          required
-          requiredMessage="Required"
-          label="First Name"
-          name="first_name"
-        />
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.last_name}
-          register={register}
-          required
-          requiredMessage="Required"
-          label="Last Name"
-          name="last_name"
-        />
-        <Controller
-          name="phone"
-          control={control}
-          render={({ field: { onChange, value } }) => {
-            return (
-              <PhoneInput
-                errors={errors?.phone}
-                label="Phone Number"
-                onChange={() => {}}
-                value={value}
-              />
-            );
-          }}
-        />
+      </div> */}
 
-        <IconedInput
-          Icon={AiOutlineMail}
-          errors={errors?.email}
-          register={register}
-          required
-          requiredMessage="Required"
-          label="Email Address"
-          name="email"
-        />
-      </div>
-    </Container>
+      <IconedInput
+        Icon={MdSubtitles}
+        errors={errors?.first_name}
+        register={register}
+        required
+        requiredMessage="Required"
+        label="First Name"
+        name="first_name"
+      />
+      <IconedInput
+        Icon={MdSubtitles}
+        errors={errors?.last_name}
+        register={register}
+        required
+        requiredMessage="Required"
+        label="Last Name"
+        name="last_name"
+      />
+      <Controller
+        name="phone"
+        control={control}
+        render={({ field: { onChange, value } }) => {
+          return (
+            <PhoneInput
+              errors={errors?.phone}
+              label="Phone Number"
+              onChange={() => {}}
+              value={value}
+            />
+          );
+        }}
+      />
+
+      <IconedInput
+        Icon={AiOutlineMail}
+        errors={errors?.email}
+        register={register}
+        required
+        requiredMessage="Required"
+        label="Email Address"
+        name="email"
+      />
+    </Box>
   );
 };
 

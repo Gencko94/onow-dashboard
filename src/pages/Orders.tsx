@@ -6,6 +6,7 @@ import OrdersPanel from "../components/Orders/OrdersPanel/OrdersPanel";
 import OrdersThumbnails from "../components/Orders/OrdersThumbnails/OrdersThumbnails";
 import Button from "../components/reusable/Button";
 import Flex from "../components/StyledComponents/Flex";
+import Hr from "../components/StyledComponents/Hr";
 import {
   GET_ORDERS_RESPONSE,
   ORDERS_FILTERS,
@@ -74,9 +75,9 @@ const Orders = () => {
         >
           <Suspense fallback={<Loading />}>
             <OrdersPanel filters={filters} setFilters={setFilters} />
-            <hr />
+
             <OrdersThumbnails stats={data!.pages[0].stats} />
-            <hr />
+            <Hr />
 
             <OrdersList data={data!} sortBy={sortBy} setSortBy={setSortBy} />
             {hasNextPage && (

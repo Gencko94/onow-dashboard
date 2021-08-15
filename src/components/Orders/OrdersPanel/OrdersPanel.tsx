@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { ORDERS_FILTERS } from "../../../interfaces/orders/orders";
 
 import Button from "../../reusable/Button";
+import Spacer from "../../reusable/Spacer";
 import Flex from "../../StyledComponents/Flex";
 import Heading from "../../StyledComponents/Heading";
 import OrdersFilters from "./OrdersFilters/OrdersFilters";
@@ -19,7 +20,9 @@ const OrdersPanel = ({ setFilters, filters }: IProps) => {
   return (
     <>
       <Flex margin="1rem 0" items="center" justify="space-between">
-        <Heading tag="h2">Orders</Heading>
+        <Heading tag="h2" type="large-title">
+          Orders
+        </Heading>
         <Flex items="center">
           <Button
             color="green"
@@ -28,12 +31,8 @@ const OrdersPanel = ({ setFilters, filters }: IProps) => {
           >
             Create new Order
           </Button>
-          <Button
-            color="green"
-            onClick={() => setOpen(!open)}
-            margin="0 0.5rem"
-            withTransition
-          >
+          <Spacer size={10} />
+          <Button color="green" onClick={() => setOpen(!open)} withTransition>
             Filter orders
           </Button>
         </Flex>

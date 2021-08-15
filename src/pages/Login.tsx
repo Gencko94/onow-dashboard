@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 
-import { MdMail, MdVisibility, MdVisibilityOff } from "react-icons/md";
-import { useContext, useState } from "react";
+import { MdMail } from "react-icons/md";
+import { useContext } from "react";
 import { useTranslation, Trans } from "react-i18next/";
 import { LOGIN_FORM } from "../interfaces/auth/auth";
 import { useMutation, useQueryClient } from "react-query";
@@ -89,110 +89,96 @@ const Login = () => {
     return <Redirect to="/dashboard" />;
   }
   return (
-    <Container>
-      <ContentWrapper>
-        <Header>
-          <LogoContainer to="/">
-            <img src="/images/logo.svg" alt="logo" />
-          </LogoContainer>
-        </Header>
-        <FormContainer>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <IconedInput
-              Icon={MdMail}
-              errors={errors?.login}
-              name="login"
-              register={register}
-              label="Email"
-            />
-            {/* <InputContainer>
-              <Label>{t("email")}</Label>
-              <Input {...register("login")} />
+    <Wrapper>
+      <div></div>
+      <Container>
+        <ContentWrapper>
+          <Header>
+            <LogoContainer to="/">
+              <img src="/images/logo.svg" alt="logo" />
+            </LogoContainer>
+          </Header>
+          <FormContainer>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <IconedInput
+                Icon={MdMail}
+                errors={errors?.login}
+                name="login"
+                register={register}
+                label="Email"
+              />
 
-              <ErrorMessage>{errors.login?.message}</ErrorMessage>
-            </InputContainer> */}
-            <PasswordInput
-              errors={errors?.password}
-              name="password"
-              register={register}
-              label="Password"
-            />
-            {/* <InputContainer>
-              <Label>{t("password")}</Label>
-              <PasswordInputContainer>
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  {...register("password")}
-                />
-                <ShowPassword
-                  type="button"
-                  onClick={() => handleShowPassword()}
-                >
-                  {showPassword ? (
-                    <MdVisibilityOff size={21} />
-                  ) : (
-                    <MdVisibility size={21} />
-                  )}
-                </ShowPassword>
-              </PasswordInputContainer>
+              <PasswordInput
+                errors={errors?.password}
+                name="password"
+                register={register}
+                label="Password"
+              />
 
-              <ErrorMessage>{errors.password?.message}</ErrorMessage>
-            </InputContainer> */}
-            <Button
-              color="primary"
-              type="submit"
-              style={{ width: "100%" }}
-              isLoading={isSubmitting}
-              disabled={isSubmitting}
-              withTransition
-            >
-              Login
-            </Button>
-          </Form>
-        </FormContainer>
-        <Footer>
-          <Text>
-            <Trans i18nKey="login:no-account">
-              Don't have an account ?
-              <InlineLink to="/register">Register here</InlineLink>
-            </Trans>
-          </Text>
-          <Text>
-            <Trans i18nKey="login:forgot-password">
-              Forgot Password ?
-              <InlineLink to="/register">Reset Here</InlineLink>
-            </Trans>
-          </Text>
-        </Footer>
-      </ContentWrapper>
+              <Button
+                color="primary"
+                type="submit"
+                style={{ width: "100%" }}
+                isLoading={isSubmitting}
+                disabled={isSubmitting}
+                withTransition
+              >
+                Login
+              </Button>
+            </Form>
+          </FormContainer>
+          <Footer>
+            <Text>
+              <Trans i18nKey="login:no-account">
+                Don't have an account ?
+                <InlineLink to="/register">Register here</InlineLink>
+              </Trans>
+            </Text>
+            <Text>
+              <Trans i18nKey="login:forgot-password">
+                Forgot Password ?
+                <InlineLink to="/register">Reset Here</InlineLink>
+              </Trans>
+            </Text>
+          </Footer>
+        </ContentWrapper>
 
-      <LanguageContainer>
-        <>
-          {i18n.language === "ar" && (
-            <Icon onClick={() => changeLanguage("en")}>English</Icon>
-          )}
-          {i18n.language === "en" && (
-            <Icon onClick={() => changeLanguage("ar")}>العربية</Icon>
-          )}
-        </>
-      </LanguageContainer>
-    </Container>
+        <LanguageContainer>
+          <>
+            {i18n.language === "ar" && (
+              <Icon onClick={() => changeLanguage("en")}>English</Icon>
+            )}
+            {i18n.language === "en" && (
+              <Icon onClick={() => changeLanguage("ar")}>العربية</Icon>
+            )}
+          </>
+        </LanguageContainer>
+      </Container>
+    </Wrapper>
   );
 };
 
 export default Login;
+const Wrapper = styled.div(
+  ({ theme: { breakpoints } }) => `
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  
 
+`
+);
 const Container = styled.div`
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: ${(props) => props.theme.subtleFloating};
   /* font-family: ${(props) => props.theme.fontFamily}; */
 `;
 
 const ContentWrapper = styled.div`
-  /* width:100%; */
-  max-width: 90%;
+  width: 90%;
+  /* max-width: 90%; */
 `;
 const Header = styled.div`
   display: flex;
@@ -211,10 +197,10 @@ const LogoContainer = styled(Link)`
   justify-content: center;
 `;
 const FormContainer = styled.div`
-  padding: 0.75rem 0.75rem;
+  padding: 1rem;
   border: ${(props) => props.theme.border};
   box-shadow: ${(props) => props.theme.shadow};
-  background-color: ${(props) => props.theme.subtleFloating};
+  /* background-color: ${(props) => props.theme.subtleFloating}; */
   border-radius: 12px;
   min-width: 300px;
   margin-bottom: 0.5rem;

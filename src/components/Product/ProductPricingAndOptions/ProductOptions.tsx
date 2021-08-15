@@ -2,6 +2,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { PRODUCT_OPTION } from "../../../interfaces/products/products";
 import { up } from "../../../utils/themes";
+import Box from "../../reusable/Box/Box";
 
 import GithubInput from "../../reusable/Inputs/GithubInput";
 import Heading from "../../StyledComponents/Heading";
@@ -19,12 +20,7 @@ const ProductOptions = ({ options, productId }: ProductOptionsProps) => {
   const optionsEnabled = watch("options_enabled");
   return (
     <>
-      <Container>
-        <div className="head">
-          <Heading color="heading" tag="h5">
-            Product Options
-          </Heading>
-        </div>
+      <Box type="titled" boxTitle="Product Options">
         <div className="content">
           <Controller
             name="options_enabled"
@@ -40,7 +36,7 @@ const ProductOptions = ({ options, productId }: ProductOptionsProps) => {
             )}
           />
         </div>
-      </Container>
+      </Box>
       {optionsEnabled && (
         <OptionsList productId={productId} productOptions={options} />
       )}

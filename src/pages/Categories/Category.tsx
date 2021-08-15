@@ -5,7 +5,9 @@ import CategoryInfo from "../../components/Categories/Category/CategoryInfo";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
+import Spacer from "../../components/reusable/Spacer";
 import Grid from "../../components/StyledComponents/Grid";
+import Heading from "../../components/StyledComponents/Heading";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
 import useToast from "../../hooks/useToast";
 import {
@@ -129,21 +131,30 @@ const Category = () => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الفئات", en: "Categories" },
-              target: "/categories",
-            },
-            {
-              name: { ar: "الفئة", en: "Category" },
-              target: "",
-            },
-          ]}
-        />
-
-        <Grid cols="auto auto" gap="0.5rem">
+      <Grid
+        gap="0.5rem"
+        cols="repeat(auto-fit,minmax(300px,auto))"
+        items="center"
+      >
+        <div>
+          <Heading tag="h2" type="large-title">
+            Category
+          </Heading>
+          <Breadcrumbs
+            withoutTitle
+            children={[
+              {
+                name: { ar: "الفئات", en: "Categories" },
+                target: "/categories",
+              },
+              {
+                name: { ar: "الفئة", en: "Category" },
+                target: "",
+              },
+            ]}
+          />
+        </div>
+        <Grid cols=" auto auto" gap="1rem" items="center" justify="end">
           <Button
             color="green"
             withTransition
@@ -173,13 +184,15 @@ const Category = () => {
             Delete Category
           </Button>
         </Grid>
-      </HeaderContainer>
+      </Grid>
+      <Spacer size={40} />
       <CategoryInfo
         watch={watch}
         control={control}
         errors={errors}
         register={register}
       />
+      <Spacer size={30} />
       <CategoryImage
         control={control}
         errors={errors}

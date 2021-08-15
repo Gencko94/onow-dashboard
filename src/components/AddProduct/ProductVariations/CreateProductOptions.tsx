@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import Box from "../../reusable/Box/Box";
 
 import GithubInput from "../../reusable/Inputs/GithubInput";
 import Heading from "../../StyledComponents/Heading";
@@ -18,11 +19,7 @@ const CreateProductOptions = () => {
     }
   }, [optionsEnabled]);
   return (
-    <div>
-      <Heading color="primary" tag="h5" mb="1.5rem">
-        Product Options
-      </Heading>
-
+    <Box type="titled" boxTitle="Product Options">
       <Controller
         name="options_enabled"
         control={control}
@@ -53,7 +50,7 @@ const CreateProductOptions = () => {
           />
         </>
       )}
-    </div>
+    </Box>
   );
 };
 

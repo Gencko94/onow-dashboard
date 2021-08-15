@@ -21,13 +21,12 @@ declare module "styled-components" {
     sidebarSubtleBackground: string;
     shadow: string;
     errorShadow: string;
-    boxColor: string;
+
     green: string;
     font: FontWeights;
     dangerRed: string;
     border: string;
     borderDanger: string;
-    seperator: string;
     maxWidthMd: string;
     maxWidthLg: string;
     borderHovered: string;

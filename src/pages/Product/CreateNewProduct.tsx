@@ -11,6 +11,7 @@ import CreateProductTabs from "../../components/AddProduct/CreateProductTabs/Cre
 import CreateProductPricingAndOptions from "../../components/AddProduct/ProductVariations/CreateProductPricingAndOptions";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import HeaderContainer from "../../components/reusable/HeaderContainer";
+import Heading from "../../components/StyledComponents/Heading";
 import useToast from "../../hooks/useToast";
 import extractError from "../../utils/extractError";
 import { createProduct } from "../../utils/queries";
@@ -115,20 +116,23 @@ const CreateNewProduct = () => {
     <NewProductContext.Provider
       value={{ activeTab, setActiveTab, updateData, formValues }}
     >
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "المنتجات", en: "Products" },
-              target: "/products",
-            },
-            {
-              name: { ar: "إضافة منتج جديد", en: "Create New Product" },
-              target: "",
-            },
-          ]}
-        />
-      </HeaderContainer>
+      <Heading tag="h5" type="large-title">
+        Create New Product
+      </Heading>
+      <Breadcrumbs
+        withoutTitle
+        children={[
+          {
+            name: { ar: "المنتجات", en: "Products" },
+            target: "/products",
+          },
+          {
+            name: { ar: "إضافة منتج جديد", en: "Create New Product" },
+            target: "",
+          },
+        ]}
+      />
+
       <CreateProductTabs />
 
       <Wrapper>
@@ -151,13 +155,13 @@ export default CreateNewProduct;
 const Wrapper = styled.div(
   ({ theme: { breakpoints, shadow } }) => `
 
-  box-shadow: ${shadow};
-  border-radius: 0 6px 6px 6px;
-  padding: 0.5rem;
-  background-color: #fff;
+  // box-shadow: ${shadow};
+  // border-radius: 0 6px 6px 6px;
+  // padding: 0.5rem;
+  // background-color: #fff;
   ${up(breakpoints.md)}{
     
-    padding: 1rem;
+    // padding: 1rem;
   }
   `
 );

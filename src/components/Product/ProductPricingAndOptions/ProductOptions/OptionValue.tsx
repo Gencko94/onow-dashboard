@@ -11,6 +11,7 @@ import IconWrapper from "../../../reusable/Icon";
 import Flex from "../../../StyledComponents/Flex";
 import Grid from "../../../StyledComponents/Grid";
 import Heading from "../../../StyledComponents/Heading";
+import Paragraph from "../../../StyledComponents/Paragraph";
 
 interface IProps {
   index: number;
@@ -80,37 +81,45 @@ const OptionValue = ({
       <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0">
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6">Name En</Heading>
+            <Heading tag="h6" type="small-title">
+              Name En
+            </Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6">{value.name.en}</Heading>
+            <Paragraph>{value.name.en}</Paragraph>
           </div>
         </div>
 
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6">Name Ar</Heading>
+            <Heading tag="h6" type="small-title">
+              Name Ar
+            </Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6">{value.name.ar}</Heading>
+            <Paragraph>{value.name.ar}</Paragraph>
           </div>
         </div>
 
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6">Price</Heading>
+            <Heading tag="h6" type="small-title">
+              Price
+            </Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6">{value.price}</Heading>
+            <Paragraph>{value.price}</Paragraph>
           </div>
         </div>
 
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6">Qty</Heading>
+            <Heading tag="h6" type="small-title">
+              Qty
+            </Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6">{value.quantity ?? "-"}</Heading>
+            <Paragraph>{value.quantity ?? "-"}</Paragraph>
           </div>
         </div>
       </Grid>

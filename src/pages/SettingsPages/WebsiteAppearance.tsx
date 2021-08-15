@@ -18,6 +18,8 @@ import useToast from "../../hooks/useToast";
 import Flex from "../../components/StyledComponents/Flex";
 import Button from "../../components/reusable/Button";
 import { up } from "../../utils/themes";
+import Spacer from "../../components/reusable/Spacer";
+import Box from "../../components/reusable/Box/Box";
 
 const HomePageAppearance = () => {
   const { data } = useQuery("store-layout", getStoreLayoutSettings, {
@@ -40,73 +42,65 @@ const HomePageAppearance = () => {
   };
   return (
     <div>
-      <Flex margin="1rem 0">
+      <Heading tag="h5" type="large-title">
+        Website Appearance
+      </Heading>
+      <Breadcrumbs
+        withoutTitle
+        children={[
+          {
+            name: { ar: "الإعدادات", en: "Settings" },
+            target: "/settings",
+          },
+          {
+            name: { ar: "مظهر الموقع", en: "Website Appearance" },
+            target: "",
+          },
+        ]}
+      />
+      <Spacer size={40} />
+      <Box type="titled" boxTitle="Website Main Color">
         <div>
-          <Heading tag="h2">Website Appearance</Heading>
-          <Breadcrumbs
-            withoutTitle
-            children={[
-              {
-                name: { ar: "الإعدادات", en: "Settings" },
-                target: "/settings",
-              },
-              {
-                name: { ar: "مظهر الموقع", en: "Website Appearance" },
-                target: "",
-              },
-            ]}
-          />
-        </div>
-      </Flex>
-      <Box color={color.hex}>
-        <div className="head">
-          <Heading tag="h5" color="heading">
-            Website Main Color
+          <Heading tag="h6" type="small-title">
+            Select Your Store Primary Color:
           </Heading>
+          <Paragraph color="textAlt" fontSize="0.8rem">
+            We Recommend picking dark colors.
+          </Paragraph>
         </div>
-        <div className="content">
-          <div>
-            <Heading tag="h6" color="primary">
-              Select Your Store Primary Color:
-            </Heading>
-            <Paragraph color="textAlt" fontSize="0.9rem">
-              We Recommend picking dark colors.
-            </Paragraph>
-          </div>
-          <div
+        <PickerOverview
+          color={color.hex}
+          onClick={() => {
+            setColorOpen(true);
+          }}
+        >
+          <button
             onClick={() => {
               setColorOpen(true);
             }}
-            className="color"
+            style={{ width: "100%" }}
+          ></button>
+          <CSSTransition
+            in={colorOpen}
+            classNames="menu"
+            timeout={300}
+            unmountOnExit
           >
-            <button
-              onClick={() => {
-                setColorOpen(true);
-              }}
-              style={{ width: "100%" }}
-            ></button>
-            <CSSTransition
-              in={colorOpen}
-              classNames="menu"
-              timeout={300}
-              unmountOnExit
-            >
-              <ClickAwayListener onClickAway={() => setColorOpen(false)}>
-                <div className="picker">
-                  <ColorPicker
-                    width={250}
-                    height={100}
-                    color={color}
-                    onChange={setColor}
-                    hideHSV
-                    hideRGB
-                    dark
-                  />
-                </div>
-              </ClickAwayListener>
-            </CSSTransition>
-          </div>
-        </div>
+            <ClickAwayListener onClickAway={() => setColorOpen(false)}>
+              <div className="picker">
+                <ColorPicker
+                  width={250}
+                  height={100}
+                  color={color}
+                  onChange={setColor}
+                  hideHSV
+                  hideRGB
+                  dark
+                />
+              </div>
+            </ClickAwayListener>
+          </CSSTransition>
+        </PickerOverview>
       </Box>
       <Flex margin="1rem 0" justify="center">
         <Button
@@ -117,10 +111,7 @@ const HomePageAppearance = () => {
           Save Changes
         </Button>
       </Flex>
-      <Box>
-        <div className="head">
-          <Heading tag="h5">Website Sections customization</Heading>
-        </div>
+      <Box type="titled" boxTitle="Website Sections customization">
         <Grid
           cols="repeat(auto-fill,minmax(300px,1fr))"
           gap="2rem"
@@ -160,24 +151,9 @@ const HomePageAppearance = () => {
 };
 
 export default HomePageAppearance;
-const Box = styled.div<{ color?: string }>(
+const PickerOverview = styled.div<{ color?: string }>(
   ({ theme: { breakpoints, border, accent1 }, color }) => `
-  border: ${border};
-  background-color: ${accent1};
-  border-radius: 6px;
-  .head {
-    border-bottom: ${border};
-    padding: 0.5rem ;
-  }
-  .content {
-    padding: 0.5rem;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:1rem;
-    align-items:center;
 
-  }
-  .color {
     width: 100%;
     border: ${border};
     background-color: ${color};
@@ -185,7 +161,7 @@ const Box = styled.div<{ color?: string }>(
     border-radius: 6px;
     cursor: pointer;
     position: relative;
-  }
+
   .picker {
     z-index: 1;
     left: 50%;
@@ -193,12 +169,7 @@ const Box = styled.div<{ color?: string }>(
     position: absolute;
     transform: translateX(-50%);
   }
-  ${up(breakpoints.md)}{
-    .head , .content {
-
-      padding:1rem;
-    }
-  }
+  
 `
 );
 const Card = styled.div`

@@ -386,6 +386,7 @@ const Container = styled.div`
   .table {
     border-radius: 20px;
     border: ${(props) => props.theme.border};
+
     overflow-x: auto;
     overflow-y: hidden;
     border-radius: 20px;

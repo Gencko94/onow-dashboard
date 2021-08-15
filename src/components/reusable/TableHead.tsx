@@ -50,12 +50,8 @@ const TableHead = ({
 
 export default TableHead;
 const Container = styled.div<{ cols: number | string; gap: string }>(
-  ({
-    theme: { breakpoints, border, subtleFloating, subtleBackground },
-    cols,
-    gap,
-  }) => `
-    background-color:${subtleBackground};
+  ({ theme: {}, cols, gap }) => `
+  
     display:grid;
     border-radius: 20px 20px 0 0 ;
    

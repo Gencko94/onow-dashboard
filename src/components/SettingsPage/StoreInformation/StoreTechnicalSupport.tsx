@@ -12,6 +12,7 @@ import useToast from "../../../hooks/useToast";
 import { STORE_TECHNICAL_SUPPORT } from "../../../interfaces/settings/store-properties/store-properties";
 import extractError from "../../../utils/extractError";
 import { editStoreTechnicalSupport } from "../../../utils/queries/settingsQueries";
+import Box from "../../reusable/Box/Box";
 import Button from "../../reusable/Button";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import PhoneInput from "../../reusable/Inputs/PhoneInput";
@@ -70,50 +71,46 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Heading tag="h5" color="primary">
-        Technical support
-      </Heading>
-      <Box>
-        <div className="section">
-          <Grid cols="repeat(auto-fill,minmax(300px,1fr))" gap="1rem">
-            <Controller
-              name="phone"
-              control={control}
-              render={({ field: { onChange, value } }) => {
-                return (
-                  <PhoneInput
-                    label="Phone Number"
-                    value={value}
-                    errors={errors?.phone}
-                    onChange={(data) => onChange(`+${data}`)}
-                  />
-                );
-              }}
-            />
+      <Box type="titled" boxTitle="Technical Support">
+        <Grid cols="repeat(auto-fill,minmax(300px,1fr))" gap="1rem">
+          <Controller
+            name="phone"
+            control={control}
+            render={({ field: { onChange, value } }) => {
+              return (
+                <PhoneInput
+                  label="Phone Number"
+                  value={value}
+                  errors={errors?.phone}
+                  onChange={(data) => onChange(`+${data}`)}
+                />
+              );
+            }}
+          />
 
-            <IconedInput
-              Icon={AiOutlineWhatsApp}
-              errors={errors?.whatsapp}
-              register={register}
-              name="whatsapp"
-              label="WhatsApp"
-            />
-            <IconedInput
-              Icon={AiOutlineMail}
-              errors={errors?.email}
-              register={register}
-              name="email"
-              label="Email Address"
-            />
-            <IconedInput
-              Icon={AiOutlinePhone}
-              errors={errors?.landline}
-              register={register}
-              name="landline"
-              label="Landline"
-            />
-          </Grid>
-        </div>
+          <IconedInput
+            Icon={AiOutlineWhatsApp}
+            errors={errors?.whatsapp}
+            register={register}
+            name="whatsapp"
+            label="WhatsApp"
+          />
+          <IconedInput
+            Icon={AiOutlineMail}
+            errors={errors?.email}
+            register={register}
+            name="email"
+            label="Email Address"
+          />
+          <IconedInput
+            Icon={AiOutlinePhone}
+            errors={errors?.landline}
+            register={register}
+            name="landline"
+            label="Landline"
+          />
+        </Grid>
+
         <Flex items="center" justify="center" padding="1rem">
           <Button
             isLoading={isLoading}
@@ -131,18 +128,3 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
 };
 
 export default StoreTechnicalSupport;
-
-const Box = styled.div`
-  box-shadow: ${(props) => props.theme.shadow};
-  border-radius: 6px;
-  background-color: #fff;
-  .section {
-    padding: 1rem;
-    border-bottom: ${(props) => props.theme.border};
-    .section-title {
-      margin-bottom: 1.5rem;
-      font-size: 1.1rem;
-      font-weight: ${(props) => props.theme.font.xbold};
-    }
-  }
-`;

@@ -11,6 +11,7 @@ import Popover from "../../../reusable/Popover";
 import Button from "../../../reusable/Button";
 import useConfirmationModal from "../../../../hooks/useConfirmationModal";
 import { FlexWrapper } from "../../../StyledComponents/Flex";
+import IconButton from "../../../reusable/IconButton";
 
 interface IProps {
   customer: CUSTOMER;
@@ -51,14 +52,14 @@ const CustomerItem = ({
       </div>
       <div className="field">
         <ActionButtonContainer onClick={() => setActionsMenuOpen(true)}>
-          <button
+          <IconButton
             onClick={() => {
               setActionsMenuOpen(!actionsMenuOpen);
             }}
             className="icon"
           >
             <BsThreeDotsVertical size={18} />
-          </button>
+          </IconButton>
           <CSSTransition
             in={actionsMenuOpen}
             classNames="menu"
@@ -85,8 +86,8 @@ const CustomerItem = ({
             </ClickAwayListener>
           </CSSTransition>
           <Button
+            size="sm"
             color="primary"
-            margin="0 0.5rem"
             withTransition
             onClick={() => {
               history.push(`/customers/${customer.id}`);
@@ -108,11 +109,11 @@ const Container = styled.div<{ selected: boolean }>`
       minmax(100px, 1fr)
     );
   background-color: ${(props) =>
-    props.selected ? props.theme.accent1 : "#fff"};
+    props.selected ? props.theme.subtleFloating : ""};
   gap: 1rem;
   border-bottom: ${(props) => props.theme.border};
   &:hover {
-    background-color: ${(props) => props.theme.accent1};
+    background-color: ${(props) => props.theme.subtleFloating};
   }
 
   .field {
@@ -130,16 +131,4 @@ const Container = styled.div<{ selected: boolean }>`
 
 const ActionButtonContainer = styled(FlexWrapper)`
   position: relative;
-  button.icon {
-    display: inline-block;
-    cursor: pointer;
-    padding: 0.25rem;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    transition: all 75ms ease;
-    &:hover {
-      background-color: #e6e6e6;
-    }
-  }
 `;

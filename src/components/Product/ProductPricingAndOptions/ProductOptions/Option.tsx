@@ -24,9 +24,11 @@ import Modal from "../../../Modal/Modal";
 import Button from "../../../reusable/Button";
 import EmptyTable from "../../../reusable/EmptyTable";
 import IconWrapper from "../../../reusable/Icon";
+import Spacer from "../../../reusable/Spacer";
 import Flex from "../../../StyledComponents/Flex";
 import Grid from "../../../StyledComponents/Grid";
 import Heading from "../../../StyledComponents/Heading";
+import Paragraph from "../../../StyledComponents/Paragraph";
 import NewOptionValueModal from "./NewOptionValueModal";
 import OptionValue from "./OptionValue";
 
@@ -210,7 +212,9 @@ const Option = ({
     <Container>
       <div className="head">
         <Flex items="center" justify="space-between">
-          <Heading tag="h5">Option {index + 1}</Heading>
+          <Heading tag="h5" type="small-title">
+            Option {index + 1}
+          </Heading>
           <Flex justify="center" items="center">
             <Button
               color="blue"
@@ -225,8 +229,8 @@ const Option = ({
             >
               <IconWrapper Icon={AiFillEdit} />
             </Button>
+            <Spacer size={10} />
             <Button
-              margin="0 0.5rem"
               color="danger"
               withTransition
               onClick={() => {
@@ -249,42 +253,48 @@ const Option = ({
       <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0" margin="0 ">
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6" color="heading">
+            <Heading tag="h6" type="small-title">
               Name En
             </Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6">{option.name?.en}</Heading>
+            <Paragraph>{option.name?.en}</Paragraph>
           </div>
         </div>
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6">Name Ar</Heading>
+            <Heading tag="h6" type="small-title">
+              Name Ar
+            </Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6">{option.name?.ar}</Heading>
+            <Paragraph>{option.name?.ar}</Paragraph>
           </div>
         </div>
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6">Select Type</Heading>
+            <Heading tag="h6" type="small-title">
+              Select Type
+            </Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6">{option.select_type}</Heading>
+            <Paragraph>{option.select_type}</Paragraph>
           </div>
         </div>
         <div className="field">
           <div className="field-head">
-            <Heading tag="h6">Required</Heading>
+            <Heading tag="h6" type="small-title">
+              Required
+            </Heading>
           </div>
           <div className="field-body">
-            <Heading tag="h6">{option.required ? "Yes" : "No"}</Heading>
+            <Paragraph>{option.required ? "Yes" : "No"}</Paragraph>
           </div>
         </div>
       </Grid>
       <div className="head">
         <Flex justify="space-between" items="center">
-          <Heading tag="h5" color="primary">
+          <Heading tag="h5" type="small-title">
             Option {index + 1} Values
           </Heading>
           <Button
@@ -373,19 +383,28 @@ const Option = ({
 
 export default Option;
 const Container = styled.div(
-  ({ theme: { breakpoints, border, dangerRed, accent1, accent2 } }) => `
+  ({
+    theme: {
+      breakpoints,
+      border,
+      dangerRed,
+      background,
+      subtleBackground,
+      accent2,
+    },
+  }) => `
   border: ${border};
   border-radius: 6px;
   margin-bottom: 1rem ;
-  background-color:${accent1};
+  background-color:${background};
   .values {
     padding: 0.5rem;
-    background-color:${accent1};
+    background-color:${subtleBackground};
   }
   .head {
     border-bottom: ${border};
     padding:0.75rem;
-    background-color:${accent2};
+    background-color:${subtleBackground};
   }
   .field {
     text-align:center;
@@ -401,7 +420,7 @@ const Container = styled.div(
 
   }
   .empty {    
-    background-color:${accent1};
+    background-color:${background};
   }
   ${up(breakpoints.md)}{
     .values {

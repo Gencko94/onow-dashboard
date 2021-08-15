@@ -1,5 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { up } from "../../constants";
 type DefaultHeadingProps = Omit<JSX.IntrinsicElements["h1"], "ref">;
 interface IProps extends DefaultHeadingProps {
   type?:
@@ -12,17 +13,6 @@ interface IProps extends DefaultHeadingProps {
     | "minor-heading";
   tag: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   mb?: string;
-  // color?:
-  //   | "primary"
-  //   | "secondary"
-  //   | "text"
-  //   | "textContrast"
-  //   | "textAlt"
-  //   | "textAltContrast";
-  // padding?: string;
-  // margin?: string;
-  // weight?: "light" | "regular" | "semibold" | "bold" | "xbold";
-  // textAlign?: "center" | "right" | "left";
 }
 
 const Heading: FC<IProps> = ({
@@ -31,9 +21,7 @@ const Heading: FC<IProps> = ({
   // padding,
   mb,
   color = "heading",
-  // margin,
-  // weight = "regular",
-  // textAlign,
+
   ...delegated
 }) => {
   let Component;
@@ -63,43 +51,76 @@ const SectionTitle = styled.h1`
   font-size: 16px;
   color: ${(props) => props.theme.secondary};
   font-weight: ${(props) => props.theme.font.semibold};
-  /* text-transform: uppercase; */
-  /* letter-spacing: 0.9px; */
 `;
 
-const SmallTitle = styled.h1`
+const SmallTitle = styled.h1(
+  ({ theme: { breakpoints, font } }) => `
+  font-size: 12px;
+  
+  font-weight: ${font.semibold};
+  
+  ${up(breakpoints.md)}{
+    font-size: 18px;
+  }
+  `
+);
+const MediumTitle = styled.h1(
+  ({ theme: { breakpoints, font, text } }) => `
   font-size: 20px;
-  color: ${(props) => props.theme.secondary};
-  font-weight: ${(props) => props.theme.font.semibold};
-  margin-top: 16px;
-  margin-bottom: 8px;
-`;
-const MediumTitle = styled.h1`
-  font-size: 28px;
-  color: ${(props) => props.theme.text};
+  color: ${text};
   line-height: 1.2;
-`;
-const LargeTitle = styled.h1`
-  font-size: 38px;
-  color: ${(props) => props.theme.text};
-`;
+  margin-top: 8px;
+  margin-bottom: 8px;
 
-const MajorHeading = styled.h2`
-  font-size: 32px;
-  color: ${(props) => props.theme.primary};
-  margin-top: 64px;
-  margin-bottom: 16px;
-`;
-const NormalHeading = styled.h3`
+  ${up(breakpoints.md)}{
+    font-size: 28px;
+  }
+  `
+);
+const LargeTitle = styled.h1(
+  ({ theme: { breakpoints, font, text } }) => `
+  font-size: 28px;
+  color: ${text};
+  
+
+  ${up(breakpoints.md)}{
+    font-size: 38px;
+  }
+  `
+);
+const MajorHeading = styled.h1(
+  ({ theme: { breakpoints, primary } }) => `
   font-size: 25px;
-  color: ${(props) => props.theme.primary};
-  margin-top: 64px;
-  margin-bottom: 12px;
-`;
-const MinorHeading = styled.h4`
-  font-size: 20px;
-  color: ${(props) => props.theme.primary};
+  color: ${primary};
+  margin-top: 16px;
+  margin-bottom: 16px;
 
-  margin-top: 24px;
+  ${up(breakpoints.md)}{
+    font-size: 32px;
+  }
+  `
+);
+const NormalHeading = styled.h1(
+  ({ theme: { breakpoints, primary } }) => `
+  font-size: 20px;
+  color: ${primary};
+  margin-top: 16px;
+  margin-bottom: 16px;
+
+  ${up(breakpoints.md)}{
+    font-size: 25px;
+  }
+  `
+);
+const MinorHeading = styled.h1(
+  ({ theme: { breakpoints, primary } }) => `
+  font-size: 16px;
+  color: ${primary};
+  margin-top: 12px;
   margin-bottom: 12px;
-`;
+
+  ${up(breakpoints.md)}{
+    font-size: 20px;
+  }
+  `
+);

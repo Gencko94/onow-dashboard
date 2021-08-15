@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { PRODUCT } from "../../../interfaces/products/products";
 import { up } from "../../../utils/themes";
+import Box from "../../reusable/Box/Box";
 import Select from "../../reusable/Select";
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
@@ -87,99 +88,67 @@ const CouponProducts = ({ control, errors, watch, setValue }: IProps) => {
     i18n: { language },
   } = useTranslation();
   return (
-    <Container>
-      <div className="head">
-        <Heading tag="h5">Coupon Coverage</Heading>
-      </div>
-      <div className="box">
-        <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
-          <Controller
-            control={control}
-            name="coupon_coverage"
-            render={({ field: { value, onChange } }) => {
-              return (
-                <Select
-                  value={
-                    options.find((i) => i.value === value) as {
-                      value: number;
-                      label: {
-                        [key: string]: string;
-                      };
-                    }
+    <Box type="titled" boxTitle="Coupon Coverage">
+      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+        <Controller
+          control={control}
+          name="coupon_coverage"
+          render={({ field: { value, onChange } }) => {
+            return (
+              <Select
+                value={
+                  options.find((i) => i.value === value) as {
+                    value: number;
+                    label: {
+                      [key: string]: string;
+                    };
                   }
-                  onChange={(val) => {
-                    console.log(val);
-                    onChange(parseInt(val.value));
-                  }}
-                  errors={errors?.couponCoverage}
-                  getOptionLabel={(option: any) => option.label[language]}
-                  getOptionValue={(option) => option.value.toString()}
-                  options={options}
-                  defaultValue={1}
-                  label="Coupon Coverage"
-                />
-              );
-            }}
-          />
-
-          {(coverage === 3 || coverage === 4) && (
-            <CouponProductsSearch
-              handleAddProduct={handleAddProduct}
-              control={control}
-              title={
-                coverage === 3
-                  ? "Search for the products you want to cover in the coupon"
-                  : "Search for the products you want to exclude"
-              }
-            />
-          )}
-          {(coverage === 3 || coverage === 4) && (
-            <CouponProductsList
-              products={products}
-              handleRemoveProduct={handleRemoveProduct}
-              control={control}
-              title={coverage === 3 ? "Covered Products" : "Execluded Products"}
-            />
-          )}
-          {coverage === 2 && (
-            <div style={{ gridColumn: "2/4" }}>
-              <CouponCategoryList
-                control={control}
-                errors={errors?.special_categories}
+                }
+                onChange={(val) => {
+                  console.log(val);
+                  onChange(parseInt(val.value));
+                }}
+                errors={errors?.couponCoverage}
+                getOptionLabel={(option: any) => option.label[language]}
+                getOptionValue={(option) => option.value.toString()}
+                options={options}
+                defaultValue={1}
+                label="Coupon Coverage"
               />
-            </div>
-          )}
-        </Grid>
-      </div>
-    </Container>
+            );
+          }}
+        />
+
+        {(coverage === 3 || coverage === 4) && (
+          <CouponProductsSearch
+            handleAddProduct={handleAddProduct}
+            control={control}
+            title={
+              coverage === 3
+                ? "Search for the products you want to cover in the coupon"
+                : "Search for the products you want to exclude"
+            }
+          />
+        )}
+        {(coverage === 3 || coverage === 4) && (
+          <CouponProductsList
+            products={products}
+            handleRemoveProduct={handleRemoveProduct}
+            control={control}
+            title={coverage === 3 ? "Covered Products" : "Execluded Products"}
+          />
+        )}
+        {coverage === 2 && (
+          <div style={{ gridColumn: "2/4" }}>
+            <CouponCategoryList
+              control={control}
+              errors={errors?.special_categories}
+            />
+          </div>
+        )}
+      </Grid>
+    </Box>
   );
 };
 
 export default CouponProducts;
-const Container = styled.div(
-  ({ theme: { breakpoints, accent1, border } }) => `
-   
-    margin: 1rem 0;
-  background-color:${accent1};
-  border:${border};
-  border-radius: 6px;
-  .head {
-    padding:0.5rem;
-    border-bottom:${border};
-    
-  }
-  .box {
-    padding:0.5rem;   
-  }
-    .box {   
-      padding: 0.5rem;
-     
-    }
-    ${up(breakpoints.md)}{
-      .box,.head {
-        padding:1rem;
-  
-      }
-    }
-    `
-);

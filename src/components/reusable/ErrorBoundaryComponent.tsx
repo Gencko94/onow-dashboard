@@ -1,4 +1,3 @@
-import { AiOutlineReload } from "react-icons/ai";
 import styled from "styled-components";
 import NotFound from "../../pages/NotFound";
 import Heading from "../StyledComponents/Heading";
