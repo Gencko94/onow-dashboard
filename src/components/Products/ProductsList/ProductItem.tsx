@@ -8,10 +8,10 @@ import { useHistory } from "react-router";
 import { PRODUCT } from "../../../interfaces/products/products";
 import { useTranslation } from "react-i18next";
 import Checkbox from "../../reusable/Inputs/Checkbox";
-import Popover from "../../reusable/Popover";
+// import Popover from "../../reusable/Popover";
 import Button from "../../reusable/Button";
 
-import { FlexWrapper } from "../../StyledComponents/Flex";
+import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
 
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import DefaultImage from "../../reusable/DefaultImage";
@@ -20,6 +20,17 @@ import CheckToggle from "../../reusable/CheckToggle";
 import Paragraph from "../../StyledComponents/Paragraph";
 import IconButton from "../../reusable/IconButton";
 
+import Spacer from "../../reusable/Spacer";
+import {
+  Menu,
+  MenuList,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  MenuPopover,
+  MenuLink,
+} from "@reach/menu-button";
+import "@reach/menu-button/styles.css";
 interface IProps {
   product: PRODUCT;
   handleDeleteProduct: (id: number) => void;
@@ -37,6 +48,7 @@ const ProductItem = ({
 }: IProps) => {
   const { setConfirmationModalStatus, handleCloseConfirmationModal } =
     useConfirmationModal();
+
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   const {
@@ -104,31 +116,30 @@ const ProductItem = ({
         />
       </div>
       <div className="field">
-        <ActionButtonContainer
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <IconButton
-            onClick={() => {
-              setActionsMenuOpen(!actionsMenuOpen);
-            }}
-          >
-            <BsThreeDotsVertical size={20} />
-          </IconButton>
-          <CSSTransition
-            in={actionsMenuOpen}
-            classNames="menu"
-            unmountOnExit
-            timeout={100}
-          >
-            <Popover closeFunction={() => setActionsMenuOpen(false)}>
-              <Button
-                size="md"
-                // hoverBg="#B72b2b"
-                onClick={(e) => {
+        <Flex>
+          <Menu>
+            <MenuButton>
+              <IconButton
+                onClick={() => {
+                  setActionsMenuOpen(!actionsMenuOpen);
+                }}
+              >
+                <BsThreeDotsVertical size={20} />
+              </IconButton>
+            </MenuButton>
+            <MenuPopover
+              className="slide-down"
+              position={(button, popover) => {
+                return {
+                  top: button!.bottom,
+                  left: button!.left - button!.width,
+                };
+              }}
+            >
+              <MenuItem
+                onSelect={() => {
                   setActionsMenuOpen(false);
-                  e.stopPropagation();
+                  // e.stopPropagation();
                   setConfirmationModalStatus?.({
                     open: true,
                     desc: "Are you sure you want to delete this Product ?",
@@ -139,13 +150,12 @@ const ProductItem = ({
                 }}
               >
                 Delete Product
-              </Button>
-            </Popover>
-          </CSSTransition>
-
+              </MenuItem>
+            </MenuPopover>
+          </Menu>
+          <Spacer size={10} />
           <Button
             color="primary"
-            margin="0 0.5rem"
             size="sm"
             withTransition
             onClick={() => {
@@ -154,7 +164,7 @@ const ProductItem = ({
           >
             Edit
           </Button>
-        </ActionButtonContainer>
+        </Flex>
       </div>
     </Container>
   );
@@ -194,16 +204,4 @@ const Container = styled.div<{ selected: boolean }>`
 
 const ActionButtonContainer = styled(FlexWrapper)`
   position: relative;
-  button.icon {
-    display: inline-block;
-    cursor: pointer;
-    padding: 0.25rem;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    transition: all 75ms ease;
-    &:hover {
-      background-color: #e6e6e6;
-    }
-  }
 `;

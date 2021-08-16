@@ -1,8 +1,5 @@
-import { useState } from "react";
-import { CgChevronDown } from "react-icons/cg";
-import { RiDeleteBinLine } from "react-icons/ri";
 import { useMutation, useQueryClient } from "react-query";
-import { CSSTransition } from "react-transition-group";
+
 import styled from "styled-components";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
 import useToast from "../../hooks/useToast";
@@ -10,21 +7,20 @@ import extractError from "../../utils/extractError";
 import { deleteProduct } from "../../utils/queries";
 import Breadcrumbs from "../reusable/Breadcrumbs";
 import Button from "../reusable/Button";
-import Popover from "../reusable/Popover";
+
 import Select from "../reusable/Select";
-import Flex from "../StyledComponents/Flex";
+
 import Grid from "../StyledComponents/Grid";
 import Heading from "../StyledComponents/Heading";
 import Paragraph from "../StyledComponents/Paragraph";
 import Sparkles from "../reusable/FancyStuff/Sparkles";
+import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
 const statuses = [
   { label: "Active", value: 1 },
   { label: "Hidden", value: "hidden" },
 ];
 
 const ProductPanel = ({ id }: { id: number }) => {
-  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
-
   const { setToastStatus, handleCloseToast } = useToast();
 
   const queryClient = useQueryClient();
@@ -116,33 +112,31 @@ const ProductPanel = ({ id }: { id: number }) => {
             value={statuses[0]}
           />
           {/* </Flex> */}
-          <Button color="primary" onClick={() => setActionsMenuOpen(true)}>
-            Actions
-            <CSSTransition
-              in={actionsMenuOpen}
-              classNames="menu"
-              unmountOnExit
-              timeout={100}
+          <Menu>
+            <MenuButton>
+              <Button color="primary">Actions</Button>
+            </MenuButton>
+            <MenuPopover
+              className="slide-down"
+              position={(button, popover) => {
+                return { top: button!.bottom + 10, left: button!.left - 20 };
+              }}
             >
-              <Popover closeFunction={() => setActionsMenuOpen(false)}>
-                <Button
-                  onClick={(e) => {
-                    setActionsMenuOpen(false);
-                    e.stopPropagation();
-                    setConfirmationModalStatus?.({
-                      open: true,
-                      desc: "Are you sure you want to delete this Product ?",
-                      title: "Delete Product",
-                      closeCb: handleCloseConfirmationModal!,
-                      successCb: () => handleDeleteProduct(id),
-                    });
-                  }}
-                >
-                  Delete Product
-                </Button>
-              </Popover>
-            </CSSTransition>
-          </Button>
+              <MenuItem
+                onSelect={() => {
+                  setConfirmationModalStatus?.({
+                    open: true,
+                    desc: "Are you sure you want to delete this Product ?",
+                    title: "Delete Product",
+                    closeCb: handleCloseConfirmationModal!,
+                    successCb: () => handleDeleteProduct(id),
+                  });
+                }}
+              >
+                Delete Product
+              </MenuItem>
+            </MenuPopover>
+          </Menu>
         </Grid>
       </Grid>
     </Container>

@@ -1,17 +1,15 @@
 import styled from "styled-components";
-import { BiDotsVerticalRounded, BiLogOut } from "react-icons/bi";
-import { useContext, useState } from "react";
+import { BiDotsVerticalRounded } from "react-icons/bi";
+import { useContext } from "react";
 import { AuthProvider } from "../../../contexts/AuthContext";
-import { CSSTransition } from "react-transition-group";
-import ClickAwayListener from "react-click-away-listener";
-import { FiPower } from "react-icons/fi";
-import Popover from "../../reusable/Popover";
-import Button from "../../reusable/Button";
+
 import IconButton from "../../reusable/IconButton";
 import Paragraph from "../../StyledComponents/Paragraph";
+
+import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
+import "@reach/menu-button/styles.css";
 const SideUser = () => {
   const { user, logOut } = useContext(AuthProvider);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <Container>
@@ -21,34 +19,34 @@ const SideUser = () => {
           {user?.first_name} {user?.last_name}
         </Paragraph>
       </div>
-      {/* <div className="menu"> */}
-      <IconButton onClick={() => setMenuOpen(true)}>
-        <BiDotsVerticalRounded size={22} color="#fff" />
-      </IconButton>
-      <CSSTransition
-        in={menuOpen}
-        classNames="menu"
-        timeout={250}
-        unmountOnExit
-      >
-        <ClickAwayListener onClickAway={() => setMenuOpen(false)}>
-          <Popover closeFunction={() => setMenuOpen(false)}>
-            <Button
-              onClick={(e) => {
-                logOut?.();
-              }}
-            >
-              Logout
-            </Button>
-          </Popover>
-        </ClickAwayListener>
-      </CSSTransition>
-      {/* </div> */}
+
+      <Menu>
+        <MenuButton>
+          <IconButton>
+            <BiDotsVerticalRounded size={22} color="#fff" />
+          </IconButton>
+        </MenuButton>
+        <MenuPopover
+          className="slide-down"
+          // position={(button, popover) => {
+          //   return { top: button!.top - 15, left: button!.left - 50 };
+          // }}
+        >
+          <MenuItem
+            onSelect={() => {
+              logOut?.();
+            }}
+          >
+            Logout
+          </MenuItem>
+        </MenuPopover>
+      </Menu>
     </Container>
   );
 };
 
 export default SideUser;
+
 const Container = styled.div`
   padding: 0.5rem;
   margin: 0.5rem 0;

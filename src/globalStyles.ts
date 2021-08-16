@@ -8,8 +8,11 @@ const GlobalStyle = createGlobalStyle(
       background,
       font,
       borderHovered,
-      subtleBackground,
+      fontFamily,
       primary,
+      subtleBackground,
+      border,
+      subtleFloating,
     },
   }) => `
 
@@ -44,7 +47,7 @@ const GlobalStyle = createGlobalStyle(
   box-sizing: border-box;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  
+  font-family: ${fontFamily};
 }
 
 *::-webkit-scrollbar-track {
@@ -75,7 +78,7 @@ html {
 }
 body {
   height: -webkit-fill-available;
-  
+
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
@@ -157,7 +160,65 @@ input:focus, textarea:focus {
   border-color:${borderHovered} !important;
 }
 
+.react-tel-input .form-control {
+  background:${subtleBackground} !important;
+  border:${border} !important;
+  color:${text} !important;
+}
+.react-tel-input .flag-dropdown {
+  border:${border} !important;
+  background:${subtleBackground} !important;
+}
+.react-tel-input .country {
+ 
+  background:${subtleBackground} !important;
 
+}
+[data-reach-menu-button] {
+  padding:0;
+  display:flex;
+  justify-content:center;
+  button {
+    width:100%;
+  }
+}
+[data-reach-menu-items] {
+  border-radius:6px;
+  display:flex;
+  flex-direction:column;
+  padding:0;
+}
+[data-reach-menu-popover] {
+ background:${subtleFloating};
+ border-radius:6px;
+ border:${border};
+}
+[data-reach-menu-item]{
+  padding: 0.5rem;
+  text-align:center;
+  color:${text};
+  font-size:1rem;
+}
+[data-reach-menu-item][data-selected] {
+   background:${background};
+   border-radius:6px; color:${text};
+}
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-down[data-reach-menu-popover],
+.slide-down[data-reach-menu-items] {
+  border-radius: 5px;
+  animation: slide-down 0.2s ease;
+}
 `
 );
 

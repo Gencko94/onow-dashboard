@@ -20,9 +20,8 @@ import { up } from "../../utils/themes";
 
 interface IProps {
   closeFunction: () => void;
-  isOpen: boolean;
 }
-const AddCustomerModal = ({ closeFunction, isOpen }: IProps) => {
+const AddCustomerModal = ({ closeFunction }: IProps) => {
   const { setToastStatus, handleCloseToast } = useToast();
   const {
     i18n: { language },
@@ -140,24 +139,18 @@ const AddCustomerModal = ({ closeFunction, isOpen }: IProps) => {
 
 export default AddCustomerModal;
 const Modal = styled(ModalWrapper)(
-  ({ theme: { breakpoints, accent1 } }) => `
-  position: fixed;
-  z-index: 20;
-  inset:215px 20px;
-  position:fixed;
+  ({ theme: { breakpoints, subtleBackground } }) => `
   min-width:300px;
-  border:none;
-  outline:none;
   z-index:20;
-  background-color:${accent1};
+  background-color:${subtleBackground};
   ${up(breakpoints.md)}{
-    inset:200px 250px;
+    // inset:200px 250px;
   }
   ${up(breakpoints.lg)}{
-    inset:200px 350px;
+    // inset:200px 350px;
   }
   ${up(breakpoints.xl)}{
-    inset:200px 600px;
+    // inset:200px 600px;
   }
   `
 );

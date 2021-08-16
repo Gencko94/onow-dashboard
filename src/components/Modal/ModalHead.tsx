@@ -18,8 +18,15 @@ interface IProps {
 const ModalHead = ({ closeFunction, title }: IProps) => {
   return (
     <Container>
-      <Heading tag="h5">{title}</Heading>
-      <Button onClick={() => closeFunction()}>
+      <Heading tag="h5" type="small-title">
+        {title}
+      </Heading>
+      <Button
+        onClick={(e) => {
+          e.stopPropagation();
+          closeFunction();
+        }}
+      >
         <IconWrapper Icon={GrClose} />
       </Button>
     </Container>
@@ -32,6 +39,6 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${(props) => props.theme.accent1};
+  background-color: ${(props) => props.theme.subtleBackground};
   border-bottom: ${(props) => props.theme.border};
 `;

@@ -13,17 +13,7 @@ const Customers = () => {
       <CustomersPanel setModalOpen={setModalOpen} />
       <CustomerList setModalOpen={setModalOpen} />
       <Modal isOpen={modalOpen} closeFunction={() => setModalOpen(false)}>
-        <CSSTransition
-          classNames="product-option-modal"
-          timeout={200}
-          unmountOnExit
-          in={modalOpen}
-        >
-          <AddCustomerModal
-            isOpen={modalOpen}
-            closeFunction={() => setModalOpen(false)}
-          />
-        </CSSTransition>
+        <AddCustomerModal closeFunction={() => setModalOpen(false)} />
       </Modal>
     </div>
   );

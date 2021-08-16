@@ -84,6 +84,5 @@ const ThemeProvider: React.FC = ({ children }) => {
 
 export default ThemeProvider;
 const Container = styled.div<{ lang: string }>`
-  font-family: ${(props) => props.theme.fontFamily};
   direction: ${(props) => (props.lang === "ar" ? "rtl" : "ltr")};
 `;

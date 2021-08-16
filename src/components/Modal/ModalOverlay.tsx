@@ -6,7 +6,7 @@ interface Props {
   handleClose: () => void;
 }
 
-const ModalOverlay: React.FC<Props> = ({ open, handleClose }) => {
+const ModalOverlay: React.FC<Props> = ({ open, handleClose, children }) => {
   return (
     <CSSTransition
       classNames="modal-overlay"
@@ -14,7 +14,16 @@ const ModalOverlay: React.FC<Props> = ({ open, handleClose }) => {
       unmountOnExit
       in={open}
     >
-      <Container onClick={() => handleClose()}></Container>
+      <Container
+        onClickCapture={(e) => {
+          if (e.target !== e.currentTarget) {
+            e.stopPropagation();
+          }
+        }}
+        onClick={() => handleClose()}
+      >
+        {children}
+      </Container>
     </CSSTransition>
   );
 };
@@ -23,6 +32,9 @@ export default ModalOverlay;
 const Container = styled.div`
   position: fixed;
   inset: 0;
-  z-index: 19;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: rgba(0, 0, 0, 0.4);
 `;

@@ -56,7 +56,6 @@ const CustomerItem = ({
             onClick={() => {
               setActionsMenuOpen(!actionsMenuOpen);
             }}
-            className="icon"
           >
             <BsThreeDotsVertical size={18} />
           </IconButton>

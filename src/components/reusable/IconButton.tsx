@@ -1,16 +1,20 @@
+import React from "react";
 import styled from "styled-components";
 
-import UnstyledButton from "./Buttons/UnstyledButton";
-
-type DefaultButtonProps = Omit<JSX.IntrinsicElements["button"], "ref">;
-
-const IconButton: React.FC<DefaultButtonProps> = ({ children, ...props }) => {
-  return <BaseIconButton {...props}>{children}</BaseIconButton>;
-};
+const IconButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentPropsWithoutRef<"button">
+>((props, ref) => {
+  return (
+    <BaseIconButton ref={ref} {...props}>
+      {props.children}
+    </BaseIconButton>
+  );
+});
 
 export default IconButton;
 
-const BaseIconButton = styled(UnstyledButton)`
+const BaseIconButton = styled.button`
   opacity: 0.7;
   transition: opacity 250ms;
   position: relative;
@@ -18,6 +22,9 @@ const BaseIconButton = styled(UnstyledButton)`
 
   width: 40px;
   height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:hover {
     opacity: 1;
   }
@@ -31,5 +38,13 @@ const BaseIconButton = styled(UnstyledButton)`
   &:not(:disabled):active {
     transform: scale(0.95);
     transition: transform 32ms;
+  }
+  &:focus {
+    outline: 2px auto ${(props) => props.theme.primary};
+    outline-offset: 2px;
+  }
+
+  &:focus:not(.focus-visible) {
+    outline: none;
   }
 `;

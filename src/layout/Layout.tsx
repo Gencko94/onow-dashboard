@@ -148,7 +148,7 @@ const ContentContainer = styled.div(
 );
 const Content = styled.div<{ drawerOpen: boolean }>(
   ({ theme: { breakpoints }, drawerOpen }) => `
-  z-index:2;
+  // z-index:2;
   min-height:100vh;
   position:relative;
 

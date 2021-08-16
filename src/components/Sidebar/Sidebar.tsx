@@ -47,7 +47,7 @@ const Container = styled.aside(
   bottom:0;
   left:0;
   width:300px;
-  z-index:3;
+  // z-index:3;
   padding:0.5rem;
   display: flex;
   flex-direction: column;
@@ -65,7 +65,7 @@ const Container = styled.aside(
     
   }
   ${up(breakpoints.md)}{
-    z-index:1;
+    // z-index:0;
   }
   `
 );

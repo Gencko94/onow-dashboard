@@ -132,12 +132,8 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     font-size: 0.8rem;
     display: block;
   }
-  .input-container {
-    display: flex;
+   .input-container {
     position: relative;
-
-    justify-content: center;
-
     background-color: ${subtleBackground};
     color: ${text};
     border: ${error ? borderDanger : border};
@@ -150,7 +146,11 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
      
    } 
     .icon {
+      position:absolute;
+      left:${rtl ? "" : 0};
+      right:${rtl ? 0 : ""};
       padding: 0.4rem;
+      height:100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -159,10 +159,13 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     }
 
     input {
+      width:100%;
       flex: 1;
       padding: 0.4rem;
+      padding-left:${rtl ? "0.4rem" : "35px"};
+      padding-right:${rtl ? "35px" : "0.4rem"};
       font-size: 0.8rem;
-      width: 50px;
+      
       color: ${text};
     }
     &:hover,
