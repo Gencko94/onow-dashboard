@@ -14,7 +14,6 @@ import {
 } from "../../../../utils/queries/productQueries";
 
 import { up } from "../../../../utils/themes";
-import Modal from "../../../Modal/Modal";
 
 import Button from "../../../reusable/Button";
 import EmptyTable from "../../../reusable/EmptyTable";
@@ -228,44 +227,27 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
           </div>
         </>
       )}
-      <Modal
+
+      <NewOptionModal
+        title={optionModalStatus.type === "edit" ? "Edit Option" : "New Option"}
         isOpen={optionModalStatus.open}
+        isLoading={optionModalStatus.type === "edit" ? editLoading : addLoading}
         closeFunction={() => {
           setOptionModalStatus((prev) => ({ ...prev, open: false }));
         }}
-      >
-        <CSSTransition
-          classNames="product-option-modal"
-          timeout={200}
-          unmountOnExit
-          in={optionModalStatus.open}
-        >
-          <NewOptionModal
-            title={
-              optionModalStatus.type === "edit" ? "Edit Option" : "New Option"
-            }
-            isOpen={optionModalStatus.open}
-            isLoading={
-              optionModalStatus.type === "edit" ? editLoading : addLoading
-            }
-            closeFunction={() => {
-              setOptionModalStatus((prev) => ({ ...prev, open: false }));
-            }}
-            defaultValues={
-              optionModalStatus.type === "edit"
-                ? options[optionModalStatus.editIndex!]
-                : undefined
-            }
-            successFunction={(vals) => {
-              if (optionModalStatus.type === "edit") {
-                handleEditOption(vals as PRODUCT_OPTION);
-              } else if (optionModalStatus.type === "new") {
-                handleAddOption(vals as NEW_OPTION);
-              }
-            }}
-          />
-        </CSSTransition>
-      </Modal>
+        defaultValues={
+          optionModalStatus.type === "edit"
+            ? options[optionModalStatus.editIndex!]
+            : undefined
+        }
+        successFunction={(vals) => {
+          if (optionModalStatus.type === "edit") {
+            handleEditOption(vals as PRODUCT_OPTION);
+          } else if (optionModalStatus.type === "new") {
+            handleAddOption(vals as NEW_OPTION);
+          }
+        }}
+      />
     </Container>
   );
 };

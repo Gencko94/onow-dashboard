@@ -19,7 +19,7 @@ import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
 import ProductItem from "./ProductItem";
 import Spinner from "react-loader-spinner";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
-import { IoCloseCircleOutline } from "react-icons/io5";
+
 import { ApplicationProvider } from "../../../contexts/ApplicationContext";
 import { useDebounce } from "use-debounce/lib";
 const ProductsList = () => {

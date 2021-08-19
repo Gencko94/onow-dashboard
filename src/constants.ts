@@ -6,7 +6,7 @@ export const lightTheme: any = {
   dangerRed: "#b72b2b",
   border: "1px solid rgba(0,0,0,0.1)",
   borderHovered: "rgba(0,0,0,0.3)",
-
+  stickyNav: "hsla(0, 0%, 100%, 0.8)",
   // New Color
   text: "#252525",
   textContrast: "#fff",
@@ -32,6 +32,7 @@ export const darkTheme: any = {
   dangerRed: "hsl(0, 100%, 69.6%)",
   border: "1px solid hsl(248, 54%, 49%)",
   borderHovered: "rgba(255,255,255,0.7)",
+  stickyNav: "hsla(248, 1%, 11%, 0.8)",
   // New Color
   text: "#fff",
   textContrast: "#252525",

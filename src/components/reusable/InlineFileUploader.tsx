@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Control, Controller, UseFormSetValue } from "react-hook-form";
+import { UseFormSetValue } from "react-hook-form";
 import { RiDeleteBinLine } from "react-icons/ri";
 import styled from "styled-components";
 import Button from "./Button";
@@ -168,9 +168,7 @@ const ImageMetaData = styled.div`
 
   font-weight: ${(props) => props.theme.font.bold};
   font-size: 0.8rem;
-  p {
-    /* flex: 1; */
-  }
+
   button {
     display: flex;
     align-items: center;

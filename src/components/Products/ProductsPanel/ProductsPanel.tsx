@@ -3,14 +3,12 @@ import { useHistory } from "react-router";
 
 import Flex from "../../StyledComponents/Flex";
 import Button from "../../reusable/Button";
-import { BiPlus } from "react-icons/bi";
+
 import Heading from "../../StyledComponents/Heading";
 import { IoMdAdd } from "react-icons/io";
 import IconWrapper from "../../reusable/Icon";
 import { useState } from "react";
-import Portal from "../../Portal/Portal";
-import Tooltip from "../../Tooltip/Tooltip";
-import TooltipPopover from "../../Tooltip/TooltipPopover";
+
 const ProductsPanel = () => {
   const [coords, setCoords] = useState<Partial<{ top: number; left: number }>>(
     {}

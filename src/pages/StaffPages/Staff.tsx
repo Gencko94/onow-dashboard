@@ -8,7 +8,6 @@ import { STAFF_MEMBER } from "../../interfaces/staff/staff";
 import TableHead from "../../components/reusable/TableHead";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { deleteStaffMember, getStaffMembers } from "../../utils/queries";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Flex from "../../components/StyledComponents/Flex";
 import Heading from "../../components/StyledComponents/Heading";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
@@ -18,15 +17,17 @@ import IconWrapper from "../../components/reusable/Icon";
 import { IoMdAdd } from "react-icons/io";
 import Button from "../../components/reusable/Button";
 import { useHistory } from "react-router-dom";
-
+import Spacer from "../../components/reusable/Spacer";
+import Spinner from "react-loader-spinner";
 const Staff = () => {
   const queryClient = useQueryClient();
   const history = useHistory();
   const { handleCloseConfirmationModal } = useConfirmationModal();
   const { handleCloseToast, setToastStatus } = useToast();
-  const { data } = useQuery<STAFF_MEMBER[]>("staff-members", getStaffMembers, {
-    suspense: true,
-  });
+  const { data, isLoading } = useQuery<STAFF_MEMBER[]>(
+    "staff-members",
+    getStaffMembers
+  );
   const { mutateAsync: deleteStaff, reset: resetDelete } = useMutation(
     deleteStaffMember,
     {
@@ -102,40 +103,46 @@ const Staff = () => {
     []
   );
   return (
-    <Container>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الإعدادات", en: "Settings" },
-              target: "/settings",
-            },
-            {
-              name: { ar: "أعضاء المتجر", en: "Store Staff" },
-              target: "",
-            },
-          ]}
-        />
-        <Flex justify="flex-end" padding="0.5rem">
-          <Button
-            onClick={() => history.push("/settings/staff/member/create")}
-            color="primary"
-            withTransition
-            size="md"
-          >
-            <IconWrapper Icon={IoMdAdd} />
-            Create New Member
-          </Button>
-        </Flex>
-      </HeaderContainer>
-      <div className="title-container">
-        <Heading tag="h6">Staff Members</Heading>
-        <ExportAs />
-      </div>
-      <div className="table">
-        <TableHead cols={cols} />
+    <div>
+      <Heading tag="h5" type="large-title">
+        Staff Members
+      </Heading>
+      <Breadcrumbs
+        withoutTitle
+        children={[
+          {
+            name: { ar: "الإعدادات", en: "Settings" },
+            target: "/settings",
+          },
+          {
+            name: { ar: "أعضاء المتجر", en: "Store Staff" },
+            target: "",
+          },
+        ]}
+      />
+      <Flex justify="flex-end" padding="0.5rem">
+        <Button
+          onClick={() => history.push("/settings/staff/member/create")}
+          color="primary"
+          withTransition
+          size="md"
+        >
+          <IconWrapper Icon={IoMdAdd} />
+          Create New Member
+        </Button>
+      </Flex>
 
-        <div>
+      <ExportAs />
+      <Spacer size={40} />
+      <TableContainer>
+        <div className="table">
+          {data?.length !== 0 && <TableHead gap="0" cols={cols} />}
+          {isLoading && (
+            <div className="loading">
+              <Spinner type="TailSpin" width={30} color="#f78f21" />
+            </div>
+          )}
+
           {data?.map((member) => (
             <StaffItem
               member={member}
@@ -144,26 +151,30 @@ const Staff = () => {
             />
           ))}
         </div>
-      </div>
-    </Container>
+      </TableContainer>
+    </div>
   );
 };
 
 export default Staff;
-const Container = styled.div`
-  .panel {
-    padding: 0.75rem 0;
-  }
-  .title-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 0;
-  }
+
+const TableContainer = styled.div`
+  border-bottom: none;
+
+  position: relative;
   .table {
-    border-radius: 8px;
-    overflow: hidden;
+    border-radius: 20px;
     border: ${(props) => props.theme.border};
-    box-shadow: ${(props) => props.theme.shadow};
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-radius: 20px;
+    background-color: ${(props) => props.theme.subtleBackground};
+  }
+  .loading {
+    position: absolute;
+    z-index: 2;
+    top: -14px;
+    left: 15px;
   }
 `;

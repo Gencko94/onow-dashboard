@@ -2,11 +2,11 @@ import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { AiOutlineMail } from "react-icons/ai";
 import { MdSubtitles } from "react-icons/md";
-import styled from "styled-components";
+import Box from "../reusable/Box/Box";
 import IconedInput from "../reusable/Inputs/IconedInput";
 import PhoneInput from "../reusable/Inputs/PhoneInput";
 import Select from "../reusable/Select";
-import Heading from "../StyledComponents/Heading";
+import Grid from "../StyledComponents/Grid";
 
 interface IProps {
   register: any;
@@ -46,11 +46,8 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
     i18n: { language },
   } = useTranslation();
   return (
-    <Container>
-      <Heading tag="h5" color="primary">
-        Staff Member Information
-      </Heading>
-      <div className="box">
+    <Box type="titled" boxTitle="Staff Member Information">
+      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <IconedInput
           Icon={MdSubtitles}
           errors={errors?.first_name}
@@ -69,7 +66,8 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
           label="Last Name"
           name="last_name"
         />
-
+      </Grid>
+      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <Controller
           name="phone"
           control={control}
@@ -96,6 +94,8 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
           label="Email Address"
           name="email"
         />
+      </Grid>
+      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <Controller
           control={control}
           name="branch_id"
@@ -140,23 +140,9 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
             );
           }}
         />
-      </div>
-    </Container>
+      </Grid>
+    </Box>
   );
 };
 
 export default StaffMemberInformation;
-
-const Container = styled.div`
-  margin: 1rem 0;
-
-  .box {
-    background-color: #fff;
-    border: ${(props) => props.theme.border};
-    border-radius: 6px;
-    padding: 1rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-`;

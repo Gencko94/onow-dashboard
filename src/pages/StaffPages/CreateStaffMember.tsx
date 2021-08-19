@@ -1,13 +1,13 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { BiPlus } from "react-icons/bi";
+
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
 import NewStaffMemberInformation from "../../components/Staff/NewStaffMemberInformation";
 import StaffMemberPermissions from "../../components/Staff/StaffMemberPermissions";
 import Flex from "../../components/StyledComponents/Flex";
+import Heading from "../../components/StyledComponents/Heading";
 import { userPermissions } from "../../data/userPermissions";
 import useToast from "../../hooks/useToast";
 import { NEW_STAFF_MEMBER } from "../../interfaces/staff/staff";
@@ -110,35 +110,38 @@ const CreateStaffMember = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <HeaderContainer>
-          <Breadcrumbs
-            children={[
-              {
-                name: { ar: "الإعدادات", en: "Settings" },
-                target: "/settings",
-              },
-              {
-                name: { ar: "أعضاء المتجر", en: "Store Staff" },
-                target: "/settings/staff",
-              },
-              {
-                name: { ar: "إضافة عضو جديد", en: "Create New Staff Member" },
-                target: "",
-              },
-            ]}
-          />
+        <Heading tag="h5" type="large-title">
+          Create New Staff Member
+        </Heading>
+        <Breadcrumbs
+          withoutTitle
+          children={[
+            {
+              name: { ar: "الإعدادات", en: "Settings" },
+              target: "/settings",
+            },
+            {
+              name: { ar: "أعضاء المتجر", en: "Store Staff" },
+              target: "/settings/staff",
+            },
+            {
+              name: { ar: "إضافة عضو جديد", en: "Create New Staff Member" },
+              target: "",
+            },
+          ]}
+        />
 
-          <Flex justify="flex-end">
-            <Button
-              type="submit"
-              color="green"
-              withTransition
-              isLoading={isLoading}
-            >
-              Create new Member
-            </Button>
-          </Flex>
-        </HeaderContainer>
+        <Flex justify="flex-end">
+          <Button
+            type="submit"
+            color="green"
+            withTransition
+            isLoading={isLoading}
+          >
+            Create new Member
+          </Button>
+        </Flex>
+
         <NewStaffMemberInformation
           register={register}
           errors={errors}

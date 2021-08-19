@@ -64,7 +64,7 @@ const StoreSocialNetwork = ({ data }: StoreSocialNetworkProps) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box type="titled" boxTitle="Social network accounts">
-        <Grid cols="repeat(auto-fill,minmax(300px,1fr))" gap="1rem">
+        <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
           <PrefixedInput
             label="Instagram"
             errors={errors.instagram}
@@ -79,6 +79,8 @@ const StoreSocialNetwork = ({ data }: StoreSocialNetworkProps) => {
             prefixText="https://www.twitter.com/"
             register={register}
           />
+        </Grid>
+        <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
           <PrefixedInput
             label="Snapchat"
             errors={errors.snapchat}

@@ -15,6 +15,7 @@ const ErrorBoundaryComponent = ({ resetErrorBoundary, error }: IProps) => {
     } else if (error.response.status === 401) {
     }
   }
+  console.log(error);
   return (
     <Container>
       <img className="img" alt="something-went-wrong" src="/images/500.svg" />
@@ -29,6 +30,7 @@ const ErrorBoundaryComponent = ({ resetErrorBoundary, error }: IProps) => {
       </Button>
 
       <pre style={{ whiteSpace: "normal" }}>{error.message}</pre>
+      <pre style={{ whiteSpace: "normal" }}>{error.stack}</pre>
     </Container>
   );
 };

@@ -4,12 +4,14 @@ import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
 import Button from "../../../components/reusable/Button";
-import HeaderContainer from "../../../components/reusable/HeaderContainer";
+import Spacer from "../../../components/reusable/Spacer";
+
 import BranchInformation from "../../../components/SettingsPage/StoreBranches/Branches/BranchInformation";
 import BranchLocation from "../../../components/SettingsPage/StoreBranches/Branches/BranchLocation";
 
 import BranchWorkingHours from "../../../components/SettingsPage/StoreBranches/Branches/BranchWorkingHours";
 import Flex from "../../../components/StyledComponents/Flex";
+import Heading from "../../../components/StyledComponents/Heading";
 import useToast from "../../../hooks/useToast";
 
 import { NEW_BRANCH } from "../../../interfaces/settings/branches/branches";
@@ -70,39 +72,44 @@ const CreateNewBranch = () => {
   };
   return (
     <form onSubmit={methods.handleSubmit(onSubmit)}>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الإعدادات", en: "Settings" },
-              target: "/settings",
-            },
-            {
-              name: { ar: "فروع المتجر", en: "Store Branches" },
-              target: "/settings/branches",
-            },
-            {
-              name: { ar: "إضافة فرع جديد", en: "Create New Branch" },
-              target: "",
-            },
-          ]}
-        />
-        <Flex justify="flex-end">
-          <Button
-            color="green"
-            withTransition
-            isLoading={isLoading}
-            disabled={isLoading}
-            type="submit"
-          >
-            Submit
-          </Button>
-        </Flex>
-      </HeaderContainer>
+      <Heading tag="h5" type="large-title">
+        Create New Branch
+      </Heading>
+      <Breadcrumbs
+        withoutTitle
+        children={[
+          {
+            name: { ar: "الإعدادات", en: "Settings" },
+            target: "/settings",
+          },
+          {
+            name: { ar: "فروع المتجر", en: "Store Branches" },
+            target: "/settings/branches",
+          },
+          {
+            name: { ar: "إضافة فرع جديد", en: "Create New Branch" },
+            target: "",
+          },
+        ]}
+      />
+      <Flex justify="flex-end">
+        <Button
+          color="green"
+          withTransition
+          isLoading={isLoading}
+          disabled={isLoading}
+          type="submit"
+        >
+          Submit
+        </Button>
+      </Flex>
+      <Spacer size={40} />
 
       <FormProvider {...methods}>
         <BranchInformation />
+        <Spacer size={40} />
         <BranchLocation />
+        <Spacer size={40} />
         <BranchWorkingHours />
       </FormProvider>
     </form>

@@ -4,7 +4,8 @@ import { MdClose } from "react-icons/md";
 import styled from "styled-components";
 import { up } from "../../utils/themes";
 import Flex from "../StyledComponents/Flex";
-import Button from "./Button";
+import Button from "../reusable/Button";
+import Spacer from "../reusable/Spacer";
 
 interface IProps {
   /**
@@ -41,7 +42,6 @@ const ModalTail = ({
       <Button
         color="green"
         withTransition
-        margin="0 0.5rem"
         type={btnType}
         onClick={() => {
           successCb();
@@ -51,6 +51,7 @@ const ModalTail = ({
       >
         {btnText}
       </Button>
+      <Spacer size={10} />
       <Button color="danger" withTransition onClick={() => closeFunction()}>
         Cancel
       </Button>
@@ -62,11 +63,11 @@ export default ModalTail;
 const Container = styled.div(
   ({ theme: { breakpoints, border } }) => `
   display: flex;
-  padding: 0.75rem 0;
+  padding: 0.75rem;
   justify-content:flex-end;
   align-items:center;  
   ${up(breakpoints.md)}{
-   padding:1rem 0;
+   padding:1rem;
   }
   `
 );

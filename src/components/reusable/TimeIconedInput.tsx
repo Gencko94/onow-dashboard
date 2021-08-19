@@ -1,22 +1,16 @@
 import { useState } from "react";
-import Calendar from "react-calendar";
+
 import ClickAwayListener from "react-click-away-listener";
-import { Control, Controller } from "react-hook-form";
+
 import { useTranslation } from "react-i18next";
 import "react-calendar/dist/Calendar.css";
 
-import {
-  FaAngleDoubleLeft,
-  FaAngleDoubleRight,
-  FaAngleLeft,
-  FaAngleRight,
-} from "react-icons/fa";
 import { IconType } from "react-icons/lib";
 import { CSSTransition } from "react-transition-group";
 
 import styled, { css } from "styled-components";
-import { format } from "date-fns";
-import { setConstantValue } from "typescript";
+import { up } from "../../constants";
+
 const hours = [
   "12:00",
   "13:00",
@@ -162,67 +156,91 @@ const TimeIconedInput = ({
 };
 
 export default TimeIconedInput;
-const Container = styled.div<{ rtl: boolean; error: boolean }>`
+const Container = styled.div<{ rtl: boolean; error: boolean }>(
+  ({
+    theme: {
+      breakpoints,
+      font,
+      primary,
+      secondary,
+      accent2,
+      border,
+      borderHovered,
+      dangerRed,
+      subtleBackground,
+      text,
+      borderDanger,
+    },
+    error,
+    rtl,
+  }) => `
   position: relative;
   label {
-    color: ${({ theme }) => theme.text};
+    color: ${text};
     margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: ${(props) => props.theme.font.regular};
-    display: inline-block;
+    font-size: 0.8rem;
+    display: block;
   }
   .input-container {
-    display: flex;
     position: relative;
-
-    justify-content: center;
-
-    background-color: #fff;
-    color: ${(props) => props.theme.text};
-    border: ${(props) => props.theme.border};
+    background-color: ${subtleBackground};
+    color: ${text};
+    border: ${error ? borderDanger : border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
+    input:disabled {
+     background-color:${accent2};
+     cursor:not-allowed;
+    } 
     .icon {
+      position:absolute;
+      left:${rtl ? "" : 0};
+      right:${rtl ? 0 : ""};
       padding: 0.4rem;
+      height:100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${(props) => props.theme.textAlt};
-      background-color: ${(props) => props.theme.subtleBackground};
-      border-right: ${(props) => props.theme.border};
-      ${(props) =>
-        props.rtl &&
-        css`
-          border-right: none;
-          border-left: ${(props) => props.theme.border};
-        `}
+      color: ${primary};z
     }
 
     input {
+      width:100%;
       flex: 1;
       padding: 0.4rem;
-      font-size: 0.9rem;
-      width: 50px;
+      padding-left:${rtl ? "0.4rem" : "35px"};
+      padding-right:${rtl ? "35px" : "0.4rem"};
+      font-size: 0.8rem; 
+      color: ${text};
     }
     &:hover,
     &:focus-within {
-      border-color: ${(props) => props.theme.borderHovered};
-      background-color: ${(props) => props.theme.subtleBackground};
+      border-color: ${borderHovered};
     }
-    ${(props) =>
-      props.error &&
-      css`
-        border-color: ${(props) => props.theme.dangerRed} !important;
-      `}
+    
   }
   .error {
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    color: ${(props) => props.theme.dangerRed};
+    color: ${dangerRed};
   }
-`;
+  ${up(breakpoints.md)}{
+    label {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+    .input-container{
+  
+      input {
+        font-size: 0.9rem;
+      }
+    }
+
+  };
+`
+);
 const HoursContainer = styled.div`
   position: absolute;
   z-index: 100;
@@ -234,7 +252,7 @@ const HoursContainer = styled.div`
   width: 250px;
   height: 200px;
   font-size: 0.8rem;
-  background-color: #f1f1f1;
+  background-color: ${(props) => props.theme.subtleFloating};
 
   .hour {
     border: ${(props) => props.theme.border};
@@ -242,7 +260,7 @@ const HoursContainer = styled.div`
     position: relative;
     cursor: pointer;
     transition: 75ms all ease;
-    transition: 75ms all ease;
+    color: ${(props) => props.theme.text};
     &:hover {
       background-color: ${(props) => props.theme.primary};
       color: #fff;
@@ -260,10 +278,11 @@ const MinutesContainer = styled.div`
   width: 200px;
   height: 100px;
   font-size: 0.8rem;
-  background-color: #f1f1f1;
+  background-color: ${(props) => props.theme.subtleFloating};
   .minute {
     border: ${(props) => props.theme.border};
     text-align: center;
+    color: ${(props) => props.theme.text};
 
     transition: 75ms all ease;
     &:hover {

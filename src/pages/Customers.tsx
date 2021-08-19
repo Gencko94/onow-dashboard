@@ -1,10 +1,9 @@
+// import Dialog from "@reach/dialog";
 import { useState } from "react";
-import { CSSTransition } from "react-transition-group";
 
 import CustomerList from "../components/Customers/CustomerList/CustomerList";
 import CustomersPanel from "../components/Customers/CustomersPanel/CustomersPanel";
 import AddCustomerModal from "../components/Modal/AddCustomerModal";
-import Modal from "../components/Modal/Modal";
 
 const Customers = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -12,9 +11,11 @@ const Customers = () => {
     <div>
       <CustomersPanel setModalOpen={setModalOpen} />
       <CustomerList setModalOpen={setModalOpen} />
-      <Modal isOpen={modalOpen} closeFunction={() => setModalOpen(false)}>
-        <AddCustomerModal closeFunction={() => setModalOpen(false)} />
-      </Modal>
+
+      <AddCustomerModal
+        open={modalOpen}
+        closeFunction={() => setModalOpen(false)}
+      />
     </div>
   );
 };

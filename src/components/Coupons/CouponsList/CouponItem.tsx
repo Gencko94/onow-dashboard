@@ -8,13 +8,14 @@ import { COUPON } from "../../../interfaces/coupons/coupons";
 import { useTranslation } from "react-i18next";
 
 import Button from "../../reusable/Button";
-import Popover from "../../reusable/Popover";
+
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import Checkbox from "../../reusable/Inputs/Checkbox";
-import { FlexWrapper } from "../../StyledComponents/Flex";
-import Heading from "../../StyledComponents/Heading";
+import Flex from "../../StyledComponents/Flex";
+
 import Paragraph from "../../StyledComponents/Paragraph";
 import IconButton from "../../reusable/IconButton";
+import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
 
 interface IProps {
   coupon: COUPON;
@@ -29,7 +30,6 @@ const CouponItem = ({
   handleToggleRows,
   selectedRows,
 }: IProps) => {
-  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const { setConfirmationModalStatus, handleCloseConfirmationModal } =
     useConfirmationModal();
   const history = useHistory();
@@ -82,27 +82,24 @@ const CouponItem = ({
       </div>
       <div className="field">{renderStatus(coupon.enabled)}</div>
       <div className="field">
-        <ActionButtonContainer
-          onClick={(e) => {
-            e.stopPropagation();
-
-            setActionsMenuOpen(true);
-          }}
-        >
-          <IconButton>
-            <BsThreeDotsVertical />
-          </IconButton>
-          <CSSTransition
-            in={actionsMenuOpen}
-            classNames="menu"
-            unmountOnExit
-            timeout={100}
-          >
-            <Popover closeFunction={() => setActionsMenuOpen(false)}>
-              <Button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActionsMenuOpen(false);
+        <Flex>
+          <Menu>
+            <MenuButton>
+              <IconButton>
+                <BsThreeDotsVertical size={20} />
+              </IconButton>
+            </MenuButton>
+            <MenuPopover
+              className="slide-down"
+              position={(button, popover) => {
+                return {
+                  top: button!.bottom,
+                  left: button!.left - button!.width,
+                };
+              }}
+            >
+              <MenuItem
+                onSelect={() => {
                   setConfirmationModalStatus?.({
                     open: true,
                     desc: "Are you sure you want to delete this coupon ?",
@@ -112,10 +109,11 @@ const CouponItem = ({
                   });
                 }}
               >
-                Delete Coupon
-              </Button>
-            </Popover>
-          </CSSTransition>
+                Delete coupon
+              </MenuItem>
+            </MenuPopover>
+          </Menu>
+
           <Button
             size="sm"
             color="primary"
@@ -127,7 +125,7 @@ const CouponItem = ({
           >
             Edit
           </Button>
-        </ActionButtonContainer>
+        </Flex>
       </div>
     </Container>
   );
@@ -156,9 +154,6 @@ const Container = styled.div<{ selected: boolean }>`
   }
 `;
 
-const ActionButtonContainer = styled(FlexWrapper)`
-  position: relative;
-`;
 const Status = styled.div`
   display: flex;
   align-items: center;

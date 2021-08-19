@@ -5,7 +5,9 @@ import { IoMdCloseCircle } from "react-icons/io";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
 import { useQuery } from "react-query";
 import styled from "styled-components";
+import Box from "../../../components/reusable/Box/Box";
 import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
+import Spacer from "../../../components/reusable/Spacer";
 import Flex from "../../../components/StyledComponents/Flex";
 
 import Grid from "../../../components/StyledComponents/Grid";
@@ -36,7 +38,9 @@ const HeaderType = () => {
     <Container>
       <Flex margin="1rem 0">
         <div>
-          <Heading tag="h2">Header Type</Heading>
+          <Heading tag="h2" type="large-title">
+            Header Type
+          </Heading>
           <Breadcrumbs
             withoutTitle
             children={[
@@ -56,96 +60,98 @@ const HeaderType = () => {
           />
         </div>
       </Flex>
-      <Heading tag="h5">Select your preffered Header type</Heading>
-      {/* <div className="desc">
-        <Heading tag="h6" color="subheading" mb="0.5rem">
-          Carousel Images are images that are shown in your website home page.
-          If Multiple images were uploaded Then it will turn into a slider.
-        </Heading>
-        <Heading tag="h6" color="subheading">
-          Recommended Width To Height Ratio : (1 : 1.25).
-        </Heading>
-      </div> */}
-      <Grid gap="1rem" cols="repeat(auto-fit,minmax(275px,1fr))">
-        <Card
-          active={headerType === "photo"}
-          onClick={() => {
-            setHeaderType("photo");
-          }}
-        >
-          <Flex justify="center" padding=" 0" items="center">
-            <Heading tag="h6">Single Photo</Heading>
-            {/* <Checkbox checked={true} onChange={() => {}} /> */}
-            {headerType === "photo" ? (
-              <FcOk
-                size={25}
-                // style={{ cursor: "pointer" }}
-              />
-            ) : (
-              <RiCheckboxBlankCircleLine
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setHeaderType("photo");
-                }}
-                size={25}
-              />
-            )}
-          </Flex>
-          <Paragraph fontSize="0.9rem" align="center">
-            Header will show a single photo
-          </Paragraph>
-        </Card>
-        <Card
-          active={headerType === "slider"}
-          onClick={() => {
-            setHeaderType("slider");
-          }}
-        >
-          <Flex justify="center" items="center">
-            <Heading tag="h6">Slideshow</Heading>
-            {/* <Checkbox checked={true} onChange={() => {}} /> */}
-            {headerType === "slider" ? (
-              <FcOk size={25} />
-            ) : (
-              <RiCheckboxBlankCircleLine
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setHeaderType("slider");
-                }}
-                size={25}
-              />
-            )}
-          </Flex>
-          <Paragraph fontSize="0.9rem" align="center">
-            Header will play images slideshow
-          </Paragraph>
-        </Card>
-        <Card
-          active={headerType === "video"}
-          onClick={() => {
-            setHeaderType("video");
-          }}
-        >
-          <Flex justify="center" items="center">
-            <Heading tag="h6">Video</Heading>
+      <Spacer size={40} />
+      <Box type="titled" boxTitle="Select your preffered Header type">
+        <Grid gap="1rem" cols="repeat(auto-fit,minmax(275px,1fr))">
+          <Card
+            active={headerType === "photo"}
+            onClick={() => {
+              setHeaderType("photo");
+            }}
+          >
+            <Flex justify="center" padding=" 0" items="center">
+              <Heading tag="h6" type="small-title">
+                Single Photo
+              </Heading>
+              <Spacer size={10} />
 
-            {headerType === "video" ? (
-              <FcOk size={25} />
-            ) : (
-              <RiCheckboxBlankCircleLine
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setHeaderType("video");
-                }}
-                size={25}
-              />
-            )}
-          </Flex>
-          <Paragraph fontSize="0.9rem" align="center">
-            Header will play a video
-          </Paragraph>
-        </Card>
-      </Grid>
+              {headerType === "photo" ? (
+                <FcOk
+                  size={20}
+                  // style={{ cursor: "pointer" }}
+                />
+              ) : (
+                <RiCheckboxBlankCircleLine
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setHeaderType("photo");
+                  }}
+                  size={20}
+                />
+              )}
+            </Flex>
+            <Paragraph fontSize="0.9rem" align="center">
+              Header will show a single photo
+            </Paragraph>
+          </Card>
+          <Card
+            active={headerType === "slider"}
+            onClick={() => {
+              setHeaderType("slider");
+            }}
+          >
+            <Flex justify="center" items="center">
+              <Heading tag="h6" type="small-title">
+                Slideshow
+              </Heading>
+              <Spacer size={10} />
+
+              {headerType === "slider" ? (
+                <FcOk size={20} />
+              ) : (
+                <RiCheckboxBlankCircleLine
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setHeaderType("slider");
+                  }}
+                  size={20}
+                />
+              )}
+            </Flex>
+            <Paragraph fontSize="0.9rem" align="center">
+              Header will play images slideshow
+            </Paragraph>
+          </Card>
+          <Card
+            active={headerType === "video"}
+            onClick={() => {
+              setHeaderType("video");
+            }}
+          >
+            <Flex justify="center" items="center">
+              <Heading tag="h6" type="small-title">
+                Video
+              </Heading>
+              <Spacer size={10} />
+              {headerType === "video" ? (
+                <FcOk size={20} />
+              ) : (
+                <RiCheckboxBlankCircleLine
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setHeaderType("video");
+                  }}
+                  size={20}
+                />
+              )}
+            </Flex>
+            <Paragraph fontSize="0.9rem" align="center">
+              Header will play a video
+            </Paragraph>
+          </Card>
+        </Grid>
+      </Box>
+      <Spacer size={40} />
       {headerType === "photo" && (
         <MiniFileUploader
           accept=".png, .jpg, .jpeg"
@@ -180,22 +186,21 @@ const HeaderType = () => {
           })}
         </Grid>
       </PreviewContainer>
-      <Box>
-        <Controller
-          control={control}
-          name="images"
-          render={({ field: { onChange, value, ref } }) => (
-            <FileUploader
-              accept=".png, .jpg, .jpeg"
-              onChange={(file: File | File[]) => {
-                if (!Array.isArray(file)) {
-                  setImages((prev) => [...prev, file]);
-                }
-              }}
-            />
-          )}
-        />
-      </Box>
+
+      <Controller
+        control={control}
+        name="images"
+        render={({ field: { onChange, value, ref } }) => (
+          <FileUploader
+            accept=".png, .jpg, .jpeg"
+            onChange={(file: File | File[]) => {
+              if (!Array.isArray(file)) {
+                setImages((prev) => [...prev, file]);
+              }
+            }}
+          />
+        )}
+      />
     </Container>
   );
 };
@@ -210,9 +215,7 @@ const Container = styled.div`
     margin: 1rem 0;
   }
 `;
-const Box = styled.div`
-  border-radius: 6px;
-`;
+
 const PreviewContainer = styled.div(
   ({ theme: { breakpoints, green, dangerRed, border } }) => `
     padding:1rem;
@@ -256,9 +259,9 @@ const Card = styled.div<{ active: boolean }>`
   padding: 0.5rem;
   cursor: pointer;
   background-color: ${(props) =>
-    props.active ? props.theme.accent2 : props.theme.accent1};
+    props.active ? props.theme.background : props.theme.subtleBackground};
   &:hover {
-    background-color: ${(props) => props.theme.accent2};
+    background-color: ${(props) => props.theme.background};
   }
   border: ${(props) => props.theme.border};
 `;

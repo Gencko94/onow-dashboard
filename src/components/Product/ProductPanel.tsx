@@ -15,6 +15,8 @@ import Heading from "../StyledComponents/Heading";
 import Paragraph from "../StyledComponents/Paragraph";
 import Sparkles from "../reusable/FancyStuff/Sparkles";
 import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
+import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import Spacer from "../reusable/Spacer";
 const statuses = [
   { label: "Active", value: 1 },
   { label: "Hidden", value: "hidden" },
@@ -113,29 +115,45 @@ const ProductPanel = ({ id }: { id: number }) => {
           />
           {/* </Flex> */}
           <Menu>
-            <MenuButton>
-              <Button color="primary">Actions</Button>
-            </MenuButton>
-            <MenuPopover
-              className="slide-down"
-              position={(button, popover) => {
-                return { top: button!.bottom + 10, left: button!.left - 20 };
-              }}
-            >
-              <MenuItem
-                onSelect={() => {
-                  setConfirmationModalStatus?.({
-                    open: true,
-                    desc: "Are you sure you want to delete this Product ?",
-                    title: "Delete Product",
-                    closeCb: handleCloseConfirmationModal!,
-                    successCb: () => handleDeleteProduct(id),
-                  });
-                }}
-              >
-                Delete Product
-              </MenuItem>
-            </MenuPopover>
+            {({ isExpanded }) => {
+              return (
+                <>
+                  <MenuButton>
+                    <Button color="primary">
+                      Actions{" "}
+                      {isExpanded ? (
+                        <FiChevronUp size={18} />
+                      ) : (
+                        <FiChevronDown size={18} />
+                      )}
+                    </Button>
+                  </MenuButton>
+                  <MenuPopover
+                    className="slide-down"
+                    position={(button, popover) => {
+                      return {
+                        top: button!.bottom + 10,
+                        left: button!.left - 20,
+                      };
+                    }}
+                  >
+                    <MenuItem
+                      onSelect={() => {
+                        setConfirmationModalStatus?.({
+                          open: true,
+                          desc: "Are you sure you want to delete this Product ?",
+                          title: "Delete Product",
+                          closeCb: handleCloseConfirmationModal!,
+                          successCb: () => handleDeleteProduct(id),
+                        });
+                      }}
+                    >
+                      Delete Product
+                    </MenuItem>
+                  </MenuPopover>
+                </>
+              );
+            }}
           </Menu>
         </Grid>
       </Grid>

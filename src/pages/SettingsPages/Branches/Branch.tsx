@@ -1,10 +1,11 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { RiDeleteBinLine } from "react-icons/ri";
+
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useHistory, useParams } from "react-router-dom";
 import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
 import Button from "../../../components/reusable/Button";
-import HeaderContainer from "../../../components/reusable/HeaderContainer";
+import Spacer from "../../../components/reusable/Spacer";
+
 import BranchInformation from "../../../components/SettingsPage/StoreBranches/Branches/BranchInformation";
 import BranchLocation from "../../../components/SettingsPage/StoreBranches/Branches/BranchLocation";
 import BranchWorkingHours from "../../../components/SettingsPage/StoreBranches/Branches/BranchWorkingHours";
@@ -251,7 +252,9 @@ const Branch = () => {
     <div>
       <Flex items="center" justify="space-between">
         <div>
-          <Heading tag="h2">Branch</Heading>
+          <Heading tag="h2" type="large-title">
+            Branch
+          </Heading>
           <Breadcrumbs
             withoutTitle
             children={[
@@ -289,6 +292,7 @@ const Branch = () => {
           </Button>
         </Flex>
       </Flex>
+      <Spacer size={40} />
       <form onSubmit={infoMethods.handleSubmit(handleEditBranchInfo)}>
         <FormProvider {...infoMethods}>
           <BranchInformation />
@@ -306,6 +310,7 @@ const Branch = () => {
           </Flex>
         </FormProvider>
       </form>
+      <Spacer size={40} />
       <form onSubmit={locationMethods.handleSubmit(handleEditBranchLocation)}>
         <FormProvider {...locationMethods}>
           <BranchLocation />
@@ -323,6 +328,7 @@ const Branch = () => {
           </Flex>
         </FormProvider>
       </form>
+      <Spacer size={40} />
       <form onSubmit={hoursMethods.handleSubmit(handleEditBranchWorkingHours)}>
         <FormProvider {...hoursMethods}>
           <BranchWorkingHours />

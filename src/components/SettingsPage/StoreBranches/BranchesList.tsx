@@ -175,14 +175,17 @@ const BranchesList = () => {
 
 export default BranchesList;
 const Container = styled.div`
-  margin-top: 2rem;
-  border-radius: 6px;
-  border: ${(props) => props.theme.border};
+  border-bottom: none;
 
   position: relative;
   .table {
+    border-radius: 20px;
+    border: ${(props) => props.theme.border};
+
     overflow-x: auto;
-    background-color: #fff;
+    overflow-y: hidden;
+    border-radius: 20px;
+    background-color: ${(props) => props.theme.subtleBackground};
   }
   .loading {
     position: absolute;

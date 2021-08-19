@@ -1,41 +1,3 @@
-/* @font-face {
-  font-family: 'AmazonEmber';
-  src: local('AmazonEmber'), url(./fonts/AmazonEmber_Lt.ttf) format('trueType'),
-    url(./fonts/AmazonEmber_Rg.ttf) format('trueType'),
-    url(./fonts/AmazonEmber_Bd.ttf) format('trueType'),
-    url(./fonts/Amazon-Ember-Medium.ttf) format('trueType'),
-    url(./fonts/AmazonEmber_He.ttf) format('truetype');
-  font-weight: 300;
-}
-@font-face {
-  font-family: 'AmazonEmber';
-  src: local('AmazonEmber'), url(./fonts/AmazonEmber_Rg.ttf) format('trueType');
-
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'AmazonEmber';
-  src: local('AmazonEmber'),
-    url(./fonts/Amazon-Ember-Medium.ttf) format('trueType');
-
-  font-weight: 500;
-}
-@font-face {
-  font-family: 'AmazonEmber';
-  src: local('AmazonEmber'), url(./fonts/AmazonEmber_Bd.ttf) format('trueType');
-
-  font-weight: 700;
-}
-@font-face {
-  font-family: 'AmazonEmber';
-  src: local('AmazonEmber'), url(./fonts/AmazonEmber_He.ttf) format('truetype');
-
-  font-weight: 800;
-} */
-/* * {
-  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-} */
 .tile {
   color: #252525;
 }
@@ -76,7 +38,7 @@
   font-size: 0.8em;
 }
 .tile {
-  border-radius: 50%;
+  /* border-radius: 50%; */
 }
 
 .react-calendar {

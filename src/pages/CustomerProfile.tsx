@@ -1,6 +1,6 @@
 import { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import { RiDeleteBinLine } from "react-icons/ri";
+
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
@@ -8,7 +8,7 @@ import CustomerProfileInfo from "../components/CustomerProfile/CustomerProfileIn
 import CustomerOrders from "../components/CustomerProfile/CustomerOrders/CustomerOrders";
 import Breadcrumbs from "../components/reusable/Breadcrumbs";
 import Button from "../components/reusable/Button";
-import HeaderContainer from "../components/reusable/HeaderContainer";
+
 import Flex from "../components/StyledComponents/Flex";
 import Hr from "../components/StyledComponents/Hr";
 import useConfirmationModal from "../hooks/useConfirmationModal";
@@ -136,43 +136,44 @@ const CustomerProfile = () => {
   };
   return (
     <>
+      <Heading tag="h5" type="large-title">
+        Customer
+      </Heading>
+      <Breadcrumbs
+        withoutTitle
+        children={[
+          {
+            name: { ar: "المستخدمين", en: "Customers" },
+            target: "/customers",
+          },
+          {
+            name: { ar: "ملف المستخدم", en: "Customer" },
+            target: "",
+          },
+        ]}
+      />
+      <Flex justify="flex-end">
+        <Button
+          type="button"
+          withTransition
+          color="danger"
+          isLoading={deleteLoading}
+          disabled={deleteLoading}
+          onClick={() =>
+            setConfirmationModalStatus?.({
+              closeCb: handleCloseConfirmationModal!,
+              desc: "Are you sure you want to delete this customer ?",
+              open: true,
+              successCb: () => handleDeleteCustomer(),
+              title: "Delete Customer",
+            })
+          }
+        >
+          Delete Customer
+        </Button>
+      </Flex>
+      <Spacer size={40} />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Heading tag="h5" type="large-title">
-          Customer
-        </Heading>
-        <Breadcrumbs
-          withoutTitle
-          children={[
-            {
-              name: { ar: "المستخدمين", en: "Customers" },
-              target: "/customers",
-            },
-            {
-              name: { ar: "ملف المستخدم", en: "Customer" },
-              target: "",
-            },
-          ]}
-        />
-        <Flex justify="flex-end">
-          <Button
-            withTransition
-            color="danger"
-            isLoading={deleteLoading}
-            disabled={deleteLoading}
-            onClick={() =>
-              setConfirmationModalStatus?.({
-                closeCb: handleCloseConfirmationModal!,
-                desc: "Are you sure you want to delete this customer ?",
-                open: true,
-                successCb: () => handleDeleteCustomer(),
-                title: "Delete Customer",
-              })
-            }
-          >
-            Delete Customer
-          </Button>
-        </Flex>
-        <Spacer size={20} />
         <CustomerProfileInfo
           register={register}
           errors={errors}

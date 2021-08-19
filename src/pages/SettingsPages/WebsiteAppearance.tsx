@@ -60,47 +60,54 @@ const HomePageAppearance = () => {
       />
       <Spacer size={40} />
       <Box type="titled" boxTitle="Website Main Color">
-        <div>
-          <Heading tag="h6" type="small-title">
-            Select Your Store Primary Color:
-          </Heading>
-          <Paragraph color="textAlt" fontSize="0.8rem">
-            We Recommend picking dark colors.
-          </Paragraph>
-        </div>
-        <PickerOverview
-          color={color.hex}
-          onClick={() => {
-            setColorOpen(true);
-          }}
+        <Grid
+          items="center"
+          cols="repeat(auto-fit,minmax(300px,1fr))"
+          gap="1rem"
         >
-          <button
+          <div>
+            <Heading tag="h6" type="small-title">
+              Select Your Store Primary Color:
+            </Heading>
+            <Paragraph color="textAlt" fontSize="0.8rem">
+              We Recommend picking dark colors.
+            </Paragraph>
+          </div>
+
+          <PickerOverview
+            color={color.hex}
             onClick={() => {
               setColorOpen(true);
             }}
-            style={{ width: "100%" }}
-          ></button>
-          <CSSTransition
-            in={colorOpen}
-            classNames="menu"
-            timeout={300}
-            unmountOnExit
           >
-            <ClickAwayListener onClickAway={() => setColorOpen(false)}>
-              <div className="picker">
-                <ColorPicker
-                  width={250}
-                  height={100}
-                  color={color}
-                  onChange={setColor}
-                  hideHSV
-                  hideRGB
-                  dark
-                />
-              </div>
-            </ClickAwayListener>
-          </CSSTransition>
-        </PickerOverview>
+            <button
+              onClick={() => {
+                setColorOpen(true);
+              }}
+              style={{ width: "100%" }}
+            ></button>
+            <CSSTransition
+              in={colorOpen}
+              classNames="menu"
+              timeout={300}
+              unmountOnExit
+            >
+              <ClickAwayListener onClickAway={() => setColorOpen(false)}>
+                <div className="picker">
+                  <ColorPicker
+                    width={250}
+                    height={100}
+                    color={color}
+                    onChange={setColor}
+                    hideHSV
+                    hideRGB
+                    dark
+                  />
+                </div>
+              </ClickAwayListener>
+            </CSSTransition>
+          </PickerOverview>
+        </Grid>
       </Box>
       <Flex margin="1rem 0" justify="center">
         <Button
@@ -126,10 +133,12 @@ const HomePageAppearance = () => {
             <div className="img-wrapper">
               <img src="/images/carousel-demo.png" alt="carousel-demo" />
             </div>
-            <Heading tag="h5" color="primary">
+            <Heading tag="h5" type="small-title">
               Header Type
             </Heading>
-            <p className="desc">Select your preffered header type</p>
+            <Paragraph fontSize="0.9rem" color="textAlt">
+              Select your preffered header type
+            </Paragraph>
           </Card>
           <Card
             onClick={() => {
@@ -139,10 +148,12 @@ const HomePageAppearance = () => {
             <div className="img-wrapper">
               <img src="/images/bar-demo.jpg" alt="bar-demo" />
             </div>
-            <Heading tag="h5" color="primary">
+            <Heading tag="h5" type="small-title">
               Products View
             </Heading>
-            <p className="desc">Manage how your products look</p>
+            <Paragraph fontSize="0.9rem" color="textAlt">
+              Manage how your products look
+            </Paragraph>
           </Card>
         </Grid>
       </Box>
@@ -175,7 +186,7 @@ const PickerOverview = styled.div<{ color?: string }>(
 const Card = styled.div`
   border: ${(props) => props.theme.border};
   border-radius: 6px;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.subtleBackground};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -197,12 +208,7 @@ const Card = styled.div`
       max-height: 100%;
     }
   }
-  p.desc {
-    font-size: 0.8rem;
-    color: ${(props) => props.theme.textAlt};
-    font-weight: ${(props) => props.theme.font.regular};
-    text-align: center;
-  }
+
   &:hover {
     box-shadow: ${(props) => props.theme.shadow};
     transform: translateY(-2px);

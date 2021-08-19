@@ -141,10 +141,9 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     border-radius: 6px;
     transition: all 150ms ease;
     input:disabled {
-     background-color:${accent2};
+     opacity:50%;
      cursor:not-allowed;
-     
-   } 
+    } 
     .icon {
       position:absolute;
       left:${rtl ? "" : 0};
@@ -155,7 +154,6 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       align-items: center;
       justify-content: center;
       color: ${primary};
-      
     }
 
     input {
@@ -164,14 +162,12 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       padding: 0.4rem;
       padding-left:${rtl ? "0.4rem" : "35px"};
       padding-right:${rtl ? "35px" : "0.4rem"};
-      font-size: 0.8rem;
-      
+      font-size: 0.8rem; 
       color: ${text};
     }
     &:hover,
     &:focus-within {
       border-color: ${borderHovered};
-    
     }
     
   }
@@ -189,7 +185,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       margin-bottom: 0.75rem;
     }
     .input-container{
-      
+  
       input {
         font-size: 0.9rem;
       }

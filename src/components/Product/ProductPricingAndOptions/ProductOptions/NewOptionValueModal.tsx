@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ModalHead from "../../../Modal/ModalHead";
-import ModalTail from "../../../reusable/ModalTail";
+import ModalTail from "../../../Modal/ModalTail";
 import { SubmitHandler } from "react-hook-form";
 import IconedInput from "../../../reusable/Inputs/IconedInput";
 import Grid from "../../../StyledComponents/Grid";
@@ -13,7 +13,8 @@ import { IoPricetagsOutline } from "react-icons/io5";
 import { OPTION_VALUE } from "../../../../interfaces/products/products";
 import { NEW_OPTION_VALUE } from "../../../../interfaces/products/create-new-product";
 import { up } from "../../../../utils/themes";
-import { ModalWrapper } from "../../../Modal/ModalWrapper";
+import { animated, useTransition } from "@react-spring/web";
+import { DialogContent, DialogOverlay } from "@reach/dialog";
 const selectTypes = [
   { value: "single", label: "Single Select" },
   { value: "multiple", label: "Multiple Select" },
@@ -81,96 +82,95 @@ const NewOptionValueModal = ({
       successFunction(data);
     }
   };
+  const transitions = useTransition(isOpen, {
+    from: { opacity: 0, y: -10 },
+    enter: { opacity: 1, y: 0 },
+    leave: { opacity: 0, y: 10 },
+  });
   return (
-    <Modal>
-      <ModalHead closeFunction={closeFunction} title={title} />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Body>
-          <Grid cols="minmax(200px,1fr)" gap="0.5rem">
-            <IconedInput
-              Icon={MdSubtitles}
-              errors={errors?.name?.en}
-              name={`name.en`}
-              register={register}
-              label="Value Name English"
-              required
-              requiredMessage="Required"
-            />
-            <IconedInput
-              Icon={MdSubtitles}
-              errors={errors?.name?.ar}
-              name={`name.ar`}
-              register={register}
-              label="Value Name Arabic"
-              requiredMessage="Required"
-              required
-            />
-            <PrefixedIconedInput
-              errors={errors?.price}
-              Icon={IoPricetagsOutline}
-              name={`price`}
-              register={register}
-              label="Price"
-              prefix="KD"
-              desc="Leave empty to disable"
-            />
-            <IconedInput
-              errors={errors?.quantity}
-              Icon={RiHandCoinLine}
-              name={`quantity`}
-              register={register}
-              label="Stock Quantity"
-              desc="Leave empty for unlimited"
-            />
-          </Grid>
-          <ModalTail
-            btnType="submit"
-            btnText={"Save"}
-            successCb={() => {}}
-            closeFunction={closeFunction}
-            isLoading={isLoading}
-          />
-        </Body>
-      </form>
-    </Modal>
+    <>
+      {transitions(
+        (styles, item) =>
+          item && (
+            <AnimatedDialogOverlay
+              onDismiss={closeFunction}
+              style={{ opacity: styles.opacity }}
+            >
+              <AnimatedDialogContent
+                aria-labelledby="dialog-title"
+                style={{
+                  transform: styles.y.to(
+                    (value) => `translate3d(0px, ${value}px, 0px)`
+                  ),
+                }}
+              >
+                <ModalHead closeFunction={closeFunction} title={title} />
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Grid cols="minmax(200px,1fr)" gap="0.5rem" p={4}>
+                    <IconedInput
+                      Icon={MdSubtitles}
+                      errors={errors?.name?.en}
+                      name={`name.en`}
+                      register={register}
+                      label="Value Name English"
+                      required
+                      requiredMessage="Required"
+                    />
+                    <IconedInput
+                      Icon={MdSubtitles}
+                      errors={errors?.name?.ar}
+                      name={`name.ar`}
+                      register={register}
+                      label="Value Name Arabic"
+                      requiredMessage="Required"
+                      required
+                    />
+                    <PrefixedIconedInput
+                      errors={errors?.price}
+                      Icon={IoPricetagsOutline}
+                      name={`price`}
+                      register={register}
+                      label="Price"
+                      prefix="KD"
+                      desc="Leave empty to disable"
+                    />
+                    <IconedInput
+                      errors={errors?.quantity}
+                      Icon={RiHandCoinLine}
+                      name={`quantity`}
+                      register={register}
+                      label="Stock Quantity"
+                      desc="Leave empty for unlimited"
+                    />
+                  </Grid>
+                  <ModalTail
+                    btnType="submit"
+                    btnText={"Save"}
+                    successCb={() => {}}
+                    closeFunction={closeFunction}
+                    isLoading={isLoading}
+                  />
+                </form>
+              </AnimatedDialogContent>
+            </AnimatedDialogOverlay>
+          )
+      )}
+    </>
   );
 };
 
 export default NewOptionValueModal;
-const Modal = styled(ModalWrapper)(
-  ({ theme: { breakpoints, shadow, accent1 } }) => `
-  position: fixed;
-  z-index: 20;
-  inset:200px 20px;
-  position:fixed;
+const AnimatedDialogOverlay = animated(DialogOverlay);
+const AnimatedDialogContent = styled(animated(DialogContent))(
+  ({ theme: { breakpoints, subtleBackground } }) => `
   min-width:300px;
-  border:none;
-  outline:none;
-  z-index:20;
-  background-color:${accent1};
+  width:300px;
+  
+  background-color:${subtleBackground};
   ${up(breakpoints.md)}{
-    inset:180px 250px;
-  }
-  ${up(breakpoints.lg)}{
-    inset:180px 350px;
-  }
-  ${up(breakpoints.xl)}{
-    inset:180px 600px;
-  }
-  `
-);
-const Body = styled.div(
-  ({ theme: { breakpoints, border } }) => `
-
-  width: 100%;
-  height: 100%;
-  display: grid;
-  padding: 0.75rem;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
-  ${up(breakpoints.md)}{
-   padding:1rem;
+    min-width:400px;
+   
   }
   
-  `
+`
 );

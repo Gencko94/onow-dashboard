@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
+
 import Spacer from "../../components/reusable/Spacer";
 import StoreNameAndDescription from "../../components/SettingsPage/StoreInformation/StoreNameAndDescription";
 import StoreSocialNetwork from "../../components/SettingsPage/StoreInformation/StoreSocialNetwork";

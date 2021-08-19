@@ -1,17 +1,15 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useState } from "react";
-import { CSSTransition } from "react-transition-group";
-import ClickAwayListener from "react-click-away-listener";
-import { RiDeleteBinLine } from "react-icons/ri";
+
 import { useHistory } from "react-router";
 import { CUSTOMER } from "../../../../interfaces/customers/customers";
 import Checkbox from "../../../reusable/Inputs/Checkbox";
-import Popover from "../../../reusable/Popover";
+
 import Button from "../../../reusable/Button";
 import useConfirmationModal from "../../../../hooks/useConfirmationModal";
-import { FlexWrapper } from "../../../StyledComponents/Flex";
+import Flex from "../../../StyledComponents/Flex";
 import IconButton from "../../../reusable/IconButton";
+import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
 
 interface IProps {
   customer: CUSTOMER;
@@ -28,7 +26,6 @@ const CustomerItem = ({
 }: IProps) => {
   const { handleCloseConfirmationModal, setConfirmationModalStatus } =
     useConfirmationModal();
-  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   return (
     <Container selected={selectedRows.includes(customer.id)}>
@@ -51,39 +48,38 @@ const CustomerItem = ({
         <h6>{customer.email} </h6>
       </div>
       <div className="field">
-        <ActionButtonContainer onClick={() => setActionsMenuOpen(true)}>
-          <IconButton
-            onClick={() => {
-              setActionsMenuOpen(!actionsMenuOpen);
-            }}
-          >
-            <BsThreeDotsVertical size={18} />
-          </IconButton>
-          <CSSTransition
-            in={actionsMenuOpen}
-            classNames="menu"
-            unmountOnExit
-            timeout={100}
-          >
-            <ClickAwayListener onClickAway={() => setActionsMenuOpen(false)}>
-              <Popover closeFunction={() => setActionsMenuOpen(false)}>
-                <Button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setConfirmationModalStatus?.({
-                      open: true,
-                      desc: "Are you sure you want to delete this customer ?",
-                      title: "Delete Customer",
-                      closeCb: handleCloseConfirmationModal!,
-                      successCb: () => handleDeleteCustomer(customer.id),
-                    });
-                  }}
-                >
-                  Delete Customer
-                </Button>
-              </Popover>
-            </ClickAwayListener>
-          </CSSTransition>
+        <Flex>
+          <Menu>
+            <MenuButton>
+              <IconButton>
+                <BsThreeDotsVertical size={20} />
+              </IconButton>
+            </MenuButton>
+            <MenuPopover
+              className="slide-down"
+              position={(button, popover) => {
+                return {
+                  top: button!.bottom,
+                  left: button!.left - button!.width,
+                };
+              }}
+            >
+              <MenuItem
+                onSelect={() => {
+                  setConfirmationModalStatus?.({
+                    open: true,
+                    desc: "Are you sure you want to delete this customer ?",
+                    title: "Delete Customer",
+                    closeCb: handleCloseConfirmationModal!,
+                    successCb: () => handleDeleteCustomer(customer.id),
+                  });
+                }}
+              >
+                Delete customer
+              </MenuItem>
+            </MenuPopover>
+          </Menu>
+
           <Button
             size="sm"
             color="primary"
@@ -94,7 +90,7 @@ const CustomerItem = ({
           >
             Edit
           </Button>
-        </ActionButtonContainer>
+        </Flex>
       </div>
     </Container>
   );
@@ -126,8 +122,4 @@ const Container = styled.div<{ selected: boolean }>`
       font-weight: ${(props) => props.theme.font.regular};
     }
   }
-`;
-
-const ActionButtonContainer = styled(FlexWrapper)`
-  position: relative;
 `;

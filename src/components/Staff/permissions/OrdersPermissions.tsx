@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { ordersPermissions } from "../../../data/userPermissions";
 import { STAFF_MEMBER } from "../../../interfaces/staff/staff";
 import CheckToggle from "../../reusable/CheckToggle";
+import Heading from "../../StyledComponents/Heading";
 
 interface IProps {
   control: Control<STAFF_MEMBER>;
@@ -51,7 +52,9 @@ const OrdersPermissions = ({ control, setValue }: IProps) => {
         <span className="icon">
           <FcRules size={50} />
         </span>
-        <h6>Orders</h6>
+        <Heading tag="h6" type="small-title">
+          Orders
+        </Heading>
       </div>
       <div className="box-content">
         <div className="item">
@@ -104,22 +107,17 @@ export default OrdersPermissions;
 const Container = styled.div`
   border: ${(props) => props.theme.border};
   border-radius: 6px;
-  background-color: #fff;
-  box-shadow: ${(props) => props.theme.shadow};
+  background-color: ${(props) => props.theme.subtleBackground};
 
   .title {
     padding: 0.75rem 0.5rem;
-    background-color: ${(props) => props.theme.subtleBackground};
+
     border-bottom: ${(props) => props.theme.border};
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     position: relative;
-    h6 {
-      font-size: 0.9rem;
-      margin: 0 2rem;
-    }
   }
   .box-content {
     max-height: 300px;

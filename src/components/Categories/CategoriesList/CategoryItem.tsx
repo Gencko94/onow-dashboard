@@ -1,8 +1,5 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useState } from "react";
-import { CSSTransition } from "react-transition-group";
-import { RiDeleteBinLine } from "react-icons/ri";
 
 import { useHistory } from "react-router";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
@@ -11,13 +8,16 @@ import Checkbox from "../../reusable/Inputs/Checkbox";
 import { CATEGORY } from "../../../interfaces/categories/categories";
 import { useTranslation } from "react-i18next";
 import Button from "../../reusable/Button";
-import Popover from "../../reusable/Popover";
-import { FlexWrapper } from "../../StyledComponents/Flex";
+
+import Flex from "../../StyledComponents/Flex";
 import DefaultImage from "../../reusable/DefaultImage";
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import CheckToggle from "../../reusable/CheckToggle";
 import Heading from "../../StyledComponents/Heading";
 import IconButton from "../../reusable/IconButton";
+import { CSSTransition } from "react-transition-group";
+import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
+import { useState } from "react";
 interface IProps {
   category: CATEGORY;
   handleDeleteCategory: (id: number) => void;
@@ -37,7 +37,7 @@ const CategoryItem = ({
   const {
     i18n: { language },
   } = useTranslation();
-  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
+
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const history = useHistory();
 
@@ -99,53 +99,50 @@ const CategoryItem = ({
         </div>
 
         <div className="field">
-          <ButtonsContainer>
-            <ActionButtonContainer
-              onClick={(e) => {
-                e.stopPropagation();
-                setActionsMenuOpen(true);
-              }}
-            >
-              <IconButton>
-                <BsThreeDotsVertical size={20} />
-              </IconButton>
-              <CSSTransition
-                in={actionsMenuOpen}
-                classNames="menu"
-                unmountOnExit
-                timeout={100}
-              >
-                <Popover closeFunction={() => setActionsMenuOpen(false)}>
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setActionsMenuOpen(false);
-                      setConfirmationModalStatus?.({
-                        open: true,
-                        desc: "Are you sure you want to delete this Category ?",
-                        title: "Delete Category",
-                        successCb: () => handleDeleteCategory(category.id),
-                        closeCb: handleCloseConfirmationModal!,
-                      });
-                    }}
-                  >
-                    Delete Category
-                  </Button>
-                </Popover>
-              </CSSTransition>
-              <Button
-                color="primary"
-                withTransition
-                size="sm"
-                margin="0 0.25rem"
-                onClick={() => {
-                  history.push(`/categories/${category.id}`);
+          <Flex>
+            <Menu>
+              <MenuButton>
+                <IconButton>
+                  <BsThreeDotsVertical size={20} />
+                </IconButton>
+              </MenuButton>
+              <MenuPopover
+                className="slide-down"
+                position={(button, popover) => {
+                  return {
+                    top: button!.bottom,
+                    left: button!.left - button!.width,
+                  };
                 }}
               >
-                Edit
-              </Button>
-            </ActionButtonContainer>
-          </ButtonsContainer>
+                <MenuItem
+                  onSelect={() => {
+                    setConfirmationModalStatus?.({
+                      open: true,
+                      desc: "Are you sure you want to delete this Category ?",
+                      title: "Delete Category",
+                      successCb: () => handleDeleteCategory(category.id),
+                      closeCb: handleCloseConfirmationModal!,
+                    });
+                  }}
+                >
+                  Delete category
+                </MenuItem>
+              </MenuPopover>
+            </Menu>
+
+            <Button
+              color="primary"
+              withTransition
+              size="sm"
+              margin="0 0.25rem"
+              onClick={() => {
+                history.push(`/categories/${category.id}`);
+              }}
+            >
+              Edit
+            </Button>
+          </Flex>
         </div>
       </Container>
       {category.children.length > 0 && (
@@ -211,10 +208,4 @@ const Container = styled.div<{ selected: boolean }>`
     height: 25px;
     border-radius: 50%;
   }
-`;
-
-const ButtonsContainer = styled.div``;
-const ActionButtonContainer = styled(FlexWrapper)`
-  position: relative;
-  align-items: center;
 `;

@@ -6,7 +6,7 @@ import {
   AiOutlineWhatsApp,
 } from "react-icons/ai";
 import { useMutation } from "react-query";
-import styled from "styled-components";
+
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { STORE_TECHNICAL_SUPPORT } from "../../../interfaces/settings/store-properties/store-properties";
@@ -18,7 +18,7 @@ import IconedInput from "../../reusable/Inputs/IconedInput";
 import PhoneInput from "../../reusable/Inputs/PhoneInput";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
-import Heading from "../../StyledComponents/Heading";
+
 interface StoreTechnicalSupportProps {
   data: STORE_TECHNICAL_SUPPORT;
 }
@@ -72,7 +72,7 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box type="titled" boxTitle="Technical Support">
-        <Grid cols="repeat(auto-fill,minmax(300px,1fr))" gap="1rem">
+        <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
           <Controller
             name="phone"
             control={control}
@@ -95,6 +95,8 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
             name="whatsapp"
             label="WhatsApp"
           />
+        </Grid>
+        <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
           <IconedInput
             Icon={AiOutlineMail}
             errors={errors?.email}

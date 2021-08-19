@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import useResponsive from "../../hooks/useResponsive";
 import Heading from "../StyledComponents/Heading";
+import Spacer from "./Spacer";
 
 interface IProps {
   title: string;
@@ -19,6 +20,7 @@ const SettingsCard = ({ desc, title, Icon, cb }: IProps) => {
       <span className="icon">
         <Icon size={isDesktop ? 40 : 30} />
       </span>
+      <Spacer size={15} />
       <Heading tag="h3" type="small-title" style={{ textAlign: "center" }}>
         {title}
       </Heading>

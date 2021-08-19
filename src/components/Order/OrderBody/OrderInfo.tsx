@@ -8,7 +8,7 @@ import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import { orderStatuses } from "../../../fakeData/fakeOrderStatuses";
 import { ORDER_STATUS } from "../../../interfaces/orders/orders";
-import Modal from "../../Modal/Modal";
+
 import OrderStatusChip from "../../reusable/OrderStatusChip";
 import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
 import Grid, { GridWrapper } from "../../StyledComponents/Grid";

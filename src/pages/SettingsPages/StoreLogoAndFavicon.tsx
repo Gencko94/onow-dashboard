@@ -4,7 +4,6 @@ import { Controller, useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import styled from "styled-components";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Grid from "../../components/StyledComponents/Grid";
 import Heading from "../../components/StyledComponents/Heading";
 import Hr from "../../components/StyledComponents/Hr";
@@ -122,20 +121,23 @@ const StoreLogoAndFavicon = () => {
   };
   return (
     <div>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الإعدادات", en: "Settings" },
-              target: "/settings",
-            },
-            {
-              name: { ar: "شعار المتجر", en: "Store Logo & Favicon" },
-              target: "",
-            },
-          ]}
-        />
-      </HeaderContainer>
+      <Heading tag="h5" type="large-title">
+        Store Logo & Favicon
+      </Heading>
+      <Breadcrumbs
+        withoutTitle
+        children={[
+          {
+            name: { ar: "الإعدادات", en: "Settings" },
+            target: "/settings",
+          },
+          {
+            name: { ar: "شعار المتجر", en: "Store Logo & Favicon" },
+            target: "",
+          },
+        ]}
+      />
+
       <Container>
         <div className="section">
           <Heading tag="h5" color="primary">

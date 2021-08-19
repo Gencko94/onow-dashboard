@@ -21,15 +21,9 @@ const StorePaymentMethods = () => {
         ]}
       />
       <PaymentMethodsTabs activeTab={activeTab} />
-      <Wrapper>{activeTab === 0 && <OnlinePayments />}</Wrapper>
+      {activeTab === 0 && <OnlinePayments />}
     </div>
   );
 };
 
 export default StorePaymentMethods;
-const Wrapper = styled.div`
-  box-shadow: 0px 4px 7px 2px rgb(213, 213, 213);
-  border-radius: 0 6px 6px 6px;
-  padding: 1rem;
-  background-color: #fff;
-`;

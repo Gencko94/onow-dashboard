@@ -119,6 +119,48 @@ const Card = styled.div`
   background-color: ${(props) => props.theme.subtleBackground};
   /* box-shadow: 0px -5px 25px -10px #e098447e; */
   border-radius: 10px;
+  position: relative;
+  z-index: 1;
+  /* box-shadow: inset 0 0 1px 1px hsla(0, 0%, 100%, 0.9),
+    0 20px 27px 0 rgba(0, 0, 0, 0.05);
+  backdrop-filter: saturate(200%) blur(30px);
+  .back {
+    backdrop-filter: saturate(200%) blur(30px);
+    filter: blur(15px);
+    inset: 0;
+    content: "";
+    position: absolute;
+    will-change: background;
+    border-radius: 12px;
+    background: linear-gradient(
+      45deg,
+      hsl(336deg 95% 62%),
+      hsl(26deg 95% 60%),
+      cyan,
+      hsl(8deg 94% 66%)
+    );
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    background-size: 400%;
+    z-index: -1;
+    transform: translateZ(0);
+
+    animation: shadow 30s linear infinite;
+  }
+  &:after {
+    filter: blur(10px);
+  }
+  @keyframes shadow {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 400% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  } */
 `;
 
 const Icon = styled.span`

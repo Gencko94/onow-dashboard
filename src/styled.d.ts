@@ -21,7 +21,7 @@ declare module "styled-components" {
     sidebarSubtleBackground: string;
     shadow: string;
     errorShadow: string;
-
+    stickyNav: string;
     green: string;
     font: FontWeights;
     dangerRed: string;

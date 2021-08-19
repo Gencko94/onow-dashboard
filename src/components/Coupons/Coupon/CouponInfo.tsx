@@ -11,17 +11,17 @@ import { BiBarcode } from "react-icons/bi";
 import { FiUser, FiUsers } from "react-icons/fi";
 import { IoMdCash } from "react-icons/io";
 import { MdSubtitles } from "react-icons/md";
-import styled from "styled-components";
+
 import DateIconedInput from "../../reusable/Inputs/DateIconedInput";
 import IconedInput from "../../reusable/Inputs/IconedInput";
 import IconedNumberInput from "../../reusable/IconedNumberInput";
 import Select from "../../reusable/Select";
 import { AiOutlineTag } from "react-icons/ai";
-import Heading from "../../StyledComponents/Heading";
+
 import GithubInput from "../../reusable/Inputs/GithubInput";
 import Grid from "../../StyledComponents/Grid";
-import { parseISO } from "date-fns";
-import { up } from "../../../utils/themes";
+import { format, parseISO } from "date-fns";
+
 import Box from "../../reusable/Box/Box";
 interface IProps {
   register: UseFormRegister<any>;
@@ -204,13 +204,11 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           render={({ field: { onChange, value, ref } }) => {
             console.log(parseISO("2021-09-16T21:00:00"), "initial value");
             console.log(parseISO("2021-09-16T21:00:00.000Z"), "initial value");
-
-            // console.log(parseISO(value).toString(), "ISO initial value");
             return (
               <DateIconedInput
                 errors={errors?.start_date}
-                onChange={onChange}
-                value={value}
+                onChange={(date: Date) => onChange(date.toISOString())}
+                selected={parseISO(value)}
                 label="Coupon Start Date"
                 ref={ref}
               />
@@ -221,13 +219,12 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           name="end_date"
           control={control}
           render={({ field: { onChange, value, ref } }) => {
-            console.log(value);
             return (
               <DateIconedInput
                 errors={errors?.end_date}
                 label="Coupon End Date"
-                onChange={onChange}
-                value={value}
+                onChange={(date: Date) => onChange(date.toISOString())}
+                selected={parseISO(value)}
                 ref={ref}
               />
             );

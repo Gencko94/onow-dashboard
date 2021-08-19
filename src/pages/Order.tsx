@@ -5,7 +5,7 @@ import OrderBody from "../components/Order/OrderBody/OrderBody";
 import OrderPanel from "../components/Order/OrderPanel/OrderPanel";
 import OrderSide from "../components/Order/OrderSide/OrderSide";
 import Breadcrumbs from "../components/reusable/Breadcrumbs";
-import HeaderContainer from "../components/reusable/HeaderContainer";
+import Heading from "../components/StyledComponents/Heading";
 import { getOrder } from "../utils/queries";
 
 const Order = () => {
@@ -15,21 +15,24 @@ const Order = () => {
   });
   return (
     <>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الطلبات", en: "Orders" },
-              target: "/orders",
-            },
-            {
-              name: { ar: "الطلب", en: "Order" },
-              target: "",
-            },
-          ]}
-        />
-        <OrderPanel />
-      </HeaderContainer>
+      <Heading tag="h5" type="large-title">
+        Order
+      </Heading>
+      <Breadcrumbs
+        withoutTitle
+        children={[
+          {
+            name: { ar: "الطلبات", en: "Orders" },
+            target: "/orders",
+          },
+          {
+            name: { ar: "الطلب", en: "Order" },
+            target: "",
+          },
+        ]}
+      />
+      <OrderPanel />
+
       <hr />
       <OrderContainer>
         <OrderBody data={data!} />

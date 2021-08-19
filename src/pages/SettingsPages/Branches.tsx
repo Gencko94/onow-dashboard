@@ -3,9 +3,10 @@ import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import BranchesList from "../../components/SettingsPage/StoreBranches/BranchesList";
 import { useHistory } from "react-router-dom";
 import Flex from "../../components/StyledComponents/Flex";
-import { BiPlus } from "react-icons/bi";
+
 import Button from "../../components/reusable/Button";
 import Heading from "../../components/StyledComponents/Heading";
+import Spacer from "../../components/reusable/Spacer";
 
 const Branches = () => {
   const history = useHistory();
@@ -13,7 +14,9 @@ const Branches = () => {
     <div>
       <Flex items="center" justify="space-between">
         <div>
-          <Heading tag="h2">Branches</Heading>
+          <Heading tag="h2" type="large-title">
+            Branches
+          </Heading>
           <Breadcrumbs
             withoutTitle
             children={[
@@ -39,7 +42,7 @@ const Branches = () => {
           </Button>
         </Flex>
       </Flex>
-
+      <Spacer size={40} />
       <BranchesList />
     </div>
   );

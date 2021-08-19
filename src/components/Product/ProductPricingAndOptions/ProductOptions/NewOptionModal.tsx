@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import ModalHead from "../../../Modal/ModalHead";
-import ModalTail from "../../../reusable/ModalTail";
+import ModalTail from "../../../Modal/ModalTail";
 
 import { Controller } from "react-hook-form";
 import IconedInput from "../../../reusable/Inputs/IconedInput";
@@ -13,8 +13,9 @@ import IconedNumberInput from "../../../reusable/IconedNumberInput";
 import { SubmitHandler } from "react-hook-form";
 import { PRODUCT_OPTION } from "../../../../interfaces/products/products";
 
-import { ModalWrapper } from "../../../Modal/ModalWrapper";
 import { up } from "../../../../utils/themes";
+import { animated, useTransition } from "@react-spring/web";
+import { DialogContent, DialogOverlay } from "@reach/dialog";
 const selectTypes = [
   { value: "single", label: "Single Select" },
   { value: "multiple", label: "Multiple Select" },
@@ -89,144 +90,146 @@ const NewOptionModal = ({
       successFunction(data);
     }
   };
+  const transitions = useTransition(isOpen, {
+    from: { opacity: 0, y: -10 },
+    enter: { opacity: 1, y: 0 },
+    leave: { opacity: 0, y: 10 },
+  });
 
   return (
-    <Modal>
-      <ModalHead closeFunction={closeFunction} title={title} />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Body>
-          <Grid cols="minmax(200px,1fr)" gap="0.5rem">
-            <IconedInput
-              Icon={MdSubtitles}
-              errors={errors?.name?.en}
-              name="name.en"
-              register={register}
-              label="Option Name English"
-              required
-              requiredMessage="Required"
-            />
-            <IconedInput
-              Icon={MdSubtitles}
-              errors={errors?.name?.ar}
-              name="name.ar"
-              register={register}
-              label="Option Name Arabic"
-              required
-              requiredMessage="Required"
-            />
-          </Grid>
-          <Grid cols="minmax(200px,1fr)" gap="1.2rem">
-            <Controller
-              control={control}
-              name="select_type"
-              render={({ field: { value, onChange, ref } }) => {
-                return (
-                  <Select
-                    ref={ref}
-                    value={
-                      selectTypes.find((i) => i.value === selectType) as {
-                        value: string;
-                        label: string;
-                      }
-                    }
-                    options={selectTypes}
-                    defaultValue={value}
-                    errors={errors?.select_type}
-                    getOptionLabel={(option) => option.label}
-                    getOptionValue={(option) => option.value}
-                    label="Option Type"
-                    onChange={(val) => onChange(val.value)}
-                  />
-                );
-              }}
-            />
+    <>
+      {transitions(
+        (styles, item) =>
+          item && (
+            <AnimatedDialogOverlay
+              onDismiss={closeFunction}
+              style={{ opacity: styles.opacity }}
+            >
+              <AnimatedDialogContent
+                aria-labelledby="dialog-title"
+                style={{
+                  transform: styles.y.to(
+                    (value) => `translate3d(0px, ${value}px, 0px)`
+                  ),
+                }}
+              >
+                <ModalHead closeFunction={closeFunction} title={title} />
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Grid cols="minmax(200px,1fr)" gap="0.5rem" p={4}>
+                    <IconedInput
+                      Icon={MdSubtitles}
+                      errors={errors?.name?.en}
+                      name="name.en"
+                      register={register}
+                      label="Option Name English"
+                      required
+                      requiredMessage="Required"
+                    />
+                    <IconedInput
+                      Icon={MdSubtitles}
+                      errors={errors?.name?.ar}
+                      name="name.ar"
+                      register={register}
+                      label="Option Name Arabic"
+                      required
+                      requiredMessage="Required"
+                    />
 
-            {selectType === "multiple" && (
-              <IconedNumberInput
-                Icon={MdSubtitles}
-                errors={errors?.max_picks}
-                name="max_picks"
-                register={register}
-                label="Maximum choice selections"
-                min={0}
-                desc="0 For Unlimited"
-              />
-            )}
-            <Controller
-              control={control}
-              name="required"
-              render={({ field: { value, onChange, ref } }) => {
-                return (
-                  <Select
-                    ref={ref}
-                    value={
-                      requiredOptions.find((i) => i.value === required) as {
-                        value: boolean;
-                        label: string;
-                      }
-                    }
-                    onChange={(val) => {
-                      onChange(val.value);
-                    }}
-                    options={requiredOptions}
-                    defaultValue={value}
-                    errors={errors?.required}
-                    getOptionLabel={(option) => option.label}
-                    getOptionValue={(option: any) => option.value}
-                    label="Required"
+                    <Controller
+                      control={control}
+                      name="select_type"
+                      render={({ field: { value, onChange, ref } }) => {
+                        return (
+                          <Select
+                            ref={ref}
+                            value={
+                              selectTypes.find(
+                                (i) => i.value === selectType
+                              ) as {
+                                value: string;
+                                label: string;
+                              }
+                            }
+                            options={selectTypes}
+                            defaultValue={value}
+                            errors={errors?.select_type}
+                            getOptionLabel={(option) => option.label}
+                            getOptionValue={(option) => option.value}
+                            label="Option Type"
+                            onChange={(val) => onChange(val.value)}
+                          />
+                        );
+                      }}
+                    />
+
+                    {selectType === "multiple" && (
+                      <IconedNumberInput
+                        Icon={MdSubtitles}
+                        errors={errors?.max_picks}
+                        name="max_picks"
+                        register={register}
+                        label="Maximum choice selections"
+                        min={0}
+                        desc="0 For Unlimited"
+                      />
+                    )}
+                    <Controller
+                      control={control}
+                      name="required"
+                      render={({ field: { value, onChange, ref } }) => {
+                        return (
+                          <Select
+                            ref={ref}
+                            value={
+                              requiredOptions.find(
+                                (i) => i.value === required
+                              ) as {
+                                value: boolean;
+                                label: string;
+                              }
+                            }
+                            onChange={(val) => {
+                              onChange(val.value);
+                            }}
+                            options={requiredOptions}
+                            defaultValue={value}
+                            errors={errors?.required}
+                            getOptionLabel={(option) => option.label}
+                            getOptionValue={(option: any) => option.value}
+                            label="Required"
+                          />
+                        );
+                      }}
+                    />
+                  </Grid>
+                  <ModalTail
+                    btnType="submit"
+                    btnText={"Save"}
+                    successCb={() => {}}
+                    closeFunction={closeFunction}
+                    isLoading={isLoading}
                   />
-                );
-              }}
-            />
-          </Grid>
-          <ModalTail
-            btnType="submit"
-            btnText={"Save"}
-            successCb={() => {}}
-            closeFunction={closeFunction}
-            isLoading={isLoading}
-          />
-        </Body>
-      </form>
-    </Modal>
+                </form>
+              </AnimatedDialogContent>
+            </AnimatedDialogOverlay>
+          )
+      )}
+    </>
   );
 };
 
 export default NewOptionModal;
-const Modal = styled(ModalWrapper)(
-  ({ theme: { breakpoints, shadow, accent1 } }) => `
-  position: fixed;
-  z-index: 20;
-  inset:240px 20px;
-  position:fixed;
+const AnimatedDialogOverlay = animated(DialogOverlay);
+const AnimatedDialogContent = styled(animated(DialogContent))(
+  ({ theme: { breakpoints, subtleBackground } }) => `
   min-width:300px;
-  border:none;
-  outline:none;
-  z-index:20;
-  background-color:${accent1};
+  width:300px;
+  
+  background-color:${subtleBackground};
   ${up(breakpoints.md)}{
-    inset:220px 250px;
-  }
-  ${up(breakpoints.lg)}{
-    inset:220px 350px;
-  }
-  ${up(breakpoints.xl)}{
-    inset:220px 600px;
-  }
-  `
-);
-const Body = styled.div(
-  ({ theme: { breakpoints, border } }) => `
-
-  width: 100%;
-  height: 100%;
-  display: grid;
-  padding: 0.75rem;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
-  ${up(breakpoints.md)}{
-   padding:1rem;
+    min-width:400px;
+   
   }
   
-  `
+`
 );

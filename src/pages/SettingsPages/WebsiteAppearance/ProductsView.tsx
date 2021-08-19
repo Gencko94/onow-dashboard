@@ -5,6 +5,7 @@ import Flex from "../../../components/StyledComponents/Flex";
 import Zoom from "react-medium-image-zoom";
 import Grid from "../../../components/StyledComponents/Grid";
 import Heading from "../../../components/StyledComponents/Heading";
+import Tooltip from "@reach/tooltip";
 
 import "react-medium-image-zoom/dist/styles.css";
 
@@ -17,13 +18,27 @@ import {
   getStoreLayoutSettings,
 } from "../../../utils/queries/settingsQueries";
 import Button from "../../../components/reusable/Button";
-import { useState } from "react";
-
+import { useMemo, useState } from "react";
+import Box from "../../../components/reusable/Box/Box";
+import Spacer from "../../../components/reusable/Spacer";
+import Paragraph from "../../../components/StyledComponents/Paragraph";
+import { FaRegQuestionCircle } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+type OPTIONS = {
+  title: {
+    [key: string]: string;
+  };
+  image: string;
+  key: "grid" | "list" | "bar";
+}[];
 const ProductsView = () => {
   const { handleCloseToast, setToastStatus } = useToast();
   const { data } = useQuery("store-layout", getStoreLayoutSettings, {
     suspense: true,
   });
+  const {
+    i18n: { language },
+  } = useTranslation();
   const [view, setView] = useState<"grid" | "list" | "bar">(() => {
     return data!.products_view;
   });
@@ -39,11 +54,42 @@ const ProductsView = () => {
       text: "Theme Color Changed Successfully",
     });
   };
+
+  const options: OPTIONS = useMemo(() => {
+    return [
+      {
+        title: {
+          ar: "جدول",
+          en: "Grid View",
+        },
+        key: "grid",
+        image: "/images/grid-demo.jpg",
+      },
+      {
+        title: {
+          ar: "قائمة",
+          en: "List View",
+        },
+        key: "list",
+        image: "/images/list-demo.jpg",
+      },
+      {
+        title: {
+          ar: "اختيار",
+          en: "Bar View",
+        },
+        key: "bar",
+        image: "/images/bar-demo.jpg",
+      },
+    ];
+  }, []);
   return (
-    <Container>
+    <div>
       <Flex margin="1rem 0">
         <div>
-          <Heading tag="h2">Products View</Heading>
+          <Heading tag="h2" type="large-title">
+            Products View
+          </Heading>
           <Breadcrumbs
             withoutTitle
             children={[
@@ -63,90 +109,49 @@ const ProductsView = () => {
           />
         </div>
       </Flex>
-
-      <Heading tag="h5">Products View in Home Page</Heading>
-      <div className="desc">
-        <Heading tag="h6" color="subheading">
+      <Spacer size={40} />
+      <Box type="titled" boxTitle="Products View in Home Page">
+        <Tooltip label="Save">
+          <button>
+            <FaRegQuestionCircle />
+          </button>
+        </Tooltip>
+        <Paragraph color="textAlt">
           You can Control how your products look in your website's Home Page
-        </Heading>
-      </div>
+        </Paragraph>
 
-      <Grid gap="1rem" cols="repeat(auto-fit,minmax(275px,1fr))">
-        <Card>
-          <div className="img-wrapper">
-            <Zoom>
-              <img src="/images/grid-demo.jpg" alt="" />
-            </Zoom>
-          </div>
-          <Flex justify="center" padding=" 0.5rem" items="center">
-            <Heading tag="h6">Grid View</Heading>
-            {/* <Checkbox checked={true} onChange={() => {}} /> */}
-            {view === "grid" ? (
-              <FcOk
-                size={30}
-                // style={{ cursor: "pointer" }}
-              />
-            ) : (
-              <RiCheckboxBlankCircleLine
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setView("grid");
-                }}
-                size={30}
-              />
-            )}
-          </Flex>
-        </Card>
-        <Card>
-          <div className="img-wrapper">
-            <Zoom>
-              <img src="/images/list-demo.jpg" alt="bar demo" />
-            </Zoom>
-          </div>
-          <Flex justify="center" padding=" 0.5rem" items="center">
-            <Heading tag="h6">List View</Heading>
-
-            {view === "list" ? (
-              <FcOk
-                size={30}
-                // style={{ cursor: "pointer" }}
-              />
-            ) : (
-              <RiCheckboxBlankCircleLine
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setView("list");
-                }}
-                size={30}
-              />
-            )}
-          </Flex>
-        </Card>
-        <Card>
-          <div className="img-wrapper">
-            <Zoom>
-              <img src="/images/bar-demo.jpg" alt="" />
-            </Zoom>
-          </div>
-          <Flex justify="center" padding=" 0.5rem" items="center">
-            <Heading tag="h6">Bar View</Heading>
-            {view === "bar" ? (
-              <FcOk
-                size={30}
-                // style={{ cursor: "pointer" }}
-              />
-            ) : (
-              <RiCheckboxBlankCircleLine
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setView("bar");
-                }}
-                size={30}
-              />
-            )}
-          </Flex>
-        </Card>
-      </Grid>
+        <Grid gap="1rem" cols="repeat(auto-fit,minmax(275px,1fr))">
+          {options.map((option) => {
+            return (
+              <Card>
+                <div className="img-wrapper">
+                  <Zoom>
+                    <img src="/images/grid-demo.jpg" alt="" />
+                  </Zoom>
+                </div>
+                <Flex justify="center" padding=" 0.5rem" items="center">
+                  <Heading tag="h6" type="small-title">
+                    {option.title[language]}
+                  </Heading>
+                  <Spacer size={10} />
+                  {view === option.key ? (
+                    <FcOk size={20} />
+                  ) : (
+                    <RiCheckboxBlankCircleLine
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setView(option.key);
+                      }}
+                      size={20}
+                    />
+                  )}
+                </Flex>
+              </Card>
+            );
+          })}
+        </Grid>
+      </Box>
+      <Spacer size={40} />
       <Flex margin="1rem 0" justify="center">
         <Button
           color="green"
@@ -156,30 +161,23 @@ const ProductsView = () => {
           Save Changes
         </Button>
       </Flex>
-    </Container>
+    </div>
   );
 };
 
 export default ProductsView;
-const Container = styled.div`
-  .desc {
-    padding: 0.5rem;
-    background-color: ${(props) => props.theme.accent3};
-    border-radius: 6px;
-    border: ${(props) => props.theme.border};
-    margin: 1rem 0;
-  }
-`;
+
 const Card = styled.div`
   border-radius: 6px;
 
-  background-color: ${(props) => props.theme.accent1};
+  background-color: ${(props) => props.theme.subtleBackground};
+
   border: ${(props) => props.theme.border};
   /* padding: 0.5rem; */
   .img-wrapper {
-    height: 400px;
+    /* height: 400px; */
     width: 100%;
-    /* border-radius: 6px; */
+    border-radius: 6px;
     border-bottom: ${(props) => props.theme.border};
     overflow: hidden;
     img {

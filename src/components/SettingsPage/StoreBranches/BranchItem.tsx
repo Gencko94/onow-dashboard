@@ -1,17 +1,17 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useState } from "react";
-import { CSSTransition } from "react-transition-group";
-import { RiDeleteBinLine } from "react-icons/ri";
 
 import { useHistory } from "react-router";
 import { BRANCH } from "../../../interfaces/settings/branches/branches";
 import Button from "../../reusable/Button";
-import Popover from "../../reusable/Popover";
+
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
-import { FlexWrapper } from "../../StyledComponents/Flex";
+import Flex from "../../StyledComponents/Flex";
 import { useTranslation } from "react-i18next";
 import Paragraph from "../../StyledComponents/Paragraph";
+import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
+import IconButton from "../../reusable/IconButton";
+import Spacer from "../../reusable/Spacer";
 
 interface IProps {
   branch: BRANCH;
@@ -23,7 +23,7 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
-  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
+
   const history = useHistory();
   const renderStatus = (status: boolean) => {
     switch (status) {
@@ -31,14 +31,20 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
         return (
           <Status color="green">
             <span className="dot" />
-            <h6>Active</h6>
+            <Spacer size={10} />
+            <Paragraph fontSize="0.9rem" weight="semibold">
+              Active
+            </Paragraph>
           </Status>
         );
       case false:
         return (
           <Status color="#b72b2b">
             <span className="dot" />
-            <h6>Disabled</h6>
+            <Spacer size={10} />
+            <Paragraph fontSize="0.9rem" weight="semibold">
+              Disabled
+            </Paragraph>
           </Status>
         );
       default:
@@ -65,50 +71,24 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
       </div>
       <div className="field">{renderStatus(branch.active)}</div>
       <div className="field">
-        <Button
-          color="primary"
-          margin="0 0.5rem"
-          withTransition
-          onClick={() => {
-            history.push(`/settings/branches/branch/${branch.id}`);
-          }}
-        >
-          Edit
-        </Button>
-        <Button
-          color="blue"
-          margin="0 0.5rem"
-          withTransition
-          onClick={() => {
-            history.push(`/settings/branches/branch/${branch.id}`);
-          }}
-        >
-          Delivery locations
-        </Button>
-        <ActionButtonContainer
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <button
-            onClick={() => {
-              setActionsMenuOpen(!actionsMenuOpen);
-            }}
-            className="icon"
-          >
-            <BsThreeDotsVertical size={18} />
-          </button>
-          <CSSTransition
-            in={actionsMenuOpen}
-            classNames="menu"
-            unmountOnExit
-            timeout={100}
-          >
-            <Popover closeFunction={() => setActionsMenuOpen(false)}>
-              <Button
-                onClick={(e) => {
-                  setActionsMenuOpen(false);
-                  e.stopPropagation();
+        <Flex items="center">
+          <Menu>
+            <MenuButton>
+              <IconButton>
+                <BsThreeDotsVertical size={20} />
+              </IconButton>
+            </MenuButton>
+            <MenuPopover
+              className="slide-down"
+              position={(button, popover) => {
+                return {
+                  top: button!.bottom,
+                  left: button!.left - button!.width,
+                };
+              }}
+            >
+              <MenuItem
+                onSelect={() => {
                   setConfirmationModalStatus?.({
                     open: true,
                     desc: "Are you sure you want to delete this branch ?",
@@ -119,10 +99,32 @@ const BranchItem = ({ handleDeleteBranch, branch }: IProps) => {
                 }}
               >
                 Delete branch
-              </Button>
-            </Popover>
-          </CSSTransition>
-        </ActionButtonContainer>
+              </MenuItem>
+            </MenuPopover>
+          </Menu>
+          <Spacer size={10} />
+          <Button
+            size="sm"
+            color="primary"
+            withTransition
+            onClick={() => {
+              history.push(`/settings/branches/branch/${branch.id}`);
+            }}
+          >
+            Edit
+          </Button>
+          <Spacer size={10} />
+          <Button
+            size="sm"
+            color="blue"
+            withTransition
+            onClick={() => {
+              history.push(`/settings/branches/branch/${branch.id}`);
+            }}
+          >
+            Delivery locations
+          </Button>
+        </Flex>
       </div>
     </Container>
   );
@@ -141,7 +143,7 @@ const Container = styled.div`
   width: 100%;
 
   &:hover {
-    background-color: ${(props) => props.theme.accent1};
+    background-color: ${(props) => props.theme.subtleFloating};
   }
   .img {
     height: 50px;
@@ -156,28 +158,9 @@ const Container = styled.div`
     justify-content: center;
     padding: 0.5rem;
     text-align: center;
-    h6 {
-      font-size: 0.8rem;
-      font-weight: ${(props) => props.theme.font.bold};
-    }
   }
 `;
 
-const ActionButtonContainer = styled(FlexWrapper)`
-  position: relative;
-  button.icon {
-    display: inline-block;
-    cursor: pointer;
-    padding: 0.25rem;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    transition: all 75ms ease;
-    &:hover {
-      background-color: #e6e6e6;
-    }
-  }
-`;
 const Status = styled.div`
   display: flex;
   align-items: center;

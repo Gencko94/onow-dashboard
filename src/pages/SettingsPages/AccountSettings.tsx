@@ -7,7 +7,6 @@ import { useContext } from "react";
 import { AuthProvider } from "../../contexts/AuthContext";
 import { USER } from "../../interfaces/auth/auth";
 import PhoneInput from "../../components/reusable/Inputs/PhoneInput";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
 import AccountPassword from "../../components/SettingsPage/MainSettingsPage/AccountSettings/AccountPassword";
 import Flex from "../../components/StyledComponents/Flex";
 import Button from "../../components/reusable/Button";
@@ -84,20 +83,23 @@ const AccountSettings = () => {
   };
   return (
     <Container>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الإعدادات", en: "Settings" },
-              target: "/settings",
-            },
-            {
-              name: { ar: "بيانات الحساب", en: "Account Settings" },
-              target: "",
-            },
-          ]}
-        />
-      </HeaderContainer>
+      <Heading tag="h5" type="large-title">
+        Account Settings
+      </Heading>
+      <Breadcrumbs
+        withoutTitle
+        children={[
+          {
+            name: { ar: "الإعدادات", en: "Settings" },
+            target: "/settings",
+          },
+          {
+            name: { ar: "بيانات الحساب", en: "Account Settings" },
+            target: "",
+          },
+        ]}
+      />
+
       <form style={{ margin: "2rem 0 " }} onSubmit={handleSubmit(onSubmit)}>
         <Heading tag="h5" mb="1rem" color="primary">
           Account Information

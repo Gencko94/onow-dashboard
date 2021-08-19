@@ -4,7 +4,6 @@ import { useHistory, useParams } from "react-router-dom";
 import CategoryInfo from "../../components/Categories/Category/CategoryInfo";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Spacer from "../../components/reusable/Spacer";
 import Grid from "../../components/StyledComponents/Grid";
 import Heading from "../../components/StyledComponents/Heading";

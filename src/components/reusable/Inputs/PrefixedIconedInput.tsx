@@ -137,11 +137,7 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     display: block;
   }
   .input-container {
-    display: flex;
     position: relative;
-
-    justify-content: center;
-
     background-color: ${subtleBackground};
     color: ${text};
     border: ${error ? borderDanger : border};
@@ -149,30 +145,37 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     border-radius: 6px;
     transition: all 150ms ease;
     .icon {
+      position:absolute;
+      left:${rtl ? "" : 0};
+      right:${rtl ? 0 : ""};
       padding: 0.4rem;
+      height:100%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: ${primary};
       
-     
     }
 
     input {
-      flex: 1;
+      
+      width:100%;
       padding: 0.4rem;
-      font-size: 0.8rem;
-      width: 50px;
+      padding-left:35px;
+      padding-right:35px;
+      font-size: 0.8rem; 
+      color: ${text};
+
       &:disabled {
-        background-color: ${accent2};
+        background-color:${accent2};
+        cursor:not-allowed;
+        opacity:50%;
+      }
+      &:not(:disabled):hover , &:focus-within {
+        border-color: ${borderHovered};
       }
     }
-    &:hover,
-    &:focus-within {
-      border-color: ${borderHovered};
-      background-color: ${accent1};
-    }
-  
+   
   }
   .error {
     font-size: 0.7rem;
@@ -188,29 +191,29 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
     color: ${primary};
   }
   .prefix {
+    position:absolute;
+    top:0;
+    left:${rtl ? 0 : ""};
+    right:${rtl ? "" : 0};
     padding: 0.4rem;
+    height:100%;
     display: flex;
-    font-size: 0.7rem;
     align-items: center;
     justify-content: center;
-    color: ${subtleBackground};
-    font-weight:${font.semibold};
-    background-color: ${accent2};
-    
+    color: ${primary};
+    font-size:0.9rem;
    
   }
   ${up(breakpoints.md)}{
     label {
       font-size: 0.9rem;
       margin-bottom: 0.75rem;
-    };
+    }
     .input-container{
+      
       input {
         font-size: 0.9rem;
       }
-    };
-    .prefix {
-      font-size:0.8rem;
     }
 
   };

@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle(
       subtleBackground,
       border,
       subtleFloating,
+      textContrast,
     },
   }) => `
 
@@ -73,9 +74,6 @@ const GlobalStyle = createGlobalStyle(
  
 	background-color: ${primary};
 }
-html {
-  height: 100%;
-}
 body {
   height: -webkit-fill-available;
 
@@ -111,35 +109,7 @@ select {
 h1, h2, h3, h4, h5, h6, strong {
   font-weight: ${font.bold};
 }
-// h1 {
-//   font-size:2rem;
-//   line-height:2.5rem; 
-// }
-// h2 {
-//   font-size:1.75rem;
-//   line-height:2.25rem; 
-// }
-// h3 {
-//   font-size:1.5rem;
-//   line-height:2rem; 
-// }
 
-// h4 {
-//   font-size:1.25rem;
-//   line-height:1.75rem;  
-// }
-// h5 {
-//   font-size:1rem;
-//   line-height:1.5rem;  
-// }
-// h6 {
-//   font-size:0.85rem;
-//   line-height:1.25rem; 
-// }
-
-p {
-  /* line-height:1 */
-}
 
 button {
   cursor: pointer;
@@ -160,6 +130,11 @@ input:focus, textarea:focus {
   border-color:${borderHovered} !important;
 }
 
+
+/* CUSTOM STYLES   */
+
+
+/* REACT TEL INPUT   */
 .react-tel-input .form-control {
   background:${subtleBackground} !important;
   border:${border} !important;
@@ -174,6 +149,9 @@ input:focus, textarea:focus {
   background:${subtleBackground} !important;
 
 }
+
+/* REACH CUSTOM STYLES   */
+
 [data-reach-menu-button] {
   padding:0;
   display:flex;
@@ -192,6 +170,10 @@ input:focus, textarea:focus {
  background:${subtleFloating};
  border-radius:6px;
  border:${border};
+ z-index:9998;
+}
+[data-reach-menu-button]{
+  color:${text};
 }
 [data-reach-menu-item]{
   padding: 0.5rem;
@@ -218,6 +200,57 @@ input:focus, textarea:focus {
 .slide-down[data-reach-menu-items] {
   border-radius: 5px;
   animation: slide-down 0.2s ease;
+}
+[data-reach-dialog-overlay] {
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background-color:rgba(255,255,255,0.6);
+}
+[data-reach-dialog-content] {
+  z-index:9999;
+  border-radius: 6px;
+ margin:1rem auto;
+  overflow-y:auto;
+  max-height:calc(100vh - 50px);
+}
+
+
+/* DATEPICKER */
+
+.react-datepicker__input-container input {
+  padding:0.4rem;
+  background-color:${subtleBackground};
+  color:${primary};
+  font-size:0.9rem;
+  text-align:center;
+  border-radius:6px;
+}
+.react-datepicker__day {
+  padding:0.5rem;
+  &:hover {
+    // color:${textContrast} !important;
+    background-color:${subtleBackground} !important;
+  }
+ 
+}
+.react-datepicker__portal .react-datepicker__current-month, .react-datepicker__portal .react-datepicker-time__header , .react-datepicker__header,.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+  color:${text} !important;
+}
+.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range, .react-datepicker__month-text--selected, .react-datepicker__month-text--in-selecting-range, .react-datepicker__month-text--in-range, .react-datepicker__quarter-text--selected, .react-datepicker__quarter-text--in-selecting-range, .react-datepicker__quarter-text--in-range, .react-datepicker__year-text--selected, .react-datepicker__year-text--in-selecting-range, .react-datepicker__year-text--in-range {
+  color: #fff !important;
+}
+.react-datepicker__header {
+  background-color:${subtleBackground} !important;
+  
+}
+.react-datepicker__month-container {
+  background-color:${subtleFloating};
+  color:${text} !important;
+}
+.react-datepicker__navigation {
+  height:50px !important;
+  width:50px;
 }
 `
 );

@@ -2,10 +2,9 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import "./transitions.css";
 import "./styles/buttons.css";
-import "./styles/modal-transitions.css";
 import App from "./App";
 import "./i18n";
-// import { BrowserRouter as Router } from "react-router-dom";
+import "@reach/tooltip/styles.css";
 
 ReactDOM.render(<App />, document.getElementById("react-root"));
 

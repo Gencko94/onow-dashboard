@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import styled from "styled-components";
+import { up } from "../../../constants";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 
 interface IProps {
@@ -22,28 +23,28 @@ const PaymentMethodsTabs = ({ activeTab }: IProps) => {
 
 export default PaymentMethodsTabs;
 const Container = styled.div`
-  padding-top: 0.5rem;
-
-  border-radius: 5px;
-
+  border-bottom: ${(props) => props.theme.border};
   display: flex;
-  gap: 0.5rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+  gap: 1.5rem;
 `;
 
-const TabItem = styled.button<{ active?: boolean }>`
-  padding: 0.75rem;
-  transition: color 150ms ease;
-  font-size: 0.9rem;
+const TabItem = styled.button<{ active?: boolean }>(
+  ({ theme: { breakpoints, font, primary, border, text }, active }) => `
+  padding: 0.75rem 0;
+  transition: color 100ms ease;
+  color:${text};
   white-space: nowrap;
   text-align: center;
-  border-radius: 6px 6px 0 0;
-  background-color: #fff;
-
-  color: ${(props) =>
-    props.active ? props.theme.primary : props.theme.textAlt};
-
-  font-weight: ${(props) => props.active && props.theme.font.bold};
+  border-bottom:${active ? `2px solid ${primary}` : "none"};
   &:hover {
-    color: ${(props) => !props.active && props.theme.text};
+    color: ${primary};
   }
-`;
+  ${up(breakpoints.md)}{
+    font-size: 1rem;
+    padding: 0.75rem 0;
+
+  }
+  `
+);

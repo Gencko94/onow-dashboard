@@ -13,14 +13,12 @@ interface IProps {
     | "textAlt"
     | "textAltContrast";
 
-  padding?: string;
   margin?: string;
   weight?: "light" | "regular" | "semibold" | "bold" | "xbold";
   align?: "center" | "right" | "left";
 }
 
 const Paragraph: FC<IProps> = ({
-  padding,
   children,
   fontSize = "1rem",
   mb,
@@ -34,7 +32,6 @@ const Paragraph: FC<IProps> = ({
       style={
         {
           "--margin-b": `${mb}`,
-          "--padding": padding,
         } as CSSProperties
       }
       color={color}
@@ -87,7 +84,7 @@ const P = styled.p<{
   text-align:${align};
   font-weight:${font[weight]};
   margin-bottom: ${mb ? mb : ""};
-  padding:var(--padding,0);
+ 
   font-size: calc(${fontSize} - 0.1rem);
   ${up(breakpoints.md)}{
       font-size:${fontSize}

@@ -1,11 +1,10 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { BiPlus } from "react-icons/bi";
+
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 import CategoryInfo from "../../components/Categories/Category/CategoryInfo";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Flex from "../../components/StyledComponents/Flex";
 import Heading from "../../components/StyledComponents/Heading";
 import useToast from "../../hooks/useToast";

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
-import Calendar from "react-calendar";
+
 import ClickAwayListener from "react-click-away-listener";
 import {
   FaAngleDoubleLeft,
@@ -267,7 +267,7 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
                     onClickAway={() => setFromCalendarOpen(false)}
                   >
                     <div className="calendar-container">
-                      <Calendar
+                      {/* <Calendar
                         onChange={(date: Date | Date[]) => {
                           setFilters((prev) => ({
                             ...prev,
@@ -286,7 +286,7 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
                         prevLabel={<FaAngleLeft size={20} />}
                         nextLabel={<FaAngleRight size={20} />}
                         showNeighboringMonth={false}
-                      />
+                      /> */}
                     </div>
                   </ClickAwayListener>
                 </CSSTransition>
@@ -321,7 +321,7 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
                     onClickAway={() => setToCalendarOpen(false)}
                   >
                     <div className="calendar-container">
-                      <Calendar
+                      {/* <Calendar
                         onChange={(date: Date | Date[]) => {
                           setFilters((prev) => ({
                             ...prev,
@@ -340,7 +340,7 @@ const OrdersFilters = ({ open, filters, setFilters }: IProps) => {
                         prevLabel={<FaAngleLeft size={20} />}
                         nextLabel={<FaAngleRight size={20} />}
                         showNeighboringMonth={false}
-                      />
+                      /> */}
                     </div>
                   </ClickAwayListener>
                 </CSSTransition>

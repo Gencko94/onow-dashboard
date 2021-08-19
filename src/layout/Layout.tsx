@@ -3,7 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { CSSTransition } from "react-transition-group";
 import styled, { css } from "styled-components";
 import DesktopNavbar from "../components/DesktopNavbar/DesktopNavbar";
-import Modal from "../components/Modal/Modal";
+
 import ConfirmationModal from "../components/reusable/ConfirmationModal";
 import Toast from "../components/reusable/Toast";
 import Sidebar from "../components/Sidebar/Sidebar";
@@ -106,26 +106,15 @@ const Layout: React.FC = ({ children }) => {
         >
           <ScrollToTop />
         </CSSTransition>
-        <Modal
+
+        <ConfirmationModal
           isOpen={confirmationModalStatus!.open}
           closeFunction={confirmationModalStatus!.closeCb}
-        >
-          <CSSTransition
-            classNames="product-option-modal"
-            timeout={200}
-            unmountOnExit
-            in={confirmationModalStatus!.open}
-          >
-            <ConfirmationModal
-              isOpen={confirmationModalStatus!.open}
-              closeFunction={confirmationModalStatus!.closeCb}
-              desc={confirmationModalStatus!.desc}
-              successButtonText="Delete"
-              successFunction={confirmationModalStatus!.successCb}
-              title={confirmationModalStatus!.title}
-            />
-          </CSSTransition>
-        </Modal>
+          desc={confirmationModalStatus!.desc}
+          successButtonText="Delete"
+          successFunction={confirmationModalStatus!.successCb}
+          title={confirmationModalStatus!.title}
+        />
 
         <Content drawerOpen={drawerOpen}>
           <DesktopNavbar handleToggleDrawer={handleToggleDrawer} />
@@ -148,7 +137,7 @@ const ContentContainer = styled.div(
 );
 const Content = styled.div<{ drawerOpen: boolean }>(
   ({ theme: { breakpoints }, drawerOpen }) => `
-  // z-index:2;
+
   min-height:100vh;
   position:relative;
 

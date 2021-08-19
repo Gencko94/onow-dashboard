@@ -8,8 +8,9 @@ import GithubInput from "../reusable/Inputs/GithubInput";
 import { useContext } from "react";
 import { AuthProvider } from "../../contexts/AuthContext";
 import { USER } from "../../interfaces/auth/auth";
-import { ModalWrapper } from "../Modal/ModalWrapper";
 import { up } from "../../utils/themes";
+import { DialogContent, DialogOverlay } from "@reach/dialog";
+import { animated, useTransition } from "@react-spring/web";
 
 interface ModalProps {
   /**
@@ -44,68 +45,75 @@ const StoreMaintenanceModal = ({ closeFunction, isOpen }: ModalProps) => {
   const handleToggleMaintenance = async (status: boolean) => {
     await mutateAsync(status);
   };
+  const transitions = useTransition(isOpen, {
+    from: { opacity: 0, y: -10 },
+    enter: { opacity: 1, y: 0 },
+    leave: { opacity: 0, y: 10 },
+  });
   return (
-    <Modal>
-      <ModalHead closeFunction={closeFunction} title="Store Maintenance" />
-      <Body>
-        <div className="content">
-          <GithubInput
-            checked={user!.store.maintenance}
-            label="Toggle Maintenance Mode"
-            desc="In Maintenance Mode , Your store will show a maintenance banner and users will not able to view your website contents"
-            onChange={() => {
-              if (user!.store.maintenance) {
-                handleToggleMaintenance(false);
-              } else {
-                handleToggleMaintenance(true);
-              }
-            }}
-          />
-        </div>
-      </Body>
-    </Modal>
+    <>
+      {transitions(
+        (styles, item) =>
+          item && (
+            <AnimatedDialogOverlay
+              onDismiss={closeFunction}
+              style={{ opacity: styles.opacity }}
+            >
+              <AnimatedDialogContent
+                aria-labelledby="dialog-title"
+                style={{
+                  transform: styles.y.to(
+                    (value) => `translate3d(0px, ${value}px, 0px)`
+                  ),
+                }}
+              >
+                <ModalHead
+                  closeFunction={closeFunction}
+                  title="Store Maintenance"
+                />
+
+                <div className="content">
+                  <GithubInput
+                    checked={user!.store.maintenance}
+                    label="Toggle Maintenance Mode"
+                    desc="In Maintenance Mode , Your store will show a maintenance banner and users will not able to view your website contents"
+                    onChange={() => {
+                      if (user!.store.maintenance) {
+                        handleToggleMaintenance(false);
+                      } else {
+                        handleToggleMaintenance(true);
+                      }
+                    }}
+                  />
+                </div>
+              </AnimatedDialogContent>
+            </AnimatedDialogOverlay>
+          )
+      )}
+    </>
   );
 };
 
 export default StoreMaintenanceModal;
 
-const Modal = styled(ModalWrapper)(
-  ({ theme: { breakpoints, accent1 } }) => `
-  position: fixed;
-  z-index: 20;
-  inset:380px 20px;
-  position:fixed;
+const AnimatedDialogContent = styled(animated(DialogContent))(
+  ({ theme: { breakpoints, subtleBackground } }) => `
   min-width:300px;
-  border:none;
-  outline:none;
-  z-index:20;
-  background-color:${accent1};
+  width:300px;  
+  background-color:${subtleBackground};
+  .content {
+    padding:1rem;
+  }
   ${up(breakpoints.md)}{
-    inset:380px 250px;
     min-width:400px;
+   
   }
   ${up(breakpoints.lg)}{
-    inset:380px 350px;
-  }
-  ${up(breakpoints.xl)}{
-    inset:380px 450px;
-  
-  `
-);
-const Body = styled.div(
-  ({ theme: { breakpoints, border } }) => `
-
-  width: 100%;
-  height: 100%;
-  display: grid;
-  padding: 0.75rem;
-  grid-template-columns: 1fr;
-
-  grid-template-rows: auto 1fr auto;
-  ${up(breakpoints.md)}{
+    min-width:500px;
    
-   padding:1rem;
   }
-  
-  `
+
+`
 );
+
+const AnimatedDialogOverlay = animated(DialogOverlay);

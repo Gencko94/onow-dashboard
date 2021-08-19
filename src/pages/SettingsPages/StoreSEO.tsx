@@ -5,9 +5,12 @@ import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { MdTitle } from "react-icons/md";
 import IconedInput from "../../components/reusable/Inputs/IconedInput";
 import Textarea from "../../components/reusable/Textarea";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Heading from "../../components/StyledComponents/Heading";
 import { up } from "../../utils/themes";
+import Box from "../../components/reusable/Box/Box";
+import Spacer from "../../components/reusable/Spacer";
+import Flex from "../../components/StyledComponents/Flex";
+import Button from "../../components/reusable/Button";
 
 const StoreSEO = () => {
   const {
@@ -23,80 +26,63 @@ const StoreSEO = () => {
   const values = watch();
   return (
     <div>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الإعدادات", en: "Settings" },
-              target: "/settings",
-            },
-            {
-              name: { ar: "تحسينات محرك البحث", en: "SEO Improvements" },
-              target: "",
-            },
-          ]}
-        />
-      </HeaderContainer>
-      <Container>
-        <Heading tag="h5" color="primary">
-          Store Search Engine Optimization
-        </Heading>
-        <Box>
-          <Grid>
-            <div>
-              <IconedInput
-                Icon={MdTitle}
-                errors={errors?.title}
-                label="Home Page Title"
-                name="title"
-                register={register}
-                required
-                requiredMessage="This field is required"
-              />
-              <Textarea
-                errors={errors?.description}
-                label="Store Description"
-                name="description"
-                register={register}
-                required
-                requiredMessage="This field is required"
-              />
-            </div>
-            <Demo>
-              <p className="link">https://Flowersplus.com</p>
-              <p className="title">{values.title}</p>
-              <p className="description">{values.description}</p>
-            </Demo>
-          </Grid>
-          <div className="save-container">
-            <button>Save Changes</button>
+      <Heading tag="h5" type="large-title">
+        Search Engine Optimizations
+      </Heading>
+      <Breadcrumbs
+        withoutTitle
+        children={[
+          {
+            name: { ar: "الإعدادات", en: "Settings" },
+            target: "/settings",
+          },
+          {
+            name: { ar: "تحسينات محرك البحث", en: "SEO Improvements" },
+            target: "",
+          },
+        ]}
+      />
+      <Spacer size={40} />
+      <Box>
+        <Grid>
+          <div>
+            <IconedInput
+              Icon={MdTitle}
+              errors={errors?.title}
+              label="Home Page Title"
+              name="title"
+              register={register}
+              required
+              requiredMessage="This field is required"
+            />
+            <Textarea
+              errors={errors?.description}
+              label="Store Description"
+              name="description"
+              register={register}
+              required
+              requiredMessage="This field is required"
+            />
           </div>
-        </Box>
-      </Container>
+          <Demo>
+            <p className="link">https://Flowersplus.com</p>
+            <p className="title">{values.title}</p>
+            <p className="description">{values.description}</p>
+          </Demo>
+        </Grid>
+      </Box>
+      <Spacer size={20} />
+      <Flex justify="center">
+        <Button size="md" color="green">
+          Save Changes
+        </Button>
+      </Flex>
     </div>
   );
 };
 
 export default StoreSEO;
-const Container = styled.div``;
-const Box = styled.div`
-  box-shadow: ${(props) => props.theme.shadow};
-  border-radius: 6px;
-  padding: 1rem;
-  background-color: #fff;
 
-  .save-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    button {
-      background-color: ${(props) => props.theme.green};
-      padding: 0.5rem;
-      border-radius: 6px;
-      color: #fff;
-    }
-  }
-`;
 const Grid = styled.div(
   ({ theme: { breakpoints } }) => `
   display: grid;
@@ -116,16 +102,16 @@ const Demo = styled.div`
   align-self: center;
   border: ${(props) => props.theme.border};
   .title {
-    color: #1a0dab;
+    color: ${(props) => props.theme.blue};
     font-size: 1.1rem;
     /* font-weight: ${(props) => props.theme.font.semibold}; */
   }
   .link {
-    color: #267c2d;
+    color: ${(props) => props.theme.green};
     font-size: 0.8rem;
   }
   .description {
     font-size: 0.8rem;
-    color: #666666;
+    color: ${(props) => props.theme.textAlt};
   }
 `;

@@ -1,23 +1,16 @@
-import { useState } from "react";
-import Calendar from "react-calendar";
-import ClickAwayListener from "react-click-away-listener";
-import { Control, Controller, FieldError, RefCallBack } from "react-hook-form";
+import { FieldError, RefCallBack } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import "react-calendar/dist/Calendar.css";
-import { formatISO, parseISO } from "date-fns";
-import {
-  FaAngleDoubleLeft,
-  FaAngleDoubleRight,
-  FaAngleLeft,
-  FaAngleRight,
-} from "react-icons/fa";
-import { CSSTransition } from "react-transition-group";
 
-import styled, { css } from "styled-components";
-import { format } from "date-fns";
+import DatePicker, { ReactDatePickerProps } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+import styled from "styled-components";
+
 import { FiCalendar } from "react-icons/fi";
+import { up } from "../../../constants";
 
-interface IProps {
+interface IProps extends ReactDatePickerProps {
   /**
    * 	An object with field errors. Obtainable from ```formState.errors```
    */
@@ -26,7 +19,7 @@ interface IProps {
   /**
    * 	The label of the input.
    */
-  label: string;
+  label?: string;
 
   /**
    * Whether the input is disabled
@@ -37,150 +30,133 @@ interface IProps {
    */
   desc?: string;
   ref?: RefCallBack;
-  onChange: (...event: any[]) => void;
-  value: any;
+  // onChange: (...event: any[]) => void;
+  // value: any;
 }
 
 const DateIconedInput = ({
   errors,
   disabled,
-  onChange,
-  value,
   label,
-
   desc,
   ref,
+  ...props
 }: IProps) => {
   const {
     i18n: { language },
   } = useTranslation();
-  const [calendarOpen, setCalendarOpen] = useState(false);
+
   return (
-    <Container
-      onClick={() => {
-        if (!disabled) setCalendarOpen(true);
-      }}
-      rtl={language === "ar"}
-      error={Boolean(errors)}
-    >
-      <label>{label}</label>
+    <Container rtl={language === "ar"} error={Boolean(errors)}>
+      {label && <label>{label}</label>}
       <div className="input-container">
         <span className="icon">
           <FiCalendar size={21} />
         </span>
-        <input
-          ref={ref}
-          readOnly
-          defaultValue={format(
-            parseISO(new Date().toISOString()),
-            "dd-MM-yyyy"
-          )}
-          value={format(parseISO(value), "dd-MM-yyyy")}
-          disabled={disabled}
-        />
+        <DatePicker withPortal portalId="portal-root" {...props} />
       </div>
       {desc && <p className="desc">{desc}</p>}
-      <CSSTransition
-        in={calendarOpen}
-        timeout={150}
-        classNames="calendar"
-        unmountOnExit
-      >
-        <ClickAwayListener onClickAway={() => setCalendarOpen(false)}>
-          <CalendarContainer>
-            <Calendar
-              value={parseISO(value)}
-              onChange={(date: any) => {
-                console.log(value, "value");
-                console.log(date.toISOString());
-                setCalendarOpen(false);
 
-                onChange(date.toISOString());
-              }}
-              tileClassName="tile"
-              minDate={new Date()}
-              prev2Label={<FaAngleDoubleLeft size={20} />}
-              next2Label={<FaAngleDoubleRight size={20} />}
-              prevLabel={<FaAngleLeft size={20} />}
-              nextLabel={<FaAngleRight size={20} />}
-              showNeighboringMonth={false}
-            />
-          </CalendarContainer>
-        </ClickAwayListener>
-      </CSSTransition>
-      <p className="error">{errors?.message}</p>
+      {errors && <p className="error">{errors?.message}</p>}
     </Container>
   );
 };
 
 export default DateIconedInput;
-const Container = styled.div<{ rtl: boolean; error: boolean }>`
+const Container = styled.div<{ rtl: boolean; error: boolean }>(
+  ({
+    theme: {
+      breakpoints,
+      text,
+      subtleBackground,
+      border,
+      borderDanger,
+      font,
+      primary,
+      dangerRed,
+      borderHovered,
+    },
+    error,
+    rtl,
+  }) => `
+  
+
   position: relative;
+  
   label {
-    color: ${({ theme }) => theme.text};
+    color: ${text};
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
-    font-weight: ${(props) => props.theme.font.regular};
+    font-weight: ${font.regular};
     display: inline-block;
   }
   .input-container {
-    display: flex;
     position: relative;
-
-    justify-content: center;
-
-    background-color: #fff;
-    color: ${(props) => props.theme.text};
-    border: ${(props) => props.theme.border};
+    background-color: ${subtleBackground};
+    color: ${text};
+    border: ${error ? borderDanger : border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
+   
+    input:disabled {
+    opacity:50%;
+     cursor:not-allowed;
+    } 
     .icon {
+      position:absolute;
+      left:${rtl ? "" : 0};
+      right:${rtl ? 0 : ""};
       padding: 0.4rem;
+      height:100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${(props) => props.theme.primary};
+      color: ${primary};
+      z-index:1;
     }
 
     input {
+      width:100%;
+      cursor:pointer;
+      font-weight:${font.semibold};
       flex: 1;
       padding: 0.4rem;
-      font-size: 0.9rem;
-      width: 50px;
-      &:disabled {
-        background-color: ${(props) => props.theme.accent2};
-      }
+      padding-left:${rtl ? "0.4rem" : "35px"};
+      padding-right:${rtl ? "35px" : "0.4rem"};
+      font-size: 0.8rem; 
+      color: ${text};
     }
     &:hover,
     &:focus-within {
-      border-color: ${(props) => props.theme.borderHovered};
+      border-color: ${borderHovered};
     }
-    ${(props) =>
-      props.error &&
-      css`
-        border-color: ${(props) => props.theme.dangerRed} !important;
-      `}
+    
   }
   .error {
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    color: ${(props) => props.theme.dangerRed};
+    color: ${dangerRed};
   }
   .desc {
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    color: ${(props) => props.theme.primary};
+    color: ${primary};
   }
-`;
-const CalendarContainer = styled.div`
-  position: absolute;
-  z-index: 100;
-  left: 0;
-  bottom: 0px;
-  direction: ltr;
-  width: 250px;
-  height: 250px;
-`;
+  ${up(breakpoints.md)}{
+    label {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+    .input-container{
+  
+      input {
+        font-size: 0.9rem;
+      }
+    }
+
+  };
+`
+);

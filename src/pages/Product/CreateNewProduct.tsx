@@ -10,7 +10,7 @@ import CreateProductOrderingAndBranchAvailability from "../../components/AddProd
 import CreateProductTabs from "../../components/AddProduct/CreateProductTabs/CreateProductTabs";
 import CreateProductPricingAndOptions from "../../components/AddProduct/ProductVariations/CreateProductPricingAndOptions";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
+
 import Heading from "../../components/StyledComponents/Heading";
 import useToast from "../../hooks/useToast";
 import extractError from "../../utils/extractError";

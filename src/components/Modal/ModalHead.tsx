@@ -1,7 +1,9 @@
 import { GrClose } from "react-icons/gr";
+import { IoMdClose } from "react-icons/io";
 import styled from "styled-components";
 import Button from "../reusable/Button";
 import IconWrapper from "../reusable/Icon";
+import IconButton from "../reusable/IconButton";
 import Heading from "../StyledComponents/Heading";
 
 interface IProps {
@@ -18,17 +20,16 @@ interface IProps {
 const ModalHead = ({ closeFunction, title }: IProps) => {
   return (
     <Container>
-      <Heading tag="h5" type="small-title">
+      <Heading tag="h5" type="medium-title">
         {title}
       </Heading>
-      <Button
+      <IconButton
         onClick={(e) => {
-          e.stopPropagation();
           closeFunction();
         }}
       >
-        <IconWrapper Icon={GrClose} />
-      </Button>
+        <IoMdClose size={30} />
+      </IconButton>
     </Container>
   );
 };

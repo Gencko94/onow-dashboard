@@ -1,17 +1,14 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useState } from "react";
-import { CSSTransition } from "react-transition-group";
-import { RiDeleteBinLine } from "react-icons/ri";
 
 import { useHistory } from "react-router";
 import { PRODUCT } from "../../../interfaces/products/products";
 import { useTranslation } from "react-i18next";
 import Checkbox from "../../reusable/Inputs/Checkbox";
-// import Popover from "../../reusable/Popover";
+
 import Button from "../../reusable/Button";
 
-import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
+import Flex from "../../StyledComponents/Flex";
 
 import useConfirmationModal from "../../../hooks/useConfirmationModal";
 import DefaultImage from "../../reusable/DefaultImage";
@@ -21,15 +18,7 @@ import Paragraph from "../../StyledComponents/Paragraph";
 import IconButton from "../../reusable/IconButton";
 
 import Spacer from "../../reusable/Spacer";
-import {
-  Menu,
-  MenuList,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-  MenuPopover,
-  MenuLink,
-} from "@reach/menu-button";
+import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
 import "@reach/menu-button/styles.css";
 interface IProps {
   product: PRODUCT;
@@ -49,7 +38,6 @@ const ProductItem = ({
   const { setConfirmationModalStatus, handleCloseConfirmationModal } =
     useConfirmationModal();
 
-  const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   const {
     i18n: { language },
@@ -119,11 +107,7 @@ const ProductItem = ({
         <Flex>
           <Menu>
             <MenuButton>
-              <IconButton
-                onClick={() => {
-                  setActionsMenuOpen(!actionsMenuOpen);
-                }}
-              >
+              <IconButton onClick={() => {}}>
                 <BsThreeDotsVertical size={20} />
               </IconButton>
             </MenuButton>
@@ -138,8 +122,6 @@ const ProductItem = ({
             >
               <MenuItem
                 onSelect={() => {
-                  setActionsMenuOpen(false);
-                  // e.stopPropagation();
                   setConfirmationModalStatus?.({
                     open: true,
                     desc: "Are you sure you want to delete this Product ?",
@@ -200,8 +182,4 @@ const Container = styled.div<{ selected: boolean }>`
     padding: 0.5rem;
     text-align: center;
   }
-`;
-
-const ActionButtonContainer = styled(FlexWrapper)`
-  position: relative;
 `;

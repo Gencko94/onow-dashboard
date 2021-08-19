@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 import ModalHead from "../Modal/ModalHead";
-import ModalTail from "./ModalTail";
+import ModalTail from "../Modal/ModalTail";
 
 import Paragraph from "../StyledComponents/Paragraph";
 import { up } from "../../utils/themes";
-import { ModalWrapper } from "../Modal/ModalWrapper";
+import { animated, useTransition } from "@react-spring/web";
+import { DialogContent, DialogOverlay } from "@reach/dialog";
 
 interface ModalProps {
   /**
@@ -47,59 +48,65 @@ const ConfirmationModal = ({
   desc,
   isLoading,
 }: ModalProps) => {
+  const transitions = useTransition(isOpen, {
+    from: { opacity: 0, y: -10 },
+    enter: { opacity: 1, y: 0 },
+    leave: { opacity: 0, y: 10 },
+  });
   return (
-    <Modal>
-      <ModalHead closeFunction={closeFunction} title={title} />
-      <Body>
-        <div className="description">
-          <Paragraph>{desc}</Paragraph>
-        </div>
-        <ModalTail
-          btnText={successButtonText}
-          successCb={successFunction}
-          closeFunction={closeFunction}
-          isLoading={isLoading}
-        />
-      </Body>
-    </Modal>
+    <>
+      {transitions(
+        (styles, item) =>
+          item && (
+            <AnimatedDialogOverlay
+              onDismiss={closeFunction}
+              style={{ opacity: styles.opacity }}
+            >
+              <AnimatedDialogContent
+                aria-labelledby="dialog-title"
+                style={{
+                  transform: styles.y.to(
+                    (value) => `translate3d(0px, ${value}px, 0px)`
+                  ),
+                }}
+              >
+                <ModalHead closeFunction={closeFunction} title={title} />
+
+                <div className="description">
+                  <Paragraph>{desc}</Paragraph>
+                </div>
+                <ModalTail
+                  btnText={successButtonText}
+                  successCb={successFunction}
+                  closeFunction={closeFunction}
+                  isLoading={isLoading}
+                />
+              </AnimatedDialogContent>
+            </AnimatedDialogOverlay>
+          )
+      )}
+    </>
   );
 };
 
 export default ConfirmationModal;
-const Modal = styled(ModalWrapper)(
-  ({ theme: { breakpoints, shadow, accent1 } }) => `
-  position: fixed;
-  z-index: 20;
-  inset:370px 20px;
-  position:fixed;
+const AnimatedDialogContent = styled(animated(DialogContent))(
+  ({ theme: { breakpoints, subtleBackground } }) => `
   min-width:300px;
-  border:none;
-  outline:none;
-  z-index:20;
-  background-color:${accent1};
+  width:300px;  
+  background-color:${subtleBackground};
+//   box-shadow: inset 0 0 1px 1px hsla(0, 0%, 100%, 0.9),
+//   0 20px 27px 0 rgba(0, 0, 0, 0.05);
+// backdrop-filter: saturate(200%) blur(30px);
+  .description {
+    padding:1rem;
+  }
   ${up(breakpoints.md)}{
-    inset:360px 190px;
+    min-width:400px;
+   
   }
-  ${up(breakpoints.lg)}{
-    inset:360px 325px;
-  }
-  ${up(breakpoints.xl)}{
-    inset:360px 490px;
-  }
-  `
-);
-const Body = styled.div(
-  ({ theme: { breakpoints, border } }) => `
 
-  width: 100%;
-  height: 100%;
-  display: grid;
-  padding: 0.75rem;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr auto;
-  ${up(breakpoints.md)}{
-   padding:1rem;
-  }
-  
-  `
+`
 );
+
+const AnimatedDialogOverlay = animated(DialogOverlay);

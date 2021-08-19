@@ -1,18 +1,18 @@
 import { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import { BiPlus } from "react-icons/bi";
+
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 import CouponInfo from "../../components/Coupons/Coupon/CouponInfo";
 import CouponProducts from "../../components/Coupons/Coupon/CouponProducts";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
+import Spacer from "../../components/reusable/Spacer";
+
 import Flex from "../../components/StyledComponents/Flex";
 import Heading from "../../components/StyledComponents/Heading";
 import useToast from "../../hooks/useToast";
 
-import { PRODUCT } from "../../interfaces/products/products";
 import extractError from "../../utils/extractError";
 import { createCoupon } from "../../utils/queries";
 
@@ -130,7 +130,6 @@ const CreateNewCoupon = () => {
             ]}
           />
         </div>
-
         <Button
           isLoading={isLoading}
           color="green"
@@ -141,6 +140,7 @@ const CreateNewCoupon = () => {
         </Button>
       </Flex>
 
+      <Spacer size={40} />
       <CouponInfo errors={errors} register={register} control={control} />
       <CouponProducts
         errors={errors}

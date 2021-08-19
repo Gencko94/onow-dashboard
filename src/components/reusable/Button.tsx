@@ -46,7 +46,8 @@ interface IProps extends React.ComponentPropsWithoutRef<"button"> {
   /**
    * Button Appearance
    */
-  appearance?: "default" | "ghost";
+  appearance?: "default" | "ghost" | "toggle";
+  active?: boolean;
 }
 
 const Button: React.FC<IProps> = React.forwardRef<HTMLButtonElement, IProps>(
@@ -62,6 +63,7 @@ const Button: React.FC<IProps> = React.forwardRef<HTMLButtonElement, IProps>(
       uppercase,
       appearance = "default",
       children,
+      active,
       ...props
     },
     ref
@@ -129,12 +131,18 @@ const Button: React.FC<IProps> = React.forwardRef<HTMLButtonElement, IProps>(
       else if (size === "sm") Component = DefaultButtonSm;
       else if (size === "md") Component = DefaultButtonMd;
       else if (size === "lg") Component = DefaultButtonLg;
+    } else if (appearance === "toggle") {
+      if (size === "xs") Component = ToggleButtonXs;
+      else if (size === "sm") Component = ToggleButtonSm;
+      else if (size === "md") Component = ToggleButtonMd;
+      else if (size === "lg") Component = ToggleButtonLg;
     }
     return (
       <Component
         background={buttonColor}
         textColor={textColor}
         withTransition={withTransition}
+        active={active}
         // style={
         //   width && height
         //     ? {
@@ -166,7 +174,6 @@ const Button: React.FC<IProps> = React.forwardRef<HTMLButtonElement, IProps>(
 export default Button;
 
 const BaseButton = styled(UnstyledButton)`
-  /* text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15); */
   border-radius: 6px;
   font-weight: ${(props) => props.theme.font.semibold};
   transition: transform 250ms;
@@ -206,6 +213,12 @@ const GhostButton = styled(BaseButton)<{
   color: ${(props) => props.background};
 `;
 
+// Toggle Button
+
+const ToggleButton = styled(GhostButton)<{ active?: boolean }>`
+  background: ${(props) => (props.active ? props.background : "transparent")};
+  color: ${(props) => (props.active ? "#fff" : "inherit")};
+`;
 const GhostButtonXs = styled(GhostButton)`
   padding: 1px 7px;
   font-size: 11px;
@@ -237,4 +250,20 @@ const DefaultButtonMd = styled(DefaultButton)`
 const DefaultButtonLg = styled(DefaultButton)`
   padding: 10px 16px;
   font-size: 16px;
+`;
+const ToggleButtonXs = styled(ToggleButton)`
+  padding: 1px 7px;
+  font-size: 11px;
+`;
+const ToggleButtonSm = styled(ToggleButton)`
+  padding: 4px 9px;
+  font-size: 13px;
+`;
+const ToggleButtonMd = styled(ToggleButton)`
+  padding: 7px 11px;
+  font-size: 14px;
+`;
+const ToggleButtonLg = styled(ToggleButton)`
+  padding: 9px 15px;
+  font-size: 15px;
 `;

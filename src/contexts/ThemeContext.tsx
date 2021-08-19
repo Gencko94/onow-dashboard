@@ -19,7 +19,7 @@ export const ThemeContext = createContext<Partial<ContextProps>>({});
 const ThemeProvider: React.FC = ({ children }) => {
   const [colorMode, setColorMode] = useState<ThemeMode>(getInitialColorMode());
   const { i18n } = useTranslation();
-
+  // TODO : Remember to Attach RTL to Theme. so changing directions become easy.
   const fontFamily = useMemo(
     // () => (i18n.language === "ar" ? "Cairo" : "Noto Sans JP"),
     // () => (i18n.language === "ar" ? "Cairo" : "apple-System"),

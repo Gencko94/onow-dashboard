@@ -1,16 +1,16 @@
 import { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import { RiDeleteBinLine } from "react-icons/ri";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
+import Spacer from "../../components/reusable/Spacer";
 
-import HeaderContainer from "../../components/reusable/HeaderContainer";
 import StaffMemberInformation from "../../components/Staff/StaffMemberInformation";
 import StaffMemberPermissions from "../../components/Staff/StaffMemberPermissions";
 import Flex from "../../components/StyledComponents/Flex";
+import Heading from "../../components/StyledComponents/Heading";
 import { userPermissions } from "../../data/userPermissions";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
 import useToast from "../../hooks/useToast";
@@ -133,49 +133,54 @@ const StaffMember = () => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <HeaderContainer>
-        <Breadcrumbs
-          children={[
-            {
-              name: { ar: "الإعدادات", en: "Settings" },
-              target: "/settings",
-            },
-            {
-              name: { ar: "أعضاء المتجر", en: "Store Staff" },
-              target: "/settings/staff",
-            },
-            {
-              name: { ar: "بيانات العضو", en: "Staff Member Details" },
-              target: "",
-            },
-          ]}
-        />
-        <Flex margin="1rem" justify="flex-end">
-          <Button type="submit" color="green" withTransition margin="0 1rem">
-            Save Changes
-          </Button>
-          <Button
-            color="danger"
-            onClick={() => {
-              setConfirmationModalStatus?.({
-                open: true,
-                desc: "Are you sure you want to delete this Staff Member ?",
-                title: "Delete Product",
-                closeCb: handleCloseConfirmationModal!,
-                successCb: () => handleDeleteStaffMember(),
-              });
-            }}
-          >
-            Delete Staff Member
-          </Button>
-        </Flex>
-      </HeaderContainer>
+      <Heading tag="h5" type="large-title">
+        Staff Member
+      </Heading>
+      <Breadcrumbs
+        withoutTitle
+        children={[
+          {
+            name: { ar: "الإعدادات", en: "Settings" },
+            target: "/settings",
+          },
+          {
+            name: { ar: "أعضاء المتجر", en: "Store Staff" },
+            target: "/settings/staff",
+          },
+          {
+            name: { ar: "بيانات العضو", en: "Staff Member Details" },
+            target: "",
+          },
+        ]}
+      />
+      <Flex margin="1rem" justify="flex-end">
+        <Button type="submit" color="green" withTransition margin="0 1rem">
+          Save Changes
+        </Button>
+        <Spacer size={10} />
+        <Button
+          color="danger"
+          onClick={() => {
+            setConfirmationModalStatus?.({
+              open: true,
+              desc: "Are you sure you want to delete this Staff Member ?",
+              title: "Delete Product",
+              closeCb: handleCloseConfirmationModal!,
+              successCb: () => handleDeleteStaffMember(),
+            });
+          }}
+        >
+          Delete Staff Member
+        </Button>
+      </Flex>
+      <Spacer size={40} />
 
       <StaffMemberInformation
         register={register}
         errors={errors}
         control={control}
       />
+      <Spacer size={40} />
       {role === "STAFF" && (
         <StaffMemberPermissions
           setValue={setValue}

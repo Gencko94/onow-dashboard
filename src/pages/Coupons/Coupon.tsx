@@ -13,7 +13,6 @@ import CouponInfo from "../../components/Coupons/Coupon/CouponInfo";
 import CouponProducts from "../../components/Coupons/Coupon/CouponProducts";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
-import HeaderContainer from "../../components/reusable/HeaderContainer";
 import Spacer from "../../components/reusable/Spacer";
 import Flex from "../../components/StyledComponents/Flex";
 import Grid from "../../components/StyledComponents/Grid";
