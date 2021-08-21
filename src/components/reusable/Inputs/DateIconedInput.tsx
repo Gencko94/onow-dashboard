@@ -1,6 +1,5 @@
 import { FieldError, RefCallBack } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import "react-calendar/dist/Calendar.css";
 
 import DatePicker, { ReactDatePickerProps } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

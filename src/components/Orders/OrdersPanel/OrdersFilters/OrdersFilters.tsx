@@ -12,7 +12,6 @@ import { VscFilter } from "react-icons/vsc";
 import Select from "react-select";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
-import "react-calendar/dist/Calendar.css";
 import { ORDERS_FILTERS } from "../../../../interfaces/orders/orders";
 import format from "date-fns/format";
 import { GrClose } from "react-icons/gr";

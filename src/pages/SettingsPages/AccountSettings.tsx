@@ -18,6 +18,9 @@ import extractError from "../../utils/extractError";
 import useToast from "../../hooks/useToast";
 import Heading from "../../components/StyledComponents/Heading";
 import Hr from "../../components/StyledComponents/Hr";
+import Box from "../../components/reusable/Box/Box";
+import Grid from "../../components/StyledComponents/Grid";
+import Spacer from "../../components/reusable/Spacer";
 
 const AccountSettings = () => {
   const { user } = useContext(AuthProvider);
@@ -82,7 +85,7 @@ const AccountSettings = () => {
     }
   };
   return (
-    <Container>
+    <>
       <Heading tag="h5" type="large-title">
         Account Settings
       </Heading>
@@ -99,56 +102,57 @@ const AccountSettings = () => {
           },
         ]}
       />
-
-      <form style={{ margin: "2rem 0 " }} onSubmit={handleSubmit(onSubmit)}>
-        <Heading tag="h5" mb="1rem" color="primary">
-          Account Information
-        </Heading>
-        <div onSubmit={handleSubmit(onSubmit)} className="container">
-          <IconedInput
-            Icon={MdSubtitles}
-            errors={errors?.first_name}
-            register={register}
-            required
-            requiredMessage="Required"
-            label="First Name"
-            name="first_name"
-          />
-          <IconedInput
-            Icon={MdSubtitles}
-            errors={errors?.last_name}
-            register={register}
-            required
-            requiredMessage="Required"
-            label="Last Name"
-            name="last_name"
-          />
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field: { onChange, value } }) => {
-              return (
-                <PhoneInput
-                  disabled
-                  label="Phone Number"
-                  value={value}
-                  errors={errors?.phone}
-                  onChange={(data) => onChange(`+${data}`)}
-                />
-              );
-            }}
-          />
-          <IconedInput
-            Icon={AiOutlineMail}
-            errors={errors?.email}
-            register={register}
-            required
-            disabled
-            requiredMessage="Required"
-            label="Email"
-            name="email"
-          />
-        </div>
+      <Spacer size={40} />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box type="titled" boxTitle="Account Information">
+          <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+            <IconedInput
+              Icon={MdSubtitles}
+              errors={errors?.first_name}
+              register={register}
+              required
+              requiredMessage="Required"
+              label="First Name"
+              name="first_name"
+            />
+            <IconedInput
+              Icon={MdSubtitles}
+              errors={errors?.last_name}
+              register={register}
+              required
+              requiredMessage="Required"
+              label="Last Name"
+              name="last_name"
+            />
+          </Grid>
+          <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+            <Controller
+              name="phone"
+              control={control}
+              render={({ field: { onChange, value } }) => {
+                return (
+                  <PhoneInput
+                    disabled
+                    label="Phone Number"
+                    value={value}
+                    errors={errors?.phone}
+                    onChange={(data) => onChange(`+${data}`)}
+                  />
+                );
+              }}
+            />
+            <IconedInput
+              Icon={AiOutlineMail}
+              errors={errors?.email}
+              register={register}
+              required
+              disabled
+              requiredMessage="Required"
+              label="Email"
+              name="email"
+            />
+          </Grid>
+        </Box>
         <Flex margin="1rem" justify="center">
           <Button
             isLoading={isLoading}
@@ -162,22 +166,10 @@ const AccountSettings = () => {
           </Button>
         </Flex>
       </form>
-      <Hr />
+      <Spacer size={40} />
       <AccountPassword />
-    </Container>
+    </>
   );
 };
 
 export default AccountSettings;
-
-const Container = styled.div`
-  .container {
-    background-color: #fff;
-    box-shadow: ${(props) => props.theme.shadow};
-    border-radius: 6px;
-    padding: 1rem 1.5rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-`;

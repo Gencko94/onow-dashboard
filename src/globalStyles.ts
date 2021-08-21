@@ -205,7 +205,7 @@ input:focus, textarea:focus {
   position:fixed;
   inset:0;
   z-index:9999;
-  background-color:rgba(255,255,255,0.6);
+  background-color:rgba(0,0,0,0.6);
 }
 [data-reach-dialog-content] {
   z-index:9999;
@@ -251,6 +251,15 @@ input:focus, textarea:focus {
 .react-datepicker__navigation {
   height:50px !important;
   width:50px;
+}
+
+/* RECHARTS */
+.recharts-text {
+  fill:${text};
+}
+.recharts-cartesian-axis-tick-value tspan {
+  
+  top:2px;
 }
 `
 );

@@ -1,4 +1,3 @@
-// import Dialog from "@reach/dialog";
 import { useState } from "react";
 
 import CustomerList from "../components/Customers/CustomerList/CustomerList";

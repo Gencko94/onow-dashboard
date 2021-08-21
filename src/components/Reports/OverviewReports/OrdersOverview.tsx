@@ -1,14 +1,22 @@
 import styled from "styled-components";
+
+import {
+  Tooltip,
+  ResponsiveContainer,
+  LineChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Legend,
+  Line,
+  AreaChart,
+  Area,
+} from "recharts";
+import Box from "../../reusable/Box/Box";
+import Paragraph from "../../StyledComponents/Paragraph";
 import Flex from "../../StyledComponents/Flex";
 import Heading from "../../StyledComponents/Heading";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
 const OrdersOverview = () => {
-  const data = [
-    { name: "Group A", value: 400 },
-    { name: "Group B", value: 300 },
-    { name: "Group C", value: 300 },
-    { name: "Group D", value: 200 },
-  ];
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
   const RADIAN = Math.PI / 180;
@@ -37,47 +45,89 @@ const OrdersOverview = () => {
       </text>
     );
   };
+  const data = [
+    {
+      name: "2021-7-21",
+      "Daily Orders": 5,
+    },
+    {
+      name: "2021-7-22",
+      "Daily Orders": 10,
+    },
+    {
+      name: "2021-7-23",
+      "Daily Orders": 21,
+    },
+    {
+      name: "2021-7-24",
+      "Daily Orders": 25,
+    },
+    {
+      name: "2021-7-25",
+      "Daily Orders": 17,
+    },
+    {
+      name: "2021-7-26",
+      "Daily Orders": 20,
+    },
+  ];
   return (
-    <Container>
-      <div className="head">
-        <Heading tag="h6">Orders Overview</Heading>
-      </div>
-      {/* <div style={{ width: "100%", height: "100%", display: "block" }}> */}
-      <ResponsiveContainer width="100%" height="90%" maxHeight={600}>
-        <PieChart width={200} height={200}>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={100}
-            fill="#8884d8"
-            dataKey="value"
-          >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-        </PieChart>
+    <Box
+    //  type="titled"
+    // boxTitle="Orders Per Day"
+    >
+      <Flex margin="0 0 1rem 0">
+        <Heading tag="h6" type="small-title">
+          Orders per day
+        </Heading>
+      </Flex>
+      <ResponsiveContainer width="100%" aspect={1} height="400px">
+        <AreaChart
+          data={data}
+          margin={{
+            top: 25,
+            // right: 30,
+            left: -30,
+            // bottom: -25,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis dataKey="Daily Orders" />
+          <Tooltip content={CustomTooltip} />
+          <Legend />
+          {/* <CustomArea /> */}
+          <Area
+            // fill="#fff"
+            type="monotone"
+            dataKey="Daily Orders"
+            // stroke="#1d60db"
+            strokeWidth="4px"
+            activeDot={{ r: 6 }}
+            dot={true}
+          />
+        </AreaChart>
       </ResponsiveContainer>
-      {/* </div> */}
-    </Container>
+    </Box>
   );
 };
 
 export default OrdersOverview;
-const Container = styled.div`
-  border: ${(props) => props.theme.border};
-  overflow: hidden;
-  border-radius: 6px;
-  background-color: ${(props) => props.theme.accent1};
-  position: relative;
-  .head {
-    border-bottom: ${(props) => props.theme.border};
-    padding: 1rem 0.75rem;
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <Box>
+        <Paragraph fontSize="0.9rem">{`Orders on this day: ${payload[0].value} orders`}</Paragraph>
+        <Paragraph fontSize="0.9rem">{`${label}`}</Paragraph>
+        {/* <p className="intro">{getIntroOfPage(label)}</p> */}
+        {/* <p className="desc">Anything you want can be displayed here.</p> */}
+      </Box>
+    );
   }
-`;
+
+  return null;
+};
+// const CustomArea = styled(Area)`
+//   stroke: ${(props) => props.theme.secondary};
+// `;

@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import CategoryInfo from "../../components/Categories/Category/CategoryInfo";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
+import Spacer from "../../components/reusable/Spacer";
 import Flex from "../../components/StyledComponents/Flex";
 import Heading from "../../components/StyledComponents/Heading";
 import useToast from "../../hooks/useToast";
@@ -119,7 +120,7 @@ const CreateNewCategory = () => {
         errors={errors}
         register={register}
       />
-
+      <Spacer size={40} />
       <CategoryImage setValue={setValue} control={control} errors={errors} />
     </form>
   );

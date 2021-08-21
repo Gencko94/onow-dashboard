@@ -1,6 +1,3 @@
-import { SubmitHandler } from "react-hook-form";
-import { useForm } from "react-hook-form";
-
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
@@ -10,65 +7,35 @@ import Breadcrumbs from "../components/reusable/Breadcrumbs";
 import Button from "../components/reusable/Button";
 
 import Flex from "../components/StyledComponents/Flex";
-import Hr from "../components/StyledComponents/Hr";
 import useConfirmationModal from "../hooks/useConfirmationModal";
 import useToast from "../hooks/useToast";
 import { CUSTOMER } from "../interfaces/customers/customers";
 import extractError from "../utils/extractError";
-import {
-  deleteCustomer,
-  editCustomer,
-  getSingleCustomer,
-} from "../utils/queries";
+import { deleteCustomer, getSingleCustomer } from "../utils/queries";
 import Heading from "../components/StyledComponents/Heading";
 import Spacer from "../components/reusable/Spacer";
+import styled from "styled-components";
+import { up } from "../constants";
+import CustomerInsights from "../components/CustomerProfile/CustomerInsights";
+import { useState } from "react";
+import EditCustomerModal from "../components/CustomerProfile/EditCustomerModal";
 
 const CustomerProfile = () => {
   const queryClient = useQueryClient();
+  const [modalOpen, setModalOpen] = useState(false);
   const { replace } = useHistory();
   const { id } = useParams<{ id: string }>();
   const { handleCloseConfirmationModal, setConfirmationModalStatus } =
     useConfirmationModal();
   const { handleCloseToast, setToastStatus } = useToast();
   const { data } = useQuery<CUSTOMER>(
-    ["customer", id],
+    ["customer", parseInt(id)],
     () => getSingleCustomer(id),
     {
       suspense: true,
     }
   );
-  const { mutateAsync: editMutation, isLoading: editLoading } = useMutation(
-    editCustomer,
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("customers");
-      },
-      onError: (error) => {
-        const { responseError } = extractError(error);
-        if (responseError) {
-          setToastStatus?.({
-            fn: () => {
-              reset();
-              handleCloseToast?.();
-            },
-            open: true,
-            text: responseError,
-            type: "error",
-          });
-        } else {
-          setToastStatus?.({
-            fn: () => {
-              reset();
-              handleCloseToast?.();
-            },
-            open: true,
-            text: "Something went wrong",
-            type: "error",
-          });
-        }
-      },
-    }
-  );
+
   // Delete Mutation
   const {
     mutateAsync: deleteCustomerMutation,
@@ -104,12 +71,7 @@ const CustomerProfile = () => {
       }
     },
   });
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<CUSTOMER>({ defaultValues: data });
+
   const handleDeleteCustomer = async () => {
     handleCloseConfirmationModal?.();
     await deleteCustomerMutation(data!.id);
@@ -122,18 +84,7 @@ const CustomerProfile = () => {
       type: "success",
     });
   };
-  const onSubmit: SubmitHandler<CUSTOMER> = async (data) => {
-    console.log(data);
-    await editMutation(data);
-    setToastStatus?.({
-      fn: () => {
-        handleCloseToast?.();
-      },
-      open: true,
-      text: "Customer Updated Successfully",
-      type: "success",
-    });
-  };
+
   return (
     <>
       <Heading tag="h5" type="large-title">
@@ -154,6 +105,16 @@ const CustomerProfile = () => {
       />
       <Flex justify="flex-end">
         <Button
+          onClick={() => {
+            setModalOpen(true);
+          }}
+          withTransition
+          color="green"
+        >
+          Edit customer
+        </Button>
+        <Spacer size={10} />
+        <Button
           type="button"
           withTransition
           color="danger"
@@ -169,35 +130,38 @@ const CustomerProfile = () => {
             })
           }
         >
-          Delete Customer
+          Delete customer
         </Button>
       </Flex>
       <Spacer size={40} />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <CustomerProfileInfo
-          register={register}
-          errors={errors}
-          control={control}
-          joinDate={data!.join_date}
-        />
-        <Spacer size={20} />
-        <Flex justify="center">
-          <Button
-            withTransition
-            type="submit"
-            color="green"
-            margin="0 1rem"
-            isLoading={editLoading}
-            disabled={editLoading}
-          >
-            Save Changes
-          </Button>
-        </Flex>
-      </form>
-      <Hr />
+
+      <Grid>
+        <CustomerProfileInfo data={data!} />
+
+        <CustomerInsights data={data!} />
+      </Grid>
+
+      <Spacer size={40} />
       <CustomerOrders customerId={data!.id} />
+      <EditCustomerModal
+        data={data!}
+        open={modalOpen}
+        closeFunction={() => setModalOpen(false)}
+      />
     </>
   );
 };
 
 export default CustomerProfile;
+const Grid = styled.div(
+  ({ theme: { breakpoints } }) => `
+display:grid;
+grid-template-columns:1fr;
+gap:1.5rem;
+${up(breakpoints.md)}{
+  grid-template-columns:1fr 0.8fr;
+
+}
+
+`
+);

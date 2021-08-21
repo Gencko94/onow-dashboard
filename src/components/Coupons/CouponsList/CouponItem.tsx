@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useState } from "react";
-import { CSSTransition } from "react-transition-group";
-import { RiDeleteBinLine } from "react-icons/ri";
+
 import { useHistory } from "react-router";
 import { COUPON } from "../../../interfaces/coupons/coupons";
 import { useTranslation } from "react-i18next";
@@ -16,6 +14,8 @@ import Flex from "../../StyledComponents/Flex";
 import Paragraph from "../../StyledComponents/Paragraph";
 import IconButton from "../../reusable/IconButton";
 import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
+import { format, parseISO } from "date-fns";
+import Spacer from "../../reusable/Spacer";
 
 interface IProps {
   coupon: COUPON;
@@ -44,14 +44,20 @@ const CouponItem = ({
         return (
           <Status color="green">
             <span className="dot" />
-            <h6>Active</h6>
+            <Spacer size={10} />
+            <Paragraph fontSize="0.9rem" weight="semibold">
+              Active
+            </Paragraph>
           </Status>
         );
       case false:
         return (
           <Status color="#b72b2b">
             <span className="dot" />
-            <h6>Disabled</h6>
+            <Spacer size={10} />
+            <Paragraph fontSize="0.9rem" weight="semibold">
+              Disabled
+            </Paragraph>
           </Status>
         );
       default:
@@ -78,6 +84,16 @@ const CouponItem = ({
       <div className="field">
         <Paragraph fontSize="0.9rem" weight="semibold">
           {coupon.code}
+        </Paragraph>
+      </div>
+      <div className="field">
+        <Paragraph fontSize="0.9rem" weight="semibold">
+          {format(parseISO(coupon.start_date), "dd-MM-yyyy")}
+        </Paragraph>
+      </div>
+      <div className="field">
+        <Paragraph fontSize="0.9rem" weight="semibold">
+          {format(parseISO(coupon.end_date), "dd-MM-yyyy")}
         </Paragraph>
       </div>
       <div className="field">{renderStatus(coupon.enabled)}</div>
@@ -135,7 +151,7 @@ export default CouponItem;
 const Container = styled.div<{ selected: boolean }>`
   display: grid;
   grid-template-columns: repeat(1, minmax(35px, 50px)) repeat(
-      4,
+      6,
       minmax(140px, 1fr)
     );
   background-color: ${(props) => props.theme.subtleBackground};

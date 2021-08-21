@@ -122,15 +122,17 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       subtleBackground,
       text,
       borderDanger,
+      textAlt,
     },
     error,
     rtl,
   }) => `
   label {
-    color: ${text};
+    color: ${textAlt};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
     display: block;
+    font-weight:${font.semibold};
   }
    .input-container {
     position: relative;

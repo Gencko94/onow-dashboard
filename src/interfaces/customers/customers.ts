@@ -5,11 +5,11 @@ export interface NEW_CUSTOMER {
   email: string;
 }
 
-export interface CUSTOMER {
+export type CUSTOMER = {
   id: number;
   first_name: string;
   last_name: string;
   phone: string;
   email?: string;
   join_date: string;
-}
+};

@@ -177,6 +177,7 @@ const BaseButton = styled(UnstyledButton)`
   border-radius: 6px;
   font-weight: ${(props) => props.theme.font.semibold};
   transition: transform 250ms;
+  text-transform: uppercase;
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;

@@ -166,7 +166,9 @@ const CustomerList = ({
       { title: "", sortable: false },
       { title: "customerName", sortable: true },
       { title: "customerPhone", sortable: true },
-      { title: "customerEmail", sortable: true },
+      { title: "firstOrderDate", sortable: true },
+      { title: "lastOrderDate", sortable: true },
+      { title: "totalOrders", sortable: true },
       { title: "actions", sortable: false },
     ],
     []
@@ -241,7 +243,7 @@ const CustomerList = ({
               cols={cols}
               gap="0"
               gridCols="repeat(1, minmax(35px, 50px)) repeat(
-                4,
+                6,
                 minmax(100px, 1fr)
               );"
             />

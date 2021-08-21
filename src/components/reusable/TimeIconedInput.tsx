@@ -3,7 +3,6 @@ import { useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
 
 import { useTranslation } from "react-i18next";
-import "react-calendar/dist/Calendar.css";
 
 import { IconType } from "react-icons/lib";
 import { CSSTransition } from "react-transition-group";

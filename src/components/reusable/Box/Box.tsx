@@ -43,11 +43,11 @@ const TitledBox = styled(DefaultBox)(
   ({ theme: { breakpoints, border } }) => `
 padding:0;
 .box-title {
-  padding:0.5rem;
+  padding:0.75rem;
   border-bottom: ${border};
 }
 .box-content {
-  padding:0.5rem;
+  padding:0.75rem;
 }
 ${up(breakpoints.md)}{
 padding:0;

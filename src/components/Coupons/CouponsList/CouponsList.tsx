@@ -36,6 +36,8 @@ const CouponsList = () => {
       { title: "", sortable: false },
       { title: "couponName", sortable: false },
       { title: "code", sortable: false },
+      { title: "validFrom", sortable: false },
+      { title: "validTill", sortable: false },
       { title: "status", sortable: false },
       { title: "actions", sortable: false },
     ],
@@ -193,7 +195,7 @@ const CouponsList = () => {
               gap="0"
               cols={cols}
               gridCols="repeat(1, minmax(35px, 50px)) repeat(
-            4,
+            6,
             minmax(140px, 1fr)
           );"
             />

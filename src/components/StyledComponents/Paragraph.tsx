@@ -22,7 +22,7 @@ const Paragraph: FC<IProps> = ({
   children,
   fontSize = "1rem",
   mb,
-  color,
+  color = "text",
   margin,
   weight = "regular",
   align,
@@ -45,48 +45,32 @@ const Paragraph: FC<IProps> = ({
     </P>
   );
 };
-
+type COLORS =
+  | "primary"
+  | "secondary"
+  | "text"
+  | "textContrast"
+  | "textAlt"
+  | "textAltContrast";
 export default Paragraph;
 const P = styled.p<{
-  color?:
-    | "primary"
-    | "secondary"
-    | "text"
-    | "textContrast"
-    | "textAlt"
-    | "textAltContrast";
+  color: COLORS;
   margin?: string;
   mb?: string;
   weight: "light" | "regular" | "semibold" | "bold" | "xbold";
   fontSize: string;
   align?: "center" | "right" | "left";
 }>(
-  ({
-    theme: {
-      breakpoints,
-      text,
-      textAlt,
-      textAltContrast,
-      textContrast,
-      primary,
-      secondary,
-      font,
-    },
-    color,
-    margin,
-    mb,
-    weight,
-    fontSize,
-    align,
-  }) => `
-  color: ${[color]};
+  ({ theme, color, margin, mb, weight, fontSize, align }) => `
+
+  color: ${theme[`${color}` as COLORS]};
   margin:${margin};
   text-align:${align};
-  font-weight:${font[weight]};
+  font-weight:${theme.font[weight]};
   margin-bottom: ${mb ? mb : ""};
  
   font-size: calc(${fontSize} - 0.1rem);
-  ${up(breakpoints.md)}{
+  ${up(theme.breakpoints.md)}{
       font-size:${fontSize}
 
   }

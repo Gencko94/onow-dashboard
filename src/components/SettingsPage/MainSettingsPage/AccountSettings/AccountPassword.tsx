@@ -5,6 +5,7 @@ import styled from "styled-components";
 import useToast from "../../../../hooks/useToast";
 import extractError from "../../../../utils/extractError";
 import { changeUserPassword } from "../../../../utils/queries";
+import Box from "../../../reusable/Box/Box";
 import Button from "../../../reusable/Button";
 import PasswordInput from "../../../reusable/Inputs/PasswordInput";
 import Flex from "../../../StyledComponents/Flex";
@@ -62,11 +63,8 @@ const AccountPassword = () => {
     }
   };
   return (
-    <Container onSubmit={handleSubmit(onSubmit)}>
-      <Heading tag="h5" color="primary">
-        Change Account password
-      </Heading>
-      <div className="container">
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Box type="titled" boxTitle="Change Account password">
         <PasswordInput
           register={register}
           name="current_password"
@@ -83,7 +81,7 @@ const AccountPassword = () => {
           label="New Password"
           errors={errors?.password}
         />
-      </div>
+      </Box>
       <Flex margin="1rem" justify="center">
         <Button
           isLoading={isLoading}
@@ -95,11 +93,8 @@ const AccountPassword = () => {
           Change Password
         </Button>
       </Flex>
-    </Container>
+    </form>
   );
 };
 
 export default AccountPassword;
-const Container = styled.form`
-  margin: 2rem 0;
-`;

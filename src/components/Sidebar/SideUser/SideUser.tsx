@@ -15,7 +15,7 @@ const SideUser = () => {
     <Container>
       <div className="user">
         <img className="img" src="/images/user.jpg" alt="user" />
-        <Paragraph fontSize="0.9rem" margin="0 0.5rem">
+        <Paragraph color="textAltContrast" fontSize="0.9rem" margin="0 0.5rem">
           {user?.first_name} {user?.last_name}
         </Paragraph>
       </div>

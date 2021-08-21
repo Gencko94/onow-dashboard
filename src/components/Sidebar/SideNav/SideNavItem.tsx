@@ -21,7 +21,7 @@ const SideNavItem = ({ Icon, active, title, target }: IProps) => {
         <span className="icon">
           <Icon size={20} />
         </span>
-        <Paragraph fontSize="0.9rem" margin="0 0.5rem">
+        <Paragraph color="textAltContrast" fontSize="0.9rem" margin="0 0.5rem">
           {title}
         </Paragraph>
 

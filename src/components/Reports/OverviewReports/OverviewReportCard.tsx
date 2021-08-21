@@ -38,7 +38,7 @@ const OverviewReportCard = () => {
 
 export default OverviewReportCard;
 const Card = styled.div`
-  background-color: ${(props) => props.theme.accent1};
+  background-color: ${(props) => props.theme.subtleBackground};
   border: ${(props) => props.theme.border};
   border-radius: 6px;
   .info {
@@ -62,6 +62,7 @@ const Card = styled.div`
   }
   .actions {
     padding: 0.75rem;
+    background-color: ${(props) => props.theme.subtleFloating};
     .action-btn {
       position: relative;
       overflow: hidden;

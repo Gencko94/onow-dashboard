@@ -2,27 +2,29 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
 import { HiOutlineMail } from "react-icons/hi";
 import styled from "styled-components";
-import { NEW_CUSTOMER } from "../../interfaces/customers/customers";
+import { CUSTOMER } from "../../interfaces/customers/customers";
 import { useMutation, useQueryClient } from "react-query";
-import { createCustomer } from "../../utils/queries";
+import { editCustomer } from "../../utils/queries";
 import IconedInput from "../reusable/Inputs/IconedInput";
 import { useTranslation } from "react-i18next";
 import PhoneInput from "../reusable/Inputs/PhoneInput";
-import ModalTail from "./ModalTail";
+
 import extractError from "../../utils/extractError";
 import useToast from "../../hooks/useToast";
-import ModalHead from "./ModalHead";
 
 import Grid from "../StyledComponents/Grid";
 import { up } from "../../utils/themes";
 import { animated, useTransition } from "@react-spring/web";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
+import ModalHead from "../Modal/ModalHead";
+import ModalTail from "../Modal/ModalTail";
 
 interface IProps {
   closeFunction: () => void;
   open: boolean;
+  data: CUSTOMER;
 }
-const AddCustomerModal = ({ closeFunction, open }: IProps) => {
+const EditCustomerModal = ({ closeFunction, open, data }: IProps) => {
   const transitions = useTransition(open, {
     from: { opacity: 0, y: -10 },
     enter: { opacity: 1, y: 0 },
@@ -30,22 +32,26 @@ const AddCustomerModal = ({ closeFunction, open }: IProps) => {
   });
   const { setToastStatus, handleCloseToast } = useToast();
   const {
-    i18n: { language },
-  } = useTranslation();
-  const queryClient = useQueryClient();
-  const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<NEW_CUSTOMER>();
+  } = useForm<CUSTOMER>({ defaultValues: data });
   const {
-    mutateAsync: createNewCustomer,
-    isLoading,
+    i18n: { language },
+  } = useTranslation();
+  const queryClient = useQueryClient();
+  const {
+    mutateAsync: editMutation,
+    isLoading: editLoading,
     reset,
-  } = useMutation(createCustomer, {
-    onSuccess: (data) => {
+  } = useMutation(editCustomer, {
+    onSuccess: (_, args) => {
       queryClient.invalidateQueries("customers");
+      queryClient.setQueryData(["customer", data.id], () => {
+        return { ...data, ...args };
+      });
+      closeFunction();
     },
     onError: (error) => {
       const { responseError } = extractError(error);
@@ -72,12 +78,17 @@ const AddCustomerModal = ({ closeFunction, open }: IProps) => {
       }
     },
   });
-  const onSubmit: SubmitHandler<NEW_CUSTOMER> = async (data) => {
-    await createNewCustomer({
-      ...data,
+  const onSubmit: SubmitHandler<CUSTOMER> = async (data) => {
+    console.log(data);
+    await editMutation(data);
+    setToastStatus?.({
+      fn: () => {
+        handleCloseToast?.();
+      },
+      open: true,
+      text: "Customer Updated Successfully",
+      type: "success",
     });
-
-    closeFunction();
   };
 
   return (
@@ -97,7 +108,10 @@ const AddCustomerModal = ({ closeFunction, open }: IProps) => {
                   ),
                 }}
               >
-                <ModalHead closeFunction={closeFunction} title="New Customer" />
+                <ModalHead
+                  closeFunction={closeFunction}
+                  title="Edit Customer"
+                />
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Grid cols="1fr" gap="0.5rem" p={4}>
                     <IconedInput
@@ -143,11 +157,11 @@ const AddCustomerModal = ({ closeFunction, open }: IProps) => {
                     />
                   </Grid>
                   <ModalTail
-                    btnText="Create new Customer"
+                    btnText="Submit"
                     closeFunction={() => closeFunction()}
                     successCb={() => {}}
                     btnType="submit"
-                    isLoading={isLoading}
+                    isLoading={editLoading}
                   />
                 </form>
               </AnimatedDialogContent>
@@ -158,7 +172,7 @@ const AddCustomerModal = ({ closeFunction, open }: IProps) => {
   );
 };
 
-export default AddCustomerModal;
+export default EditCustomerModal;
 const AnimatedDialogContent = styled(animated(DialogContent))(
   ({ theme: { breakpoints, subtleBackground } }) => `
   min-width:300px;

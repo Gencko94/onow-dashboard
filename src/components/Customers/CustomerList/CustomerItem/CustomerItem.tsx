@@ -10,6 +10,7 @@ import useConfirmationModal from "../../../../hooks/useConfirmationModal";
 import Flex from "../../../StyledComponents/Flex";
 import IconButton from "../../../reusable/IconButton";
 import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
+import Paragraph from "../../../StyledComponents/Paragraph";
 
 interface IProps {
   customer: CUSTOMER;
@@ -39,13 +40,29 @@ const CustomerItem = ({
         />
       </div>
       <div className="field">
-        <h6>{`${customer.first_name} ${customer.last_name}`}</h6>
+        <Paragraph fontSize="0.9rem" weight="semibold">
+          {`${customer.first_name} ${customer.last_name}`}
+        </Paragraph>
       </div>
       <div className="field">
-        <h6>{customer.phone}</h6>
+        <Paragraph fontSize="0.9rem" weight="semibold">
+          {customer.phone}
+        </Paragraph>
       </div>
       <div className="field">
-        <h6>{customer.email} </h6>
+        <Paragraph fontSize="0.9rem" weight="semibold">
+          -
+        </Paragraph>
+      </div>
+      <div className="field">
+        <Paragraph fontSize="0.9rem" weight="semibold">
+          -
+        </Paragraph>
+      </div>
+      <div className="field">
+        <Paragraph fontSize="0.9rem" weight="semibold">
+          -
+        </Paragraph>
       </div>
       <div className="field">
         <Flex>
@@ -100,7 +117,7 @@ export default CustomerItem;
 const Container = styled.div<{ selected: boolean }>`
   display: grid;
   grid-template-columns: repeat(1, minmax(35px, 50px)) repeat(
-      4,
+      6,
       minmax(100px, 1fr)
     );
   background-color: ${(props) =>
@@ -117,9 +134,5 @@ const Container = styled.div<{ selected: boolean }>`
     justify-content: center;
     padding: 0.75rem;
     text-align: center;
-    h6 {
-      font-size: 0.9rem;
-      font-weight: ${(props) => props.theme.font.regular};
-    }
   }
 `;

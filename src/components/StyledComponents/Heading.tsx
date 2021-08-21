@@ -55,12 +55,12 @@ const SectionTitle = styled.h1`
 
 const SmallTitle = styled.h1(
   ({ theme: { breakpoints, font } }) => `
-  font-size: 16px;
+  font-size: 18px;
   
   font-weight: ${font.semibold};
   
   ${up(breakpoints.md)}{
-    font-size: 18px;
+    font-size: 20px;
   }
   `
 );
