@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
+import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 
-import Flex from "../../../components/StyledComponents/Flex";
+import Flex from "../../components/StyledComponents/Flex";
 import Zoom from "react-medium-image-zoom";
-import Grid from "../../../components/StyledComponents/Grid";
-import Heading from "../../../components/StyledComponents/Heading";
+import Grid from "../../components/StyledComponents/Grid";
+import Heading from "../../components/StyledComponents/Heading";
 import Tooltip from "@reach/tooltip";
 
 import "react-medium-image-zoom/dist/styles.css";
@@ -12,16 +12,16 @@ import "react-medium-image-zoom/dist/styles.css";
 import { FcOk } from "react-icons/fc";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
 import { useMutation, useQuery } from "react-query";
-import useToast from "../../../hooks/useToast";
+import useToast from "../../hooks/useToast";
 import {
   editStoreProductsView,
   getStoreLayoutSettings,
-} from "../../../utils/queries/settingsQueries";
-import Button from "../../../components/reusable/Button";
+} from "../../utils/queries/settingsQueries";
+import Button from "../../components/reusable/Button";
 import { useMemo, useState } from "react";
-import Box from "../../../components/reusable/Box/Box";
-import Spacer from "../../../components/reusable/Spacer";
-import Paragraph from "../../../components/StyledComponents/Paragraph";
+import Box from "../../components/reusable/Box/Box";
+import Spacer from "../../components/reusable/Spacer";
+import Paragraph from "../../components/StyledComponents/Paragraph";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 type OPTIONS = {
@@ -94,12 +94,8 @@ const ProductsView = () => {
             withoutTitle
             children={[
               {
-                name: { ar: "الإعدادات", en: "Settings" },
-                target: "/settings",
-              },
-              {
-                name: { ar: "مظهر الموقع", en: "Website Appearance" },
-                target: "/settings/website-appearance",
+                name: { ar: "مظهر الموقع", en: "Theme & Appearance" },
+                target: "/website-appearance/theme-appearance",
               },
               {
                 name: { ar: "مظهر المنتجات", en: "Products View" },

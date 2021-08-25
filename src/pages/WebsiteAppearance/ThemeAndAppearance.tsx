@@ -43,21 +43,17 @@ const HomePageAppearance = () => {
   return (
     <div>
       <Heading tag="h5" type="large-title">
-        Website Appearance
+        Theme & Appearance / Website Appearance
       </Heading>
-      <Breadcrumbs
+      {/* <Breadcrumbs
         withoutTitle
         children={[
-          {
-            name: { ar: "الإعدادات", en: "Settings" },
-            target: "/settings",
-          },
           {
             name: { ar: "مظهر الموقع", en: "Website Appearance" },
             target: "",
           },
         ]}
-      />
+      /> */}
       <Spacer size={40} />
       <Box type="titled" boxTitle="Website Main Color">
         <Grid
@@ -127,7 +123,7 @@ const HomePageAppearance = () => {
         >
           <Card
             onClick={() => {
-              history.push("/settings/website-appearance/header-type");
+              history.push("/website-appearance/header-type");
             }}
           >
             <div className="img-wrapper">
@@ -142,7 +138,7 @@ const HomePageAppearance = () => {
           </Card>
           <Card
             onClick={() => {
-              history.push("/settings/website-appearance/products-view");
+              history.push("/website-appearance/products-view");
             }}
           >
             <div className="img-wrapper">

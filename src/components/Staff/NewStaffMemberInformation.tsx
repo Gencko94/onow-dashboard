@@ -1,18 +1,18 @@
 import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { AiOutlineMail } from "react-icons/ai";
-import { CgPassword } from "react-icons/cg";
+import { CgArrowsExpandDownLeft, CgPassword } from "react-icons/cg";
 import { MdSubtitles } from "react-icons/md";
 import { useInfiniteQuery } from "react-query";
-import styled from "styled-components";
 import { getBranches } from "../../utils/queries";
 import IconedInput from "../reusable/Inputs/IconedInput";
 import PhoneInput from "../reusable/Inputs/PhoneInput";
 import S, { GroupTypeBase, Styles } from "react-select";
 import { GET_BRANCHES_RES } from "../SettingsPage/StoreBranches/BranchesList";
-import Heading from "../StyledComponents/Heading";
 import { useMemo } from "react";
 import Select from "../reusable/Select";
+import Box from "../reusable/Box/Box";
+import Grid from "../StyledComponents/Grid";
 interface IProps {
   register: any;
   errors: any;
@@ -67,23 +67,24 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
         padding: "6px",
         display: "grid",
       }),
-      option: (provided: any) => ({
-        ...provided,
-        fontSize: "0.9rem",
-      }),
-      menu: (provided: any) => ({
-        ...provided,
+      option: (provided, state) => {
+        return {
+          ...provided,
+          fontSize: "1.9rem",
+        };
+      },
+      menu: (provided, state) => {
+        return {
+          ...provided,
 
-        zIndex: 200,
-      }),
+          zIndex: 200,
+        };
+      },
     };
   }, []);
   return (
-    <Container>
-      <Heading tag="h5" color="primary">
-        Staff Member Information
-      </Heading>
-      <div className="box">
+    <Box type="titled" boxTitle="Staff Member Information">
+      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <IconedInput
           Icon={MdSubtitles}
           errors={errors?.first_name}
@@ -102,6 +103,8 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
           label="Last Name"
           name="last_name"
         />
+      </Grid>
+      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <Controller
           name="phone"
           control={control}
@@ -128,6 +131,8 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
           label="Email Address"
           name="email"
         />
+      </Grid>
+      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <IconedInput
           Icon={CgPassword}
           errors={errors?.password}
@@ -144,24 +149,23 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
           render={({ field: { onChange, value, ref } }) => {
             console.log(value);
             return (
-              <div>
-                <label>Accessible Branches</label>
-                <S
-                  ref={ref}
-                  isLoading={isLoading}
-                  isMulti
-                  value={value}
-                  placeholder="Select Branches"
-                  options={data!.pages[0].data}
-                  styles={selectStyles}
-                  onChange={onChange}
-                  getOptionLabel={(option) => option!.name[language]}
-                  getOptionValue={(option) => option!.id.toString()}
-                />
-              </div>
+              <Select
+                errors={errors.branch_id}
+                getOptionLabel={(option) => option!.name[language]}
+                getOptionValue={(option) => option!.id.toString()}
+                options={data!.pages[0].data}
+                label="Accessible Branches"
+                onChange={onChange}
+                isLoading={isLoading}
+                ref={ref}
+                value={value}
+                isMulti
+              />
             );
           }}
         />
+      </Grid>
+      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <Controller
           control={control}
           name="roles"
@@ -185,31 +189,9 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
             );
           }}
         />
-      </div>
-    </Container>
+      </Grid>
+    </Box>
   );
 };
 
 export default NewStaffMemberInformation;
-
-const Container = styled.div`
-  margin: 1rem 0;
-
-  .box {
-    background-color: #fff;
-    box-shadow: ${(props) => props.theme.shadow};
-    border-radius: 6px;
-    padding: 1rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-
-    label {
-      color: ${(props) => props.theme.text};
-      margin-bottom: 0.5rem;
-      font-size: 0.8rem;
-      font-weight: ${(props) => props.theme.font.regular};
-      display: inline-block;
-    }
-  }
-`;

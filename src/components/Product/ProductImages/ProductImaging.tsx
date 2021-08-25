@@ -1,6 +1,6 @@
 import { PRODUCT } from "../../../interfaces/products/products";
 
-import ProductImage from "../ProductGeneralInformation/ProductImage";
+import ProductImage from "./ProductImage";
 
 interface IProps {
   data: PRODUCT;

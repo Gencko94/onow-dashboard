@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import { up } from "../../constants";
 type DefaultHeadingProps = Omit<JSX.IntrinsicElements["h1"], "ref">;
@@ -15,36 +15,40 @@ interface IProps extends DefaultHeadingProps {
   mb?: string;
 }
 
-const Heading: FC<IProps> = ({
-  tag,
-  type = "medium-title",
-  // padding,
-  mb,
-  color = "heading",
+const Heading = React.forwardRef<HTMLHeadingElement, IProps>(
+  (
+    {
+      tag,
+      type = "medium-title",
+      // padding,
+      mb,
+      color = "heading",
+      ...delegated
+    },
+    ref
+  ) => {
+    let Component;
+    if (type === "section-title") {
+      Component = SectionTitle;
+    } else if (type === "small-title") {
+      Component = SmallTitle;
+    } else if (type === "medium-title") {
+      Component = MediumTitle;
+    } else if (type === "large-title") {
+      Component = LargeTitle;
+    } else if (type === "major-heading") {
+      Component = MajorHeading;
+    } else if (type === "normal-heading") {
+      Component = NormalHeading;
+    } else if (type === "minor-heading") {
+      Component = MinorHeading;
+    } else {
+      throw new Error("Unrecognized Heading type: " + type);
+    }
 
-  ...delegated
-}) => {
-  let Component;
-  if (type === "section-title") {
-    Component = SectionTitle;
-  } else if (type === "small-title") {
-    Component = SmallTitle;
-  } else if (type === "medium-title") {
-    Component = MediumTitle;
-  } else if (type === "large-title") {
-    Component = LargeTitle;
-  } else if (type === "major-heading") {
-    Component = MajorHeading;
-  } else if (type === "normal-heading") {
-    Component = NormalHeading;
-  } else if (type === "minor-heading") {
-    Component = MinorHeading;
-  } else {
-    throw new Error("Unrecognized Heading type: " + type);
+    return <Component as={tag} {...delegated} />;
   }
-
-  return <Component as={tag} {...delegated} />;
-};
+);
 export default Heading;
 
 const SectionTitle = styled.h1`

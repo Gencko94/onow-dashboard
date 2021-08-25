@@ -50,7 +50,7 @@ interface IProps extends React.ComponentPropsWithoutRef<"button"> {
   active?: boolean;
 }
 
-const Button: React.FC<IProps> = React.forwardRef<HTMLButtonElement, IProps>(
+const Button = React.forwardRef<HTMLButtonElement, IProps>(
   (
     {
       type = "button",

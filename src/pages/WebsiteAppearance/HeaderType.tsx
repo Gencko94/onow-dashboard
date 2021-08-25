@@ -5,18 +5,18 @@ import { IoMdCloseCircle } from "react-icons/io";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import Box from "../../../components/reusable/Box/Box";
-import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
-import Spacer from "../../../components/reusable/Spacer";
-import Flex from "../../../components/StyledComponents/Flex";
+import Box from "../../components/reusable/Box/Box";
+import Breadcrumbs from "../../components/reusable/Breadcrumbs";
+import Spacer from "../../components/reusable/Spacer";
+import Flex from "../../components/StyledComponents/Flex";
 
-import Grid from "../../../components/StyledComponents/Grid";
-import Heading from "../../../components/StyledComponents/Heading";
-import Paragraph from "../../../components/StyledComponents/Paragraph";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
-import FileUploader from "../../../utils/FileUploader";
-import MiniFileUploader from "../../../utils/MiniFileUploader";
-import { getStoreLayoutSettings } from "../../../utils/queries/settingsQueries";
+import Grid from "../../components/StyledComponents/Grid";
+import Heading from "../../components/StyledComponents/Heading";
+import Paragraph from "../../components/StyledComponents/Paragraph";
+import useConfirmationModal from "../../hooks/useConfirmationModal";
+import FileUploader from "../../utils/FileUploader";
+import MiniFileUploader from "../../utils/MiniFileUploader";
+import { getStoreLayoutSettings } from "../../utils/queries/settingsQueries";
 
 const HeaderType = () => {
   const { control } = useForm();
@@ -45,12 +45,8 @@ const HeaderType = () => {
             withoutTitle
             children={[
               {
-                name: { ar: "الإعدادات", en: "Settings" },
-                target: "/settings",
-              },
-              {
-                name: { ar: "مظهر الموقع", en: "Website Appearance" },
-                target: "/settings/website-appearance",
+                name: { ar: "مظهر الموقع", en: "Theme & Appearance" },
+                target: "/website-appearance/theme-appearance",
               },
               {
                 name: { ar: "خصائص الرأسية", en: "Header Type" },

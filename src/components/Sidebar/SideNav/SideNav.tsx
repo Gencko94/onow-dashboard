@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import styled, { css } from "styled-components";
+import { Link, useLocation } from "react-router-dom";
 
 import {
   FcAdvertising,
@@ -7,68 +7,122 @@ import {
   FcConferenceCall,
   FcGenealogy,
   FcHome,
+  FcList,
   FcRules,
+  FcSelfie,
   FcSupport,
   FcViewDetails,
 } from "react-icons/fc";
 import canVisitPage from "../../../utils/canVisitPage";
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { AuthProvider } from "../../../contexts/AuthContext";
-import SideNavItem from "./SideNavItem";
+
 import { up } from "../../../utils/themes";
 import Spacer from "../../reusable/Spacer";
-// import { useState } from "react";
+
+import Paragraph from "../../StyledComponents/Paragraph";
+import { IconType } from "react-icons/lib";
+import Collapse, { Panel } from "rc-collapse";
+import Ripple from "../../reusable/Ripple";
+import Flex from "../../StyledComponents/Flex";
+export type SIDENAV_ITEM = {
+  Icon: IconType;
+  title: string;
+  target: string;
+  collapsible: boolean;
+  children?: {
+    Icon: IconType;
+    title: string;
+    target: string;
+  }[];
+};
 const SideNav = () => {
   const { pathname } = useLocation();
   const { user } = useContext(AuthProvider);
-  const items = useMemo(() => {
+  const [activeKey, setActiveKey] = useState<React.Key | React.Key[]>([]);
+  const items: SIDENAV_ITEM[] = useMemo(() => {
     return [
       {
         title: "Dashboard",
-        icon: FcHome,
+        Icon: FcHome,
         target: "/dashboard",
+        collapsible: false,
       },
       {
         title: "Products",
-        icon: FcViewDetails,
+        Icon: FcViewDetails,
         target: "/products",
+        collapsible: false,
       },
       {
         title: "Categories",
-        icon: FcGenealogy,
+        Icon: FcGenealogy,
         target: "/categories",
+        collapsible: false,
       },
       {
         title: "Orders",
-        icon: FcRules,
+        Icon: FcRules,
         target: "/orders",
+        collapsible: false,
       },
       {
         title: "Customers",
-        icon: FcConferenceCall,
+        Icon: FcConferenceCall,
         target: "/customers",
+        collapsible: false,
       },
       {
         title: "Settings",
-        icon: FcSupport,
+        Icon: FcSupport,
         target: "/settings",
+        collapsible: false,
+      },
+      {
+        title: "Website Appearance",
+        Icon: FcSelfie,
+        target: "/website-appearance/menu-configuration",
+        collapsible: true,
+        children: [
+          {
+            Icon: FcList,
+            target: "/website-appearance/menu-configuration",
+            title: "Menu Configuration",
+          },
+          {
+            Icon: FcSelfie,
+            target: "/website-appearance/theme-appearance",
+            title: "Theme & Appearance",
+          },
+        ],
       },
       {
         title: "Coupons",
-        icon: FcAdvertising,
+        Icon: FcAdvertising,
         target: "/coupons",
+        collapsible: false,
       },
       {
         title: "Reports",
-        icon: FcBullish,
+        Icon: FcBullish,
         target: "/reports",
+        collapsible: false,
       },
     ];
   }, []);
+  const onChange = (key: React.Key | React.Key[]) => {
+    console.log(key);
+    setActiveKey(key);
+  };
   return (
-    <Container>
-      {items.map((item, i) => {
-        // if (
+    <Container
+      activeKey={activeKey}
+      accordion
+      onChange={onChange}
+      destroyInactivePanel
+    >
+      {items.map(({ Icon, collapsible, target, title, children }, i) => {
+        // if (111
         //   canVisitPage({
         //     permissions: user?.permissions,
         //     path: "/customers",
@@ -76,15 +130,64 @@ const SideNav = () => {
         //   })
         // )
         return (
-          <React.Fragment key={item.target}>
-            <SideNavItem
-              key={item.target}
-              Icon={item.icon}
-              active={pathname.includes(item.target)}
-              target={item.target}
-              title={item.title}
-            />
-            {i !== items.length - 1 && <Spacer size={6} />}
+          <React.Fragment key={i}>
+            <Panel
+              key={i.toString()}
+              showArrow={false}
+              header={
+                <SideNavLink isCurrent={activeKey === i.toString()} to={target}>
+                  <Flex items="center">
+                    <span className="icon">
+                      <Icon size={20} />
+                    </span>
+                    <Paragraph
+                      color="textAltContrast"
+                      fontSize="0.9rem"
+                      margin="0 0.5rem"
+                    >
+                      {title}
+                    </Paragraph>
+                  </Flex>
+                  {collapsible && (
+                    <ExpandIcon isActive={activeKey === i.toString()} />
+                  )}
+
+                  <Ripple />
+                </SideNavLink>
+              }
+            >
+              {children?.map(
+                (
+                  { Icon: ChildIcon, target: childTarget, title: childTitle },
+                  childId
+                ) => (
+                  <React.Fragment key={childId}>
+                    {childId === 0 && <Spacer size={10} />}
+                    <SideNavLink
+                      isCurrent={pathname.includes(childTarget)}
+                      to={childTarget}
+                    >
+                      <Flex items="center">
+                        <span className="icon">
+                          <ChildIcon size={20} />
+                        </span>
+                        <Paragraph
+                          color="textAltContrast"
+                          fontSize="0.9rem"
+                          margin="0 0.5rem"
+                        >
+                          {childTitle}
+                        </Paragraph>
+                      </Flex>
+
+                      <Ripple />
+                    </SideNavLink>
+                    {childId !== children?.length - 1 && <Spacer size={10} />}
+                  </React.Fragment>
+                )
+              )}
+            </Panel>
+            {i !== items.length - 1 && <Spacer size={10} />}
           </React.Fragment>
         );
       })}
@@ -93,7 +196,7 @@ const SideNav = () => {
 };
 
 export default SideNav;
-const Container = styled.ul(
+const Container = styled(Collapse)(
   ({ theme: { breakpoints } }) => `
   height: calc(100vh - 298px);
   overflow-y: auto;
@@ -103,3 +206,57 @@ const Container = styled.ul(
   
   `
 );
+const SideNavLink = styled(Link)<{ isCurrent: boolean }>`
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 150ms ease;
+  color: #fff;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+
+  .icon {
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+  }
+  &:hover {
+    background-color: ${(props) => props.theme.sidebarSubtleBackground};
+  }
+  ${(props) =>
+    props.isCurrent &&
+    css`
+      background-color: ${(props) => props.theme.sidebarSubtleBackground};
+      color: ${(props) => props.theme.primary};
+    `};
+  @media (min-width: 768px) {
+    padding: 0.75rem 1rem;
+  }
+`;
+const arrowPath =
+  "M869 487.8L491.2 159.9c-2.9-2.5-6.6-3.9-10.5-3.9h-88" +
+  ".5c-7.4 0-10.8 9.2-5.2 14l350.2 304H152c-4.4 0-8 3.6-8 8v60c0 4.4 3." +
+  "6 8 8 8h585.1L386.9 854c-5.6 4.9-2.2 14 5.2 14h91.5c1.9 0 3.8-0.7 5." +
+  "2-2L869 536.2c14.7-12.8 14.7-35.6 0-48.4z";
+function ExpandIcon({ isActive }: { isActive: boolean }) {
+  console.log(isActive);
+  return (
+    <i style={{ marginRight: ".5rem" }}>
+      <svg
+        viewBox="0 0 1024 1024"
+        width="1em"
+        height="1em"
+        fill="currentColor"
+        style={{
+          verticalAlign: "-.125em",
+          transition: "transform .2s",
+          transform: `rotate(${isActive ? 90 : 0}deg)`,
+        }}
+      >
+        <path d={arrowPath} p-id="5827" />
+      </svg>
+    </i>
+  );
+}

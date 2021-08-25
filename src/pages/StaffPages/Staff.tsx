@@ -66,8 +66,8 @@ const Staff = () => {
     }
   );
   const handleDeleteStaffMember = async (staffId: number) => {
-    await deleteStaff(staffId);
     handleCloseConfirmationModal?.();
+    await deleteStaff(staffId);
     setToastStatus?.({
       fn: () => {
         handleCloseToast?.();

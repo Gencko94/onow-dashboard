@@ -167,9 +167,11 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       font-size: 0.8rem; 
       color: ${text};
     }
-    &:hover,
-    &:focus-within {
+    &:hover {
       border-color: ${borderHovered};
+    };
+    &:focus,&:focus-within {
+      box-shadow:0 0 0 1px ${secondary};
     }
     
   }

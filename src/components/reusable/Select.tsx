@@ -13,6 +13,9 @@ import {
   getOptionValue,
 } from "react-select/src/builtins";
 import InputErrorMessage from "./InputErrorMessage";
+import { useContext } from "react";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { up } from "../../constants";
 
 interface IProps<T> {
   label?: string;
@@ -56,32 +59,87 @@ export default function Select<T>({
   onChange,
   value,
 }: IProps<T>) {
+  const { currentTheme } = useContext(ThemeContext);
   const { t } = useTranslation();
   const selectStyles:
     | Partial<Styles<any, false, GroupTypeBase<any>>>
     | undefined = useMemo(() => {
     return {
-      control: (provided: any, state: any) => ({
+      valueContainer: (provided) => {
+        return {
+          ...provided,
+          padding: "0.4rem",
+        };
+      },
+      control: (provided) => {
+        return {
+          ...provided,
+          fontSize: "0.9rem",
+          minHeight: "35.78px",
+          backgroundColor: currentTheme!.subtleBackground,
+          border: currentTheme.border,
+          borderRadius: "6px",
+
+          ":hover": {
+            ...provided[":hover"],
+            borderColor: currentTheme.borderHovered,
+          },
+        };
+      },
+      singleValue: (provided) => ({
         ...provided,
-        fontSize: "0.9rem",
-        minHeight: "35px",
+
+        color: currentTheme!.text,
       }),
-      dropdownIndicator: (provided: any, state: any) => ({
+      multiValue: (provided) => ({
+        ...provided,
+
+        backgroundColor: currentTheme!.background,
+      }),
+      multiValueLabel: (provided) => ({
+        ...provided,
+
+        color: currentTheme!.text,
+      }),
+
+      dropdownIndicator: (provided) => ({
         ...provided,
         padding: "6px",
         display: "grid",
       }),
-      option: (provided: any) => ({
-        ...provided,
-        fontSize: "0.9rem",
-      }),
-      menu: (provided: any) => ({
-        ...provided,
+      option: (provided, { isDisabled, isSelected, isFocused }) => {
+        return {
+          ...provided,
+          fontSize: "0.9rem",
+          backgroundColor: isSelected
+            ? currentTheme!.primary
+            : isFocused
+            ? currentTheme!.background
+            : currentTheme!.subtleFloating,
+          ":active": {
+            ...provided[":active"],
+            backgroundColor:
+              !isDisabled &&
+              (isSelected ? currentTheme!.primary : currentTheme!.background),
+          },
+        };
+      },
 
-        zIndex: 200,
-      }),
+      menuPortal: (provided: any) => {
+        return {
+          ...provided,
+          zIndex: 9999,
+        };
+      },
+
+      menu: (provided: any) => {
+        return {
+          ...provided,
+          backgroundColor: currentTheme!.subtleFloating,
+        };
+      },
     };
-  }, []);
+  }, [currentTheme]);
   return (
     <Container>
       {label && <label>{t(label)}</label>}
@@ -96,11 +154,13 @@ export default function Select<T>({
         placeholder={placeholder}
         options={options}
         styles={selectStyles}
+        menuPortalTarget={document.body}
         onChange={onChange}
         getOptionLabel={getOptionLabel}
         getOptionValue={getOptionValue}
         formatOptionLabel={formatOptionLabel}
         formatGroupLabel={formatGroupLabel}
+        menuShouldScrollIntoView={false}
       />
       {errors && <InputErrorMessage msg={errors?.message} />}
     </Container>
@@ -113,7 +173,7 @@ const Container = styled.div(
     color: ${text};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
-    font-weight: ${font.regular};
+    font-weight: ${font.semibold};
     display: inline-block;
   }
   .error {
@@ -122,7 +182,7 @@ const Container = styled.div(
     height: 22px;
     color: ${dangerRed};
   }
-  @media ${breakpoints.md}{
+   ${up(breakpoints.md)}{
     font-size: 0.9rem;
     label {
       font-size: 0.9rem;

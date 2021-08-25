@@ -15,6 +15,7 @@ import FileUploader from "../../../utils/FileUploader";
 import MiniFileUploader from "../../../utils/MiniFileUploader";
 import { customerUri } from "../../../utils/queries";
 import { removeProductImage } from "../../../utils/queries/productQueries";
+import Box from "../../reusable/Box/Box";
 
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
@@ -228,20 +229,88 @@ const ProductImage = ({ data }: IProps) => {
   };
   return (
     <Container>
-      <Heading tag="h5" color="primary">
+      {/* <Heading tag="h5" color="primary">
         Product Imaging
-      </Heading>
-      <DescriptionBox>
+      </Heading> */}
+      {/* <DescriptionBox>
         <p>
           High Quality product images are very important when you're offering
           food, Truly delectable images will help your products sell themselfs.
         </p>
-      </DescriptionBox>
+      </DescriptionBox> */}
+      <Box type="titled" boxTitle="Image Gallery">
+        <PreviewContainer>
+          <Grid cols="repeat(auto-fill,minmax(200px,1fr))" gap="1rem">
+            {data.images.map((image, index) => {
+              return (
+                <div className="img-preview">
+                  <img src={image?.link} alt={`i-${index}`} />
 
-      <Box>
-        <Heading tag="h5" color="heading">
-          Product Default Image
-        </Heading>
+                  <button
+                    className="remove"
+                    type="button"
+                    onClick={() => {
+                      setConfirmationModalStatus?.({
+                        open: true,
+                        desc: "Are you sure you want to delete this Image ?",
+                        title: "Delete Image",
+                        closeCb: handleCloseConfirmationModal!,
+                        successCb: () => {
+                          removeImage(image?.id);
+                        },
+                      });
+                    }}
+                  >
+                    <IoMdCloseCircle size={35} />
+                  </button>
+                </div>
+              );
+            })}
+            {galleryProgress !== null && (
+              <div className="img-preview">
+                <img
+                  className="loading-image"
+                  src={URL.createObjectURL(loadingImage)}
+                  alt={`Uploading...`}
+                />
+                <div className="progress-container">
+                  <CircularProgressbar
+                    strokeWidth={2}
+                    value={galleryProgress}
+                    maxValue={100}
+                    styles={buildStyles({
+                      pathColor: "#f78f21",
+                      textSize: "0.7rem",
+                      textColor: "#f78f21",
+                    })}
+                    text={`${progress}% Uploaded`}
+                  />
+                </div>
+              </div>
+            )}
+          </Grid>
+        </PreviewContainer>
+        <Controller
+          control={control}
+          name="images"
+          render={({ field: { onChange, value, ref } }) => (
+            <FileUploader
+              accept=".png, .jpg, .jpeg"
+              onChange={(file: File | File[]) => {
+                if (!Array.isArray(file)) {
+                  setLoadingImage(file);
+                  handleAddImage(file);
+                }
+              }}
+            />
+          )}
+        />
+      </Box>
+      <Box
+        style={{ alignSelf: "self-start" }}
+        type="titled"
+        boxTitle="Default Product image"
+      >
         <Controller
           control={control}
           name="image"
@@ -259,81 +328,8 @@ const ProductImage = ({ data }: IProps) => {
           }}
         />
       </Box>
-      <Hr />
-      <PreviewContainer>
-        <Grid cols="repeat(auto-fill,minmax(200px,1fr))" gap="1rem">
-          {data.images.map((image, index) => {
-            return (
-              <div className="img-preview">
-                <img src={image?.link} alt={`i-${index}`} />
 
-                <button
-                  className="remove"
-                  type="button"
-                  onClick={() => {
-                    setConfirmationModalStatus?.({
-                      open: true,
-                      desc: "Are you sure you want to delete this Image ?",
-                      title: "Delete Image",
-                      closeCb: handleCloseConfirmationModal!,
-                      successCb: () => {
-                        removeImage(image?.id);
-                      },
-                    });
-                  }}
-                >
-                  <IoMdCloseCircle size={35} />
-                </button>
-              </div>
-            );
-          })}
-          {galleryProgress !== null && (
-            <div className="img-preview">
-              <img
-                className="loading-image"
-                src={URL.createObjectURL(loadingImage)}
-                alt={`Uploading...`}
-              />
-              <div className="progress-container">
-                <CircularProgressbar
-                  strokeWidth={2}
-                  value={galleryProgress}
-                  maxValue={100}
-                  styles={buildStyles({
-                    pathColor: "#f78f21",
-                    textSize: "0.7rem",
-                    textColor: "#f78f21",
-                  })}
-                  text={`${progress}% Uploaded`}
-                />
-              </div>
-            </div>
-          )}
-        </Grid>
-      </PreviewContainer>
-
-      <Box>
-        <Heading tag="h5" color="heading">
-          Product Image Gallery
-        </Heading>
-        <Controller
-          control={control}
-          name="images"
-          render={({ field: { onChange, value, ref } }) => (
-            <FileUploader
-              accept=".png, .jpg, .jpeg"
-              onChange={(file: File | File[]) => {
-                if (!Array.isArray(file)) {
-                  setLoadingImage(file);
-                  handleAddImage(file);
-                }
-              }}
-            />
-          )}
-        />
-      </Box>
-
-      <ErrorMessage>{errors?.images && "Required"}</ErrorMessage>
+      {/* <ErrorMessage>{errors?.images && "Required"}</ErrorMessage> */}
     </Container>
   );
 };
@@ -341,26 +337,9 @@ const ProductImage = ({ data }: IProps) => {
 export default ProductImage;
 const Container = styled.div(
   ({ theme: { breakpoints, shadow } }) => `
- 
-  display:flex;
-  flex-direction:column;
-  
-  .box {
-    flex:1;
-    background-color: #fff;
-    box-shadow: ${shadow};
-    border-radius: 6px;
-    padding: 1rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  @media ${breakpoints.md} {
-    .box {
-      grid-template-columns: 1fr 1fr ;
-
-    }
-  }
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
   `
 );
 const DescriptionBox = styled.div`
@@ -376,15 +355,7 @@ const ErrorMessage = styled.p`
   padding-top: 0.25rem;
   color: ${(props) => props.theme.dangerRed};
 `;
-const Box = styled.div(
-  ({ theme: { breakpoints, shadow } }) => `
-  padding:1rem;
-  .title {
-    margin-bottom:1rem;
-    text-align:center;
-  }
-  `
-);
+
 const PreviewContainer = styled.div(
   ({ theme: { breakpoints, green, dangerRed, border } }) => `
   padding:1rem;

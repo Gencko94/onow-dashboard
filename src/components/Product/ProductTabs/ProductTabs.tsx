@@ -22,14 +22,20 @@ const ProductTabs = ({ setActiveTab, activeTab }: IProps) => {
         onClick={() => setActiveTab(0)}
         active={activeTab === 0}
       >
-        <Paragraph> Product Name & Description</Paragraph>
+        <Paragraph weight={activeTab === 0 ? "semibold" : "regular"}>
+          {" "}
+          Product Name & Description
+        </Paragraph>
       </TabItem>
       <TabItem
         type="button"
         onClick={() => setActiveTab(1)}
         active={activeTab === 1}
       >
-        <Paragraph> Product Imaging</Paragraph>
+        <Paragraph weight={activeTab === 1 ? "semibold" : "regular"}>
+          {" "}
+          Product Imaging
+        </Paragraph>
       </TabItem>
 
       <TabItem
@@ -37,21 +43,28 @@ const ProductTabs = ({ setActiveTab, activeTab }: IProps) => {
         onClick={() => setActiveTab(2)}
         active={activeTab === 2}
       >
-        <Paragraph> Pricing & Options</Paragraph>
+        <Paragraph weight={activeTab === 2 ? "semibold" : "regular"}>
+          {" "}
+          Pricing & Options
+        </Paragraph>
       </TabItem>
       <TabItem
         type="button"
         onClick={() => setActiveTab(3)}
         active={activeTab === 3}
       >
-        <Paragraph>Ordering Options & Branch Availability</Paragraph>
+        <Paragraph weight={activeTab === 3 ? "semibold" : "regular"}>
+          Ordering Options & Branch Availability
+        </Paragraph>
       </TabItem>
       <TabItem
         type="button"
         onClick={() => setActiveTab(4)}
         active={activeTab === 4}
       >
-        <Paragraph>Product Promotions</Paragraph>
+        <Paragraph weight={activeTab === 4 ? "semibold" : "regular"}>
+          Product Promotions
+        </Paragraph>
       </TabItem>
     </Container>
   );
@@ -74,6 +87,7 @@ const TabItem = styled.button<{ active?: boolean }>(
   white-space: nowrap;
   text-align: center;
   border-bottom:${active ? `2px solid ${primary}` : "none"};
+  
   &:hover {
     color: ${primary};
   }

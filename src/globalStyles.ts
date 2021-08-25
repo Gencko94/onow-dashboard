@@ -204,15 +204,19 @@ input:focus, textarea:focus {
 [data-reach-dialog-overlay] {
   position:fixed;
   inset:0;
-  z-index:9999;
+  z-index:9000;
   background-color:rgba(0,0,0,0.6);
 }
 [data-reach-dialog-content] {
-  z-index:9999;
+  /* React-select menu portal z-index is higher */
+  z-index:9000;
   border-radius: 6px;
- margin:1rem auto;
+  margin:1rem auto;
   overflow-y:auto;
   max-height:calc(100vh - 50px);
+}
+[data-reach-accordion-button] {
+  color:inherit;
 }
 
 
@@ -253,14 +257,46 @@ input:focus, textarea:focus {
   width:50px;
 }
 
+
+
 /* RECHARTS */
 .recharts-text {
   fill:${text};
 }
 .recharts-cartesian-axis-tick-value tspan {
-  
   top:2px;
 }
+
+
+
+
+/*  RC COLLAPSE */
+.rc-collapse {
+  border:none;
+  background-color:inherit;
+  border-radius:0;
+}
+.rc-collapse > .rc-collapse-item > .rc-collapse-header {
+  padding:0;
+  display:block;
+}
+.rc-collapse-content {
+  background-color:inherit;
+  color:inherit;
+}
+.rc-collapse-item:last-child > .rc-collapse-content {
+  border-radius:0;
+  
+}
+.rc-collapse-content > .rc-collapse-content-box  {
+  background-color:inherit;
+  color:inherit;
+  margin:0;
+  padding: 0 16px;
+ 
+}
+
+
 `
 );
 

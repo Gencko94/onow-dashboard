@@ -4,6 +4,7 @@ import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Button from "../../components/reusable/Button";
+import Spacer from "../../components/reusable/Spacer";
 import NewStaffMemberInformation from "../../components/Staff/NewStaffMemberInformation";
 import StaffMemberPermissions from "../../components/Staff/StaffMemberPermissions";
 import Flex from "../../components/StyledComponents/Flex";
@@ -141,12 +142,13 @@ const CreateStaffMember = () => {
             Create new Member
           </Button>
         </Flex>
-
+        <Spacer size={40} />
         <NewStaffMemberInformation
           register={register}
           errors={errors}
           control={control}
         />
+        <Spacer size={40} />
         {roles === "STAFF" && (
           <StaffMemberPermissions
             setValue={setValue}
