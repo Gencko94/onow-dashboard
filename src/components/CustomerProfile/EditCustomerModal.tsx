@@ -113,7 +113,7 @@ const EditCustomerModal = ({ closeFunction, open, data }: IProps) => {
                   title="Edit Customer"
                 />
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <Grid cols="1fr" gap="0.5rem" p={4}>
+                  <Grid columns="1fr" gap="0.5rem" padding="1rem">
                     <IconedInput
                       Icon={MdSubtitles}
                       errors={errors?.first_name}

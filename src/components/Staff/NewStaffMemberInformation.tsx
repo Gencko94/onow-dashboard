@@ -84,7 +84,7 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
   }, []);
   return (
     <Box type="titled" boxTitle="Staff Member Information">
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <IconedInput
           Icon={MdSubtitles}
           errors={errors?.first_name}
@@ -104,7 +104,7 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
           name="last_name"
         />
       </Grid>
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <Controller
           name="phone"
           control={control}
@@ -132,7 +132,7 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
           name="email"
         />
       </Grid>
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <IconedInput
           Icon={CgPassword}
           errors={errors?.password}
@@ -165,7 +165,7 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
           }}
         />
       </Grid>
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <Controller
           control={control}
           name="roles"

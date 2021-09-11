@@ -249,7 +249,7 @@ const Option = ({
           </Flex>
         </Flex>
       </div>
-      <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0" margin="0 ">
+      <Grid columns="repeat(auto-fit,minmax(200px,1fr))" gap="0" margin="0 ">
         <div className="field">
           <div className="field-head">
             <Heading tag="h6" type="small-title">

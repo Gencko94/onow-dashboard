@@ -21,7 +21,7 @@ import {
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
 import TableHead from "../../reusable/TableHead";
-import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
+import Flex from "../../StyledComponents/Flex";
 import CustomerItem from "./CustomerItem/CustomerItem";
 import Spinner from "react-loader-spinner";
 import LoadingTable from "../../reusable/LoadingTable";
@@ -319,7 +319,7 @@ const Container = styled.div`
     left: 15px;
   }
 `;
-const SearchContainer = styled(FlexWrapper)`
+const SearchContainer = styled(Flex)`
   background-color: #fff;
   padding: 0.5rem;
   border-radius: 6px;

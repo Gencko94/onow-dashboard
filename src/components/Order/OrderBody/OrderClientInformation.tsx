@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import styled from "styled-components";
 import { BiUser } from "react-icons/bi";
-import Grid, { GridWrapper } from "../../StyledComponents/Grid";
+import Grid from "../../StyledComponents/Grid";
 import { ORDER_CUSTOMER } from "../../../interfaces/orders/orders";
 
 interface IProps {
@@ -17,13 +17,13 @@ const OrderClientInformation = ({ customer }: IProps) => {
         <h6 className="title">Order Customer </h6>
       </div>
       <div className="content">
-        <Grid items="center" p={3} cols="auto 1fr" gap="0.25rem">
+        <Grid items="center" padding="0.75rem" columns="auto 1fr" gap="0.25rem">
           <p className="label">Customer Name : </p>
           <p className="value">
             {customer.first_name} {customer.last_name}
           </p>
         </Grid>
-        <Grid items="center" p={3} cols="auto 1fr" gap="0.25rem">
+        <Grid items="center" padding="0.75rem" columns="auto 1fr" gap="0.25rem">
           <p className="label">Customer Phone Number : </p>
           <p className="value">{customer.phone_number}</p>
         </Grid>
@@ -57,9 +57,6 @@ const Container = styled.div`
       font-size: 0.9rem;
       margin: 0 0.25rem;
       font-weight: ${(props) => props.theme.font.semibold};
-    }
-    ${GridWrapper} {
-      border-bottom: ${(props) => props.theme.border};
     }
   }
 `;

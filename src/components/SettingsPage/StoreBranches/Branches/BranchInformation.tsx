@@ -27,7 +27,7 @@ const BranchInformation = () => {
   const codEnabled = watch("cod_enabled");
   return (
     <Box type="titled" boxTitle="Branch information">
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <IconedInput
           Icon={MdSubtitles}
           errors={errors?.name?.en}
@@ -47,7 +47,7 @@ const BranchInformation = () => {
           name="name.ar"
         />
       </Grid>
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <IconedInput
           Icon={MdSmartphone}
           errors={errors?.contact_info?.mobile}
@@ -73,7 +73,7 @@ const BranchInformation = () => {
         />
       </Grid>
       <Grid
-        cols="repeat(auto-fit,minmax(300px,0.5fr))"
+        columns="repeat(auto-fit,minmax(300px,0.5fr))"
         gap="1rem"
         margin="1rem 0"
       >
@@ -104,7 +104,7 @@ const BranchInformation = () => {
           />
         )}
       </Grid>
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <Controller
           control={control}
           name="delivery_enabled"

@@ -28,7 +28,7 @@ const BranchLocation = () => {
   console.log(coords, "coods");
   return (
     <Box type="titled" boxTitle="Branch location">
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <IconedInput
           Icon={IoLocate}
           errors={errors?.address?.coords?.lat}
@@ -48,7 +48,7 @@ const BranchLocation = () => {
           name="address.coords.lng"
         />
       </Grid>
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <Textarea
           errors={errors?.address?.address?.en}
           register={register}

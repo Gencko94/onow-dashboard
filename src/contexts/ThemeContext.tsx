@@ -1,8 +1,8 @@
 import React, { createContext, useCallback, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { I18nextProvider, useTranslation } from "react-i18next";
 import styled, { ThemeProvider as StyledThemes } from "styled-components";
 import { devices } from "../utils/breakpoints";
-
+import i18nConfig from "../i18n";
 import Color from "color";
 import { getInitialColorMode } from "../helpers/getInitialColorMode";
 import { darkTheme, lightTheme } from "../constants";
@@ -76,7 +76,9 @@ const ThemeProvider: React.FC = ({ children }) => {
   return (
     <ThemeContext.Provider value={{ toggleTheme, colorMode, currentTheme }}>
       <StyledThemes theme={currentTheme}>
-        <Container lang={i18n.language}>{children}</Container>
+        <I18nextProvider i18n={i18nConfig}>
+          <Container lang={i18n.language}>{children}</Container>
+        </I18nextProvider>
       </StyledThemes>
     </ThemeContext.Provider>
   );

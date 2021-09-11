@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { FieldError, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { IconType } from "react-icons/lib";
@@ -66,46 +67,53 @@ interface NotRequiredInput extends BaseInput {
 
 type IProps = RequiredInput | NotRequiredInput;
 
-const IconedInput = ({
-  errors,
-  register,
-  Icon,
-  name,
-  required,
-  label,
-  requiredMessage,
-  placeholder,
-  desc,
-  defaultValue,
-  disabled,
-}: IProps) => {
-  const {
-    i18n: { language },
-  } = useTranslation();
-  const { isDesktop } = useResponsive();
-  return (
-    <Container rtl={language === "ar"} error={Boolean(errors?.message)}>
-      {label && <label>{label}</label>}
-      <div className="input-container">
-        <span className="icon">
-          <Icon size={isDesktop ? 21 : 19} />
-        </span>
+const IconedInput = forwardRef<HTMLInputElement, IProps>(
+  (
+    {
+      errors,
+      register,
+      Icon,
+      name,
+      required,
+      label,
+      requiredMessage,
+      placeholder,
+      desc,
+      defaultValue,
+      disabled,
+      ...delegated
+    },
+    ref
+  ) => {
+    const {
+      i18n: { language },
+    } = useTranslation();
+    const { isDesktop } = useResponsive();
+    return (
+      <Container rtl={language === "ar"} error={Boolean(errors?.message)}>
+        {label && <label>{label}</label>}
+        <div className="input-container">
+          <span className="icon">
+            <Icon size={isDesktop ? 21 : 19} />
+          </span>
 
-        <input
-          disabled={disabled}
-          defaultValue={defaultValue}
-          placeholder={placeholder}
-          {...register(name, {
-            required: required ? requiredMessage : false,
-          })}
-        />
-      </div>
-      {desc && <p className="desc">{desc}</p>}
+          <input
+            disabled={disabled}
+            defaultValue={defaultValue}
+            placeholder={placeholder}
+            {...register(name, {
+              required: required ? requiredMessage : false,
+            })}
+            {...delegated}
+          />
+        </div>
+        {desc && <p className="desc">{desc}</p>}
 
-      <InputErrorMessage msg={errors?.message} />
-    </Container>
-  );
-};
+        {/* <InputErrorMessage msg={errors?.message} /> */}
+      </Container>
+    );
+  }
+);
 
 export default IconedInput;
 const Container = styled.div<{ rtl: boolean; error: boolean }>(

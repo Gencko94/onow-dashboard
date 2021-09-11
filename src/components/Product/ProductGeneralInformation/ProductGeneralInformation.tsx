@@ -94,7 +94,7 @@ const ProductGeneralInformation = ({ data }: IProps) => {
   };
   return (
     <div>
-      <Grid cols="repeat(auto-fit,minmax(350px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(350px,1fr))" gap="1rem">
         <FormProvider {...methods}>
           <ProductNameAndDescription />
 

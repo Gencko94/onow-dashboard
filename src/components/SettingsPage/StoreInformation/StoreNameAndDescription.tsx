@@ -89,7 +89,7 @@ const StoreNameAndDescription = ({ data }: StoreNameAndDescriptionProps) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box type="titled" boxTitle="Store General Information">
-        <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="1rem">
+        <Grid columns="repeat(auto-fit,minmax(200px,1fr))" gap="1rem">
           <IconedInput
             Icon={MdSubtitles}
             errors={errors?.name?.en}
@@ -111,7 +111,7 @@ const StoreNameAndDescription = ({ data }: StoreNameAndDescriptionProps) => {
           />
         </Grid>
 
-        <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="1rem">
+        <Grid columns="repeat(auto-fit,minmax(200px,1fr))" gap="1rem">
           <Textarea
             errors={errors?.description?.en}
             label="Store Description"

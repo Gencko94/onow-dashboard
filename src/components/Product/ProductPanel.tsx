@@ -80,7 +80,7 @@ const ProductPanel = ({ id }: { id: number }) => {
     <Container>
       <Grid
         gap="0.5rem"
-        cols="repeat(auto-fit,minmax(300px,auto))"
+        columns="repeat(auto-fit,minmax(300px,auto))"
         items="center"
       >
         <div>
@@ -103,7 +103,12 @@ const ProductPanel = ({ id }: { id: number }) => {
             ]}
           />
         </div>
-        <Grid cols="60px 200px 100px" gap="1rem" items="center" justify="end">
+        <Grid
+          columns="60px 200px 100px"
+          gap="1rem"
+          items="center"
+          justify="end"
+        >
           {/* <Flex> */}
           <Paragraph>Status :</Paragraph>
           <Select

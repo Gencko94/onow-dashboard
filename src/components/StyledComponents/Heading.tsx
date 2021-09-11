@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import styled from "styled-components";
 import { up } from "../../constants";
 type DefaultHeadingProps = Omit<JSX.IntrinsicElements["h1"], "ref">;

@@ -72,7 +72,7 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box type="titled" boxTitle="Technical Support">
-        <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+        <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
           <Controller
             name="phone"
             control={control}
@@ -96,7 +96,7 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
             label="WhatsApp"
           />
         </Grid>
-        <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+        <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
           <IconedInput
             Icon={AiOutlineMail}
             errors={errors?.email}

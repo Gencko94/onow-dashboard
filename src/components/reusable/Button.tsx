@@ -120,6 +120,7 @@ const Button = React.forwardRef<HTMLButtonElement, IProps>(
     //   // children are a dep so dimensions are updated if initial contents change
     //   [children]
     // );
+
     let Component: any;
     if (appearance === "ghost") {
       if (size === "xs") Component = GhostButtonXs;
@@ -143,6 +144,7 @@ const Button = React.forwardRef<HTMLButtonElement, IProps>(
         textColor={textColor}
         withTransition={withTransition}
         active={active}
+        type={type}
         // style={
         //   width && height
         //     ? {
@@ -155,7 +157,7 @@ const Button = React.forwardRef<HTMLButtonElement, IProps>(
         {...props}
       >
         {isLoading ? (
-          <span className="loading">
+          <span className="loading" data-testid="btn-loading">
             <ImSpinner2 size={isDesktop ? 15 : 18} className="loading" />
           </span>
         ) : (

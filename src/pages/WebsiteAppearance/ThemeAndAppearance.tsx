@@ -58,7 +58,7 @@ const HomePageAppearance = () => {
       <Box type="titled" boxTitle="Website Main Color">
         <Grid
           items="center"
-          cols="repeat(auto-fit,minmax(300px,1fr))"
+          columns="repeat(auto-fit,minmax(300px,1fr))"
           gap="1rem"
         >
           <div>
@@ -116,10 +116,10 @@ const HomePageAppearance = () => {
       </Flex>
       <Box type="titled" boxTitle="Website Sections customization">
         <Grid
-          cols="repeat(auto-fill,minmax(300px,1fr))"
+          columns="repeat(auto-fill,minmax(300px,1fr))"
           gap="2rem"
           margin="1rem 0"
-          p={4}
+          padding="1rem"
         >
           <Card
             onClick={() => {

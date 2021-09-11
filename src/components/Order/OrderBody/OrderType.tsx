@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { GridWrapper } from "../../StyledComponents/Grid";
 import OrderDelivery from "./OrderDelivery";
 
 interface IProps {

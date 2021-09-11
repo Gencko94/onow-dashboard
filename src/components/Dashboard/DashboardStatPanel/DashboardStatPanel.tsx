@@ -64,9 +64,9 @@ const DashboardStatPanel = () => {
           styles={selectStyles}
         />
       </div>
-      <Grid cols="repeat(auto-fit,minmax(250px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(250px,1fr))" gap="1rem">
         <Card>
-          <Grid p={2} cols="1fr 0.8fr" items="center" gap="1rem">
+          <Grid padding="0.5rem" columns="1fr 0.8fr" items="center" gap="1rem">
             <Flex items="center" justify="flex-start" padding="0.5rem">
               <Icon color="#2cda66">
                 <RiFileList3Line size={30} />
@@ -79,7 +79,7 @@ const DashboardStatPanel = () => {
           </Grid>
         </Card>
         <Card>
-          <Grid p={2} cols="1fr 0.8fr" items="center" gap="1rem">
+          <Grid padding="0.5rem" columns="1fr 0.8fr" items="center" gap="1rem">
             <Flex items="center" justify="flex-start" padding="0.5rem">
               <Icon color="#2cda66">
                 <MdAttachMoney size={30} />
@@ -92,7 +92,7 @@ const DashboardStatPanel = () => {
           </Grid>
         </Card>
         <Card>
-          <Grid p={2} cols="1fr 0.8fr" items="center" gap="1rem">
+          <Grid padding="0.5rem" columns="1fr 0.8fr" items="center" gap="1rem">
             <Flex items="center" justify="flex-start" padding="0.5rem">
               <Icon color="#2cda66">
                 <RiFileList3Line size={30} />

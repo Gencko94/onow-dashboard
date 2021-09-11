@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import styled from "styled-components";
 
 import ProductsList from "../components/Products/ProductsList/ProductsList";
 import ProductsPanel from "../components/Products/ProductsPanel/ProductsPanel";

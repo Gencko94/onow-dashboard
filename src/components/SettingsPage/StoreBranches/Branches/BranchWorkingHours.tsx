@@ -51,9 +51,9 @@ const BranchWorkingHours = () => {
         return (
           <Grid
             key={day}
-            cols="repeat(auto-fit,minmax(250px,1fr))"
+            columns="repeat(auto-fit,minmax(250px,1fr))"
             gap="1rem"
-            p={4}
+            padding="1rem"
           >
             <Controller
               control={control}
@@ -68,7 +68,7 @@ const BranchWorkingHours = () => {
                 );
               }}
             />
-            <Grid gap="0.5rem" cols="0.2fr 1fr" items="center">
+            <Grid gap="0.5rem" columns="0.2fr 1fr" items="center">
               <Paragraph>From</Paragraph>
               <Controller
                 control={control}
@@ -86,7 +86,7 @@ const BranchWorkingHours = () => {
                 }}
               />
             </Grid>
-            <Grid gap="0.5rem" cols="0.2fr 1fr" items="center">
+            <Grid gap="0.5rem" columns="0.2fr 1fr" items="center">
               <Paragraph>To</Paragraph>
               <Controller
                 control={control}

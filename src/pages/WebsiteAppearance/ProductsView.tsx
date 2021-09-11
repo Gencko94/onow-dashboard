@@ -116,7 +116,7 @@ const ProductsView = () => {
           You can Control how your products look in your website's Home Page
         </Paragraph>
 
-        <Grid gap="1rem" cols="repeat(auto-fit,minmax(275px,1fr))">
+        <Grid gap="1rem" columns="repeat(auto-fit,minmax(275px,1fr))">
           {options.map((option) => {
             return (
               <Card>

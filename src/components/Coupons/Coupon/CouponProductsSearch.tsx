@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { GoSearch } from "react-icons/go";
 import styled from "styled-components";
-import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
+import Flex from "../../StyledComponents/Flex";
 import { useDebounce } from "use-debounce";
 import { useInfiniteQuery } from "react-query";
 import Grid from "../../StyledComponents/Grid";
@@ -98,7 +98,7 @@ const CouponProductsSearch = ({ title, control, handleAddProduct }: IProps) => {
                           className="search-result"
                           onClick={() => handleAddProduct(product)}
                         >
-                          <Grid cols="50px 1fr" gap="0.25rem">
+                          <Grid columns="50px 1fr" gap="0.25rem">
                             {product.image ? (
                               <img
                                 className="img"
@@ -142,7 +142,7 @@ const Container = styled.div`
   border-radius: 6px;
   background-color: ${(props) => props.theme.accent2};
 
-  ${FlexWrapper} {
+  ${Flex} {
     position: relative;
     border-radius: 6px;
     box-shadow: ${(props) => props.theme.shadow};

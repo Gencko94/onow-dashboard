@@ -132,7 +132,7 @@ const Category = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid
         gap="0.5rem"
-        cols="repeat(auto-fit,minmax(300px,auto))"
+        columns="repeat(auto-fit,minmax(300px,auto))"
         items="center"
       >
         <div>
@@ -153,7 +153,7 @@ const Category = () => {
             ]}
           />
         </div>
-        <Grid cols=" auto auto" gap="1rem" items="center" justify="end">
+        <Grid columns=" auto auto" gap="1rem" items="center" justify="end">
           <Button
             color="green"
             withTransition

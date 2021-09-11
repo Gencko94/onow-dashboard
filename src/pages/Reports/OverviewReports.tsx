@@ -7,7 +7,7 @@ import { up } from "../../utils/themes";
 const OverviewReports = () => {
   return (
     <div>
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <OverviewReportCard />
         <OverviewReportCard />
         <OverviewReportCard />

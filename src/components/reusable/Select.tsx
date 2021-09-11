@@ -162,7 +162,7 @@ export default function Select<T>({
         formatGroupLabel={formatGroupLabel}
         menuShouldScrollIntoView={false}
       />
-      {errors && <InputErrorMessage msg={errors?.message} />}
+      {/* {errors && <InputErrorMessage msg={errors?.message} />} */}
     </Container>
   );
 }

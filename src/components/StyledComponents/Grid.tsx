@@ -1,10 +1,9 @@
-import { CSSProperties, FC } from "react";
 import styled from "styled-components";
 interface IProps {
   /**
    * Specifies the ```grid-template-columns``` property
    */
-  cols: string;
+  columns?: string;
   /**
    * Specifies the ```grid-template-rows``` property
    */
@@ -23,53 +22,20 @@ interface IProps {
   justify?: string;
   /**
    * Sets the ```padding``` property.
-   *
-   * example : ```p={2}``` === ```2 * 0.25rem```
    */
-  p?: number;
+  padding?: string;
   margin?: string;
 }
-const Grid: FC<IProps> = ({
-  children,
-  rows,
-  cols,
-  gap,
-  items,
-  p,
-  margin,
-  justify,
-}) => {
-  return (
-    <GridWrapper
-      justify={justify}
-      style={
-        {
-          "--cols": cols,
-          "--gap": gap,
-          "--items": items,
-          "--rows": rows,
-          "--padding": `${p! * 0.25}rem`,
-          "--margin": margin,
-        } as CSSProperties
-      }
-    >
-      {children}
-    </GridWrapper>
-  );
-};
 
-export default Grid;
-export const GridWrapper = styled.div<{ justify?: string }>(
-  ({ theme: { breakpoints, font }, justify }) => `
-
+const Grid = styled.div<IProps>`
   display: grid;
-  grid-template-columns: var(--cols);
-  grid-template-rows: var(--rows);
-  gap: var(--gap);
-  align-items: var(--items, normal);
-  padding: var(--padding, 0);
-  margin: var(--margin, 0);
-  justify-content:${justify};
-  
-  `
-);
+
+  grid-template-rows: ${(props) => props.rows};
+  gap: ${(props) => props.gap};
+  align-items: ${(props) => props.items};
+  padding: ${(props) => props.padding};
+  margin: ${(props) => props.margin};
+  justify-content: ${(props) => props.justify};
+  grid-template-columns: ${(props) => props.columns};
+`;
+export default Grid;

@@ -10,8 +10,8 @@ import { orderStatuses } from "../../../fakeData/fakeOrderStatuses";
 import { ORDER_STATUS } from "../../../interfaces/orders/orders";
 
 import OrderStatusChip from "../../reusable/OrderStatusChip";
-import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
-import Grid, { GridWrapper } from "../../StyledComponents/Grid";
+import Flex from "../../StyledComponents/Flex";
+import Grid from "../../StyledComponents/Grid";
 import ChangeOrderStatusModalBody from "./ChangeOrderStatusModalBody";
 
 interface IProps {
@@ -79,7 +79,7 @@ const OrderInfo = ({ date, orderId, orderStatus }: IProps) => {
   }, []);
   return (
     <Container>
-      <Grid cols="1fr 1fr 1fr" gap="1rem" p={2}>
+      <Grid columns="1fr 1fr 1fr" gap="1rem" padding="0.5rem">
         <Flex items="center" justify="flex-start">
           <p className="label">Order Number</p>
           <p className="value">{orderId}</p>

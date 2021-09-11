@@ -40,7 +40,7 @@ const CouponProductsList = ({
               )}
               {products.map((product: any) => (
                 <div className="search-result">
-                  <Grid cols="50px 1fr 50px" gap="0.25rem">
+                  <Grid columns="50px 1fr 50px" gap="0.25rem">
                     {product.image ? (
                       <img
                         className="img"

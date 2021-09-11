@@ -13,7 +13,7 @@ const AccountSection = () => {
         Account Settings
       </Heading>
       <Grid
-        cols="repeat(auto-fill,minmax(250px,1fr))"
+        columns="repeat(auto-fill,minmax(250px,1fr))"
         gap="2rem"
         margin="1rem 0"
       >

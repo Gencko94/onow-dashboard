@@ -21,7 +21,7 @@ const ProductOrdering = () => {
 
   return (
     <Box type="titled" boxTitle="Product Ordering options">
-      <Grid cols="1fr  1fr 0.2fr" gap="0.5rem">
+      <Grid columns="1fr  1fr 0.2fr" gap="0.5rem">
         <IconedNumberInput
           label="Maximum ordering quantity per customer"
           Icon={RiHandCoinLine}
@@ -40,7 +40,7 @@ const ProductOrdering = () => {
           register={register}
         />
       </Grid>
-      <Grid cols="1fr 1fr" gap="3.5rem">
+      <Grid columns="1fr 1fr" gap="3.5rem">
         <Controller
           control={control}
           name="allow_side_notes"

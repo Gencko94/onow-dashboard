@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import ProductPromotions from "../../components/AddProduct/ProductPromotions/ProductPromotions";
@@ -10,18 +9,11 @@ import ProductPanel from "../../components/Product/ProductPanel";
 import ProductPricingAndOptions from "../../components/Product/ProductPricingAndOptions/ProductPricingAndOptions";
 import ProductTabs from "../../components/Product/ProductTabs/ProductTabs";
 
-import Flex from "../../components/StyledComponents/Flex";
-
-import { getProduct } from "../../utils/queries";
-import { up } from "../../utils/themes";
+import { useGetProduct } from "../../hooks/data-hooks/product.hooks";
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
-  const { data } = useQuery(["product", parseInt(id)], () => getProduct(id), {
-    suspense: true,
-    // useErrorBoundary: false,
-    // onError: (err: any) => console.log(err.response),
-  });
+  const { data } = useGetProduct(parseInt(id));
   const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3 | 4>(0);
   return (
     <div>

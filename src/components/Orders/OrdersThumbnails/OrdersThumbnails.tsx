@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import OrderThumbnail from "./OrderThumbnail";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation } from "swiper";
+
+// import { Navigation } from "swiper";
 import "swiper/swiper-bundle.css";
 import { STORE_ORDERS_STAT } from "../../../interfaces/orders/orders";
-SwiperCore.use([Navigation]);
+import { Swiper, SwiperSlide } from "swiper/react";
+// import Swiper, { SwiperSlide } from "swiper/react";
 
 const breakpoints = {
   // when window width is >= 320px
@@ -31,10 +32,11 @@ const breakpoints = {
     spaceBetween: 20,
   },
   1440: {
-    slidesPerView: 5,
+    slidesPerView: 4.25,
     spaceBetween: 20,
   },
 };
+
 interface IProps {
   stats: STORE_ORDERS_STAT[];
 }

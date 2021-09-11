@@ -1,27 +1,24 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
+
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import useToast from "../../../hooks/useToast";
+
 import { PRODUCT } from "../../../interfaces/products/products";
-import extractError from "../../../utils/extractError";
-import {
-  activateProduct,
-  deleteMultipleProducts,
-  deleteProduct,
-  getProducts,
-} from "../../../utils/queries";
+
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
 import LoadingTable from "../../reusable/LoadingTable";
 import TableHead from "../../reusable/TableHead";
-import Flex, { FlexWrapper } from "../../StyledComponents/Flex";
+import Flex from "../../StyledComponents/Flex";
 import ProductItem from "./ProductItem";
 import Spinner from "react-loader-spinner";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
 
 import { ApplicationProvider } from "../../../contexts/ApplicationContext";
 import { useDebounce } from "use-debounce/lib";
+import { useGetProducts } from "../../../hooks/data-hooks/products/useGetProducts";
+import { useActivateProduct } from "../../../hooks/data-hooks/products/useActivateProduct";
+import { useDeleteProduct } from "../../../hooks/data-hooks/products/useDeleteProduct";
+import { useDeleteMultipleProducts } from "../../../hooks/data-hooks/products/useDeleteMultipleProducts";
 const ProductsList = () => {
   // const { search } = useQueryParams();
   const {
@@ -32,14 +29,8 @@ const ProductsList = () => {
   } = useContext(ApplicationProvider);
   const [debouncedSearchValue] = useDebounce(globalSearchBarValue, 500);
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
-  const { handleCloseConfirmationModal, setConfirmationModalStatus } =
-    useConfirmationModal();
 
   const history = useHistory();
-
-  const { setToastStatus, handleCloseToast } = useToast();
-
-  const queryClient = useQueryClient();
 
   const [sortBy, setSortBy] = useState<{
     field: string;
@@ -56,165 +47,29 @@ const ProductsList = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery(
-    ["products", sortBy, debouncedSearchValue],
-    ({ pageParam = 1 }) =>
-      getProducts(sortBy, pageParam, debouncedSearchValue as string),
-    {
-      keepPreviousData: globalSearchBarValue !== "" ? false : true,
-
-      getNextPageParam: (lastPage) => {
-        if (lastPage.currentPage < lastPage.lastPage) {
-          return lastPage.currentPage + 1;
-        } else {
-          return undefined;
-        }
-      },
-    }
-  );
-
-  // Activate Mutation
-  const {
-    mutateAsync: activationMutation,
-    reset: resetActivation,
-    isLoading: activationLoading,
-  } = useMutation(activateProduct, {
-    onSuccess: (data, productId) => {
-      queryClient.invalidateQueries("products");
-    },
+  } = useGetProducts({
+    debouncedSearchValue,
+    globalSearchBarValue,
+    sortBy,
   });
-  // Delete Mutation
-  const {
-    mutateAsync,
-    reset,
-    isLoading: deleteLoading,
-  } = useMutation(deleteProduct, {
-    onSuccess: (data, productId) => {
-      queryClient.invalidateQueries("products");
-    },
-  });
+
+  // Activate Logic
+  const { handleActivateProduct } = useActivateProduct();
+  // Delete Logic
+  const { handleDeleteProduct } = useDeleteProduct();
   // Multiple Delete Mutation
-  const {
-    mutateAsync: deleteMultiple,
-    reset: resetMultipleDelete,
-    isLoading: multipleDeleteLoading,
-  } = useMutation(deleteMultipleProducts, {
-    onSuccess: (data, productId) => {
-      queryClient.invalidateQueries("products");
-    },
-  });
+  const { handleDeleteMultipleProducts, multipleDeleteLoading } =
+    useDeleteMultipleProducts({
+      successCallback: () => {
+        setSelectedRows([]);
+      },
+    });
+
   useEffect(() => {
     if (globalSearchType !== "product") {
       handleChangeGlobalSearchType?.("product");
     }
   }, [globalSearchType, handleChangeGlobalSearchType]);
-  const handleDeleteProduct = async (id: number) => {
-    handleCloseConfirmationModal?.();
-    try {
-      await mutateAsync(id.toString());
-      setToastStatus?.({
-        fn: () => {
-          handleCloseToast?.();
-        },
-        open: true,
-        text: "Product Deleted Successfully",
-        type: "success",
-      });
-    } catch (error) {
-      handleCloseConfirmationModal?.();
-
-      const { responseError } = extractError(error);
-      if (responseError) {
-        setToastStatus?.({
-          fn: () => {
-            reset();
-            handleCloseToast?.();
-          },
-          open: true,
-          text: responseError,
-          type: "error",
-        });
-      } else {
-        setToastStatus?.({
-          fn: () => {
-            reset();
-            handleCloseToast?.();
-          },
-          open: true,
-          text: "Something went wrong",
-          type: "error",
-        });
-      }
-    }
-  };
-  const handleActivateProduct = async (id: number, active: number) => {
-    try {
-      await activationMutation({ id, active });
-      handleCloseConfirmationModal?.();
-      setToastStatus?.({
-        fn: () => {
-          handleCloseToast?.();
-        },
-        open: true,
-        text: "Product Status Changed",
-        type: "success",
-      });
-    } catch (error) {
-      handleCloseConfirmationModal?.();
-
-      const { responseError } = extractError(error);
-      if (responseError) {
-        setToastStatus?.({
-          fn: () => {
-            reset();
-            handleCloseToast?.();
-          },
-          open: true,
-          text: responseError,
-          type: "error",
-        });
-      } else {
-        setToastStatus?.({
-          fn: () => {
-            resetActivation();
-            handleCloseToast?.();
-          },
-          open: true,
-          text: "Something went wrong",
-          type: "error",
-        });
-      }
-    }
-  };
-  const handleDeleteMultipleProducts = async (ids: number[]) => {
-    handleCloseConfirmationModal?.();
-    try {
-      await deleteMultiple(ids);
-      setToastStatus?.({
-        fn: () => {
-          handleCloseToast?.();
-        },
-        open: true,
-        text: "Products Deleted Successfully",
-        type: "success",
-      });
-      setSelectedRows([]);
-    } catch (error) {
-      const { responseError } = extractError(error);
-      if (responseError) {
-      } else {
-        setToastStatus?.({
-          fn: () => {
-            resetMultipleDelete();
-            handleCloseToast?.();
-          },
-          open: true,
-          text: "Something went wrong",
-          type: "error",
-        });
-      }
-    }
-  };
 
   const cols = useMemo(
     () => [
@@ -399,7 +254,7 @@ const Container = styled.div`
     left: 15px;
   }
 `;
-const SearchContainer = styled(FlexWrapper)`
+const SearchContainer = styled(Flex)`
   background-color: #fff;
   padding: 0.5rem;
   border-radius: 6px;

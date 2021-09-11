@@ -1,9 +1,10 @@
-import { FieldError, UseFormRegister } from "react-hook-form";
+import { FieldError } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { IconType } from "react-icons/lib";
+
 import Input from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { up } from "../../../constants";
 import InputErrorMessage from "../InputErrorMessage";
 type CountryData = {
   countryCode: string;
@@ -76,26 +77,41 @@ const PhoneInput = ({
       />
 
       {desc && <p className="desc">{desc}</p>}
-      <InputErrorMessage msg={errors?.message} />
+      {/* <InputErrorMessage msg={errors?.message} /> */}
     </Container>
   );
 };
 
 export default PhoneInput;
-const Container = styled.div<{ rtl: boolean; error: boolean }>`
+const Container = styled.div<{ rtl: boolean; error: boolean }>(
+  ({ theme: { breakpoints, textAlt, primary, font } }) => `
   label {
-    color: ${({ theme }) => theme.text};
-    margin-bottom: 0.75rem;
-    font-size: 0.9rem;
-    font-weight: ${(props) => props.theme.font.regular};
+    color: ${textAlt};
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
     display: block;
+    font-weight:${font.semibold};
+  }
+.desc {
+  font-size: 0.7rem;
+  padding-top: 0.25rem;
+  height: 22px;
+
+  color: ${primary};
+}
+  
+${up(breakpoints.md)}{
+  label {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+  .input-container{
+
+    input {
+      font-size: 0.9rem;
+    }
   }
 
-  .desc {
-    font-size: 0.7rem;
-    padding-top: 0.25rem;
-    height: 22px;
-
-    color: ${(props) => props.theme.primary};
-  }
-`;
+};
+  `
+);

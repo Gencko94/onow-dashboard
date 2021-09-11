@@ -11,12 +11,12 @@ interface IProps {
 const CustomerProfileInfo = ({ data }: IProps) => {
   return (
     <Box type="titled" boxTitle="Customer Personal Info">
-      <Grid cols="repeat(auto-fit,minmax(280px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(280px,1fr))" gap="1rem">
         <DataField label="First Name">{data.first_name}</DataField>
         <DataField label="Last Name">{data.last_name}</DataField>
       </Grid>
       <Spacer size={16} />
-      <Grid cols="repeat(auto-fit,minmax(280px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(280px,1fr))" gap="1rem">
         <DataField label="Phone Number">{data.phone}</DataField>
         <DataField label="Email Address">{data.email}</DataField>
       </Grid>

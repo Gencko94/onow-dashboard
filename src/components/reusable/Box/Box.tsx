@@ -48,6 +48,7 @@ padding:0;
 }
 .box-content {
   padding:0.75rem;
+  width:100%;
 }
 ${up(breakpoints.md)}{
 padding:0;

@@ -3,7 +3,7 @@ import "./index.css";
 import "./transitions.css";
 import "./styles/buttons.css";
 import App from "./App";
-import "./i18n";
+
 import "@reach/tooltip/styles.css";
 
 ReactDOM.render(<App />, document.getElementById("react-root"));

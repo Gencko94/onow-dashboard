@@ -16,7 +16,7 @@ interface IProps {
 const StaffMemberPermissions = ({ control, permissions, setValue }: IProps) => {
   return (
     <Box type="titled" boxTitle="Staff Member Permissions">
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <CustomerPermissions setValue={setValue} control={control} />
         <OrdersPermissions control={control} setValue={setValue} />
         <ProductsPermissions control={control} setValue={setValue} />

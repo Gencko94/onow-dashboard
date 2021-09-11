@@ -67,7 +67,7 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
   } = useTranslation();
   return (
     <Box type="titled" boxTitle="Coupon Information">
-      <Grid gap="1rem" cols="repeat(auto-fit,minmax(300px,1fr))">
+      <Grid gap="1rem" columns="repeat(auto-fit,minmax(300px,1fr))">
         <IconedInput
           Icon={MdSubtitles}
           errors={errors?.name?.en}
@@ -87,7 +87,7 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           name="name.ar"
         />
       </Grid>
-      <Grid gap="1rem" cols="repeat(auto-fit,minmax(300px,1fr))">
+      <Grid gap="1rem" columns="repeat(auto-fit,minmax(300px,1fr))">
         <IconedInput
           Icon={BiBarcode}
           errors={errors?.code}

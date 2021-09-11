@@ -61,7 +61,7 @@ const CreateProductOption = ({ option, index, removeOption }: IProps) => {
           <TiDelete size={30} />
         </button>
       </Flex>
-      <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
+      <Grid columns="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
         <IconedInput
           Icon={MdSubtitles}
           errors={errors?.options?.[index]?.name?.en}

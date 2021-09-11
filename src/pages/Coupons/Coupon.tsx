@@ -153,7 +153,7 @@ const Coupon = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <Grid
                 gap="0.5rem"
-                cols="repeat(auto-fit,minmax(300px,auto))"
+                columns="repeat(auto-fit,minmax(300px,auto))"
                 items="center"
               >
                 <Breadcrumbs

@@ -47,7 +47,7 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
   } = useTranslation();
   return (
     <Box type="titled" boxTitle="Staff Member Information">
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <IconedInput
           Icon={MdSubtitles}
           errors={errors?.first_name}
@@ -67,7 +67,7 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
           name="last_name"
         />
       </Grid>
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <Controller
           name="phone"
           control={control}
@@ -95,7 +95,7 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
           name="email"
         />
       </Grid>
-      <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+      <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <Controller
           control={control}
           name="branch_id"

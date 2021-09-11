@@ -22,7 +22,7 @@ const CustomerInsights = ({ data }: IProps) => {
       boxTitle="Customer Insights"
     >
       <Wrapper>
-        <Grid cols="1fr 0.8fr" items="center" gap="1rem">
+        <Grid columns="1fr 0.8fr" items="center" gap="1rem">
           <Flex items="center" justify="flex-start">
             <Icon color="#2cda66">
               <FiCalendar size={20} />
@@ -37,7 +37,7 @@ const CustomerInsights = ({ data }: IProps) => {
           </Paragraph>
         </Grid>
         <Spacer size={10} />
-        <Grid cols="1fr 0.8fr" items="center" gap="1rem">
+        <Grid columns="1fr 0.8fr" items="center" gap="1rem">
           <Flex items="center" justify="flex-start">
             <Icon color="#2cda66">
               <FiCalendar size={20} />

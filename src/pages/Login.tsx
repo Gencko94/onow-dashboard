@@ -1,66 +1,38 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
-import { MdMail } from "react-icons/md";
 import { useContext } from "react";
 import { useTranslation, Trans } from "react-i18next/";
 import { LOGIN_FORM } from "../interfaces/auth/auth";
-import { useMutation, useQueryClient } from "react-query";
-import { userLogin } from "../utils/queries";
 import { AuthProvider } from "../contexts/AuthContext";
-import * as Yup from "yup";
-import Button from "../components/reusable/Button";
-import IconedInput from "../components/reusable/Inputs/IconedInput";
-import PasswordInput from "../components/reusable/Inputs/PasswordInput";
+import { LoginForm } from "../components/Login/LoginForm";
+import { useLogin } from "../hooks/data-hooks/useLogin";
 
 const Login = () => {
   const { t, ready, i18n } = useTranslation(["login"]);
   const { user } = useContext(AuthProvider);
-  const schema = Yup.object().shape({
-    login: Yup.string().required("Required Field"),
-    password: Yup.string().required("Required Field").min(6, t("min-6")),
-  });
-  const queryClient = useQueryClient();
-  const history = useHistory();
-  const location = useLocation<string>();
 
   const {
     register,
     handleSubmit,
-
     setError,
     formState: { isSubmitting, errors },
-  } = useForm<LOGIN_FORM>({
-    resolver: yupResolver(schema),
-  });
+  } = useForm<LOGIN_FORM>({});
   const changeLanguage = (lng: string) => {
     if (ready) {
       i18n.changeLanguage(lng);
     }
   };
-  const { mutateAsync: login } = useMutation(userLogin, {
-    onSuccess: (data) => {
-      localStorage.setItem("dshtid", data.result.token);
-      queryClient.setQueryData("auth", data.result.userInfo);
-      history.replace(location.state ?? "/dashboard");
-      // if (location.state) {
-      //   history.push(location.state);
-      //   console.log(location.state);
-      // } else {
-      //   console.log("hi");
-      // }
-    },
-  });
+  const { mutateAsync } = useLogin();
+
   const onSubmit = async (data: LOGIN_FORM) => {
-    console.log(data);
     try {
-      await login({
+      await mutateAsync({
         password: data.password,
         login: data.login.toLowerCase(),
       });
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       if (
         error.response?.data.error === "Phone Number or Password is Missing"
@@ -98,35 +70,13 @@ const Login = () => {
               <img src="/images/logo.svg" alt="logo" />
             </LogoContainer>
           </Header>
-          <FormContainer>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <IconedInput
-                Icon={MdMail}
-                errors={errors?.login}
-                name="login"
-                register={register}
-                label="Email"
-              />
-
-              <PasswordInput
-                errors={errors?.password}
-                name="password"
-                register={register}
-                label="Password"
-              />
-
-              <Button
-                color="primary"
-                type="submit"
-                style={{ width: "100%" }}
-                isLoading={isSubmitting}
-                disabled={isSubmitting}
-                withTransition
-              >
-                Login
-              </Button>
-            </Form>
-          </FormContainer>
+          <LoginForm
+            isSubmitting={isSubmitting}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+            errors={errors}
+            register={register}
+          />
           <Footer>
             <Text>
               <Trans i18nKey="login:no-account">
@@ -195,18 +145,6 @@ const LogoContainer = styled(Link)`
 
   align-items: center;
   justify-content: center;
-`;
-const FormContainer = styled.div`
-  padding: 1rem;
-  border: ${(props) => props.theme.border};
-  box-shadow: ${(props) => props.theme.shadow};
-  /* background-color: ${(props) => props.theme.subtleFloating}; */
-  border-radius: 12px;
-  min-width: 300px;
-  margin-bottom: 0.5rem;
-`;
-const Form = styled.form`
-  padding: 0rem 0.25rem;
 `;
 
 const Footer = styled.div`

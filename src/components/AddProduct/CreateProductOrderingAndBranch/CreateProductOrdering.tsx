@@ -24,7 +24,7 @@ const CreateProductOrdering = () => {
         Product Ordering Options
       </Heading>
 
-      <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
+      <Grid columns="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
         <IconedNumberInput
           label="Maximum ordering quantity per customer"
           Icon={RiHandCoinLine}
@@ -43,7 +43,7 @@ const CreateProductOrdering = () => {
           register={register}
         />
       </Grid>
-      <Grid cols="repeat(auto-fit,minmax(200px,1fr))" gap="2rem">
+      <Grid columns="repeat(auto-fit,minmax(200px,1fr))" gap="2rem">
         <Controller
           control={control}
           name="allow_side_notes"

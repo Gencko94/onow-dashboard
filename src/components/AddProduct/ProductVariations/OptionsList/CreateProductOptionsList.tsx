@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import Button from "../../../reusable/Button";
 import EmptyTable from "../../../reusable/EmptyTable";
-import Flex, { FlexWrapper } from "../../../StyledComponents/Flex";
+import Flex from "../../../StyledComponents/Flex";
 import Heading from "../../../StyledComponents/Heading";
 import { secondTabProps } from "../CreateProductPricingAndOptions";
 

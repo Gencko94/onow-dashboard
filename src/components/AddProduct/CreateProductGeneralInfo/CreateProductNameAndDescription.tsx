@@ -31,7 +31,7 @@ const CreateProductNameAndDescription = () => {
   }, [nameEn]);
   return (
     <Box type="titled" boxTitle="Product Naming & Description">
-      <Grid cols="repeat(auto-fill,minmax(300px,1fr)" gap="1rem">
+      <Grid columns="repeat(auto-fill,minmax(300px,1fr))" gap="1rem">
         <IconedInput
           Icon={MdSubtitles}
           errors={errors?.name?.en}
@@ -93,7 +93,7 @@ const CreateProductNameAndDescription = () => {
           name="quantity"
         />
       </Grid>
-      <Grid cols="1fr" gap="1rem">
+      <Grid columns="1fr" gap="1rem">
         <PrefixedInput
           errors={errors?.slug}
           label="Slug"

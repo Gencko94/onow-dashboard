@@ -24,7 +24,7 @@ const OrderBody = ({ data }: IProps) => {
       />
 
       <OrderItems amount={data!.amount} />
-      <Grid cols="1fr 1fr" gap="0.5rem">
+      <Grid columns="1fr 1fr" gap="0.5rem">
         <OrderSummary />
         <OrderNotes />
       </Grid>

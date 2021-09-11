@@ -3,6 +3,7 @@ import { FieldError, UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { CgPassword } from "react-icons/cg";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+import { ErrorMessage } from "@hookform/error-message";
 
 import styled, { css } from "styled-components";
 import { up } from "../../../constants";
@@ -11,7 +12,7 @@ interface BaseInput {
   /**
    * 	An object with field errors. Obtainable from ```formState.errors```
    */
-  errors: FieldError | undefined;
+  errors: any;
   /**
    * 	Input's name being registered.
    */
@@ -84,12 +85,13 @@ const PasswordInput = ({
   };
   return (
     <Container rtl={language === "ar"} error={Boolean(errors?.message)}>
-      {label && <label>{label}</label>}
+      {label && <label htmlFor="password">{label}</label>}
       <div className="input-container">
         <span className="icon">
           <CgPassword size={21} />
         </span>
         <Input
+          id="password"
           type={showPassword ? "text" : "password"}
           defaultValue={defaultValue}
           placeholder={placeholder}
@@ -106,8 +108,7 @@ const PasswordInput = ({
         </span>
       </div>
       {desc && <p className="desc">{desc}</p>}
-
-      <InputErrorMessage msg={errors?.message} />
+      {/* <InputErrorMessage errors={errors} name={name} /> */}
     </Container>
   );
 };

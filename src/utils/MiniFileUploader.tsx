@@ -3,7 +3,7 @@ import styled from "styled-components";
 import convertUrlToFile from "./convertUrlToFile";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import Flex, { FlexWrapper } from "../components/StyledComponents/Flex";
+import Flex from "../components/StyledComponents/Flex";
 import Button from "../components/reusable/Button";
 const DEFAULT_MAX_FILE_SIZE_IN_BYTES = 1000000;
 interface IProps {
@@ -25,6 +25,7 @@ const MiniFileUploader = ({
   console.log(progress);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const [placeholderImage, setPlaceholderImage] = useState<File | null>(null);
 
   // Image Validation
   const addFilesAndValidate = (files: FileList) => {
@@ -43,8 +44,11 @@ const MiniFileUploader = ({
   ) => {
     if (files?.length) {
       const addedImage = addFilesAndValidate(files);
-
-      cb(addedImage!);
+      if (typeof addedImage !== "undefined") {
+        setPlaceholderImage(addedImage);
+        setFile(addedImage);
+        cb(addedImage!);
+      }
     }
   };
   const removeImage = () => {
@@ -72,7 +76,7 @@ const MiniFileUploader = ({
               <DragDropText>Drag and drop here</DragDropText>
             </>
           )}
-          {file && progress === null && (
+          {file && !progress && (
             <FilePreviewContainer>
               <PreviewContainer>
                 <ImagePreview src={URL.createObjectURL(file)} />
@@ -81,6 +85,11 @@ const MiniFileUploader = ({
           )}
           {progress && progress !== 0 && (
             <FilePreviewContainer>
+              <img
+                className="loading-image"
+                src={URL.createObjectURL(placeholderImage)}
+                alt={`Uploading...`}
+              />
               <ProgressContainer>
                 <CircularProgressbar
                   strokeWidth={2}
@@ -125,6 +134,7 @@ const MiniFileUploader = ({
       {image && (
         <Flex justify="center" margin="1rem 0">
           <Button
+            type="button"
             color="green"
             withTransition
             onClick={() => {
@@ -200,12 +210,15 @@ const FilePreviewContainer = styled.div`
   right: 0;
   bottom: 0;
   z-index: 1;
+  .loading-image {
+    filter: blur(4px) brightness(0.9);
+  }
 `;
-const ProgressContainer = styled(FlexWrapper)`
+const ProgressContainer = styled(Flex)`
   padding: 4rem;
   align-items: center;
   justify-content: center;
-
+  position: absolute;
   margin: 0 auto;
 `;
 const PreviewContainer = styled.div`
@@ -217,6 +230,7 @@ const PreviewContainer = styled.div`
 `;
 const ImagePreview = styled.img`
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  max-height: 100%;
+  min-height: 200px;
 `;

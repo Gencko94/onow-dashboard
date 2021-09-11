@@ -94,6 +94,21 @@ export const getStoreLayoutSettings =
     );
     return res.data.results;
   };
+export const updateStoreLayoutSettings =
+  async (): Promise<STORE_LAYOUT_SETTINGS> => {
+    const t = localStorage.getItem("dshtid");
+    const config = {
+      headers: {
+        Authorization: t ? `Bearer ${t}` : "",
+      },
+    };
+    const res = await axios.post(
+      `${customerUri}/store-layout`,
+
+      config
+    );
+    return res.data.results;
+  };
 export const editStoreThemeColor = async (color: string) => {
   const t = localStorage.getItem("dshtid");
   const config = {

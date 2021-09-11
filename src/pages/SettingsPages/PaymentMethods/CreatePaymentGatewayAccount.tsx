@@ -13,7 +13,7 @@ import InlineFileUploader from "../../../components/reusable/InlineFileUploader"
 import IconedInput from "../../../components/reusable/Inputs/IconedInput";
 import RadioButton from "../../../components/reusable/RadioButton";
 import Select from "../../../components/reusable/Select";
-import Flex, { FlexWrapper } from "../../../components/StyledComponents/Flex";
+import Flex from "../../../components/StyledComponents/Flex";
 import { countrylistWithDialCodes } from "../../../data/countryList";
 import { CREATE_PAYMENT_GATEWAY } from "../../../interfaces/settings/payment-methods/payment-methods";
 import { up } from "../../../utils/themes";
@@ -326,7 +326,7 @@ const Container = styled.div(
     height: 22px;
     color: ${dangerRed};
   }
- ${FlexWrapper}{
+ ${Flex}{
    margin: 1rem 0 ;
  }
  ${up(breakpoints.md)}{

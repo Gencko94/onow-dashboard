@@ -1,6 +1,5 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
-import styled from "styled-components";
 import IconedInput from "../../components/reusable/Inputs/IconedInput";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { useContext } from "react";
@@ -17,7 +16,6 @@ import { updateUserAccount } from "../../utils/queries";
 import extractError from "../../utils/extractError";
 import useToast from "../../hooks/useToast";
 import Heading from "../../components/StyledComponents/Heading";
-import Hr from "../../components/StyledComponents/Hr";
 import Box from "../../components/reusable/Box/Box";
 import Grid from "../../components/StyledComponents/Grid";
 import Spacer from "../../components/reusable/Spacer";
@@ -105,7 +103,7 @@ const AccountSettings = () => {
       <Spacer size={40} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box type="titled" boxTitle="Account Information">
-          <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+          <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
             <IconedInput
               Icon={MdSubtitles}
               errors={errors?.first_name}
@@ -125,13 +123,14 @@ const AccountSettings = () => {
               name="last_name"
             />
           </Grid>
-          <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
+          <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
             <Controller
               name="phone"
               control={control}
               render={({ field: { onChange, value } }) => {
                 return (
                   <PhoneInput
+                    desc="Phone Number Cannot be changed"
                     disabled
                     label="Phone Number"
                     value={value}
@@ -142,6 +141,7 @@ const AccountSettings = () => {
               }}
             />
             <IconedInput
+              desc="Email Cannot be changed"
               Icon={AiOutlineMail}
               errors={errors?.email}
               register={register}

@@ -19,7 +19,7 @@ const PaymentMethodCard = ({ gateway }: IProps) => {
   } = useTranslation();
   const history = useHistory();
   return (
-    <Grid cols="repeat(auto-fit,minmax(300px,1fr))" gap="1.5rem">
+    <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1.5rem">
       <Flex items="center" justify="center" column>
         <img src={gateway.logo} alt={gateway.name.en} />
 

@@ -11,6 +11,7 @@ import { IoMdCloseCircle } from "react-icons/io";
 import styled from "styled-components";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import FileUploader from "../../../utils/FileUploader";
+import MiniFileUploader from "../../../utils/MiniFileUploader";
 import Box from "../../reusable/Box/Box";
 import Button from "../../reusable/Button";
 import Spacer from "../../reusable/Spacer";
@@ -88,16 +89,37 @@ const CreateProductImage = () => {
         <Button type="submit">Next</Button>
       </Flex>
       <Spacer size={40} />
-      <Box type="titled" boxTitle="Product Imaging">
+      <Box
+        style={{ alignSelf: "self-start" }}
+        type="titled"
+        boxTitle="Default Product image"
+      >
+        <Controller
+          control={control}
+          name="thumbnail"
+          render={({ field: { value, onChange } }) => {
+            return (
+              <MiniFileUploader
+                accept=".png, .jpg, .jpeg"
+                image={value}
+                onChange={(image) => {
+                  onChange(image);
+                }}
+              />
+            );
+          }}
+        />
+      </Box>
+      <Box type="titled" boxTitle="Image Gallery">
         <Paragraph>
           High Quality product images are very important when you're offering
           food, Truly delectable images will help your products sell themselfs.
         </Paragraph>
 
-        <Grid cols="1fr" gap="1rem">
+        <Grid columns="1fr" gap="1rem">
           <PreviewContainer>
-            <Grid cols="repeat(auto-fill,minmax(200px,1fr))" gap="1rem">
-              {thumbnail && (
+            <Grid columns="repeat(auto-fill,minmax(200px,1fr))" gap="1rem">
+              {/* {thumbnail && (
                 <div className="img-preview">
                   <img src={URL.createObjectURL(thumbnail)} alt={`main`} />
                   <div className="default-container">
@@ -118,7 +140,7 @@ const CreateProductImage = () => {
                     <IoMdCloseCircle size={35} />
                   </button>
                 </div>
-              )}
+              )} */}
               {images.map((image, index) => {
                 return (
                   <div className="img-preview">

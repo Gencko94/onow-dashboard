@@ -9,7 +9,7 @@ import { BiUser } from "react-icons/bi";
 import Flex from "../../StyledComponents/Flex";
 import OrderStatusChip from "../../reusable/OrderStatusChip";
 import PaymentStatusChip from "../../reusable/PaymentStatusChip";
-import Grid, { GridWrapper } from "../../StyledComponents/Grid";
+import Grid from "../../StyledComponents/Grid";
 import { PAYMENT_STATUS } from "../../../interfaces/orders/orders";
 
 interface IProps {
@@ -25,11 +25,11 @@ const OrderPayment = ({ paymentStatus, paymentType }: IProps) => {
         <h6 className="title">Order Payment </h6>
       </div>
       <div className="content">
-        <Grid items="center" p={3} cols="auto 1fr" gap="0.25rem">
+        <Grid items="center" padding="0.75rem" columns="auto 1fr" gap="0.25rem">
           <p className="label">Payment Type : </p>
           <p className="value">Visa</p>
         </Grid>
-        <Grid items="center" p={3} cols="auto 1fr" gap="0.25rem">
+        <Grid items="center" padding="0.75rem" columns="auto 1fr" gap="0.25rem">
           <p className="label">Payment Status </p>
           <PaymentStatusChip
             dots
@@ -71,8 +71,5 @@ const Container = styled.div`
       margin: 0 0.25rem;
       font-weight: ${(props) => props.theme.font.semibold};
     }
-  }
-  ${GridWrapper} {
-    border-bottom: ${(props) => props.theme.border};
   }
 `;

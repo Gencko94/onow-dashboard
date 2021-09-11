@@ -43,7 +43,7 @@ const CategoryInfo = ({
     }
   }, [nameEn]);
   return (
-    <Grid cols="repeat(auto-fit,minmax(310px,1fr))" gap="1rem">
+    <Grid columns="repeat(auto-fit,minmax(310px,1fr))" gap="1rem">
       <Box type="titled" boxTitle="Category Information">
         <IconedInput
           Icon={MdSubtitles}

@@ -90,7 +90,7 @@ const ProductPromotions = () => {
           start and end dates .
         </p>
       </div>
-      <Grid cols="1fr 1fr" p={2} gap="1rem">
+      <Grid columns="1fr 1fr" padding="0.5rem" gap="1rem">
         <Controller
           control={control}
           name="promotions.type"
@@ -140,7 +140,7 @@ const ProductPromotions = () => {
           />
         )}
       </Grid>
-      <Grid cols="1fr 1fr 1fr" gap="1rem" p={2}>
+      <Grid columns="1fr 1fr 1fr" gap="1rem" padding="0.5rem">
         <PrefixedIconedInput
           errors={errors.promotions?.sale_price}
           Icon={IoPricetagsOutline}

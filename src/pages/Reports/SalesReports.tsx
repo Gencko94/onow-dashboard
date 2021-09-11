@@ -1,7 +1,5 @@
 import styled from "styled-components";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation } from "swiper";
-import "swiper/swiper-bundle.css";
+
 import Heading from "../../components/StyledComponents/Heading";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,7 +10,9 @@ import Hr from "../../components/StyledComponents/Hr";
 import ReportsDatePicker from "../../components/ReportsDatePicker/ReportsDatePicker";
 import { up } from "../../constants";
 import { format, subDays } from "date-fns";
-SwiperCore.use([Navigation]);
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
+import SwiperGrid from "../../components/SwiperGrid";
 
 const breakpoints = {
   // when window width is >= 320px
@@ -97,50 +97,52 @@ const SalesReports = () => {
         Best Selling Products
       </Heading>
       <Spacer size={40} />
-      <Swiper breakpoints={breakpoints} freeMode>
-        {stats.map((product) => (
-          <SwiperSlide key={product.id}>
-            <ProductCard>
-              <div className="img-container">
-                <img src={product.image} alt={product.name.en} />
-              </div>
-              <div className="content">
-                <Heading type="small-title" tag="h5">
-                  {product.name[language]}
-                </Heading>
-                <Hr m="0.2rem" />
-                <Flex>
-                  <Paragraph fontSize="0.9rem" color="textAlt">
-                    Total Sales :
-                  </Paragraph>
-                  <Spacer size={10} />
-                  <Paragraph fontSize="0.9rem" weight="semibold">
-                    {product.total_sales} KD
-                  </Paragraph>
-                </Flex>
-                <Flex>
-                  <Paragraph fontSize="0.9rem" color="textAlt">
-                    Total Orders :
-                  </Paragraph>
-                  <Spacer size={10} />
-                  <Paragraph fontSize="0.9rem" weight="semibold">
-                    {product.total_orders}
-                  </Paragraph>
-                </Flex>
-                <Flex>
-                  <Paragraph fontSize="0.9rem" color="textAlt">
-                    Quantity Sold
-                  </Paragraph>
-                  <Spacer size={10} />
-                  <Paragraph fontSize="0.9rem" weight="semibold">
-                    {product.quantity_sold}
-                  </Paragraph>
-                </Flex>
-              </div>
-            </ProductCard>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <SwiperGrid>
+        <Swiper breakpoints={breakpoints} freeMode>
+          {stats.map((product) => (
+            <SwiperSlide key={product.id}>
+              <ProductCard>
+                <div className="img-container">
+                  <img src={product.image} alt={product.name.en} />
+                </div>
+                <div className="content">
+                  <Heading type="small-title" tag="h5">
+                    {product.name[language]}
+                  </Heading>
+                  <Hr m="0.2rem" />
+                  <Flex>
+                    <Paragraph fontSize="0.9rem" color="textAlt">
+                      Total Sales :
+                    </Paragraph>
+                    <Spacer size={10} />
+                    <Paragraph fontSize="0.9rem" weight="semibold">
+                      {product.total_sales} KD
+                    </Paragraph>
+                  </Flex>
+                  <Flex>
+                    <Paragraph fontSize="0.9rem" color="textAlt">
+                      Total Orders :
+                    </Paragraph>
+                    <Spacer size={10} />
+                    <Paragraph fontSize="0.9rem" weight="semibold">
+                      {product.total_orders}
+                    </Paragraph>
+                  </Flex>
+                  <Flex>
+                    <Paragraph fontSize="0.9rem" color="textAlt">
+                      Quantity Sold
+                    </Paragraph>
+                    <Spacer size={10} />
+                    <Paragraph fontSize="0.9rem" weight="semibold">
+                      {product.quantity_sold}
+                    </Paragraph>
+                  </Flex>
+                </div>
+              </ProductCard>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </SwiperGrid>
     </Container>
   );
 };

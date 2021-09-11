@@ -115,7 +115,7 @@ const NewOptionModal = ({
               >
                 <ModalHead closeFunction={closeFunction} title={title} />
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <Grid cols="minmax(200px,1fr)" gap="0.5rem" p={4}>
+                  <Grid columns="minmax(200px,1fr)" gap="0.5rem" padding="1rem">
                     <IconedInput
                       Icon={MdSubtitles}
                       errors={errors?.name?.en}

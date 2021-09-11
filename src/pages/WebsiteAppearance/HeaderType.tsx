@@ -3,10 +3,11 @@ import { Controller, useForm } from "react-hook-form";
 import { FcOk } from "react-icons/fc";
 import { IoMdCloseCircle } from "react-icons/io";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import styled from "styled-components";
 import Box from "../../components/reusable/Box/Box";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
+import Button from "../../components/reusable/Button";
 import Spacer from "../../components/reusable/Spacer";
 import Flex from "../../components/StyledComponents/Flex";
 
@@ -16,10 +17,12 @@ import Paragraph from "../../components/StyledComponents/Paragraph";
 import useConfirmationModal from "../../hooks/useConfirmationModal";
 import FileUploader from "../../utils/FileUploader";
 import MiniFileUploader from "../../utils/MiniFileUploader";
-import { getStoreLayoutSettings } from "../../utils/queries/settingsQueries";
+import {
+  getStoreLayoutSettings,
+  updateStoreLayoutSettings,
+} from "../../utils/queries/settingsQueries";
 
 const HeaderType = () => {
-  const { control } = useForm();
   const { data } = useQuery("store-layout", getStoreLayoutSettings, {
     suspense: true,
   });
@@ -29,14 +32,14 @@ const HeaderType = () => {
   );
   const { handleCloseConfirmationModal, setConfirmationModalStatus } =
     useConfirmationModal();
-
+  const { mutateAsync } = useMutation(updateStoreLayoutSettings);
   const onRemove = async (image: File) => {
     handleCloseConfirmationModal?.();
   };
 
   return (
     <Container>
-      <Flex margin="1rem 0">
+      <Flex margin="1rem 0" items="center" justify="space-between">
         <div>
           <Heading tag="h2" type="large-title">
             Header Type
@@ -55,10 +58,13 @@ const HeaderType = () => {
             ]}
           />
         </div>
+        <Button type="submit" color="primary">
+          Save Changes
+        </Button>
       </Flex>
       <Spacer size={40} />
       <Box type="titled" boxTitle="Select your preffered Header type">
-        <Grid gap="1rem" cols="repeat(auto-fit,minmax(275px,1fr))">
+        <Grid gap="1rem" columns="repeat(auto-fit,minmax(275px,1fr))">
           <Card
             active={headerType === "photo"}
             onClick={() => {
@@ -118,7 +124,8 @@ const HeaderType = () => {
               Header will play images slideshow
             </Paragraph>
           </Card>
-          <Card
+          {/* TODO : Implement Video */}
+          {/* <Card
             active={headerType === "video"}
             onClick={() => {
               setHeaderType("video");
@@ -144,7 +151,7 @@ const HeaderType = () => {
             <Paragraph fontSize="0.9rem" align="center">
               Header will play a video
             </Paragraph>
-          </Card>
+          </Card> */}
         </Grid>
       </Box>
       <Spacer size={40} />
@@ -156,7 +163,7 @@ const HeaderType = () => {
         />
       )}
       <PreviewContainer>
-        <Grid cols="repeat(auto-fill,minmax(400px,1fr))" gap="1rem">
+        <Grid columns="repeat(auto-fill,minmax(400px,1fr))" gap="1rem">
           {images.map((image, index) => {
             return (
               <div className="img-preview">
@@ -183,20 +190,16 @@ const HeaderType = () => {
         </Grid>
       </PreviewContainer>
 
-      <Controller
-        control={control}
-        name="images"
-        render={({ field: { onChange, value, ref } }) => (
-          <FileUploader
-            accept=".png, .jpg, .jpeg"
-            onChange={(file: File | File[]) => {
-              if (!Array.isArray(file)) {
-                setImages((prev) => [...prev, file]);
-              }
-            }}
-          />
-        )}
-      />
+      {headerType === "slider" && (
+        <FileUploader
+          accept=".png, .jpg, .jpeg"
+          onChange={(file: File | File[]) => {
+            if (!Array.isArray(file)) {
+              setImages((prev) => [...prev, file]);
+            }
+          }}
+        />
+      )}
     </Container>
   );
 };

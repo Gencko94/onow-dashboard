@@ -384,7 +384,7 @@ export const getProducts = async (
     currentPage: res.data.results.pagination.current,
   };
 };
-export const getProduct = async (id: string): Promise<PRODUCT> => {
+export const getProduct = async (id: number): Promise<PRODUCT> => {
   const t = localStorage.getItem("dshtid");
   const config: AxiosRequestConfig = {
     headers: {
