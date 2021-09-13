@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import styled from "styled-components";
-import TableHead from "../../reusable/TableHead";
+import TableHead from "../../reusable/TableHead/TableHead";
 import BrandItem from "./BrandItem";
 
 const BrandsList = () => {

@@ -1,4 +1,3 @@
-import { Control, Controller } from "react-hook-form";
 import Toggle from "react-toggle";
 import styled from "styled-components";
 import "react-toggle/style.css";
@@ -31,6 +30,7 @@ const CheckToggle = ({ checked, onChange, label, desc }: IProps) => {
         </div>
       )}
       <Toggle
+        data-testid="toggler"
         id={label}
         checked={checked}
         className="react-custom-toggle"

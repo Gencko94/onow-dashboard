@@ -9,7 +9,7 @@ import extractError from "../../../utils/extractError";
 import { getBranches } from "../../../utils/queries";
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
-import TableHead from "../../reusable/TableHead";
+import TableHead from "../../reusable/TableHead/TableHead";
 import Flex from "../../StyledComponents/Flex";
 import BranchItem from "./BranchItem";
 import Spinner from "react-loader-spinner";

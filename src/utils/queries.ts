@@ -373,7 +373,7 @@ export const getProducts = async (
       sort: sortBy.order,
       field: sortBy.field,
       page: pageParam,
-      limit: 20,
+      limit: 5,
       search,
     },
   };

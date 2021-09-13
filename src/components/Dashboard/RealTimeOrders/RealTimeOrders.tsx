@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { NEW_ORDERS } from "../../../interfaces/orders/new-orders";
 import { getNewOrders } from "../../../utils/test-queries";
 import OrderItem from "../../Orders/OrdersList/OrderItem";
-import TableHead from "../../reusable/TableHead";
+import TableHead from "../../reusable/TableHead/TableHead";
 
 const RealTimeOrders = () => {
   const cols = useMemo(

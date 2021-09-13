@@ -20,20 +20,19 @@ import IconButton from "../../reusable/IconButton";
 import Spacer from "../../reusable/Spacer";
 import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
 import "@reach/menu-button/styles.css";
+import { useActivateProduct } from "../../../hooks/data-hooks/products/useActivateProduct";
+import { useDeleteProduct } from "../../../hooks/data-hooks/products/useDeleteProduct";
 interface IProps {
   product: PRODUCT;
-  handleDeleteProduct: (id: number) => void;
   selectedRows: number[];
   handleToggleRows: (rowId: number) => void;
-  handleActivateProduct: (id: number, active: number) => Promise<void>;
 }
 
 const ProductItem = ({
   product,
-  handleDeleteProduct,
+
   handleToggleRows,
   selectedRows,
-  handleActivateProduct,
 }: IProps) => {
   const { setConfirmationModalStatus, handleCloseConfirmationModal } =
     useConfirmationModal();
@@ -42,7 +41,8 @@ const ProductItem = ({
   const {
     i18n: { language },
   } = useTranslation();
-
+  const { handleActivateProduct } = useActivateProduct();
+  const { handleDeleteProduct } = useDeleteProduct();
   return (
     <Container selected={selectedRows.includes(product.id)}>
       <div className="field">
@@ -55,7 +55,7 @@ const ProductItem = ({
         />
       </div>
       <div className="field">
-        <Paragraph fontSize="0.9rem" weight="semibold">
+        <Paragraph data-testid="product-id" fontSize="0.9rem" weight="semibold">
           {product.id}
         </Paragraph>
       </div>
@@ -71,7 +71,11 @@ const ProductItem = ({
         )}
       </div>
       <div className="field">
-        <Paragraph fontSize="0.9rem" weight="semibold">
+        <Paragraph
+          data-testid="product-name"
+          fontSize="0.9rem"
+          weight="semibold"
+        >
           {product.name[language]}
         </Paragraph>
       </div>
@@ -107,7 +111,7 @@ const ProductItem = ({
         <Flex>
           <Menu>
             <MenuButton>
-              <IconButton onClick={() => {}}>
+              <IconButton data-testid="menu-toggle" onClick={() => {}}>
                 <BsThreeDotsVertical size={20} />
               </IconButton>
             </MenuButton>

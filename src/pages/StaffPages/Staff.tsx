@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ExportAs from "../../components/reusable/ExportAs";
 import StaffItem from "../../components/Staff/StaffItem";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
-import TableHead from "../../components/reusable/TableHead";
+import TableHead from "../../components/reusable/TableHead/TableHead";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { deleteStaffMember, getStaffMembers } from "../../utils/queries";
 import Flex from "../../components/StyledComponents/Flex";

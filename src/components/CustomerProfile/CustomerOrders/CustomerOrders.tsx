@@ -9,7 +9,7 @@ import Box from "../../reusable/Box/Box";
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
 import LoadingTable from "../../reusable/LoadingTable";
-import TableHead from "../../reusable/TableHead";
+import TableHead from "../../reusable/TableHead/TableHead";
 import Flex from "../../StyledComponents/Flex";
 
 interface IProps {

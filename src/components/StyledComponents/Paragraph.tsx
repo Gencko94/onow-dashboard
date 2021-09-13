@@ -1,8 +1,8 @@
-import { CSSProperties, FC } from "react";
+import { CSSProperties, FC, forwardRef } from "react";
 import styled from "styled-components";
 import { up } from "../../utils/themes";
 
-interface IProps {
+interface IProps extends React.ComponentPropsWithoutRef<"p"> {
   mb?: string;
   fontSize?: string;
   color?:
@@ -18,33 +18,39 @@ interface IProps {
   align?: "center" | "right" | "left";
 }
 
-const Paragraph: FC<IProps> = ({
-  children,
-  fontSize = "1rem",
-  mb,
-  color = "text",
-  margin,
-  weight = "regular",
-  align,
-}) => {
-  return (
-    <P
-      style={
-        {
-          "--margin-b": `${mb}`,
-        } as CSSProperties
-      }
-      color={color}
-      mb={mb}
-      weight={weight}
-      fontSize={fontSize}
-      margin={margin}
-      align={align}
-    >
-      {children}
-    </P>
-  );
-};
+const Paragraph = forwardRef<HTMLParagraphElement, IProps>(
+  (
+    {
+      fontSize = "1rem",
+      mb,
+      color = "text",
+      margin,
+      weight = "regular",
+      align,
+      ...delegated
+    },
+    ref
+  ) => {
+    return (
+      <P
+        style={
+          {
+            "--margin-b": `${mb}`,
+          } as CSSProperties
+        }
+        color={color}
+        mb={mb}
+        weight={weight}
+        fontSize={fontSize}
+        margin={margin}
+        align={align}
+        {...delegated}
+      >
+        {delegated.children}
+      </P>
+    );
+  }
+);
 type COLORS =
   | "primary"
   | "secondary"

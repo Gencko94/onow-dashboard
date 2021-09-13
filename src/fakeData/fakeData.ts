@@ -1,7 +1,29 @@
 // import { CATEGORY } from '../interfaces/categories/categories';
 import { MINI_CATEGORY } from "../interfaces/categories/categories";
-import { MINI_PRODUCT } from "../interfaces/products/products";
-
+import { MINI_PRODUCT, PRODUCT } from "../interfaces/products/products";
+export const fakeProduct: PRODUCT = {
+  id: 1,
+  active: false,
+  allow_attachments: false,
+  allow_side_notes: false,
+  branch_availability: { all: true, branches: [] },
+  name: { en: "Product 1", ar: "برودكت 1" },
+  category: { id: 1, name: { en: "Category 1", ar: "كاتيغوري 1" } },
+  description: {
+    en: "Description",
+    ar: "وصف",
+  },
+  image: "",
+  images: [],
+  max_qty_per_user: 1,
+  options: [],
+  prep_time: 0,
+  price: 1,
+  price_by_options: false,
+  quantity: 1,
+  sku: "sku",
+  slug: "slug",
+};
 export const product1: MINI_PRODUCT = {
   id: 1,
   name: {

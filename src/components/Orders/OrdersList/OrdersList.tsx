@@ -5,7 +5,7 @@ import { GET_ORDERS_RESPONSE, ORDER } from "../../../interfaces/orders/orders";
 import { ORDER_SORT } from "../../../pages/Orders";
 import Button from "../../reusable/Button";
 import ExportAs from "../../reusable/ExportAs";
-import TableHead from "../../reusable/TableHead";
+import TableHead from "../../reusable/TableHead/TableHead";
 import OrderItem from "./OrderItem";
 interface IProps {
   data: InfiniteData<GET_ORDERS_RESPONSE>;

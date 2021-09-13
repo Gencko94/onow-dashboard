@@ -3,7 +3,7 @@ import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Button from "../../../reusable/Button";
-import TableHead from "../../../reusable/TableHead";
+import TableHead from "../../../reusable/TableHead/TableHead";
 import Flex from "../../../StyledComponents/Flex";
 export interface thirdTabBranchInfo {}
 

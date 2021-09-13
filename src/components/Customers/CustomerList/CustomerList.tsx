@@ -20,7 +20,7 @@ import {
 } from "../../../utils/queries";
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
-import TableHead from "../../reusable/TableHead";
+import TableHead from "../../reusable/TableHead/TableHead";
 import Flex from "../../StyledComponents/Flex";
 import CustomerItem from "./CustomerItem/CustomerItem";
 import Spinner from "react-loader-spinner";

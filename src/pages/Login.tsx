@@ -33,7 +33,6 @@ const Login = () => {
         login: data.login.toLowerCase(),
       });
     } catch (error: any) {
-      console.log(error);
       if (
         error.response?.data.error === "Phone Number or Password is Missing"
       ) {
@@ -51,7 +50,6 @@ const Login = () => {
           message: t("invalid-credentials"),
         });
       } else {
-        console.log(error.response);
         // show unknown error
       }
     }

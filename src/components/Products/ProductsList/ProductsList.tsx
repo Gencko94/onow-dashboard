@@ -8,7 +8,7 @@ import { PRODUCT } from "../../../interfaces/products/products";
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
 import LoadingTable from "../../reusable/LoadingTable";
-import TableHead from "../../reusable/TableHead";
+import TableHead from "../../reusable/TableHead/TableHead";
 import Flex from "../../StyledComponents/Flex";
 import ProductItem from "./ProductItem";
 import Spinner from "react-loader-spinner";
@@ -16,9 +16,9 @@ import Spinner from "react-loader-spinner";
 import { ApplicationProvider } from "../../../contexts/ApplicationContext";
 import { useDebounce } from "use-debounce/lib";
 import { useGetProducts } from "../../../hooks/data-hooks/products/useGetProducts";
-import { useActivateProduct } from "../../../hooks/data-hooks/products/useActivateProduct";
-import { useDeleteProduct } from "../../../hooks/data-hooks/products/useDeleteProduct";
+
 import { useDeleteMultipleProducts } from "../../../hooks/data-hooks/products/useDeleteMultipleProducts";
+import { useToggleRows } from "../../../hooks/useToggleRows";
 const ProductsList = () => {
   // const { search } = useQueryParams();
   const {
@@ -28,8 +28,7 @@ const ProductsList = () => {
     handleChangeGlobalSearchType,
   } = useContext(ApplicationProvider);
   const [debouncedSearchValue] = useDebounce(globalSearchBarValue, 500);
-  const [selectedRows, setSelectedRows] = useState<number[]>([]);
-
+  const { selectedRows, handleToggleRows, handleClearRows } = useToggleRows();
   const history = useHistory();
 
   const [sortBy, setSortBy] = useState<{
@@ -53,15 +52,11 @@ const ProductsList = () => {
     sortBy,
   });
 
-  // Activate Logic
-  const { handleActivateProduct } = useActivateProduct();
-  // Delete Logic
-  const { handleDeleteProduct } = useDeleteProduct();
   // Multiple Delete Mutation
   const { handleDeleteMultipleProducts, multipleDeleteLoading } =
     useDeleteMultipleProducts({
       successCallback: () => {
-        setSelectedRows([]);
+        handleClearRows();
       },
     });
 
@@ -113,13 +108,7 @@ const ProductsList = () => {
     ],
     [sortBy.field, sortBy.order]
   );
-  const handleToggleRows = (rowId: number) => {
-    if (selectedRows.includes(rowId)) {
-      setSelectedRows((prev) => prev.filter((i) => i !== rowId));
-    } else {
-      setSelectedRows((prev) => [...prev, rowId]);
-    }
-  };
+
   if (status === "loading") return <LoadingTable />;
 
   return (
@@ -202,12 +191,10 @@ const ProductsList = () => {
               <React.Fragment key={i}>
                 {group.data.map((product: PRODUCT) => (
                   <ProductItem
-                    handleDeleteProduct={handleDeleteProduct}
                     key={product.id}
                     product={product}
                     selectedRows={selectedRows}
                     handleToggleRows={handleToggleRows}
-                    handleActivateProduct={handleActivateProduct}
                   />
                 ))}
               </React.Fragment>

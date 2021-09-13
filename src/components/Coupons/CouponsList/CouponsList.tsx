@@ -16,7 +16,7 @@ import {
 import Button from "../../reusable/Button";
 import EmptyTable from "../../reusable/EmptyTable";
 import LoadingTable from "../../reusable/LoadingTable";
-import TableHead from "../../reusable/TableHead";
+import TableHead from "../../reusable/TableHead/TableHead";
 import Flex from "../../StyledComponents/Flex";
 import CouponItem from "./CouponItem";
 type GET_COUPONS_RES = {

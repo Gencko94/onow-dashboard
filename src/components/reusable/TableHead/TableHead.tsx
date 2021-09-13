@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import styled, { css } from "styled-components";
-import { up } from "../../utils/themes";
+import { up } from "../../../utils/themes";
 
 interface IProps {
   cols: {
