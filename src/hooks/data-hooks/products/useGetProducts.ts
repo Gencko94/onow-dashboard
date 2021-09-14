@@ -1,12 +1,13 @@
-import { useInfiniteQuery } from "react-query";
-import { getProducts } from "../../../utils/queries";
+import { useInfiniteQuery, useQuery } from "react-query";
+import { PRODUCT } from "../../../interfaces/products/products";
+import { getProducts, getPaginatedProducts } from "../../../utils/queries";
 
 interface IProps {
-  sortBy: any;
+  sortBy?: any;
   debouncedSearchValue?: string;
   globalSearchBarValue?: string;
 }
-export const useGetProducts = ({
+export const useGetPaginatedProducts = ({
   debouncedSearchValue,
 
   sortBy,
@@ -15,7 +16,7 @@ export const useGetProducts = ({
   return useInfiniteQuery(
     ["products", sortBy, debouncedSearchValue],
     ({ pageParam = 1 }) =>
-      getProducts(sortBy, pageParam, debouncedSearchValue as string),
+      getPaginatedProducts(sortBy, pageParam, debouncedSearchValue as string),
     {
       keepPreviousData: globalSearchBarValue !== "" ? false : true,
 
@@ -28,4 +29,7 @@ export const useGetProducts = ({
       },
     }
   );
+};
+export const useGetProducts = () => {
+  return useQuery("products", getProducts);
 };

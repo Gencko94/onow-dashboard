@@ -56,6 +56,7 @@ export const LoginForm = ({
         <InputErrorMessage errors={errors} name="password" />
 
         <Button
+          data-testid="login-btn"
           color="primary"
           type="submit"
           style={{ width: "100%" }}

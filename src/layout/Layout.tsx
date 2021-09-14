@@ -4,7 +4,7 @@ import { CSSTransition } from "react-transition-group";
 import styled, { css } from "styled-components";
 import DesktopNavbar from "../components/DesktopNavbar/DesktopNavbar";
 
-import ConfirmationModal from "../components/reusable/ConfirmationModal";
+import ConfirmationModal from "../components/reusable/ConfirmationModal/ConfirmationModal";
 import Toast from "../components/reusable/Toast";
 import Sidebar from "../components/Sidebar/Sidebar";
 import useConfirmationModal from "../hooks/useConfirmationModal";
@@ -111,7 +111,7 @@ const Layout: React.FC = ({ children }) => {
           isOpen={confirmationModalStatus!.open}
           closeFunction={confirmationModalStatus!.closeCb}
           desc={confirmationModalStatus!.desc}
-          successButtonText="Delete"
+          successButtonText="Confirm"
           successFunction={confirmationModalStatus!.successCb}
           title={confirmationModalStatus!.title}
         />

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-import ModalHead from "../Modal/ModalHead";
-import ModalTail from "../Modal/ModalTail";
+import ModalHead from "../../Modal/ModalHead";
+import ModalTail from "../../Modal/ModalTail";
 
-import Paragraph from "../StyledComponents/Paragraph";
-import { up } from "../../utils/themes";
+import Paragraph from "../../StyledComponents/Paragraph";
+import { up } from "../../../utils/themes";
 import { animated, useTransition } from "@react-spring/web";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 
@@ -63,6 +63,7 @@ const ConfirmationModal = ({
               style={{ opacity: styles.opacity }}
             >
               <AnimatedDialogContent
+                data-testid="confirmation-modal"
                 aria-labelledby="dialog-title"
                 style={{
                   transform: styles.y.to(
@@ -73,7 +74,9 @@ const ConfirmationModal = ({
                 <ModalHead closeFunction={closeFunction} title={title} />
 
                 <div className="description">
-                  <Paragraph>{desc}</Paragraph>
+                  <Paragraph data-testid="confirmation-modal-description">
+                    {desc}
+                  </Paragraph>
                 </div>
                 <ModalTail
                   btnText={successButtonText}

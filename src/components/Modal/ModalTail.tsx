@@ -40,6 +40,7 @@ const ModalTail = ({
   return (
     <Container>
       <Button
+        data-testid="confirmation-modal-confirm-btn"
         color="green"
         withTransition
         type={btnType}
@@ -52,7 +53,12 @@ const ModalTail = ({
         {btnText}
       </Button>
       <Spacer size={10} />
-      <Button color="danger" withTransition onClick={() => closeFunction()}>
+      <Button
+        data-testid="confirmation-modal-cancel-btn"
+        color="danger"
+        withTransition
+        onClick={() => closeFunction()}
+      >
         Cancel
       </Button>
     </Container>

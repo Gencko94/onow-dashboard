@@ -16,7 +16,7 @@ describe("Form Submission", () => {
     render(<Login />);
   });
   it("should display requried error when inputs are empty", async () => {
-    fireEvent.submit(screen.getByRole("button"));
+    fireEvent.submit(screen.getByTestId("login-btn"));
     expect(screen.getByText("Email")).toBeInTheDocument();
     expect(await screen.findAllByRole("alert")).toHaveLength(2);
     expect(mutateAsync).not.toBeCalled();
@@ -30,7 +30,7 @@ describe("Form Submission", () => {
     fireEvent.input(screen.getByLabelText(/password/i), {
       target: { value: "password" },
     });
-    fireEvent.submit(screen.getByRole("button"));
+    fireEvent.submit(screen.getByTestId("login-btn"));
 
     expect(await screen.findAllByRole("alert")).toHaveLength(1);
     expect(mutateAsync).not.toBeCalled();

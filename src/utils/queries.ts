@@ -354,9 +354,25 @@ export const deleteMultipleCoupons = async (
 };
 
 //Products
-//Get
 
-export const getProducts = async (
+// Get Products
+export const getProducts = async () => {
+  const t = localStorage.getItem("dshtid");
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: t ? `Bearer ${t}` : "",
+    },
+    params: {
+      // page: pageParam,
+      limit: 1000,
+    },
+  };
+  const res = await axios.get(`${customerUri}/products`, config);
+  return res.data.results.data;
+};
+//Get Paginated Products
+
+export const getPaginatedProducts = async (
   sortBy: {
     field: string;
     order: string;

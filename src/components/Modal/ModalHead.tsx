@@ -20,10 +20,15 @@ interface IProps {
 const ModalHead = ({ closeFunction, title }: IProps) => {
   return (
     <Container>
-      <Heading tag="h5" type="medium-title">
+      <Heading
+        data-testid="confirmation-modal-title"
+        tag="h5"
+        type="medium-title"
+      >
         {title}
       </Heading>
       <IconButton
+        data-testid="confirmation-modal-close-btn"
         onClick={(e) => {
           closeFunction();
         }}
