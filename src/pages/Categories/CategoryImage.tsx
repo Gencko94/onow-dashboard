@@ -5,7 +5,7 @@ import { useMutation } from "react-query";
 import styled from "styled-components";
 import Box from "../../components/reusable/Box/Box";
 import Heading from "../../components/StyledComponents/Heading";
-import useConfirmationModal from "../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../hooks/useToast";
 import extractError from "../../utils/extractError";
 import MiniFileUploader from "../../utils/MiniFileUploader";

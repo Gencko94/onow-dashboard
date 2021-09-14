@@ -18,7 +18,7 @@ import TableHead from "../../reusable/TableHead/TableHead";
 import Flex from "../../StyledComponents/Flex";
 import CategoryItem from "./CategoryItem";
 import Spinner from "react-loader-spinner";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 
 interface GET_CATEGORIES_RES {
   data: CATEGORY[];

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ApplicationProvider } from "../contexts/ApplicationContext";
+import { ApplicationProvider } from "../../contexts/ApplicationContext";
 
 const useConfirmationModal = () => {
   const {

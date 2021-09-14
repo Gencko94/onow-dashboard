@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 import Button from "../../reusable/Button";
 
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import Checkbox from "../../reusable/Inputs/Checkbox";
 import Flex from "../../StyledComponents/Flex";
 

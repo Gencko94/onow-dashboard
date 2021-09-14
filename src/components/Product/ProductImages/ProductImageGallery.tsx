@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { PRODUCT } from "../../../interfaces/products/products";
 import { ADD_PRODUCT_IMAGE } from "../../../interfaces/products/update-product";

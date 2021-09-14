@@ -11,7 +11,7 @@ import Button from "../../reusable/Button";
 
 import Flex from "../../StyledComponents/Flex";
 import DefaultImage from "../../reusable/DefaultImage";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import CheckToggle from "../../reusable/CheckToggle";
 import Heading from "../../StyledComponents/Heading";
 import IconButton from "../../reusable/IconButton";

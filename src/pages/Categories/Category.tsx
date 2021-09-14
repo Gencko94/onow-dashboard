@@ -7,7 +7,7 @@ import Button from "../../components/reusable/Button";
 import Spacer from "../../components/reusable/Spacer";
 import Grid from "../../components/StyledComponents/Grid";
 import Heading from "../../components/StyledComponents/Heading";
-import useConfirmationModal from "../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../hooks/useToast";
 import {
   CATEGORY,

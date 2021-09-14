@@ -7,7 +7,7 @@ import Breadcrumbs from "../components/reusable/Breadcrumbs";
 import Button from "../components/reusable/Button";
 
 import Flex from "../components/StyledComponents/Flex";
-import useConfirmationModal from "../hooks/useConfirmationModal";
+import useConfirmationModal from "../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../hooks/useToast";
 import { CUSTOMER } from "../interfaces/customers/customers";
 import extractError from "../utils/extractError";

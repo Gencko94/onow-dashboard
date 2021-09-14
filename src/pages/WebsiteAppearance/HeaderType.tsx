@@ -14,7 +14,7 @@ import Flex from "../../components/StyledComponents/Flex";
 import Grid from "../../components/StyledComponents/Grid";
 import Heading from "../../components/StyledComponents/Heading";
 import Paragraph from "../../components/StyledComponents/Paragraph";
-import useConfirmationModal from "../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../hooks/useConfirmationModal/useConfirmationModal";
 import FileUploader from "../../utils/FileUploader";
 import MiniFileUploader from "../../utils/MiniFileUploader";
 import {

@@ -12,7 +12,7 @@ import StaffMemberPermissions from "../../components/Staff/StaffMemberPermission
 import Flex from "../../components/StyledComponents/Flex";
 import Heading from "../../components/StyledComponents/Heading";
 import { userPermissions } from "../../data/userPermissions";
-import useConfirmationModal from "../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../hooks/useToast";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
 import extractError from "../../utils/extractError";

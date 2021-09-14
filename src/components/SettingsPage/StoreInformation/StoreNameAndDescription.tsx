@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { MdSubtitles } from "react-icons/md";
 import { useMutation, useQueryClient } from "react-query";
 import styled from "styled-components";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { USER } from "../../../interfaces/auth/auth";
 import { STORE_NAME_AND_DESCRIPTION } from "../../../interfaces/settings/store-properties/store-properties";

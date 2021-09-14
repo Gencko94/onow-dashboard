@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import styled from "styled-components";
 import { up } from "../../../constants";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { PRODUCT } from "../../../interfaces/products/products";
 import { ADD_PRODUCT_IMAGE } from "../../../interfaces/products/update-product";

@@ -1,14 +1,11 @@
-import React, { Suspense } from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import ThemeProvider from "./contexts/ThemeContext";
 import { MemoryRouter } from "react-router";
-import AuthContext from "./contexts/AuthContext";
 import { QueryClient, QueryClientProvider } from "react-query";
-import Loading from "./utils/Loading";
 import { renderIntoDocument } from "react-dom/test-utils";
 import Layout from "./layout/Layout";
 import ApplicationContext from "./contexts/ApplicationContext";
-
+import { fireEvent } from "@testing-library/react";
 const AllTheProviders = ({ children }) => {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
@@ -41,3 +38,32 @@ export {
   customRender as render,
   customRenderIntoDocument as renderIntoDocument,
 };
+export function simulateMouseClick(element) {
+  fireEvent.pointerDown(element, { pointerType: "mouse" });
+  fireEvent.mouseDown(element);
+  fireEvent.pointerUp(element, { pointerType: "mouse" });
+  fireEvent.mouseUp(element);
+  fireEvent.click(element);
+}
+export function simulateEnterKeyClick(element, opts) {
+  let { fireClick } = opts || {};
+  fireEvent.keyDown(element, { key: "Enter" });
+  fireEvent.keyUp(element, { key: "Enter" });
+  if (fireClick) {
+    fireEvent.click(element);
+  }
+}
+export function simulateSpaceKeyClick(element, opts) {
+  let { fireClick } = opts || {};
+  fireEvent.keyDown(element, { key: " " });
+  fireEvent.keyUp(element, { key: " " });
+  if (fireClick) {
+    fireEvent.click(element);
+  }
+}
+export async function wait(time) {
+  return await new Promise((res) => setTimeout(res, time));
+}
+export function debug(limit = 300000) {
+  screen.debug(undefined, limit);
+}

@@ -6,7 +6,7 @@ import { BiPlus } from "react-icons/bi";
 import { useMutation } from "react-query";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
-import useConfirmationModal from "../../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../../hooks/useToast";
 import { NEW_OPTION_VALUE } from "../../../../interfaces/products/create-new-product";
 import {

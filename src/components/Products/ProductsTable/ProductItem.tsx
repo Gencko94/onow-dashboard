@@ -10,7 +10,7 @@ import Button from "../../reusable/Button";
 
 import Flex from "../../StyledComponents/Flex";
 
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import DefaultImage from "../../reusable/DefaultImage";
 import CheckToggle from "../../reusable/CheckToggle";
 
@@ -19,7 +19,7 @@ import IconButton from "../../reusable/IconButton";
 
 import Spacer from "../../reusable/Spacer";
 import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
-import "@reach/menu-button/styles.css";
+
 import { useActivateProduct } from "../../../hooks/data-hooks/products/useActivateProduct";
 import { useDeleteProduct } from "../../../hooks/data-hooks/products/useDeleteProduct";
 interface IProps {

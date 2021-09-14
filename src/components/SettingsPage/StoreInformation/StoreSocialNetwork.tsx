@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 
 import styled from "styled-components";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { STORE_SOCIAL_NETWORK } from "../../../interfaces/settings/store-properties/store-properties";
 import extractError from "../../../utils/extractError";

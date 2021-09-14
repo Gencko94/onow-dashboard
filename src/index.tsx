@@ -2,9 +2,8 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import "./transitions.css";
 import "./styles/buttons.css";
+import "./styles/reach-styles.css";
 import App from "./App";
-
-import "@reach/tooltip/styles.css";
 
 ReactDOM.render(<App />, document.getElementById("react-root"));
 

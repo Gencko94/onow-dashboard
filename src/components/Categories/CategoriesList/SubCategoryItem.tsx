@@ -12,7 +12,7 @@ import Checkbox from "../../reusable/Inputs/Checkbox";
 import { CATEGORY } from "../../../interfaces/categories/categories";
 import Button from "../../reusable/Button";
 
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import DefaultImage from "../../reusable/DefaultImage";
 import { useTranslation } from "react-i18next";
 import Flex from "../../StyledComponents/Flex";

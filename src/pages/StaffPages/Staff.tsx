@@ -10,7 +10,7 @@ import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { deleteStaffMember, getStaffMembers } from "../../utils/queries";
 import Flex from "../../components/StyledComponents/Flex";
 import Heading from "../../components/StyledComponents/Heading";
-import useConfirmationModal from "../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../hooks/useToast";
 import extractError from "../../utils/extractError";
 import IconWrapper from "../../components/reusable/Icon";

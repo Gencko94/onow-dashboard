@@ -157,6 +157,7 @@ input:focus, textarea:focus {
   padding:0;
   display:flex;
   justify-content:center;
+  align-items:center;
   button {
     width:100%;
   }

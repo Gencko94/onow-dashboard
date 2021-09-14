@@ -132,7 +132,7 @@ const SideNav = () => {
         return (
           <React.Fragment key={i}>
             <Panel
-              key={i.toString()}
+              key={i}
               showArrow={false}
               header={
                 <SideNavLink isCurrent={activeKey === i.toString()} to={target}>
@@ -161,7 +161,7 @@ const SideNav = () => {
                   { Icon: ChildIcon, target: childTarget, title: childTitle },
                   childId
                 ) => (
-                  <React.Fragment key={childId}>
+                  <React.Fragment key={childId + 1}>
                     {childId === 0 && <Spacer size={10} />}
                     <SideNavLink
                       isCurrent={pathname.includes(childTarget)}

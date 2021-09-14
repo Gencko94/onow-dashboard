@@ -7,7 +7,7 @@ import {
 } from "react-icons/ai";
 import { useMutation } from "react-query";
 
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { STORE_TECHNICAL_SUPPORT } from "../../../interfaces/settings/store-properties/store-properties";
 import extractError from "../../../utils/extractError";

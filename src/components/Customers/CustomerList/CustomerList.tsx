@@ -8,7 +8,7 @@ import {
 } from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import { useQueryParams } from "../../../hooks/useQueryParams";
 import useToast from "../../../hooks/useToast";
 import { CUSTOMER } from "../../../interfaces/customers/customers";

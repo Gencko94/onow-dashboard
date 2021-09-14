@@ -11,7 +11,7 @@ import BranchLocation from "../../../components/SettingsPage/StoreBranches/Branc
 import BranchWorkingHours from "../../../components/SettingsPage/StoreBranches/Branches/BranchWorkingHours";
 import Flex from "../../../components/StyledComponents/Flex";
 import Heading from "../../../components/StyledComponents/Heading";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import {
   BRANCH_ADDRESS,

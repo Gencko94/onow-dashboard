@@ -6,11 +6,12 @@ import { CUSTOMER } from "../../../../interfaces/customers/customers";
 import Checkbox from "../../../reusable/Inputs/Checkbox";
 
 import Button from "../../../reusable/Button";
-import useConfirmationModal from "../../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../../hooks/useConfirmationModal/useConfirmationModal";
 import Flex from "../../../StyledComponents/Flex";
 import IconButton from "../../../reusable/IconButton";
 import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
 import Paragraph from "../../../StyledComponents/Paragraph";
+import Spacer from "../../../reusable/Spacer";
 
 interface IProps {
   customer: CUSTOMER;
@@ -68,9 +69,7 @@ const CustomerItem = ({
         <Flex>
           <Menu>
             <MenuButton>
-              <IconButton>
-                <BsThreeDotsVertical size={20} />
-              </IconButton>
+              <BsThreeDotsVertical size={20} />
             </MenuButton>
             <MenuPopover
               className="slide-down"
@@ -96,7 +95,7 @@ const CustomerItem = ({
               </MenuItem>
             </MenuPopover>
           </Menu>
-
+          <Spacer size={10} />
           <Button
             size="sm"
             color="primary"

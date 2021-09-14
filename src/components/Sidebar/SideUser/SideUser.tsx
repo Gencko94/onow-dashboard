@@ -7,7 +7,7 @@ import IconButton from "../../reusable/IconButton";
 import Paragraph from "../../StyledComponents/Paragraph";
 
 import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
-import "@reach/menu-button/styles.css";
+
 const SideUser = () => {
   const { user, logOut } = useContext(AuthProvider);
 
@@ -22,9 +22,9 @@ const SideUser = () => {
 
       <Menu>
         <MenuButton>
-          <IconButton>
-            <BiDotsVerticalRounded size={22} color="#fff" />
-          </IconButton>
+          {/* <IconButton> */}
+          <BiDotsVerticalRounded size={22} color="#fff" />
+          {/* </IconButton> */}
         </MenuButton>
         <MenuPopover
           className="slide-down"

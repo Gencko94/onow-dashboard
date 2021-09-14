@@ -4,7 +4,7 @@ import Spinner from "react-loader-spinner";
 import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { COUPON } from "../../../interfaces/coupons/coupons";
 import extractError from "../../../utils/extractError";

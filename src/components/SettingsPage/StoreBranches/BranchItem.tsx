@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 import { BRANCH } from "../../../interfaces/settings/branches/branches";
 import Button from "../../reusable/Button";
 
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import Flex from "../../StyledComponents/Flex";
 import { useTranslation } from "react-i18next";
 import Paragraph from "../../StyledComponents/Paragraph";

@@ -3,7 +3,7 @@ import { BiPlus } from "react-icons/bi";
 import { useMutation } from "react-query";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
-import useConfirmationModal from "../../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../../hooks/useToast";
 import { PRODUCT_OPTION } from "../../../../interfaces/products/products";
 import extractError from "../../../../utils/extractError";

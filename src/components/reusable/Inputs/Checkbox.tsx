@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { CustomCheckboxContainer, CustomCheckboxInput } from "@reach/checkbox";
-import "@reach/checkbox/styles.css";
+
 interface IProps {
   /**
    * 	```onChange``` callback function.

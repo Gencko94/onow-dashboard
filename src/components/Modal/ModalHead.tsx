@@ -29,7 +29,7 @@ const ModalHead = ({ closeFunction, title }: IProps) => {
       </Heading>
       <IconButton
         data-testid="confirmation-modal-close-btn"
-        onClick={(e) => {
+        onClick={() => {
           closeFunction();
         }}
       >

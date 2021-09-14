@@ -75,7 +75,7 @@ const DarkModeToggleContainer = () => {
                 r={1.5}
                 style={{
                   ...props,
-                  transform: transform.interpolate((t) => `scale(${t})`),
+                  transform: transform.to((t) => `scale(${t})`),
                 }}
               />
             );

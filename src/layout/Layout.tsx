@@ -7,7 +7,7 @@ import DesktopNavbar from "../components/DesktopNavbar/DesktopNavbar";
 import ConfirmationModal from "../components/reusable/ConfirmationModal/ConfirmationModal";
 import Toast from "../components/reusable/Toast";
 import Sidebar from "../components/Sidebar/Sidebar";
-import useConfirmationModal from "../hooks/useConfirmationModal";
+import useConfirmationModal from "../hooks/useConfirmationModal/useConfirmationModal";
 import useResponsive from "../hooks/useResponsive";
 import useToast from "../hooks/useToast";
 import Loading from "../utils/Loading";

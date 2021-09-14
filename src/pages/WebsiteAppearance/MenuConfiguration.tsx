@@ -8,7 +8,7 @@ import styled from "styled-components";
 import Heading from "../../components/StyledComponents/Heading";
 import Paragraph from "../../components/StyledComponents/Paragraph";
 import { Accordion } from "@reach/accordion";
-import "@reach/accordion/styles.css";
+
 import update from "immutability-helper";
 
 import MenuConfigItem from "../../components/WebsiteAppearance/MenuConfigItem";

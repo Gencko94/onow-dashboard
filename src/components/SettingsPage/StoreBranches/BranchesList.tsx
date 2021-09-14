@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { BRANCH } from "../../../interfaces/settings/branches/branches";
 import extractError from "../../../utils/extractError";

@@ -1,6 +1,6 @@
-import { render } from "../../../test-utils";
-import { screen, fireEvent } from "@testing-library/react";
-import useConfirmationModal from "../../../hooks/useConfirmationModal";
+import { render, simulateMouseClick, wait } from "../../../test-utils";
+import { screen } from "@testing-library/react";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 
 const ConfirmationModalTest = () => {
   const { handleCloseConfirmationModal, setConfirmationModalStatus } =
@@ -21,31 +21,16 @@ const ConfirmationModalTest = () => {
     </button>
   );
 };
-jest.mock("../../../hooks/useConfirmationModal");
+
 describe("<Modal>", () => {
-  const handleCloseConfirmationModal = jest.fn();
-  const setConfirmationModalStatus = jest.fn();
   beforeEach(() => {
-    useConfirmationModal.mockImplementation(() => ({
-      handleCloseConfirmationModal,
-      setConfirmationModalStatus,
-      confirmationModalStatus: {
-        open: true,
-        closeCb: handleCloseConfirmationModal,
-        successCb: () => {},
-        desc: "description",
-        title: "Modal Title",
-      },
-    }));
     render(<ConfirmationModalTest />);
-    fireEvent.click(screen.getByText("Open Modal"));
+    simulateMouseClick(screen.getByText("Open Modal"));
   });
 
   describe("Renders Correctly", () => {
-    it("Render Modal Without Crashing", async () => {
+    it("Clicking open renders the modal", async () => {
       expect(screen.getByTestId("confirmation-modal")).toBeInTheDocument();
-
-      fireEvent.select(screen.getByTestId("confirmation-modal-close-btn"));
     });
     it("Renders the correct Modal Title, Buttons texts", () => {
       expect(screen.getByTestId("confirmation-modal")).toBeInTheDocument();
@@ -59,21 +44,20 @@ describe("<Modal>", () => {
         screen.getByTestId("confirmation-modal-confirm-btn")
       ).toHaveTextContent("Confirm");
     });
-  });
-  describe("Modal functions are called", () => {
-    it("Calls the close function", () => {
-      fireEvent.click(screen.getByTestId("confirmation-modal-close-btn"));
-      //   expect(closeFn).toBeCalled();
-      expect(screen.getByTestId("confirmation-modal")).toBeInTheDocument();
+    it("Clicking close hides the modal", async () => {
+      simulateMouseClick(screen.getByTestId("confirmation-modal-close-btn"));
+      await wait(1200);
+
+      expect(
+        screen.queryByTestId("confirmation-modal")
+      ).not.toBeInTheDocument();
     });
-    it("Calls the success function", () => {
-      fireEvent.click(screen.getByTestId("confirmation-modal-confirm-btn"));
-      expect(setConfirmationModalStatus).toBeCalled();
-    });
-    it("Calls the cancel function", () => {
-      fireEvent.click(screen.getByTestId("confirmation-modal-cancel-btn"));
-      expect(setConfirmationModalStatus).toBeCalled();
-      expect(handleCloseConfirmationModal).toBeCalled();
+    it("Clicking cancel hides the modal", async () => {
+      simulateMouseClick(screen.getByTestId("confirmation-modal-cancel-btn"));
+      await wait(750);
+      expect(
+        screen.queryByTestId("confirmation-modal")
+      ).not.toBeInTheDocument();
     });
   });
 });

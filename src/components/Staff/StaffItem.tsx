@@ -5,7 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useHistory } from "react-router";
 
 import styled from "styled-components";
-import useConfirmationModal from "../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../hooks/useConfirmationModal/useConfirmationModal";
 import { STAFF_MEMBER } from "../../interfaces/staff/staff";
 import Button from "../reusable/Button";
 

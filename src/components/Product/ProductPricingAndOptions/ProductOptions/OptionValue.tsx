@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 import styled from "styled-components";
-import useConfirmationModal from "../../../../hooks/useConfirmationModal";
+import useConfirmationModal from "../../../../hooks/useConfirmationModal/useConfirmationModal";
 import { OPTION_VALUE } from "../../../../interfaces/products/products";
 import { up } from "../../../../utils/themes";
 import Button from "../../../reusable/Button";
