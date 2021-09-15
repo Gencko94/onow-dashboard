@@ -2,7 +2,6 @@ import { useContext } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { useSpring, useTrail, animated } from "@react-spring/web";
-import { up } from "../../utils/themes";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 const DarkModeToggleContainer = () => {
   const { colorMode, toggleTheme } = useContext(ThemeContext);
@@ -87,8 +86,7 @@ const DarkModeToggleContainer = () => {
 };
 
 export default DarkModeToggleContainer;
-const IconWrapper = styled.button(
-  ({ theme: { breakpoints, text } }) => `
+const IconWrapper = styled.button`
   opacity: 0.7;
   position: relative;
   border-radius: 5px;
@@ -98,15 +96,14 @@ const IconWrapper = styled.button(
   align-items: center;
   justify-content: center;
   transition: opacity 250ms;
-  
- ${up(breakpoints.md)}{
-    &:hover {
-        opacity: 1;
-      }
- }
 
-  `
-);
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    &:hover {
+      opacity: 1;
+    }
+  }
+`;
+
 const MoonOrSun = styled(animated.svg)`
   position: relative;
   overflow: visible;

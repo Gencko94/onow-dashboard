@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { CUSTOMER } from "../../interfaces/customers/customers";
 import { useMutation, useQueryClient } from "react-query";
 import { editCustomer } from "../../utils/queries";
-import IconedInput from "../reusable/Inputs/IconedInput";
+import Input from "../reusable/Input/Input";
 import { useTranslation } from "react-i18next";
 import PhoneInput from "../reusable/Inputs/PhoneInput";
 
@@ -13,7 +13,6 @@ import extractError from "../../utils/extractError";
 import useToast from "../../hooks/useToast";
 
 import Grid from "../StyledComponents/Grid";
-import { up } from "../../utils/themes";
 import { animated, useTransition } from "@react-spring/web";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 import ModalHead from "../Modal/ModalHead";
@@ -114,23 +113,17 @@ const EditCustomerModal = ({ closeFunction, open, data }: IProps) => {
                 />
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Grid columns="1fr" gap="0.5rem" padding="1rem">
-                    <IconedInput
-                      Icon={MdSubtitles}
-                      errors={errors?.first_name}
-                      register={register}
-                      required
+                    <Input
+                      startAdornment={<MdSubtitles />}
+                      errors={errors}
                       label="Customer First Name"
-                      name="first_name"
-                      requiredMessage="Required"
+                      {...register("first_name", { required: "Required" })}
                     />
-                    <IconedInput
-                      Icon={MdSubtitles}
-                      errors={errors?.last_name}
-                      register={register}
-                      required
-                      requiredMessage="Required"
+                    <Input
+                      startAdornment={<MdSubtitles />}
+                      errors={errors}
                       label="Customer Last Name"
-                      name="last_name"
+                      {...register("last_name", { required: "Required" })}
                     />
 
                     <Controller
@@ -148,12 +141,11 @@ const EditCustomerModal = ({ closeFunction, open, data }: IProps) => {
                       }}
                     />
 
-                    <IconedInput
-                      Icon={HiOutlineMail}
-                      errors={errors?.email}
-                      register={register}
+                    <Input
+                      startAdornment={<HiOutlineMail />}
+                      errors={errors}
                       label="Customer Email Address"
-                      name="email"
+                      {...register("email")}
                     />
                   </Grid>
                   <ModalTail
@@ -173,17 +165,13 @@ const EditCustomerModal = ({ closeFunction, open, data }: IProps) => {
 };
 
 export default EditCustomerModal;
-const AnimatedDialogContent = styled(animated(DialogContent))(
-  ({ theme: { breakpoints, subtleBackground } }) => `
-  min-width:300px;
-  width:300px;  
-  background-color:${subtleBackground};
-  ${up(breakpoints.md)}{
-    min-width:400px;
-   
+const AnimatedDialogContent = styled(animated(DialogContent))`
+  min-width: 300px;
+  width: 300px;
+  background-color: ${(props) => props.theme.subtleBackground};
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    min-width: 400px;
   }
-
-`
-);
+`;
 
 const AnimatedDialogOverlay = animated(DialogOverlay);

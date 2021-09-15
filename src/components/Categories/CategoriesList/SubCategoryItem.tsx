@@ -2,8 +2,6 @@ import styled from "styled-components";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
-import ClickAwayListener from "react-click-away-listener";
-import { RiDeleteBinLine } from "react-icons/ri";
 
 import { useHistory } from "react-router";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";

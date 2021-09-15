@@ -6,7 +6,6 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { ErrorMessage } from "@hookform/error-message";
 
 import styled, { css } from "styled-components";
-import { up } from "../../../constants";
 import InputErrorMessage from "../InputErrorMessage";
 interface BaseInput {
   /**
@@ -114,39 +113,23 @@ const PasswordInput = ({
 };
 
 export default PasswordInput;
-const Container = styled.div<{ rtl: boolean; error: boolean }>(
-  ({
-    theme: {
-      breakpoints,
-      font,
-      primary,
-      border,
-      text,
-      borderHovered,
-      dangerRed,
-      accent1,
-      background,
-      subtleBackground,
-    },
-    error,
-    rtl,
-  }) => `
+const Container = styled.div<{ rtl: boolean; error: boolean }>`
   label {
-    color: ${text};
+    color: ${(props) => props.theme.text};
     margin-bottom: 0.75rem;
     font-size: 0.8rem;
-    font-weight: ${font.regular};
+    font-weight: ${(props) => props.theme.font.regular};
     display: block;
   }
   .input-container {
     display: flex;
     position: relative;
-    
+
     justify-content: center;
-    
-    background-color: ${subtleBackground};
-    color: ${text};
-    border: ${border};
+
+    background-color: ${(props) => props.theme.subtleBackground};
+    color: ${(props) => props.theme.text};
+    border: ${(props) => props.theme.border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
@@ -155,60 +138,50 @@ const Container = styled.div<{ rtl: boolean; error: boolean }>(
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${primary};
+      color: ${(props) => props.theme.primary};
     }
-    
+
     &:hover,
     &:focus-within {
-      border-color: ${borderHovered};
-      
+      border-color: ${(props) => props.theme.borderHovered};
     }
-    ${
-      error &&
+    ${(props) =>
+      props.error &&
       css`
-        border-color: ${dangerRed} !important;
-      `
+        border-color: ${(props) => props.theme.dangerRed} !important;
+      `}
+  }
+  .visibility {
+    padding: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .desc {
+    font-size: 0.7rem;
+    padding-top: 0.25rem;
+    height: 22px;
+
+    color: ${(props) => props.theme.primary};
+  }
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    label {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
     }
-    }
-    .visibility {
-      padding: 0.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor:pointer;
-    }
-    .desc {
-      font-size: 0.7rem;
-      padding-top: 0.25rem;
-      height: 22px;
-      
-      color: ${primary};
-    }
-    ${up(breakpoints.md)}{
-      label {
-        font-size: 0.9rem;
-        margin-bottom: 0.75rem;
-      };
-  
-    };
-    `
-);
-const Input = styled.input(
-  ({ theme: { breakpoints, text } }) => `
+  } ;
+`;
+
+const Input = styled.input`
   flex: 1;
   padding: 0.4rem;
   font-size: 0.8rem;
   width: 50px;
-  
-    color:${text};
- 
-  ${up(breakpoints.md)}{
 
-    
-        font-size: 0.9rem;
-     
-    
+  color: ${(props) => props.theme.text};
 
-  };
-  `
-);
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    font-size: 0.9rem;
+  } ;
+`;

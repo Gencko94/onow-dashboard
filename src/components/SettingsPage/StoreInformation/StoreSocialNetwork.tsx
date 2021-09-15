@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "react-query";
 
-import styled from "styled-components";
 import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { STORE_SOCIAL_NETWORK } from "../../../interfaces/settings/store-properties/store-properties";
@@ -10,10 +9,9 @@ import extractError from "../../../utils/extractError";
 import { editStoreSocialMedia } from "../../../utils/queries/settingsQueries";
 import Box from "../../reusable/Box/Box";
 import Button from "../../reusable/Button";
-import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
+import Input from "../../reusable/Input/Input";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
-import Heading from "../../StyledComponents/Heading";
 interface StoreSocialNetworkProps {
   data: STORE_SOCIAL_NETWORK;
 }
@@ -65,35 +63,31 @@ const StoreSocialNetwork = ({ data }: StoreSocialNetworkProps) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box type="titled" boxTitle="Social network accounts">
         <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
-          <PrefixedInput
+          <Input
             label="Instagram"
-            errors={errors.instagram}
-            name="instagram"
-            prefixText="https://instagram.com/"
-            register={register}
+            errors={errors}
+            startAdornment="https://instagram.com/"
+            {...register("instagram")}
           />
-          <PrefixedInput
+          <Input
             label="Twitter"
-            errors={errors.twitter}
-            name="twitter"
-            prefixText="https://www.twitter.com/"
-            register={register}
+            errors={errors}
+            startAdornment="https://www.twitter.com/"
+            {...register("twitter")}
           />
         </Grid>
         <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
-          <PrefixedInput
+          <Input
             label="Snapchat"
-            errors={errors.snapchat}
-            name="snapchat"
-            prefixText="https://www.snapchat.com/add/"
-            register={register}
+            errors={errors}
+            startAdornment="https://www.snapchat.com/add/"
+            {...register("snapchat")}
           />
-          <PrefixedInput
+          <Input
             label="Facebook"
-            errors={errors.facebook}
-            name="facebook"
-            prefixText="https://www.facebook.com/"
-            register={register}
+            errors={errors}
+            startAdornment="https://www.facebook.com/"
+            {...register("facebook")}
           />
         </Grid>
 

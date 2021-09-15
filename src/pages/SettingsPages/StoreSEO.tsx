@@ -3,14 +3,14 @@ import styled from "styled-components";
 import { STORE_SEO } from "../../interfaces/settings/store-seo/store-seo";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { MdTitle } from "react-icons/md";
-import IconedInput from "../../components/reusable/Inputs/IconedInput";
+import Input from "../../components/reusable/Input/Input";
 import Textarea from "../../components/reusable/Textarea";
 import Heading from "../../components/StyledComponents/Heading";
-import { up } from "../../utils/themes";
 import Box from "../../components/reusable/Box/Box";
 import Spacer from "../../components/reusable/Spacer";
 import Flex from "../../components/StyledComponents/Flex";
 import Button from "../../components/reusable/Button";
+import InputErrorMessage from "../../components/reusable/InputErrorMessage";
 
 const StoreSEO = () => {
   const {
@@ -46,15 +46,14 @@ const StoreSEO = () => {
       <Box>
         <Grid>
           <div>
-            <IconedInput
-              Icon={MdTitle}
-              errors={errors?.title}
-              label="Home Page Title"
-              name="title"
-              register={register}
-              required
-              requiredMessage="This field is required"
-            />
+            <div>
+              <Input
+                startAdornment={<MdTitle />}
+                label="Home Page Title"
+                errors={errors}
+                {...register("title", { required: "This Field is required" })}
+              />
+            </div>
             <Textarea
               errors={errors?.description}
               label="Store Description"
@@ -83,20 +82,16 @@ const StoreSEO = () => {
 
 export default StoreSEO;
 
-const Grid = styled.div(
-  ({ theme: { breakpoints } }) => `
+const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
-  
 
-  ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     grid-template-columns: 1fr 1fr;
-   
-
   }
-  `
-);
+`;
+
 const Demo = styled.div`
   padding: 0.5rem;
   align-self: center;

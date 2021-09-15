@@ -74,6 +74,3 @@ export const darkTheme = {
   accent3: "#333",
   blue: "#2e87fc",
 };
-
-export const up = (breakpoint: string) => `@media (min-width: ${breakpoint})`;
-export const down = (breakpoint: string) => `@media (max-width: ${breakpoint})`;

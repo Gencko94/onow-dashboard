@@ -4,16 +4,14 @@ import ModalHead from "../../../Modal/ModalHead";
 import ModalTail from "../../../Modal/ModalTail";
 
 import { Controller } from "react-hook-form";
-import IconedInput from "../../../reusable/Inputs/IconedInput";
+import Input from "../../../reusable/Input/Input";
 import Grid from "../../../StyledComponents/Grid";
 import { useForm } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
 import Select from "../../../reusable/Select";
-import IconedNumberInput from "../../../reusable/IconedNumberInput";
 import { SubmitHandler } from "react-hook-form";
 import { PRODUCT_OPTION } from "../../../../interfaces/products/products";
 
-import { up } from "../../../../utils/themes";
 import { animated, useTransition } from "@react-spring/web";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 const selectTypes = [
@@ -116,23 +114,17 @@ const NewOptionModal = ({
                 <ModalHead closeFunction={closeFunction} title={title} />
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Grid columns="minmax(200px,1fr)" gap="0.5rem" padding="1rem">
-                    <IconedInput
-                      Icon={MdSubtitles}
-                      errors={errors?.name?.en}
-                      name="name.en"
-                      register={register}
+                    <Input
+                      startAdornment={<MdSubtitles />}
+                      errors={errors}
                       label="Option Name English"
-                      required
-                      requiredMessage="Required"
+                      {...register("name.en", { required: "Required" })}
                     />
-                    <IconedInput
-                      Icon={MdSubtitles}
-                      errors={errors?.name?.ar}
-                      name="name.ar"
-                      register={register}
+                    <Input
+                      startAdornment={<MdSubtitles />}
+                      errors={errors}
                       label="Option Name Arabic"
-                      required
-                      requiredMessage="Required"
+                      {...register("name.ar", { required: "Required" })}
                     />
 
                     <Controller
@@ -163,11 +155,11 @@ const NewOptionModal = ({
                     />
 
                     {selectType === "multiple" && (
-                      <IconedNumberInput
-                        Icon={MdSubtitles}
-                        errors={errors?.max_picks}
-                        name="max_picks"
-                        register={register}
+                      <Input
+                        startAdornment={<MdSubtitles />}
+                        errors={errors}
+                        type="number"
+                        {...register("max_picks")}
                         label="Maximum choice selections"
                         min={0}
                         desc="0 For Unlimited"
@@ -220,16 +212,11 @@ const NewOptionModal = ({
 
 export default NewOptionModal;
 const AnimatedDialogOverlay = animated(DialogOverlay);
-const AnimatedDialogContent = styled(animated(DialogContent))(
-  ({ theme: { breakpoints, subtleBackground } }) => `
-  min-width:300px;
-  width:300px;
-  
-  background-color:${subtleBackground};
-  ${up(breakpoints.md)}{
-    min-width:400px;
-   
+const AnimatedDialogContent = styled(animated(DialogContent))`
+  min-width: 300px;
+  width: 300px;
+  background-color: ${(props) => props.theme.subtleBackground};
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    min-width: 400px;
   }
-  
-`
-);
+`;

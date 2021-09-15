@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Control, Controller, useWatch } from "react-hook-form";
 
-import { useInfiniteQuery, useQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 
 import { useTranslation } from "react-i18next";
 
@@ -12,8 +12,7 @@ import {
   MINI_CATEGORY,
 } from "../../../interfaces/categories/categories";
 import Checkbox from "../../reusable/Inputs/Checkbox";
-import Chip from "../../reusable/Chip";
-import { getMiniCategories } from "../../../utils/test-queries";
+
 import { getCategories } from "../../../utils/queries";
 import DefaultImage from "../../reusable/DefaultImage";
 import LoadingTable from "../../reusable/LoadingTable";

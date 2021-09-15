@@ -1,5 +1,5 @@
 import styled from "styled-components";
-interface IProps {
+interface IProps extends React.ComponentPropsWithRef<"div"> {
   justify?:
     | "flex-start"
     | "center"
@@ -9,7 +9,6 @@ interface IProps {
   items?: string;
   padding?: string;
   margin?: string;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
   wrap?: boolean;
   column?: boolean;
 }

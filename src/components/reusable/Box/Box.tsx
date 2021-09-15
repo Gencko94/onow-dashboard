@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { up } from "../../../constants";
+
 import Heading from "../../StyledComponents/Heading";
 type DefaultDivProps = Omit<JSX.IntrinsicElements["div"], "ref">;
 
@@ -27,38 +27,33 @@ const Box: React.FC<BoxProps> = ({ boxTitle, type = "normal", ...props }) => {
 
 export default Box;
 
-const DefaultBox = styled.div(
-  ({ theme: { breakpoints, subtleFloating, border } }) => `
-    
-  background-color: ${subtleFloating};
-  padding:0.5rem;
-  border-radius:6px;
-  border:${border};
-  ${up(breakpoints.md)}{
-      padding:1rem;
+const DefaultBox = styled.div`
+  background-color: ${(props) => props.theme.subtleFloating};
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: ${(props) => props.theme.border};
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    padding: 1rem;
   }
-  `
-);
-const TitledBox = styled(DefaultBox)(
-  ({ theme: { breakpoints, border } }) => `
-padding:0;
-.box-title {
-  padding:0.75rem;
-  border-bottom: ${border};
-}
-.box-content {
-  padding:0.75rem;
-  width:100%;
-}
-${up(breakpoints.md)}{
-padding:0;
- .box-title {
-    padding:1rem;
- }
- .box-content {
-    padding:1rem;
- }
-}
+`;
 
-`
-);
+const TitledBox = styled(DefaultBox)`
+  padding: 0;
+  .box-title {
+    padding: 0.75rem;
+    border-bottom: ${(props) => props.theme.border};
+  }
+  .box-content {
+    padding: 0.75rem;
+    width: 100%;
+  }
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    padding: 0;
+    .box-title {
+      padding: 1rem;
+    }
+    .box-content {
+      padding: 1rem;
+    }
+  }
+`;

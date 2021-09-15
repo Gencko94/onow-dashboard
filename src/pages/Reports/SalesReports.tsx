@@ -8,7 +8,7 @@ import Flex from "../../components/StyledComponents/Flex";
 import Paragraph from "../../components/StyledComponents/Paragraph";
 import Hr from "../../components/StyledComponents/Hr";
 import ReportsDatePicker from "../../components/ReportsDatePicker/ReportsDatePicker";
-import { up } from "../../constants";
+
 import { format, subDays } from "date-fns";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
@@ -149,28 +149,25 @@ const SalesReports = () => {
 
 export default SalesReports;
 const Container = styled.div``;
-const ProductCard = styled.div(
-  ({ theme: { breakpoints, subtleFloating } }) => `
-  background-color:${subtleFloating};
-  border-radius:6px;
-  overflow:hidden;
+const ProductCard = styled.div`
+  background-color: ${(props) => props.theme.subtleFloating};
+  border-radius: 6px;
+  overflow: hidden;
   .img-container {
-    height:150px;
+    height: 150px;
     img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      margin:auto;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      margin: auto;
     }
   }
   .content {
-    padding:.75rem;
+    padding: 0.75rem;
   }
-${up(breakpoints.md)}{
-  .img-container {
-   height:175px;
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    .img-container {
+      height: 175px;
+    }
   }
-}
-
-`
-);
+`;

@@ -1,6 +1,6 @@
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
-import IconedInput from "../../components/reusable/Inputs/IconedInput";
+import Input from "../../components/reusable/Input/Input";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import { useContext } from "react";
 import { AuthProvider } from "../../contexts/AuthContext";
@@ -104,23 +104,17 @@ const AccountSettings = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box type="titled" boxTitle="Account Information">
           <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
-            <IconedInput
-              Icon={MdSubtitles}
-              errors={errors?.first_name}
-              register={register}
-              required
-              requiredMessage="Required"
+            <Input
+              startAdornment={<MdSubtitles />}
+              errors={errors}
               label="First Name"
-              name="first_name"
+              {...register("first_name", { required: "Required" })}
             />
-            <IconedInput
-              Icon={MdSubtitles}
-              errors={errors?.last_name}
-              register={register}
-              required
-              requiredMessage="Required"
+            <Input
+              startAdornment={<MdSubtitles />}
+              errors={errors}
               label="Last Name"
-              name="last_name"
+              {...register("last_name", { required: "Required" })}
             />
           </Grid>
           <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
@@ -140,16 +134,13 @@ const AccountSettings = () => {
                 );
               }}
             />
-            <IconedInput
+            <Input
               desc="Email Cannot be changed"
-              Icon={AiOutlineMail}
-              errors={errors?.email}
-              register={register}
-              required
+              startAdornment={<AiOutlineMail />}
+              errors={errors}
               disabled
-              requiredMessage="Required"
               label="Email"
-              name="email"
+              {...register("email", { required: "Required" })}
             />
           </Grid>
         </Box>

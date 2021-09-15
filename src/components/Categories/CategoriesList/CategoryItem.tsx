@@ -11,13 +11,13 @@ import Button from "../../reusable/Button";
 
 import Flex from "../../StyledComponents/Flex";
 import DefaultImage from "../../reusable/DefaultImage";
-import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import CheckToggle from "../../reusable/CheckToggle";
 import Heading from "../../StyledComponents/Heading";
 import IconButton from "../../reusable/IconButton";
 import { CSSTransition } from "react-transition-group";
 import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
 import { useState } from "react";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 interface IProps {
   category: CATEGORY;
   handleDeleteCategory: (id: number) => void;

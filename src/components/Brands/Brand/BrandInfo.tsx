@@ -1,14 +1,10 @@
-import { Control, SetFieldValue, useWatch } from "react-hook-form";
+import { Control, SetFieldValue } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import { MdSubtitles } from "react-icons/md";
 
 import styled from "styled-components";
-import MiniFileUploader from "../../../utils/MiniFileUploader";
-
-import IconedInput from "../../reusable/Inputs/IconedInput";
-import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
-import Select from "../../reusable/Select";
+import Input from "../../reusable/Input/Input";
 import Textarea from "../../reusable/Textarea";
 interface IProps {
   register: any;
@@ -44,33 +40,24 @@ const BrandInfo = ({ control, errors, register, setValue }: IProps) => {
       </div>
       <div className="box">
         <div className="info">
-          <IconedInput
-            Icon={MdSubtitles}
-            errors={errors?.name?.en}
-            register={register}
-            required
-            requiredMessage="Required"
+          <Input
+            startAdornment={<MdSubtitles />}
+            errors={errors}
             label="Brand Name English"
-            name="name.en"
+            {...register("name.en", { required: "Required" })}
           />
-          <IconedInput
-            Icon={MdSubtitles}
-            errors={errors?.name?.ar}
-            register={register}
-            required
-            requiredMessage="Required"
+          <Input
+            startAdornment={<MdSubtitles />}
+            errors={errors}
             label="Brand Name Arabic"
-            name="name.ar"
+            {...register("name.ar", { required: "Required" })}
           />
-          <PrefixedInput
-            prefixText="https://your-store/brands/"
-            errors={errors?.slug}
-            register={register}
-            required
-            requiredMessage="Required"
+          <Input
+            startAdornment="https://your-store/brands/"
+            errors={errors}
             label="Brand Slug"
-            name="slug"
             desc="How your brand will look in the url"
+            {...register("slug", { required: "Required" })}
           />
 
           <Textarea

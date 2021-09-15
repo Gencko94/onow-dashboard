@@ -2,17 +2,16 @@ import styled from "styled-components";
 import ModalHead from "../../../Modal/ModalHead";
 import ModalTail from "../../../Modal/ModalTail";
 import { SubmitHandler } from "react-hook-form";
-import IconedInput from "../../../reusable/Inputs/IconedInput";
+import Input from "../../../reusable/Input/Input";
 import Grid from "../../../StyledComponents/Grid";
 import { useForm } from "react-hook-form";
 import { MdSubtitles } from "react-icons/md";
 
 import { RiHandCoinLine } from "react-icons/ri";
-import PrefixedIconedInput from "../../../reusable/Inputs/PrefixedIconedInput";
 import { IoPricetagsOutline } from "react-icons/io5";
 import { OPTION_VALUE } from "../../../../interfaces/products/products";
 import { NEW_OPTION_VALUE } from "../../../../interfaces/products/create-new-product";
-import { up } from "../../../../utils/themes";
+
 import { animated, useTransition } from "@react-spring/web";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 const selectTypes = [
@@ -107,40 +106,32 @@ const NewOptionValueModal = ({
                 <ModalHead closeFunction={closeFunction} title={title} />
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Grid columns="minmax(200px,1fr)" gap="0.5rem" padding="1rem">
-                    <IconedInput
-                      Icon={MdSubtitles}
-                      errors={errors?.name?.en}
-                      name={`name.en`}
-                      register={register}
+                    <Input
+                      startAdornment={<MdSubtitles />}
+                      errors={errors}
                       label="Value Name English"
-                      required
-                      requiredMessage="Required"
+                      {...register("name.en", { required: "Required" })}
                     />
-                    <IconedInput
-                      Icon={MdSubtitles}
-                      errors={errors?.name?.ar}
-                      name={`name.ar`}
-                      register={register}
+                    <Input
+                      startAdornment={<MdSubtitles />}
+                      errors={errors}
                       label="Value Name Arabic"
-                      requiredMessage="Required"
-                      required
+                      {...register("name.ar", { required: "Required" })}
                     />
-                    <PrefixedIconedInput
-                      errors={errors?.price}
-                      Icon={IoPricetagsOutline}
-                      name={`price`}
-                      register={register}
+                    <Input
+                      errors={errors}
+                      startAdornment={<IoPricetagsOutline />}
                       label="Price"
-                      prefix="KD"
+                      endAdornment="KD"
                       desc="Leave empty to disable"
+                      {...register("price")}
                     />
-                    <IconedInput
-                      errors={errors?.quantity}
-                      Icon={RiHandCoinLine}
-                      name={`quantity`}
-                      register={register}
+                    <Input
+                      errors={errors}
+                      startAdornment={<RiHandCoinLine />}
                       label="Stock Quantity"
                       desc="Leave empty for unlimited"
+                      {...register("quantity")}
                     />
                   </Grid>
                   <ModalTail
@@ -161,16 +152,12 @@ const NewOptionValueModal = ({
 
 export default NewOptionValueModal;
 const AnimatedDialogOverlay = animated(DialogOverlay);
-const AnimatedDialogContent = styled(animated(DialogContent))(
-  ({ theme: { breakpoints, subtleBackground } }) => `
-  min-width:300px;
-  width:300px;
-  
-  background-color:${subtleBackground};
-  ${up(breakpoints.md)}{
-    min-width:400px;
-   
+const AnimatedDialogContent = styled(animated(DialogContent))`
+  min-width: 300px;
+  width: 300px;
+
+  background-color: ${(props) => props.theme.subtleBackground};
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    min-width: 400px;
   }
-  
-`
-);
+`;

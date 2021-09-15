@@ -1,12 +1,10 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { IoPricetagsOutline } from "react-icons/io5";
-import styled from "styled-components";
-import { up } from "../../../utils/themes";
+
 import Box from "../../reusable/Box/Box";
 
 import GithubInput from "../../reusable/Inputs/GithubInput";
-import PrefixedIconedInput from "../../reusable/Inputs/PrefixedIconedInput";
-import Heading from "../../StyledComponents/Heading";
+import Input from "../../reusable/Input/Input";
 import { FORM_PROPS } from "./ProductPricingAndOptions";
 
 const ProductPricing = () => {
@@ -21,17 +19,16 @@ const ProductPricing = () => {
   const priceFromVariationsEnabled = watch("price_by_options");
   return (
     <Box type="titled" boxTitle="Product Pricing">
-      <PrefixedIconedInput
-        errors={errors.price}
-        Icon={IoPricetagsOutline}
-        name="price"
-        register={register}
+      <Input
+        errors={errors}
+        startAdornment={<IoPricetagsOutline />}
         label="Product Price"
-        prefix="KD"
+        endAdornment="KD"
         disabled={priceFromVariationsEnabled}
-        required={!priceFromVariationsEnabled}
-        requiredMessage="Required"
         // defaultValue={formValues?.price}
+        {...register("price", {
+          required: priceFromVariationsEnabled && "Reqiured",
+        })}
       />
 
       <Controller

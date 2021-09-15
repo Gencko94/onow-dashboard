@@ -34,7 +34,7 @@ export const LoginForm = ({
         <Input
           data-testid="email"
           startAdornment={<MdMail size={20} />}
-          errors={errors?.login?.message}
+          errors={errors}
           label="Email"
           {...register("login", {
             required: "Required",
@@ -44,7 +44,7 @@ export const LoginForm = ({
             },
           })}
         />
-        <InputErrorMessage errors={errors} name="login" />
+        {/* <InputErrorMessage errors={errors} name="login" /> */}
         <PasswordInput
           errors={errors?.password}
           name="password"
@@ -53,7 +53,7 @@ export const LoginForm = ({
           required
           requiredMessage="Requried"
         />
-        <InputErrorMessage errors={errors} name="password" />
+        {/* <InputErrorMessage errors={errors} name="password" /> */}
 
         <Button
           data-testid="login-btn"

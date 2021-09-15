@@ -18,7 +18,9 @@ describe("Form Submission", () => {
   it("should display requried error when inputs are empty", async () => {
     fireEvent.submit(screen.getByTestId("login-btn"));
     expect(screen.getByText("Email")).toBeInTheDocument();
-    expect(await screen.findAllByRole("alert")).toHaveLength(2);
+    await waitFor(() => {
+      expect(screen.getAllByRole("alert")).toHaveLength(2);
+    });
     expect(mutateAsync).not.toBeCalled();
     expect(screen.queryByTestId("btn-loading")).not.toBeInTheDocument();
   });

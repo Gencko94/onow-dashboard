@@ -8,7 +8,6 @@ import { IconType } from "react-icons/lib";
 import { CSSTransition } from "react-transition-group";
 
 import styled, { css } from "styled-components";
-import { up } from "../../constants";
 
 const hours = [
   "12:00",
@@ -61,7 +60,7 @@ interface IProps {
   enabled: boolean | undefined;
 }
 
-const TimeIconedInput = ({
+const TimeInput = ({
   errors,
   value,
   Icon,
@@ -154,92 +153,75 @@ const TimeIconedInput = ({
   );
 };
 
-export default TimeIconedInput;
-const Container = styled.div<{ rtl: boolean; error: boolean }>(
-  ({
-    theme: {
-      breakpoints,
-      font,
-      primary,
-      secondary,
-      accent2,
-      border,
-      borderHovered,
-      dangerRed,
-      subtleBackground,
-      text,
-      borderDanger,
-    },
-    error,
-    rtl,
-  }) => `
+export default TimeInput;
+const Container = styled.div<{ rtl: boolean; error: boolean }>`
   position: relative;
   label {
-    color: ${text};
+    color: ${(props) => props.theme.text};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
     display: block;
   }
   .input-container {
     position: relative;
-    background-color: ${subtleBackground};
-    color: ${text};
-    border: ${error ? borderDanger : border};
+    background-color: ${(props) => props.theme.subtleBackground};
+    color: ${(props) => props.theme.text};
+    border: ${(props) =>
+      props.error
+        ? (props) => props.theme.borderDanger
+        : (props) => props.theme.border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
     input:disabled {
-     background-color:${accent2};
-     cursor:not-allowed;
-    } 
+      background-color: ${(props) => props.theme.accent2};
+      cursor: not-allowed;
+    }
     .icon {
-      position:absolute;
-      left:${rtl ? "" : 0};
-      right:${rtl ? 0 : ""};
+      position: absolute;
+      left: ${(props) => (props.rtl ? "" : 0)};
+      right: ${(props) => (props.rtl ? 0 : "")};
       padding: 0.4rem;
-      height:100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${primary};z
+      color: ${(props) => props.theme.primary};
     }
 
     input {
-      width:100%;
+      width: 100%;
       flex: 1;
       padding: 0.4rem;
-      padding-left:${rtl ? "0.4rem" : "35px"};
-      padding-right:${rtl ? "35px" : "0.4rem"};
-      font-size: 0.8rem; 
-      color: ${text};
+      padding-left: ${(props) => (props.rtl ? "0.4rem" : "35px")};
+      padding-right: ${(props) => (props.rtl ? "35px" : "0.4rem")};
+      font-size: 0.8rem;
+      color: ${(props) => props.theme.text};
     }
     &:hover,
     &:focus-within {
-      border-color: ${borderHovered};
+      border-color: ${(props) => props.theme.borderHovered};
     }
-    
   }
   .error {
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    color: ${dangerRed};
+    color: ${(props) => props.theme.dangerRed};
   }
-  ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     label {
       font-size: 0.9rem;
       margin-bottom: 0.75rem;
     }
-    .input-container{
-  
+    .input-container {
       input {
         font-size: 0.9rem;
       }
     }
+  } ;
+`;
 
-  };
-`
-);
 const HoursContainer = styled.div`
   position: absolute;
   z-index: 100;

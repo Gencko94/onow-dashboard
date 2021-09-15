@@ -6,8 +6,8 @@ import { RiHandCoinLine } from "react-icons/ri";
 import { TiDelete } from "react-icons/ti";
 import styled from "styled-components";
 
-import IconedInput from "../../../reusable/Inputs/IconedInput";
-import PrefixedIconedNumberInput from "../../../reusable/Inputs/PrefixedIconedNumberInput";
+import Input from "../../../reusable/Input/Input";
+
 import Flex from "../../../StyledComponents/Flex";
 import Grid from "../../../StyledComponents/Grid";
 import Heading from "../../../StyledComponents/Heading";
@@ -55,45 +55,41 @@ const CreateProductOptionValue = ({
         </button>
       </Flex>
       <Grid columns="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.options?.[parentIndex]?.values?.[index]?.name?.en}
-          name={`options.${parentIndex}.values.${index}.name.en`}
-          register={register}
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Value Name English"
-          required={optionsEnabled}
-          requiredMessage="Required"
           defaultValue={options?.[index].name.en}
+          {...register(`options.${parentIndex}.values.${index}.name.en`, {
+            required: optionsEnabled && "Required",
+          })}
         />
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.options?.[parentIndex]?.values?.[index]?.name?.ar}
-          name={`options.${parentIndex}.values.${index}.name.ar`}
-          register={register}
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Value Name Arabic"
-          defaultValue={options?.[index].name.ar}
-          requiredMessage="Required"
-          required={optionsEnabled}
+          {...register(`options.${parentIndex}.values.${index}.name.ar`, {
+            required: optionsEnabled && "Required",
+          })}
         />
-        <PrefixedIconedNumberInput
-          errors={errors?.options?.[parentIndex]?.values?.[index]?.price}
-          Icon={IoPricetagsOutline}
-          name={`options.${parentIndex}.values.${index}.price`}
-          register={register}
+        <Input
+          errors={errors}
+          startAdornment={<IoPricetagsOutline />}
           label="Price"
-          prefix="KD"
+          endAdornment="KD"
           desc="Leave empty to disable"
           defaultValue={options?.[index].price}
           min={0}
+          type="number"
+          {...register(`options.${parentIndex}.values.${index}.price`)}
         />
-        <IconedInput
-          errors={errors?.options?.[parentIndex]?.values?.[index]?.quantity}
-          Icon={RiHandCoinLine}
-          name={`options.${parentIndex}.values.${index}.quantity`}
-          register={register}
+        <Input
+          errors={errors}
+          startAdornment={<RiHandCoinLine />}
           label="Stock Quantity"
           desc="Leave empty for unlimited"
           defaultValue={options?.[index].qty}
+          {...register(`options.${parentIndex}.values.${index}.quantity`)}
         />
       </Grid>
     </Container>

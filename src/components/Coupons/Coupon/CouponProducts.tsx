@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { Control, Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 import { PRODUCT } from "../../../interfaces/products/products";
-import { up } from "../../../utils/themes";
 import Box from "../../reusable/Box/Box";
 import Select from "../../reusable/Select";
 import Grid from "../../StyledComponents/Grid";
-import Heading from "../../StyledComponents/Heading";
 import CouponCategoryList from "./CouponCategoryList";
 import CouponProductsList from "./CouponProductsList";
 import CouponProductsSearch from "./CouponProductsSearch";

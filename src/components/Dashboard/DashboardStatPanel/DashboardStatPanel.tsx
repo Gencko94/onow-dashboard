@@ -1,10 +1,8 @@
 import styled from "styled-components";
-import { AiOutlineUser } from "react-icons/ai";
 import { RiFileList3Line } from "react-icons/ri";
 import { MdAttachMoney } from "react-icons/md";
 import Select from "react-select";
 import { useMemo, useState } from "react";
-import { down, up } from "../../../utils/themes";
 import Heading from "../../StyledComponents/Heading";
 import Grid from "../../StyledComponents/Grid";
 import Flex from "../../StyledComponents/Flex";

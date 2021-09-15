@@ -1,13 +1,11 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { IoPricetagsOutline } from "react-icons/io5";
-import styled from "styled-components";
 import { secondTabProps } from "./CreateProductPricingAndOptions";
 
 import GithubInput from "../../reusable/Inputs/GithubInput";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import { useContext } from "react";
-import Heading from "../../StyledComponents/Heading";
-import PrefixedIconedNumberInput from "../../reusable/Inputs/PrefixedIconedNumberInput";
+import Input from "../../reusable/Input/Input";
 import Box from "../../reusable/Box/Box";
 
 const CreateProductPricing = () => {
@@ -25,18 +23,16 @@ const CreateProductPricing = () => {
   return (
     <Box type="titled" boxTitle="Product Pricing">
       <div className="inputs-container">
-        <PrefixedIconedNumberInput
-          errors={errors.price}
-          Icon={IoPricetagsOutline}
-          name="price"
-          register={register}
+        <Input
+          errors={errors}
+          startAdornment={<IoPricetagsOutline />}
           label="Product Price"
-          prefix="KD"
+          endAdornment="KD"
           disabled={priceByOptions ?? formValues?.price_by_options}
-          required={!priceByOptions}
-          requiredMessage="Required"
           defaultValue={formValues?.price}
           min={0}
+          type="number"
+          {...register("price", { required: priceByOptions && "Required" })}
         />
         <Controller
           name="price_by_options"

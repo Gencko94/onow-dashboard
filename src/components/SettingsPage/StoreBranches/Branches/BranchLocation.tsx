@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import styled from "styled-components";
 
-import IconedInput from "../../../reusable/Inputs/IconedInput";
+import Input from "../../../reusable/Input/Input";
 
 import InlineMap from "../../../reusable/InlineMap";
 import Textarea from "../../../reusable/Textarea";
@@ -12,7 +12,6 @@ import { IoLocate } from "react-icons/io5";
 import Grid from "../../../StyledComponents/Grid";
 import Box from "../../../reusable/Box/Box";
 import Paragraph from "../../../StyledComponents/Paragraph";
-import { up } from "../../../../constants";
 
 const BranchLocation = () => {
   const {
@@ -29,28 +28,22 @@ const BranchLocation = () => {
   return (
     <Box type="titled" boxTitle="Branch location">
       <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
-        <IconedInput
-          Icon={IoLocate}
-          errors={errors?.address?.coords?.lat}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<IoLocate />}
+          errors={errors}
           label="Latitude"
-          name="address.coords.lat"
+          {...register("address.coords.lat", { required: "Required" })}
         />
-        <IconedInput
-          Icon={IoLocate}
-          errors={errors?.address?.coords?.lng}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<IoLocate />}
+          errors={errors}
           label="Longitude"
-          name="address.coords.lng"
+          {...register("address.coords.lng", { required: "Required" })}
         />
       </Grid>
       <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
         <Textarea
-          errors={errors?.address?.address?.en}
+          errors={errors}
           register={register}
           required
           requiredMessage="Required"
@@ -93,17 +86,15 @@ const BranchLocation = () => {
 
 export default BranchLocation;
 
-const MapContainer = styled.div(
-  ({ theme: { breakpoints } }) => `
+const MapContainer = styled.div`
   .map {
-    height:300px;
-    margin:1rem 0;  
+    height: 300px;
+    margin: 1rem 0;
   }
-  ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     .map {
-      height:300px;
-      margin:1rem 0;  
+      height: 300px;
+      margin: 1rem 0;
     }
   }
-`
-);
+`;

@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
+import { DeepMap, FieldError, get } from "react-hook-form";
 import styled, { css } from "styled-components";
-import { up } from "../../../constants";
+
 import Paragraph from "../../StyledComponents/Paragraph";
 import InputErrorMessage from "../InputErrorMessage";
 
@@ -25,7 +26,7 @@ interface BaseInputProps extends React.ComponentPropsWithoutRef<"input"> {
   /**
    * 	Error Message
    */
-  errors?: any;
+  errors?: DeepMap<any, FieldError>;
 }
 
 const Input = forwardRef<HTMLDivElement, BaseInputProps>(
@@ -36,7 +37,12 @@ const Input = forwardRef<HTMLDivElement, BaseInputProps>(
     return (
       <div>
         {label && <Label htmlFor={delegated.id}>{label}</Label>}
-        <InputWrapper ref={ref} disabled={delegated.disabled}>
+        <InputWrapper
+          data-testid="input-wrapper"
+          ref={ref}
+          disabled={delegated.disabled}
+          errors={typeof get(errors, delegated.name as string) !== "undefined"}
+        >
           {startAdornment &&
             (typeof startAdornment === "object" ? (
               <Adornment data-testid="start-adornment">
@@ -58,6 +64,7 @@ const Input = forwardRef<HTMLDivElement, BaseInputProps>(
             {desc}
           </InputDesc>
         )}
+        {errors && <InputErrorMessage errors={errors} name={delegated.name} />}
       </div>
     );
   }
@@ -65,18 +72,21 @@ const Input = forwardRef<HTMLDivElement, BaseInputProps>(
 
 export default Input;
 
-const InputWrapper = styled.div<{ disabled?: boolean }>`
+const InputWrapper = styled.div<{ disabled?: boolean; errors: boolean }>`
   position: relative;
   overflow: hidden;
   display: flex;
   background-color: ${(props) => props.theme.subtleBackground};
-  border: ${(props) => props.theme.border};
+  border: ${(props) =>
+    props.errors ? props.theme.borderDanger : props.theme.border};
   border-radius: 6px;
   transition: 150ms border ease-out;
-  &:hover,
-  &:focus,
-  &:focus-within {
-    border-color: ${(props) => !props.disabled && props.theme.secondary};
+  &:not(:disabled) {
+    &:hover,
+    &:focus,
+    &:focus-within {
+      border-color: ${(props) => !props.errors && props.theme.secondary};
+    }
   }
   ${(props) =>
     props.disabled &&
@@ -96,42 +106,38 @@ const Label = styled.label`
 const InputDesc = styled(Paragraph)`
   font-size: 0.8rem;
 `;
-const BaseInput = styled.input(
-  ({ theme: { breakpoints, text } }) => `
-width: 100%;
+const BaseInput = styled.input`
+  width: 100%;
 
-font-size: 0.9rem;
-color: ${text};
-flex: 1;
-outline: none;
-min-width: 0;
-&:disabled {
+  font-size: 0.9rem;
+  color: ${(props) => props.theme.text};
+  flex: 1;
+  outline: none;
+  min-width: 0;
+  &:disabled {
     cursor: not-allowed;
-}
-padding: 0.4rem;
-${up(breakpoints.md)} {
+  }
+  padding: 0.4rem;
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     padding: 0.5rem;
-}
+  }
+`;
 
-`
-);
 const DefaultInput = styled(BaseInput)``;
 
-const Adornment = styled.span(
-  ({ theme: { breakpoints, primary, subtleBackground } }) => `
+const Adornment = styled.span`
   padding: 0.4rem;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${primary};
-  background-color: ${subtleBackground};
-  ${up(breakpoints.md)} {
-      padding: 0.5rem;
-    }
-    
-    `
-);
+  color: ${({ theme: { primary } }) => primary};
+  background-color: ${({ theme: { subtleBackground } }) => subtleBackground};
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    padding: 0.5rem;
+  }
+`;
+
 const TextAdornment = styled(Adornment)`
   background-color: gray;
 `;

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Input from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import styled from "styled-components";
-import { up } from "../../../constants";
+
 import InputErrorMessage from "../InputErrorMessage";
 type CountryData = {
   countryCode: string;
@@ -83,35 +83,31 @@ const PhoneInput = ({
 };
 
 export default PhoneInput;
-const Container = styled.div<{ rtl: boolean; error: boolean }>(
-  ({ theme: { breakpoints, textAlt, primary, font } }) => `
+const Container = styled.div<{ rtl: boolean; error: boolean }>`
   label {
-    color: ${textAlt};
+    color: ${(props) => props.theme.textAlt};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
     display: block;
-    font-weight:${font.semibold};
+    font-weight: ${(props) => props.theme.font.semibold};
   }
-.desc {
-  font-size: 0.7rem;
-  padding-top: 0.25rem;
-  height: 22px;
+  .desc {
+    font-size: 0.7rem;
+    padding-top: 0.25rem;
+    height: 22px;
 
-  color: ${primary};
-}
-  
-${up(breakpoints.md)}{
-  label {
-    font-size: 0.9rem;
-    margin-bottom: 0.75rem;
+    color: ${(props) => props.theme.primary};
   }
-  .input-container{
 
-    input {
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    label {
       font-size: 0.9rem;
+      margin-bottom: 0.75rem;
     }
-  }
-
-};
-  `
-);
+    .input-container {
+      input {
+        font-size: 0.9rem;
+      }
+    }
+  } ;
+`;

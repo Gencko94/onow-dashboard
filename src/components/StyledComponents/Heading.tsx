@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { up } from "../../constants";
+
 type DefaultHeadingProps = Omit<JSX.IntrinsicElements["h1"], "ref">;
 interface IProps extends DefaultHeadingProps {
   type?:
@@ -57,74 +57,66 @@ const SectionTitle = styled.h1`
   font-weight: ${(props) => props.theme.font.semibold};
 `;
 
-const SmallTitle = styled.h1(
-  ({ theme: { breakpoints, font } }) => `
+const SmallTitle = styled.h1`
   font-size: 18px;
-  
-  font-weight: ${font.semibold};
-  
-  ${up(breakpoints.md)}{
+
+  font-weight: ${(props) => props.theme.font.semibold};
+
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     font-size: 20px;
   }
-  `
-);
-const MediumTitle = styled.h1(
-  ({ theme: { breakpoints, font, text } }) => `
+`;
+
+const MediumTitle = styled.h1`
   font-size: 20px;
-  color: ${text};
+  color: ${(props) => props.theme.text};
   line-height: 1.2;
   margin-top: 8px;
   margin-bottom: 8px;
 
-  ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     font-size: 28px;
   }
-  `
-);
-const LargeTitle = styled.h1(
-  ({ theme: { breakpoints, font, text } }) => `
-  font-size: 28px;
-  color: ${text};
-  
+`;
 
-  ${up(breakpoints.md)}{
+const LargeTitle = styled.h1`
+  font-size: 28px;
+  color: ${(props) => props.theme.text};
+
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     font-size: 38px;
   }
-  `
-);
-const MajorHeading = styled.h1(
-  ({ theme: { breakpoints, primary } }) => `
+`;
+
+const MajorHeading = styled.h1`
   font-size: 25px;
-  color: ${primary};
+  color: ${(props) => props.theme.primary};
   margin-top: 16px;
   margin-bottom: 16px;
 
-  ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     font-size: 32px;
   }
-  `
-);
-const NormalHeading = styled.h1(
-  ({ theme: { breakpoints, primary } }) => `
+`;
+
+const NormalHeading = styled.h1`
   font-size: 20px;
-  color: ${primary};
+  color: ${(props) => props.theme.primary};
   margin-top: 16px;
   margin-bottom: 16px;
 
-  ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     font-size: 25px;
   }
-  `
-);
-const MinorHeading = styled.h1(
-  ({ theme: { breakpoints, primary } }) => `
+`;
+
+const MinorHeading = styled.h1`
   font-size: 16px;
-  color: ${primary};
+  color: ${(props) => props.theme.primary};
   margin-top: 12px;
   margin-bottom: 12px;
 
-  ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     font-size: 20px;
   }
-  `
-);
+`;

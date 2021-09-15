@@ -14,7 +14,7 @@ import extractError from "../../../utils/extractError";
 import { editStoreTechnicalSupport } from "../../../utils/queries/settingsQueries";
 import Box from "../../reusable/Box/Box";
 import Button from "../../reusable/Button";
-import IconedInput from "../../reusable/Inputs/IconedInput";
+import Input from "../../reusable/Input/Input";
 import PhoneInput from "../../reusable/Inputs/PhoneInput";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
@@ -88,28 +88,25 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
             }}
           />
 
-          <IconedInput
-            Icon={AiOutlineWhatsApp}
-            errors={errors?.whatsapp}
-            register={register}
-            name="whatsapp"
+          <Input
+            startAdornment={<AiOutlineWhatsApp />}
+            errors={errors}
             label="WhatsApp"
+            {...register("whatsapp")}
           />
         </Grid>
         <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
-          <IconedInput
-            Icon={AiOutlineMail}
-            errors={errors?.email}
-            register={register}
-            name="email"
+          <Input
+            startAdornment={<AiOutlineMail />}
+            errors={errors}
             label="Email Address"
+            {...register("email")}
           />
-          <IconedInput
-            Icon={AiOutlinePhone}
-            errors={errors?.landline}
-            register={register}
-            name="landline"
+          <Input
+            startAdornment={<AiOutlinePhone />}
+            errors={errors}
             label="Landline"
+            {...register("landline")}
           />
         </Grid>
 

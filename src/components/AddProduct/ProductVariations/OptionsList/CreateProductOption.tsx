@@ -1,13 +1,11 @@
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
-import { BiPlus } from "react-icons/bi";
 import { MdSubtitles } from "react-icons/md";
 import { TiDelete } from "react-icons/ti";
 import styled from "styled-components";
 import { NEW_PRODUCT_OPTION } from "../../../../interfaces/products/create-new-product";
 import Button from "../../../reusable/Button";
 
-import IconedNumberInput from "../../../reusable/IconedNumberInput";
-import IconedInput from "../../../reusable/Inputs/IconedInput";
+import Input from "../../../reusable/Input/Input";
 import Select from "../../../reusable/Select";
 import Flex from "../../../StyledComponents/Flex";
 import Grid from "../../../StyledComponents/Grid";
@@ -62,26 +60,23 @@ const CreateProductOption = ({ option, index, removeOption }: IProps) => {
         </button>
       </Flex>
       <Grid columns="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.options?.[index]?.name?.en}
-          name={`options.${index}.name.en`}
-          register={register}
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Option Name English"
-          required={optionsEnabled}
-          requiredMessage="Required"
-          defaultValue={options[index]?.name?.en}
+          {...register(`options.${index}.name.en`, {
+            required: optionsEnabled && "Required",
+          })}
         />
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.options?.[index]?.name?.ar}
-          name={`options.${index}.name.ar`}
-          register={register}
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Option Name Arabic"
-          required={optionsEnabled}
-          defaultValue={options[index]?.name?.ar}
-          requiredMessage="Required"
+          {...register(`options.${index}.name.ar`, {
+            required: optionsEnabled && "Required",
+          })}
         />
+
         <Controller
           control={control}
           name={`options.${index}.select_type` as any}
@@ -111,15 +106,15 @@ const CreateProductOption = ({ option, index, removeOption }: IProps) => {
         />
 
         {optionType === "multiple" && (
-          <IconedNumberInput
-            Icon={MdSubtitles}
-            errors={errors?.options?.[index]?.max_picks}
-            name={`options.${index}.max_picks`}
-            register={register}
+          <Input
+            startAdornment={<MdSubtitles />}
+            errors={errors}
             label="Maximum choice selections"
+            type="number"
             min={0}
             defaultValue={options[index]?.max_picks}
             desc="0 For Unlimited"
+            {...register(`options.${index}.max_picks`)}
           />
         )}
         <Controller

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import styled from "styled-components";
-import { up } from "../../../constants";
+
 import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { PRODUCT } from "../../../interfaces/products/products";
@@ -127,14 +127,11 @@ const ProductImage = ({ data }: IProps) => {
 };
 
 export default ProductImage;
-const Container = styled.div(
-  ({ theme: { breakpoints, shadow } }) => `
-  display:grid;
-  grid-template-columns:1fr;
-  gap:1rem;
-  ${up(breakpoints.md)}{
-    grid-template-columns:1fr 1fr;
-
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    grid-template-columns: 1fr 1fr;
   }
-  `
-);
+`;

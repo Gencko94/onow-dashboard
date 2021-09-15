@@ -2,7 +2,6 @@ import {
   AccordionButton,
   AccordionItem,
   AccordionPanel,
-  useAccordionItemContext,
 } from "@reach/accordion";
 import React from "react";
 import { useRef } from "react";
@@ -120,7 +119,9 @@ const MenuConfigItem = ({ item, index, moveCard, isLast }: IProps) => {
       </Flex>
       <AccordionPanel>
         {item.products.map((product) => (
-          <ItemContainer>{product.name[language]}</ItemContainer>
+          <ItemContainer key={product.id}>
+            {product.name[language]}
+          </ItemContainer>
         ))}
       </AccordionPanel>
     </AccordionHead>

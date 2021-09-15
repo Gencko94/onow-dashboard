@@ -2,9 +2,9 @@ import { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { BiPlus } from "react-icons/bi";
+
 import { useMutation } from "react-query";
-import { CSSTransition } from "react-transition-group";
+
 import styled from "styled-components";
 import useConfirmationModal from "../../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../../hooks/useToast";
@@ -19,7 +19,6 @@ import {
   deleteProductOptionValue,
   editProductOptionValue,
 } from "../../../../utils/queries/productQueries";
-import { up } from "../../../../utils/themes";
 import Button from "../../../reusable/Button";
 import EmptyTable from "../../../reusable/EmptyTable";
 import IconWrapper from "../../../reusable/Icon";
@@ -366,56 +365,45 @@ const Option = ({
 };
 
 export default Option;
-const Container = styled.div(
-  ({
-    theme: {
-      breakpoints,
-      border,
-      dangerRed,
-      background,
-      subtleBackground,
-      accent2,
-    },
-  }) => `
-  border: ${border};
+const Container = styled.div`
+  border: ${(props) => props.theme.border};
   border-radius: 6px;
-  margin-bottom: 1rem ;
-  background-color:${background};
+  margin-bottom: 1rem;
+  background-color: ${(props) => props.theme.background};
   .values {
     padding: 0.5rem;
-    background-color:${subtleBackground};
+    background-color: ${(props) => props.theme.subtleBackground};
   }
   .head {
-    border-bottom: ${border};
-    padding:0.75rem;
-    background-color:${subtleBackground};
+    border-bottom: ${(props) => props.theme.border};
+    padding: 0.75rem;
+    background-color: ${(props) => props.theme.subtleBackground};
   }
   .field {
-    text-align:center;
-    border-right: ${border};
-    border-bottom: ${border};
+    text-align: center;
+    border-right: ${(props) => props.theme.border};
+    border-bottom: ${(props) => props.theme.border};
   }
   .field-head {
-    border-bottom: ${border};
-    padding:0.5rem;
+    border-bottom: ${(props) => props.theme.border};
+    padding: 0.5rem;
   }
   .field-body {
-    padding:0.5rem;
-
+    padding: 0.5rem;
   }
-  .empty {    
-    background-color:${background};
+  .empty {
+    background-color: ${(props) => props.theme.background};
   }
-  ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     .values {
       padding: 1rem;
     }
-    .head{
-      padding:1rem;
+    .head {
+      padding: 1rem;
     }
-    .field-head, .field-body {
-      padding:0.75rem 
+    .field-head,
+    .field-body {
+      padding: 0.75rem;
     }
   }
-  `
-);
+`;

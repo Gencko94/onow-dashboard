@@ -1,11 +1,9 @@
 import { Controller, useFormContext } from "react-hook-form";
 import styled from "styled-components";
 import { PRODUCT_OPTION } from "../../../interfaces/products/products";
-import { up } from "../../../utils/themes";
 import Box from "../../reusable/Box/Box";
 
 import GithubInput from "../../reusable/Inputs/GithubInput";
-import Heading from "../../StyledComponents/Heading";
 import OptionsList from "./ProductOptions/OptionsList";
 import { FORM_PROPS } from "./ProductPricingAndOptions";
 
@@ -45,25 +43,23 @@ const ProductOptions = ({ options, productId }: ProductOptionsProps) => {
 };
 
 export default ProductOptions;
-const Container = styled.div(
-  ({ theme: { breakpoints, border, accent1 } }) => `
-  border: ${border};
+const Container = styled.div`
+  border: ${(props) => props.theme.border};
   border-radius: 6px;
-  margin:1rem 0 2rem 0;
-  background-color:${accent1};
-  
+  margin: 1rem 0 2rem 0;
+  background-color: ${(props) => props.theme.accent1};
+
   .head {
-    border-bottom: ${border};
-    padding:0.5rem;
-    
+    border-bottom: ${(props) => props.theme.border};
+    padding: 0.5rem;
   }
   .content {
-    padding:0.5rem;
+    padding: 0.5rem;
   }
-  ${up(breakpoints.md)} {
-    .head , .content  {
-      padding:1rem;
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    .head,
+    .content {
+      padding: 1rem;
     }
   }
-  `
-);
+`;

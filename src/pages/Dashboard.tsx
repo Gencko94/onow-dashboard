@@ -3,7 +3,6 @@ import DashboardStatPanel from "../components/Dashboard/DashboardStatPanel/Dashb
 import RealTimeOrders from "../components/Dashboard/RealTimeOrders/RealTimeOrders";
 import DashboardBestSeller from "../components/Dashboard/DashboardBestSeller/DashboardBestSeller";
 import StoreTasks from "../components/Dashboard/StoreTasks/StoreTasks";
-import { up } from "../utils/themes";
 
 const Dashboard = () => {
   return (
@@ -18,13 +17,10 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-const Container = styled.div(
-  ({ theme: { breakpoints, font } }) => `
-  
-  ${up(breakpoints.md)}{
+const Container = styled.div`
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     gap: 1rem;
     grid-template-columns: 1fr;
     display: grid;
   }
-  `
-);
+`;

@@ -28,7 +28,9 @@ const GlobalStyle = createGlobalStyle(
   article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
   }
-
+  th {
+    font-weight:${font.semibold};
+  }
   blockquote, q {
     quotes: none;
   }

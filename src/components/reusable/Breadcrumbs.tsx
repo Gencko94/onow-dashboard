@@ -5,7 +5,6 @@ import { FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import useResponsive from "../../hooks/useResponsive";
-import { up } from "../../utils/themes";
 import Heading from "../StyledComponents/Heading";
 import Paragraph from "../StyledComponents/Paragraph";
 
@@ -85,16 +84,12 @@ const Breadcrumbs = ({ children, withoutTitle }: IProps) => {
 
 export default Breadcrumbs;
 
-const Container = styled.nav(
-  ({ theme: { breakpoints, font, border } }) => `
-  
-  
+const Container = styled.nav`
   .links-container {
-     
     font-size: 0.9rem;
-    white-space:nowrap;
+    white-space: nowrap;
     display: flex;
-    font-size:0.9rem;
+    font-size: 0.9rem;
     align-items: center;
     .chevron {
       display: flex;
@@ -102,15 +97,14 @@ const Container = styled.nav(
       justify-content: center;
       margin: 0 0.75rem;
     }
-  };
-  ${up(breakpoints.md)}{
+  }
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     .links-container {
-      font-size:0.9rem;
-      
+      font-size: 0.9rem;
     }
   }
-  `
-);
+`;
+
 const StyledLink = styled(Link)`
   display: block;
   transition: color 75ms ease;

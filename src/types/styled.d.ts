@@ -1,6 +1,6 @@
 // import original module declarations
 import "styled-components";
-import { Devices } from "./breakpoints";
+import { Devices } from "../interfaces/breakpoints/breakpoints";
 
 // and extend them!
 type FontWeights = {

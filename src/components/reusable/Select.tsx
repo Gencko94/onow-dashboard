@@ -15,7 +15,6 @@ import {
 import InputErrorMessage from "./InputErrorMessage";
 import { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { up } from "../../constants";
 
 interface IProps<T> {
   label?: string;
@@ -167,27 +166,25 @@ export default function Select<T>({
   );
 }
 
-const Container = styled.div(
-  ({ theme: { breakpoints, text, font, dangerRed } }) => `
+const Container = styled.div`
   label {
-    color: ${text};
+    color: ${(props) => props.theme.text};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
-    font-weight: ${font.semibold};
+    font-weight: ${(props) => props.theme.font.semibold};
     display: inline-block;
   }
   .error {
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    color: ${dangerRed};
+    color: ${(props) => props.theme.dangerRed};
   }
-   ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     font-size: 0.9rem;
     label {
       font-size: 0.9rem;
       margin-bottom: 0.75rem;
-    };
+    }
   }
-  `
-);
+`;

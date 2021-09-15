@@ -10,13 +10,11 @@ import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
 import Button from "../../../components/reusable/Button";
 import CountrySelectInput from "../../../components/reusable/CountrySelectInput";
 import InlineFileUploader from "../../../components/reusable/InlineFileUploader";
-import IconedInput from "../../../components/reusable/Inputs/IconedInput";
-import RadioButton from "../../../components/reusable/RadioButton";
+import Input from "../../../components/reusable/Input/Input";
 import Select from "../../../components/reusable/Select";
 import Flex from "../../../components/StyledComponents/Flex";
 import { countrylistWithDialCodes } from "../../../data/countryList";
 import { CREATE_PAYMENT_GATEWAY } from "../../../interfaces/settings/payment-methods/payment-methods";
-import { up } from "../../../utils/themes";
 
 const accountTypeOptions: { label: { [key: string]: string }; value: any }[] = [
   {
@@ -82,32 +80,23 @@ const CreatePaymentGatewayAccount = () => {
           <h5>Please fill up this form</h5>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="box">
-          <IconedInput
-            register={register}
-            required
-            requiredMessage="Required"
-            Icon={MdSubtitles}
-            errors={errors.first_name}
-            label="First Name"
-            name="first_name"
+          <Input
+            startAdornment={<MdSubtitles />}
+            errors={errors}
+            label="First name"
+            {...register("first_name", { required: "Required" })}
           />
-          <IconedInput
-            register={register}
-            required
-            requiredMessage="Required"
-            Icon={MdSubtitles}
-            errors={errors.last_name}
-            label="Last Name"
-            name="last_name"
+          <Input
+            startAdornment={<MdSubtitles />}
+            errors={errors}
+            label="Last name"
+            {...register("last_name", { required: "Required" })}
           />
-          <IconedInput
-            register={register}
-            required
-            requiredMessage="Required"
-            Icon={AiOutlineMail}
-            errors={errors.email}
+          <Input
+            startAdornment={<AiOutlineMail />}
+            errors={errors}
             label="Email Address"
-            name="email"
+            {...register("email", { required: "Required" })}
           />
           <Controller
             control={control}
@@ -129,15 +118,12 @@ const CreatePaymentGatewayAccount = () => {
             }}
           />
           <div style={{ gridColumn: "1/3" }}>
-            <IconedInput
-              register={register}
-              required
-              requiredMessage="Required"
-              Icon={AiOutlineMail}
-              errors={errors.business_name}
+            <Input
+              startAdornment={<AiOutlineMail />}
+              errors={errors}
               label="Business Name"
-              name="business_name"
               placeholder="Enter your business name"
+              {...register("business_name", { required: "Required" })}
             />
           </div>
           <Controller
@@ -228,15 +214,14 @@ const CreatePaymentGatewayAccount = () => {
           {account_type === "company" && (
             <>
               <div style={{ gridColumn: "1/3" }}>
-                <IconedInput
-                  register={register}
-                  required={account_type === "company"}
-                  requiredMessage="Required"
-                  Icon={AiOutlineFileProtect}
-                  errors={errors.license_number}
+                <Input
+                  startAdornment={<AiOutlineFileProtect />}
+                  errors={errors}
                   label="License Number"
-                  name="license_number"
                   placeholder="Enter your license number"
+                  {...register("license_number", {
+                    required: account_type === "company" && "Required",
+                  })}
                 />
               </div>
               <Controller
@@ -277,16 +262,13 @@ const CreatePaymentGatewayAccount = () => {
               />
             </>
           )}
-          <IconedInput
-            register={register}
-            required
-            requiredMessage="Required"
-            Icon={RiBankFill}
-            errors={errors.bank_iban}
+          <Input
+            startAdornment={<RiBankFill />}
+            errors={errors}
             label="Bank IBAN"
-            name="bank_iban"
             placeholder="Enter your Bank IBAN"
             desc="Enter the information of your company bank account if you have a commercial license, if not, enter the information of your personal bank account."
+            {...register("bank_iban", { required: "Required" })}
           />
           <div style={{ gridColumn: "1/3" }}>
             <Flex justify="center" items="center">
@@ -303,37 +285,33 @@ const CreatePaymentGatewayAccount = () => {
 
 export default CreatePaymentGatewayAccount;
 
-const Container = styled.div(
-  ({ theme: { breakpoints, primary, shadow, font, dangerRed } }) => `
+const Container = styled.div`
   margin: 2rem 0;
   .title-container {
     padding: 1rem 0;
-    color: ${primary};
+    color: ${(props) => props.theme.primary};
   }
   .box {
     background-color: #fff;
-    box-shadow: ${shadow};
+    box-shadow: ${(props) => props.theme.shadow};
     border-radius: 6px;
     padding: 1rem;
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
-    
-  } 
+  }
   .error {
     font-size: 0.7rem;
     padding-top: 0.25rem;
     height: 22px;
-    color: ${dangerRed};
+    color: ${(props) => props.theme.dangerRed};
   }
- ${Flex}{
-   margin: 1rem 0 ;
- }
- ${up(breakpoints.md)}{
+  ${Flex} {
+    margin: 1rem 0;
+  }
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     .box {
       grid-template-columns: 1fr 1fr;
-
     }
   }
-  `
-);
+`;

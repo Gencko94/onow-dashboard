@@ -4,7 +4,7 @@ import ModalHead from "../../Modal/ModalHead";
 import ModalTail from "../../Modal/ModalTail";
 
 import Paragraph from "../../StyledComponents/Paragraph";
-import { up } from "../../../utils/themes";
+
 import { animated, useTransition } from "@react-spring/web";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 
@@ -93,23 +93,17 @@ const ConfirmationModal = ({
 };
 
 export default ConfirmationModal;
-const AnimatedDialogContent = styled(animated(DialogContent))(
-  ({ theme: { breakpoints, subtleBackground } }) => `
-  min-width:300px;
-  width:300px;  
-  background-color:${subtleBackground};
-//   box-shadow: inset 0 0 1px 1px hsla(0, 0%, 100%, 0.9),
-//   0 20px 27px 0 rgba(0, 0, 0, 0.05);
-// backdrop-filter: saturate(200%) blur(30px);
-  .description {
-    padding:1rem;
-  }
-  ${up(breakpoints.md)}{
-    min-width:400px;
-   
-  }
+const AnimatedDialogContent = styled(animated(DialogContent))`
+  min-width: 300px;
+  width: 300px;
+  background-color: ${(props) => props.theme.subtleBackground};
 
-`
-);
+  .description {
+    padding: 1rem;
+  }
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    min-width: 400px;
+  }
+`;
 
 const AnimatedDialogOverlay = animated(DialogOverlay);

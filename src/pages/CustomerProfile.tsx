@@ -7,7 +7,6 @@ import Breadcrumbs from "../components/reusable/Breadcrumbs";
 import Button from "../components/reusable/Button";
 
 import Flex from "../components/StyledComponents/Flex";
-import useConfirmationModal from "../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../hooks/useToast";
 import { CUSTOMER } from "../interfaces/customers/customers";
 import extractError from "../utils/extractError";
@@ -15,10 +14,11 @@ import { deleteCustomer, getSingleCustomer } from "../utils/queries";
 import Heading from "../components/StyledComponents/Heading";
 import Spacer from "../components/reusable/Spacer";
 import styled from "styled-components";
-import { up } from "../constants";
+
 import CustomerInsights from "../components/CustomerProfile/CustomerInsights";
 import { useState } from "react";
 import EditCustomerModal from "../components/CustomerProfile/EditCustomerModal";
+import useConfirmationModal from "../hooks/useConfirmationModal/useConfirmationModal";
 
 const CustomerProfile = () => {
   const queryClient = useQueryClient();
@@ -153,15 +153,11 @@ const CustomerProfile = () => {
 };
 
 export default CustomerProfile;
-const Grid = styled.div(
-  ({ theme: { breakpoints } }) => `
-display:grid;
-grid-template-columns:1fr;
-gap:1.5rem;
-${up(breakpoints.md)}{
-  grid-template-columns:1fr 0.8fr;
-
-}
-
-`
-);
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    grid-template-columns: 1fr 0.8fr;
+  }
+`;

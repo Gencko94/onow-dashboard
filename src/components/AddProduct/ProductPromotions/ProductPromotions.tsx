@@ -5,9 +5,9 @@ import styled from "styled-components";
 
 import Select from "../../reusable/Select";
 import Grid from "../../StyledComponents/Grid";
-import PrefixedIconedInput from "../../reusable/Inputs/PrefixedIconedInput";
+import Input from "../../reusable/Input/Input";
 import { IoPricetagsOutline } from "react-icons/io5";
-import DateIconedInput from "../../reusable/Inputs/DateIconedInput";
+import DateInput from "../../reusable/Inputs/DateIconedInput";
 import { NEW_PRODUCT_FORM_PROPS } from "../../../interfaces/products/create-new-product";
 
 const promotionTypeOptions = [
@@ -141,20 +141,19 @@ const ProductPromotions = () => {
         )}
       </Grid>
       <Grid columns="1fr 1fr 1fr" gap="1rem" padding="0.5rem">
-        <PrefixedIconedInput
-          errors={errors.promotions?.sale_price}
-          Icon={IoPricetagsOutline}
-          name="sale_price"
-          register={register}
+        <Input
+          errors={errors}
+          startAdornment={<IoPricetagsOutline />}
           label="Sale Price"
-          prefix="KD"
+          endAdornment="KD"
+          {...register("promotions.sale_price")}
         />
         <Controller
           name="promotions.sale_start_date"
           control={control}
           render={({ field: { onChange, value, ref } }) => {
             return (
-              <DateIconedInput
+              <DateInput
                 errors={errors.promotions?.sale_start_date}
                 onChange={onChange}
                 value={value}
@@ -168,7 +167,7 @@ const ProductPromotions = () => {
           control={control}
           render={({ field: { onChange, value, ref } }) => {
             return (
-              <DateIconedInput
+              <DateInput
                 errors={errors.promotions?.sale_end_date}
                 onChange={onChange}
                 value={value}

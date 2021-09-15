@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { RiHandCoinLine } from "react-icons/ri";
 
 import styled, { css } from "styled-components";
-import { up } from "../../../utils/themes";
 import Flex from "../../StyledComponents/Flex";
 import Checkbox from "./Checkbox";
 interface BaseInput {
@@ -143,42 +142,23 @@ const Container = styled.div<{
   rtl: boolean;
   error: boolean;
   unlimited: boolean;
-}>(
-  ({
-    theme: {
-      breakpoints,
-      font,
-
-      border,
-
-      borderHovered,
-      dangerRed,
-      accent1,
-      accent2,
-      text,
-      subtleBackground,
-      primary,
-    },
-    error,
-    unlimited,
-    rtl,
-  }) => `
+}>`
   label {
-    color: ${text};
+    color: ${(props) => props.theme.text};
     margin-bottom: 0.5rem;
     font-size: 0.8rem;
-    font-weight: ${font.regular};
+    font-weight: ${(props) => props.theme.font.regular};
     display: block;
   }
   .input-container {
     display: flex;
     position: relative;
-    
+
     justify-content: center;
-    
-    background-color:${subtleBackground};
-    color: ${text};
-    border: ${border};
+
+    background-color: ${(props) => props.theme.subtleBackground};
+    color: ${(props) => props.theme.text};
+    border: ${(props) => props.theme.border};
     overflow: hidden;
     border-radius: 6px;
     transition: all 150ms ease;
@@ -187,63 +167,57 @@ const Container = styled.div<{
       display: flex;
       align-items: center;
       justify-content: center;
-      color: ${primary};
+      color: ${(props) => props.theme.primary};
     }
-    
+
     input {
       flex: 1;
       padding: 0.4rem;
       font-size: 0.8rem;
       width: 50px;
-      color: ${text};
-      ${
-        unlimited &&
+      color: ${(props) => props.theme.text};
+      ${(props) =>
+        props.unlimited &&
         css`
-          background-color: ${accent2};
-        `
+          background-color: ${props.theme.accent2};
+        `}
+    }
+    &:hover,
+    &:focus-within {
+      border-color: ${(props) => props.theme.borderHovered};
+    }
+    ${(props) =>
+      props.error &&
+      css`
+        border-color: ${props.theme.dangerRed} !important;
+      `}
+  }
+  .unlimited {
+    font-size: 0.8rem;
+    margin: 0;
+  }
+  .error {
+    font-size: 0.7rem;
+    padding-top: 0.25rem;
+    height: 22px;
+    color: ${(props) => props.theme.dangerRed};
+  }
+  .desc {
+    font-size: 0.7rem;
+    padding-top: 0.25rem;
+    height: 22px;
+
+    color: ${(props) => props.theme.primary};
+  }
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    label {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+    .input-container {
+      input {
+        font-size: 0.9rem;
       }
-      };
-      &:hover,
-      &:focus-within {
-        border-color: ${borderHovered};
-       
-      }
-      ${
-        error &&
-        css`
-          border-color: ${dangerRed} !important;
-        `
-      }
-      }
-      .unlimited {
-        font-size: 0.8rem;
-        margin: 0;
-      }
-      .error {
-        font-size: 0.7rem;
-        padding-top: 0.25rem;
-        height: 22px;
-        color: ${dangerRed};
-      }
-      .desc {
-        font-size: 0.7rem;
-        padding-top: 0.25rem;
-        height: 22px;
-       
-        color: ${primary};
-      }
-      ${up(breakpoints.md)}{
-        label {
-          font-size: 0.9rem;
-          margin-bottom: 0.75rem;
-        };
-        .input-container{
-          
-          input {
-            font-size: 0.9rem;
-          }
-        }
-    
-      };
-      `
-);
+    }
+  } ;
+`;

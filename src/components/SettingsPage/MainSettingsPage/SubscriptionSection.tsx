@@ -4,7 +4,7 @@ import "react-circular-progressbar/dist/styles.css";
 import Button from "../../reusable/Button";
 import Heading from "../../StyledComponents/Heading";
 import Flex from "../../StyledComponents/Flex";
-import { up } from "../../../utils/themes";
+
 import MagicRainbowButton from "../../reusable/FancyStuff/MagicRainbowButton";
 import Spacer from "../../reusable/Spacer";
 const SubscriptionSection = () => {
@@ -60,21 +60,20 @@ const SubscriptionSection = () => {
 };
 
 export default SubscriptionSection;
-const Container = styled.div(
-  ({ theme: { breakpoints, font, shadow, subtleFloating } }) => `
+const Container = styled.div`
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr;
   .current-sub {
     padding: 1rem;
     display: grid;
-    grid-template-columns: minmax(175px,2fr) minmax(125px, 1fr);
-    box-shadow: ${shadow};
+    grid-template-columns: minmax(175px, 2fr) minmax(125px, 1fr);
+    box-shadow: ${(props) => props.theme.shadow};
     border-radius: 6px;
-    background-color: ${subtleFloating};
-    
+    background-color: ${(props) => props.theme.subtleFloating};
+
     .desc {
-      font-weight: ${font.regular};
+      font-weight: ${(props) => props.theme.font.regular};
       font-size: 0.8rem;
     }
     .img {
@@ -88,9 +87,9 @@ const Container = styled.div(
   }
   .sub-count {
     padding: 1rem;
-    box-shadow: ${shadow};
+    box-shadow: ${(props) => props.theme.shadow};
     border-radius: 6px;
-    background-color: ${subtleFloating};
+    background-color: ${(props) => props.theme.subtleFloating};
     .circle-container {
       display: flex;
       align-items: center;
@@ -101,8 +100,7 @@ const Container = styled.div(
       }
     }
   }
-  ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     grid-template-columns: 1fr 0.5fr;
   }
-  `
-);
+`;

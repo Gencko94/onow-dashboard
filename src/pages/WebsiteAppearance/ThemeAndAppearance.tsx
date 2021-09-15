@@ -1,6 +1,5 @@
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Grid from "../../components/StyledComponents/Grid";
 import Heading from "../../components/StyledComponents/Heading";
 import Paragraph from "../../components/StyledComponents/Paragraph";
@@ -17,7 +16,6 @@ import {
 import useToast from "../../hooks/useToast";
 import Flex from "../../components/StyledComponents/Flex";
 import Button from "../../components/reusable/Button";
-import { up } from "../../utils/themes";
 import Spacer from "../../components/reusable/Spacer";
 import Box from "../../components/reusable/Box/Box";
 

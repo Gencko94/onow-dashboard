@@ -1,6 +1,5 @@
-import { CSSProperties, FC, forwardRef } from "react";
+import { CSSProperties, forwardRef } from "react";
 import styled from "styled-components";
-import { up } from "../../utils/themes";
 
 interface IProps extends React.ComponentPropsWithoutRef<"p"> {
   mb?: string;
@@ -66,19 +65,15 @@ const P = styled.p<{
   weight: "light" | "regular" | "semibold" | "bold" | "xbold";
   fontSize: string;
   align?: "center" | "right" | "left";
-}>(
-  ({ theme, color, margin, mb, weight, fontSize, align }) => `
+}>`
+  color: ${({ theme, color }) => theme[`${color}` as COLORS]};
+  margin: ${(props) => props.margin};
+  text-align: ${(props) => props.align};
+  font-weight: ${(props) => props.theme.font[props.weight]};
+  margin-bottom: ${(props) => (props.mb ? props.mb : "")};
 
-  color: ${theme[`${color}` as COLORS]};
-  margin:${margin};
-  text-align:${align};
-  font-weight:${theme.font[weight]};
-  margin-bottom: ${mb ? mb : ""};
- 
-  font-size: calc(${fontSize} - 0.1rem);
-  ${up(theme.breakpoints.md)}{
-      font-size:${fontSize}
-
+  font-size: ${(props) => `calc(${props.fontSize} - 0.1rem)`};
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    font-size: ${(props) => props.fontSize};
   }
-  `
-);
+`;

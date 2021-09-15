@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
 import Heading from "../../StyledComponents/Heading";
-import { up } from "../../../utils/themes";
 interface IProps {
   /**
    * Primary Label.
@@ -56,40 +55,34 @@ const GithubInput = ({
 };
 
 export default GithubInput;
-const Container = styled.div(
-  ({ theme: { breakpoints, secondary, text, textAlt, font } }) => `
+const Container = styled.div`
   display: flex;
   align-items: center;
-  gap:1rem;
+  gap: 1rem;
   .text-container {
     flex: auto;
-   
+
     .first-subtitle {
-      color: ${text};
+      color: ${(props) => props.theme.text};
       font-size: 0.7rem;
       margin-bottom: 0.25rem;
     }
     .second-subtitle {
-      color: ${textAlt};
+      color: ${(props) => props.theme.textAlt};
       font-size: 0.7rem;
-      font-weight: ${font.regular};
+      font-weight: ${(props) => props.theme.font.regular};
     }
   }
-  ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     .text-container {
-
-     
       .first-subtitle {
-       
         font-size: 0.8rem;
-       
       }
       .second-subtitle {
-        color: ${secondary};
+        color: ${(props) => props.theme.secondary};
         font-size: 0.79rem;
-        font-weight: ${font.regular};
+        font-weight: ${(props) => props.theme.font.regular};
       }
     }
   }
-  `
-);
+`;

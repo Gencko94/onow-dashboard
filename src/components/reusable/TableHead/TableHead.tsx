@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import styled, { css } from "styled-components";
-import { up } from "../../../utils/themes";
 
 interface IProps {
   cols: {
@@ -49,44 +48,36 @@ const TableHead = ({
 };
 
 export default TableHead;
-const Container = styled.div<{ cols: number | string; gap: string }>(
-  ({ theme: {}, cols, gap }) => `
-  
-    display:grid;
-    border-radius: 20px 20px 0 0 ;
-   
-    grid-template-columns: ${
-      typeof cols === "string" ? cols : `repeat(${cols},minmax(100px,1fr))`
-    };
-    gap:${gap};
-    
-    `
-);
-const Field = styled.button<{ active: boolean; sortable: boolean }>(
-  ({
-    theme: { breakpoints, border, text, textAlt, font },
-    active,
-    sortable,
-  }) => `
-      
-      border-bottom:${border};
-  cursor:default;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+const Container = styled.div<{ cols: number | string; gap: string }>`
+  display: grid;
+  border-radius: 20px 20px 0 0;
+
+  grid-template-columns: ${(props) =>
+    typeof props.cols === "string"
+      ? props.cols
+      : `repeat(${props.cols},minmax(100px,1fr))`};
+  gap: ${(props) => props.gap};
+`;
+
+const Field = styled.button<{ active: boolean; sortable: boolean }>`
+  border-bottom: ${(props) => props.theme.border};
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 1rem 0;
- 
-  color: ${textAlt};
- 
+
+  color: ${(props) => props.theme.textAlt};
+
   h6 {
     transition: transform 75ms ease;
-    font-weight: ${font.semibold};
+    font-weight: ${(props) => props.theme.font.semibold};
     font-size: 0.8rem;
-    
-    margin:0 0.25rem;
-  };
-  ${
-    sortable &&
+
+    margin: 0 0.25rem;
+  }
+  ${(props) =>
+    props.sortable &&
     css`
       h6 {
         cursor: pointer;
@@ -94,22 +85,18 @@ const Field = styled.button<{ active: boolean; sortable: boolean }>(
           transform: translateY(-2px);
         }
       }
-    `
-  };
-  ${
-    active &&
+    `};
+  ${(props) =>
+    props.active &&
     css`
-      color: ${text};
+      color: ${(props) => props.theme.text};
       h6 {
         font-weight: 700;
       }
-    `
-  };
-  ${up(breakpoints.md)}{
+    `};
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     h6 {
-       font-size:0.8rem;
-    };
+      font-size: 0.8rem;
+    }
   }
-  
-  `
-);
+`;

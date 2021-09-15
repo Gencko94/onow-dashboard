@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import CreateProductPricing from "./CreateProductPricing";
 import Hr from "../../StyledComponents/Hr";
 import CreateProductOptions from "./CreateProductOptions";

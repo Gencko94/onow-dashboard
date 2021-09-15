@@ -207,6 +207,9 @@ const Table = styled.table`
   td {
     vertical-align: middle;
   }
+  font-size: 0.9rem;
+  tr {
+  }
 `;
 const TableBodyRow = styled.tr`
   background-color: ${(props) => props.theme.subtleBackground};

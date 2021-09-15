@@ -4,8 +4,7 @@ import { useTranslation } from "react-i18next";
 import { IoMdCash } from "react-icons/io";
 import { MdSmartphone, MdSubtitles } from "react-icons/md";
 
-import IconedInput from "../../../reusable/Inputs/IconedInput";
-import IconedNumberInput from "../../../reusable/IconedNumberInput";
+import Input from "../../../reusable/Input/Input";
 
 import { AiOutlinePhone, AiOutlineWhatsApp } from "react-icons/ai";
 import Grid from "../../../StyledComponents/Grid";
@@ -28,48 +27,47 @@ const BranchInformation = () => {
   return (
     <Box type="titled" boxTitle="Branch information">
       <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.name?.en}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Branch Name English"
-          name="name.en"
+          {...register("name.en", {
+            required: "Required",
+          })}
         />
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.name?.ar}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Branch Name Arabic"
-          name="name.ar"
+          {...register("name.ar", {
+            required: "Required",
+          })}
         />
       </Grid>
       <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
-        <IconedInput
-          Icon={MdSmartphone}
-          errors={errors?.contact_info?.mobile}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSmartphone />}
+          errors={errors}
           label="Mobile"
-          name="contact_info.mobile"
+          {...register("contact_info.mobile", {
+            required: "Required",
+          })}
         />
-        <IconedInput
-          Icon={AiOutlinePhone}
-          errors={errors?.contact_info?.landline}
-          register={register}
+        <Input
+          startAdornment={<AiOutlinePhone />}
+          errors={errors}
           label="Landline"
-          name="contact_info.landline"
+          {...register("contact_info.landline", {
+            required: "Required",
+          })}
         />
-        <IconedInput
-          Icon={AiOutlineWhatsApp}
-          errors={errors?.contact_info?.whatsapp}
-          register={register}
+        <Input
+          startAdornment={<AiOutlineWhatsApp />}
+          errors={errors}
           label="Whatsapp"
-          name="contact_info.whatsapp"
+          {...register("contact_info.whatsapp", {
+            required: "Required",
+          })}
         />
       </Grid>
       <Grid
@@ -92,15 +90,15 @@ const BranchInformation = () => {
           }}
         />
         {codEnabled && (
-          <IconedNumberInput
-            Icon={IoMdCash}
-            errors={errors?.cod_cost}
-            register={register}
-            required
-            requiredMessage="Required"
+          <Input
+            type="number"
+            errors={errors}
+            startAdornment={<IoMdCash />}
             label="Cash on Delivery cost"
-            name="cod_cost"
             min={0}
+            {...register("cod_cost", {
+              required: "Required",
+            })}
           />
         )}
       </Grid>

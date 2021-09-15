@@ -1,9 +1,10 @@
 import React, { lazy, useState } from "react";
-import { BiPlus } from "react-icons/bi";
+
 import { useMutation } from "react-query";
-import { CSSTransition } from "react-transition-group";
+
 import styled from "styled-components";
 import useConfirmationModal from "../../../../hooks/useConfirmationModal/useConfirmationModal";
+
 import useToast from "../../../../hooks/useToast";
 import { PRODUCT_OPTION } from "../../../../interfaces/products/products";
 import extractError from "../../../../utils/extractError";
@@ -12,8 +13,6 @@ import {
   deleteProductOption,
   editProductOption,
 } from "../../../../utils/queries/productQueries";
-
-import { up } from "../../../../utils/themes";
 
 import Button from "../../../reusable/Button";
 import EmptyTable from "../../../reusable/EmptyTable";
@@ -253,24 +252,22 @@ const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
 };
 
 export default OptionsList;
-const Container = styled.div(
-  ({ theme: { border, breakpoints, subtleFloating } }) => `
-  margin-top:1rem;
-  border: ${border};
+const Container = styled.div`
+  margin-top: 1rem;
+  border: ${(props) => props.theme.border};
   .head {
-    background-color:${subtleFloating};
-    border-bottom: ${border};
+    background-color: ${(props) => props.theme.subtleFloating};
+    border-bottom: ${(props) => props.theme.border};
     padding: 1rem;
   }
   .list {
     padding: 1rem;
-    background-color:${subtleFloating}
-  };
-  ${up(breakpoints.md)} {
-    .head ,.list {
-      padding:1rem;
+    background-color: ${(props) => props.theme.subtleFloating};
+  }
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    .head,
+    .list {
+      padding: 1rem;
     }
   }
-
-`
-);
+`;

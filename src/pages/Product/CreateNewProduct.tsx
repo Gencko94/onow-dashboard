@@ -15,7 +15,6 @@ import Heading from "../../components/StyledComponents/Heading";
 import useToast from "../../hooks/useToast";
 import extractError from "../../utils/extractError";
 import { createProduct } from "../../utils/queries";
-import { up } from "../../utils/themes";
 
 type ContextProps = {
   activeTab: 0 | 1 | 2 | 3;
@@ -152,16 +151,7 @@ const CreateNewProduct = () => {
 
 export default CreateNewProduct;
 
-const Wrapper = styled.div(
-  ({ theme: { breakpoints, shadow } }) => `
-
-  // box-shadow: ${shadow};
-  // border-radius: 0 6px 6px 6px;
-  // padding: 0.5rem;
-  // background-color: #fff;
-  ${up(breakpoints.md)}{
-    
-    // padding: 1rem;
+const Wrapper = styled.div`
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
   }
-  `
-);
+`;

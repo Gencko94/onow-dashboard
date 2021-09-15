@@ -12,7 +12,6 @@ import useResponsive from "../hooks/useResponsive";
 import useToast from "../hooks/useToast";
 import Loading from "../utils/Loading";
 import ScrollToTop from "../utils/ScrollToTop";
-import { up } from "../utils/themes";
 
 const Layout: React.FC = ({ children }) => {
   const { isDesktop } = useResponsive();
@@ -135,24 +134,20 @@ const ContentContainer = styled.div(
   min-height: 100vh;
   `
 );
-const Content = styled.div<{ drawerOpen: boolean }>(
-  ({ theme: { breakpoints }, drawerOpen }) => `
-
-  min-height:100vh;
-  position:relative;
+const Content = styled.div<{ drawerOpen: boolean }>`
+  min-height: 100vh;
+  position: relative;
 
   transition: all 250ms ease-out;
-  margin-left:0;
+  margin-left: 0;
   .body {
-    padding:1rem;
+    padding: 1rem;
   }
-  ${up(breakpoints.md)}{
-    ${
-      drawerOpen &&
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    ${(props) =>
+      props.drawerOpen &&
       css`
         margin-left: 300px;
-      `
-    }
+      `}
   }
-  `
-);
+`;

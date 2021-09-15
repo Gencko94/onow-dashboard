@@ -2,7 +2,7 @@ import { BsCheck } from "react-icons/bs";
 
 import { MdClose } from "react-icons/md";
 import styled from "styled-components";
-import { up } from "../../utils/themes";
+
 import Flex from "../StyledComponents/Flex";
 import Button from "../reusable/Button";
 import Spacer from "../reusable/Spacer";
@@ -66,14 +66,12 @@ const ModalTail = ({
 };
 
 export default ModalTail;
-const Container = styled.div(
-  ({ theme: { breakpoints, border } }) => `
+const Container = styled.div`
   display: flex;
   padding: 0.75rem;
-  justify-content:flex-end;
-  align-items:center;  
-  ${up(breakpoints.md)}{
-   padding:1rem;
+  justify-content: flex-end;
+  align-items: center;
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    padding: 1rem;
   }
-  `
-);
+`;

@@ -1,11 +1,10 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { GrServices } from "react-icons/gr";
 import { RiHandCoinLine } from "react-icons/ri";
-import styled from "styled-components";
 import Box from "../../reusable/Box/Box";
 
 import CheckToggle from "../../reusable/CheckToggle";
-import IconedNumberInput from "../../reusable/IconedNumberInput";
+import Input from "../../reusable/Input/Input";
 import Grid from "../../StyledComponents/Grid";
 import { FORM_PROPS } from "./ProductOrderingAndBranchAvailability";
 
@@ -22,22 +21,22 @@ const ProductOrdering = () => {
   return (
     <Box type="titled" boxTitle="Product Ordering options">
       <Grid columns="1fr  1fr 0.2fr" gap="0.5rem">
-        <IconedNumberInput
+        <Input
           label="Maximum ordering quantity per customer"
-          Icon={RiHandCoinLine}
-          errors={errors.max_qty_per_user}
-          name="max_qty_per_user"
-          register={register}
+          startAdornment={<RiHandCoinLine />}
+          errors={errors}
+          type="number"
           min={0}
           desc="0 For Unlimited"
+          {...register("max_qty_per_user", { required: "Required" })}
         />
-        <IconedNumberInput
+        <Input
           label="Preperation Time in Minutes"
-          Icon={GrServices}
-          errors={errors.prep_time}
+          startAdornment={<GrServices />}
+          errors={errors}
           min={0}
-          name="prep_time"
-          register={register}
+          type="number"
+          {...register("prep_time", { required: "Required" })}
         />
       </Grid>
       <Grid columns="1fr 1fr" gap="3.5rem">

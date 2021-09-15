@@ -7,7 +7,6 @@ import { EDIT_PRODUCT_GENERAL_INFO } from "../../../interfaces/products/update-p
 import ProductCategoryList from "./ProductCategoryList";
 import { FORM_PROPS } from "./ProductGeneralInformation";
 import Heading from "../../StyledComponents/Heading";
-import { up } from "../../../utils/themes";
 
 const ProductCategories = () => {
   const {
@@ -34,25 +33,24 @@ const ProductCategories = () => {
 };
 
 export default ProductCategories;
-const Container = styled.div<{ error: boolean }>(
-  ({ theme: { breakpoints, subtleFloating, border, dangerRed }, error }) => `
-  display:flex;
-  flex-direction:column;
-  border: ${error ? `1px solid ${dangerRed}` : border};
+const Container = styled.div<{ error: boolean }>`
+  display: flex;
+  flex-direction: column;
+  border: ${(props) =>
+    props.error ? `1px solid ${props.theme.dangerRed}` : props.theme.border};
   border-radius: 6px;
-  background-color:${subtleFloating} ;
+  background-color: ${(props) => props.theme.subtleFloating};
   .head {
-    border-bottom: ${border};
-    padding:0.5rem ;
-  
+    border-bottom: ${(props) => props.theme.border};
+    padding: 0.5rem;
   }
-  ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     .head {
       padding: 1rem;
     }
   }
-  `
-);
+`;
+
 const CategoriesList = styled.div`
   overflow-y: auto;
   position: relative;

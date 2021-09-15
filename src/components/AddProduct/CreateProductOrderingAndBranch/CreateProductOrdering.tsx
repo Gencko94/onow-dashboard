@@ -1,11 +1,9 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { GrServices } from "react-icons/gr";
 import { RiHandCoinLine } from "react-icons/ri";
-import styled from "styled-components";
 
 import CheckToggle from "../../reusable/CheckToggle";
-import IconedNumberInput from "../../reusable/IconedNumberInput";
-import Select from "../../reusable/Select";
+import Input from "../../reusable/Input/Input";
 import Grid from "../../StyledComponents/Grid";
 import Heading from "../../StyledComponents/Heading";
 import { thirdTabProps } from "./CreateProductOrderingAndBranchAvailability";
@@ -25,22 +23,22 @@ const CreateProductOrdering = () => {
       </Heading>
 
       <Grid columns="repeat(auto-fit,minmax(200px,1fr))" gap="0.5rem">
-        <IconedNumberInput
+        <Input
           label="Maximum ordering quantity per customer"
-          Icon={RiHandCoinLine}
-          errors={errors.max_qty_per_user}
-          name="max_qty_per_user"
-          register={register}
+          startAdornment={<RiHandCoinLine />}
+          errors={errors}
           min={0}
+          type="number"
           desc="0 For Unlimited"
+          {...register("max_qty_per_user")}
         />
-        <IconedNumberInput
+        <Input
+          type="number"
           label="Preperation Time in Minutes"
-          Icon={GrServices}
-          errors={errors.prep_time}
+          startAdornment={<GrServices />}
+          errors={errors}
           min={0}
-          name="prep_time"
-          register={register}
+          {...register("prep_time")}
         />
       </Grid>
       <Grid columns="repeat(auto-fit,minmax(200px,1fr))" gap="2rem">

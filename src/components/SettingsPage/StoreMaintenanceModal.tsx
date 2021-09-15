@@ -8,7 +8,6 @@ import GithubInput from "../reusable/Inputs/GithubInput";
 import { useContext } from "react";
 import { AuthProvider } from "../../contexts/AuthContext";
 import { USER } from "../../interfaces/auth/auth";
-import { up } from "../../utils/themes";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 import { animated, useTransition } from "@react-spring/web";
 
@@ -96,24 +95,19 @@ const StoreMaintenanceModal = ({ closeFunction, isOpen }: ModalProps) => {
 
 export default StoreMaintenanceModal;
 
-const AnimatedDialogContent = styled(animated(DialogContent))(
-  ({ theme: { breakpoints, subtleBackground } }) => `
-  min-width:300px;
-  width:300px;  
-  background-color:${subtleBackground};
+const AnimatedDialogContent = styled(animated(DialogContent))`
+  min-width: 300px;
+  width: 300px;
+  background-color: ${(props) => props.theme.subtleBackground};
   .content {
-    padding:1rem;
+    padding: 1rem;
   }
-  ${up(breakpoints.md)}{
-    min-width:400px;
-   
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    min-width: 400px;
   }
-  ${up(breakpoints.lg)}{
-    min-width:500px;
-   
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    min-width: 500px;
   }
-
-`
-);
+`;
 
 const AnimatedDialogOverlay = animated(DialogOverlay);

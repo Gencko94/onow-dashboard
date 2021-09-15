@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import { up } from "../../../constants";
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 
 interface IProps {
@@ -30,21 +29,19 @@ const Container = styled.div`
   gap: 1.5rem;
 `;
 
-const TabItem = styled.button<{ active?: boolean }>(
-  ({ theme: { breakpoints, font, primary, border, text }, active }) => `
+const TabItem = styled.button<{ active?: boolean }>`
   padding: 0.75rem 0;
   transition: color 100ms ease;
-  color:${text};
+  color: ${({ theme: { text } }) => text};
   white-space: nowrap;
   text-align: center;
-  border-bottom:${active ? `2px solid ${primary}` : "none"};
+  border-bottom: ${({ theme: { primary }, active }) =>
+    active ? `2px solid ${primary}` : "none"};
   &:hover {
-    color: ${primary};
+    color: ${(props) => props.theme.primary};
   }
-  ${up(breakpoints.md)}{
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
     font-size: 1rem;
     padding: 0.75rem 0;
-
   }
-  `
-);
+`;

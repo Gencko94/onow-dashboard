@@ -5,7 +5,7 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import styled from "styled-components";
 import useConfirmationModal from "../../../../hooks/useConfirmationModal/useConfirmationModal";
 import { OPTION_VALUE } from "../../../../interfaces/products/products";
-import { up } from "../../../../utils/themes";
+
 import Button from "../../../reusable/Button";
 import IconWrapper from "../../../reusable/Icon";
 import Flex from "../../../StyledComponents/Flex";
@@ -128,30 +128,26 @@ const OptionValue = ({
 };
 
 export default OptionValue;
-const Container = styled.div(
-  ({ theme: { breakpoints, border, dangerRed, accent2, accent1 } }) => `
-  background-color: ${accent1};
-  border: ${border};
+const Container = styled.div`
+  background-color: ${(props) => props.theme.accent1};
+  border: ${(props) => props.theme.border};
   border-radius: 6px;
   margin-bottom: 1rem;
   .delete {
-    color: ${dangerRed};
+    color: ${(props) => props.theme.dangerRed};
   }
   .head {
-    border-bottom: ${border};
-    padding:0.75rem;
-    background-color:${accent2};
+    border-bottom: ${(props) => props.theme.border};
+    padding: 0.75rem;
+    background-color: ${(props) => props.theme.accent2};
   }
   .field {
-   
-    border-right: ${border};
-    border-bottom: ${border};
+    border-right: ${(props) => props.theme.border};
+    border-bottom: ${(props) => props.theme.border};
   }
-  ${up(breakpoints.md)}{
-   
-    .head  {
-      padding:1rem;
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    .head {
+      padding: 1rem;
     }
   }
-  `
-);
+`;

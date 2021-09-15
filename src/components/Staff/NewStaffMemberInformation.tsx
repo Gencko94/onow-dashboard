@@ -1,13 +1,13 @@
 import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { AiOutlineMail } from "react-icons/ai";
-import { CgArrowsExpandDownLeft, CgPassword } from "react-icons/cg";
+import { CgPassword } from "react-icons/cg";
 import { MdSubtitles } from "react-icons/md";
 import { useInfiniteQuery } from "react-query";
 import { getBranches } from "../../utils/queries";
-import IconedInput from "../reusable/Inputs/IconedInput";
+import Input from "../reusable/Input/Input";
 import PhoneInput from "../reusable/Inputs/PhoneInput";
-import S, { GroupTypeBase, Styles } from "react-select";
+import { GroupTypeBase, Styles } from "react-select";
 import { GET_BRANCHES_RES } from "../SettingsPage/StoreBranches/BranchesList";
 import { useMemo } from "react";
 import Select from "../reusable/Select";
@@ -85,23 +85,17 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
   return (
     <Box type="titled" boxTitle="Staff Member Information">
       <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.first_name}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="First Name"
-          name="first_name"
+          {...register("first_name", { required: "Required" })}
         />
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.last_name}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Last Name"
-          name="last_name"
+          {...register("last_name", { required: "Required" })}
         />
       </Grid>
       <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
@@ -122,25 +116,19 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
           }}
         />
 
-        <IconedInput
-          Icon={AiOutlineMail}
-          errors={errors?.email}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<AiOutlineMail />}
+          errors={errors}
           label="Email Address"
-          name="email"
+          {...register("email", { required: "Required" })}
         />
       </Grid>
       <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
-        <IconedInput
-          Icon={CgPassword}
-          errors={errors?.password}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<CgPassword />}
+          errors={errors}
           label="Password"
-          name="password"
+          {...register("password", { required: "Required" })}
         />
         <Controller
           control={control}

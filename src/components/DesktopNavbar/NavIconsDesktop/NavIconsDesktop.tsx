@@ -6,7 +6,6 @@ import useResponsive from "../../../hooks/useResponsive";
 import { useContext } from "react";
 import { AuthProvider } from "../../../contexts/AuthContext";
 import Heading from "../../StyledComponents/Heading";
-import { up } from "../../../utils/themes";
 import DarkModeToggleContainer from "../../DarkModeToggle/DarkModeToggle";
 import IconButton from "../../reusable/IconButton";
 interface IProps {
@@ -56,12 +55,8 @@ const NavIconsDesktop = ({ handleToggleDrawer }: IProps) => {
 };
 
 export default NavIconsDesktop;
-const Container = styled.div(
-  ({ theme: { breakpoints } }) => `
+const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
- 
-  
-  `
-);
+`;

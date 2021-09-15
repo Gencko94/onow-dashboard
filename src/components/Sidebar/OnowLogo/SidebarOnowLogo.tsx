@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { up } from "../../../utils/themes";
 
 const SidebarOnowLogo = () => {
   return (
@@ -11,22 +10,19 @@ const SidebarOnowLogo = () => {
 
 export default SidebarOnowLogo;
 
-const Container = styled.div(
-  ({ theme: { breakpoints, shadow } }) => `
+const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   .logo {
-    min-height:40px;
-    height:40px;
+    min-height: 40px;
+    height: 40px;
   }
-  ${up(breakpoints.md)}{
-    z-index:1;
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    z-index: 1;
     .logo {
-      min-height:50px;
-      height:50px;
-
+      min-height: 50px;
+      height: 50px;
     }
   }
-  `
-);
+`;

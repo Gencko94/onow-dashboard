@@ -14,17 +14,22 @@ import {
   FcViewDetails,
 } from "react-icons/fc";
 import canVisitPage from "../../../utils/canVisitPage";
-import React, { useContext, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import { AuthProvider } from "../../../contexts/AuthContext";
 
-import { up } from "../../../utils/themes";
 import Spacer from "../../reusable/Spacer";
 
 import Paragraph from "../../StyledComponents/Paragraph";
 import { IconType } from "react-icons/lib";
-import Collapse, { Panel } from "rc-collapse";
+
 import Ripple from "../../reusable/Ripple";
 import Flex from "../../StyledComponents/Flex";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
+} from "@reach/accordion";
 export type SIDENAV_ITEM = {
   Icon: IconType;
   title: string;
@@ -39,7 +44,21 @@ export type SIDENAV_ITEM = {
 const SideNav = () => {
   const { pathname } = useLocation();
   const { user } = useContext(AuthProvider);
-  const [activeKey, setActiveKey] = useState<React.Key | React.Key[]>([]);
+  const [indices, setIndices] = useState<number[]>([]);
+  const toggleAccordionItem = useCallback(
+    (toggledIndex: number) => {
+      if (indices.includes(toggledIndex)) {
+        setIndices(
+          indices.filter((currentIndex) => currentIndex !== toggledIndex)
+        );
+      } else {
+        setIndices((prev) => {
+          return [...prev, toggledIndex];
+        });
+      }
+    },
+    [indices]
+  );
   const items: SIDENAV_ITEM[] = useMemo(() => {
     return [
       {
@@ -81,7 +100,7 @@ const SideNav = () => {
       {
         title: "Website Appearance",
         Icon: FcSelfie,
-        target: "/website-appearance/menu-configuration",
+        target: "/website-appearance",
         collapsible: true,
         children: [
           {
@@ -110,17 +129,8 @@ const SideNav = () => {
       },
     ];
   }, []);
-  const onChange = (key: React.Key | React.Key[]) => {
-    console.log(key);
-    setActiveKey(key);
-  };
   return (
-    <Container
-      activeKey={activeKey}
-      accordion
-      onChange={onChange}
-      destroyInactivePanel
-    >
+    <Container>
       {items.map(({ Icon, collapsible, target, title, children }, i) => {
         // if (111
         //   canVisitPage({
@@ -131,62 +141,85 @@ const SideNav = () => {
         // )
         return (
           <React.Fragment key={i}>
-            <Panel
-              key={i}
-              showArrow={false}
-              header={
-                <SideNavLink isCurrent={activeKey === i.toString()} to={target}>
-                  <Flex items="center">
-                    <span className="icon">
-                      <Icon size={20} />
-                    </span>
-                    <Paragraph
-                      color="textAltContrast"
-                      fontSize="0.9rem"
-                      margin="0 0.5rem"
-                    >
-                      {title}
-                    </Paragraph>
-                  </Flex>
-                  {collapsible && (
-                    <ExpandIcon isActive={activeKey === i.toString()} />
-                  )}
+            {collapsible ? (
+              <Accordion index={indices} onChange={toggleAccordionItem}>
+                <AccordionItem>
+                  <AccordionToggle>
+                    <Content isCurrent={pathname.includes(target)}>
+                      <span className="icon">
+                        <Icon size={20} />
+                      </span>
+                      <Paragraph
+                        color="textAltContrast"
+                        fontSize="0.9rem"
+                        margin="0 0.5rem"
+                      >
+                        {title}
+                      </Paragraph>
 
-                  <Ripple />
-                </SideNavLink>
-              }
-            >
-              {children?.map(
-                (
-                  { Icon: ChildIcon, target: childTarget, title: childTitle },
-                  childId
-                ) => (
-                  <React.Fragment key={childId + 1}>
-                    {childId === 0 && <Spacer size={10} />}
-                    <SideNavLink
-                      isCurrent={pathname.includes(childTarget)}
-                      to={childTarget}
-                    >
-                      <Flex items="center">
-                        <span className="icon">
-                          <ChildIcon size={20} />
-                        </span>
-                        <Paragraph
-                          color="textAltContrast"
-                          fontSize="0.9rem"
-                          margin="0 0.5rem"
-                        >
-                          {childTitle}
-                        </Paragraph>
-                      </Flex>
+                      <ExpandIcon isActive={indices.includes(0)} />
+                    </Content>
+                    <Ripple />
+                  </AccordionToggle>
 
-                      <Ripple />
-                    </SideNavLink>
-                    {childId !== children?.length - 1 && <Spacer size={10} />}
-                  </React.Fragment>
-                )
-              )}
-            </Panel>
+                  <Panel>
+                    {children?.map(
+                      (
+                        {
+                          Icon: ChildIcon,
+                          target: childTarget,
+                          title: childTitle,
+                        },
+                        childId
+                      ) => (
+                        <React.Fragment key={childId + 1}>
+                          {childId === 0 && <Spacer size={10} />}
+                          <SideNavLink to={childTarget}>
+                            <Content
+                              isCurrent={pathname.includes(childTarget)}
+                              items="center"
+                            >
+                              <span className="icon">
+                                <ChildIcon size={20} />
+                              </span>
+                              <Paragraph
+                                color="textAltContrast"
+                                fontSize="0.9rem"
+                                margin="0 0.5rem"
+                              >
+                                {childTitle}
+                              </Paragraph>
+                            </Content>
+
+                            <Ripple />
+                          </SideNavLink>
+                          {childId !== children?.length - 1 && (
+                            <Spacer size={10} />
+                          )}
+                        </React.Fragment>
+                      )
+                    )}
+                  </Panel>
+                </AccordionItem>
+              </Accordion>
+            ) : (
+              <SideNavLink to={target}>
+                <Content isCurrent={pathname.includes(target)} items="center">
+                  <span className="icon">
+                    <Icon size={20} />
+                  </span>
+                  <Paragraph
+                    color="textAltContrast"
+                    fontSize="0.9rem"
+                    margin="0 0.5rem"
+                  >
+                    {title}
+                  </Paragraph>
+                </Content>
+                <Ripple />
+              </SideNavLink>
+            )}
+
             {i !== items.length - 1 && <Spacer size={10} />}
           </React.Fragment>
         );
@@ -196,27 +229,36 @@ const SideNav = () => {
 };
 
 export default SideNav;
-const Container = styled(Collapse)(
-  ({ theme: { breakpoints } }) => `
+const Container = styled.div`
   height: calc(100vh - 298px);
   overflow-y: auto;
-  ${up(breakpoints.md)}{
-    height: calc(100vh - 288px);
+  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
+    height: "calc(100vh - 288px)";
   }
-  
-  `
-);
-const SideNavLink = styled(Link)<{ isCurrent: boolean }>`
+`;
+
+const SideNavLink = styled(Link)`
+  position: relative;
+  overflow: hidden;
+`;
+const AccordionToggle = styled(AccordionButton)`
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  &:hover {
+    background-color: ${(props) => props.theme.sidebarSubtleBackground};
+  }
+`;
+const Panel = styled(AccordionPanel)`
+  padding: 0 1rem;
+`;
+const Content = styled(Flex)<{ isCurrent: boolean }>`
   padding: 0.5rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   transition: background 150ms ease;
   color: #fff;
   border-radius: 6px;
-  position: relative;
-  overflow: hidden;
-
   .icon {
     padding: 0.25rem;
     display: flex;

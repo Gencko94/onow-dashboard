@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { AiOutlineMail } from "react-icons/ai";
 import { MdSubtitles } from "react-icons/md";
 import Box from "../reusable/Box/Box";
-import IconedInput from "../reusable/Inputs/IconedInput";
+import Input from "../reusable/Input/Input";
 import PhoneInput from "../reusable/Inputs/PhoneInput";
 import Select from "../reusable/Select";
 import Grid from "../StyledComponents/Grid";
@@ -48,23 +48,17 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
   return (
     <Box type="titled" boxTitle="Staff Member Information">
       <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.first_name}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="First Name"
-          name="first_name"
+          {...register("first_name", { required: "Required" })}
         />
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.last_name}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Last Name"
-          name="last_name"
+          {...register("last_name", { required: "Required" })}
         />
       </Grid>
       <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
@@ -85,14 +79,11 @@ const StaffMemberInformation = ({ register, errors, control }: IProps) => {
           }}
         />
 
-        <IconedInput
-          Icon={AiOutlineMail}
-          errors={errors?.email}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<AiOutlineMail />}
+          errors={errors}
           label="Email Address"
-          name="email"
+          {...register("email", { required: "Required" })}
         />
       </Grid>
       <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">

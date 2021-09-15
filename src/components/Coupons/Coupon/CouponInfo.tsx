@@ -12,9 +12,9 @@ import { FiUser, FiUsers } from "react-icons/fi";
 import { IoMdCash } from "react-icons/io";
 import { MdSubtitles } from "react-icons/md";
 
-import DateIconedInput from "../../reusable/Inputs/DateIconedInput";
-import IconedInput from "../../reusable/Inputs/IconedInput";
-import IconedNumberInput from "../../reusable/IconedNumberInput";
+import DateInput from "../../reusable/Inputs/DateIconedInput";
+import Input from "../../reusable/Input/Input";
+
 import Select from "../../reusable/Select";
 import { AiOutlineTag } from "react-icons/ai";
 
@@ -68,45 +68,34 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
   return (
     <Box type="titled" boxTitle="Coupon Information">
       <Grid gap="1rem" columns="repeat(auto-fit,minmax(300px,1fr))">
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.name?.en}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Coupon Name English"
-          name="name.en"
+          {...register("name.en", { required: "required" })}
         />
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.name?.ar}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Coupon Name Arabic"
-          name="name.ar"
+          {...register("name.ar", { required: "required" })}
         />
       </Grid>
       <Grid gap="1rem" columns="repeat(auto-fit,minmax(300px,1fr))">
-        <IconedInput
-          Icon={BiBarcode}
-          errors={errors?.code}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<BiBarcode />}
+          errors={errors}
           label="Coupon Code"
-          name="code"
+          {...register("code", { required: "required" })}
         />
-        <IconedNumberInput
-          Icon={IoMdCash}
-          errors={errors?.min_total_order}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<IoMdCash />}
+          errors={errors}
           label="Minimum order amount"
-          name="min_total_order"
+          type="number"
           min={0}
           desc="0 For no minimum amount"
+          {...register("min_total_order", { required: "required" })}
         />
         <Controller
           control={control}
@@ -133,15 +122,13 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           }}
         />
 
-        <IconedNumberInput
-          Icon={IoMdCash}
-          errors={errors?.amount}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<IoMdCash />}
+          errors={errors}
           label="Discount Amount"
-          name="amount"
+          type="number"
           min={0}
+          {...register("amount", { required: "required" })}
         />
         <Controller
           control={control}
@@ -168,35 +155,33 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           }}
         />
 
-        <IconedNumberInput
-          Icon={FiUser}
-          errors={errors?.uses_per_user}
-          register={register}
+        <Input
+          startAdornment={<FiUser />}
+          errors={errors}
           label="Uses Per Customer"
-          name="uses_per_user"
+          type="number"
           desc="Leave Blank for unlimited"
           min={0}
+          {...register("uses_per_user")}
         />
 
-        <IconedNumberInput
-          Icon={FiUsers}
-          errors={errors?.total_uses}
-          register={register}
+        <Input
+          startAdornment={<FiUsers />}
+          errors={errors}
           label="Total Uses"
-          name="total_uses"
+          type="number"
           desc="Leave Blank for unlimited"
           min={0}
+          {...register("total_uses")}
         />
-        <IconedNumberInput
-          Icon={AiOutlineTag}
-          errors={errors?.max_discount}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<AiOutlineTag />}
+          errors={errors}
           label="Max Discount"
-          name="max_discount"
+          type="number"
           desc="Keep 0 For no max discount"
           min={0}
+          {...register("max_discount", { required: "Required" })}
         />
         <Controller
           name="start_date"
@@ -205,7 +190,7 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
             console.log(parseISO("2021-09-16T21:00:00"), "initial value");
             console.log(parseISO("2021-09-16T21:00:00.000Z"), "initial value");
             return (
-              <DateIconedInput
+              <DateInput
                 errors={errors?.start_date}
                 onChange={(date: Date) => onChange(date.toISOString())}
                 selected={parseISO(value)}
@@ -220,7 +205,7 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           control={control}
           render={({ field: { onChange, value, ref } }) => {
             return (
-              <DateIconedInput
+              <DateInput
                 errors={errors?.end_date}
                 label="Coupon End Date"
                 onChange={(date: Date) => onChange(date.toISOString())}

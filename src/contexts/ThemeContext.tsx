@@ -1,11 +1,10 @@
 import React, { createContext, useCallback, useMemo, useState } from "react";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import styled, { ThemeProvider as StyledThemes } from "styled-components";
-import { devices } from "../utils/breakpoints";
 import i18nConfig from "../i18n";
 import Color from "color";
 import { getInitialColorMode } from "../helpers/getInitialColorMode";
-import { darkTheme, lightTheme } from "../constants";
+import { BREAKPOINTS, darkTheme, lightTheme } from "../constants";
 export type ThemeMode = "light" | "dark";
 
 type ContextProps = {
@@ -45,11 +44,11 @@ const ThemeProvider: React.FC = ({ children }) => {
           };
     return {
       fontFamily,
-      breakpoints: devices,
+      breakpoints: BREAKPOINTS,
       maxWidthMd: "960px",
       maxWidthLg: "1100px",
       yellow: "#f5a623",
-      borderDanger: "1px solid #e23e3eac",
+      borderDanger: "1px solid #b72b2b",
       primaryLighter: Color(theme.primary).lighten(0.2).hex(),
       primaryDarker: Color(theme.primary).darken(0.2).hex(),
       font: {

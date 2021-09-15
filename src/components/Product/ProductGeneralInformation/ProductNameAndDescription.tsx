@@ -1,15 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { BiDetail } from "react-icons/bi";
 import { MdSubtitles } from "react-icons/md";
-import styled from "styled-components";
-import { up } from "../../../utils/themes";
 import Box from "../../reusable/Box/Box";
 
-import IconedInput from "../../reusable/Inputs/IconedInput";
-import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
+import Input from "../../reusable/Input/Input";
 import QuantityInput from "../../reusable/Inputs/QuantityInput";
 import Grid from "../../StyledComponents/Grid";
-import Heading from "../../StyledComponents/Heading";
 import { FORM_PROPS } from "./ProductGeneralInformation";
 
 const ProductNameAndDescription = () => {
@@ -24,50 +20,35 @@ const ProductNameAndDescription = () => {
   return (
     <Box type="titled" boxTitle="Product Naming & Description">
       <Grid columns="repeat(auto-fill,minmax(275px,1fr))" gap="1rem">
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.name?.en}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Product Name"
-          name="name.en"
+          {...register("name.en", { required: "Required" })}
         />
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.name?.ar}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Product Name Arabic"
-          name="name.ar"
+          {...register("name.ar", { required: "Required" })}
         />
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.description?.en}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Short Description English"
-          name="description.en"
+          {...register("description.en", { required: "Required" })}
         />
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.description?.ar}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Short Description Arabic"
-          name="description.ar"
+          {...register("description.ar", { required: "Required" })}
         />
-        <IconedInput
-          Icon={BiDetail}
-          errors={errors?.sku}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<BiDetail />}
+          errors={errors}
           label="SKU"
-          name="sku"
+          {...register("sku", { required: "Required" })}
         />
 
         <QuantityInput
@@ -81,15 +62,12 @@ const ProductNameAndDescription = () => {
         />
       </Grid>
       <Grid columns="1fr" gap="1rem">
-        <PrefixedInput
-          errors={errors?.slug}
+        <Input
+          errors={errors}
           label="Slug"
-          name="slug"
-          register={register}
-          required
-          requiredMessage="Required"
-          prefixText="https://your-domain.com/products/"
+          startAdornment="https://your-domain.com/products/"
           desc="This is how your product will look in the URL"
+          {...register("slug", { required: "Required" })}
         />
       </Grid>
     </Box>

@@ -4,17 +4,15 @@ import { useTranslation } from "react-i18next";
 
 import { MdSubtitles } from "react-icons/md";
 
-import styled from "styled-components";
 import Box from "../../reusable/Box/Box";
 
 import CategorySelection from "../../reusable/CategorySelection";
 import GithubInput from "../../reusable/Inputs/GithubInput";
 
-import IconedInput from "../../reusable/Inputs/IconedInput";
-import PrefixedInput from "../../reusable/Inputs/PrefixedInput";
+import Input from "../../reusable/Input/Input";
 import Textarea from "../../reusable/Textarea";
 import Grid from "../../StyledComponents/Grid";
-import Heading from "../../StyledComponents/Heading";
+
 interface IProps {
   register: any;
   errors: any;
@@ -45,23 +43,17 @@ const CategoryInfo = ({
   return (
     <Grid columns="repeat(auto-fit,minmax(310px,1fr))" gap="1rem">
       <Box type="titled" boxTitle="Category Information">
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.name?.en}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Category Name English"
-          name="name.en"
+          {...register("name.en", { required: "Required" })}
         />
-        <IconedInput
-          Icon={MdSubtitles}
-          errors={errors?.name?.ar}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment={<MdSubtitles />}
+          errors={errors}
           label="Category Name Arabic"
-          name="name.ar"
+          {...register("name.ar", { required: "Required" })}
         />
 
         <Textarea
@@ -80,15 +72,12 @@ const CategoryInfo = ({
           label="Description Arabic"
           name="description.ar"
         />
-        <PrefixedInput
-          prefixText="https://your-store/categories/"
-          errors={errors?.slug}
-          register={register}
-          required
-          requiredMessage="Required"
+        <Input
+          startAdornment="https://your-store/categories/"
+          errors={errors}
           label="Category Slug"
-          name="slug"
           desc="How your category will look in the url"
+          {...register("slug", { required: "Required" })}
         />
         <Controller
           control={control}

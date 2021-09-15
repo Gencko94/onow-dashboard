@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 
 import { MdSubtitles } from "react-icons/md";
 import { useMutation, useQueryClient } from "react-query";
-import styled from "styled-components";
 import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
 import { USER } from "../../../interfaces/auth/auth";
@@ -12,11 +11,10 @@ import extractError from "../../../utils/extractError";
 import { editStoreNameAndDescription } from "../../../utils/queries/settingsQueries";
 import Box from "../../reusable/Box/Box";
 import Button from "../../reusable/Button";
-import IconedInput from "../../reusable/Inputs/IconedInput";
+import Input from "../../reusable/Input/Input";
 import Textarea from "../../reusable/Textarea";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
-import Heading from "../../StyledComponents/Heading";
 
 interface StoreNameAndDescriptionProps {
   data: STORE_NAME_AND_DESCRIPTION;
@@ -90,24 +88,18 @@ const StoreNameAndDescription = ({ data }: StoreNameAndDescriptionProps) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box type="titled" boxTitle="Store General Information">
         <Grid columns="repeat(auto-fit,minmax(200px,1fr))" gap="1rem">
-          <IconedInput
-            Icon={MdSubtitles}
-            errors={errors?.name?.en}
-            register={register}
-            name="name.en"
-            required
-            requiredMessage="Name Required"
+          <Input
+            startAdornment={<MdSubtitles />}
+            errors={errors}
             label="Store Name English"
+            {...register("name.en", { required: "required" })}
           />
 
-          <IconedInput
-            Icon={MdSubtitles}
-            errors={errors?.name?.ar}
-            register={register}
-            name="name.ar"
-            required
-            requiredMessage="Name Required"
+          <Input
+            startAdornment={<MdSubtitles />}
+            errors={errors}
             label="Store Name Arabic"
+            {...register("name.ar", { required: "required" })}
           />
         </Grid>
 

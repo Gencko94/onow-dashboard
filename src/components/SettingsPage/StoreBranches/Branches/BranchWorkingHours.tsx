@@ -6,8 +6,7 @@ import { WiTime8, WiTime12 } from "react-icons/wi";
 import Box from "../../../reusable/Box/Box";
 
 import GithubInput from "../../../reusable/Inputs/GithubInput";
-
-import TimeIconedInput from "../../../reusable/TimeIconedInput";
+import TimeInput from "../../../reusable/TimeIconedInput";
 
 import Grid from "../../../StyledComponents/Grid";
 import Paragraph from "../../../StyledComponents/Paragraph";
@@ -75,7 +74,7 @@ const BranchWorkingHours = () => {
                 name={`working_hours.${day}.from` as any}
                 render={({ field: { value, onChange } }) => {
                   return (
-                    <TimeIconedInput
+                    <TimeInput
                       enabled={working_hours?.[day]?.enabled}
                       onChange={onChange}
                       errors={errors}
@@ -93,7 +92,7 @@ const BranchWorkingHours = () => {
                 name={`working_hours.${day}.to` as any}
                 render={({ field: { value, onChange } }) => {
                   return (
-                    <TimeIconedInput
+                    <TimeInput
                       value={value}
                       enabled={working_hours?.saturday?.enabled}
                       onChange={onChange}

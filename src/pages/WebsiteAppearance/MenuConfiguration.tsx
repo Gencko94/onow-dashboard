@@ -86,12 +86,7 @@ const MenuConfiguration = () => {
         </Button>
       </Flex>
       <Spacer size={40} />
-      <CollapsibleTable
-        index={indices}
-        onChange={toggleAccordionItem}
-        collapsible
-        multiple
-      >
+      <CollapsibleTable index={indices} onChange={toggleAccordionItem}>
         {cards.map((item, i) => (
           <MenuConfigItem
             key={item.id}

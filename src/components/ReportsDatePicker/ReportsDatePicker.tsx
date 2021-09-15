@@ -5,7 +5,7 @@ import Spacer from "../reusable/Spacer";
 import Flex from "../StyledComponents/Flex";
 
 import Button from "../reusable/Button";
-import DateIconedInput from "../reusable/Inputs/DateIconedInput";
+import DateInput from "../reusable/Inputs/DateIconedInput";
 interface IProps {
   dates: { start: Date | null; end: Date | null };
   setDates: Dispatch<SetStateAction<{ start: Date | null; end: Date | null }>>;
@@ -63,7 +63,7 @@ const ReportsDatePicker = ({ dates, setDates }: IProps) => {
         Last 30 Days
       </Button>
       <Spacer size={10} />
-      <DateIconedInput
+      <DateInput
         errors={undefined}
         startDate={dates.start}
         endDate={dates.end}
