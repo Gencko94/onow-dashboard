@@ -1,6 +1,9 @@
 import { useInfiniteQuery, useQuery } from "react-query";
 import { PRODUCT } from "../../../interfaces/products/products";
-import { getProducts, getPaginatedProducts } from "../../../utils/queries";
+import {
+  getProducts,
+  getPaginatedProducts,
+} from "../../../utils/queries/productQueries";
 
 interface IProps {
   sortBy?: any;

@@ -1,4 +1,5 @@
 import { Devices } from "./interfaces/breakpoints/breakpoints";
+export const customerUri = "https://new-version.o-now.net/customer-api";
 
 export const lightTheme: any = {
   background: "hsl(255,25%,95%)",

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { customerUri } from "./queries";
+import { customerUri } from "../constants";
 
 interface UPLOAD_FILE_PROPS {
   href: string;

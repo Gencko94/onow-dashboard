@@ -1,7 +1,8 @@
 /* eslint-disable no-throw-literal */
 import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { LoginForm } from "../components/Login/LoginForm";
 import { useLogin } from "../hooks/data-hooks/useLogin";
-import Login from "../pages/Login";
+
 import { render } from "../test-utils";
 
 jest.mock("../hooks/data-hooks/useLogin", () => {
@@ -13,7 +14,7 @@ describe("Form Submission", () => {
   const mutateAsync = jest.fn();
   beforeEach(() => {
     useLogin.mockImplementation(() => ({ mutateAsync }));
-    render(<Login />);
+    render(<LoginForm />);
   });
   it("should display requried error when inputs are empty", async () => {
     fireEvent.submit(screen.getByTestId("login-btn"));
@@ -38,7 +39,16 @@ describe("Form Submission", () => {
     expect(mutateAsync).not.toBeCalled();
     expect(screen.queryByTestId("btn-loading")).not.toBeInTheDocument();
   });
-  it("Submits the form correctly and shows loading spinner", async () => {
+});
+
+describe("Submitting", () => {
+  const mutateAsync = jest.fn();
+
+  beforeEach(() => {
+    useLogin.mockImplementation(() => ({ mutateAsync }));
+    render(<LoginForm />);
+  });
+  it("mutateAsync gets called with correct data", async () => {
     fireEvent.input(screen.getByTestId("email"), {
       target: { value: "test@test.com" },
     });
@@ -54,21 +64,26 @@ describe("Form Submission", () => {
         login: "test@test.com",
         password: "password",
       });
-      expect(screen.getByTestId("btn-loading")).toBeInTheDocument();
     });
   });
 });
+
 describe("Login Server Error messages", () => {
-  // Needs improvments, should mock the entire ```onSubmit``` function in order to seperate server responses from the actual test.
+  jest.mock("../hooks/data-hooks/useLogin", () => {
+    return {
+      ...jest.requireActual("../hooks/data-hooks/useLogin"),
+      useLogin: jest.fn(),
+    };
+  });
   it("If Credentials are invalid, show error messages", async () => {
-    const mutateAsync = jest.fn(() => {
+    const mutateAsync = jest.fn().mockImplementation(() => {
       throw {
         response: { data: { error: "INVALID_CREDENTIALS" } },
       };
     });
 
     useLogin.mockImplementation(() => ({ mutateAsync }));
-    render(<Login />);
+    render(<LoginForm />);
     fireEvent.input(screen.getByTestId("email"), {
       target: { value: "test@test.com" },
     });
@@ -77,8 +92,12 @@ describe("Login Server Error messages", () => {
     });
     fireEvent.submit(screen.getByRole("button", { name: /login/i }));
     await waitFor(() => {
+      expect(mutateAsync).toBeCalledWith({
+        login: "test@test.com",
+        password: "password",
+      });
+      expect(mutateAsync).toThrowError();
       expect(screen.getAllByRole("alert")).toHaveLength(2);
-      expect(mutateAsync).toBeCalled();
     });
   });
 });

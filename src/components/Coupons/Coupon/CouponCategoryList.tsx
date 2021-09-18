@@ -13,7 +13,10 @@ import {
 } from "../../../interfaces/categories/categories";
 import Checkbox from "../../reusable/Inputs/Checkbox";
 
-import { getCategories } from "../../../utils/queries";
+import {
+  getCategories,
+  getPaginatedCategories,
+} from "../../../utils/queries/categoriesQueries";
 import DefaultImage from "../../reusable/DefaultImage";
 import LoadingTable from "../../reusable/LoadingTable";
 import React from "react";
@@ -37,7 +40,7 @@ const CouponCategoryList = ({ control, errors }: IProps) => {
     isFetchingNextPage,
   } = useInfiniteQuery(
     "categories",
-    ({ pageParam = 1 }) => getCategories(pageParam),
+    ({ pageParam = 1 }) => getPaginatedCategories(pageParam),
     {
       keepPreviousData: true,
 

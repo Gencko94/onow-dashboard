@@ -11,7 +11,6 @@ import { PRODUCT } from "../../../interfaces/products/products";
 import { ADD_PRODUCT_IMAGE } from "../../../interfaces/products/update-product";
 import extractError from "../../../utils/extractError";
 import FileUploader from "../../../utils/FileUploader";
-import { customerUri } from "../../../utils/queries";
 import { removeProductImage } from "../../../utils/queries/productQueries";
 import Box from "../../reusable/Box/Box";
 
@@ -19,6 +18,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import Spacer from "../../reusable/Spacer";
 import SwiperGrid from "../../SwiperGrid";
+import { customerUri } from "../../../constants";
 
 const breakpoints = {
   // when window width is >= 320px

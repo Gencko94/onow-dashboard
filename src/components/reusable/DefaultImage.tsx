@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { TableRowImage } from "./Table/TableRowImage";
 
 interface IProps {
   width?: string;
@@ -9,7 +10,7 @@ interface IProps {
 
 const DefaultImage = ({ border, height, width, circular }: IProps) => {
   return (
-    <Image
+    <I
       border={border}
       width={width}
       height={height}
@@ -21,7 +22,7 @@ const DefaultImage = ({ border, height, width, circular }: IProps) => {
 };
 
 export default DefaultImage;
-const Image = styled.img<{
+const I = styled(TableRowImage)<{
   border?: boolean;
   width?: string;
   height?: string;

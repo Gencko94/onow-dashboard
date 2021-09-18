@@ -67,3 +67,16 @@ export async function wait(time) {
 export function debug(limit = 300000) {
   screen.debug(undefined, limit);
 }
+export const queryHooksWrapper = ({ children }) => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        // ✅ turns retries off
+        retry: false,
+      },
+    },
+  });
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+};

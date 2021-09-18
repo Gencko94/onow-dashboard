@@ -1,6 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import styled from "styled-components";
 
 import useToast from "../../../../hooks/useToast";
 import extractError from "../../../../utils/extractError";
@@ -9,7 +8,6 @@ import Box from "../../../reusable/Box/Box";
 import Button from "../../../reusable/Button";
 import PasswordInput from "../../../reusable/Inputs/PasswordInput";
 import Flex from "../../../StyledComponents/Flex";
-import Heading from "../../../StyledComponents/Heading";
 
 interface PASSWORD_FORM {
   current_password: string;
@@ -66,20 +64,14 @@ const AccountPassword = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box type="titled" boxTitle="Change Account password">
         <PasswordInput
-          register={register}
-          name="current_password"
-          required
-          requiredMessage="Required"
           label="Old Password"
-          errors={errors?.current_password}
+          errors={errors}
+          {...register("current_password", { required: "Required" })}
         />
         <PasswordInput
-          register={register}
-          name="password"
-          required
-          requiredMessage="Required"
           label="New Password"
-          errors={errors?.password}
+          errors={errors}
+          {...register("password", { required: "Required" })}
         />
       </Box>
       <Flex margin="1rem" justify="center">

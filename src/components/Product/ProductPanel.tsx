@@ -4,7 +4,7 @@ import styled from "styled-components";
 import useConfirmationModal from "../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../hooks/useToast";
 import extractError from "../../utils/extractError";
-import { deleteProduct } from "../../utils/queries";
+import { deleteProduct } from "../../utils/queries/productQueries";
 import Breadcrumbs from "../reusable/Breadcrumbs";
 import Button from "../reusable/Button";
 
@@ -40,7 +40,7 @@ const ProductPanel = ({ id }: { id: number }) => {
   const handleDeleteProduct = async (id: number) => {
     handleCloseConfirmationModal?.();
     try {
-      await mutateAsync(id.toString());
+      await mutateAsync(id);
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();

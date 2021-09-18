@@ -1,31 +1,25 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { CustomCheckboxContainer, CustomCheckboxInput } from "@reach/checkbox";
+import { forwardRef } from "react";
 
-interface IProps {
-  /**
-   * 	```onChange``` callback function.
-   */
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  /**
-   * 	Boolean indicated whether the input is checked.
-   */
-  checked: boolean;
+interface IProps extends React.ComponentPropsWithoutRef<"input"> {
   small?: boolean;
-  id?: string;
 }
 
-const Checkbox = ({ checked, onChange, small, id }: IProps) => {
-  return (
-    <CustomCheckboxContainer
-      checked={checked}
-      onChange={onChange}
-      style={getContainerStyle()}
-    >
-      <CustomCheckboxInput id="id" />
-      <Checkmark aria-hidden checked={checked} />
-    </CustomCheckboxContainer>
-  );
-};
+const Checkbox = forwardRef<HTMLInputElement, IProps>(
+  ({ small, ...delegated }, ref) => {
+    return (
+      <CustomCheckboxContainer
+        checked={delegated.checked}
+        onChange={delegated.onChange}
+        style={getContainerStyle()}
+      >
+        <CustomCheckboxInput ref={ref} {...delegated} />
+        <Checkmark aria-hidden checked={delegated.checked} />
+      </CustomCheckboxContainer>
+    );
+  }
+);
 
 export default Checkbox;
 function getContainerStyle() {
@@ -37,7 +31,7 @@ function getContainerStyle() {
     width: 26,
   };
 }
-const Checkmark = styled.span<{ checked: boolean }>`
+const Checkmark = styled.span<{ checked?: boolean }>`
   display: block;
   position: absolute;
   width: 50%;
@@ -45,6 +39,7 @@ const Checkmark = styled.span<{ checked: boolean }>`
   top: 50%;
   left: 50%;
   border-radius: 2px;
+  pointer-events: none;
   transition: transform 200ms ease-out, background 200ms ease-out;
   z-index: 1;
   background: ${(props) =>

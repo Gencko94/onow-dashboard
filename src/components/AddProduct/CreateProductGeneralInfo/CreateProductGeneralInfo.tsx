@@ -1,5 +1,4 @@
 import Grid from "../../StyledComponents/Grid";
-import Hr from "../../StyledComponents/Hr";
 import CreateProductCategories from "./CreateProductCategories";
 import ProductDescription from "./ProductDescription";
 import CreateProductImage from "./CreateProductImage";
@@ -57,7 +56,7 @@ const CreateProductGeneralInfo = () => {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
         <Flex justify="flex-end">
-          <Button type="submit" color="blue" withTransition>
+          <Button data-testid="pgi-n" type="submit" color="blue" withTransition>
             Next
           </Button>
         </Flex>

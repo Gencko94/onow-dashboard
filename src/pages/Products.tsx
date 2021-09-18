@@ -21,7 +21,7 @@ const Products = () => {
   const handleViewChange = (view: PRODUCTS_VIEW) => {
     setView(view);
   };
-  const { data, status, isFetching, isLoading } = useGetProducts();
+  const { data, status } = useGetProducts();
 
   return (
     <>

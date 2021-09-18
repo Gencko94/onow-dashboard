@@ -109,24 +109,6 @@ const QuantityInput = ({
                 onChange={onChange}
               />
             </div>
-            <Flex items="center">
-              <Checkbox
-                id="unlimited"
-                small
-                checked={value === "unlimited"}
-                onChange={() => {
-                  if (value === "unlimited") {
-                    onChange("1");
-                  } else {
-                    onChange("unlimited");
-                  }
-                }}
-              />
-
-              <label htmlFor="unlimited" className="unlimited">
-                Unlimited
-              </label>
-            </Flex>
 
             {desc && <p className="desc">{desc}</p>}
             <p className="error">{errors?.message}</p>

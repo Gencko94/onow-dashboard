@@ -9,7 +9,7 @@ export interface CATEGORY {
   name: {
     [key: string]: string;
   };
-  parent_id: number;
+  parent_id: number | null;
   image: string;
   slug: string;
   children: CATEGORY[];

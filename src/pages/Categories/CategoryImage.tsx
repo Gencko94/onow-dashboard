@@ -4,11 +4,13 @@ import { Control, Controller, SetFieldValue } from "react-hook-form";
 import { useMutation } from "react-query";
 import styled from "styled-components";
 import Box from "../../components/reusable/Box/Box";
+import { customerUri } from "../../constants";
 import useConfirmationModal from "../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../hooks/useToast";
 import extractError from "../../utils/extractError";
 import MiniFileUploader from "../../utils/MiniFileUploader";
-import { customerUri, removeCategoryImage } from "../../utils/queries";
+
+import { removeCategoryImage } from "../../utils/queries/categoriesQueries";
 
 interface IProps {
   errors: any;

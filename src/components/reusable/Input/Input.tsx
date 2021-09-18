@@ -4,8 +4,11 @@ import styled, { css } from "styled-components";
 
 import Paragraph from "../../StyledComponents/Paragraph";
 import InputErrorMessage from "../InputErrorMessage";
+import { InputLabel } from "../InputLabel/InputLabel";
+import { BaseInput } from "./BaseInput";
+import { InputAdornment, TextAdornment } from "./InputAdornment";
 
-interface BaseInputProps extends React.ComponentPropsWithoutRef<"input"> {
+interface BaseInputProps extends React.ComponentPropsWithRef<"input"> {
   /**
    * 	Start Adornment.
    */
@@ -29,32 +32,33 @@ interface BaseInputProps extends React.ComponentPropsWithoutRef<"input"> {
   errors?: DeepMap<any, FieldError>;
 }
 
-const Input = forwardRef<HTMLDivElement, BaseInputProps>(
+const Input = forwardRef<HTMLInputElement, BaseInputProps>(
   (
     { label, startAdornment, endAdornment, desc, errors, ...delegated },
     ref
   ) => {
     return (
       <div>
-        {label && <Label htmlFor={delegated.id}>{label}</Label>}
+        {label && <InputLabel htmlFor={delegated.name}>{label}</InputLabel>}
         <InputWrapper
           data-testid="input-wrapper"
-          ref={ref}
           disabled={delegated.disabled}
           errors={typeof get(errors, delegated.name as string) !== "undefined"}
         >
           {startAdornment &&
             (typeof startAdornment === "object" ? (
-              <Adornment data-testid="start-adornment">
+              <InputAdornment data-testid="start-adornment">
                 {startAdornment}
-              </Adornment>
+              </InputAdornment>
             ) : (
               <TextAdornment>{startAdornment}</TextAdornment>
             ))}
-          <DefaultInput id={delegated.id} {...delegated} />
+          <BaseInput ref={ref} id={delegated.name} {...delegated} />
           {endAdornment &&
             (typeof endAdornment === "object" ? (
-              <Adornment data-testid="end-adornment">{endAdornment}</Adornment>
+              <InputAdornment data-testid="end-adornment">
+                {endAdornment}
+              </InputAdornment>
             ) : (
               <TextAdornment>{endAdornment}</TextAdornment>
             ))}
@@ -72,7 +76,7 @@ const Input = forwardRef<HTMLDivElement, BaseInputProps>(
 
 export default Input;
 
-const InputWrapper = styled.div<{ disabled?: boolean; errors: boolean }>`
+export const InputWrapper = styled.div<{ disabled?: boolean; errors: boolean }>`
   position: relative;
   overflow: hidden;
   display: flex;
@@ -96,48 +100,6 @@ const InputWrapper = styled.div<{ disabled?: boolean; errors: boolean }>`
     `}
 `;
 
-const Label = styled.label`
-  color: ${(props) => props.theme.textAlt};
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  display: block;
-  font-weight: ${(props) => props.theme.font.semibold};
-`;
-const InputDesc = styled(Paragraph)`
+export const InputDesc = styled(Paragraph)`
   font-size: 0.8rem;
-`;
-const BaseInput = styled.input`
-  width: 100%;
-
-  font-size: 0.9rem;
-  color: ${(props) => props.theme.text};
-  flex: 1;
-  outline: none;
-  min-width: 0;
-  &:disabled {
-    cursor: not-allowed;
-  }
-  padding: 0.4rem;
-  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
-    padding: 0.5rem;
-  }
-`;
-
-const DefaultInput = styled(BaseInput)``;
-
-const Adornment = styled.span`
-  padding: 0.4rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${({ theme: { primary } }) => primary};
-  background-color: ${({ theme: { subtleBackground } }) => subtleBackground};
-  @media ${(props) => props.theme.breakpoints.mdAndLarger} {
-    padding: 0.5rem;
-  }
-`;
-
-const TextAdornment = styled(Adornment)`
-  background-color: gray;
 `;

@@ -1,33 +1,52 @@
-import {
-  DeepMap,
-  FieldError,
-  UseFormHandleSubmit,
-  UseFormRegister,
-} from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { MdMail } from "react-icons/md";
 
 import styled from "styled-components";
+import { useLogin } from "../../hooks/data-hooks/useLogin";
 import { LOGIN_FORM } from "../../interfaces/auth/auth";
 import Button from "../reusable/Button";
 import Input from "../reusable/Input/Input";
-import InputErrorMessage from "../reusable/InputErrorMessage";
 import PasswordInput from "../reusable/Inputs/PasswordInput";
+import Spacer from "../reusable/Spacer";
 
-interface IProps {
-  isSubmitting: boolean;
-  handleSubmit: UseFormHandleSubmit<LOGIN_FORM>;
-  onSubmit: (args: any) => void;
-  errors: DeepMap<LOGIN_FORM, FieldError>;
-  register: UseFormRegister<LOGIN_FORM>;
-}
-
-export const LoginForm = ({
-  onSubmit,
-  handleSubmit,
-  isSubmitting,
-  errors,
-  register,
-}: IProps) => {
+export const LoginForm = () => {
+  const { t } = useTranslation(["login"]);
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<LOGIN_FORM>();
+  const { isLoading, mutateAsync } = useLogin({ setError });
+  const onSubmit: SubmitHandler<LOGIN_FORM> = async (data) => {
+    try {
+      await mutateAsync({
+        password: data.password,
+        login: data.login.toLowerCase(),
+      });
+    } catch (error: any) {
+      if (
+        error.response?.data.error === "Phone Number or Password is Missing"
+      ) {
+        setError("password", {
+          message: t("fields-missing-response"),
+        });
+        setError("login", {
+          message: t("fields-missing-response"),
+        });
+      } else if (error.response?.data.error === "INVALID_CREDENTIALS") {
+        setError("password", {
+          message: t("invalid-credentials"),
+        });
+        setError("login", {
+          message: t("invalid-credentials"),
+        });
+      } else {
+        // show unknown error
+      }
+    }
+  };
   return (
     <FormContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -44,24 +63,23 @@ export const LoginForm = ({
             },
           })}
         />
-        {/* <InputErrorMessage errors={errors} name="login" /> */}
+        <Spacer size={10} />
         <PasswordInput
-          errors={errors?.password}
-          name="password"
-          register={register}
+          errors={errors}
           label="Password"
-          required
-          requiredMessage="Requried"
+          {...register("password", {
+            required: "Required",
+          })}
         />
-        {/* <InputErrorMessage errors={errors} name="password" /> */}
+        <Spacer size={30} />
 
         <Button
           data-testid="login-btn"
           color="primary"
           type="submit"
           style={{ width: "100%" }}
-          isLoading={isSubmitting}
-          disabled={isSubmitting}
+          isLoading={isLoading}
+          disabled={isLoading}
           withTransition
         >
           Login

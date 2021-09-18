@@ -19,7 +19,7 @@ const ProductItemActions = ({ id }: IProps) => {
     useConfirmationModal();
   const { handleDeleteProduct } = useDeleteProduct();
   return (
-    <Flex>
+    <Flex justify="center">
       <Menu>
         <MenuButton data-testid="menu-toggle">
           {/* <IconButton onClick={() => {}}> */}

@@ -11,7 +11,7 @@ import Heading from "../../components/StyledComponents/Heading";
 import useToast from "../../hooks/useToast";
 import { CATEGORY } from "../../interfaces/categories/categories";
 import extractError from "../../utils/extractError";
-import { createCategory } from "../../utils/queries";
+import { createCategory } from "../../utils/queries/categoriesQueries";
 import CategoryImage from "./CategoryImage";
 
 export type NEW_CATEGORY_FORM = {

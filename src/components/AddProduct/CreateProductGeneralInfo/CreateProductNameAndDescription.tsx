@@ -3,11 +3,14 @@ import { useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { BiDetail } from "react-icons/bi";
 import { MdSubtitles } from "react-icons/md";
+import { RiHandCoinLine } from "react-icons/ri";
 
 import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import Box from "../../reusable/Box/Box";
 import Input from "../../reusable/Input/Input";
+import Checkbox from "../../reusable/Inputs/Checkbox";
 import QuantityInput from "../../reusable/Inputs/QuantityInput";
+import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
 
 import { firstTabInfo } from "./CreateProductGeneralInfo";
@@ -23,6 +26,8 @@ const CreateProductNameAndDescription = () => {
   } = useFormContext<firstTabInfo>();
   const quantity = watch("quantity");
   const nameEn = watch("name.en");
+  console.log(errors);
+  console.log(quantity);
   useEffect(() => {
     if (nameEn) {
       setValue?.("slug", nameEn.toLowerCase().split(" ").join("-"));
@@ -35,47 +40,64 @@ const CreateProductNameAndDescription = () => {
           startAdornment={<MdSubtitles />}
           errors={errors}
           label="Product Name"
-          defaultValue={formValues?.name?.en}
           {...register("name.en", { required: "Required" })}
         />
         <Input
           startAdornment={<MdSubtitles />}
           errors={errors}
           label="Product Name Arabic"
-          defaultValue={formValues?.name?.ar}
           {...register("name.ar", { required: "Required" })}
         />
         <Input
           startAdornment={<MdSubtitles />}
           errors={errors}
           label="Short Description English"
-          defaultValue={formValues?.description?.en}
           {...register("description.en", { required: "Required" })}
         />
         <Input
           startAdornment={<MdSubtitles />}
           errors={errors}
           label="Short Description Arabic"
-          defaultValue={formValues?.description?.ar}
           {...register("description.ar", { required: "Required" })}
         />
         <Input
           startAdornment={<BiDetail />}
           errors={errors}
           label="SKU"
-          defaultValue={formValues?.sku}
           {...register("sku", { required: "Required" })}
         />
+        <div>
+          <Input
+            startAdornment={<RiHandCoinLine />}
+            errors={errors}
+            label="Quantity"
+            // defaultValue={formValues?.quantity}
+            type="number"
+            min={0}
+            disabled={quantity === "unlimited"}
+            {...register("quantity", {
+              required: quantity !== "unlimited" && "Required",
+            })}
+          />
+          <Flex items="center">
+            <Checkbox
+              id="unlimited"
+              small
+              checked={quantity === "unlimited"}
+              onChange={() => {
+                if (quantity === "unlimited") {
+                  setValue("quantity", "1");
+                } else {
+                  setValue("quantity", "unlimited");
+                }
+              }}
+            />
 
-        <QuantityInput
-          unlimited={quantity === "unlimited"}
-          control={control}
-          errors={errors?.quantity}
-          required
-          requiredMessage="Required"
-          label="Quantity"
-          name="quantity"
-        />
+            <label htmlFor="unlimited" className="unlimited">
+              Unlimited
+            </label>
+          </Flex>
+        </div>
       </Grid>
       <Grid columns="1fr" gap="1rem">
         <Input

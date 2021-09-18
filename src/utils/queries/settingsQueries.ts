@@ -1,4 +1,5 @@
 import axios from "axios";
+import { customerUri } from "../../constants";
 import {
   GET_STORE_INFORMATION,
   STORE_NAME_AND_DESCRIPTION,
@@ -6,8 +7,6 @@ import {
   STORE_TECHNICAL_SUPPORT,
 } from "../../interfaces/settings/store-properties/store-properties";
 import { STORE_LAYOUT_SETTINGS } from "../../interfaces/settings/website-appearance/website-appearance";
-
-export const customerUri = "https://new-version.o-now.net/customer-api";
 
 export const getStoreInformation = async (): Promise<GET_STORE_INFORMATION> => {
   const t = localStorage.getItem("dshtid");

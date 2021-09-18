@@ -14,7 +14,7 @@ import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 import Heading from "../../components/StyledComponents/Heading";
 import useToast from "../../hooks/useToast";
 import extractError from "../../utils/extractError";
-import { createProduct } from "../../utils/queries";
+import { createProduct } from "../../utils/queries/productQueries";
 
 type ContextProps = {
   activeTab: 0 | 1 | 2 | 3;

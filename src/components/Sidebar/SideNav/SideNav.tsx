@@ -283,7 +283,6 @@ const arrowPath =
   "6 8 8 8h585.1L386.9 854c-5.6 4.9-2.2 14 5.2 14h91.5c1.9 0 3.8-0.7 5." +
   "2-2L869 536.2c14.7-12.8 14.7-35.6 0-48.4z";
 function ExpandIcon({ isActive }: { isActive: boolean }) {
-  console.log(isActive);
   return (
     <i style={{ marginRight: ".5rem" }}>
       <svg

@@ -1,17 +1,21 @@
 import React, { useContext, useEffect, useMemo } from "react";
-
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Flex from "../../StyledComponents/Flex";
 import { ApplicationProvider } from "../../../contexts/ApplicationContext";
 import { useDebounce } from "use-debounce/lib";
 
-import { useDeleteMultipleProducts } from "../../../hooks/data-hooks/products/useDeleteMultipleProducts";
-import { useToggleRows } from "../../../hooks/useToggleRows";
-import { useTable, useSortBy, Column } from "react-table";
+import { useTable, useSortBy, Column, useRowSelect } from "react-table";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { useTranslation } from "react-i18next";
 import ProductItemActions from "./ProductItemActions";
+import { Table } from "../../reusable/Table/Table";
+import { TableHead } from "../../reusable/Table/TableHead";
+import { TableBodyRow } from "../../reusable/Table/TableBodyRow";
+import { TableBodyData } from "../../reusable/Table/TableBodyData";
+import { TableRowImage } from "../../reusable/Table/TableRowImage";
+import Checkbox from "../../reusable/Inputs/Checkbox";
+import { PRODUCT } from "../../../interfaces/products/products";
+import Paragraph from "../../StyledComponents/Paragraph";
 
 interface IProps {
   data: any;
@@ -28,7 +32,7 @@ const ProductsTable = ({ data }: IProps) => {
   } = useContext(ApplicationProvider);
   const [debouncedSearchValue] = useDebounce(globalSearchBarValue, 500);
 
-  const columns = useMemo<Column[]>(
+  const columns = useMemo<Column<PRODUCT>[]>(
     () => [
       {
         id: "product-id",
@@ -43,14 +47,21 @@ const ProductsTable = ({ data }: IProps) => {
         Cell: ({ value }) => {
           return (
             <Flex justify="center">
-              <Image src={value} />
+              <TableRowImage src={value} />
             </Flex>
           );
         },
       },
       {
         Header: t`name` as string,
-        accessor: `name[${i18n.language}]`,
+        accessor: "name",
+        Cell: (instance) => {
+          return (
+            <Paragraph fontSize="0.9rem">
+              {instance.value[i18n.language]}
+            </Paragraph>
+          );
+        },
       },
       {
         Header: t`quantity` as string,
@@ -58,47 +69,90 @@ const ProductsTable = ({ data }: IProps) => {
       },
       {
         Header: t`price` as string,
-
         accessor: "price",
       },
       {
         Header: t`category` as string,
-        accessor: `category.name[${i18n.language}]`,
+        accessor: "category",
+        Cell: (instance) => {
+          return (
+            <Paragraph fontSize="0.9rem">
+              {instance.value ? instance.value.name?.[i18n.language] : "-"}
+            </Paragraph>
+          );
+        },
       },
       {
         Header: t`status` as string,
-        accessor: "status",
+        accessor: "active",
+        Cell: (instance) => {
+          return (
+            <Paragraph fontSize="0.9rem">
+              {instance.value ? "Active" : "Disabled"}
+            </Paragraph>
+          );
+        },
       },
       {
         Header: t`actions` as string,
+        accessor: "id",
+        Cell: (instance: any) => (
+          <ProductItemActions id={instance.row.original.id} />
+        ),
         disableSortBy: true,
-        accessor: (row: any) => row.id,
-        Cell: ({ value }) => {
-          return <ProductItemActions id={value} />;
-        },
       },
     ],
     [i18n.language, t]
   );
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      {
-        columns,
-        data,
-        initialState: { sortBy: [{ id: "id", desc: true }] },
-      },
-      useSortBy
-    );
-  const { selectedRows, handleToggleRows, handleClearRows } = useToggleRows();
-  const history = useHistory();
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state,
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { sortBy: [{ id: "product-id", desc: true }] },
+    },
+    useSortBy,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        {
+          id: "selection",
+          disableSortBy: true,
+          accessor: "id",
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <Checkbox
+              data-testid="select-all-check"
+              {...getToggleAllRowsSelectedProps()}
+            />
+          ),
+          Cell: (instance: any) => {
+            return (
+              <Checkbox
+                data-testid={`select-${instance.row.original.id}`}
+                {...instance.row.getToggleRowSelectedProps()}
+              />
+            );
+          },
+        },
+        ...columns,
+      ]);
+    }
+  );
+  // const { selectedRows, handleToggleRows, handleClearRows } = useToggleRows();
 
   // Multiple Delete Mutation
-  const { handleDeleteMultipleProducts, multipleDeleteLoading } =
-    useDeleteMultipleProducts({
-      successCallback: () => {
-        handleClearRows();
-      },
-    });
+  // const { handleDeleteMultipleProducts, multipleDeleteLoading } =
+  //   useDeleteMultipleProducts({
+  //     successCallback: () => {
+  //       handleClearRows();
+  //     },
+  //   });
 
   useEffect(() => {
     if (globalSearchType !== "product") {
@@ -158,8 +212,8 @@ const ProductsTable = ({ data }: IProps) => {
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <TableHead
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
                   sortable={column.canSort}
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
                 >
                   <Flex items="center" justify="center">
                     {column.render("Header")}{" "}
@@ -182,7 +236,7 @@ const ProductsTable = ({ data }: IProps) => {
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <TableBodyRow {...row.getRowProps()}>
+              <TableBodyRow isSelected={row.isSelected} {...row.getRowProps()}>
                 {row.cells.map((cell) => (
                   <TableBodyData
                     data-testid={cell.column.id}
@@ -201,60 +255,7 @@ const ProductsTable = ({ data }: IProps) => {
 };
 
 export default ProductsTable;
-const Table = styled.table`
-  border: ${(props) => props.theme.border};
-  th,
-  td {
-    vertical-align: middle;
-  }
-  font-size: 0.9rem;
-  tr {
-  }
-`;
-const TableBodyRow = styled.tr`
-  background-color: ${(props) => props.theme.subtleBackground};
 
-  &:hover {
-    background-color: ${(props) => props.theme.subtleFloating};
-  }
-`;
-const TableHead = styled.th<{ sortable: boolean }>`
-  text-align: center;
-  padding: 1rem;
-  transition: all 75ms ease-in-out;
-
-  &:hover {
-    color: ${(props) => (props.sortable ? props.theme.primary : "inherit")};
-    transform: ${(props) => props.sortable && "translateY(-1px)"};
-  }
-  /* background-color: ${(props) => props.theme.primary}; */
-  border-bottom: ${(props) => props.theme.border};
-`;
-const TableBodyData = styled.td`
-  border-bottom: ${(props) => props.theme.border};
-  padding: 1rem;
-  text-align: center;
-`;
-// const Container = styled.div`
-//   border-bottom: none;
-
-//   position: relative;
-//   .table {
-//     border-radius: 20px;
-//     border: ${(props) => props.theme.border};
-
-//     overflow-x: auto;
-//     overflow-y: hidden;
-//     border-radius: 20px;
-//     background-color: ${(props) => props.theme.subtleBackground};
-//   }
-//   .loading {
-//     position: absolute;
-//     z-index: 2;
-//     top: -14px;
-//     left: 15px;
-//   }
-// `;
 const SearchContainer = styled(Flex)`
   background-color: #fff;
   padding: 0.5rem;
@@ -263,12 +264,4 @@ const SearchContainer = styled(Flex)`
   .search-text {
     font-size: 0.9rem;
   }
-`;
-
-const Image = styled.img`
-  height: 50px;
-  width: 50px;
-  border-radius: 50px;
-  font-size: 0.6rem;
-  object-fit: cover;
 `;

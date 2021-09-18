@@ -4,13 +4,16 @@
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
 import "jest-styled-components";
+
 import { render } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createMemoryHistory } from "history";
 import { MemoryRouter, Router } from "react-router";
 import matchMediaPolyfill from "mq-polyfill";
+import "./testServer";
 // polyfill for match media not available in JSDOM
 matchMediaPolyfill(window);
+
 global.renderWithClient = () => {
   const queryClient = new QueryClient();
   return ({ children }) => (
@@ -19,6 +22,7 @@ global.renderWithClient = () => {
     </MemoryRouter>
   );
 };
+
 global.renderWithRouter = (renderComponent, route) => {
   const history = createMemoryHistory();
   if (route) {

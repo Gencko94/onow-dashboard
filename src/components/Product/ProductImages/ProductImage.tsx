@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import styled from "styled-components";
+import { customerUri } from "../../../constants";
 
 import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";
@@ -11,7 +12,6 @@ import { PRODUCT } from "../../../interfaces/products/products";
 import { ADD_PRODUCT_IMAGE } from "../../../interfaces/products/update-product";
 import extractError from "../../../utils/extractError";
 import MiniFileUploader from "../../../utils/MiniFileUploader";
-import { customerUri } from "../../../utils/queries";
 import Box from "../../reusable/Box/Box";
 import ProductImageGallery from "./ProductImageGallery";
 

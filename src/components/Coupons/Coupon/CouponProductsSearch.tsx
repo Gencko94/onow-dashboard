@@ -10,7 +10,7 @@ import Loader from "react-loader-spinner";
 import { PRODUCT } from "../../../interfaces/products/products";
 import { Control, Controller } from "react-hook-form";
 
-import { searchProducts } from "../../../utils/queries";
+import { searchProducts } from "../../../utils/queries/productQueries";
 import DefaultImage from "../../reusable/DefaultImage";
 import Heading from "../../StyledComponents/Heading";
 import Paragraph from "../../StyledComponents/Paragraph";

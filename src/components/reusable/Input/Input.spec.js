@@ -8,10 +8,11 @@ describe("Input Component", () => {
   it("Should Render Input Component with label ", () => {
     const { getByLabelText } = render(
       <ThemeProvider>
-        <Input label="Test Label" id="test" />
+        <Input label="Test Label" name="test" />
       </ThemeProvider>
     );
     expect(getByLabelText("Test Label")).toBeInTheDocument();
+    expect(getByLabelText("Test Label")).toHaveAttribute("name", "test");
   });
   it("Should Render adornments ", () => {
     const { getByTestId } = render(

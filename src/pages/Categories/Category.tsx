@@ -14,7 +14,11 @@ import {
   EDIT_CATEGORY,
 } from "../../interfaces/categories/categories";
 import extractError from "../../utils/extractError";
-import { deleteCategory, editCategory, getCategory } from "../../utils/queries";
+import {
+  deleteCategory,
+  editCategory,
+  getCategory,
+} from "../../utils/queries/categoriesQueries";
 import CategoryImage from "./CategoryImage";
 
 const Category = () => {

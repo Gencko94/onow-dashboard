@@ -10,7 +10,10 @@ import {
   CATEGORY,
   MINI_CATEGORY,
 } from "../../../interfaces/categories/categories";
-import { getCategories } from "../../../utils/queries";
+import {
+  getCategories,
+  getPaginatedCategories,
+} from "../../../utils/queries/categoriesQueries";
 import LoadingTable from "../../reusable/LoadingTable";
 import React from "react";
 import ProductCategoryItem from "./ProductCategoryItem";
@@ -33,7 +36,7 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
     isFetchingNextPage,
   } = useInfiniteQuery(
     "categories",
-    ({ pageParam = 1 }) => getCategories(pageParam),
+    ({ pageParam = 1 }) => getPaginatedCategories(pageParam),
     {
       keepPreviousData: true,
 

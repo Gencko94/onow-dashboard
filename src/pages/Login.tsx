@@ -1,57 +1,18 @@
-import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { Link, Redirect } from "react-router-dom";
 
 import { useContext } from "react";
 import { useTranslation, Trans } from "react-i18next/";
-import { LOGIN_FORM } from "../interfaces/auth/auth";
 import { AuthProvider } from "../contexts/AuthContext";
 import { LoginForm } from "../components/Login/LoginForm";
-import { useLogin } from "../hooks/data-hooks/useLogin";
 
 const Login = () => {
-  const { t, ready, i18n } = useTranslation(["login"]);
+  const { ready, i18n } = useTranslation(["login"]);
   const { user } = useContext(AuthProvider);
 
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { isSubmitting, errors },
-  } = useForm<LOGIN_FORM>({});
   const changeLanguage = (lng: string) => {
     if (ready) {
       i18n.changeLanguage(lng);
-    }
-  };
-  const { mutateAsync } = useLogin();
-
-  const onSubmit = async (data: LOGIN_FORM) => {
-    try {
-      await mutateAsync({
-        password: data.password,
-        login: data.login.toLowerCase(),
-      });
-    } catch (error: any) {
-      if (
-        error.response?.data.error === "Phone Number or Password is Missing"
-      ) {
-        setError("password", {
-          message: t("fields-missing-response"),
-        });
-        setError("login", {
-          message: t("fields-missing-response"),
-        });
-      } else if (error.response?.data.error === "INVALID_CREDENTIALS") {
-        setError("password", {
-          message: t("invalid-credentials"),
-        });
-        setError("login", {
-          message: t("invalid-credentials"),
-        });
-      } else {
-        // show unknown error
-      }
     }
   };
 
@@ -68,13 +29,7 @@ const Login = () => {
               <img src="/images/logo.svg" alt="logo" />
             </LogoContainer>
           </Header>
-          <LoginForm
-            isSubmitting={isSubmitting}
-            handleSubmit={handleSubmit}
-            onSubmit={onSubmit}
-            errors={errors}
-            register={register}
-          />
+          <LoginForm />
           <Footer>
             <Text>
               <Trans i18nKey="login:no-account">

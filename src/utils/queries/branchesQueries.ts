@@ -1,11 +1,11 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { customerUri } from "../../constants";
 import {
   BRANCH,
   BRANCH_ADDRESS,
   BRANCH_INFO,
   WORKING_HOURS,
 } from "../../interfaces/settings/branches/branches";
-import { customerUri } from "../queries";
 
 export const deleteBranch = async (
   id: string

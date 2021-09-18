@@ -16,14 +16,16 @@ interface IProps {
 const Toast = ({ text, btnText, closeFunction, type }: IProps) => {
   const { isDesktop } = useResponsive();
   return (
-    <Container type={type}>
+    <Container data-testid="toast" type={type}>
       {type === "error" ? (
         <RiErrorWarningLine size={isDesktop ? 40 : 30} />
       ) : (
         <IoIosCheckmarkCircleOutline size={isDesktop ? 40 : 30} />
       )}
       <div className="content">
-        <Heading tag="h6">{text}</Heading>
+        <Heading data-testid="toast-text" tag="h6">
+          {text}
+        </Heading>
 
         <Flex justify="flex-end">
           <Button

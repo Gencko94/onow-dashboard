@@ -24,7 +24,6 @@ export const miniCategories: MINI_CATEGORY[] = [
   },
   {
     id: 5,
-
     image: "/images/product.webp",
     name: {
       ar: "المنظفات",

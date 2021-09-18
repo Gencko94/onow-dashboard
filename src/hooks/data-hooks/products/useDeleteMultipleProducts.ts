@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import extractError from "../../../utils/extractError";
-import { deleteMultipleProducts } from "../../../utils/queries";
+import { deleteMultipleProducts } from "../../../utils/queries/productQueries";
 import useConfirmationModal from "../../useConfirmationModal/useConfirmationModal";
 import useToast from "../../useToast";
 

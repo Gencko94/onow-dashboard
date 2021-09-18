@@ -10,7 +10,10 @@ import Checkbox from "../reusable/Inputs/Checkbox";
 import { firstTabInfo } from "../AddProduct/CreateProductGeneralInfo/CreateProductGeneralInfo";
 import { NewProductContext } from "../../pages/Product/CreateNewProduct";
 import React, { useContext } from "react";
-import { getCategories } from "../../utils/queries";
+import {
+  getCategories,
+  getPaginatedCategories,
+} from "../../utils/queries/categoriesQueries";
 import LoadingTable from "../reusable/LoadingTable";
 import DefaultImage from "../reusable/DefaultImage";
 import EmptyTable from "../reusable/EmptyTable";
@@ -37,7 +40,7 @@ const AddCategoryModalBody = ({ control, errors }: IProps) => {
     isFetchingNextPage,
   } = useInfiniteQuery(
     "categories",
-    ({ pageParam = 1 }) => getCategories(pageParam),
+    ({ pageParam = 1 }) => getPaginatedCategories(pageParam),
     {
       keepPreviousData: true,
 
@@ -209,6 +212,7 @@ const CategoryItem = styled.div<{ active: boolean }>`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  margin: 0 -0.5rem;
   border-bottom: ${(props) => props.theme.border};
 
   .img {

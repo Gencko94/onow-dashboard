@@ -9,7 +9,10 @@ import React from "react";
 import { CATEGORY } from "../../interfaces/categories/categories";
 
 import LoadingTable from "./LoadingTable";
-import { getCategories } from "../../utils/queries";
+import {
+  getCategories,
+  getPaginatedCategories,
+} from "../../utils/queries/categoriesQueries";
 import EmptyTable from "./EmptyTable";
 import CategorySelectionItem from "../Categories/CategorySelectionItem";
 
@@ -34,7 +37,7 @@ const CategorySelection = ({
     isFetchingNextPage,
   } = useInfiniteQuery(
     "categories",
-    ({ pageParam = 1 }) => getCategories(pageParam, 5000),
+    ({ pageParam = 1 }) => getPaginatedCategories(pageParam, 5000),
     {
       getNextPageParam: (lastPage) => {
         if (lastPage.currentPage < lastPage.lastPage) {

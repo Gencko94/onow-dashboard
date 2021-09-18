@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import extractError from "../../../utils/extractError";
-import { deleteProduct } from "../../../utils/queries";
+import { deleteProduct } from "../../../utils/queries/productQueries";
 import useConfirmationModal from "../../useConfirmationModal/useConfirmationModal";
 import useToast from "../../useToast";
 
@@ -8,15 +8,15 @@ export const useDeleteProduct = () => {
   const queryClient = useQueryClient();
   const { handleCloseConfirmationModal } = useConfirmationModal();
   const { setToastStatus, handleCloseToast } = useToast();
-  const { mutateAsync, reset } = useMutation(deleteProduct, {
+  const { mutateAsync, reset, isSuccess } = useMutation(deleteProduct, {
     onSuccess: (data, productId) => {
       queryClient.invalidateQueries("products");
     },
   });
-  const handleDeleteProduct = async (id: number) => {
+  async function handleDeleteProduct(id: number) {
     handleCloseConfirmationModal?.();
     try {
-      await mutateAsync(id.toString());
+      await mutateAsync(id);
       setToastStatus?.({
         fn: () => {
           handleCloseToast?.();
@@ -51,6 +51,7 @@ export const useDeleteProduct = () => {
         });
       }
     }
-  };
-  return { handleDeleteProduct };
+  }
+
+  return { handleDeleteProduct, isSuccess };
 };
