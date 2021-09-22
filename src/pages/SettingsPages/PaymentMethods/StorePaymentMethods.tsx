@@ -1,11 +1,10 @@
 import { useState } from "react";
-import styled from "styled-components";
 import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
 import OnlinePayments from "../../../components/SettingsPage/StorePaymentMethods/OnlinePayments";
 import PaymentMethodsTabs from "../../../components/SettingsPage/StorePaymentMethods/PaymentMethodsTabs";
 
 const StorePaymentMethods = () => {
-  const [activeTab, setActiveTab] = useState<0>(0);
+  const [activeTab] = useState<0>(0);
   return (
     <div>
       <Breadcrumbs

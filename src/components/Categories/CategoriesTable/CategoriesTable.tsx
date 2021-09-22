@@ -78,7 +78,7 @@ const CategoriesTable = ({ data }: IProps) => {
         disableSortBy: true,
       },
     ],
-    []
+    [i18n.language, t]
   );
   const {
     getTableBodyProps,

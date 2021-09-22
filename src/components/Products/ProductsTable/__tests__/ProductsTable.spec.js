@@ -1,8 +1,8 @@
-import { screen, waitFor } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { useHistory } from "react-router";
 import { fakeProduct } from "../../../../fakeData/fakeData";
 import { useDeleteProduct } from "../../../../hooks/data-hooks/products/useDeleteProduct";
-import { render, simulateMouseClick, wait } from "../../../../test-utils";
+import { render, simulateMouseClick } from "../../../../test-utils";
 import ProductsTable from "../ProductsTable";
 
 jest.mock("react-router", () => ({

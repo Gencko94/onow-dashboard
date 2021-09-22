@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useMemo } from "react";
-import styled from "styled-components";
+
 import Flex from "../../StyledComponents/Flex";
 import { ApplicationProvider } from "../../../contexts/ApplicationContext";
-import { useDebounce } from "use-debounce/lib";
+// import { useDebounce } from "use-debounce/lib";
 
 import { useTable, useSortBy, Column, useRowSelect } from "react-table";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
@@ -27,12 +27,12 @@ const ProductsTable = ({ data }: IProps) => {
   // const { search } = useQueryParams();
   const { i18n, t } = useTranslation();
   const {
-    globalSearchBarValue,
-    handleChangeGlobalSearchBar,
+    // globalSearchBarValue,
+    // handleChangeGlobalSearchBar,
     globalSearchType,
     handleChangeGlobalSearchType,
   } = useContext(ApplicationProvider);
-  const [debouncedSearchValue] = useDebounce(globalSearchBarValue, 500);
+  // const [debouncedSearchValue] = useDebounce(globalSearchBarValue, 500);
   const { handleDeleteMultipleProducts, multipleDeleteLoading } =
     useDeleteMultipleProducts({});
   const columns = useMemo<Column<PRODUCT>[]>(
@@ -265,13 +265,3 @@ const ProductsTable = ({ data }: IProps) => {
 };
 
 export default ProductsTable;
-
-const SearchContainer = styled(Flex)`
-  background-color: #fff;
-  padding: 0.5rem;
-  border-radius: 6px;
-  margin: 1rem 0;
-  .search-text {
-    font-size: 0.9rem;
-  }
-`;

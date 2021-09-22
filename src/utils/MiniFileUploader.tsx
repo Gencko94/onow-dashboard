@@ -22,7 +22,6 @@ const MiniFileUploader = ({
   image,
   progress,
 }: IProps) => {
-  console.log(progress);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [placeholderImage, setPlaceholderImage] = useState<File | null>(null);

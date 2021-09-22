@@ -1,5 +1,5 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { MdSave } from "react-icons/md";
+
 import { useMutation } from "react-query";
 import styled from "styled-components";
 import useToast from "../../../hooks/useToast";
@@ -8,7 +8,7 @@ import extractError from "../../../utils/extractError";
 import { editProductPriceAndOptions } from "../../../utils/queries/productQueries";
 import Button from "../../reusable/Button";
 import Flex from "../../StyledComponents/Flex";
-import Heading from "../../StyledComponents/Heading";
+
 import Hr from "../../StyledComponents/Hr";
 import ProductOptions from "./ProductOptions";
 import ProductPricing from "./ProductPricing";

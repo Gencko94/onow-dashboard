@@ -74,7 +74,7 @@ const ProductCategoriesTable = ({
         },
       },
     ],
-    [data]
+    [i18n.language, t]
   );
   function getDefaultSelectedRows(): Record<string, boolean> {
     const obj: Record<string, boolean> = {};
@@ -89,49 +89,43 @@ const ProductCategoriesTable = ({
     // }
     // return {};
   }
-  const {
-    getTableBodyProps,
-    getTableProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    selectedFlatRows,
-  } = useTable(
-    {
-      columns,
-      data: data as CATEGORY[],
-      initialState: {
-        sortBy: [{ id: "category-id", desc: true }],
-        selectedRowIds: getDefaultSelectedRows(),
-      },
-    },
-    useSortBy,
-    useRowSelect,
-    (hooks) => {
-      hooks.visibleColumns.push((columns) => [
-        {
-          id: "selection",
-          disableSortBy: true,
-          accessor: "id",
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <Checkbox
-              data-testid="select-all-check"
-              {...getToggleAllRowsSelectedProps()}
-            />
-          ),
-          Cell: (instance: any) => {
-            return (
-              <Checkbox
-                data-testid={`select-${instance.row.original.id}`}
-                {...instance.row.getToggleRowSelectedProps()}
-              />
-            );
-          },
+  const { getTableBodyProps, getTableProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data: data as CATEGORY[],
+        initialState: {
+          sortBy: [{ id: "category-id", desc: true }],
+          selectedRowIds: getDefaultSelectedRows(),
         },
-        ...columns,
-      ]);
-    }
-  );
+      },
+      useSortBy,
+      useRowSelect,
+      (hooks) => {
+        hooks.visibleColumns.push((columns) => [
+          {
+            id: "selection",
+            disableSortBy: true,
+            accessor: "id",
+            Header: ({ getToggleAllRowsSelectedProps }) => (
+              <Checkbox
+                data-testid="select-all-check"
+                {...getToggleAllRowsSelectedProps()}
+              />
+            ),
+            Cell: (instance: any) => {
+              return (
+                <Checkbox
+                  data-testid={`select-${instance.row.original.id}`}
+                  {...instance.row.getToggleRowSelectedProps()}
+                />
+              );
+            },
+          },
+          ...columns,
+        ]);
+      }
+    );
   return (
     <Table noBorder {...getTableProps()}>
       <thead>

@@ -42,7 +42,6 @@ const CreateProductPricingAndOptions = () => {
     if (data.price_by_options === true) {
       let foundTrue = false;
       for (let i = 0; i < data.options.length; i++) {
-        console.log(data.options[i]);
         if (data.options[i].required === true) {
           foundTrue = true;
         }
@@ -56,16 +55,13 @@ const CreateProductPricingAndOptions = () => {
       updateData?.(data);
       setActiveTab?.(3);
     } else {
-      console.log("One Must be Required");
       methods.setError("options.0.required", {
         message: "Atleast one should be required",
       });
       methods.setFocus("options.0.required");
     }
   };
-  const onError: SubmitErrorHandler<secondTabProps> = (errors) => {
-    console.log(errors);
-  };
+  const onError: SubmitErrorHandler<secondTabProps> = (errors) => {};
 
   return (
     <FormProvider {...methods}>

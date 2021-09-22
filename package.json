@@ -1,5 +1,5 @@
 {
-  "name": "cra-starter-typescript",
+  "name": "onow-dashboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -61,13 +61,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test createproductgeneralinfo  --watch",
-    "lint": "eslint ."
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
+    "test": "react-scripts test createproductgeneralinfo",
+    "test:watch": "react-scripts test createproductgeneralinfo  --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "lint:staged": "lint-staged"
   },
   "browserslist": {
     "production": [
@@ -98,9 +96,18 @@
     "@types/react-transition-group": "^4.4.1",
     "@types/styled-components": "^5.1.14",
     "babel-plugin-styled-components": "^1.13.2",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.2.0",
+    "husky": "^7.0.0",
     "jest-styled-components": "^7.0.5",
+    "lint-staged": "^11.1.2",
     "mq-polyfill": "^1.1.8",
     "msw": "^0.35.0",
     "react-test-renderer": "^17.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

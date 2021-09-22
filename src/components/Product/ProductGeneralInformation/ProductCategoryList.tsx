@@ -4,16 +4,11 @@ import { Control, Controller, useWatch } from "react-hook-form";
 
 import { useInfiniteQuery } from "react-query";
 
-import { useTranslation } from "react-i18next";
-
 import {
   CATEGORY,
   MINI_CATEGORY,
 } from "../../../interfaces/categories/categories";
-import {
-  getCategories,
-  getPaginatedCategories,
-} from "../../../utils/queries/categoriesQueries";
+import { getPaginatedCategories } from "../../../utils/queries/categoriesQueries";
 import LoadingTable from "../../reusable/LoadingTable";
 import React from "react";
 import ProductCategoryItem from "./ProductCategoryItem";
@@ -27,14 +22,7 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
     control,
   });
 
-  const {
-    data,
-    status,
-    isFetching,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery(
+  const { data, status } = useInfiniteQuery(
     "categories",
     ({ pageParam = 1 }) => getPaginatedCategories(pageParam),
     {
@@ -49,9 +37,7 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
       },
     }
   );
-  const {
-    i18n: { language },
-  } = useTranslation();
+
   const categoryId = formValues.category?.id;
   function handleToggleCategories(
     category: MINI_CATEGORY,
@@ -59,10 +45,8 @@ const ProductCategoryList = ({ control, errors }: IProps) => {
   ) {
     const found = formValues.category?.id === category.id;
 
-    console.log(formValues);
     // console.log(found);
     if (found) {
-      console.log("found");
       onChange(null);
     } else {
       onChange({ name: category.name.en, id: category.id });

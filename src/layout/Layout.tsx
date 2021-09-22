@@ -36,7 +36,7 @@ const Layout: React.FC = ({ children }) => {
         handleCloseToast?.();
       }, 3000);
     }
-  }, [toastStatus?.open]);
+  }, [handleCloseToast, toastStatus?.open]);
 
   // Close Drawer when switching to mobile
   useEffect(() => {

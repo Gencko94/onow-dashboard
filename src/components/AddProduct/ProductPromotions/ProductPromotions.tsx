@@ -32,7 +32,7 @@ const ProductPromotions = () => {
     i18n: { language },
   } = useTranslation();
   const promotionType = watch("promotions.type");
-  const values = watch("promotions.values_skus");
+
   const options = [
     {
       name: {

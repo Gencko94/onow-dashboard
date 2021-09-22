@@ -26,7 +26,7 @@ const CategoryImage = ({ control, errors, setValue, id }: IProps) => {
     useConfirmationModal();
   const { handleCloseToast, setToastStatus } = useToast();
   const [progress, setProgress] = useState<number | null>(null);
-  console.log(progress);
+
   const updateImage = async (
     image: File,
     progressFn: (progress: number) => void

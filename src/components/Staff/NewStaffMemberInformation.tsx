@@ -7,9 +7,9 @@ import { useInfiniteQuery } from "react-query";
 import { getBranches } from "../../utils/queries";
 import Input from "../reusable/Input/Input";
 import PhoneInput from "../reusable/Inputs/PhoneInput";
-import { GroupTypeBase, Styles } from "react-select";
+
 import { GET_BRANCHES_RES } from "../SettingsPage/StoreBranches/BranchesList";
-import { useMemo } from "react";
+
 import Select from "../reusable/Select";
 import Box from "../reusable/Box/Box";
 import Grid from "../StyledComponents/Grid";
@@ -53,35 +53,7 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
       },
     }
   );
-  const selectStyles:
-    | Partial<Styles<any, false, GroupTypeBase<any>>>
-    | undefined = useMemo(() => {
-    return {
-      control: (provided: any, state: any) => ({
-        ...provided,
-        fontSize: "0.9rem",
-        minHeight: "35px",
-      }),
-      dropdownIndicator: (provided: any, state: any) => ({
-        ...provided,
-        padding: "6px",
-        display: "grid",
-      }),
-      option: (provided, state) => {
-        return {
-          ...provided,
-          fontSize: "1.9rem",
-        };
-      },
-      menu: (provided, state) => {
-        return {
-          ...provided,
 
-          zIndex: 200,
-        };
-      },
-    };
-  }, []);
   return (
     <Box type="titled" boxTitle="Staff Member Information">
       <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">
@@ -135,7 +107,6 @@ const NewStaffMemberInformation = ({ register, errors, control }: IProps) => {
           name="branches"
           rules={{ required: "Required" }}
           render={({ field: { onChange, value, ref } }) => {
-            console.log(value);
             return (
               <Select
                 errors={errors.branch_id}

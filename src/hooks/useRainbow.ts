@@ -25,9 +25,7 @@ const useRainbow = ({ intervalDelay = 1000 }) => {
           syntax: "<color>",
           inherits: false,
         });
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     }
   }, []);
   // Get an ever-incrementing number from another custom hook*

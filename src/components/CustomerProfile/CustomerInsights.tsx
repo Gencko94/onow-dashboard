@@ -1,13 +1,13 @@
 import { format, parseISO } from "date-fns";
 import { FiCalendar } from "react-icons/fi";
-import { MdAttachMoney } from "react-icons/md";
+
 import styled from "styled-components";
 import { CUSTOMER } from "../../interfaces/customers/customers";
 import Box from "../reusable/Box/Box";
 import Spacer from "../reusable/Spacer";
 import Flex from "../StyledComponents/Flex";
 import Grid from "../StyledComponents/Grid";
-import Heading from "../StyledComponents/Heading";
+
 import Paragraph from "../StyledComponents/Paragraph";
 
 interface IProps {

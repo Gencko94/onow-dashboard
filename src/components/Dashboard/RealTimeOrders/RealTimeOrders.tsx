@@ -41,7 +41,7 @@ const RealTimeOrders = () => {
     ],
     []
   );
-  const { data, isLoading } = useQuery<NEW_ORDERS>("new-orders", getNewOrders);
+  const { data } = useQuery<NEW_ORDERS>("new-orders", getNewOrders);
   return (
     <Container>
       <div className="title-container">

@@ -1,4 +1,3 @@
-import { IconType } from "react-icons/lib";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 

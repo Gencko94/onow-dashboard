@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import {
   FormProvider,
   SubmitErrorHandler,
@@ -12,7 +12,6 @@ import CreateProductBranches from "./CreateProductBranches";
 import CreateProductOrdering from "./CreateProductOrdering";
 
 import Button from "../../reusable/Button";
-import { NEW_PRODUCT } from "../../../interfaces/products/create-new-product";
 import { NewProductContext } from "../../../contexts/Product/NewProductContext";
 
 export interface thirdTabProps {
@@ -49,15 +48,13 @@ const CreateProductOrderingAndBranchAvailability = ({
       active: formValues?.active,
     },
   });
-  console.log(methods.watch());
+
   const onSubmit: SubmitHandler<thirdTabProps> = (data) => {
     updateData?.(data);
 
     submitForm({ ...formValues, ...data });
   };
-  const onError: SubmitErrorHandler<thirdTabProps> = (errors) => {
-    console.log(errors);
-  };
+  const onError: SubmitErrorHandler<thirdTabProps> = (errors) => {};
   // useEffect(() => {
   //   methods.setValue("branch_availability", formValues?.branch_availability);
   // }, []);

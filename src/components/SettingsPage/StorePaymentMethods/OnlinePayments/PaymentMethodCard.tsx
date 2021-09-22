@@ -81,54 +81,54 @@ const PaymentMethodCard = ({ gateway }: IProps) => {
 };
 
 export default PaymentMethodCard;
-const Container = styled.div`
-  border: ${(props) => props.theme.border};
-  background-color: ${(props) => props.theme.subtleBackground};
-  padding: 1rem;
-  border-radius: 6px;
-  display: grid;
-  grid-template-columns: 0.3fr 1fr;
-  gap: 0.5rem;
-  .gateway-identity {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
+// const Container = styled.div`
+//   border: ${(props) => props.theme.border};
+//   background-color: ${(props) => props.theme.subtleBackground};
+//   padding: 1rem;
+//   border-radius: 6px;
+//   display: grid;
+//   grid-template-columns: 0.3fr 1fr;
+//   gap: 0.5rem;
+//   .gateway-identity {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     flex-direction: column;
+//   }
 
-  .info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-  }
-  .about {
-    padding: 0 0.5rem;
-  }
-  .table {
-    border-collapse: collapse;
-    width: 100%;
-    th,
-    td {
-      border: ${(props) => props.theme.border};
-      text-align: center;
-      padding: 0.75rem;
-    }
-    th {
-      color: ${(props) => props.theme.primary};
-    }
-    td {
-      font-size: 0.9rem;
-    }
-  }
-  .method-identity {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    p {
-      margin: 0 0.25rem;
-    }
-  }
-`;
+//   .info {
+//     display: grid;
+//     grid-template-columns: 1fr 1fr;
+//     gap: 0.5rem;
+//   }
+//   .about {
+//     padding: 0 0.5rem;
+//   }
+//   .table {
+//     border-collapse: collapse;
+//     width: 100%;
+//     th,
+//     td {
+//       border: ${(props) => props.theme.border};
+//       text-align: center;
+//       padding: 0.75rem;
+//     }
+//     th {
+//       color: ${(props) => props.theme.primary};
+//     }
+//     td {
+//       font-size: 0.9rem;
+//     }
+//   }
+//   .method-identity {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     p {
+//       margin: 0 0.25rem;
+//     }
+//   }
+// `;
 const Table = styled.div`
   border-collapse: collapse;
   width: 100%;

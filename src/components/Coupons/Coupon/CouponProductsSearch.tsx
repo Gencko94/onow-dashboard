@@ -28,12 +28,8 @@ const CouponProductsSearch = ({ title, control, handleAddProduct }: IProps) => {
 
   const {
     data,
-    status,
-    isFetching,
+
     isLoading,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
   } = useInfiniteQuery(
     ["search-products", debouncedSearchValue],
     ({ pageParam = 1 }) => searchProducts(debouncedSearchValue, pageParam),

@@ -6,7 +6,7 @@ import { CUSTOMER } from "../../interfaces/customers/customers";
 import { useMutation, useQueryClient } from "react-query";
 import { editCustomer } from "../../utils/queries";
 import Input from "../reusable/Input/Input";
-import { useTranslation } from "react-i18next";
+
 import PhoneInput from "../reusable/Inputs/PhoneInput";
 
 import extractError from "../../utils/extractError";
@@ -36,9 +36,7 @@ const EditCustomerModal = ({ closeFunction, open, data }: IProps) => {
     control,
     formState: { errors },
   } = useForm<CUSTOMER>({ defaultValues: data });
-  const {
-    i18n: { language },
-  } = useTranslation();
+
   const queryClient = useQueryClient();
   const {
     mutateAsync: editMutation,
@@ -78,7 +76,6 @@ const EditCustomerModal = ({ closeFunction, open, data }: IProps) => {
     },
   });
   const onSubmit: SubmitHandler<CUSTOMER> = async (data) => {
-    console.log(data);
     await editMutation(data);
     setToastStatus?.({
       fn: () => {

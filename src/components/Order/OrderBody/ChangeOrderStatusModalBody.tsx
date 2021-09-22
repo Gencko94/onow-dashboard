@@ -32,10 +32,7 @@ const ChangeOrderStatusModalBody = ({ portal }: { portal: any }) => {
       }),
     };
   }, []);
-  const selectTypes = [
-    { id: 1, name: "Single Select" },
-    { id: 2, name: "Multiple Select" },
-  ];
+
   return (
     <Container>
       <div className="content">

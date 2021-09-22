@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Control, Controller } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 
 import { MdSubtitles } from "react-icons/md";
 
@@ -28,9 +27,6 @@ const CategoryInfo = ({
   setValue,
   watch,
 }: IProps) => {
-  const {
-    i18n: { language },
-  } = useTranslation();
   const formCategoryId = watch("parent_id");
   const nameEn: string = watch("name.en");
   const currentId: number = watch("id");
@@ -39,7 +35,7 @@ const CategoryInfo = ({
     if (nameEn) {
       setValue?.("slug", nameEn.toLowerCase().split(" ").join("-"));
     }
-  }, [nameEn]);
+  }, [nameEn, setValue]);
   return (
     <Grid columns="repeat(auto-fit,minmax(310px,1fr))" gap="1rem">
       <Box type="titled" boxTitle="Category Information">

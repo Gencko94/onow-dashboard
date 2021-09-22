@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+
 import { IoPricetagsOutline } from "react-icons/io5";
 import { MdSubtitles } from "react-icons/md";
 import { RiHandCoinLine } from "react-icons/ri";
@@ -30,10 +30,6 @@ const CreateProductOptionValue = ({
     register,
     watch,
   } = useFormContext<secondTabProps>();
-
-  const {
-    i18n: { language },
-  } = useTranslation();
 
   const options = watch(`options.${parentIndex}.values` as any);
   const optionsEnabled = watch("options_enabled");

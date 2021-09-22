@@ -55,12 +55,7 @@ interface IProps {
 const ProductImageGallery = ({ data }: IProps) => {
   const [loadingImage, setLoadingImage] = useState<File | null>(null);
 
-  const {
-    formState: { errors },
-    control,
-    watch,
-    setValue,
-  } = useForm<ADD_PRODUCT_IMAGE>({
+  const { control, watch, setValue } = useForm<ADD_PRODUCT_IMAGE>({
     defaultValues: { images: [] },
   });
   const queryClient = useQueryClient();
@@ -166,14 +161,12 @@ const ProductImageGallery = ({ data }: IProps) => {
         text: "Image Added Successfully",
         type: "success",
       });
-      console.log(res.data);
+
       setValue("images", [res.data.results, ...images]);
       // Update the product cache
       queryClient.setQueryData<PRODUCT | undefined>(
         ["product", data.id],
         (prev) => {
-          console.log(prev);
-          console.log(data.id);
           if (prev) {
             return {
               ...prev,

@@ -53,7 +53,6 @@ const CreateStaffMember = () => {
   });
   const roles = watch("roles");
   const onSubmit: SubmitHandler<NEW_STAFF_MEMBER> = async (data) => {
-    console.log(data);
     try {
       await createStaff({
         ...data,
@@ -69,9 +68,9 @@ const CreateStaffMember = () => {
         type: "success",
       });
       history.replace("/settings/staff");
-    } catch (error) {
-      if (error.response) {
-        const errors = JSON.parse(error.response.data.error);
+    } catch (error: any) {
+      if (error?.response) {
+        const errors = JSON.parse(error?.response.data.error);
         if (errors.email?.includes("The email has already been taken.")) {
           setError("email", {
             message: "The email has already been taken.",
@@ -95,7 +94,6 @@ const CreateStaffMember = () => {
           });
         }
       } else {
-        console.log(error);
         setToastStatus?.({
           fn: () => {
             reset();

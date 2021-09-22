@@ -1,5 +1,4 @@
 import { Controller } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 
 import { IoMdCash } from "react-icons/io";
 import { MdSmartphone, MdSubtitles } from "react-icons/md";
@@ -20,9 +19,7 @@ const BranchInformation = () => {
     control,
     watch,
   } = useFormContext();
-  const {
-    i18n: { language },
-  } = useTranslation();
+
   const codEnabled = watch("cod_enabled");
   return (
     <Box type="titled" boxTitle="Branch information">

@@ -3,7 +3,6 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { useContext } from "react";
 import { AuthProvider } from "../../../contexts/AuthContext";
 
-import IconButton from "../../reusable/IconButton";
 import Paragraph from "../../StyledComponents/Paragraph";
 
 import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";

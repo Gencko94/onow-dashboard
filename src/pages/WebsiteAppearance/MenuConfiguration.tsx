@@ -1,8 +1,5 @@
 import { useState } from "react";
 
-import { useTranslation } from "react-i18next";
-
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import Heading from "../../components/StyledComponents/Heading";
@@ -36,24 +33,19 @@ const MenuConfiguration = () => {
     },
   ]);
 
-  const history = useHistory();
-  const {
-    i18n: { language },
-  } = useTranslation();
   const toggleAccordionItem = useCallback(
     (toggledIndex: number) => {
-      console.log(toggledIndex, indices);
       if (indices.includes(toggledIndex)) {
         setIndices(
           indices.filter((currentIndex) => currentIndex !== toggledIndex)
         );
       } else {
-        console.log("push");
         setIndices((prev) => {
           return [...prev, toggledIndex];
         });
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [cards]
   );
   const moveCard = useCallback(

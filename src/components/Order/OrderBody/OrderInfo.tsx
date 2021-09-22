@@ -1,18 +1,16 @@
 import { parseISO } from "date-fns";
 import { format } from "date-fns/esm";
-import { useMemo, useRef, useState } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+
 import Select, { GroupTypeBase, Styles } from "react-select";
-import { CSSTransition } from "react-transition-group";
+
 import styled from "styled-components";
 import { orderStatuses } from "../../../fakeData/fakeOrderStatuses";
 import { ORDER_STATUS } from "../../../interfaces/orders/orders";
 
-import OrderStatusChip from "../../reusable/OrderStatusChip";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
-import ChangeOrderStatusModalBody from "./ChangeOrderStatusModalBody";
 
 interface IProps {
   date: string;
@@ -21,8 +19,6 @@ interface IProps {
 }
 
 const OrderInfo = ({ date, orderId, orderStatus }: IProps) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
   const {
     i18n: { language },
   } = useTranslation();
@@ -76,7 +72,7 @@ const OrderInfo = ({ date, orderId, orderStatus }: IProps) => {
         color: "#fff",
       }),
     };
-  }, []);
+  }, [orderStatus.id]);
   return (
     <Container>
       <Grid columns="1fr 1fr 1fr" gap="1rem" padding="0.5rem">

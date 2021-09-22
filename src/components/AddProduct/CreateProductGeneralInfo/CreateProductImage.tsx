@@ -6,7 +6,6 @@ import {
   SubmitHandler,
   useForm,
 } from "react-hook-form";
-import { AiOutlineCheckCircle } from "react-icons/ai";
 import { IoMdCloseCircle } from "react-icons/io";
 import styled from "styled-components";
 import { NewProductContext } from "../../../contexts/Product/NewProductContext";
@@ -17,7 +16,6 @@ import Button from "../../reusable/Button";
 import Spacer from "../../reusable/Spacer";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
-import Heading from "../../StyledComponents/Heading";
 import Paragraph from "../../StyledComponents/Paragraph";
 
 interface ImageProps {
@@ -33,18 +31,14 @@ const CreateProductImage = () => {
     },
   });
   const onSubmit: SubmitHandler<ImageProps> = (data) => {
-    console.log(data);
-
     setActiveTab?.(2);
     updateData?.(data);
   };
-  const onError: SubmitErrorHandler<ImageProps> = (errors) => {
-    console.log(errors);
-  };
+  const onError: SubmitErrorHandler<ImageProps> = (errors) => {};
   useEffect(() => {
     setValue("thumbnail", formValues?.thumbnail);
     setValue("images", formValues?.images);
-  }, []);
+  }, [formValues?.images, formValues?.thumbnail, setValue]);
   const thumbnail = watch("thumbnail");
   const images = watch("images");
   const setDefaultImage = (image: File) => {
@@ -58,13 +52,13 @@ const CreateProductImage = () => {
       );
     }
   };
-  const removeThumbnailImage = () => {
-    setValue("thumbnail", images[0]);
-    setValue(
-      "images",
-      images.filter((i) => i.lastModified !== images[0].lastModified)
-    );
-  };
+  // const removeThumbnailImage = () => {
+  //   setValue("thumbnail", images[0]);
+  //   setValue(
+  //     "images",
+  //     images.filter((i) => i.lastModified !== images[0].lastModified)
+  //   );
+  // };
   const removeImage = (image: File) => {
     setValue(
       "images",

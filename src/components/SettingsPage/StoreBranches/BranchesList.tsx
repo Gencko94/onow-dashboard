@@ -31,7 +31,7 @@ const BranchesList = () => {
 
   const {
     data,
-    status,
+
     isFetching,
     fetchNextPage,
     hasNextPage,
@@ -51,11 +51,7 @@ const BranchesList = () => {
     }
   );
   // Delete Mutation
-  const {
-    mutateAsync,
-    reset,
-    isLoading: deleteLoading,
-  } = useMutation(deleteBranch, {
+  const { mutateAsync, reset } = useMutation(deleteBranch, {
     onSuccess: (data, productId) => {
       queryClient.invalidateQueries("branches");
     },

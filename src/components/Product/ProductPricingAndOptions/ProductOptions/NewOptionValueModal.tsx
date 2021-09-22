@@ -14,14 +14,14 @@ import { NEW_OPTION_VALUE } from "../../../../interfaces/products/create-new-pro
 
 import { animated, useTransition } from "@react-spring/web";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
-const selectTypes = [
-  { value: "single", label: "Single Select" },
-  { value: "multiple", label: "Multiple Select" },
-];
-const requiredOptions = [
-  { value: false, label: "No" },
-  { value: true, label: "Yes" },
-];
+// const selectTypes = [
+//   { value: "single", label: "Single Select" },
+//   { value: "multiple", label: "Multiple Select" },
+// ];
+// const requiredOptions = [
+//   { value: false, label: "No" },
+//   { value: true, label: "Yes" },
+// ];
 // const modalStyles = {
 //   content: {
 //     inset: "240px",

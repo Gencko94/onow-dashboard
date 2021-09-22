@@ -25,7 +25,6 @@ const NewProductProvider: React.FC = ({ children }) => {
     category_id: [],
   });
   const updateData = (data: any) => {
-    console.log(formValues, "old");
     setFormValues((prev) => ({
       ...prev,
       ...data,

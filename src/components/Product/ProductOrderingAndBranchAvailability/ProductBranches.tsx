@@ -2,13 +2,13 @@ import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useInfiniteQuery } from "react-query";
-import styled from "styled-components";
+
 import { BRANCH } from "../../../interfaces/settings/branches/branches";
 import { getBranches } from "../../../utils/queries";
 import Box from "../../reusable/Box/Box";
 
 import CheckToggle from "../../reusable/CheckToggle";
-import Heading from "../../StyledComponents/Heading";
+
 import { FORM_PROPS } from "./ProductOrderingAndBranchAvailability";
 type GET_BRANCHES_RES = {
   data: BRANCH[];
@@ -16,22 +16,11 @@ type GET_BRANCHES_RES = {
   lastPage: number;
 };
 const ProductBranches = () => {
-  const {
-    control,
-    watch,
-    formState: { errors },
-  } = useFormContext<FORM_PROPS>();
+  const { control, watch } = useFormContext<FORM_PROPS>();
   const {
     i18n: { language },
   } = useTranslation();
-  const {
-    data,
-    status,
-    isFetching,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery<GET_BRANCHES_RES>(
+  const { data } = useInfiniteQuery<GET_BRANCHES_RES>(
     "branches",
     ({ pageParam = 1 }) => getBranches(pageParam),
     {
@@ -46,7 +35,6 @@ const ProductBranches = () => {
   );
   const allBranchesChecked = watch("branch_availability.all");
   const addedBranches = watch("branch_availability.branches");
-  console.log(addedBranches);
 
   const handleToggleBranches = (
     branch: BRANCH,
@@ -54,7 +42,6 @@ const ProductBranches = () => {
   ) => {
     const found = addedBranches.find((i: any) => i === branch.id);
 
-    console.log(addedBranches);
     if (!found) {
       onChange([...addedBranches, branch.id]);
     } else {

@@ -4,7 +4,7 @@ import { BiHomeAlt } from "react-icons/bi";
 import { FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import useResponsive from "../../hooks/useResponsive";
+
 import Heading from "../StyledComponents/Heading";
 import Paragraph from "../StyledComponents/Paragraph";
 
@@ -18,7 +18,7 @@ const Breadcrumbs = ({ children, withoutTitle }: IProps) => {
     t,
     i18n: { language },
   } = useTranslation();
-  const { isDesktop } = useResponsive();
+
   return (
     <Container>
       {!withoutTitle && (

@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import { useDeleteProduct } from "../../../hooks/data-hooks/products/useDeleteProduct";
 import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import Button from "../../reusable/Button";
-import IconButton from "../../reusable/IconButton";
+
 import Spacer from "../../reusable/Spacer";
 import Flex from "../../StyledComponents/Flex";
 

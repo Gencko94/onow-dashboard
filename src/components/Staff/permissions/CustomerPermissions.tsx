@@ -1,5 +1,5 @@
 import { Control, Controller, useWatch } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+
 import { FcConferenceCall } from "react-icons/fc";
 import styled from "styled-components";
 import { customerPermissions } from "../../../data/userPermissions";
@@ -12,7 +12,6 @@ interface IProps {
   setValue: any;
 }
 const CustomerPermissions = ({ control, setValue }: IProps) => {
-  const { t } = useTranslation();
   const permissionsValues: any = useWatch<STAFF_MEMBER>({
     control,
     name: "permissions",
@@ -84,13 +83,11 @@ const CustomerPermissions = ({ control, setValue }: IProps) => {
                         checked={permissionsValues.includes(key)}
                         onChange={(e) => {
                           if (permissionsValues.includes(key)) {
-                            console.log("remove");
                             setValue(
                               "permissions",
                               permissionsValues.filter((i: any) => i !== key)
                             );
                           } else {
-                            console.log("add", [...permissionsValues, key]);
                             setValue("permissions", [
                               ...permissionsValues,
                               key,

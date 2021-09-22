@@ -1,7 +1,6 @@
 import { fireEvent, waitFor } from "@testing-library/react";
 import { useGetCategories } from "../../../../hooks/data-hooks/categories/useGetCategories";
 import {
-  render,
   renderWithoutLayout,
   simulateMouseClick,
 } from "../../../../test-utils";

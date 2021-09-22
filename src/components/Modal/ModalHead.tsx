@@ -1,8 +1,6 @@
-import { GrClose } from "react-icons/gr";
 import { IoMdClose } from "react-icons/io";
 import styled from "styled-components";
-import Button from "../reusable/Button";
-import IconWrapper from "../reusable/Icon";
+
 import IconButton from "../reusable/IconButton";
 import Heading from "../StyledComponents/Heading";
 

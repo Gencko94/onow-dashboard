@@ -13,9 +13,9 @@ import {
   FcSupport,
   FcViewDetails,
 } from "react-icons/fc";
-import canVisitPage from "../../../utils/canVisitPage";
-import React, { useCallback, useContext, useMemo, useState } from "react";
-import { AuthProvider } from "../../../contexts/AuthContext";
+
+import React, { useCallback, useMemo, useState } from "react";
+// import { AuthProvider } from "../../../contexts/AuthContext";
 
 import Spacer from "../../reusable/Spacer";
 
@@ -43,7 +43,7 @@ export type SIDENAV_ITEM = {
 };
 const SideNav = () => {
   const { pathname } = useLocation();
-  const { user } = useContext(AuthProvider);
+  // const { user } = useContext(AuthProvider);
   const [indices, setIndices] = useState<number[]>([]);
   const toggleAccordionItem = useCallback(
     (toggledIndex: number) => {

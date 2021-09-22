@@ -11,7 +11,7 @@ import {
   FcDocument,
 } from "react-icons/fc";
 import { useHistory } from "react-router-dom";
-import { CSSTransition } from "react-transition-group";
+
 import styled from "styled-components";
 
 import SettingsCard from "../../reusable/SettingsCard";

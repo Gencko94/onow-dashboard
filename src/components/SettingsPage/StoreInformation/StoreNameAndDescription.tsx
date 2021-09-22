@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 
 import { MdSubtitles } from "react-icons/md";
 import { useMutation, useQueryClient } from "react-query";
@@ -49,12 +48,8 @@ const StoreNameAndDescription = ({ data }: StoreNameAndDescriptionProps) => {
       },
     }
   );
-  const {
-    i18n: { language },
-  } = useTranslation();
 
   const onSubmit = async (data: STORE_NAME_AND_DESCRIPTION) => {
-    console.log(data);
     try {
       await mutateAsync(data);
       handleCloseConfirmationModal?.();

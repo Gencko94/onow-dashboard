@@ -20,7 +20,7 @@ import {
   WORKING_HOURS_ARRAY,
 } from "../../../interfaces/settings/branches/branches";
 import extractError from "../../../utils/extractError";
-import { editBranch, getBranch } from "../../../utils/queries";
+import { getBranch } from "../../../utils/queries";
 import {
   deleteBranch,
   updateBranchInfo,
@@ -64,7 +64,6 @@ const Branch = () => {
       onError: (error) => {
         const { responseError } = extractError(error);
         if (responseError) {
-          console.log(responseError);
           setToastStatus?.({
             open: true,
             fn: handleCloseToast!,
@@ -83,7 +82,6 @@ const Branch = () => {
     });
   // Edit Branch Info
   const handleEditBranchInfo = async (formData: BRANCH_INFO) => {
-    console.log(formData);
     await editBranchInfoMutation({ info: formData, id: data!.id });
     setToastStatus?.({
       open: true,
@@ -120,7 +118,6 @@ const Branch = () => {
     onError: (error) => {
       const { responseError } = extractError(error);
       if (responseError) {
-        console.log(responseError);
         setToastStatus?.({
           open: true,
           fn: handleCloseToast!,
@@ -158,7 +155,7 @@ const Branch = () => {
     hours.forEach((day) => {
       newHours[Object.keys(day)[0]] = day[Object.keys(day)[0]];
     });
-    console.log(newHours);
+
     return newHours as WORKING_HOURS;
   };
 
@@ -176,7 +173,6 @@ const Branch = () => {
       onError: (error) => {
         const { responseError } = extractError(error);
         if (responseError) {
-          console.log(responseError);
           setToastStatus?.({
             open: true,
             fn: handleCloseToast!,
@@ -196,7 +192,6 @@ const Branch = () => {
 
   // Edit Branch Location
   const handleEditBranchWorkingHours = async (formData: WORKING_HOURS) => {
-    console.log(formData);
     await editBranchHoursMutation({
       id: data!.id,
       days: formData,
@@ -212,11 +207,8 @@ const Branch = () => {
 
   // Delete Logic
 
-  const {
-    mutateAsync: deleteMutation,
-    reset: resetDeleteMutation,
-    isLoading: deleteLoading,
-  } = useMutation(deleteBranch);
+  const { mutateAsync: deleteMutation, reset: resetDeleteMutation } =
+    useMutation(deleteBranch);
 
   const handleDeleteBranch = async () => {
     try {
@@ -233,9 +225,7 @@ const Branch = () => {
       handleCloseConfirmationModal?.();
       const { responseError, unknownError } = extractError(error);
       if (responseError) {
-        console.log(responseError);
       } else if (unknownError) {
-        console.log("here");
         setToastStatus?.({
           fn: () => {
             resetDeleteMutation();

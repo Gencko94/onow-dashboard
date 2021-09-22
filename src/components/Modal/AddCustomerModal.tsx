@@ -6,7 +6,7 @@ import { NEW_CUSTOMER } from "../../interfaces/customers/customers";
 import { useMutation, useQueryClient } from "react-query";
 import { createCustomer } from "../../utils/queries";
 import Input from "../reusable/Input/Input";
-import { useTranslation } from "react-i18next";
+
 import PhoneInput from "../reusable/Inputs/PhoneInput";
 import ModalTail from "./ModalTail";
 import extractError from "../../utils/extractError";
@@ -29,9 +29,7 @@ const AddCustomerModal = ({ closeFunction, open }: IProps) => {
     leave: { opacity: 0, y: 10 },
   });
   const { setToastStatus, handleCloseToast } = useToast();
-  const {
-    i18n: { language },
-  } = useTranslation();
+
   const queryClient = useQueryClient();
   const {
     register,

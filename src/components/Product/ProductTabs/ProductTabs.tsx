@@ -7,13 +7,7 @@ interface IProps {
   setActiveTab: Dispatch<SetStateAction<0 | 1 | 2 | 3 | 4>>;
   activeTab: 0 | 1 | 2 | 3 | 4;
 }
-const tabOptions = [
-  "General Product Info",
-  "Product Details",
-  "Product Variations & Pricing",
-  "Ordering Options",
-  "Additional Settings",
-];
+
 const ProductTabs = ({ setActiveTab, activeTab }: IProps) => {
   return (
     <Container>

@@ -65,10 +65,8 @@ const StaffMember = () => {
     },
   });
   const role = watch("role");
-  const permissions = watch("permissions");
-  console.log(permissions, "Acual Data");
+
   const onSubmit: SubmitHandler<STAFF_MEMBER> = async (data) => {
-    console.log(data);
     try {
       await editStaff(data);
       setToastStatus?.({
@@ -82,7 +80,6 @@ const StaffMember = () => {
     } catch (error) {
       const { responseError, unknownError } = extractError(error);
       if (responseError) {
-        console.log(responseError);
         setToastStatus?.({
           open: true,
           text: JSON.stringify(responseError),
@@ -110,7 +107,6 @@ const StaffMember = () => {
     } catch (error) {
       const { responseError, unknownError } = extractError(error);
       if (responseError) {
-        console.log(responseError);
         setToastStatus?.({
           open: true,
           text: "Something Went Wrong",

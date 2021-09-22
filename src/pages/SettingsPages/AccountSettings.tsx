@@ -49,7 +49,6 @@ const AccountSettings = () => {
     },
   });
   const onSubmit: SubmitHandler<USER> = async (data) => {
-    console.log(data);
     try {
       await updateUser({
         first_name: data.first_name,
@@ -63,7 +62,6 @@ const AccountSettings = () => {
       });
     } catch (error) {
       const { responseError } = extractError(error);
-      console.log(responseError);
 
       if (responseError) {
         if (responseError.phone?.includes("phone belongs to another account")) {

@@ -9,7 +9,6 @@ import { NewProductContext } from "../../../contexts/Product/NewProductContext";
 import Box from "../../reusable/Box/Box";
 import Input from "../../reusable/Input/Input";
 import Checkbox from "../../reusable/Inputs/Checkbox";
-import QuantityInput from "../../reusable/Inputs/QuantityInput";
 import Flex from "../../StyledComponents/Flex";
 import Grid from "../../StyledComponents/Grid";
 
@@ -25,13 +24,12 @@ const CreateProductNameAndDescription = () => {
   } = useFormContext<firstTabInfo>();
   const quantity = watch("quantity");
   const nameEn = watch("name.en");
-  console.log(errors);
 
   useEffect(() => {
     if (nameEn) {
       setValue?.("slug", nameEn.toLowerCase().split(" ").join("-"));
     }
-  }, [nameEn]);
+  }, [nameEn, setValue]);
   return (
     <Box type="titled" boxTitle="Product Naming & Description">
       <Grid columns="repeat(auto-fill,minmax(300px,1fr))" gap="1rem">

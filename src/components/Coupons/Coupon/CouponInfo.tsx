@@ -20,7 +20,7 @@ import { AiOutlineTag } from "react-icons/ai";
 
 import GithubInput from "../../reusable/Inputs/GithubInput";
 import Grid from "../../StyledComponents/Grid";
-import { format, parseISO } from "date-fns";
+import { parseISO } from "date-fns";
 
 import Box from "../../reusable/Box/Box";
 interface IProps {
@@ -61,7 +61,7 @@ const freeDeliveryOptions = [
     value: "1",
   },
 ];
-export default function CouponInfo<T>({ control, errors, register }: IProps) {
+export default function CouponInfo({ control, errors, register }: IProps) {
   const {
     i18n: { language },
   } = useTranslation();
@@ -187,8 +187,6 @@ export default function CouponInfo<T>({ control, errors, register }: IProps) {
           name="start_date"
           control={control}
           render={({ field: { onChange, value, ref } }) => {
-            console.log(parseISO("2021-09-16T21:00:00"), "initial value");
-            console.log(parseISO("2021-09-16T21:00:00.000Z"), "initial value");
             return (
               <DateInput
                 errors={errors?.start_date}

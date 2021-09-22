@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext } from "react";
 
 import ProductsTable from "../components/Products/ProductsTable/ProductsTable";
 import ProductsPanel from "../components/Products/ProductsPanel/ProductsPanel";
@@ -6,8 +6,6 @@ import LoadingTable from "../components/reusable/LoadingTable";
 import { useGetProducts } from "../hooks/data-hooks/products/useGetProducts";
 import { PRODUCTS_VIEW } from "../interfaces/products/products";
 import EmptyTable from "../components/reusable/EmptyTable";
-import { useTranslation } from "react-i18next";
-import { Column } from "react-table";
 
 type PRODUCTS_CONTEXT_PROPS = {
   view: PRODUCTS_VIEW;
@@ -17,10 +15,10 @@ export const ProductsProvider = createContext<Partial<PRODUCTS_CONTEXT_PROPS>>({
   view: "list",
 });
 const Products = () => {
-  const [view, setView] = useState<PRODUCTS_VIEW>("list");
-  const handleViewChange = (view: PRODUCTS_VIEW) => {
-    setView(view);
-  };
+  // const [view, setView] = useState<PRODUCTS_VIEW>("list");
+  // const handleViewChange = (view: PRODUCTS_VIEW) => {
+  //   setView(view);
+  // };
   const { data, status } = useGetProducts();
 
   return (

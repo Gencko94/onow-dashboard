@@ -1,5 +1,4 @@
 import { Control, SetFieldValue } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 
 import { MdSubtitles } from "react-icons/md";
 
@@ -12,27 +11,8 @@ interface IProps {
   setValue: SetFieldValue<any>;
   control: Control<any>;
 }
-const options = [
-  {
-    title: {
-      ar: "نسبة",
-      en: "Percent",
-    },
-    value: "percent",
-  },
-  {
-    title: {
-      ar: "مبلغ ثابت",
-      en: "Fixed Amount",
-    },
-    value: "fixed",
-  },
-];
-const BrandInfo = ({ control, errors, register, setValue }: IProps) => {
-  const {
-    i18n: { language },
-  } = useTranslation();
 
+const BrandInfo = ({ control, errors, register, setValue }: IProps) => {
   return (
     <Container>
       <div className="title-container">

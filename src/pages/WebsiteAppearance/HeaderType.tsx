@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
 import { FcOk } from "react-icons/fc";
 import { IoMdCloseCircle } from "react-icons/io";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
-import { useMutation, useQuery } from "react-query";
+import { useQuery } from "react-query";
 import styled from "styled-components";
 import Box from "../../components/reusable/Box/Box";
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
@@ -17,10 +16,7 @@ import Paragraph from "../../components/StyledComponents/Paragraph";
 import useConfirmationModal from "../../hooks/useConfirmationModal/useConfirmationModal";
 import FileUploader from "../../utils/FileUploader";
 import MiniFileUploader from "../../utils/MiniFileUploader";
-import {
-  getStoreLayoutSettings,
-  updateStoreLayoutSettings,
-} from "../../utils/queries/settingsQueries";
+import { getStoreLayoutSettings } from "../../utils/queries/settingsQueries";
 
 const HeaderType = () => {
   const { data } = useQuery("store-layout", getStoreLayoutSettings, {
@@ -32,7 +28,7 @@ const HeaderType = () => {
   );
   const { handleCloseConfirmationModal, setConfirmationModalStatus } =
     useConfirmationModal();
-  const { mutateAsync } = useMutation(updateStoreLayoutSettings);
+  // const { mutateAsync } = useMutation(updateStoreLayoutSettings);
   const onRemove = async (image: File) => {
     handleCloseConfirmationModal?.();
   };

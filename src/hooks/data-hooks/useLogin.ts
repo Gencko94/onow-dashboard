@@ -1,5 +1,5 @@
 import { UseFormSetError } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+
 import { useMutation, useQueryClient } from "react-query";
 import { useHistory, useLocation } from "react-router";
 import { LOGIN_FORM } from "../../interfaces/auth/auth";
@@ -10,7 +10,6 @@ interface IProps {
 }
 
 export const useLogin = ({ setError }: IProps) => {
-  const { t } = useTranslation(["login"]);
   const queryClient = useQueryClient();
   const history = useHistory();
   const location = useLocation<{ state: string }>();
@@ -22,9 +21,7 @@ export const useLogin = ({ setError }: IProps) => {
       history.replace(location.state ?? "/dashboard");
       if (location.state) {
         history.push(location.state);
-        console.log(location.state);
       } else {
-        console.log("hi");
       }
     },
   });

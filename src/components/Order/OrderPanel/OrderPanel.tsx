@@ -1,6 +1,3 @@
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBinLine } from "react-icons/ri";
-
 import Button from "../../reusable/Button";
 import Flex from "../../StyledComponents/Flex";
 

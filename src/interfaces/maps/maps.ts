@@ -1,13 +1,13 @@
-type TYPES =
-  | "street_address"
-  | "route"
-  | "political"
-  | "country"
-  | "administrative_area_level_1"
-  | "administrative_area_level_2"
-  | "locality"
-  | "sublocality"
-  | "neighborhood";
+// type TYPES =
+//   | "street_address"
+//   | "route"
+//   | "political"
+//   | "country"
+//   | "administrative_area_level_1"
+//   | "administrative_area_level_2"
+//   | "locality"
+//   | "sublocality"
+//   | "neighborhood";
 
 export type MapCoordinates = {
   lat: number;

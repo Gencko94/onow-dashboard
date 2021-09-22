@@ -21,7 +21,6 @@ export const getCategories = (): Promise<any> => {
   });
 };
 export const searchProducts = (value: string): Promise<any> => {
-  console.log(value);
   return new Promise((resolve) => {
     setTimeout(() => {
       if (value === "test") {

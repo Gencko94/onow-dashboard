@@ -2,7 +2,6 @@ import React, { forwardRef } from "react";
 import styled from "styled-components";
 
 import Heading from "../../StyledComponents/Heading";
-type DefaultDivProps = Omit<JSX.IntrinsicElements["div"], "ref">;
 
 interface BoxProps extends React.ComponentPropsWithoutRef<"div"> {
   type?: "titled" | "normal";

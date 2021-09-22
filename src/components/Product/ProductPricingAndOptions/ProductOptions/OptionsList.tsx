@@ -30,8 +30,7 @@ interface OptionsListProps {
 
 const OptionsList = ({ productOptions, productId }: OptionsListProps) => {
   const [options, setOptions] = useState(productOptions);
-  const { handleCloseConfirmationModal, setConfirmationModalStatus } =
-    useConfirmationModal();
+  const { handleCloseConfirmationModal } = useConfirmationModal();
   const { setToastStatus, handleCloseToast } = useToast();
 
   const [optionModalStatus, setOptionModalStatus] = useState<{

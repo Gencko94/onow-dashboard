@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import { BsPlus } from "react-icons/bs";
 
 import Button from "../../reusable/Button";
 import Flex from "../../StyledComponents/Flex";

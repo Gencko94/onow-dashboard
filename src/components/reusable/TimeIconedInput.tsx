@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { IconType } from "react-icons/lib";
 import { CSSTransition } from "react-transition-group";
 
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const hours = [
   "12:00",

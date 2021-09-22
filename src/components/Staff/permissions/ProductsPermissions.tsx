@@ -1,5 +1,5 @@
 import { Control, Controller, useWatch } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+
 import { FcTreeStructure } from "react-icons/fc";
 import styled from "styled-components";
 import { STAFF_MEMBER } from "../../../interfaces/staff/staff";
@@ -12,7 +12,6 @@ interface IProps {
   setValue: any;
 }
 const ProductsPermissions = ({ control, setValue }: IProps) => {
-  const { t } = useTranslation();
   const permissionsValues: any = useWatch<STAFF_MEMBER>({
     control,
     name: "permissions",

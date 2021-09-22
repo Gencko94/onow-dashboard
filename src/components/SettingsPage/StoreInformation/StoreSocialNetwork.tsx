@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+
 import { useMutation } from "react-query";
 
 import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
@@ -23,13 +23,10 @@ const StoreSocialNetwork = ({ data }: StoreSocialNetworkProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm<STORE_SOCIAL_NETWORK>({ defaultValues: { ...data } });
-  const {
-    i18n: { language },
-  } = useTranslation();
+
   const { mutateAsync, isLoading, reset } = useMutation(editStoreSocialMedia);
 
   const onSubmit = async (data: STORE_SOCIAL_NETWORK) => {
-    console.log(data);
     try {
       await mutateAsync(data);
       handleCloseConfirmationModal?.();

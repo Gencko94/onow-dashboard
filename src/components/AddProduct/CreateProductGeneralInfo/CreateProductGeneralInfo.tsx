@@ -1,7 +1,6 @@
 import Grid from "../../StyledComponents/Grid";
 import CreateProductCategories from "./CreateProductCategories";
-import ProductDescription from "./ProductDescription";
-import CreateProductImage from "./CreateProductImage";
+
 import CreateProductNameAndDescription from "./CreateProductNameAndDescription";
 import {
   FormProvider,
@@ -43,14 +42,10 @@ const CreateProductGeneralInfo = () => {
     },
   });
   const onSubmit: SubmitHandler<firstTabInfo> = (data) => {
-    console.log(data);
-
     updateData?.(data);
     setActiveTab?.(1);
   };
-  const onError: SubmitErrorHandler<firstTabInfo> = (errors) => {
-    console.log(errors);
-  };
+  const onError: SubmitErrorHandler<firstTabInfo> = (errors) => {};
 
   return (
     <FormProvider {...methods}>

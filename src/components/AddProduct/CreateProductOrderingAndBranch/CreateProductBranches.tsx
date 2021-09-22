@@ -15,14 +15,7 @@ type GET_BRANCHES_RES = {
   lastPage: number;
 };
 const CreateProductBranches = () => {
-  const {
-    data,
-    status,
-    isFetching,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery<GET_BRANCHES_RES>(
+  const { data } = useInfiniteQuery<GET_BRANCHES_RES>(
     "branches",
     ({ pageParam = 1 }) => getBranches(pageParam),
     {
@@ -37,9 +30,7 @@ const CreateProductBranches = () => {
   );
   const { control, watch } = useFormContext<thirdTabProps>();
   const allBranchesChecked = watch("branch_availability.all");
-  const allBranches = watch("branch_availability");
   const addedBranches = watch("branch_availability.branches", []);
-  console.log(allBranches);
   const {
     i18n: { language },
   } = useTranslation();
@@ -50,7 +41,6 @@ const CreateProductBranches = () => {
   ) => {
     const found = addedBranches.find((i: any) => i === branch.id);
 
-    console.log(addedBranches);
     if (!found) {
       onChange([...addedBranches, branch.id]);
     } else {

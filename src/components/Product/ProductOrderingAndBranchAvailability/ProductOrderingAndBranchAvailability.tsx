@@ -1,5 +1,4 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { MdSave } from "react-icons/md";
 import { useMutation } from "react-query";
 import useToast from "../../../hooks/useToast";
 import { PRODUCT } from "../../../interfaces/products/products";
@@ -25,7 +24,6 @@ export interface FORM_PROPS {
   };
 }
 const ProductOrderingAndBranchAvailability = ({ data }: IProps) => {
-  console.log(data);
   const { setToastStatus, handleCloseToast } = useToast();
   const { mutateAsync, isLoading, reset } = useMutation(
     editProductOrderingAndAvailability
@@ -43,7 +41,6 @@ const ProductOrderingAndBranchAvailability = ({ data }: IProps) => {
     },
   });
   const onSubmit: SubmitHandler<FORM_PROPS> = async (formData) => {
-    console.log(formData);
     try {
       await mutateAsync({
         prep_time: formData.prep_time,

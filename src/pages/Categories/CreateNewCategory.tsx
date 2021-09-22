@@ -43,7 +43,6 @@ const CreateNewCategory = () => {
   const { mutateAsync: createCategoryMutation, isLoading } =
     useMutation(createCategory);
   const onSubmit: SubmitHandler<NEW_CATEGORY_FORM> = async (data) => {
-    console.log(data);
     try {
       await createCategoryMutation({
         active: data.active ? 1 : 0,

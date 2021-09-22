@@ -2,13 +2,11 @@ import styled from "styled-components";
 import { ORDER } from "../../../interfaces/orders/orders";
 import Grid from "../../StyledComponents/Grid";
 import OrderItems from "../OrderItems/OrderItems";
-import OrderClientInformation from "./OrderClientInformation";
-import OrderDelivery from "./OrderDelivery";
+
 import OrderInfo from "./OrderInfo";
 import OrderNotes from "./OrderNotes";
-import OrderPayment from "./OrderPayment";
+
 import OrderSummary from "./OrderSummary";
-import OrderType from "./OrderType";
 
 interface IProps {
   data: ORDER;

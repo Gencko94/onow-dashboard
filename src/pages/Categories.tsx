@@ -1,4 +1,3 @@
-import CategoriesList from "../components/Categories/CategoriesList/CategoriesList";
 import CategoriesPanel from "../components/Categories/CategoriesPanel";
 import CategoriesTable from "../components/Categories/CategoriesTable/CategoriesTable";
 import EmptyTable from "../components/reusable/EmptyTable";
@@ -20,7 +19,7 @@ const Categories = () => {
       {status === "success" && data && data.length === 0 && (
         <EmptyTable text="No Categories Found" height="200px" />
       )}
-      <CategoriesList />
+      {/* <CategoriesList /> */}
     </>
   );
 };

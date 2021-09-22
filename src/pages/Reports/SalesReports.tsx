@@ -9,7 +9,7 @@ import Paragraph from "../../components/StyledComponents/Paragraph";
 import Hr from "../../components/StyledComponents/Hr";
 import ReportsDatePicker from "../../components/ReportsDatePicker/ReportsDatePicker";
 
-import { format, subDays } from "date-fns";
+import { subDays } from "date-fns";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import SwiperGrid from "../../components/SwiperGrid";

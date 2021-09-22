@@ -3,7 +3,6 @@ import { Controller, useFormContext } from "react-hook-form";
 import Box from "../../reusable/Box/Box";
 
 import GithubInput from "../../reusable/Inputs/GithubInput";
-import Heading from "../../StyledComponents/Heading";
 import Hr from "../../StyledComponents/Hr";
 import { secondTabProps } from "./CreateProductPricingAndOptions";
 import CreateProductOptionsList from "./OptionsList/CreateProductOptionsList";
@@ -17,7 +16,7 @@ const CreateProductOptions = () => {
     if (!optionsEnabled) {
       clearErrors("options");
     }
-  }, [optionsEnabled]);
+  }, [clearErrors, optionsEnabled]);
   return (
     <Box type="titled" boxTitle="Product Options">
       <Controller

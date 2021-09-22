@@ -1,9 +1,5 @@
-import { BsCheck } from "react-icons/bs";
-
-import { MdClose } from "react-icons/md";
 import styled from "styled-components";
 
-import Flex from "../StyledComponents/Flex";
 import Button from "../reusable/Button";
 import Spacer from "../reusable/Spacer";
 

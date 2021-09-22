@@ -8,7 +8,7 @@ import Checkbox from "../../../reusable/Inputs/Checkbox";
 import Button from "../../../reusable/Button";
 import useConfirmationModal from "../../../../hooks/useConfirmationModal/useConfirmationModal";
 import Flex from "../../../StyledComponents/Flex";
-import IconButton from "../../../reusable/IconButton";
+
 import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
 import Paragraph from "../../../StyledComponents/Paragraph";
 import Spacer from "../../../reusable/Spacer";

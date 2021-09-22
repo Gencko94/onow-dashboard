@@ -1,11 +1,6 @@
 import React, { Dispatch, SetStateAction, useMemo, useState } from "react";
-import { IoCloseCircleOutline } from "react-icons/io5";
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "react-query";
+
+import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
@@ -73,15 +68,14 @@ const CustomerList = ({
   const queryClient = useQueryClient();
 
   // Delete Mutation
-  const {
-    mutateAsync: deleteCustomerMutation,
-    reset,
-    isLoading: deleteLoading,
-  } = useMutation(deleteCustomer, {
-    onSuccess: (data, customerId) => {
-      queryClient.invalidateQueries("customers");
-    },
-  });
+  const { mutateAsync: deleteCustomerMutation, reset } = useMutation(
+    deleteCustomer,
+    {
+      onSuccess: (data, customerId) => {
+        queryClient.invalidateQueries("customers");
+      },
+    }
+  );
   // Multiple Delete Mutation
   const {
     mutateAsync: deleteMultiple,

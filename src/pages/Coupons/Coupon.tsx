@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useForm } from "react-hook-form";
-import { RiDeleteBinLine } from "react-icons/ri";
 import {
   QueryErrorResetBoundary,
   useMutation,
@@ -59,18 +58,11 @@ const Coupon = () => {
 
   // Delete Mutation
 
-  const {
-    mutateAsync: deleteMutation,
-    reset: resetDeleteMutation,
-    isLoading: deleteLoading,
-  } = useMutation(deleteCoupon);
+  const { mutateAsync: deleteMutation, reset: resetDeleteMutation } =
+    useMutation(deleteCoupon);
 
   const onSubmit = async (data: COUPON) => {
-    console.log({
-      ...data,
-    });
     try {
-      console.log("hi");
       await editMutation({
         ...data,
         name: data.name,
@@ -96,7 +88,6 @@ const Coupon = () => {
     } catch (error) {
       const { responseError } = extractError(error);
       if (responseError) {
-        console.log(responseError);
       } else {
         setToastStatus?.({
           open: true,
@@ -120,9 +111,7 @@ const Coupon = () => {
     } catch (error) {
       const { responseError, unknownError } = extractError(error);
       if (responseError) {
-        console.log(responseError);
       } else if (unknownError) {
-        console.log("here");
         setToastStatus?.({
           fn: () => {
             resetDeleteMutation();
@@ -135,7 +124,7 @@ const Coupon = () => {
       }
     }
   };
-  console.log(data);
+
   return (
     <QueryErrorResetBoundary>
       {({ reset }) => (

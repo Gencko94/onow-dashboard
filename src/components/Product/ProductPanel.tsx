@@ -16,7 +16,6 @@ import Paragraph from "../StyledComponents/Paragraph";
 import Sparkles from "../reusable/FancyStuff/Sparkles";
 import { Menu, MenuButton, MenuItem, MenuPopover } from "@reach/menu-button";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import Spacer from "../reusable/Spacer";
 const statuses = [
   { label: "Active", value: 1 },
   { label: "Hidden", value: "hidden" },
@@ -28,11 +27,7 @@ const ProductPanel = ({ id }: { id: number }) => {
   const queryClient = useQueryClient();
   const { setConfirmationModalStatus, handleCloseConfirmationModal } =
     useConfirmationModal();
-  const {
-    mutateAsync,
-    reset,
-    isLoading: deleteLoading,
-  } = useMutation(deleteProduct, {
+  const { mutateAsync, reset } = useMutation(deleteProduct, {
     onSuccess: (data, productId) => {
       queryClient.invalidateQueries("products");
     },

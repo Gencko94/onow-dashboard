@@ -1,13 +1,5 @@
-import { useState } from "react";
-import ClickAwayListener from "react-click-away-listener";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { AiOutlinePhone, AiOutlineWhatsApp } from "react-icons/ai";
-import { HiOutlineMail, HiOutlineArchive } from "react-icons/hi";
-import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
-import { BiUser } from "react-icons/bi";
-import Flex from "../../StyledComponents/Flex";
-import OrderStatusChip from "../../reusable/OrderStatusChip";
+
 import PaymentStatusChip from "../../reusable/PaymentStatusChip";
 import Grid from "../../StyledComponents/Grid";
 import { PAYMENT_STATUS } from "../../../interfaces/orders/orders";
@@ -18,7 +10,6 @@ interface IProps {
 }
 
 const OrderPayment = ({ paymentStatus, paymentType }: IProps) => {
-  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <Container>
       <div className="title-container">

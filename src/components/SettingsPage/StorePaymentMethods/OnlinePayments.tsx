@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { paymentGateways } from "../../../data/paymentMethods";
 import Box from "../../reusable/Box/Box";
 import Grid from "../../StyledComponents/Grid";

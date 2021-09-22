@@ -102,7 +102,6 @@ const CouponProducts = ({ control, errors, watch, setValue }: IProps) => {
                   }
                 }
                 onChange={(val) => {
-                  console.log(val);
                   onChange(parseInt(val.value));
                 }}
                 errors={errors?.couponCoverage}

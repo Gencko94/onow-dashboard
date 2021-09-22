@@ -10,7 +10,6 @@ import Box from "../../components/reusable/Box/Box";
 import Spacer from "../../components/reusable/Spacer";
 import Flex from "../../components/StyledComponents/Flex";
 import Button from "../../components/reusable/Button";
-import InputErrorMessage from "../../components/reusable/InputErrorMessage";
 
 const StoreSEO = () => {
   const {

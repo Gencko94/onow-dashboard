@@ -43,7 +43,8 @@ const MenuConfigItem = ({ item, index, moveCard, isLast }: IProps) => {
       isDragging: !!monitor.isDragging(),
     }),
   });
-  const [{}, dropRef] = useDrop<ITEM, null, DROP_COLLECTED_PROPS>({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, dropRef] = useDrop<ITEM, null, DROP_COLLECTED_PROPS>({
     accept: "card",
     hover: (item, monitor) => {
       if (!ref.current) {
@@ -59,7 +60,6 @@ const MenuConfigItem = ({ item, index, moveCard, isLast }: IProps) => {
 
       // Determine rectangle on screen
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      console.log(hoverBoundingRect);
 
       // Get vertical middle
       const hoverMiddleY =

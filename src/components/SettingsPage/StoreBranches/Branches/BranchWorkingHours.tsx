@@ -34,16 +34,13 @@ const BranchWorkingHours = () => {
 
     control,
   } = useFormContext();
-  const {
-    i18n: { language },
-    t,
-  } = useTranslation();
+  const { t } = useTranslation();
 
   const working_hours = useWatch({
     control,
     name: "working_hours",
   });
-  console.log(working_hours);
+
   return (
     <Box type="titled" boxTitle="Branch working hours">
       {days.map((day) => {

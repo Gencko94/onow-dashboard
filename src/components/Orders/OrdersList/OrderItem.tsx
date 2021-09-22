@@ -2,8 +2,8 @@ import { parseISO } from "date-fns";
 import format from "date-fns/format";
 import { useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
-import { BsCheck, BsThreeDotsVertical } from "react-icons/bs";
-import { ImProfile } from "react-icons/im";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
 import { RiDeleteBinLine } from "react-icons/ri";
 import { useHistory } from "react-router";
 import { CSSTransition } from "react-transition-group";
@@ -16,7 +16,6 @@ interface IProps {
 }
 
 const OrderItem = ({ order }: IProps) => {
-  console.log(order);
   const [actionsMenuOpen, setActionsMenuOpen] = useState(false);
   const history = useHistory();
   return (

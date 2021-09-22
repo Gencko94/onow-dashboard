@@ -1,23 +1,16 @@
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { BiCurrentLocation } from "react-icons/bi";
+import { useCallback, useContext, useMemo, useRef, useState } from "react";
+
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+
 import { ThemeContext } from "../../contexts/ThemeContext";
 import useCurrentLocation from "../../hooks/useCurrentLocation";
 import { Libraries } from "@react-google-maps/api/dist/utils/make-load-script-url";
-import { GoogleMapsResult, MapCoordinates } from "../../interfaces/maps/maps";
-import { useQuery } from "react-query";
-import { getGoogleMapsLocation } from "../../utils/queries";
+import { MapCoordinates } from "../../interfaces/maps/maps";
+// import { useQuery } from "react-query";
+// import { getGoogleMapsLocation } from "../../utils/queries";
 import Button from "./Button";
 import useToast from "../../hooks/useToast";
 
@@ -27,37 +20,35 @@ interface IProps {
   name: string;
 }
 const InlineMap = ({ mapCenter, setValue, name }: IProps) => {
-  console.log(mapCenter, "center");
   const [marker, setMarker] = useState<MapCoordinates>(mapCenter);
   const {
     i18n: { language },
     t,
   } = useTranslation(["map"]);
-  const { data, isLoading } = useQuery(
-    ["google-maps-result", marker, language],
-    () =>
-      getGoogleMapsLocation({
-        coords: {
-          lat: marker.lat,
-          lng: marker.lng,
-        },
-        language,
-      }),
-    {
-      onSuccess: (data) => {
-        setValue(name, { ...marker });
-      },
-    }
-  );
+  // const { data, isLoading } = useQuery(
+  //   ["google-maps-result", marker, language],
+  //   () =>
+  //     getGoogleMapsLocation({
+  //       coords: {
+  //         lat: marker.lat,
+  //         lng: marker.lng,
+  //       },
+  //       language,
+  //     }),
+  //   {
+  //     onSuccess: (data) => {
+  //       setValue(name, { ...marker });
+  //     },
+  //   }
+  // );
 
-  const [outOfBorder, setOutOfBorder] = useState<boolean>(false);
+  const [outOfBorder] = useState<boolean>(false);
   const { getCurrentLocation } = useCurrentLocation();
   const { handleCloseToast, setToastStatus } = useToast();
   const { colorMode } = useContext(ThemeContext);
   const libraries = useMemo<Libraries>(() => ["places"], []);
-  const history = useHistory();
 
-  const { isLoaded, loadError } = useJsApiLoader({
+  const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
     language,
@@ -159,8 +150,7 @@ const InlineMap = ({ mapCenter, setValue, name }: IProps) => {
               },
             ],
     };
-  }, []);
-  // console.log(data);
+  }, [colorMode]);
 
   const mapRef = useRef<any>();
   const onMapLoad = useCallback((map: any) => {

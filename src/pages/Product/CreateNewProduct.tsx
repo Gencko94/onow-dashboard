@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction, useState } from "react";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 
@@ -29,8 +28,6 @@ const CreateNewProduct = () => {
   const history = useHistory();
 
   const submitForm = async (data: any) => {
-    console.log(data);
-
     try {
       const regex = /^0+(?!$)/;
       await createProductMutation({
@@ -65,10 +62,8 @@ const CreateNewProduct = () => {
       });
       history.push("/products");
     } catch (error) {
-      console.log(error);
       const { responseError } = extractError(error);
       if (responseError) {
-        console.log(responseError);
       } else {
         setToastStatus?.({
           fn: () => {

@@ -1,19 +1,14 @@
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 
 import ClickAwayListener from "react-click-away-listener";
-import {
-  FaAngleDoubleLeft,
-  FaAngleDoubleRight,
-  FaAngleLeft,
-  FaAngleRight,
-} from "react-icons/fa";
+
 import { FiCalendar } from "react-icons/fi";
 import { VscFilter } from "react-icons/vsc";
 import Select from "react-select";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import { ORDERS_FILTERS } from "../../../../interfaces/orders/orders";
-import format from "date-fns/format";
+
 import { GrClose } from "react-icons/gr";
 
 interface IProps {

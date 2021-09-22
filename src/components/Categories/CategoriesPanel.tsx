@@ -1,4 +1,3 @@
-import { BiPlus } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 import { useHistory } from "react-router-dom";
 import Button from "../reusable/Button";

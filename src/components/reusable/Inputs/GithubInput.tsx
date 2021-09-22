@@ -1,4 +1,3 @@
-import { Control, Controller } from "react-hook-form";
 import styled from "styled-components";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";

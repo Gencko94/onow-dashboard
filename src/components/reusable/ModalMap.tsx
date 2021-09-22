@@ -15,12 +15,10 @@ import styled from "styled-components";
 
 import axios from "axios";
 
-import { useHistory } from "react-router-dom";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import useCurrentLocation from "../../hooks/useCurrentLocation";
 import { Libraries } from "@react-google-maps/api/dist/utils/make-load-script-url";
 import { GoogleMapsResult } from "../../interfaces/maps/maps";
-import { textChangeRangeIsUnchanged } from "typescript";
 export interface MapCoordinates {
   lat: number | null;
   lng: number | null;
@@ -31,20 +29,19 @@ const Map = () => {
     t,
   } = useTranslation(["map"]);
 
-  const [marker, setMarker] = useState<MapCoordinates>(() => {
+  const [marker] = useState<MapCoordinates>(() => {
     return {
       lat: null,
       lng: null,
     };
   });
-  //   const [address, setAddress] = useState<DELIVERY_ADDRESS | null>(null);
+  const [setAddress] = useState<any>(null);
 
   const [outOfBorder, setOutOfBorder] = useState<boolean>(false);
   const { getCurrentLocation } = useCurrentLocation();
 
   const { colorMode } = useContext(ThemeContext);
   const libraries = useMemo<Libraries>(() => ["places"], []);
-  const history = useHistory();
 
   const mapCenter = useMemo(() => {
     return {
@@ -52,7 +49,7 @@ const Map = () => {
       lng: 47.9774,
     };
   }, []);
-  const { isLoaded, loadError } = useJsApiLoader({
+  const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
     language,
@@ -154,20 +151,8 @@ const Map = () => {
               },
             ],
     };
-  }, []);
+  }, [colorMode]);
   const mapRef = useRef<any>();
-  const onMapLoad = useCallback((map: any) => {
-    mapRef.current = map;
-
-    getCurrentLocation(
-      ({ lat, lng }) => {
-        panTo({ lat, lng });
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }, []);
 
   const panTo = useCallback(({ lat, lng }: { lat: number; lng: number }) => {
     mapRef.current?.panTo({ lat, lng });
@@ -175,6 +160,19 @@ const Map = () => {
     // setMarkerInfoWindowDetails(null);
   }, []);
 
+  const onMapLoad = useCallback(
+    (map: any) => {
+      mapRef.current = map;
+
+      getCurrentLocation(
+        ({ lat, lng }) => {
+          panTo({ lat, lng });
+        },
+        (error) => {}
+      );
+    },
+    [getCurrentLocation, panTo]
+  );
   useEffect(() => {
     if (marker) {
       axios
@@ -223,24 +221,24 @@ const Map = () => {
               area = result.address_components[0].long_name;
             }
           });
-          //   setAddress(prev => ({
-          //     ...prev,
-          //     coords: {
-          //       lat: marker.lat,
-          //       lng: marker.lng,
-          //     },
-          //     mapAddress: `${street},${block},${area}`,
-          //     area,
-          //     block,
-          //     street,
-          //   }));
+          setAddress((prev: any) => ({
+            ...prev,
+            coords: {
+              lat: marker.lat,
+              lng: marker.lng,
+            },
+            mapAddress: `${street},${block},${area}`,
+            area,
+            block,
+            street,
+          }));
         })
         .catch((err) => {});
     } else {
       //   setAddress(null);
       // setMarkerInfoWindowDetails(null);
     }
-  }, [marker]);
+  }, [language, marker, outOfBorder, setAddress]);
 
   if (!isLoaded) return <div>loading</div>;
   return (
@@ -283,9 +281,7 @@ const Map = () => {
               ({ lat, lng }) => {
                 panTo({ lat, lng });
               },
-              (error) => {
-                console.log(error);
-              }
+              (error) => {}
             )
           }
         >
@@ -350,21 +346,6 @@ const ConfirmationContainer = styled.div`
   align-items: center;
 `;
 
-const ConfirmButton = styled.button<{ outOfBorder: boolean }>(
-  ({ theme: { breakpoints, font, border, text }, outOfBorder }) => `
-  border-radius: 12px;
-  font-size: 1rem;
-  background-color: ${outOfBorder ? "gray" : text};
-  color: ${textChangeRangeIsUnchanged};
-  padding: 0.5rem 0.5rem;
-  font-weight: ${font.bold};
-  border: ${border};
-  margin: 0 1rem;
-  @media ${breakpoints.md}{
-  font-size:1.1rem;
-  }
-`
-);
 const MapIcon = styled.button`
   display: flex;
   justify-content: center;

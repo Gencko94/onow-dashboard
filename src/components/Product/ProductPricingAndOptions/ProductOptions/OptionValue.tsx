@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import { useTranslation } from "react-i18next";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 import styled from "styled-components";
@@ -30,9 +29,6 @@ const OptionValue = ({
   setOptionValueModalStatus,
   value,
 }: IProps) => {
-  const {
-    i18n: { language },
-  } = useTranslation();
   const { handleCloseConfirmationModal, setConfirmationModalStatus } =
     useConfirmationModal();
 

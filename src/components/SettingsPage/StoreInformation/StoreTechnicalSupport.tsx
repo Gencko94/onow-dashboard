@@ -1,5 +1,5 @@
 import { Controller, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+
 import {
   AiOutlineMail,
   AiOutlinePhone,
@@ -31,15 +31,12 @@ const StoreTechnicalSupport = ({ data }: StoreTechnicalSupportProps) => {
     control,
     formState: { errors },
   } = useForm<STORE_TECHNICAL_SUPPORT>({ defaultValues: { ...data } });
-  const {
-    i18n: { language },
-  } = useTranslation();
+
   const { mutateAsync, isLoading, reset } = useMutation(
     editStoreTechnicalSupport
   );
 
   const onSubmit = async (data: STORE_TECHNICAL_SUPPORT) => {
-    console.log(data);
     try {
       await mutateAsync(data);
       handleCloseConfirmationModal?.();

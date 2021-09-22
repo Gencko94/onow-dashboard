@@ -50,9 +50,7 @@ const CreatePaymentGatewayAccount = () => {
   const {
     i18n: { language },
   } = useTranslation();
-  const onSubmit: SubmitHandler<CREATE_PAYMENT_GATEWAY> = (data) => {
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<CREATE_PAYMENT_GATEWAY> = (data) => {};
   const account_type = watch("account_type");
   return (
     <div id="parent">

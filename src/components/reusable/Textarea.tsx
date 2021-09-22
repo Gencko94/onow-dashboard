@@ -1,6 +1,5 @@
 import { UseFormRegister } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { IconType } from "react-icons/lib";
 
 import styled, { css } from "styled-components";
 

@@ -1,10 +1,9 @@
 import { BsArrowRightShort } from "react-icons/bs";
 import { RiFileList3Line } from "react-icons/ri";
 import styled from "styled-components";
-import Button from "../../reusable/Button";
+
 import Ripple from "../../reusable/Ripple";
-import Flex from "../../StyledComponents/Flex";
-import Heading from "../../StyledComponents/Heading";
+
 import Paragraph from "../../StyledComponents/Paragraph";
 
 const OverviewReportCard = () => {

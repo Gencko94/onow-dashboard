@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { useTranslation } from "react-i18next";
 import { CgMenu } from "react-icons/cg";
-import useResponsive from "../../../hooks/useResponsive";
+
 import { useContext } from "react";
 import { AuthProvider } from "../../../contexts/AuthContext";
 import Heading from "../../StyledComponents/Heading";
@@ -14,7 +14,7 @@ interface IProps {
 const NavIconsDesktop = ({ handleToggleDrawer }: IProps) => {
   const { user } = useContext(AuthProvider);
   const { i18n } = useTranslation();
-  const { isDesktop } = useResponsive();
+
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
   };

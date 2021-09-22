@@ -1,11 +1,7 @@
-import { useTranslation } from "react-i18next";
 import { AiOutlineVerticalAlignTop } from "react-icons/ai";
 import styled from "styled-components";
 
 const ScrollToTop = () => {
-  const {
-    i18n: { language },
-  } = useTranslation();
   return (
     <Container
       onClick={() => {

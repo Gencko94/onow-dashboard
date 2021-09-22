@@ -1,26 +1,27 @@
-import ProductsPanelActions from "./ProductsPanelActions/ProductsPanelActions";
-import { useHistory } from "react-router";
+// import ProductsPanelActions from "./ProductsPanelActions/ProductsPanelActions";
+// import { useHistory } from "react-router";
 
 import Flex from "../../StyledComponents/Flex";
-import Button from "../../reusable/Button";
+// import Button from "../../reusable/Button";
 
 import Heading from "../../StyledComponents/Heading";
-import { IoMdAdd } from "react-icons/io";
-import IconWrapper from "../../reusable/Icon";
-import { useState } from "react";
+// import { IoMdAdd } from "react-icons/io";
+// import IconWrapper from "../../reusable/Icon";
+// import { useState } from "react";
 
 const ProductsPanel = () => {
-  const [coords, setCoords] = useState<Partial<{ top: number; left: number }>>(
-    {}
-  ); // takes current button coordinates
-  const [isOn, setOn] = useState(false); // toggles button visibility
-  const history = useHistory();
+  // const [coords, setCoords] = useState<Partial<{ top: number; left: number }>>(
+  //   {}
+  // );
+  // takes current button coordinates
+  // const [isOn, setOn] = useState(false); // toggles button visibility
+  // const history = useHistory();
   return (
     <Flex justify="space-between" items="center" margin="1rem 0">
       <Heading tag="h2" type="large-title">
         Products
       </Heading>
-      <Button
+      {/* <Button
         onClick={() => history.push("/products/product/create")}
         color="primary"
         withTransition
@@ -40,7 +41,7 @@ const ProductsPanel = () => {
       >
         <IconWrapper Icon={IoMdAdd} />
         Create New Product
-      </Button>
+      </Button> */}
       {/* {isOn && (
         <Portal>
           <TooltipPopover coords={coords}>

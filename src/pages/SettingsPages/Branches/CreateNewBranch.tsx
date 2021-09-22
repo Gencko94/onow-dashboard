@@ -1,5 +1,4 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { BiPlus } from "react-icons/bi";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 import Breadcrumbs from "../../../components/reusable/Breadcrumbs";
@@ -44,9 +43,8 @@ const CreateNewBranch = () => {
   });
 
   const onSubmit: SubmitHandler<NEW_BRANCH> = async (data) => {
-    console.log(data);
     try {
-      const regex = /^0+(?!$)/;
+      // const regex = /^0+(?!$)/;
       await mutateAsync({ ...data, country_id: 1 });
       setToastStatus?.({
         open: true,
@@ -56,11 +54,9 @@ const CreateNewBranch = () => {
       });
       history.replace("/settings/branches");
     } catch (error) {
-      const { responseError, unknownError } = extractError(error);
+      const { responseError } = extractError(error);
       if (responseError) {
-        console.log(responseError);
       } else {
-        console.log(unknownError);
         setToastStatus?.({
           open: true,
           fn: handleCloseToast!,

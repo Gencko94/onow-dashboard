@@ -1,5 +1,4 @@
 import { useFormContext } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 
 import styled from "styled-components";
 
@@ -20,11 +19,9 @@ const BranchLocation = () => {
     watch,
     setValue,
   } = useFormContext();
-  const {
-    i18n: { language },
-  } = useTranslation();
+
   const coords = watch("address.coords");
-  console.log(coords, "coods");
+
   return (
     <Box type="titled" boxTitle="Branch location">
       <Grid columns="repeat(auto-fit,minmax(300px,1fr))" gap="1rem">

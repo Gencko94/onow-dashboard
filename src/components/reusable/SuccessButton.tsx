@@ -1,6 +1,5 @@
-import { BiPlus } from "react-icons/bi";
 import { MdCheck } from "react-icons/md";
-import { useHistory } from "react-router";
+
 import styled from "styled-components";
 
 interface IProps {

@@ -1,14 +1,11 @@
-import { useFormContext } from "react-hook-form";
-import { FORM_PROPS } from "./ProductGeneralInformation";
+// import { useFormContext } from "react-hook-form";
+// import { FORM_PROPS } from "./ProductGeneralInformation";
 import Box from "../../reusable/Box/Box";
-import { useGetCategories } from "../../../hooks/data-hooks/categories/useGetCategories";
-import ProductCategoriesTable from "./ProductCategoriesTable";
+// import { useGetCategories } from "../../../hooks/data-hooks/categories/useGetCategories";
+
 const ProductCategories = () => {
-  const {
-    formState: { errors },
-    control,
-  } = useFormContext<FORM_PROPS>();
-  const { data } = useGetCategories();
+  // const {} = useFormContext<FORM_PROPS>();
+  // const { data } = useGetCategories();
   return (
     <Box disabledContentPadding type="titled" boxTitle="Product Category">
       {/* {data && <ProductCategoriesTable data={data} />} */}

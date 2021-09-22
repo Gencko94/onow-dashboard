@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
+
 import Spinner from "react-loader-spinner";
 import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
@@ -43,12 +43,12 @@ const CouponsList = () => {
     ],
     []
   );
-  const [sortBy, setSortBy] = useState({
+  const [sortBy] = useState({
     by: "orderDate",
     order: "desc",
   });
   const history = useHistory();
-  const { t } = useTranslation();
+
   const {
     data,
     isFetchingNextPage,
@@ -70,11 +70,7 @@ const CouponsList = () => {
     }
   );
   // Delete Mutation
-  const {
-    mutateAsync,
-    reset,
-    isLoading: deleteLoading,
-  } = useMutation(deleteCoupon, {
+  const { mutateAsync, reset } = useMutation(deleteCoupon, {
     onSuccess: (data, couponId, context) => {
       queryClient.invalidateQueries(["coupons", sortBy]);
     },

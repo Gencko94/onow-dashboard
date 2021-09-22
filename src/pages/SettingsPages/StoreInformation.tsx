@@ -12,7 +12,7 @@ const StoreInformation = () => {
   const { data } = useQuery("store-information", getStoreInformation, {
     suspense: true,
   });
-  console.log(data);
+
   return (
     <div>
       <Heading tag="h5" type="large-title">

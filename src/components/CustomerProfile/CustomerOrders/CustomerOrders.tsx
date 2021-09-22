@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { useInfiniteQuery } from "react-query";
-import styled from "styled-components";
 import { GET_ORDERS_BY_CUSTOMER_RESPONSE } from "../../../interfaces/orders/orders";
 import { ORDER_SORT } from "../../../pages/Orders";
 import { getOrdersByCustomer } from "../../../utils/queries";
@@ -168,23 +167,3 @@ const CustomerOrders = ({ customerId }: IProps) => {
 };
 
 export default CustomerOrders;
-
-const Container = styled.div(
-  ({ theme: { breakpoints, primary, shadow } }) => `
-  margin: 2rem 0;
-  .title-container {
-    padding: 1rem 0;
-    color: ${primary};
-  }
-  .box {
-    background-color: #fff;
-    box-shadow: ${shadow};
-    border-radius: 6px;
-    
-   
-  }
-  @media ${breakpoints.md} {
-    
-  }
-  `
-);

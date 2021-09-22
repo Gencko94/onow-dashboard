@@ -13,10 +13,7 @@ import {
 } from "../../../interfaces/categories/categories";
 import Checkbox from "../../reusable/Inputs/Checkbox";
 
-import {
-  getCategories,
-  getPaginatedCategories,
-} from "../../../utils/queries/categoriesQueries";
+import { getPaginatedCategories } from "../../../utils/queries/categoriesQueries";
 import DefaultImage from "../../reusable/DefaultImage";
 import LoadingTable from "../../reusable/LoadingTable";
 import React from "react";
@@ -30,15 +27,8 @@ const CouponCategoryList = ({ control, errors }: IProps) => {
     control,
     name: "special_categories",
   });
-  console.log(special_categories, "special Categories");
-  const {
-    data,
-    status,
-    isFetching,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery(
+
+  const { data, status } = useInfiniteQuery(
     "categories",
     ({ pageParam = 1 }) => getPaginatedCategories(pageParam),
     {
@@ -67,7 +57,6 @@ const CouponCategoryList = ({ control, errors }: IProps) => {
     // console.log(formValues);
     // console.log(found);
     if (found) {
-      console.log("found");
       onChange(special_categories.filter((id: number) => id !== category.id));
     } else {
       onChange([...special_categories, category.id]);

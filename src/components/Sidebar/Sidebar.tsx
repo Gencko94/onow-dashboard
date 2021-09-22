@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import SidebarOnowLogo from "./OnowLogo/SidebarOnowLogo";
 import ProjectSwitcher from "./ProjectSwitcher/ProjectSwitcher";
 import SideNav from "./SideNav/SideNav";

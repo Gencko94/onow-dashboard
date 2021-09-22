@@ -3,8 +3,7 @@ import { useTranslation } from "react-i18next";
 import { RiHandCoinLine } from "react-icons/ri";
 
 import styled, { css } from "styled-components";
-import Flex from "../../StyledComponents/Flex";
-import Checkbox from "./Checkbox";
+
 interface BaseInput {
   /**
    * 	An object with field errors. Obtainable from ```formState.errors```

@@ -68,7 +68,7 @@ export const getProduct = async (id: number): Promise<PRODUCT> => {
 //Create
 export const createProduct = async (product: NEW_PRODUCT) => {
   const t = localStorage.getItem("dshtid");
-  console.log(product);
+
   const formData = new FormData();
   // Appending Form Data
   formData.append("name", JSON.stringify(product.name));
@@ -245,7 +245,6 @@ export const editProductOption = async ({
   productId: number;
   option: PRODUCT_OPTION;
 }): Promise<PRODUCT_OPTION> => {
-  console.log(option);
   const t = localStorage.getItem("dshtid");
   const config = {
     headers: {

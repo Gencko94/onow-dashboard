@@ -20,8 +20,7 @@ interface IProps {
 }
 
 const ProductImage = ({ data }: IProps) => {
-  const { handleCloseConfirmationModal, setConfirmationModalStatus } =
-    useConfirmationModal();
+  const { handleCloseConfirmationModal } = useConfirmationModal();
   const { handleCloseToast, setToastStatus } = useToast();
   const [progress, setProgress] = useState<number | null>(null);
 

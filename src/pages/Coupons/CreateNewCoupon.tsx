@@ -62,11 +62,9 @@ const CreateNewCoupon = () => {
       enabled: true,
     },
   });
-  console.log(watch());
 
   const { mutateAsync, isLoading } = useMutation(createCoupon);
   const onSubmit: SubmitHandler<NEW_COUPON_FORM> = async (data) => {
-    console.log(data);
     try {
       const regex = /^0+(?!$)/;
       await mutateAsync({
@@ -90,7 +88,7 @@ const CreateNewCoupon = () => {
       });
       history.replace("/coupons");
     } catch (error) {
-      const { responseError, unknownError } = extractError(error);
+      const { responseError } = extractError(error);
       if (responseError) {
         if (
           responseError?.code?.includes("The code has already been taken.") ||
@@ -101,7 +99,6 @@ const CreateNewCoupon = () => {
           });
         }
       } else {
-        console.log(unknownError);
         setToastStatus?.({
           open: true,
           fn: handleCloseToast!,

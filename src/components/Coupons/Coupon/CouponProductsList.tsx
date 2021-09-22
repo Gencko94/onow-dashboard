@@ -1,6 +1,6 @@
 import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { MdCancel } from "react-icons/md";
+
 import styled from "styled-components";
 import { PRODUCT } from "../../../interfaces/products/products";
 import Button from "../../reusable/Button";

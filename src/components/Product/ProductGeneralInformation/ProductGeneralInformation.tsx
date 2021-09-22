@@ -1,5 +1,4 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { MdSave } from "react-icons/md";
 import { useMutation } from "react-query";
 import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import useToast from "../../../hooks/useToast";

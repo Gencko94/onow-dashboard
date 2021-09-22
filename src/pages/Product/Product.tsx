@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router";
-import styled from "styled-components";
-import ProductPromotions from "../../components/AddProduct/ProductPromotions/ProductPromotions";
+// import ProductPromotions from "../../components/AddProduct/ProductPromotions/ProductPromotions";
 import ProductGeneralInformation from "../../components/Product/ProductGeneralInformation/ProductGeneralInformation";
 import ProductImaging from "../../components/Product/ProductImages/ProductImaging";
 import ProductOrderingAndBranchAvailability from "../../components/Product/ProductOrderingAndBranchAvailability/ProductOrderingAndBranchAvailability";
@@ -35,12 +34,3 @@ const Product = () => {
 };
 
 export default Product;
-
-const Wrapper = styled.div(
-  ({ theme: { breakpoints, shadow } }) => `
-
-  
-  
- 
-  `
-);

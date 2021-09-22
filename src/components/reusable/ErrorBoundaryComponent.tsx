@@ -15,7 +15,6 @@ const ErrorBoundaryComponent = ({ resetErrorBoundary, error }: IProps) => {
     } else if (error.response.status === 401) {
     }
   }
-  console.log(error);
   return (
     <Container>
       <img className="img" alt="something-went-wrong" src="/images/500.svg" />

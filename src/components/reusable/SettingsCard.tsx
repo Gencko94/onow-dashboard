@@ -1,5 +1,4 @@
 import { IconType } from "react-icons/lib";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import useResponsive from "../../hooks/useResponsive";
 import Heading from "../StyledComponents/Heading";

@@ -2,17 +2,12 @@ import styled from "styled-components";
 
 import { useInfiniteQuery } from "react-query";
 
-import { useTranslation } from "react-i18next";
-
 import React from "react";
 
 import { CATEGORY } from "../../interfaces/categories/categories";
 
 import LoadingTable from "./LoadingTable";
-import {
-  getCategories,
-  getPaginatedCategories,
-} from "../../utils/queries/categoriesQueries";
+import { getPaginatedCategories } from "../../utils/queries/categoriesQueries";
 import EmptyTable from "./EmptyTable";
 import CategorySelectionItem from "../Categories/CategorySelectionItem";
 
@@ -28,14 +23,7 @@ const CategorySelection = ({
   onChange,
   currentId,
 }: IProps) => {
-  const {
-    data,
-    status,
-    isFetching,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery(
+  const { data, status } = useInfiniteQuery(
     "categories",
     ({ pageParam = 1 }) => getPaginatedCategories(pageParam, 5000),
     {
@@ -48,9 +36,6 @@ const CategorySelection = ({
       },
     }
   );
-  const {
-    i18n: { language },
-  } = useTranslation();
 
   function handleToggleCategories(
     category: CATEGORY,
@@ -60,7 +45,6 @@ const CategorySelection = ({
 
     // console.log(found);
     if (found) {
-      console.log("found");
       onChange(null);
     } else {
       onChange(category.id);

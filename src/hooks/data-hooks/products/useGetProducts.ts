@@ -1,5 +1,4 @@
 import { useInfiniteQuery, useQuery } from "react-query";
-import { PRODUCT } from "../../../interfaces/products/products";
 import {
   getProducts,
   getPaginatedProducts,

@@ -1,4 +1,3 @@
-import { string } from "yup/lib/locale";
 import { PAYMENT_GATEWAY } from "../interfaces/settings/payment-methods/payment-methods";
 
 export const paymentGateways: PAYMENT_GATEWAY[] = [

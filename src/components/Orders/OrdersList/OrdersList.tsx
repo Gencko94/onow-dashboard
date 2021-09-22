@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useMemo } from "react";
 import { InfiniteData } from "react-query";
 import styled from "styled-components";
-import { GET_ORDERS_RESPONSE, ORDER } from "../../../interfaces/orders/orders";
+import { GET_ORDERS_RESPONSE } from "../../../interfaces/orders/orders";
 import { ORDER_SORT } from "../../../pages/Orders";
-import Button from "../../reusable/Button";
+
 import ExportAs from "../../reusable/ExportAs";
 import TableHead from "../../reusable/TableHead/TableHead";
 import OrderItem from "./OrderItem";
@@ -100,7 +100,7 @@ const OrdersList = ({ data, setSortBy, sortBy }: IProps) => {
         sortable: false,
       },
     ],
-    [sortBy]
+    [setSortBy, sortBy.by, sortBy.order]
   );
   return (
     <Container>

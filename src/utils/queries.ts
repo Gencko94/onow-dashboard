@@ -5,14 +5,9 @@ import { GET_GOOGLE_MAP_DATA, MapCoordinates } from "../interfaces/maps/maps";
 import { GET_STORES_RESPONSE } from "../interfaces/stores/stores";
 import { ORDER, ORDERS_FILTERS } from "../interfaces/orders/orders";
 import { COUPON, NEW_COUPON } from "../interfaces/coupons/coupons";
-import { NEW_PRODUCT } from "../interfaces/products/create-new-product";
-import { PRODUCT } from "../interfaces/products/products";
+
 import { NEW_STAFF_MEMBER, STAFF_MEMBER } from "../interfaces/staff/staff";
-import {
-  CATEGORY,
-  EDIT_CATEGORY,
-  NEW_CATEGORY,
-} from "../interfaces/categories/categories";
+
 import { ORDER_SORT } from "../pages/Orders";
 import { BRANCH, NEW_BRANCH } from "../interfaces/settings/branches/branches";
 import { customerUri } from "../constants";
@@ -196,7 +191,7 @@ export const getGoogleMapsLocation = async ({
   const res = await axios.get(
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&language=${language}`
   );
-  // console.log(res.data);
+
   return res.data;
 };
 
@@ -379,7 +374,6 @@ export const getStaffMember = async (id: number) => {
 };
 export const createStaffMember = async (staff: NEW_STAFF_MEMBER) => {
   const t = localStorage.getItem("dshtid");
-  console.log(staff, "New Staff");
 
   const config: AxiosRequestConfig = {
     headers: {

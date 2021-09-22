@@ -13,7 +13,6 @@ import IconButton from "../reusable/IconButton";
 import Spacer from "../reusable/Spacer";
 import Flex from "../StyledComponents/Flex";
 
-import Heading from "../StyledComponents/Heading";
 import Paragraph from "../StyledComponents/Paragraph";
 
 interface IProps {

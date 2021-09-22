@@ -16,7 +16,6 @@ const ProductOrdering = () => {
     formState: { errors },
   } = useFormContext<FORM_PROPS>();
   const allowSideNotes = watch("allow_side_notes");
-  const allowattach = watch("allow_attachments");
 
   return (
     <Box type="titled" boxTitle="Product Ordering options">

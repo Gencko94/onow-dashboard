@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 
 import { useHistory } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import styled from "styled-components";
+
 import { ORDERS_FILTERS } from "../../../interfaces/orders/orders";
 
 import Button from "../../reusable/Button";

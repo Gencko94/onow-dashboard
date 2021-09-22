@@ -29,13 +29,13 @@ const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Products = lazy(() => import("./pages/Products"));
 const Customers = lazy(() => import("./pages/Customers"));
 const Categories = lazy(() => import("./pages/Categories"));
-const Brands = lazy(() => import("./pages/Brands"));
+
 const CreateNewCategory = lazy(
   () => import("./pages/Categories/CreateNewCategory")
 );
-const CreateNewBrand = lazy(() => import("./pages/Brands/CreateNewBrand"));
+
 const Category = lazy(() => import("./pages/Categories/Category"));
-const Brand = lazy(() => import("./pages/Brands/Brand"));
+
 const CustomerProfile = lazy(() => import("./pages/CustomerProfile"));
 const Orders = lazy(() => import("./pages/Orders"));
 const Order = lazy(() => import("./pages/Order"));
@@ -151,15 +151,7 @@ function App() {
                               path="/categories/category/create"
                               Component={CreateNewCategory}
                             />
-                            <ProtectedRoute path="/brands" Component={Brands} />
-                            <ProtectedRoute
-                              path="/brands/brand/:id"
-                              Component={Brand}
-                            />
-                            <ProtectedRoute
-                              path="/brands/create"
-                              Component={CreateNewBrand}
-                            />
+
                             <ProtectedRoute path="/orders" Component={Orders} />
                             <ProtectedRoute
                               path="/orders/:id"

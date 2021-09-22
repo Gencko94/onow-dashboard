@@ -1,7 +1,5 @@
-import { useState } from "react";
-
 import styled from "styled-components";
-import { BiUser } from "react-icons/bi";
+
 import Grid from "../../StyledComponents/Grid";
 import { ORDER_CUSTOMER } from "../../../interfaces/orders/orders";
 
@@ -10,7 +8,6 @@ interface IProps {
 }
 
 const OrderClientInformation = ({ customer }: IProps) => {
-  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <Container>
       <div className="title-container">

@@ -42,7 +42,7 @@ const Category = () => {
   // Edit Mutation
   const {
     mutateAsync: editMutation,
-    reset: resetEdit,
+
     isLoading: editLoading,
   } = useMutation(editCategory, {
     onSuccess: (data, categoryId) => {
@@ -81,7 +81,6 @@ const Category = () => {
     } catch (error) {
       const { responseError } = extractError(error);
       if (responseError) {
-        console.log(responseError);
       } else {
         setToastStatus?.({
           fn: () => {
@@ -118,7 +117,6 @@ const Category = () => {
     } catch (error) {
       const { responseError } = extractError(error);
       if (responseError) {
-        console.log(responseError);
       } else {
         setToastStatus?.({
           fn: () => {
