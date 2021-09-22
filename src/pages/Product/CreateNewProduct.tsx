@@ -1,4 +1,4 @@
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 
@@ -12,51 +12,22 @@ import CreateProductPricingAndOptions from "../../components/AddProduct/ProductV
 import Breadcrumbs from "../../components/reusable/Breadcrumbs";
 
 import Heading from "../../components/StyledComponents/Heading";
+import NewProductProvider, {
+  NewProductContext,
+} from "../../contexts/Product/NewProductContext";
 import useToast from "../../hooks/useToast";
 import extractError from "../../utils/extractError";
 import { createProduct } from "../../utils/queries/productQueries";
 
-type ContextProps = {
-  activeTab: 0 | 1 | 2 | 3;
-  setActiveTab: Dispatch<SetStateAction<0 | 1 | 2 | 3>>;
-  updateData: (data: any) => void;
-  formValues: any;
-};
-
-export const NewProductContext = createContext<Partial<ContextProps>>({});
-
 const CreateNewProduct = () => {
   const { setToastStatus, handleCloseToast } = useToast();
-  const [activeTab, setActiveTab] = useState<0 | 1 | 2 | 3>(0);
   const {
     mutateAsync: createProductMutation,
     isLoading,
     reset,
   } = useMutation(createProduct);
   const history = useHistory();
-  const [formValues, setFormValues] = useState({
-    allow_attachments: false,
-    allow_side_notes: true,
-    price_by_options: false,
-    branch_availability: {
-      all: true,
-      branches: [] as number[],
-    },
-    thumbnail: undefined,
-    options: [],
-    images: [],
-    max_qty_per_user: "0",
-    active: 1,
-    quantity: "unlimited",
-  });
 
-  const updateData = (data: any) => {
-    console.log(formValues, "old");
-    setFormValues((prev) => ({
-      ...prev,
-      ...data,
-    }));
-  };
   const submitForm = async (data: any) => {
     console.log(data);
 
@@ -71,7 +42,7 @@ const CreateNewProduct = () => {
         allow_attachments: data.allow_attachments,
         allow_side_notes: data.allow_side_notes,
         branch_availability: data.branch_availability,
-        product_category_id: data.category_id,
+        product_category_id: data.category_id[0],
         description: data.description,
         images: data.images,
         max_qty_per_user: data.max_qty_per_user,
@@ -112,9 +83,7 @@ const CreateNewProduct = () => {
     }
   };
   return (
-    <NewProductContext.Provider
-      value={{ activeTab, setActiveTab, updateData, formValues }}
-    >
+    <NewProductProvider>
       <Heading tag="h5" type="large-title">
         Create New Product
       </Heading>
@@ -133,19 +102,22 @@ const CreateNewProduct = () => {
       />
 
       <CreateProductTabs />
-
-      <Wrapper>
-        {activeTab === 0 && <CreateProductGeneralInfo />}
-        {activeTab === 1 && <CreateProductImage />}
-        {activeTab === 2 && <CreateProductPricingAndOptions />}
-        {activeTab === 3 && (
-          <CreateProductOrderingAndBranchAvailability
-            formLoading={isLoading}
-            submitForm={submitForm}
-          />
+      <NewProductContext.Consumer>
+        {({ activeTab }) => (
+          <Wrapper>
+            {activeTab === 0 && <CreateProductGeneralInfo />}
+            {activeTab === 1 && <CreateProductImage />}
+            {activeTab === 2 && <CreateProductPricingAndOptions />}
+            {activeTab === 3 && (
+              <CreateProductOrderingAndBranchAvailability
+                formLoading={isLoading}
+                submitForm={submitForm}
+              />
+            )}
+          </Wrapper>
         )}
-      </Wrapper>
-    </NewProductContext.Provider>
+      </NewProductContext.Consumer>
+    </NewProductProvider>
   );
 };
 

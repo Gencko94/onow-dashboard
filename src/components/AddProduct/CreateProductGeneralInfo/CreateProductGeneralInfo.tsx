@@ -11,11 +11,11 @@ import {
 } from "react-hook-form";
 import { useContext } from "react";
 import Flex from "../../StyledComponents/Flex";
-import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import Button from "../../reusable/Button";
+import { NewProductContext } from "../../../contexts/Product/NewProductContext";
 
 export interface firstTabInfo {
-  category_id: number;
+  category_id: number[];
   name: {
     [key: string]: string;
   };
@@ -33,9 +33,9 @@ const CreateProductGeneralInfo = () => {
     useContext(NewProductContext);
   const methods = useForm<firstTabInfo>({
     defaultValues: {
-      category_id: formValues?.category_id,
+      category_id: formValues?.category_id || [],
       description: formValues?.description,
-      quantity: formValues?.quantity,
+      quantity: formValues?.quantity || "unlimited",
       name: formValues?.name,
 
       slug: formValues?.slug,
@@ -45,8 +45,8 @@ const CreateProductGeneralInfo = () => {
   const onSubmit: SubmitHandler<firstTabInfo> = (data) => {
     console.log(data);
 
-    setActiveTab?.(1);
     updateData?.(data);
+    setActiveTab?.(1);
   };
   const onError: SubmitErrorHandler<firstTabInfo> = (errors) => {
     console.log(errors);

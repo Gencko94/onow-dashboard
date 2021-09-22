@@ -16,6 +16,8 @@ import { TableRowImage } from "../../reusable/Table/TableRowImage";
 import Checkbox from "../../reusable/Inputs/Checkbox";
 import { PRODUCT } from "../../../interfaces/products/products";
 import Paragraph from "../../StyledComponents/Paragraph";
+import { useDeleteMultipleProducts } from "../../../hooks/data-hooks/products/useDeleteMultipleProducts";
+import Button from "../../reusable/Button";
 
 interface IProps {
   data: any;
@@ -31,7 +33,8 @@ const ProductsTable = ({ data }: IProps) => {
     handleChangeGlobalSearchType,
   } = useContext(ApplicationProvider);
   const [debouncedSearchValue] = useDebounce(globalSearchBarValue, 500);
-
+  const { handleDeleteMultipleProducts, multipleDeleteLoading } =
+    useDeleteMultipleProducts({});
   const columns = useMemo<Column<PRODUCT>[]>(
     () => [
       {
@@ -110,7 +113,7 @@ const ProductsTable = ({ data }: IProps) => {
     headerGroups,
     rows,
     prepareRow,
-    state,
+    selectedFlatRows,
   } = useTable(
     {
       columns,
@@ -162,26 +165,33 @@ const ProductsTable = ({ data }: IProps) => {
 
   return (
     <>
-      {/* {data?.length !== 0 && (
+      {data?.length !== 0 && (
         <Flex margin="1rem 0" justify="flex-end" items="center">
-          <p>Selected Rows ({selectedRows.length}) : </p>
+          <p>Selected Rows ({Object.keys(selectedFlatRows).length}) : </p>
           <Flex margin="0 0.5rem">
             <Button
-              disabled={selectedRows.length === 0 || multipleDeleteLoading}
+              disabled={
+                Object.keys(selectedFlatRows).length === 0 ||
+                multipleDeleteLoading
+              }
               color="danger"
               withTransition
               size="sm"
               isLoading={multipleDeleteLoading}
               onClick={() => {
-                handleDeleteMultipleProducts(selectedRows);
+                const ids = selectedFlatRows.map((row) => row.original.id);
+                handleDeleteMultipleProducts(ids);
               }}
             >
-              Delete {selectedRows.length > 0 ? selectedRows.length : ""}{" "}
+              Delete{" "}
+              {Object.keys(selectedFlatRows).length > 0
+                ? Object.keys(selectedFlatRows).length
+                : ""}
               Products
             </Button>
           </Flex>
         </Flex>
-      )} */}
+      )}
       {/* {debouncedSearchValue && (
         <SearchContainer>
           <p className="search-text">

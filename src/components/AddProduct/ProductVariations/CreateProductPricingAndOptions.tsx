@@ -10,9 +10,9 @@ import {
 import { NEW_PRODUCT_OPTION } from "../../../interfaces/products/create-new-product";
 import Flex from "../../StyledComponents/Flex";
 import { useContext } from "react";
-import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import Button from "../../reusable/Button";
 import Spacer from "../../reusable/Spacer";
+import { NewProductContext } from "../../../contexts/Product/NewProductContext";
 export interface secondTabProps {
   price: number;
   price_by_options: boolean;

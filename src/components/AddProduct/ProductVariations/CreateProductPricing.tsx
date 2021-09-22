@@ -3,10 +3,10 @@ import { IoPricetagsOutline } from "react-icons/io5";
 import { secondTabProps } from "./CreateProductPricingAndOptions";
 
 import GithubInput from "../../reusable/Inputs/GithubInput";
-import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import { useContext } from "react";
 import Input from "../../reusable/Input/Input";
 import Box from "../../reusable/Box/Box";
+import { NewProductContext } from "../../../contexts/Product/NewProductContext";
 
 const CreateProductPricing = () => {
   const {

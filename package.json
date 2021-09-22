@@ -61,7 +61,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test usegetcategories  --watch",
+    "test": "react-scripts test createproductgeneralinfo  --watch",
     "lint": "eslint ."
   },
   "eslintConfig": {

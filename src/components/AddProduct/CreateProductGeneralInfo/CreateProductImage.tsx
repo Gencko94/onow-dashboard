@@ -9,7 +9,7 @@ import {
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { IoMdCloseCircle } from "react-icons/io";
 import styled from "styled-components";
-import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
+import { NewProductContext } from "../../../contexts/Product/NewProductContext";
 import FileUploader from "../../../utils/FileUploader";
 import MiniFileUploader from "../../../utils/MiniFileUploader";
 import Box from "../../reusable/Box/Box";

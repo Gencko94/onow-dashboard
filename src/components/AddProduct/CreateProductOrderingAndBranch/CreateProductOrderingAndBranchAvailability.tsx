@@ -6,7 +6,6 @@ import {
   useForm,
 } from "react-hook-form";
 import styled from "styled-components";
-import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import Flex from "../../StyledComponents/Flex";
 import Hr from "../../StyledComponents/Hr";
 import CreateProductBranches from "./CreateProductBranches";
@@ -14,6 +13,7 @@ import CreateProductOrdering from "./CreateProductOrdering";
 
 import Button from "../../reusable/Button";
 import { NEW_PRODUCT } from "../../../interfaces/products/create-new-product";
+import { NewProductContext } from "../../../contexts/Product/NewProductContext";
 
 export interface thirdTabProps {
   max_qty_per_user: number;

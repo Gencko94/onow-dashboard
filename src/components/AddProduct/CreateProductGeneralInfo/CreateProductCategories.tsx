@@ -1,31 +1,68 @@
 import styled from "styled-components";
 
-import AddCategoryModalBody from "../../Modal/AddCategoryModalBody";
-
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 import { useTranslation } from "react-i18next";
 import { firstTabInfo } from "./CreateProductGeneralInfo";
-import Heading from "../../StyledComponents/Heading";
 import Box from "../../reusable/Box/Box";
+import ProductCategoriesTable from "../../Product/ProductGeneralInformation/ProductCategoriesTable";
+import { useGetCategories } from "../../../hooks/data-hooks/categories/useGetCategories";
+import { CATEGORY } from "../../../interfaces/categories/categories";
+import { useContext } from "react";
+import LoadingTable from "../../reusable/LoadingTable";
 
 const CreateProductCategories = () => {
   const {
     control,
     formState: { errors },
+    getValues,
   } = useFormContext<firstTabInfo>();
+
   const {
     i18n: { language },
   } = useTranslation();
-
+  const { data } = useGetCategories();
+  function handleToggleCategories(
+    category: CATEGORY,
+    onChange: (...event: any[]) => void
+  ) {
+    console.log(getValues("category_id"));
+    const formCategories = getValues("category_id");
+    if (typeof formCategories.find((i) => i === category.id) !== "undefined") {
+      onChange([]);
+    } else {
+      onChange([...formCategories, category.id]);
+    }
+  }
   return (
-    <Box type="titled" boxTitle="Product Category">
-      <CategoriesList error={Boolean(errors?.category_id)}>
+    <Box disabledContentPadding type="titled" boxTitle="Product Category">
+      <Controller
+        control={control}
+        name="category_id"
+        rules={{
+          required: "Required",
+        }}
+        // defaultValue={formValues?.product_category_id}
+        render={({ field: { onChange, value } }) =>
+          data ? (
+            <ProductCategoriesTable
+              handleToggleCategories={handleToggleCategories}
+              onChange={onChange}
+              data={data}
+              selected={value}
+            />
+          ) : (
+            <LoadingTable />
+          )
+        }
+      />
+
+      {/* <CategoriesList error={Boolean(errors?.category_id)}>
         <AddCategoryModalBody
           control={control}
           errors={Boolean(errors?.category_id)}
         />
-      </CategoriesList>
+      </CategoriesList> */}
     </Box>
   );
 };

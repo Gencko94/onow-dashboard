@@ -180,35 +180,7 @@ const CategoriesList = () => {
       setSelectedRows((prev) => [...prev, rowId]);
     }
   };
-  return (
-    <>
-      <Flex justify="flex-start" margin="1rem 0 " items="center">
-        <p>Selected Rows ({selectedRows.length}) : </p>
-        <Flex margin="0 0.5rem">
-          <Button
-            size="sm"
-            disabled={selectedRows.length === 0 || multipleLoading}
-            color="danger"
-            isLoading={multipleLoading}
-            withTransition
-            onClick={() => {
-              setConfirmationModalStatus?.({
-                closeCb: handleCloseConfirmationModal!,
-                desc: "Are you sure you want to delete these categories ?",
-                open: true,
-                successCb: () => {
-                  handleDeleteMultipleCategories(selectedRows);
-                },
-                title: "Delete Categories",
-              });
-            }}
-          >
-            Delete Categories
-          </Button>
-        </Flex>
-      </Flex>
-    </>
-  );
+  return <></>;
 };
 
 export default CategoriesList;

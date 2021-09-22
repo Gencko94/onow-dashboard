@@ -4,8 +4,8 @@ import { useFormContext } from "react-hook-form";
 import { BiDetail } from "react-icons/bi";
 import { MdSubtitles } from "react-icons/md";
 import { RiHandCoinLine } from "react-icons/ri";
+import { NewProductContext } from "../../../contexts/Product/NewProductContext";
 
-import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 import Box from "../../reusable/Box/Box";
 import Input from "../../reusable/Input/Input";
 import Checkbox from "../../reusable/Inputs/Checkbox";
@@ -19,7 +19,6 @@ const CreateProductNameAndDescription = () => {
   const { formValues } = useContext(NewProductContext);
   const {
     register,
-    control,
     watch,
     setValue,
     formState: { errors },
@@ -27,7 +26,7 @@ const CreateProductNameAndDescription = () => {
   const quantity = watch("quantity");
   const nameEn = watch("name.en");
   console.log(errors);
-  console.log(quantity);
+
   useEffect(() => {
     if (nameEn) {
       setValue?.("slug", nameEn.toLowerCase().split(" ").join("-"));
@@ -39,18 +38,21 @@ const CreateProductNameAndDescription = () => {
         <Input
           startAdornment={<MdSubtitles />}
           errors={errors}
+          data-testid="name.en"
           label="Product Name"
           {...register("name.en", { required: "Required" })}
         />
         <Input
           startAdornment={<MdSubtitles />}
           errors={errors}
+          data-testid="name.ar"
           label="Product Name Arabic"
           {...register("name.ar", { required: "Required" })}
         />
         <Input
           startAdornment={<MdSubtitles />}
           errors={errors}
+          data-testid="description.en"
           label="Short Description English"
           {...register("description.en", { required: "Required" })}
         />
@@ -58,12 +60,14 @@ const CreateProductNameAndDescription = () => {
           startAdornment={<MdSubtitles />}
           errors={errors}
           label="Short Description Arabic"
+          data-testid="description.ar"
           {...register("description.ar", { required: "Required" })}
         />
         <Input
           startAdornment={<BiDetail />}
           errors={errors}
           label="SKU"
+          data-testid="sku"
           {...register("sku", { required: "Required" })}
         />
         <div>

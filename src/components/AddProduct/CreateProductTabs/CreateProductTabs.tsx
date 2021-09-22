@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
+import { NewProductContext } from "../../../contexts/Product/NewProductContext";
 
 import Paragraph from "../../StyledComponents/Paragraph";
 

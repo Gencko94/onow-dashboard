@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import { queryHooksWrapper } from "../../../../test-utils";
 import { useGetCategories } from "../useGetCategories";
 describe("useGetCategories", () => {
-  it.only("calls getCategories", async () => {
+  it("calls getCategories", async () => {
     const { result, waitFor } = renderHook(() => useGetCategories(), {
       wrapper: queryHooksWrapper,
     });

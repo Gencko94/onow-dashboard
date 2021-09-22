@@ -1,5 +1,6 @@
 import { rest } from "msw";
 import { customerUri } from "../constants";
+import { fakeCategory } from "../fakeData/fakeData";
 export const handlers = [
   rest.delete(`${customerUri}/products/:id`, (req, res, ctx) => {
     const { id } = req.params;
@@ -20,6 +21,9 @@ export const handlers = [
     }
   }),
   rest.get(`${customerUri}/product-categories`, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ results: { data: [] } }));
+    return res(
+      ctx.status(200),
+      ctx.json({ results: { data: [fakeCategory] } })
+    );
   }),
 ];

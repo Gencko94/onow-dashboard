@@ -1,5 +1,5 @@
 // import { CATEGORY } from '../interfaces/categories/categories';
-import { MINI_CATEGORY } from "../interfaces/categories/categories";
+import { CATEGORY, MINI_CATEGORY } from "../interfaces/categories/categories";
 import { MINI_PRODUCT, PRODUCT } from "../interfaces/products/products";
 export const fakeProduct: PRODUCT = {
   id: 1,
@@ -22,6 +22,16 @@ export const fakeProduct: PRODUCT = {
   price_by_options: false,
   quantity: 1,
   sku: "sku",
+  slug: "slug",
+};
+export const fakeCategory: CATEGORY = {
+  active: true,
+  children: [],
+  description: { en: "description", ar: "description ar" },
+  name: { en: "name", ar: "name ar" },
+  id: 1,
+  image: "",
+  parent_id: null,
   slug: "slug",
 };
 export const product1: MINI_PRODUCT = {

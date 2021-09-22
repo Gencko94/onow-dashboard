@@ -12,12 +12,12 @@ const Categories = () => {
       <CategoriesPanel />
       {status === "loading" ? (
         <LoadingTable />
-      ) : status === "success" && data.length > 0 ? (
+      ) : status === "success" && data && data.length > 0 ? (
         <CategoriesTable data={data} />
       ) : (
         ""
       )}
-      {status === "success" && data.length === 0 && (
+      {status === "success" && data && data.length === 0 && (
         <EmptyTable text="No Categories Found" height="200px" />
       )}
       <CategoriesList />

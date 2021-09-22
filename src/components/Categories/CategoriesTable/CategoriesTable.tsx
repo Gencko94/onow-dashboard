@@ -1,8 +1,10 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { Column, useSortBy, useTable } from "react-table";
+import { Column, useRowSelect, useSortBy, useTable } from "react-table";
+import useConfirmationModal from "../../../hooks/useConfirmationModal/useConfirmationModal";
 import { CATEGORY } from "../../../interfaces/categories/categories";
+import Button from "../../reusable/Button";
 import DefaultImage from "../../reusable/DefaultImage";
 import { Table } from "../../reusable/Table/Table";
 import { TableBodyData } from "../../reusable/Table/TableBodyData";
@@ -12,12 +14,19 @@ import { TableRowImage } from "../../reusable/Table/TableRowImage";
 import Flex from "../../StyledComponents/Flex";
 import Paragraph from "../../StyledComponents/Paragraph";
 import CategoryItemActions from "./CategoryItemActions";
+import { useDeleteMultipleCategories } from "../../../hooks/data-hooks/categories/useDeleteMultipleCategories";
+import Checkbox from "../../reusable/Inputs/Checkbox";
+
 interface IProps {
   data: any;
 }
 
 const CategoriesTable = ({ data }: IProps) => {
   const { i18n, t } = useTranslation();
+  const { handleCloseConfirmationModal, setConfirmationModalStatus } =
+    useConfirmationModal();
+  const { handleDeleteMultipleCategories, multipleDeleteLoading } =
+    useDeleteMultipleCategories();
   const columns = useMemo<Column<CATEGORY>[]>(
     () => [
       {
@@ -71,60 +80,120 @@ const CategoriesTable = ({ data }: IProps) => {
     ],
     []
   );
-  const { getTableBodyProps, getTableProps, headerGroups, rows, prepareRow } =
-    useTable(
-      {
-        columns,
-        data,
-        initialState: { sortBy: [{ id: "category-id", desc: true }] },
-      },
-      useSortBy
-    );
+  const {
+    getTableBodyProps,
+    getTableProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    selectedFlatRows,
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { sortBy: [{ id: "category-id", desc: true }] },
+    },
+    useSortBy,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        {
+          id: "selection",
+          disableSortBy: true,
+          accessor: "id",
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <Checkbox
+              data-testid="select-all-check"
+              {...getToggleAllRowsSelectedProps()}
+            />
+          ),
+          Cell: (instance: any) => {
+            return (
+              <Checkbox
+                data-testid={`select-${instance.row.original.id}`}
+                {...instance.row.getToggleRowSelectedProps()}
+              />
+            );
+          },
+        },
+        ...columns,
+      ]);
+    }
+  );
+
   return (
-    <Table {...getTableProps()}>
-      <thead>
-        {headerGroups.map((hGroup) => (
-          <tr {...hGroup.getHeaderGroupProps()}>
-            {hGroup.headers.map((column) => (
-              <TableHead
-                sortable={column.canSort}
-                {...column.getHeaderProps(column.getSortByToggleProps())}
-              >
-                <Flex items="center" justify="center">
-                  {column.render("Header")}{" "}
-                  {column.isSorted ? (
-                    column.isSortedDesc ? (
-                      <BiChevronDown size={20} />
-                    ) : (
-                      <BiChevronUp size={20} />
-                    )
-                  ) : (
-                    ""
-                  )}
-                </Flex>
-              </TableHead>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <TableBodyRow {...row.getRowProps()}>
-              {row.cells.map((cell) => (
-                <TableBodyData
-                  data-testid={cell.column.id}
-                  {...cell.getCellProps()}
+    <div>
+      <Flex justify="flex-start" margin="1rem 0 " items="center">
+        <p>Selected Rows ({selectedFlatRows.length}) : </p>
+        <Flex margin="0 0.5rem">
+          <Button
+            size="sm"
+            disabled={selectedFlatRows.length === 0 || multipleDeleteLoading}
+            color="danger"
+            isLoading={multipleDeleteLoading}
+            withTransition
+            onClick={() => {
+              setConfirmationModalStatus?.({
+                closeCb: handleCloseConfirmationModal!,
+                desc: "Are you sure you want to delete these categories ?",
+                open: true,
+                successCb: () => {
+                  const ids = selectedFlatRows.map((row) => row.original.id);
+                  handleDeleteMultipleCategories(ids);
+                },
+                title: "Delete Categories",
+              });
+            }}
+          >
+            Delete Categories
+          </Button>
+        </Flex>
+      </Flex>
+      <Table {...getTableProps()}>
+        <thead>
+          {headerGroups.map((hGroup) => (
+            <tr {...hGroup.getHeaderGroupProps()}>
+              {hGroup.headers.map((column) => (
+                <TableHead
+                  sortable={column.canSort}
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
                 >
-                  {cell.render("Cell")}
-                </TableBodyData>
+                  <Flex items="center" justify="center">
+                    {column.render("Header")}{" "}
+                    {column.isSorted ? (
+                      column.isSortedDesc ? (
+                        <BiChevronDown size={20} />
+                      ) : (
+                        <BiChevronUp size={20} />
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </Flex>
+                </TableHead>
               ))}
-            </TableBodyRow>
-          );
-        })}
-      </tbody>
-    </Table>
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <TableBodyRow isSelected={row.isSelected} {...row.getRowProps()}>
+                {row.cells.map((cell) => (
+                  <TableBodyData
+                    data-testid={cell.column.id}
+                    {...cell.getCellProps()}
+                  >
+                    {cell.render("Cell")}
+                  </TableBodyData>
+                ))}
+              </TableBodyRow>
+            );
+          })}
+        </tbody>
+      </Table>
+    </div>
   );
 };
 

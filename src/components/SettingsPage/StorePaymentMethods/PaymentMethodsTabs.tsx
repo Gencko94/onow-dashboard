@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import { NewProductContext } from "../../../pages/Product/CreateNewProduct";
 
 interface IProps {
   activeTab: 0;

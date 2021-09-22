@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export const Table = styled.table`
-  border: ${(props) => props.theme.border};
+export const Table = styled.table<{ noBorder?: boolean }>`
+  border: ${(props) => !props.noBorder && props.theme.border};
   th,
   td {
     vertical-align: middle;

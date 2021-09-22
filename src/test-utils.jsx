@@ -24,9 +24,27 @@ const AllTheProviders = ({ children }) => {
     </MemoryRouter>
   );
 };
+const AllTheProvidersWithoutLayout = ({ children }) => {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  });
+  return (
+    <MemoryRouter>
+      {/* <Suspense fallback={<Loading />}> */}
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <ApplicationContext>{children}</ApplicationContext>
+        </ThemeProvider>
+      </QueryClientProvider>
+      {/* </Suspense> */}
+    </MemoryRouter>
+  );
+};
 
 const customRender = (ui, options) =>
   render(ui, { wrapper: AllTheProviders, ...options });
+const customRenderWithoutLayout = (ui, options) =>
+  render(ui, { wrapper: AllTheProvidersWithoutLayout, ...options });
 const customRenderIntoDocument = (ui, options) =>
   renderIntoDocument(<AllTheProviders>{ui}</AllTheProviders>);
 
@@ -37,6 +55,7 @@ export * from "@testing-library/react";
 export {
   customRender as render,
   customRenderIntoDocument as renderIntoDocument,
+  customRenderWithoutLayout as renderWithoutLayout,
 };
 export function simulateMouseClick(element) {
   fireEvent.pointerDown(element, { pointerType: "mouse" });
